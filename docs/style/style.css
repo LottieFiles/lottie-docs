@@ -43,3 +43,10 @@
     background: none !important;
 }
 
+.matrix, .playground {
+    background-color: #fcfdff; border: 1px solid #ccc;
+}
+.playground {
+    padding: 1em;
+}
+

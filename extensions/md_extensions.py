@@ -182,8 +182,8 @@ class Matrix(BlockProcessor):
 
     def run(self, parent, blocks):
         table = etree.SubElement(parent, "table")
-        table.attrib["style"] = "font-family: monospace; text-align: center; background-color: #fcfdff; border: 1px solid #ccc;"
-        table.attrib["class"] = "table-plain"
+        table.attrib["style"] = "font-family: monospace; text-align: center; "
+        table.attrib["class"] = "table-plain matrix"
         rows = blocks.pop(0)
         for row in rows.split("\n")[1:]:
             tr = etree.SubElement(table, "tr")
@@ -295,6 +295,8 @@ class LottiePlayground(BlockProcessor):
             width=match.group(2),
             height=match.group(3)
         )
+
+        element.attrib["class"] = "playground"
 
         for index, line in enumerate(block.strip().split("\n")[1:]):
             row_match = self.re_row.match(line)
