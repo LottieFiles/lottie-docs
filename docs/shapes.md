@@ -116,7 +116,7 @@ Defines a single color fill.
 |----|------------------------------------------------------------------------------------------|-------------------------------|
 |`o` |[Animated](concepts.md#animated-property) `number`                                        |Opacity, 100 means fully opaque|
 |`c` |[Animated](concepts.md#animated-property) [Color](concepts.md#color)                      |Color                          |
-|`r` |[Fill Rule](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_FillRule)   |                               |
+|`r` |[Fill Rule](constants.md#FillRule)   |                               |
 
 
 ### Stroke
@@ -126,8 +126,8 @@ Define a stroke.
 
 |Attribute|Type                                                                                 |Description                    |
 |----|------------------------------------------------------------------------------------------|-------------------------------|
-|`lc`|[Line Cap](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_LineCap)     |                               |
-|`lj`|[Line Join](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_LineJoin)   |                               |
+|`lc`|[Line Cap](constants.md#LineCap)     |                               |
+|`lj`|[Line Join](constants.md#LineJoin)   |                               |
 |`ml`|`number`                                                                                  |Miter Limit                    |
 |`o` |[Animated](concepts.md#animated-property) `number`                                        |Opacity, 100 means fully opaque|
 |`w` |[Animated](concepts.md#animated-property) `number`                                        |Width                          |
@@ -141,7 +141,7 @@ Defined as a sequence of alternating dashes and gaps.
 
 |Attribute|Type                                                                                     |Description                    |
 |----|----------------------------------------------------------------------------------------------|-------------------------------|
-|`n` |[Dash Type](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_StrokeDashType) |Dash type                      |
+|`n` |[Dash Type](constants.md#StrokeDashType) |Dash type                      |
 |`v` |[Animated](concepts.md#animated-property) `number`                                            |Length of the dash             |
 
 ### Gradient Fill / Stroke
@@ -153,7 +153,7 @@ but remove color (`c`) and add the following:
 |----|---------------------------------------------------|------------------------------|
 |`s` |[Animated](concepts.md#animated-property) 2D Vector|Starting point for the gradient|
 |`e` |[Animated](concepts.md#animated-property) 2D Vector|End point for the gradient    |
-|`t` |`integer`|[Gradient Type](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_GradientType) |
+|`t` |`integer`|[Gradient Type](constants.md#GradientType) |
 |`g` |[Gradient Colors](#gradient-colors)                |                              |
 
 If it's a radial gradient, `s` refers to the center of the gradient,
@@ -223,7 +223,7 @@ The effect of a Repeater is to duplicate the other shapes a number of times appl
 |----|------------------------------------------------------|-------------------------------|
 |`c` |[Animated](concepts.md#animated-property) `integer`   |Number of copies               |
 |`o` |[Animated](concepts.md#animated-property) `number`    |Offset (see below)             |
-|`m` |`integer`                                             |[Composite](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_Composite) (How to stack copies)|
+|`m` |`integer`                                             |[Composite](constants.md#Composite) (How to stack copies)|
 |`tr`|[Repeater Transform](#repeater-transform)             |Transform applied to each copy |
 
 
@@ -257,7 +257,7 @@ It takes the path defined by [shapes](#shapes) and only shows a segment of the r
 |`s` |[Animated](concepts.md#animated-property) `number`|Segment start          |
 |`e` |[Animated](concepts.md#animated-property) `number`|Segment end            |
 |`o` |[Animated](concepts.md#animated-property) `number`|Offset                 |
-|`m` |`integer`                                         |[How to treat multiple shapes](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_TrimMultipleShapes)
+|`m` |`integer`                                         |[How to treat multiple shapes](constants.md#TrimMultipleShapes)
 
 
 `s` and `e` go from `0` to `100`, `0` being at the beginning of the path and `100` at the end.
@@ -269,7 +269,14 @@ It looks like an angle but it isn't really, the difference between `o` and `s` i
 that with `o` you can go over `360` or below `0` to shift the whole segment along the path.
 
 
-{lottie:trim_path.json:512:512}
+Here is an interactive example:
+
+
+{lottie_playground:trim_path.json:512:512}
+Start:slider:layers[0].shapes[0].it[1].s.k:0:0:100
+End:slider:layers[0].shapes[0].it[1].e.k:0:50:100
+Offset:slider:layers[0].shapes[0].it[1].o.k:0:0:360
+
 
 ### Rounded Corners
 
@@ -279,7 +286,8 @@ Self explanatory
 |----|--------------------------------------------------|-----------------------|
 |`r` |[Animated](concepts.md#animated-property) `number`|Radius                 |
 
-{lottie:rounded_corners.json:512:512}
+{lottie_playground:rounded_corners.json:512:512}
+Radius:slider:layers[0].shapes[0].it[1].r.k:0:50:100
 
 ### Pucker / Bloat
 
@@ -294,5 +302,5 @@ When `a` is positive, the vertices are pulled towards the center, with `100` bei
 When `a` is negative the vertices are pushed away from the center with `100` being twice far away from the center. And the tangents are pulled towards the center.<br/>
 
 
-{lottie:pucker_bloat.json:512:512}
-
+{lottie_playground:pucker_bloat.json:512:512}
+Amount:slider:layers[0].shapes[0].it[1].a.k:-100:50:100

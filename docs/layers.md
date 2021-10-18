@@ -38,8 +38,8 @@ They also have attributes from [Visual Object](#visual-object).
 |`ip`               |`number`                           |In Point           |Frame when the layers becomes visible|
 |`op`               |`number`                           |Out Point          |Frame when the layers becomes invisible|
 |`st`               |`number`                           |Start time         ||
-|`bm`               |`integer`                          |[Blend Mode](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_BlendMode)||
-|`tt`               |`integer`                          |[Matte Mode](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_MatteMode)|See [mattes](#mattes)|
+|`bm`               |`integer`                          |[Blend Mode](constants.md#BlendMode)||
+|`tt`               |`integer`                          |[Matte Mode](constants.md#MatteMode)|See [mattes](#mattes)|
 |`td`               |`integer`                          |Matte Target       |See [mattes](#mattes)|
 |`hasMask`          |`boolean`                          |Has Mask           |Whether the layer has masks applied|
 |`masksProperties`  |`array`                            |Masks              |[Masks](#masks) for the layer|
@@ -61,6 +61,19 @@ parent's transform (except for opacity).
 Basically you need multiply the transform matrix by the parent's transform matrix
 to get a child layer's final transform.
 
+The flat layer structure and flexible parenting allows more flexibility but it's
+different from the more traditional approach of nesting child layers inside the
+parent layer (like a folder structure).
+
+One of the advantages of flexible parenting is you can have children of the same
+layer be intermixed with unrelated layers.
+
+In the following example, the star and the ellipse are in separate layers,
+but both have the same parent, which moves left and right.
+Between the two there's an additional layer with the rectangle.
+
+{lottie:parenting.json:512:512}
+
 ### Auto Orient
 
 When true, if the transform position is animated, it rotates the layer along the
@@ -79,7 +92,7 @@ follows the path (`ao` is 1).
 A matte allows using a layer as a mask for another layer.
 
 The way it works is the layer defining the mask has a `tt` attribute with the
-appropriate [value](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#lottie_MatteMode)
+appropriate [value](constants.md#MatteMode)
 and it affects the layer on top (the layer before it in the layer list).
 
 In this example there's a layer with a rectangle and a star being masked by an ellipse:

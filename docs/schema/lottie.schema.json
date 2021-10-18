@@ -1,6 +1,12 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://lottiefiles.github.io/lottie-docs/schema/lottie.schema.json",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "#/animation/animation"
+        }
+    ],
     "effects": {
         "stroke-effect": {
             "type": "object",

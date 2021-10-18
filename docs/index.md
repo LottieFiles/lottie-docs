@@ -14,6 +14,12 @@ which is the reference implementation.
 Note that some lottie players require certain JSON keys to be presents before others in the file
 to play properly.
 
+This documentation assumes the reader is already familiar with the following concepts:
+
+* [Vector Graphics](https://en.wikipedia.org/wiki/Vector_graphics)
+* [Bezier Curves](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+* [Tweening](https://en.wikipedia.org/wiki/Inbetweening)
+
 
 # Structure
 

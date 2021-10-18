@@ -8,6 +8,10 @@ id = "https://lottiefiles.github.io/lottie-docs/schema/lottie.schema.json"
 json_data = {
     "$schema": schema,
     "$id": id,
+    "type": "object",
+    "allOf": [{
+        "$ref": "#/animation/animation"
+    }]
 }
 
 root = pathlib.Path(__file__).parent.parent / "docs" / "schema"

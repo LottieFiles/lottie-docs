@@ -6,6 +6,12 @@
 
 {schema_enum:blend-mode}
 
+In the following example you can change the blend mode of the top layer
+
+{lottie_playground:blend_mode.json:512:512}
+Blend Mode:enum:layers[0].bm:blend-mode
+Opacity:slider:layers[0].ks.o.k:0:50:100
+
 
 ## {schema_attribute:title:constants/composite}
 
