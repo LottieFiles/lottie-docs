@@ -97,6 +97,7 @@ Inner Radius:slider:layers[0].shapes[0].it[0].ir.k:0:100:300
 Outer Roundness:slider:layers[0].shapes[0].it[0].os.k:0:0:200
 Inner Roundness:slider:layers[0].shapes[0].it[0].is.k:0:0:200
 
+
 ### Path
 
 Bezier path, note that it's a continuous shape, to have multiple shapes like

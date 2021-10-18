@@ -19,14 +19,6 @@
                     "title": "Position",
                     "$ref": "#/properties/multi-dimensional"
                 },
-                "ir": {
-                    "title": "Inner Radius",
-                    "$ref": "#/properties/value"
-                },
-                "is": {
-                    "title": "Inner Roundness",
-                    "$ref": "#/properties/value"
-                },
                 "or": {
                     "title": "Outer Radius",
                     "$ref": "#/properties/value"
@@ -52,6 +44,23 @@
             "required": [
                 "ty"
             ]
+        }
+        {
+            "if": {
+                "properties": { "sy": 1 }
+            },
+            "then": {
+                "properties": {
+                    "ir": {
+                        "title": "Inner Radius",
+                        "$ref": "#/properties/value"
+                    },
+                    "is": {
+                        "title": "Inner Roundness",
+                        "$ref": "#/properties/value"
+                    }
+                }
+            }
         }
     ]
 }
