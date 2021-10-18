@@ -1,0 +1,29 @@
+name: Build Pages
+on:
+    push:
+        brances:
+            - main
+    workflow_dispatch:
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Setup
+        run: |
+            apt update -q
+            apt install -yy python python-pip python virtualenv make
+            make install_dependencies
+            make docs
+      -
+        name: Deploy to GitHub Pages
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
