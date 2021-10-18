@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Effect",
+    "description": "Layer effect",
+    "allOf": [
+        {
+            "$ref": "#/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ix": {
+                    "title": "Effect Index",
+                    "type": "integer"
+                },
+                "ty": {
+                    "title": "Type",
+                    "type": "integer"
+                },
+                "ef": {
+                    "title": "Effects",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/effects/effect-value"
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

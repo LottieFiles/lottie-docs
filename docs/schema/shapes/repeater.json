@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Repeater",
+    "description": "Duplicates previous shapes in a group",
+    "allOf": [
+        {
+            "$ref": "#/shapes/modifier"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "rp"
+                },
+                "c": {
+                    "title": "Copies",
+                    "$ref": "#/properties/value"
+                },
+                "o": {
+                    "title": "Offset",
+                    "$ref": "#/properties/value"
+                },
+                "m": {
+                    "title": "Composite",
+                    "$ref": "#/constants/composite",
+                    "default": 1
+                },
+                "tr": {
+                    "title": "Transform",
+                    "$ref": "#/shapes/repeater-transform"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

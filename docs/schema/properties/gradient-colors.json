@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient Colors",
+    "description": "Represents colors and offsets in a gradient\n\nColors are represented as a flat list interleaving offsets and color components in weird ways\nThere are two possible layouts:\n\nWithout alpha, the colors are a sequence of offset, r, g, b\n\nWith alpha, same as above but at the end of the list there is a sequence of offset, alpha\n\nExamples:\n\nFor the gradient [0, red], [0.5, yellow], [1, green]\nThe list would be [0, 1, 0, 0, 0.5, 1, 1, 0, 1, 0, 1, 0]\n\nFor the gradient [0, red at 80% opacity], [0.5, yellow at 70% opacity], [1, green at 60% opacity]\nThe list would be [0, 1, 0, 0, 0.5, 1, 1, 0, 1, 0, 1, 0, 0, 0.8, 0.5, 0.7, 1, 0.6]",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "k": {
+                    "title": "Colors",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "p": {
+                    "title": "Count",
+                    "type": "integer",
+                    "default": 0
+                }
+            },
+            "required": []
+        }
+    ]
+}

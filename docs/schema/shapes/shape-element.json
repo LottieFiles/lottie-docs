@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Shape Element",
+    "description": "Base class for all elements of ShapeLayer and Group",
+    "allOf": [
+        {
+            "$ref": "#/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "hd": {
+                    "title": "Hidden",
+                    "type": "boolean"
+                },
+                "ty": {
+                    "title": "Type",
+                    "type": "string"
+                },
+                "cix": {
+                    "title": "Property Index",
+                    "type": "integer"
+                },
+                "bm": {
+                    "title": "Bm",
+                    "type": "integer"
+                }
+            },
+            "required": []
+        }
+    ]
+}

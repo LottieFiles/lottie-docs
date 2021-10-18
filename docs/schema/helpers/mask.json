@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Mask",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "inv": {
+                    "title": "Inverted",
+                    "type": "boolean",
+                    "default": false
+                },
+                "pt": {
+                    "title": "Shape",
+                    "$ref": "#/properties/shape-property"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/properties/value"
+                },
+                "mode": {
+                    "title": "Mode",
+                    "$ref": "#/constants/mask-mode",
+                    "default": "i"
+                },
+                "x": {
+                    "title": "Dilate",
+                    "$ref": "#/properties/value"
+                }
+            },
+            "required": []
+        }
+    ]
+}

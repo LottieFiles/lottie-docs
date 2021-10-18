@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Keyframe Bezier Handle",
+    "description": "Bezier handle for keyframe interpolation",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "x": {
+                    "title": "X",
+                    "type": "array",
+                    "item": {
+                        "type": "number",
+                        "default": 0
+                    }
+                },
+                "y": {
+                    "title": "Y",
+                    "type": "array",
+                    "item": {
+                        "type": "number",
+                        "default": 0
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

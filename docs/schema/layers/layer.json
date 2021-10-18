@@ -1,0 +1,96 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Layer",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ddd": {
+                    "title": "Threedimensional",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                },
+                "hd": {
+                    "title": "Hidden",
+                    "type": "boolean"
+                },
+                "ty": {
+                    "title": "Type",
+                    "type": "integer"
+                },
+                "parent": {
+                    "title": "Parent Index",
+                    "type": "integer"
+                },
+                "sr": {
+                    "title": "Stretch",
+                    "type": "number",
+                    "default": 1
+                },
+                "ks": {
+                    "title": "Transform",
+                    "$ref": "#/helpers/transform"
+                },
+                "ao": {
+                    "title": "Auto Orient",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                },
+                "ip": {
+                    "title": "In Point",
+                    "type": "number"
+                },
+                "op": {
+                    "title": "Out Point",
+                    "type": "number"
+                },
+                "st": {
+                    "title": "Start Time",
+                    "type": "number",
+                    "default": 0
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/constants/blend-mode",
+                    "default": 0
+                },
+                "tt": {
+                    "title": "Matte Mode",
+                    "$ref": "#/constants/matte-mode"
+                },
+                "ind": {
+                    "title": "Index",
+                    "type": "integer"
+                },
+                "hasMask": {
+                    "title": "Has Masks",
+                    "type": "boolean"
+                },
+                "masksProperties": {
+                    "title": "Masks",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/helpers/mask"
+                    }
+                },
+                "ef": {
+                    "title": "Effects",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/effects/effect"
+                    }
+                },
+                "td": {
+                    "title": "Matte Target",
+                    "type": "integer"
+                }
+            },
+            "required": []
+        }
+    ]
+}

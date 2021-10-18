@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Matte3Effect",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 28
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

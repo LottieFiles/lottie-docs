@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "LineCap",
+    "description": "",
+    "oneOf": [
+        {
+            "title": "Butt",
+            "const": 1
+        },
+        {
+            "title": "Round",
+            "const": 2
+        },
+        {
+            "title": "Square",
+            "const": 3
+        }
+    ]
+}

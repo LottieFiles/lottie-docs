@@ -1,0 +1,28 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Layer",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 5
+                },
+                "t": {
+                    "title": "Data",
+                    "$ref": "#/text/text-animator-data"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "GradientType",
+    "description": "",
+    "oneOf": [
+        {
+            "title": "Linear",
+            "const": 1
+        },
+        {
+            "title": "Radial",
+            "const": 2
+        }
+    ]
+}

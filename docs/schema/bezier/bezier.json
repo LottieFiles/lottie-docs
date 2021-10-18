@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Bezier",
+    "description": "Single bezier curve",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "c": {
+                    "title": "Closed",
+                    "type": "boolean",
+                    "default": false
+                },
+                "i": {
+                    "title": "In Tangents",
+                    "type": "array",
+                    "item": {
+                        "type": "number",
+                        "default": []
+                    }
+                },
+                "o": {
+                    "title": "Out Tangents",
+                    "type": "array",
+                    "item": {
+                        "type": "number",
+                        "default": []
+                    }
+                },
+                "v": {
+                    "title": "Vertices",
+                    "type": "array",
+                    "item": {
+                        "type": "number",
+                        "default": []
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

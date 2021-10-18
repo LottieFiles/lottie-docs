@@ -1,0 +1,44 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Base Stroke",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "lc": {
+                    "title": "Line Cap",
+                    "$ref": "#/constants/line-cap",
+                    "default": 2
+                },
+                "lj": {
+                    "title": "Line Join",
+                    "$ref": "#/constants/line-join",
+                    "default": 2
+                },
+                "ml": {
+                    "title": "Miter Limit",
+                    "type": "number",
+                    "default": 0
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/properties/value"
+                },
+                "w": {
+                    "title": "Width",
+                    "$ref": "#/properties/value"
+                },
+                "d": {
+                    "title": "Dashes",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/shapes/stroke-dash"
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

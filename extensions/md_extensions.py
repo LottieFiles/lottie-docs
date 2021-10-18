@@ -1,5 +1,6 @@
 import re
 import os
+import json
 from pathlib import Path
 import xml.etree.ElementTree as etree
 from xml.etree.ElementTree import parse as parse_xml
@@ -138,12 +139,95 @@ class Matrix(BlockProcessor):
         return True
 
 
+class SchemaData:
+    _data = None
+
+    @classmethod
+    def get_schema(cls):
+        if cls._data is None:
+            with open(Path(__file__).parent.parent / "docs" / "schema" / "lottie.schema.json") as file:
+                cls._data = json.load(file)
+        return cls._data
+
+    def get_ref(self, ref: str):
+        return self.get_path(ref.strip("#").strip("/").split("/"))
+
+    def get_path(self, path):
+        schema = self.get_schema()
+        for chunk in path:
+            schema = schema[chunk]
+        return schema
+
+    def get_enum_values(self, name):
+        enum = self.get_path(["constants", name])
+        data = []
+        for item in enum["oneOf"]:
+            data.append((item["const"], item["title"], item.get("description", "")))
+        return data
+
+
+class SchemaEnum(BlockProcessor):
+    re_fence_start = re.compile(r'^\s*\{schema_enum:([^}]+)\}\s*(?:\n|$)')
+    re_row = re.compile(r'^\s*(\w+)\s*:\s*(.*)')
+
+    def test(self, parent, block):
+        return self.re_fence_start.match(block)
+
+    def run(self, parent, blocks):
+        name = self.test(parent, blocks[0]).group(1)
+
+        enum_data = SchemaData().get_enum_values(name)
+
+        table = etree.SubElement(parent, "table")
+        descriptions = {}
+
+        for value, name, description in enum_data:
+            if description:
+                descriptions[str(value)] = description
+
+        # Override descriptions if specified from markdown
+        rows = blocks.pop(0)
+        for row in rows.split("\n")[1:]:
+            match = self.re_row.match(row)
+            if match:
+                descriptions[match.group(0)] = match.group(1)
+
+        thead = etree.SubElement(etree.SubElement(table, "thead"), "tr")
+        etree.SubElement(thead, "th").text = "Value"
+        etree.SubElement(thead, "th").text = "Name"
+        if descriptions:
+            etree.SubElement(thead, "th").text = "Description"
+
+        tbody = etree.SubElement(table, "tbody")
+
+        for value, name, _ in enum_data:
+            tr = etree.SubElement(tbody, "tr")
+            etree.SubElement(etree.SubElement(tr, "td"), "code").text = repr(value)
+            etree.SubElement(tr, "td").text = name
+            if descriptions:
+                etree.SubElement(tr, "td").text = descriptions.get(str(value), "")
+
+        return True
+
+
+class SchemaAttribute(InlineProcessor):
+    def __init__(self, md):
+        super().__init__(r'\{schema_attribute:(?P<attribute>[^:]+):(?P<path>[^:]+)\}', md)
+
+    def handleMatch(self, match, data):
+        span = etree.Element("span")
+        span.text = SchemaData().get_ref(match.group("path")).get(match.group("attribute"), "")
+        return span, match.start(0), match.end(0)
+
+
 class GlaxnimateExtension(Extension):
     def extendMarkdown(self, md):
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 1), 'lottie_color', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color_255:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 255), 'lottie_color_255', 175)
         md.parser.blockprocessors.register(Matrix(md.parser), 'matrix', 175)
+        md.parser.blockprocessors.register(SchemaEnum(md.parser), 'schema_enum', 175)
+        md.inlinePatterns.register(SchemaAttribute(md), 'schema_attribute', 175)
 
 
 def makeExtension(**kwargs):

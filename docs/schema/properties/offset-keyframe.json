@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Offset Keyframe",
+    "description": "Keyframe for MultiDimensional values\n\n@par Bezier easing\n@parblock\nImagine a quadratic bezier, with starting point at (0, 0) and end point at (1, 1).\n\n@p out_value and @p in_value are the other two handles for a quadratic bezier,\nexpressed as absoulte values in this 0-1 space.\n\nSee also https://cubic-bezier.com/\n@endparblock",
+    "allOf": [
+        {
+            "$ref": "#/properties/keyframe"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "s": {
+                    "title": "Start",
+                    "type": "array",
+                    "item": {
+                        "type": "number"
+                    }
+                },
+                "e": {
+                    "title": "End",
+                    "type": "array",
+                    "item": {
+                        "type": "number"
+                    }
+                },
+                "ti": {
+                    "title": "In Tan",
+                    "type": "array",
+                    "item": {
+                        "type": "number"
+                    }
+                },
+                "to": {
+                    "title": "Out Tan",
+                    "type": "array",
+                    "item": {
+                        "type": "number"
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

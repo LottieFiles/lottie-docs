@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "MaskMode",
+    "description": "How masks interact with each other\n@see https://helpx.adobe.com/after-effects/using/alpha-channels-masks-mattes.html",
+    "oneOf": [
+        {
+            "title": "No",
+            "const": "n"
+        },
+        {
+            "title": "Add",
+            "const": "a"
+        },
+        {
+            "title": "Subtract",
+            "const": "s"
+        },
+        {
+            "title": "Intersect",
+            "const": "i"
+        },
+        {
+            "title": "Lightent",
+            "const": "l"
+        },
+        {
+            "title": "Darken",
+            "const": "d"
+        },
+        {
+            "title": "Difference",
+            "const": "f"
+        }
+    ]
+}

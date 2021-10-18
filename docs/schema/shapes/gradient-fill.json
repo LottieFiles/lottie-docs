@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient Fill",
+    "description": "Gradient fill",
+    "allOf": [
+        {
+            "$ref": "#/shapes/shape-element"
+        },
+        {
+            "$ref": "#/shapes/gradient"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "gf"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/properties/value"
+                },
+                "r": {
+                    "title": "Fill Rule",
+                    "$ref": "#/constants/fill-rule"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

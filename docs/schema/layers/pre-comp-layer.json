@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Pre Comp Layer",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 0
+                },
+                "refId": {
+                    "title": "Reference Id",
+                    "type": "string",
+                    "default": ""
+                },
+                "tm": {
+                    "title": "Time Remapping",
+                    "$ref": "#/properties/value"
+                },
+                "w": {
+                    "title": "Width",
+                    "type": "integer",
+                    "default": 512
+                },
+                "h": {
+                    "title": "Height",
+                    "type": "integer",
+                    "default": 512
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

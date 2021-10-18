@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "s": {
+                    "title": "Start Point",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "e": {
+                    "title": "End Point",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "t": {
+                    "title": "Gradient Type",
+                    "$ref": "#/constants/gradient-type",
+                    "default": 1
+                },
+                "h": {
+                    "title": "Highlight Length",
+                    "$ref": "#/properties/value"
+                },
+                "a": {
+                    "title": "Highlight Angle",
+                    "$ref": "#/properties/value"
+                },
+                "g": {
+                    "title": "Colors",
+                    "$ref": "#/properties/gradient-colors"
+                }
+            },
+            "required": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Repeater Transform",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/helpers/transform"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "so": {
+                    "title": "Start Opacity",
+                    "$ref": "#/properties/value"
+                },
+                "eo": {
+                    "title": "End Opacity",
+                    "$ref": "#/properties/value"
+                }
+            },
+            "required": []
+        }
+    ]
+}

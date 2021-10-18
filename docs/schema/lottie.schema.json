@@ -1,0 +1,3003 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://lottiefiles.github.io/lottie-docs/schema/lottie.schema.json",
+    "easing": {
+        "keyframe-bezier-handle": {
+            "type": "object",
+            "title": "Keyframe Bezier Handle",
+            "description": "Bezier handle for keyframe interpolation",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "x": {
+                            "title": "X",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": 0
+                            }
+                        },
+                        "y": {
+                            "title": "Y",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": 0
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "effects": {
+        "stroke-effect": {
+            "type": "object",
+            "title": "Stroke Effect",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 22
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "fill-effect": {
+            "type": "object",
+            "title": "Fill Effect",
+            "description": "Replaces the whole layer with the given color\n@note Opacity is in [0, 1]",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 21
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "tritone-effect": {
+            "type": "object",
+            "title": "Tritone Effect",
+            "description": "Maps layers colors based on bright/mid/dark colors",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 23
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "change-to-color-effect": {
+            "type": "object",
+            "title": "Change To Color Effect",
+            "description": "Change to color",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 5
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "pro-levels-effect": {
+            "type": "object",
+            "title": "Pro Levels Effect",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 24
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "matte3effect": {
+            "type": "object",
+            "title": "Matte3Effect",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 28
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-value": {
+            "type": "object",
+            "title": "Effect Value",
+            "description": "Value for an effect",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/visual-object"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ix": {
+                            "title": "Effect Index",
+                            "type": "integer"
+                        },
+                        "mn": {
+                            "title": "Match Name",
+                            "type": "string"
+                        },
+                        "nm": {
+                            "title": "Name",
+                            "type": "string"
+                        },
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "effect-value-checkbox": {
+            "type": "object",
+            "title": "Effect Value Checkbox",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 4
+                        },
+                        "v": {
+                            "title": "Value",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "gaussian-blur-effect": {
+            "type": "object",
+            "title": "Gaussian Blur Effect",
+            "description": "Gaussian blur",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 29
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-value-layer": {
+            "type": "object",
+            "title": "Effect Value Layer",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 10
+                        },
+                        "v": {
+                            "title": "Value",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect": {
+            "type": "object",
+            "title": "Effect",
+            "description": "Layer effect",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/visual-object"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ix": {
+                            "title": "Effect Index",
+                            "type": "integer"
+                        },
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer"
+                        },
+                        "ef": {
+                            "title": "Effects",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/effects/effect-value"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "ignored-value": {
+            "type": "object",
+            "title": "Ignored Value",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 6
+                        },
+                        "v": {
+                            "title": "Value",
+                            "type": "number",
+                            "default": 0
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-value-point": {
+            "type": "object",
+            "title": "Effect Value Point",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 3
+                        },
+                        "v": {
+                            "title": "Value",
+                            "$ref": "#/properties/multi-dimensional"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "tint-effect": {
+            "type": "object",
+            "title": "Tint Effect",
+            "description": "Colorizes the layer\n@note Opacity is in [0, 100]",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 20
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-value-color": {
+            "type": "object",
+            "title": "Effect Value Color",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 2
+                        },
+                        "v": {
+                            "title": "Value",
+                            "$ref": "#/properties/color-value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-no-value": {
+            "type": "object",
+            "title": "Effect No Value",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": null
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "drop-shadow-effect": {
+            "type": "object",
+            "title": "Drop Shadow Effect",
+            "description": "Adds a shadow to the layer\n@note Opacity is in [0, 255]",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 25
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-value-drop-down": {
+            "type": "object",
+            "title": "Effect Value Drop Down",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 7
+                        },
+                        "v": {
+                            "title": "Value",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-value-slider": {
+            "type": "object",
+            "title": "Effect Value Slider",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 0
+                        },
+                        "v": {
+                            "title": "Value",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "effect-value-angle": {
+            "type": "object",
+            "title": "Effect Value Angle",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/effects/effect-value"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 1
+                        },
+                        "v": {
+                            "title": "Value",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        }
+    },
+    "assets": {
+        "image": {
+            "type": "object",
+            "title": "Image",
+            "description": "External image\n\n@see http://docs.aenhancers.com/sources/filesource/",
+            "allOf": [
+                {
+                    "$ref": "#/assets/asset"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "title": "Height",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "w": {
+                            "title": "Width",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "id": {
+                            "title": "Id",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "p": {
+                            "title": "Image",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "u": {
+                            "title": "Image Path",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "e": {
+                            "title": "Is Embedded",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "asset": {
+            "type": "object",
+            "title": "Asset",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                }
+            ]
+        },
+        "chars": {
+            "type": "object",
+            "title": "Chars",
+            "description": "Defines character shapes to avoid loading system fonts",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "ch": {
+                            "title": "Character",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "fFamily": {
+                            "title": "Font Family",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "size": {
+                            "title": "Font Size",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "style": {
+                            "title": "Font Style",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "w": {
+                            "title": "Width",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "data": {
+                            "title": "Data",
+                            "$ref": "#/assets/character-data"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "character-data": {
+            "type": "object",
+            "title": "Character Data",
+            "description": "Character shapes",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "shapes": {
+                            "title": "Shapes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/shapes/shape-element"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "precomp": {
+            "type": "object",
+            "title": "Precomp",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/assets/asset"
+                },
+                {
+                    "$ref": "#/composition/composition"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "title": "Id",
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "properties": {
+        "shape-property": {
+            "type": "object",
+            "title": "Shape Property",
+            "description": "An animatable property that holds a Bezier",
+            "allOf": [
+                {
+                    "$ref": "#/properties/animatable-mixin"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "k": {
+                            "title": "Keyframes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/properties/shape-prop-keyframe"
+                            }
+                        },
+                        "ix": {
+                            "title": "Property Index",
+                            "type": "number"
+                        },
+                        "a": {
+                            "title": "Animated",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "offset-keyframe": {
+            "type": "object",
+            "title": "Offset Keyframe",
+            "description": "Keyframe for MultiDimensional values\n\n@par Bezier easing\n@parblock\nImagine a quadratic bezier, with starting point at (0, 0) and end point at (1, 1).\n\n@p out_value and @p in_value are the other two handles for a quadratic bezier,\nexpressed as absoulte values in this 0-1 space.\n\nSee also https://cubic-bezier.com/\n@endparblock",
+            "allOf": [
+                {
+                    "$ref": "#/properties/keyframe"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "s": {
+                            "title": "Start",
+                            "type": "array",
+                            "item": {
+                                "type": "number"
+                            }
+                        },
+                        "e": {
+                            "title": "End",
+                            "type": "array",
+                            "item": {
+                                "type": "number"
+                            }
+                        },
+                        "ti": {
+                            "title": "In Tan",
+                            "type": "array",
+                            "item": {
+                                "type": "number"
+                            }
+                        },
+                        "to": {
+                            "title": "Out Tan",
+                            "type": "array",
+                            "item": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "keyframe": {
+            "type": "object",
+            "title": "Keyframe",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "t": {
+                            "title": "Time",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "i": {
+                            "title": "In Value",
+                            "$ref": "#/easing/keyframe-bezier-handle"
+                        },
+                        "o": {
+                            "title": "Out Value",
+                            "$ref": "#/easing/keyframe-bezier-handle"
+                        },
+                        "h": {
+                            "title": "Jump",
+                            "$ref": "#/types/int-boolean"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "shape-prop-keyframe": {
+            "type": "object",
+            "title": "Shape Prop Keyframe",
+            "description": "Keyframe holding Bezier objects",
+            "allOf": [
+                {
+                    "$ref": "#/properties/keyframe"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "s": {
+                            "title": "Start",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/bezier/bezier"
+                            }
+                        },
+                        "e": {
+                            "title": "End",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/bezier/bezier"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "position-value": {
+            "type": "object",
+            "title": "Position Value",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "k": {
+                            "title": "Keyframes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/properties/offset-keyframe"
+                            }
+                        },
+                        "ix": {
+                            "title": "Property Index",
+                            "type": "integer"
+                        },
+                        "a": {
+                            "title": "Animated",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "multi-dimensional": {
+            "type": "object",
+            "title": "Multi Dimensional",
+            "description": "An animatable property that holds a NVector",
+            "allOf": [
+                {
+                    "$ref": "#/properties/animatable-mixin"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "k": {
+                            "title": "Keyframes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/properties/offset-keyframe"
+                            }
+                        },
+                        "ix": {
+                            "title": "Property Index",
+                            "type": "integer"
+                        },
+                        "a": {
+                            "title": "Animated",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "value": {
+            "type": "object",
+            "title": "Value",
+            "description": "An animatable property that holds a float",
+            "allOf": [
+                {
+                    "$ref": "#/properties/animatable-mixin"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "k": {
+                            "title": "Keyframes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/properties/offset-keyframe"
+                            }
+                        },
+                        "ix": {
+                            "title": "Property Index",
+                            "type": "integer"
+                        },
+                        "a": {
+                            "title": "Animated",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "color-value": {
+            "type": "object",
+            "title": "Color Value",
+            "description": "An animatable property that holds a Color",
+            "allOf": [
+                {
+                    "$ref": "#/properties/animatable-mixin"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "k": {
+                            "title": "Keyframes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/properties/offset-keyframe"
+                            }
+                        },
+                        "ix": {
+                            "title": "Property Index",
+                            "type": "integer"
+                        },
+                        "a": {
+                            "title": "Animated",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "gradient-colors": {
+            "type": "object",
+            "title": "Gradient Colors",
+            "description": "Represents colors and offsets in a gradient\n\nColors are represented as a flat list interleaving offsets and color components in weird ways\nThere are two possible layouts:\n\nWithout alpha, the colors are a sequence of offset, r, g, b\n\nWith alpha, same as above but at the end of the list there is a sequence of offset, alpha\n\nExamples:\n\nFor the gradient [0, red], [0.5, yellow], [1, green]\nThe list would be [0, 1, 0, 0, 0.5, 1, 1, 0, 1, 0, 1, 0]\n\nFor the gradient [0, red at 80% opacity], [0.5, yellow at 70% opacity], [1, green at 60% opacity]\nThe list would be [0, 1, 0, 0, 0.5, 1, 1, 0, 1, 0, 1, 0, 0, 0.8, 0.5, 0.7, 1, 0.6]",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "k": {
+                            "title": "Colors",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "p": {
+                            "title": "Count",
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "composition": {
+        "composition": {
+            "type": "object",
+            "title": "Composition",
+            "description": "Base class for layer holders",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "layers": {
+                            "title": "Layers",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/layers/layer"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "shapes": {
+        "rect": {
+            "type": "object",
+            "title": "Rect",
+            "description": "A simple rectangle shape",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "rc"
+                        },
+                        "p": {
+                            "title": "Position",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "s": {
+                            "title": "Size",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "r": {
+                            "title": "Rounded",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "fill": {
+            "type": "object",
+            "title": "Fill",
+            "description": "Solid fill color",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "fl"
+                        },
+                        "o": {
+                            "title": "Opacity",
+                            "$ref": "#/properties/value"
+                        },
+                        "c": {
+                            "title": "Color",
+                            "$ref": "#/properties/color-value"
+                        },
+                        "r": {
+                            "title": "Fill Rule",
+                            "$ref": "#/constants/fill-rule"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "trim": {
+            "type": "object",
+            "title": "Trim",
+            "description": "Trims shapes into a segment",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/modifier"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "tm"
+                        },
+                        "s": {
+                            "title": "Start",
+                            "$ref": "#/properties/value"
+                        },
+                        "e": {
+                            "title": "End",
+                            "$ref": "#/properties/value"
+                        },
+                        "o": {
+                            "title": "Offset",
+                            "$ref": "#/properties/value"
+                        },
+                        "m": {
+                            "title": "Multiple",
+                            "$ref": "#/constants/trim-multiple-shapes"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "repeater": {
+            "type": "object",
+            "title": "Repeater",
+            "description": "Duplicates previous shapes in a group",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/modifier"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "rp"
+                        },
+                        "c": {
+                            "title": "Copies",
+                            "$ref": "#/properties/value"
+                        },
+                        "o": {
+                            "title": "Offset",
+                            "$ref": "#/properties/value"
+                        },
+                        "m": {
+                            "title": "Composite",
+                            "$ref": "#/constants/composite",
+                            "default": 1
+                        },
+                        "tr": {
+                            "title": "Transform",
+                            "$ref": "#/shapes/repeater-transform"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "stroke": {
+            "type": "object",
+            "title": "Stroke",
+            "description": "Solid stroke",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "$ref": "#/shapes/base-stroke"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "st"
+                        },
+                        "c": {
+                            "title": "Color",
+                            "$ref": "#/properties/multi-dimensional"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "pucker-bloat": {
+            "type": "object",
+            "title": "Pucker Bloat",
+            "description": "Interpolates the shape with its center point and bezier tangents with the opposite direction",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "pb"
+                        },
+                        "a": {
+                            "title": "Amount",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "stroke-dash": {
+            "type": "object",
+            "title": "Stroke Dash",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/visual-object"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "n": {
+                            "title": "Type",
+                            "$ref": "#/constants/stroke-dash-type",
+                            "default": "d"
+                        },
+                        "v": {
+                            "title": "Length",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "gradient-stroke": {
+            "type": "object",
+            "title": "Gradient Stroke",
+            "description": "Gradient stroke",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "$ref": "#/shapes/base-stroke"
+                },
+                {
+                    "$ref": "#/shapes/gradient"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "gs"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "shape": {
+            "type": "object",
+            "title": "Shape",
+            "description": "Drawable shape",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": null
+                        },
+                        "d": {
+                            "title": "Direction",
+                            "type": "number",
+                            "default": 0
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "twist": {
+            "type": "object",
+            "title": "Twist",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "tw"
+                        },
+                        "a": {
+                            "title": "Angle",
+                            "$ref": "#/properties/value"
+                        },
+                        "c": {
+                            "title": "Center",
+                            "$ref": "#/properties/multi-dimensional"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "group": {
+            "type": "object",
+            "title": "Group",
+            "description": "ShapeElement that can contain other shapes\n@note Shapes inside the same group will create \"holes\" in other shapes",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "gr"
+                        },
+                        "np": {
+                            "title": "Number Of Properties",
+                            "type": "number"
+                        },
+                        "it": {
+                            "title": "Shapes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/shapes/shape-element"
+                            }
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "star": {
+            "type": "object",
+            "title": "Star",
+            "description": "Star shape",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "sr"
+                        },
+                        "p": {
+                            "title": "Position",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "ir": {
+                            "title": "Inner Radius",
+                            "$ref": "#/properties/value"
+                        },
+                        "is": {
+                            "title": "Inner Roundness",
+                            "$ref": "#/properties/value"
+                        },
+                        "or": {
+                            "title": "Outer Radius",
+                            "$ref": "#/properties/value"
+                        },
+                        "os": {
+                            "title": "Outer Roundness",
+                            "$ref": "#/properties/value"
+                        },
+                        "r": {
+                            "title": "Rotation",
+                            "$ref": "#/properties/value"
+                        },
+                        "pt": {
+                            "title": "Points",
+                            "$ref": "#/properties/value"
+                        },
+                        "sy": {
+                            "title": "Star Type",
+                            "$ref": "#/constants/star-type",
+                            "default": 1
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "repeater-transform": {
+            "type": "object",
+            "title": "Repeater Transform",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/transform"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "so": {
+                            "title": "Start Opacity",
+                            "$ref": "#/properties/value"
+                        },
+                        "eo": {
+                            "title": "End Opacity",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "transform-shape": {
+            "type": "object",
+            "title": "Transform Shape",
+            "description": "Group transform",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "$ref": "#/helpers/transform"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "tr"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "base-stroke": {
+            "type": "object",
+            "title": "Base Stroke",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "lc": {
+                            "title": "Line Cap",
+                            "$ref": "#/constants/line-cap",
+                            "default": 2
+                        },
+                        "lj": {
+                            "title": "Line Join",
+                            "$ref": "#/constants/line-join",
+                            "default": 2
+                        },
+                        "ml": {
+                            "title": "Miter Limit",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "o": {
+                            "title": "Opacity",
+                            "$ref": "#/properties/value"
+                        },
+                        "w": {
+                            "title": "Width",
+                            "$ref": "#/properties/value"
+                        },
+                        "d": {
+                            "title": "Dashes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/shapes/stroke-dash"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "modifier": {
+            "type": "object",
+            "title": "Modifier",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": null
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "gradient": {
+            "type": "object",
+            "title": "Gradient",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "s": {
+                            "title": "Start Point",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "e": {
+                            "title": "End Point",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "t": {
+                            "title": "Gradient Type",
+                            "$ref": "#/constants/gradient-type",
+                            "default": 1
+                        },
+                        "h": {
+                            "title": "Highlight Length",
+                            "$ref": "#/properties/value"
+                        },
+                        "a": {
+                            "title": "Highlight Angle",
+                            "$ref": "#/properties/value"
+                        },
+                        "g": {
+                            "title": "Colors",
+                            "$ref": "#/properties/gradient-colors"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "ellipse": {
+            "type": "object",
+            "title": "Ellipse",
+            "description": "Ellipse shape",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "el"
+                        },
+                        "p": {
+                            "title": "Position",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "s": {
+                            "title": "Size",
+                            "$ref": "#/properties/multi-dimensional"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "merge": {
+            "type": "object",
+            "title": "Merge",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "mm"
+                        },
+                        "mm": {
+                            "title": "Merge Mode",
+                            "type": "number",
+                            "default": 1
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "rounded-corners": {
+            "type": "object",
+            "title": "Rounded Corners",
+            "description": "Rounds corners of other shapes",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/modifier"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "rd"
+                        },
+                        "r": {
+                            "title": "Radius",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "path": {
+            "type": "object",
+            "title": "Path",
+            "description": "Animatable Bezier curve",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "sh"
+                        },
+                        "ks": {
+                            "title": "Shape",
+                            "$ref": "#/properties/shape-property"
+                        },
+                        "ind": {
+                            "title": "Index",
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "gradient-fill": {
+            "type": "object",
+            "title": "Gradient Fill",
+            "description": "Gradient fill",
+            "allOf": [
+                {
+                    "$ref": "#/shapes/shape-element"
+                },
+                {
+                    "$ref": "#/shapes/gradient"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "string",
+                            "const": "gf"
+                        },
+                        "o": {
+                            "title": "Opacity",
+                            "$ref": "#/properties/value"
+                        },
+                        "r": {
+                            "title": "Fill Rule",
+                            "$ref": "#/constants/fill-rule"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "shape-element": {
+            "type": "object",
+            "title": "Shape Element",
+            "description": "Base class for all elements of ShapeLayer and Group",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/visual-object"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "hd": {
+                            "title": "Hidden",
+                            "type": "boolean"
+                        },
+                        "ty": {
+                            "title": "Type",
+                            "type": "string"
+                        },
+                        "cix": {
+                            "title": "Property Index",
+                            "type": "integer"
+                        },
+                        "bm": {
+                            "title": "Bm",
+                            "type": "integer"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "layers": {
+        "pre-comp-layer": {
+            "type": "object",
+            "title": "Pre Comp Layer",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/layers/layer"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 0
+                        },
+                        "refId": {
+                            "title": "Reference Id",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "tm": {
+                            "title": "Time Remapping",
+                            "$ref": "#/properties/value"
+                        },
+                        "w": {
+                            "title": "Width",
+                            "type": "integer",
+                            "default": 512
+                        },
+                        "h": {
+                            "title": "Height",
+                            "type": "integer",
+                            "default": 512
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "null-layer": {
+            "type": "object",
+            "title": "Null Layer",
+            "description": "Layer with no data, useful to group layers together",
+            "allOf": [
+                {
+                    "$ref": "#/layers/layer"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 3
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "image-layer": {
+            "type": "object",
+            "title": "Image Layer",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/layers/layer"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 2
+                        },
+                        "refId": {
+                            "title": "Image Id",
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "solid-color-layer": {
+            "type": "object",
+            "title": "Solid Color Layer",
+            "description": "Layer with a solid color rectangle",
+            "allOf": [
+                {
+                    "$ref": "#/layers/layer"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 1
+                        },
+                        "sc": {
+                            "title": "Color",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "sh": {
+                            "title": "Height",
+                            "type": "number",
+                            "default": 512
+                        },
+                        "sw": {
+                            "title": "Width",
+                            "type": "number",
+                            "default": 512
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "layer": {
+            "type": "object",
+            "title": "Layer",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/visual-object"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ddd": {
+                            "title": "Threedimensional",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        },
+                        "hd": {
+                            "title": "Hidden",
+                            "type": "boolean"
+                        },
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer"
+                        },
+                        "parent": {
+                            "title": "Parent Index",
+                            "type": "integer"
+                        },
+                        "sr": {
+                            "title": "Stretch",
+                            "type": "number",
+                            "default": 1
+                        },
+                        "ks": {
+                            "title": "Transform",
+                            "$ref": "#/helpers/transform"
+                        },
+                        "ao": {
+                            "title": "Auto Orient",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        },
+                        "ip": {
+                            "title": "In Point",
+                            "type": "number"
+                        },
+                        "op": {
+                            "title": "Out Point",
+                            "type": "number"
+                        },
+                        "st": {
+                            "title": "Start Time",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "bm": {
+                            "title": "Blend Mode",
+                            "$ref": "#/constants/blend-mode",
+                            "default": 0
+                        },
+                        "tt": {
+                            "title": "Matte Mode",
+                            "$ref": "#/constants/matte-mode"
+                        },
+                        "ind": {
+                            "title": "Index",
+                            "type": "integer"
+                        },
+                        "hasMask": {
+                            "title": "Has Masks",
+                            "type": "boolean"
+                        },
+                        "masksProperties": {
+                            "title": "Masks",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/helpers/mask"
+                            }
+                        },
+                        "ef": {
+                            "title": "Effects",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/effects/effect"
+                            }
+                        },
+                        "td": {
+                            "title": "Matte Target",
+                            "type": "integer"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "text-layer": {
+            "type": "object",
+            "title": "Text Layer",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/layers/layer"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 5
+                        },
+                        "t": {
+                            "title": "Data",
+                            "$ref": "#/text/text-animator-data"
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        },
+        "shape-layer": {
+            "type": "object",
+            "title": "Shape Layer",
+            "description": "Layer containing ShapeElement objects",
+            "allOf": [
+                {
+                    "$ref": "#/layers/layer"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ty": {
+                            "title": "Type",
+                            "type": "integer",
+                            "const": 4
+                        },
+                        "shapes": {
+                            "title": "Shapes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/shapes/shape-element"
+                            }
+                        }
+                    },
+                    "required": [
+                        "ty"
+                    ]
+                }
+            ]
+        }
+    },
+    "helpers": {
+        "transform": {
+            "type": "object",
+            "title": "Transform",
+            "description": "Layer transform",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "title": "Anchor Point",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "p": {
+                            "title": "Position",
+                            "$ref": "#/properties/position-value"
+                        },
+                        "s": {
+                            "title": "Scale",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "r": {
+                            "title": "Rotation",
+                            "$ref": "#/properties/value"
+                        },
+                        "o": {
+                            "title": "Opacity",
+                            "$ref": "#/properties/value"
+                        },
+                        "sk": {
+                            "title": "Skew",
+                            "$ref": "#/properties/value"
+                        },
+                        "sa": {
+                            "title": "Skew Axis",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "visual-object": {
+            "type": "object",
+            "title": "Visual Object",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "nm": {
+                            "title": "Name",
+                            "type": "string"
+                        },
+                        "mn": {
+                            "title": "Match Name",
+                            "type": "string"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "mask": {
+            "type": "object",
+            "title": "Mask",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/visual-object"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "inv": {
+                            "title": "Inverted",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "pt": {
+                            "title": "Shape",
+                            "$ref": "#/properties/shape-property"
+                        },
+                        "o": {
+                            "title": "Opacity",
+                            "$ref": "#/properties/value"
+                        },
+                        "mode": {
+                            "title": "Mode",
+                            "$ref": "#/constants/mask-mode",
+                            "default": "i"
+                        },
+                        "x": {
+                            "title": "Dilate",
+                            "$ref": "#/properties/value"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "types": {
+        "int-boolean": {
+            "type": "integer",
+            "title": "Integer Boolean",
+            "description": "Represents boolean values as an integer. 0 is false, 1 is true.",
+            "default": 0,
+            "examples": [
+                0
+            ],
+            "enum": [
+                0,
+                1
+            ]
+        },
+        "color": {
+            "type": "array",
+            "title": "Color",
+            "description": "Color as a [r, g, b] array with values in [0, 1]",
+            "items": {
+                "type": "number"
+            }
+        }
+    },
+    "animation": {
+        "metadata": {
+            "type": "object",
+            "title": "Metadata",
+            "description": "Document metadata",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "title": "Author",
+                            "type": "string"
+                        },
+                        "k": {
+                            "title": "Keywords",
+                            "type": "array",
+                            "item": {
+                                "type": "string"
+                            }
+                        },
+                        "d": {
+                            "title": "Description",
+                            "type": "string"
+                        },
+                        "c": {
+                            "title": "Theme Color",
+                            "type": "string"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "animation": {
+            "type": "object",
+            "title": "Animation",
+            "description": "Top level object, describing the animation\n\n@see http://docs.aenhancers.com/items/compitem/",
+            "allOf": [
+                {
+                    "$ref": "#/composition/composition"
+                },
+                {
+                    "$ref": "#/helpers/visual-object"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "v": {
+                            "title": "Version",
+                            "type": "string",
+                            "default": "5.5.2"
+                        },
+                        "fr": {
+                            "title": "Frame Rate",
+                            "type": "number",
+                            "default": 60
+                        },
+                        "ip": {
+                            "title": "In Point",
+                            "type": "number",
+                            "default": 0
+                        },
+                        "op": {
+                            "title": "Out Point",
+                            "type": "number",
+                            "default": 60
+                        },
+                        "w": {
+                            "title": "Width",
+                            "type": "integer",
+                            "default": 512
+                        },
+                        "h": {
+                            "title": "Height",
+                            "type": "integer",
+                            "default": 512
+                        },
+                        "mn": {
+                            "title": "Match Name",
+                            "type": "string"
+                        },
+                        "ddd": {
+                            "title": "Threedimensional",
+                            "$ref": "#/types/int-boolean",
+                            "default": 0
+                        },
+                        "assets": {
+                            "title": "Assets",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/assets/asset"
+                            }
+                        },
+                        "fonts": {
+                            "title": "Fonts",
+                            "$ref": "#/text/font-list"
+                        },
+                        "chars": {
+                            "title": "Chars",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/assets/chars"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "text": {
+        "text-animator-data-property": {
+            "type": "object",
+            "title": "Text Animator Data Property",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/helpers/transform"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "rx": {
+                            "title": "Rx",
+                            "$ref": "#/properties/value"
+                        },
+                        "ry": {
+                            "title": "Ry",
+                            "$ref": "#/properties/value"
+                        },
+                        "sw": {
+                            "title": "Stroke Width",
+                            "$ref": "#/properties/value"
+                        },
+                        "sc": {
+                            "title": "Stroke Color",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "fc": {
+                            "title": "Fill Color",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "fh": {
+                            "title": "Fh",
+                            "$ref": "#/properties/value"
+                        },
+                        "fs": {
+                            "title": "Fs",
+                            "$ref": "#/properties/value"
+                        },
+                        "fb": {
+                            "title": "Fb",
+                            "$ref": "#/properties/value"
+                        },
+                        "t": {
+                            "title": "Tracking",
+                            "$ref": "#/properties/value"
+                        },
+                        "s": {
+                            "title": "Scale",
+                            "$ref": "#/properties/multi-dimensional"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "font-list": {
+            "type": "object",
+            "title": "Font List",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "list": {
+                            "title": "List",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/text/font"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "font": {
+            "type": "object",
+            "title": "Font",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "ascent": {
+                            "title": "Ascent",
+                            "type": "number"
+                        },
+                        "fFamily": {
+                            "title": "Font Family",
+                            "type": "string",
+                            "default": "sans"
+                        },
+                        "fName": {
+                            "title": "Name",
+                            "type": "string",
+                            "default": "sans-Regular"
+                        },
+                        "fStyle": {
+                            "title": "Font Style",
+                            "type": "string",
+                            "default": "Regular"
+                        },
+                        "fPath": {
+                            "title": "Path",
+                            "type": "string"
+                        },
+                        "fWeight": {
+                            "title": "Weight",
+                            "type": "string"
+                        },
+                        "origin": {
+                            "title": "Origin",
+                            "$ref": "#/constants/font-path-origin"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "text-more-options": {
+            "type": "object",
+            "title": "Text More Options",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "title": "Alignment",
+                            "$ref": "#/properties/multi-dimensional"
+                        },
+                        "g": {
+                            "title": "G",
+                            "type": "number"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "text-animator-data": {
+            "type": "object",
+            "title": "Text Animator Data",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "title": "Properties",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/text/text-animator-data-property"
+                            }
+                        },
+                        "d": {
+                            "title": "Data",
+                            "$ref": "#/text/text-data"
+                        },
+                        "m": {
+                            "title": "More Options",
+                            "$ref": "#/text/text-more-options"
+                        },
+                        "p": {
+                            "title": "Masked Path",
+                            "$ref": "#/text/masked-path"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "text-data-keyframe": {
+            "type": "object",
+            "title": "Text Data Keyframe",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "s": {
+                            "title": "Start",
+                            "$ref": "#/text/text-document"
+                        },
+                        "t": {
+                            "title": "Time",
+                            "type": "number",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "masked-path": {
+            "type": "object",
+            "title": "Masked Path",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "m": {
+                            "title": "Mask",
+                            "type": "number"
+                        },
+                        "f": {
+                            "title": "F",
+                            "$ref": "#/properties/value"
+                        },
+                        "l": {
+                            "title": "L",
+                            "$ref": "#/properties/value"
+                        },
+                        "r": {
+                            "title": "R",
+                            "type": "number"
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "text-document": {
+            "type": "object",
+            "title": "Text Document",
+            "description": "@see http://docs.aenhancers.com/other/textdocument/\n\nNote that for multi-line text, lines are separated by \\r",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "f": {
+                            "title": "Font Family",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "fc": {
+                            "title": "Color",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": [
+                                    0,
+                                    0,
+                                    0
+                                ]
+                            }
+                        },
+                        "s": {
+                            "title": "Font Size",
+                            "type": "number",
+                            "default": 10
+                        },
+                        "lh": {
+                            "title": "Line Height",
+                            "type": "number"
+                        },
+                        "sz": {
+                            "title": "Wrap Size",
+                            "type": "array",
+                            "item": {
+                                "type": "number"
+                            }
+                        },
+                        "t": {
+                            "title": "Text",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "j": {
+                            "title": "Justify",
+                            "$ref": "#/constants/text-justify",
+                            "default": 0
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
+        "text-data": {
+            "type": "object",
+            "title": "Text Data",
+            "description": "",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "k": {
+                            "title": "Keyframes",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/text/text-data-keyframe"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "bezier": {
+        "bezier": {
+            "type": "object",
+            "title": "Bezier",
+            "description": "Single bezier curve",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "c": {
+                            "title": "Closed",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "i": {
+                            "title": "In Tangents",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": []
+                            }
+                        },
+                        "o": {
+                            "title": "Out Tangents",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": []
+                            }
+                        },
+                        "v": {
+                            "title": "Vertices",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": []
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        }
+    },
+    "constants": {
+        "text-grouping": {
+            "type": "integer",
+            "title": "TextGrouping",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Characters",
+                    "const": 1
+                },
+                {
+                    "title": "Word",
+                    "const": 2
+                },
+                {
+                    "title": "Line",
+                    "const": 3
+                },
+                {
+                    "title": "All",
+                    "const": 4
+                }
+            ]
+        },
+        "stroke-dash-type": {
+            "type": "integer",
+            "title": "StrokeDashType",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Dash",
+                    "const": "d"
+                },
+                {
+                    "title": "Gap",
+                    "const": "g"
+                },
+                {
+                    "title": "Offset",
+                    "const": "o"
+                }
+            ]
+        },
+        "composite": {
+            "type": "integer",
+            "title": "Composite",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Above",
+                    "const": 1
+                },
+                {
+                    "title": "Below",
+                    "const": 2
+                }
+            ]
+        },
+        "gradient-type": {
+            "type": "integer",
+            "title": "GradientType",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Linear",
+                    "const": 1
+                },
+                {
+                    "title": "Radial",
+                    "const": 2
+                }
+            ]
+        },
+        "font-path-origin": {
+            "type": "integer",
+            "title": "FontPathOrigin",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Unknown",
+                    "const": 0
+                },
+                {
+                    "title": "Css Url",
+                    "const": 1
+                },
+                {
+                    "title": "Script Url",
+                    "const": 2
+                },
+                {
+                    "title": "Font Url",
+                    "const": 3
+                }
+            ]
+        },
+        "trim-multiple-shapes": {
+            "type": "integer",
+            "title": "TrimMultipleShapes",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Simultaneously",
+                    "const": 1
+                },
+                {
+                    "title": "Individually",
+                    "const": 2
+                }
+            ]
+        },
+        "text-justify": {
+            "type": "integer",
+            "title": "TextJustify",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Left",
+                    "const": 0
+                },
+                {
+                    "title": "Right",
+                    "const": 1
+                },
+                {
+                    "title": "Center",
+                    "const": 2
+                }
+            ]
+        },
+        "text-based": {
+            "type": "integer",
+            "title": "TextBased",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Characters",
+                    "const": 1
+                },
+                {
+                    "title": "Character Excluding Spaces",
+                    "const": 2
+                },
+                {
+                    "title": "Words",
+                    "const": 3
+                },
+                {
+                    "title": "Lines",
+                    "const": 4
+                }
+            ]
+        },
+        "line-cap": {
+            "type": "integer",
+            "title": "LineCap",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Butt",
+                    "const": 1
+                },
+                {
+                    "title": "Round",
+                    "const": 2
+                },
+                {
+                    "title": "Square",
+                    "const": 3
+                }
+            ]
+        },
+        "star-type": {
+            "type": "integer",
+            "title": "StarType",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Star",
+                    "const": 1
+                },
+                {
+                    "title": "Polygon",
+                    "const": 2
+                }
+            ]
+        },
+        "matte-mode": {
+            "type": "integer",
+            "title": "MatteMode",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Normal",
+                    "const": 0
+                },
+                {
+                    "title": "Alpha",
+                    "const": 1
+                },
+                {
+                    "title": "Inverted Alpha",
+                    "const": 2
+                },
+                {
+                    "title": "Luma",
+                    "const": 3
+                },
+                {
+                    "title": "Inverted Luma",
+                    "const": 4
+                }
+            ]
+        },
+        "text-shape": {
+            "type": "integer",
+            "title": "TextShape",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Square",
+                    "const": 1
+                },
+                {
+                    "title": "Ramp Up",
+                    "const": 2
+                },
+                {
+                    "title": "Ramp Down",
+                    "const": 3
+                },
+                {
+                    "title": "Triangle",
+                    "const": 4
+                },
+                {
+                    "title": "Round",
+                    "const": 5
+                },
+                {
+                    "title": "Smooth",
+                    "const": 6
+                }
+            ]
+        },
+        "line-join": {
+            "type": "integer",
+            "title": "LineJoin",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Miter",
+                    "const": 1
+                },
+                {
+                    "title": "Round",
+                    "const": 2
+                },
+                {
+                    "title": "Bevel",
+                    "const": 3
+                }
+            ]
+        },
+        "mask-mode": {
+            "type": "integer",
+            "title": "MaskMode",
+            "description": "How masks interact with each other\n@see https://helpx.adobe.com/after-effects/using/alpha-channels-masks-mattes.html",
+            "oneOf": [
+                {
+                    "title": "No",
+                    "const": "n"
+                },
+                {
+                    "title": "Add",
+                    "const": "a"
+                },
+                {
+                    "title": "Subtract",
+                    "const": "s"
+                },
+                {
+                    "title": "Intersect",
+                    "const": "i"
+                },
+                {
+                    "title": "Lightent",
+                    "const": "l"
+                },
+                {
+                    "title": "Darken",
+                    "const": "d"
+                },
+                {
+                    "title": "Difference",
+                    "const": "f"
+                }
+            ]
+        },
+        "blend-mode": {
+            "type": "integer",
+            "title": "BlendMode",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Normal",
+                    "const": 0
+                },
+                {
+                    "title": "Multiply",
+                    "const": 1
+                },
+                {
+                    "title": "Screen",
+                    "const": 2
+                },
+                {
+                    "title": "Overlay",
+                    "const": 3
+                },
+                {
+                    "title": "Darken",
+                    "const": 4
+                },
+                {
+                    "title": "Lighten",
+                    "const": 5
+                },
+                {
+                    "title": "Color Dodge",
+                    "const": 6
+                },
+                {
+                    "title": "Color Burn",
+                    "const": 7
+                },
+                {
+                    "title": "Hard Light",
+                    "const": 8
+                },
+                {
+                    "title": "Soft Light",
+                    "const": 9
+                },
+                {
+                    "title": "Difference",
+                    "const": 10
+                },
+                {
+                    "title": "Exclusion",
+                    "const": 11
+                },
+                {
+                    "title": "Hue",
+                    "const": 12
+                },
+                {
+                    "title": "Saturation",
+                    "const": 13
+                },
+                {
+                    "title": "Color",
+                    "const": 14
+                },
+                {
+                    "title": "Luminosity",
+                    "const": 15
+                }
+            ]
+        },
+        "fill-rule": {
+            "type": "integer",
+            "title": "FillRule",
+            "description": "",
+            "oneOf": [
+                {
+                    "title": "Non Zero",
+                    "const": 1
+                },
+                {
+                    "title": "Even Odd",
+                    "const": 2
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Shape",
+    "description": "Drawable shape",
+    "allOf": [
+        {
+            "$ref": "#/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": null
+                },
+                "d": {
+                    "title": "Direction",
+                    "type": "number",
+                    "default": 0
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

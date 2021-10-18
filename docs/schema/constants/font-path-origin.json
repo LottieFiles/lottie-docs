@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "FontPathOrigin",
+    "description": "",
+    "oneOf": [
+        {
+            "title": "Unknown",
+            "const": 0
+        },
+        {
+            "title": "Css Url",
+            "const": 1
+        },
+        {
+            "title": "Script Url",
+            "const": 2
+        },
+        {
+            "title": "Font Url",
+            "const": 3
+        }
+    ]
+}

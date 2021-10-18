@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Keyframe",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "t": {
+                    "title": "Time",
+                    "type": "number",
+                    "default": 0
+                },
+                "i": {
+                    "title": "In Value",
+                    "$ref": "#/easing/keyframe-bezier-handle"
+                },
+                "o": {
+                    "title": "Out Value",
+                    "$ref": "#/easing/keyframe-bezier-handle"
+                },
+                "h": {
+                    "title": "Jump",
+                    "$ref": "#/types/int-boolean"
+                }
+            },
+            "required": []
+        }
+    ]
+}

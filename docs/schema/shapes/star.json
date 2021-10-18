@@ -1,0 +1,57 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Star",
+    "description": "Star shape",
+    "allOf": [
+        {
+            "$ref": "#/shapes/shape"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "sr"
+                },
+                "p": {
+                    "title": "Position",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "ir": {
+                    "title": "Inner Radius",
+                    "$ref": "#/properties/value"
+                },
+                "is": {
+                    "title": "Inner Roundness",
+                    "$ref": "#/properties/value"
+                },
+                "or": {
+                    "title": "Outer Radius",
+                    "$ref": "#/properties/value"
+                },
+                "os": {
+                    "title": "Outer Roundness",
+                    "$ref": "#/properties/value"
+                },
+                "r": {
+                    "title": "Rotation",
+                    "$ref": "#/properties/value"
+                },
+                "pt": {
+                    "title": "Points",
+                    "$ref": "#/properties/value"
+                },
+                "sy": {
+                    "title": "Star Type",
+                    "$ref": "#/constants/star-type",
+                    "default": 1
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

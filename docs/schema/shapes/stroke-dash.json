@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Stroke Dash",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "n": {
+                    "title": "Type",
+                    "$ref": "#/constants/stroke-dash-type",
+                    "default": "d"
+                },
+                "v": {
+                    "title": "Length",
+                    "$ref": "#/properties/value"
+                }
+            },
+            "required": []
+        }
+    ]
+}

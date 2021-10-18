@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Data Keyframe",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "s": {
+                    "title": "Start",
+                    "$ref": "#/text/text-document"
+                },
+                "t": {
+                    "title": "Time",
+                    "type": "number",
+                    "default": 0
+                }
+            },
+            "required": []
+        }
+    ]
+}

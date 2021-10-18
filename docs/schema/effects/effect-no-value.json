@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Effect No Value",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/effects/effect-value"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": null
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

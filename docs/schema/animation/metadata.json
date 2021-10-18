@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Metadata",
+    "description": "Document metadata",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "title": "Author",
+                    "type": "string"
+                },
+                "k": {
+                    "title": "Keywords",
+                    "type": "array",
+                    "item": {
+                        "type": "string"
+                    }
+                },
+                "d": {
+                    "title": "Description",
+                    "type": "string"
+                },
+                "c": {
+                    "title": "Theme Color",
+                    "type": "string"
+                }
+            },
+            "required": []
+        }
+    ]
+}

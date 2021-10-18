@@ -1,0 +1,57 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Animator Data Property",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/helpers/transform"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "rx": {
+                    "title": "Rx",
+                    "$ref": "#/properties/value"
+                },
+                "ry": {
+                    "title": "Ry",
+                    "$ref": "#/properties/value"
+                },
+                "sw": {
+                    "title": "Stroke Width",
+                    "$ref": "#/properties/value"
+                },
+                "sc": {
+                    "title": "Stroke Color",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "fc": {
+                    "title": "Fill Color",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "fh": {
+                    "title": "Fh",
+                    "$ref": "#/properties/value"
+                },
+                "fs": {
+                    "title": "Fs",
+                    "$ref": "#/properties/value"
+                },
+                "fb": {
+                    "title": "Fb",
+                    "$ref": "#/properties/value"
+                },
+                "t": {
+                    "title": "Tracking",
+                    "$ref": "#/properties/value"
+                },
+                "s": {
+                    "title": "Scale",
+                    "$ref": "#/properties/multi-dimensional"
+                }
+            },
+            "required": []
+        }
+    ]
+}

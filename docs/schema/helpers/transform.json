@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Transform",
+    "description": "Layer transform",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "title": "Anchor Point",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "p": {
+                    "title": "Position",
+                    "$ref": "#/properties/position-value"
+                },
+                "s": {
+                    "title": "Scale",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "r": {
+                    "title": "Rotation",
+                    "$ref": "#/properties/value"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/properties/value"
+                },
+                "sk": {
+                    "title": "Skew",
+                    "$ref": "#/properties/value"
+                },
+                "sa": {
+                    "title": "Skew Axis",
+                    "$ref": "#/properties/value"
+                }
+            },
+            "required": []
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Stroke",
+    "description": "Solid stroke",
+    "allOf": [
+        {
+            "$ref": "#/shapes/shape-element"
+        },
+        {
+            "$ref": "#/shapes/base-stroke"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "st"
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/properties/multi-dimensional"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Null Layer",
+    "description": "Layer with no data, useful to group layers together",
+    "allOf": [
+        {
+            "$ref": "#/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 3
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

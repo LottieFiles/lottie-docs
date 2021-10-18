@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Fill",
+    "description": "Solid fill color",
+    "allOf": [
+        {
+            "$ref": "#/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "fl"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/properties/value"
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/properties/color-value"
+                },
+                "r": {
+                    "title": "Fill Rule",
+                    "$ref": "#/constants/fill-rule"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

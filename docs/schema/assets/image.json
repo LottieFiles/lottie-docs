@@ -1,0 +1,47 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Image",
+    "description": "External image\n\n@see http://docs.aenhancers.com/sources/filesource/",
+    "allOf": [
+        {
+            "$ref": "#/assets/asset"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "h": {
+                    "title": "Height",
+                    "type": "number",
+                    "default": 0
+                },
+                "w": {
+                    "title": "Width",
+                    "type": "number",
+                    "default": 0
+                },
+                "id": {
+                    "title": "Id",
+                    "type": "string",
+                    "default": ""
+                },
+                "p": {
+                    "title": "Image",
+                    "type": "string",
+                    "default": ""
+                },
+                "u": {
+                    "title": "Image Path",
+                    "type": "string",
+                    "default": ""
+                },
+                "e": {
+                    "title": "Is Embedded",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                }
+            },
+            "required": []
+        }
+    ]
+}

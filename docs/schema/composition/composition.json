@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Composition",
+    "description": "Base class for layer holders",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "layers": {
+                    "title": "Layers",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/layers/layer"
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

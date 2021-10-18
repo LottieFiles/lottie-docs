@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Data",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "k": {
+                    "title": "Keyframes",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/text/text-data-keyframe"
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

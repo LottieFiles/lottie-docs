@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Masked Path",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "m": {
+                    "title": "Mask",
+                    "type": "number"
+                },
+                "f": {
+                    "title": "F",
+                    "$ref": "#/properties/value"
+                },
+                "l": {
+                    "title": "L",
+                    "$ref": "#/properties/value"
+                },
+                "r": {
+                    "title": "R",
+                    "type": "number"
+                }
+            },
+            "required": []
+        }
+    ]
+}

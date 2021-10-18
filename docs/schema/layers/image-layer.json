@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Image Layer",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 2
+                },
+                "refId": {
+                    "title": "Image Id",
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

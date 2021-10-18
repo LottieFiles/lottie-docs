@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Tritone Effect",
+    "description": "Maps layers colors based on bright/mid/dark colors",
+    "allOf": [
+        {
+            "$ref": "#/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 23
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

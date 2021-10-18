@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Group",
+    "description": "ShapeElement that can contain other shapes\n@note Shapes inside the same group will create \"holes\" in other shapes",
+    "allOf": [
+        {
+            "$ref": "#/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "gr"
+                },
+                "np": {
+                    "title": "Number Of Properties",
+                    "type": "number"
+                },
+                "it": {
+                    "title": "Shapes",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/shapes/shape-element"
+                    }
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

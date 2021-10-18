@@ -1,0 +1,57 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Document",
+    "description": "@see http://docs.aenhancers.com/other/textdocument/\n\nNote that for multi-line text, lines are separated by \\r",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "f": {
+                    "title": "Font Family",
+                    "type": "string",
+                    "default": ""
+                },
+                "fc": {
+                    "title": "Color",
+                    "type": "array",
+                    "item": {
+                        "type": "number",
+                        "default": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                },
+                "s": {
+                    "title": "Font Size",
+                    "type": "number",
+                    "default": 10
+                },
+                "lh": {
+                    "title": "Line Height",
+                    "type": "number"
+                },
+                "sz": {
+                    "title": "Wrap Size",
+                    "type": "array",
+                    "item": {
+                        "type": "number"
+                    }
+                },
+                "t": {
+                    "title": "Text",
+                    "type": "string",
+                    "default": ""
+                },
+                "j": {
+                    "title": "Justify",
+                    "$ref": "#/constants/text-justify",
+                    "default": 0
+                }
+            },
+            "required": []
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Animation",
+    "description": "Top level object, describing the animation\n\n@see http://docs.aenhancers.com/items/compitem/",
+    "allOf": [
+        {
+            "$ref": "#/composition/composition"
+        },
+        {
+            "$ref": "#/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "v": {
+                    "title": "Version",
+                    "type": "string",
+                    "default": "5.5.2"
+                },
+                "fr": {
+                    "title": "Frame Rate",
+                    "type": "number",
+                    "default": 60
+                },
+                "ip": {
+                    "title": "In Point",
+                    "type": "number",
+                    "default": 0
+                },
+                "op": {
+                    "title": "Out Point",
+                    "type": "number",
+                    "default": 60
+                },
+                "w": {
+                    "title": "Width",
+                    "type": "integer",
+                    "default": 512
+                },
+                "h": {
+                    "title": "Height",
+                    "type": "integer",
+                    "default": 512
+                },
+                "mn": {
+                    "title": "Match Name",
+                    "type": "string"
+                },
+                "ddd": {
+                    "title": "Threedimensional",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                },
+                "assets": {
+                    "title": "Assets",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/assets/asset"
+                    }
+                },
+                "fonts": {
+                    "title": "Fonts",
+                    "$ref": "#/text/font-list"
+                },
+                "chars": {
+                    "title": "Chars",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/assets/chars"
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Merge",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "mm"
+                },
+                "mm": {
+                    "title": "Merge Mode",
+                    "type": "number",
+                    "default": 1
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

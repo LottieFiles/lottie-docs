@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Solid Color Layer",
+    "description": "Layer with a solid color rectangle",
+    "allOf": [
+        {
+            "$ref": "#/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 1
+                },
+                "sc": {
+                    "title": "Color",
+                    "type": "string",
+                    "default": ""
+                },
+                "sh": {
+                    "title": "Height",
+                    "type": "number",
+                    "default": 512
+                },
+                "sw": {
+                    "title": "Width",
+                    "type": "number",
+                    "default": 512
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

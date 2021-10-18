@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Trim",
+    "description": "Trims shapes into a segment",
+    "allOf": [
+        {
+            "$ref": "#/shapes/modifier"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "string",
+                    "const": "tm"
+                },
+                "s": {
+                    "title": "Start",
+                    "$ref": "#/properties/value"
+                },
+                "e": {
+                    "title": "End",
+                    "$ref": "#/properties/value"
+                },
+                "o": {
+                    "title": "Offset",
+                    "$ref": "#/properties/value"
+                },
+                "m": {
+                    "title": "Multiple",
+                    "$ref": "#/constants/trim-multiple-shapes"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

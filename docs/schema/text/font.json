@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Font",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "ascent": {
+                    "title": "Ascent",
+                    "type": "number"
+                },
+                "fFamily": {
+                    "title": "Font Family",
+                    "type": "string",
+                    "default": "sans"
+                },
+                "fName": {
+                    "title": "Name",
+                    "type": "string",
+                    "default": "sans-Regular"
+                },
+                "fStyle": {
+                    "title": "Font Style",
+                    "type": "string",
+                    "default": "Regular"
+                },
+                "fPath": {
+                    "title": "Path",
+                    "type": "string"
+                },
+                "fWeight": {
+                    "title": "Weight",
+                    "type": "string"
+                },
+                "origin": {
+                    "title": "Origin",
+                    "$ref": "#/constants/font-path-origin"
+                }
+            },
+            "required": []
+        }
+    ]
+}

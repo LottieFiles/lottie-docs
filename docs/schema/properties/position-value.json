@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Position Value",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/properties/multi-dimensional"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "k": {
+                    "title": "Keyframes",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/properties/offset-keyframe"
+                    }
+                },
+                "ix": {
+                    "title": "Property Index",
+                    "type": "integer"
+                },
+                "a": {
+                    "title": "Animated",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                }
+            },
+            "required": []
+        }
+    ]
+}

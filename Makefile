@@ -7,11 +7,16 @@ MKDOCS ?= PYTHONPATH="$(SOURCE_DIR)/extensions" mkdocs
 SOURCE_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 OUTPUT_DIR ?= $(CURDIR)/site
 
-.PHONY: all install_dependencies docs docs_serve
-
+.PHONY: all install_dependencies docs docs_serve lottie.schema.json
 
 
 all: docs
+
+lottie.schema.json:$(SOURCE_DIR)/docs/schema/lottie.schema.json
+
+$(SOURCE_DIR)/docs/schema/lottie.schema.json: $(wildcard $(SOURCE_DIR)/docs/schema/**/*.json)
+$(SOURCE_DIR)/docs/schema/lottie.schema.json: $(SOURCE_DIR)/tools/schema-merge.py
+	$(SOURCE_DIR)/tools/schema-merge.py
 
 docs:
 	$(MKDOCS) build -f $(SOURCE_DIR)/mkdocs.yml -d $(OUTPUT_DIR)

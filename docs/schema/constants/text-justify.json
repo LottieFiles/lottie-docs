@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "TextJustify",
+    "description": "",
+    "oneOf": [
+        {
+            "title": "Left",
+            "const": 0
+        },
+        {
+            "title": "Right",
+            "const": 1
+        },
+        {
+            "title": "Center",
+            "const": 2
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Animator Data",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "title": "Properties",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/text/text-animator-data-property"
+                    }
+                },
+                "d": {
+                    "title": "Data",
+                    "$ref": "#/text/text-data"
+                },
+                "m": {
+                    "title": "More Options",
+                    "$ref": "#/text/text-more-options"
+                },
+                "p": {
+                    "title": "Masked Path",
+                    "$ref": "#/text/masked-path"
+                }
+            },
+            "required": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "FillRule",
+    "description": "",
+    "oneOf": [
+        {
+            "title": "Non Zero",
+            "const": 1
+        },
+        {
+            "title": "Even Odd",
+            "const": 2
+        }
+    ]
+}

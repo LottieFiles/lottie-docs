@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Shape Property",
+    "description": "An animatable property that holds a Bezier",
+    "allOf": [
+        {
+            "$ref": "#/properties/animatable-mixin"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "k": {
+                    "title": "Keyframes",
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/properties/shape-prop-keyframe"
+                    }
+                },
+                "ix": {
+                    "title": "Property Index",
+                    "type": "number"
+                },
+                "a": {
+                    "title": "Animated",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                }
+            },
+            "required": []
+        }
+    ]
+}

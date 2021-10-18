@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text More Options",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "title": "Alignment",
+                    "$ref": "#/properties/multi-dimensional"
+                },
+                "g": {
+                    "title": "G",
+                    "type": "number"
+                }
+            },
+            "required": []
+        }
+    ]
+}
