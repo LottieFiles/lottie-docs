@@ -3,6 +3,8 @@ Lottie Documentation
 
 This repository contains both human-readable and machine-readable documentation about the Lottie format
 
+The documentation is available online at https://lottiefiles.github.io/lottie-docs/
+
 License
 -------
 
