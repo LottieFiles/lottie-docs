@@ -10,7 +10,7 @@ theme:
 repo_url: https://github.com/LottieFiles/lottie-docs
 edit_uri: https://github.com/LottieFiles/lottie-docs/edit/main/docs
 use_directory_urls: true
-# site_url: RODO
+site_url: https://lottiefiles.github.io/lottie-docs/
 markdown_extensions:
     - fontawesome_markdown
     - md_extensions

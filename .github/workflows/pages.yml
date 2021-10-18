@@ -14,8 +14,8 @@ jobs:
       -
         name: Setup
         run: |
-            apt update -q
-            apt install -yy python python-pip python virtualenv make
+            sudo apt update -q
+            sudo apt install -yy python python-pip python virtualenv make
             make install_dependencies
             make docs
       -
