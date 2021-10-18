@@ -13,7 +13,7 @@
                 },
                 "p": {
                     "title": "Position",
-                    "$ref": "#/properties/position-value"
+                    "$ref": "#/properties/multi-dimensional"
                 },
                 "s": {
                     "title": "Scale",

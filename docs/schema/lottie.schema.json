@@ -1,37 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://lottiefiles.github.io/lottie-docs/schema/lottie.schema.json",
-    "easing": {
-        "keyframe-bezier-handle": {
-            "type": "object",
-            "title": "Keyframe Bezier Handle",
-            "description": "Bezier handle for keyframe interpolation",
-            "allOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "x": {
-                            "title": "X",
-                            "type": "array",
-                            "item": {
-                                "type": "number",
-                                "default": 0
-                            }
-                        },
-                        "y": {
-                            "title": "Y",
-                            "type": "array",
-                            "item": {
-                                "type": "number",
-                                "default": 0
-                            }
-                        }
-                    },
-                    "required": []
-                }
-            ]
-        }
-    },
     "effects": {
         "stroke-effect": {
             "type": "object",
@@ -59,7 +28,7 @@
         "fill-effect": {
             "type": "object",
             "title": "Fill Effect",
-            "description": "Replaces the whole layer with the given color\n@note Opacity is in [0, 1]",
+            "description": "Replaces the whole layer with the given color. Note: Opacity is in [0, 1]",
             "allOf": [
                 {
                     "$ref": "#/effects/effect"
@@ -369,7 +338,7 @@
         "tint-effect": {
             "type": "object",
             "title": "Tint Effect",
-            "description": "Colorizes the layer\n@note Opacity is in [0, 100]",
+            "description": "Colorizes the layer. Note: Opacity is in [0, 100]",
             "allOf": [
                 {
                     "$ref": "#/effects/effect"
@@ -442,7 +411,7 @@
         "drop-shadow-effect": {
             "type": "object",
             "title": "Drop Shadow Effect",
-            "description": "Adds a shadow to the layer\n@note Opacity is in [0, 255]",
+            "description": "Adds a shadow to the layer. Note: Opacity is in [0, 255]",
             "allOf": [
                 {
                     "$ref": "#/effects/effect"
@@ -548,7 +517,7 @@
         "image": {
             "type": "object",
             "title": "Image",
-            "description": "External image\n\n@see http://docs.aenhancers.com/sources/filesource/",
+            "description": "External image",
             "allOf": [
                 {
                     "$ref": "#/assets/asset"
@@ -695,111 +664,91 @@
             "type": "object",
             "title": "Shape Property",
             "description": "An animatable property that holds a Bezier",
-            "allOf": [
-                {
-                    "$ref": "#/properties/animatable-mixin"
+            "properties": {
+                "ix": {
+                    "title": "Property Index",
+                    "type": "integer"
                 },
+                "a": {
+                    "title": "Animated",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                }
+            },
+            "allOf": [
                 {
-                    "type": "object",
-                    "properties": {
-                        "k": {
-                            "title": "Keyframes",
-                            "type": "array",
-                            "item": {
-                                "$ref": "#/properties/shape-prop-keyframe"
+                    "if": {
+                        "properties": {
+                            "a": {
+                                "const": 1
                             }
-                        },
-                        "ix": {
-                            "title": "Property Index",
-                            "type": "number"
-                        },
-                        "a": {
-                            "title": "Animated",
-                            "$ref": "#/types/int-boolean",
-                            "default": 0
                         }
                     },
-                    "required": []
+                    "then": {
+                        "properties": {
+                            "k": {
+                                "type": "array",
+                                "title": "Animated Value",
+                                "description": "Array of keyframes",
+                                "items": {
+                                    "$ref": "#/properties/shape-keyframe"
+                                }
+                            }
+                        }
+                    },
+                    "else": {
+                        "properties": {
+                            "k": {
+                                "$ref": "#/helpers/bezier",
+                                "title": "Static Value"
+                            }
+                        }
+                    }
                 }
             ]
         },
-        "offset-keyframe": {
+        "animated-property": {
             "type": "object",
-            "title": "Offset Keyframe",
-            "description": "Keyframe for MultiDimensional values\n\n@par Bezier easing\n@parblock\nImagine a quadratic bezier, with starting point at (0, 0) and end point at (1, 1).\n\n@p out_value and @p in_value are the other two handles for a quadratic bezier,\nexpressed as absoulte values in this 0-1 space.\n\nSee also https://cubic-bezier.com/\n@endparblock",
-            "allOf": [
-                {
-                    "$ref": "#/properties/keyframe"
+            "title": "Multi Dimensional",
+            "description": "An animatable property that holds an array of numbers",
+            "properties": {
+                "ix": {
+                    "title": "Property Index",
+                    "type": "integer"
                 },
-                {
-                    "type": "object",
-                    "properties": {
-                        "s": {
-                            "title": "Start",
-                            "type": "array",
-                            "item": {
-                                "type": "number"
-                            }
-                        },
-                        "e": {
-                            "title": "End",
-                            "type": "array",
-                            "item": {
-                                "type": "number"
-                            }
-                        },
-                        "ti": {
-                            "title": "In Tan",
-                            "type": "array",
-                            "item": {
-                                "type": "number"
-                            }
-                        },
-                        "to": {
-                            "title": "Out Tan",
-                            "type": "array",
-                            "item": {
-                                "type": "number"
-                            }
-                        }
-                    },
-                    "required": []
+                "a": {
+                    "title": "Animated",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
                 }
-            ]
-        },
-        "keyframe": {
-            "type": "object",
-            "title": "Keyframe",
-            "description": "",
+            },
             "allOf": [
                 {
-                    "type": "object",
-                    "properties": {
-                        "t": {
-                            "title": "Time",
-                            "type": "number",
-                            "default": 0
-                        },
-                        "i": {
-                            "title": "In Value",
-                            "$ref": "#/easing/keyframe-bezier-handle"
-                        },
-                        "o": {
-                            "title": "Out Value",
-                            "$ref": "#/easing/keyframe-bezier-handle"
-                        },
-                        "h": {
-                            "title": "Jump",
-                            "$ref": "#/types/int-boolean"
+                    "if": {
+                        "properties": {
+                            "a": {
+                                "const": 1
+                            }
                         }
                     },
-                    "required": []
+                    "then": {
+                        "properties": {
+                            "k": {
+                                "type": "array",
+                                "title": "Animated Value",
+                                "description": "Array of keyframes",
+                                "items": {
+                                    "$ref": "#/properties/keyframe"
+                                }
+                            }
+                        }
+                    }
                 }
             ]
         },
-        "shape-prop-keyframe": {
+        "shape-keyframe": {
             "type": "object",
-            "title": "Shape Prop Keyframe",
+            "title": "Shape Keyframe",
             "description": "Keyframe holding Bezier objects",
             "allOf": [
                 {
@@ -812,82 +761,150 @@
                             "title": "Start",
                             "type": "array",
                             "item": {
-                                "$ref": "#/bezier/bezier"
-                            }
-                        },
-                        "e": {
-                            "title": "End",
-                            "type": "array",
-                            "item": {
-                                "$ref": "#/bezier/bezier"
+                                "$ref": "#/helpers/bezier"
                             }
                         }
-                    },
-                    "required": []
+                    }
                 }
             ]
         },
-        "position-value": {
+        "keyframe-bezier-handle": {
             "type": "object",
-            "title": "Position Value",
-            "description": "",
+            "title": "Keyframe Bezier Handle",
+            "description": "Bezier handle for keyframe interpolation",
             "allOf": [
-                {
-                    "$ref": "#/properties/multi-dimensional"
-                },
                 {
                     "type": "object",
                     "properties": {
-                        "k": {
-                            "title": "Keyframes",
+                        "x": {
+                            "title": "X",
                             "type": "array",
                             "item": {
-                                "$ref": "#/properties/offset-keyframe"
-                            }
+                                "type": "number",
+                                "default": 0,
+                                "minimum": 0,
+                                "maximum": 0
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
                         },
-                        "ix": {
-                            "title": "Property Index",
-                            "type": "integer"
-                        },
-                        "a": {
-                            "title": "Animated",
-                            "$ref": "#/types/int-boolean",
-                            "default": 0
+                        "y": {
+                            "title": "Y",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": 0,
+                                "minimum": 0,
+                                "maximum": 0
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
                         }
                     },
-                    "required": []
+                    "required": [
+                        "x",
+                        "y"
+                    ]
                 }
+            ]
+        },
+        "keyframe": {
+            "type": "object",
+            "title": "Keyframe",
+            "description": "",
+            "properties": {
+                "t": {
+                    "title": "Time",
+                    "type": "number",
+                    "default": 0
+                },
+                "h": {
+                    "title": "Hold",
+                    "$ref": "#/types/int-boolean",
+                    "default": 0
+                },
+                "s": {
+                    "title": "Value",
+                    "description": "Value at this keyframe. Note the if the property is a scalar, keyframe values are still represented as arrays",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "ti": {
+                    "title": "Value In Tangent",
+                    "description": "Tangent for values (eg: moving position around a curved path",
+                    "type": "array",
+                    "item": {
+                        "type": "number"
+                    }
+                },
+                "to": {
+                    "title": "Value Out Tangent",
+                    "description": "Tangent for values (eg: moving position around a curved path",
+                    "type": "array",
+                    "item": {
+                        "type": "number"
+                    }
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "h": {
+                                "const": 0
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "i": {
+                                "title": "In Tangent",
+                                "description": "Easing tangent going into the next keyframe",
+                                "$ref": "#/properties/keyframe-bezier-handle"
+                            },
+                            "o": {
+                                "title": "Out Tangent",
+                                "description": "Easing tangent leaving the current keyframe",
+                                "$ref": "#/properties/keyframe-bezier-handle"
+                            }
+                        }
+                    }
+                }
+            ],
+            "required": [
+                "t",
+                "s"
             ]
         },
         "multi-dimensional": {
             "type": "object",
             "title": "Multi Dimensional",
-            "description": "An animatable property that holds a NVector",
+            "description": "An animatable property that holds an array of numbers",
             "allOf": [
                 {
-                    "$ref": "#/properties/animatable-mixin"
+                    "$ref": "#/properties/animated-property"
                 },
                 {
-                    "type": "object",
-                    "properties": {
-                        "k": {
-                            "title": "Keyframes",
-                            "type": "array",
-                            "item": {
-                                "$ref": "#/properties/offset-keyframe"
+                    "if": {
+                        "properties": {
+                            "a": {
+                                "const": 0
                             }
-                        },
-                        "ix": {
-                            "title": "Property Index",
-                            "type": "integer"
-                        },
-                        "a": {
-                            "title": "Animated",
-                            "$ref": "#/types/int-boolean",
-                            "default": 0
                         }
                     },
-                    "required": []
+                    "then": {
+                        "properties": {
+                            "k": {
+                                "title": "Static value",
+                                "type": "array",
+                                "item": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
                 }
             ]
         },
@@ -897,29 +914,24 @@
             "description": "An animatable property that holds a float",
             "allOf": [
                 {
-                    "$ref": "#/properties/animatable-mixin"
+                    "$ref": "#/properties/animated-property"
                 },
                 {
-                    "type": "object",
-                    "properties": {
-                        "k": {
-                            "title": "Keyframes",
-                            "type": "array",
-                            "item": {
-                                "$ref": "#/properties/offset-keyframe"
+                    "if": {
+                        "properties": {
+                            "a": {
+                                "const": 0
                             }
-                        },
-                        "ix": {
-                            "title": "Property Index",
-                            "type": "integer"
-                        },
-                        "a": {
-                            "title": "Animated",
-                            "$ref": "#/types/int-boolean",
-                            "default": 0
                         }
                     },
-                    "required": []
+                    "then": {
+                        "properties": {
+                            "k": {
+                                "title": "Static value",
+                                "type": "number"
+                            }
+                        }
+                    }
                 }
             ]
         },
@@ -929,29 +941,24 @@
             "description": "An animatable property that holds a Color",
             "allOf": [
                 {
-                    "$ref": "#/properties/animatable-mixin"
+                    "$ref": "#/properties/animated-property"
                 },
                 {
-                    "type": "object",
-                    "properties": {
-                        "k": {
-                            "title": "Keyframes",
-                            "type": "array",
-                            "item": {
-                                "$ref": "#/properties/offset-keyframe"
+                    "if": {
+                        "properties": {
+                            "a": {
+                                "const": 0
                             }
-                        },
-                        "ix": {
-                            "title": "Property Index",
-                            "type": "integer"
-                        },
-                        "a": {
-                            "title": "Animated",
-                            "$ref": "#/types/int-boolean",
-                            "default": 0
                         }
                     },
-                    "required": []
+                    "then": {
+                        "properties": {
+                            "k": {
+                                "title": "Static value",
+                                "$ref": "#/types/color"
+                            }
+                        }
+                    }
                 }
             ]
         },
@@ -1323,7 +1330,7 @@
         "group": {
             "type": "object",
             "title": "Group",
-            "description": "ShapeElement that can contain other shapes\n@note Shapes inside the same group will create \"holes\" in other shapes",
+            "description": "Shape Element that can contain other shapes",
             "allOf": [
                 {
                     "$ref": "#/shapes/shape-element"
@@ -2048,7 +2055,7 @@
                         },
                         "p": {
                             "title": "Position",
-                            "$ref": "#/properties/position-value"
+                            "$ref": "#/properties/multi-dimensional"
                         },
                         "s": {
                             "title": "Scale",
@@ -2133,6 +2140,48 @@
                     "required": []
                 }
             ]
+        },
+        "bezier": {
+            "type": "object",
+            "title": "Bezier",
+            "description": "Single bezier curve",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "c": {
+                            "title": "Closed",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "i": {
+                            "title": "In Tangents",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": []
+                            }
+                        },
+                        "o": {
+                            "title": "Out Tangents",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": []
+                            }
+                        },
+                        "v": {
+                            "title": "Vertices",
+                            "type": "array",
+                            "item": {
+                                "type": "number",
+                                "default": []
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
         }
     },
     "types": {
@@ -2155,7 +2204,9 @@
             "description": "Color as a [r, g, b] array with values in [0, 1]",
             "items": {
                 "type": "number"
-            }
+            },
+            "minItems": 3,
+            "maxItems": 4
         }
     },
     "animation": {
@@ -2194,7 +2245,7 @@
         "animation": {
             "type": "object",
             "title": "Animation",
-            "description": "Top level object, describing the animation\n\n@see http://docs.aenhancers.com/items/compitem/",
+            "description": "Top level object, describing the animation",
             "allOf": [
                 {
                     "$ref": "#/composition/composition"
@@ -2263,7 +2314,13 @@
                             }
                         }
                     },
-                    "required": []
+                    "required": [
+                        "w",
+                        "h",
+                        "fr",
+                        "layers",
+                        "op"
+                    ]
                 }
             ]
         }
@@ -2496,7 +2553,7 @@
         "text-document": {
             "type": "object",
             "title": "Text Document",
-            "description": "@see http://docs.aenhancers.com/other/textdocument/\n\nNote that for multi-line text, lines are separated by \\r",
+            "description": "Note that for multi-line text, lines are separated by \\r",
             "allOf": [
                 {
                     "type": "object",
@@ -2562,50 +2619,6 @@
                             "type": "array",
                             "item": {
                                 "$ref": "#/text/text-data-keyframe"
-                            }
-                        }
-                    },
-                    "required": []
-                }
-            ]
-        }
-    },
-    "bezier": {
-        "bezier": {
-            "type": "object",
-            "title": "Bezier",
-            "description": "Single bezier curve",
-            "allOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "c": {
-                            "title": "Closed",
-                            "type": "boolean",
-                            "default": false
-                        },
-                        "i": {
-                            "title": "In Tangents",
-                            "type": "array",
-                            "item": {
-                                "type": "number",
-                                "default": []
-                            }
-                        },
-                        "o": {
-                            "title": "Out Tangents",
-                            "type": "array",
-                            "item": {
-                                "type": "number",
-                                "default": []
-                            }
-                        },
-                        "v": {
-                            "title": "Vertices",
-                            "type": "array",
-                            "item": {
-                                "type": "number",
-                                "default": []
                             }
                         }
                     },
@@ -2881,7 +2894,7 @@
         "mask-mode": {
             "type": "integer",
             "title": "MaskMode",
-            "description": "How masks interact with each other\n@see https://helpx.adobe.com/after-effects/using/alpha-channels-masks-mattes.html",
+            "description": "How masks interact with each other. See https://helpx.adobe.com/after-effects/using/alpha-channels-masks-mattes.html",
             "oneOf": [
                 {
                     "title": "No",

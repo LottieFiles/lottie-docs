@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Drop Shadow Effect",
-    "description": "Adds a shadow to the layer\n@note Opacity is in [0, 255]",
+    "description": "Adds a shadow to the layer. Note: Opacity is in [0, 255]",
     "allOf": [
         {
             "$ref": "#/effects/effect"

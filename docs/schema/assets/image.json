@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Image",
-    "description": "External image\n\n@see http://docs.aenhancers.com/sources/filesource/",
+    "description": "External image",
     "allOf": [
         {
             "$ref": "#/assets/asset"

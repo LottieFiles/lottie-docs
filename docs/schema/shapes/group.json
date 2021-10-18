@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Group",
-    "description": "ShapeElement that can contain other shapes\n@note Shapes inside the same group will create \"holes\" in other shapes",
+    "description": "Shape Element that can contain other shapes",
     "allOf": [
         {
             "$ref": "#/shapes/shape-element"

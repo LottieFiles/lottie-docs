@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Animation",
-    "description": "Top level object, describing the animation\n\n@see http://docs.aenhancers.com/items/compitem/",
+    "description": "Top level object, describing the animation",
     "allOf": [
         {
             "$ref": "#/composition/composition"
@@ -71,7 +71,7 @@
                     }
                 }
             },
-            "required": []
+            "required": ["w", "h", "fr", "layers", "op"]
         }
     ]
 }

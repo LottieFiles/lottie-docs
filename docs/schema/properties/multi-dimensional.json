@@ -2,32 +2,28 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Multi Dimensional",
-    "description": "An animatable property that holds a NVector",
+    "description": "An animatable property that holds an array of numbers",
     "allOf": [
         {
-            "$ref": "#/properties/animatable-mixin"
+            "$ref": "#/properties/animated-property"
         },
         {
-            "type": "object",
-            "properties": {
-                "k": {
-                    "title": "Keyframes",
-                    "type": "array",
-                    "item": {
-                        "$ref": "#/properties/offset-keyframe"
-                    }
-                },
-                "ix": {
-                    "title": "Property Index",
-                    "type": "integer"
-                },
-                "a": {
-                    "title": "Animated",
-                    "$ref": "#/types/int-boolean",
-                    "default": 0
+            "if": {
+                "properties": {
+                    "a": { "const": 0  }
                 }
             },
-            "required": []
+            "then": {
+                "properties": {
+                    "k": {
+                        "title": "Static value",
+                        "type": "array",
+                        "item": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
         }
     ]
 }

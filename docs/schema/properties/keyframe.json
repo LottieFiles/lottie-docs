@@ -3,29 +3,64 @@
     "type": "object",
     "title": "Keyframe",
     "description": "",
+    "properties": {
+        "t": {
+            "title": "Time",
+            "type": "number",
+            "default": 0
+        },
+        "h": {
+            "title": "Hold",
+            "$ref": "#/types/int-boolean",
+            "default": 0
+        },
+        "s": {
+            "title": "Value",
+            "description": "Value at this keyframe. Note the if the property is a scalar, keyframe values are still represented as arrays",
+            "type": "array",
+            "items": {
+                "type": "number"
+            }
+        },
+        "ti": {
+            "title": "Value In Tangent",
+            "description": "Tangent for values (eg: moving position around a curved path",
+            "type": "array",
+            "item": {
+                "type": "number"
+            }
+        },
+        "to": {
+            "title": "Value Out Tangent",
+            "description": "Tangent for values (eg: moving position around a curved path",
+            "type": "array",
+            "item": {
+                "type": "number"
+            }
+        }
+    },
     "allOf": [
         {
-            "type": "object",
-            "properties": {
-                "t": {
-                    "title": "Time",
-                    "type": "number",
-                    "default": 0
-                },
-                "i": {
-                    "title": "In Value",
-                    "$ref": "#/easing/keyframe-bezier-handle"
-                },
-                "o": {
-                    "title": "Out Value",
-                    "$ref": "#/easing/keyframe-bezier-handle"
-                },
-                "h": {
-                    "title": "Jump",
-                    "$ref": "#/types/int-boolean"
+            "if": {
+                "properties": {
+                    "h": { "const": 0  }
                 }
             },
-            "required": []
+            "then": {
+                "properties": {
+                    "i": {
+                        "title": "In Tangent",
+                        "description": "Easing tangent going into the next keyframe",
+                        "$ref": "#/properties/keyframe-bezier-handle"
+                    },
+                    "o": {
+                        "title": "Out Tangent",
+                        "description": "Easing tangent leaving the current keyframe",
+                        "$ref": "#/properties/keyframe-bezier-handle"
+                    }
+                }
+            }
         }
-    ]
+    ],
+    "required": ["t", "s"]
 }

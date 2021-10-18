@@ -12,19 +12,27 @@
                     "type": "array",
                     "item": {
                         "type": "number",
-                        "default": 0
-                    }
+                        "default": 0,
+                        "minimum": 0,
+                        "maximum": 0
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
                 },
                 "y": {
                     "title": "Y",
                     "type": "array",
                     "item": {
                         "type": "number",
-                        "default": 0
-                    }
+                        "default": 0,
+                        "minimum": 0,
+                        "maximum": 0
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
                 }
             },
-            "required": []
+            "required": ["x", "y"]
         }
     ]
 }

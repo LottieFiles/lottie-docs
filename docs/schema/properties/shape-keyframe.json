@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Shape Prop Keyframe",
+    "title": "Shape Keyframe",
     "description": "Keyframe holding Bezier objects",
     "allOf": [
         {
@@ -14,18 +14,10 @@
                     "title": "Start",
                     "type": "array",
                     "item": {
-                        "$ref": "#/bezier/bezier"
-                    }
-                },
-                "e": {
-                    "title": "End",
-                    "type": "array",
-                    "item": {
-                        "$ref": "#/bezier/bezier"
+                        "$ref": "#/helpers/bezier"
                     }
                 }
-            },
-            "required": []
+            }
         }
     ]
 }

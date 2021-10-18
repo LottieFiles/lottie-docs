@@ -5,5 +5,7 @@
     "description": "Color as a [r, g, b] array with values in [0, 1]",
     "items": {
         "type": "number"
-    }
+    },
+    "minItems": 3,
+    "maxItems": 4
 }

@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Document",
-    "description": "@see http://docs.aenhancers.com/other/textdocument/\n\nNote that for multi-line text, lines are separated by \\r",
+    "description": "Note that for multi-line text, lines are separated by \\r",
     "allOf": [
         {
             "type": "object",

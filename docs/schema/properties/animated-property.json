@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Shape Property",
-    "description": "An animatable property that holds a Bezier",
+    "title": "Multi Dimensional",
+    "description": "An animatable property that holds an array of numbers",
     "properties": {
         "ix": {
             "title": "Property Index",
@@ -28,16 +28,8 @@
                         "title": "Animated Value",
                         "description": "Array of keyframes",
                         "items": {
-                            "$ref": "#/properties/shape-keyframe"
+                            "$ref": "#/properties/keyframe"
                         }
-                    }
-                }
-            },
-            "else": {
-                "properties": {
-                    "k": {
-                        "$ref": "#/helpers/bezier",
-                        "title": "Static Value"
                     }
                 }
             }

@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Fill Effect",
-    "description": "Replaces the whole layer with the given color\n@note Opacity is in [0, 1]",
+    "description": "Replaces the whole layer with the given color. Note: Opacity is in [0, 1]",
     "allOf": [
         {
             "$ref": "#/effects/effect"
