@@ -15,6 +15,12 @@ markdown_extensions:
     - fontawesome_markdown
     - md_extensions
 extra_css:
-    - /style/style.css
+    - /lottie-docs/style/style.css
 nav:
-    - index.md
+    - "Introduction": index.md
+    - "<i class='fa fa-book'></i> Lottie":
+        - animation.md
+        - layers.md
+        - shapes.md
+        - assets.md
+        - concepts.md

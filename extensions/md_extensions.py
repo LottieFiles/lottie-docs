@@ -43,8 +43,9 @@ class LottieInlineProcessor(InlineProcessor):
         animation.attrib["class"] = "alpha_checkered"
         animation.attrib["id"] = "lottie_target_%s" % self._id
 
-        filename = "/examples/" + m.group(1)
+        filename = "examples/" + m.group(1)
         download_file = filename
+        lottie_url = "../" + filename
 
         if m.group(2):
             animation.attrib["style"] = "width:%spx;height:%spx" % (m.group(2), m.group(3))
@@ -83,7 +84,7 @@ class LottieInlineProcessor(InlineProcessor):
                 autoplay: true,
                 path: '{file}'
             }});
-        """.format(id=self._id, file=filename)
+        """.format(id=self._id, file=lottie_url)
 
         self._id += 1
         return el, m.start(0), m.end(0)
