@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block extrahead %}
+    {{ super() }}
+
+    {% if config.theme.colorscheme %}
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/{{ config.theme.colorscheme }}.min.css">
+    {% else %}
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    {% endif %}
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/{{ config.extra.lottie_player_version }}/lottie.js'></script>
+
+{% endblock %}
+
+{% block footer %}
+<hr>
+<p><small>{{ config.copyright }} {{ page.meta.authors }}.</small></p>
+
+
+        {%- if page and page.edit_url %}
+            <a href="{{ page.edit_url }}">
+                {%- if config.repo_name == 'GitHub' -%}
+                <i class="fab fa-github"></i> Edit this page on {{ config.repo_name }}
+                {%- elif config.repo_name == 'Bitbucket' -%}
+                <i class="fab fa-bitbucket"></i> Edit this page on {{ config.repo_name }}
+                {%- elif config.repo_name == 'GitLab' -%}
+                <i class="fab fa-gitlab"></i> Edit this page on {{ config.repo_name }}
+                {%- else -%}
+                Edit on {{ config.repo_name }}
+                {%- endif -%}
+            </a>
+        {% endif %}
+{% endblock %}
+
+{% block scripts %}
+
+    {{ super() }}
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        {% if config.theme.hljs_languages %}
+            {%- for lang in config.theme.hljs_languages %}
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/{{lang}}.min.js"></script>
+            {%- endfor %}
+        {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+{% endblock %}
+

@@ -1,0 +1,20 @@
+site_name: Lottie Docs
+site_description: Documentation for the Lottie animation format
+copyright: Copyright (C) 2021
+extra:
+    lottie_player_version: 5.7.1
+theme:
+    name: cinder
+    custom_dir: theme
+    highlightjs: false
+repo_url: https://github.com/LottieFiles/lottie-docs
+edit_uri: https://github.com/LottieFiles/lottie-docs/edit/main/docs
+use_directory_urls: true
+# site_url: RODO
+markdown_extensions:
+    - fontawesome_markdown
+    - md_extensions
+extra_css:
+    - /style/style.css
+nav:
+    - index.md

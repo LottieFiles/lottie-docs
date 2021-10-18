@@ -1,7 +1,7 @@
 # Executable names
 PIP ?= pip
 PYTHON ?= python
-MKDOCS ?= mkdocs
+MKDOCS ?= PYTHONPATH="$(SOURCE_DIR)/extensions" mkdocs
 
 # Paths
 SOURCE_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
