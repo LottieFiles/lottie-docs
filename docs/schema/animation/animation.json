@@ -5,10 +5,10 @@
     "description": "Top level object, describing the animation",
     "allOf": [
         {
-            "$ref": "#/composition/composition"
+            "$ref": "#/helpers/visual-object"
         },
         {
-            "$ref": "#/helpers/visual-object"
+            "$ref": "#/animation/composition"
         },
         {
             "type": "object",

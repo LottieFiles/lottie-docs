@@ -2,6 +2,8 @@ import re
 import os
 import json
 import inspect
+import dataclasses
+from typing import Any
 from pathlib import Path
 import xml.etree.ElementTree as etree
 from xml.etree.ElementTree import parse as parse_xml
@@ -342,7 +344,126 @@ class LottiePlayground(BlockProcessor):
                 input.attrib["autocomplete"] = "off"
 
 
-class GlaxnimateExtension(Extension):
+@dataclasses.dataclass
+class SchemaProperty:
+    description: str = ""
+    const: Any = None
+    type: str = ""
+
+
+class SchemaObject(BlockProcessor):
+    re_fence_start = re.compile(r'^\s*\{schema_object:([^}]+)\}\s*(?:\n|$)')
+    re_row = re.compile(r'^\s*(\w+)\s*:\s*(.*)')
+    prop_fields = {f.name for f in dataclasses.fields(SchemaProperty)}
+
+    def test(self, parent, block):
+        return self.re_fence_start.match(block)
+
+    def _add_properties(self, schema_props, prop_dict):
+        for name, prop in schema_props.items():
+            data = dict((k, v) for k, v in prop.items() if k in self.prop_fields)
+            if "$ref" in prop and "type" not in prop:
+                data["type"] = prop["$ref"]
+            if "title" in prop and "description" not in prop:
+                data["description"] = prop["title"]
+
+            prop_dict[name] = SchemaProperty(**data)
+
+    def _object_properties(self, object, prop_dict, base_list):
+        if "properties" in object:
+            self._add_properties(object["properties"], prop_dict)
+
+        if "allOf" in object:
+            for chunk in object["allOf"]:
+                if "properties" in chunk:
+                    self._add_properties(chunk["properties"], prop_dict)
+                elif "$ref" in chunk:
+                    base_list.append(chunk["$ref"])
+
+    def _base_link(self, parent, ref):
+        a = etree.SubElement(parent, "a")
+        a.text = SchemaData().get_ref(ref)["title"]
+        path_chunks = ref.split("/")
+        a.attrib["href"] = "%s.md#%s" % (path_chunks[-2], path_chunks[-1])
+        return a
+
+    def run(self, parent, blocks):
+        name = self.test(parent, blocks[0]).group(1)
+
+        schema_data = SchemaData().get_ref(name)
+
+        prop_dict = {}
+        base_list = []
+        self._object_properties(schema_data, prop_dict, base_list)
+
+        # Override descriptions if specified from markdown
+        rows = blocks.pop(0)
+        for row in rows.split("\n")[1:]:
+            match = self.re_row.match(row)
+            if match:
+                if match.group(1) == "EXPAND":
+                    prop_dict_base = {}
+                    base = match.group(2)
+                    self._object_properties(SchemaData().get_ref(base), prop_dict_base, [])
+                    base_list.remove(base)
+                    prop_dict_base.update(prop_dict)
+                    prop_dict = prop_dict_base
+                else:
+                    prop_dict[match.group(1)].description = match.group(2)
+
+        div = etree.SubElement(parent, "div")
+
+        has_own_props = len(prop_dict)
+
+        if len(base_list):
+            p = etree.SubElement(div, "p")
+            if not has_own_props:
+                p.text = "Has the attributes from"
+            else:
+                p.text = "Also has the attributes from"
+
+            if len(base_list) == 1:
+                p.text += " "
+                self._base_link(p, base_list[0]).tail = "."
+            else:
+                p.text += ":"
+                ul = etree.SubElement(p, "ul")
+                for base in base_list:
+                    self._base_link(etree.SubElement(ul, "li"), base)
+
+        if has_own_props:
+            table = etree.SubElement(div, "table")
+            thead = etree.SubElement(etree.SubElement(table, "thead"), "tr")
+            etree.SubElement(thead, "th").text = "Attribute"
+            etree.SubElement(thead, "th").text = "Type"
+            etree.SubElement(thead, "th").text = "Description"
+
+            tbody = etree.SubElement(table, "tbody")
+
+            for name, prop in prop_dict.items():
+                tr = etree.SubElement(tbody, "tr")
+                etree.SubElement(etree.SubElement(tr, "td"), "code").text = name
+
+                type_cell = etree.SubElement(tr, "td")
+                if prop.type == "#/types/int-boolean":
+                    type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#booleans"})
+                    type_text.text = "0-1 "
+                    etree.SubElement(type_text, "code").text = "integer"
+                else:
+                    type_text = etree.SubElement(type_cell, "code")
+                    type_text.text = prop.type
+
+                if prop.const is not None:
+                    type_text.tail = " = "
+                    etree.SubElement(type_cell, "code").text = repr(prop.const)
+
+                description = etree.SubElement(tr, "td")
+                self.parser.parseBlocks(description, [prop.description])
+
+        return True
+
+
+class LottieExtension(Extension):
     def extendMarkdown(self, md):
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 1), 'lottie_color', 175)
@@ -351,8 +472,9 @@ class GlaxnimateExtension(Extension):
         md.parser.blockprocessors.register(SchemaEnum(md.parser), 'schema_enum', 175)
         md.inlinePatterns.register(SchemaAttribute(md), 'schema_attribute', 175)
         md.parser.blockprocessors.register(LottiePlayground(md.parser), 'lottie_playground', 175)
+        md.parser.blockprocessors.register(SchemaObject(md.parser), 'schema_object', 175)
 
 
 def makeExtension(**kwargs):
-    return GlaxnimateExtension(**kwargs)
+    return LottieExtension(**kwargs)
 

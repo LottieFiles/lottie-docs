@@ -520,6 +520,19 @@
         }
     },
     "assets": {
+        "precomposition": {
+            "type": "object",
+            "title": "Precomposition",
+            "description": "",
+            "allOf": [
+                {
+                    "$ref": "#/assets/asset"
+                },
+                {
+                    "$ref": "#/animation/composition"
+                }
+            ]
+        },
         "image": {
             "type": "object",
             "title": "Image",
@@ -531,20 +544,15 @@
                 {
                     "type": "object",
                     "properties": {
-                        "h": {
-                            "title": "Height",
-                            "type": "number",
-                            "default": 0
-                        },
                         "w": {
                             "title": "Width",
                             "type": "number",
                             "default": 0
                         },
-                        "id": {
-                            "title": "Id",
-                            "type": "string",
-                            "default": ""
+                        "h": {
+                            "title": "Height",
+                            "type": "number",
+                            "default": 0
                         },
                         "p": {
                             "title": "Image",
@@ -557,7 +565,8 @@
                             "default": ""
                         },
                         "e": {
-                            "title": "Is Embedded",
+                            "title": "Embedded",
+                            "description": "Whether the image is embedded",
                             "$ref": "#/types/int-boolean",
                             "default": 0
                         }
@@ -573,8 +582,17 @@
             "allOf": [
                 {
                     "type": "object",
-                    "properties": {},
-                    "required": []
+                    "properties": {
+                        "id": {
+                            "title": "Identifier",
+                            "description": "Identifier used by layers when referencing this asset",
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    "required": [
+                        "id"
+                    ]
                 }
             ]
         },
@@ -634,30 +652,6 @@
                             "item": {
                                 "$ref": "#/shapes/shape-element"
                             }
-                        }
-                    },
-                    "required": []
-                }
-            ]
-        },
-        "precomp": {
-            "type": "object",
-            "title": "Precomp",
-            "description": "",
-            "allOf": [
-                {
-                    "$ref": "#/assets/asset"
-                },
-                {
-                    "$ref": "#/composition/composition"
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "id": {
-                            "title": "Id",
-                            "type": "string",
-                            "default": ""
                         }
                     },
                     "required": []
@@ -991,28 +985,7 @@
             ]
         }
     },
-    "composition": {
-        "composition": {
-            "type": "object",
-            "title": "Composition",
-            "description": "Base class for layer holders",
-            "allOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "layers": {
-                            "title": "Layers",
-                            "type": "array",
-                            "item": {
-                                "$ref": "#/layers/layer"
-                            }
-                        }
-                    },
-                    "required": []
-                }
-            ]
-        }
-    },
+    "composition": {},
     "shapes": {
         "rect": {
             "type": "object",
@@ -2227,6 +2200,26 @@
         }
     },
     "animation": {
+        "composition": {
+            "type": "object",
+            "title": "Composition",
+            "description": "Base class for layer holders",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "layers": {
+                            "title": "Layers",
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/layers/layer"
+                            }
+                        }
+                    },
+                    "required": []
+                }
+            ]
+        },
         "metadata": {
             "type": "object",
             "title": "Metadata",
@@ -2265,10 +2258,10 @@
             "description": "Top level object, describing the animation",
             "allOf": [
                 {
-                    "$ref": "#/composition/composition"
+                    "$ref": "#/helpers/visual-object"
                 },
                 {
-                    "$ref": "#/helpers/visual-object"
+                    "$ref": "#/animation/composition"
                 },
                 {
                     "type": "object",

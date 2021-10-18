@@ -6,8 +6,15 @@
     "allOf": [
         {
             "type": "object",
-            "properties": {},
-            "required": []
+            "properties": {
+                "id": {
+                    "title": "Identifier",
+                    "description": "Identifier used by layers when referencing this asset",
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": ["id"]
         }
     ]
 }

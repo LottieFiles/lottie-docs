@@ -10,20 +10,15 @@
         {
             "type": "object",
             "properties": {
-                "h": {
-                    "title": "Height",
-                    "type": "number",
-                    "default": 0
-                },
                 "w": {
                     "title": "Width",
                     "type": "number",
                     "default": 0
                 },
-                "id": {
-                    "title": "Id",
-                    "type": "string",
-                    "default": ""
+                "h": {
+                    "title": "Height",
+                    "type": "number",
+                    "default": 0
                 },
                 "p": {
                     "title": "Image",
@@ -36,7 +31,8 @@
                     "default": ""
                 },
                 "e": {
-                    "title": "Is Embedded",
+                    "title": "Embedded",
+                    "description": "Whether the image is embedded",
                     "$ref": "#/types/int-boolean",
                     "default": 0
                 }
