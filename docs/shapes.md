@@ -88,14 +88,14 @@ If `sy` is `1` (star) you also have attributes defining the inner ends of the st
 |`is`|[Animated](concepts.md#animated-property) `number`    |Inner Roundness                            |
 
 
-
 {lottie_playground:star.json:512:512}
-Points:slider:layers[0].shapes[0].it[0].pt.k:3:5:10
-Rotation:slider:layers[0].shapes[0].it[0].r.k:0:0:360
-Outer Radius:slider:layers[0].shapes[0].it[0].or.k:0:200:300
-Inner Radius:slider:layers[0].shapes[0].it[0].ir.k:0:100:300
-Outer Roundness:slider:layers[0].shapes[0].it[0].os.k:0:0:200
-Inner Roundness:slider:layers[0].shapes[0].it[0].is.k:0:0:200
+Points:slider:assets[0].layers[0].shapes[0].it[0].pt.k,assets[1].layers[0].shapes[0].it[0].pt.k:3:5:10
+Rotation:slider:assets[0].layers[0].shapes[0].it[0].r.k,assets[1].layers[0].shapes[0].it[0].r.k:0:0:360
+Outer Radius:slider:assets[0].layers[0].shapes[0].it[0].or.k,assets[1].layers[0].shapes[0].it[0].or.k:0:200:300
+Inner Radius:slider:assets[0].layers[0].shapes[0].it[0].ir.k:0:100:300
+Outer Roundness:slider:assets[0].layers[0].shapes[0].it[0].os.k,assets[1].layers[0].shapes[0].it[0].os.k:0:0:200
+Inner Roundness:slider:assets[0].layers[0].shapes[0].it[0].is.k:0:0:200
+Type:select:layers[0].refId:Star=star:Polygon=poly
 
 
 ### Path
@@ -284,9 +284,10 @@ Here is an interactive example:
 
 
 {lottie_playground:trim_path.json:512:512}
-Start:slider:layers[0].shapes[0].it[1].s.k:0:0:100
-End:slider:layers[0].shapes[0].it[1].e.k:0:50:100
-Offset:slider:layers[0].shapes[0].it[1].o.k:0:0:360
+Start:slider:layers[0].shapes[4].s.k:0:0:100
+End:slider:layers[0].shapes[4].e.k:0:50:100
+Offset:slider:layers[0].shapes[4].o.k:0:0:360
+Multiple Shapes:enum:layers[0].shapes[4].m:trim-multiple-shapes
 
 
 ### Rounded Corners

@@ -112,7 +112,8 @@ class LottieRenderer:
                         renderer: 'svg',
                         loop: true,
                         autoplay: true,
-                        animationData: lottie_json_{id}
+                        // parse/stringify because the player modifies the passed object
+                        animationData: JSON.parse(JSON.stringify(lottie_json_{id}))
                     }};
                     if ( anim_{id} != null )
                         anim_{id} = anim_{id}.destroy();
@@ -309,7 +310,7 @@ class LottiePlayground(BlockProcessor):
 
             label = row_match.group("label")
             type = row_match.group("type")
-            path = row_match.group("path")
+            paths = row_match.group("path").split(",")
             args = row_match.group("args").split(":")
 
             input_p = etree.Element("p")
@@ -319,9 +320,11 @@ class LottiePlayground(BlockProcessor):
             label_element.tail = " "
             id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
 
+            setter = "lottie_setter({id}, {paths})".format(id=anim_id, paths=repr(paths))
+
             if type == "enum":
                 input = etree.SubElement(input_p, "select")
-                input.attrib["onchange"] = "lottie_json_{id}.{path} = event.target.value; reload_lottie_{id}();".format(id=anim_id, path=path)
+                input.attrib["onchange"] = setter + "(event.target.value);"
 
                 for value, title, _ in SchemaData().get_enum_values(args[0]):
                     etree.SubElement(input, "option", {"value": str(value)}).text = title
@@ -333,14 +336,22 @@ class LottiePlayground(BlockProcessor):
                     "value": args[1],
                     "max": args[2],
                     "oninput": inspect.cleandoc("""
-                        lottie_json_{id}.{path} = Number(event.target.value);
+                        {setter}(event.target.value);
                         document.getElementById('{span}').innerText = event.target.value;
                         reload_lottie_{id}();
-                    """.format(id=anim_id, path=path, span=id_base + "_span"))
+                    """.format(id=anim_id, setter=setter, span=id_base + "_span"))
                 })
                 etree.SubElement(input_p, "span", {
                     "id": id_base + "_span"
                 }).text = args[1]
+
+            elif type == "select":
+                input = etree.SubElement(input_p, "select")
+                input.attrib["onchange"] = setter + "(event.target.value);"
+
+                for item in args:
+                    label, value = item.split("=")
+                    etree.SubElement(input, "option", {"value": value}).text = label
 
             if input is not None:
                 input.attrib["autocomplete"] = "off"
