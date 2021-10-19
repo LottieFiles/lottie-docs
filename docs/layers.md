@@ -92,11 +92,13 @@ follows the path (`ao` is 1).
 A matte allows using a layer as a mask for another layer.
 
 The way it works is the layer defining the mask has a `tt` attribute with the
-appropriate [value](constants.md#MatteMode)
+appropriate [value](constants.md#mattemode)
 and it affects the layer on top (the layer before it in the layer list).
 
 In this example there's a layer with a rectangle and a star being masked by an ellipse:
-{lottie:matte.json:512:512}
+
+{lottie_playground:matte.json:512:512}
+Matte Mode:enum:layers[2].tt:matte-mode:1
 
 
 ## Shape Layer

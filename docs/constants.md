@@ -68,6 +68,9 @@ Opacity:slider:layers[0].ks.o.k:0:50:100
 
 {schema_enum:matte-mode}
 
+{lottie_playground:matte.json:512:512}
+Matte Mode:enum:layers[2].tt:matte-mode:1
+
 
 ## {schema_attribute:title:constants/matte-mode}
 

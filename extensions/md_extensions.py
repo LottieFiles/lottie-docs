@@ -325,9 +325,13 @@ class LottiePlayground(BlockProcessor):
             if type == "enum":
                 input = etree.SubElement(input_p, "select")
                 input.attrib["onchange"] = setter + "(event.target.value);"
+                default_value = args[1] if len(args) > 1 else None
 
                 for value, title, _ in SchemaData().get_enum_values(args[0]):
-                    etree.SubElement(input, "option", {"value": str(value)}).text = title
+                    option = etree.SubElement(input, "option", {"value": str(value)})
+                    option.text = title
+                    if str(value) == default_value:
+                        option.attrib["selected"] = "selected"
 
             elif type == "slider":
                 input = etree.SubElement(input_p, "input", {
@@ -349,10 +353,14 @@ class LottiePlayground(BlockProcessor):
             elif type == "select":
                 input = etree.SubElement(input_p, "select")
                 input.attrib["onchange"] = setter + "(event.target.value);"
+                default_value = args[1] if len(args) > 1 else None
 
                 for item in args:
                     label, value = item.split("=")
-                    etree.SubElement(input, "option", {"value": value}).text = label
+                    option = etree.SubElement(input, "option", {"value": value})
+                    option.text = label
+                    if str(value) == default_value:
+                        option.attrib["selected"] = "selected"
 
             elif type == "json":
                 json_viewer = id_base + "_json_viewer"
@@ -496,10 +504,10 @@ class SchemaObject(BlockProcessor):
                 elif prop.type.startswith("#/$defs/"):
                     split = prop.type.split("/")
                     page = split[-2]
-                    anchor = split[-1]
+                    title = SchemaData().get_ref(prop.type)["title"]
                     type_text = etree.SubElement(type_cell, "a")
-                    type_text.attrib["href"] = "%s.md#%s" % (page, anchor)
-                    type_text.text = SchemaData().get_ref(prop.type)["title"]
+                    type_text.attrib["href"] = "%s.md#%s" % (page, title.replace(" ", "-").lower())
+                    type_text.text = title
                 else:
                     type_text = etree.SubElement(type_cell, "code")
                     type_text.text = prop.type
