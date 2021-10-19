@@ -3,19 +3,14 @@
     "type": "object",
     "title": "Text Data",
     "description": "",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "k": {
-                    "title": "Keyframes",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/text/text-data-keyframe"
-                    }
-                }
-            },
-            "required": []
+    "properties": {
+        "k": {
+            "title": "Keyframes",
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/text/text-data-keyframe"
+            }
         }
-    ]
+    },
+    "required": ["k"]
 }

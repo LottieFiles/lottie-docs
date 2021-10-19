@@ -3,55 +3,47 @@
     "type": "object",
     "title": "Text Document",
     "description": "Note that for multi-line text, lines are separated by \\r",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "f": {
-                    "title": "Font Family",
-                    "type": "string",
-                    "default": ""
-                },
-                "fc": {
-                    "title": "Color",
-                    "type": "array",
-                    "items": {
-                        "type": "number",
-                        "default": [
-                            0,
-                            0,
-                            0
-                        ]
-                    }
-                },
-                "s": {
-                    "title": "Font Size",
-                    "type": "number",
-                    "default": 10
-                },
-                "lh": {
-                    "title": "Line Height",
-                    "type": "number"
-                },
-                "sz": {
-                    "title": "Wrap Size",
-                    "type": "array",
-                    "items": {
-                        "type": "number"
-                    }
-                },
-                "t": {
-                    "title": "Text",
-                    "type": "string",
-                    "default": ""
-                },
-                "j": {
-                    "title": "Justify",
-                    "$ref": "#/$defs/constants/text-justify",
-                    "default": 0
-                }
-            },
-            "required": []
+    "properties": {
+        "f": {
+            "title": "Font Family",
+            "type": "string",
+            "default": ""
+        },
+        "fc": {
+            "title": "Font Color",
+            "$ref": "#/$defs/types/color",
+            "default": [
+                0,
+                0,
+                0
+            ]
+        },
+        "s": {
+            "title": "Font Size",
+            "type": "number",
+            "default": 10
+        },
+        "lh": {
+            "title": "Line Height",
+            "type": "number"
+        },
+        "sz": {
+            "title": "Wrap Size",
+            "type": "array",
+            "items": {
+                "type": "number"
+            }
+        },
+        "t": {
+            "title": "Text",
+            "type": "string",
+            "default": ""
+        },
+        "j": {
+            "title": "Justify",
+            "$ref": "#/$defs/constants/text-justify",
+            "default": 0
         }
-    ]
+    },
+    "required": []
 }

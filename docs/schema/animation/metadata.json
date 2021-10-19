@@ -3,31 +3,30 @@
     "type": "object",
     "title": "Metadata",
     "description": "Document metadata",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "a": {
-                    "title": "Author",
-                    "type": "string"
-                },
-                "k": {
-                    "title": "Keywords",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "d": {
-                    "title": "Description",
-                    "type": "string"
-                },
-                "c": {
-                    "title": "Theme Color",
-                    "type": "string"
-                }
-            },
-            "required": []
+    "properties": {
+        "a": {
+            "title": "Author",
+            "type": "string"
+        },
+        "k": {
+            "title": "Keywords",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "d": {
+            "title": "Description",
+            "type": "string"
+        },
+        "c": {
+            "title": "Theme Color",
+            "type": "string"
+        },
+        "g": {
+            "title": "Generator",
+            "description": "Software used to generate the file",
+            "type": "string"
         }
-    ]
+    }
 }

@@ -3,41 +3,36 @@
     "type": "object",
     "title": "Chars",
     "description": "Defines character shapes to avoid loading system fonts",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "ch": {
-                    "title": "Character",
-                    "type": "string",
-                    "default": ""
-                },
-                "fFamily": {
-                    "title": "Font Family",
-                    "type": "string",
-                    "default": ""
-                },
-                "size": {
-                    "title": "Font Size",
-                    "type": "number",
-                    "default": 0
-                },
-                "style": {
-                    "title": "Font Style",
-                    "type": "string",
-                    "default": ""
-                },
-                "w": {
-                    "title": "Width",
-                    "type": "number",
-                    "default": 0
-                },
-                "data": {
-                    "title": "Data",
-                    "$ref": "#/$defs/assets/character-data"
-                }
-            },
-            "required": []
+    "type": "object",
+    "properties": {
+        "ch": {
+            "title": "Character",
+            "type": "string",
+            "default": ""
+        },
+        "fFamily": {
+            "title": "Font Family",
+            "type": "string",
+            "default": ""
+        },
+        "size": {
+            "title": "Font Size",
+            "type": "number",
+            "default": 0
+        },
+        "style": {
+            "title": "Font Style",
+            "type": "string",
+            "default": ""
+        },
+        "w": {
+            "title": "Width",
+            "type": "number",
+            "default": 0
+        },
+        "data": {
+            "title": "Data",
+            "$ref": "#/$defs/assets/character-data"
         }
-    ]
+    }
 }

@@ -3,36 +3,31 @@
     "type": "object",
     "title": "Keyframe Bezier Handle",
     "description": "Bezier handle for keyframe interpolation",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "x": {
-                    "title": "X",
-                    "type": "array",
-                    "items": {
-                        "type": "number",
-                        "default": 0,
-                        "minimum": 0,
-                        "maximum": 0
-                    },
-                    "minItems": 1,
-                    "maxItems": 1
-                },
-                "y": {
-                    "title": "Y",
-                    "type": "array",
-                    "items": {
-                        "type": "number",
-                        "default": 0,
-                        "minimum": 0,
-                        "maximum": 0
-                    },
-                    "minItems": 1,
-                    "maxItems": 1
-                }
+    "properties": {
+        "x": {
+            "title": "X",
+            "type": "array",
+            "items": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1
             },
-            "required": ["x", "y"]
+            "minItems": 1,
+            "maxItems": 1
+        },
+        "y": {
+            "title": "Y",
+            "type": "array",
+            "items": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1
+            },
+            "minItems": 1,
+            "maxItems": 1
         }
-    ]
+    },
+    "required": ["x", "y"]
 }

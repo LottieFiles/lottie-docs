@@ -3,21 +3,16 @@
     "type": "object",
     "title": "Text Data Keyframe",
     "description": "",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "s": {
-                    "title": "Start",
-                    "$ref": "#/$defs/text/text-document"
-                },
-                "t": {
-                    "title": "Time",
-                    "type": "number",
-                    "default": 0
-                }
-            },
-            "required": []
+    "properties": {
+        "s": {
+            "title": "Start",
+            "$ref": "#/$defs/text/text-document"
+        },
+        "t": {
+            "title": "Time",
+            "type": "number",
+            "default": 0
         }
-    ]
+    },
+    "required": ["s", "t"]
 }

@@ -21,7 +21,7 @@ This documentation assumes the reader is already familiar with the following con
 * [Tweening](https://en.wikipedia.org/wiki/Inbetweening)
 
 
-# Structure
+## Structure
 
 The top level JSON object is the [Animation](animation.md).
 
@@ -30,3 +30,8 @@ Objects within the JSON may have a mixture of animatable and non-animatable prop
 If a property is not animated, the value is represented as usual within the JSON.
 
 If it's animated, it has a special [representation](concepts/#animated-property).
+
+## JSON Schema
+
+This guide provides a human-readable description of the format, but if you want
+a machine-readable description, we also have a [JSON schema](schema/lottie.schema.json).
