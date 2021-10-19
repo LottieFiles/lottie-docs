@@ -156,6 +156,37 @@ as it exits the current keyframe.
 `i` is the "in" handle, and it's the second one in the bezier, determines the curve
 as it enters the next keyframe.
 
+
+For linear interpolation you'd have
+
+```json
+{
+    "o": {"x": [0], "y": [0]},
+    "i": {"x": [1], "y": [1]}
+}
+```
+
+For easing in and out, you move the `x` towards the center, this makes the animation more fluid:
+
+```json
+{
+    "o": {"x": [0.333], "y": [0]},
+    "i": {"x": [0.667], "y": [1]}
+}
+```
+
+In the following example, the ball moves left and right, on the background
+you can see a representation of its easing function.
+
+
+{lottie_playground:easing.json:512:512}
+Out tangent x:slider:assets[0].layers[1].shapes[0].ks.k.o[1][0]   ,assets[0].layers[1].shapes[0].ks.k.v[0][0],assets[0].layers[0].shapes[0].p.k[0],layers[0].ks.p.k[0].o.x[0],layers[0].ks.p.k[1].o.x[0]:0:0.33:1:0.01
+Out tangent y:slider:assets[0].layers[1].shapes[0].ks.k.o[1][1]   ,assets[0].layers[1].shapes[0].ks.k.v[0][1],assets[0].layers[0].shapes[0].p.k[1],layers[0].ks.p.k[0].o.y[0],layers[0].ks.p.k[1].o.y[0]:0:0:1:0.01
+In tangent x :slider:assets[0].layers[1].shapes[0].ks.k.i[2][0]!-1,assets[0].layers[1].shapes[0].ks.k.v[3][0],assets[0].layers[0].shapes[1].p.k[0],layers[0].ks.p.k[0].i.x[0],layers[0].ks.p.k[1].i.x[0]:0:0.67:1:0.01
+In tangent y :slider:assets[0].layers[1].shapes[0].ks.k.i[2][1]!-1,assets[0].layers[1].shapes[0].ks.k.v[3][1],assets[0].layers[0].shapes[1].p.k[1],layers[0].ks.p.k[0].i.y[0],layers[0].ks.p.k[1].i.y[0]:0:1:1:0.01
+Hold:select:layers[0].ks.p.k[0].h,layers[0].ks.p.k[1].h:No=0:Yes=1
+:json:layers[0].ks.p
+
 #### Old Lottie Keyframes
 
 Old lotties have an additional attribute for keyframes, `e` which works
