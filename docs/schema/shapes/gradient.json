@@ -9,28 +9,28 @@
             "properties": {
                 "s": {
                     "title": "Start Point",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "e": {
                     "title": "End Point",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "t": {
                     "title": "Gradient Type",
-                    "$ref": "#/constants/gradient-type",
+                    "$ref": "#/$defs/constants/gradient-type",
                     "default": 1
                 },
                 "h": {
                     "title": "Highlight Length",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "a": {
                     "title": "Highlight Angle",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "g": {
                     "title": "Colors",
-                    "$ref": "#/properties/gradient-colors"
+                    "$ref": "#/$defs/animated-properties/gradient-colors"
                 }
             },
             "required": []

@@ -10,8 +10,8 @@
                 "k": {
                     "title": "Keyframes",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/text/text-data-keyframe"
+                    "items": {
+                        "$ref": "#/$defs/text/text-data-keyframe"
                     }
                 }
             },

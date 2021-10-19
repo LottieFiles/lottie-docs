@@ -10,8 +10,8 @@
                 "list": {
                     "title": "List",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/text/font"
+                    "items": {
+                        "$ref": "#/$defs/text/font"
                     }
                 }
             },

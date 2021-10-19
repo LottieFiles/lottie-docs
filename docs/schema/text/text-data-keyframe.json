@@ -9,7 +9,7 @@
             "properties": {
                 "s": {
                     "title": "Start",
-                    "$ref": "#/text/text-document"
+                    "$ref": "#/$defs/text/text-document"
                 },
                 "t": {
                     "title": "Time",

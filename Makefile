@@ -18,10 +18,10 @@ $(SOURCE_DIR)/docs/schema/lottie.schema.json: $(wildcard $(SOURCE_DIR)/docs/sche
 $(SOURCE_DIR)/docs/schema/lottie.schema.json: $(SOURCE_DIR)/tools/schema-merge.py
 	$(SOURCE_DIR)/tools/schema-merge.py
 
-docs:
+docs:$(SOURCE_DIR)/docs/schema/lottie.schema.json
 	$(MKDOCS) build -f $(SOURCE_DIR)/mkdocs.yml -d $(OUTPUT_DIR)
 
-docs_serve:
+docs_serve:$(SOURCE_DIR)/docs/schema/lottie.schema.json
 	$(MKDOCS) serve -f $(SOURCE_DIR)/mkdocs.yml
 
 install_dependencies:

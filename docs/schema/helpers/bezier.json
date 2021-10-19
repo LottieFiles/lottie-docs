@@ -15,7 +15,7 @@
                 "i": {
                     "title": "In Tangents",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "number",
                         "default": []
                     }
@@ -23,7 +23,7 @@
                 "o": {
                     "title": "Out Tangents",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "number",
                         "default": []
                     }
@@ -31,7 +31,7 @@
                 "v": {
                     "title": "Vertices",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "number",
                         "default": []
                     }

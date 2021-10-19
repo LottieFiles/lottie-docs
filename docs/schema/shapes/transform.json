@@ -5,10 +5,10 @@
     "description": "Group transform",
     "allOf": [
         {
-            "$ref": "#/shapes/shape-element"
+            "$ref": "#/$defs/shapes/shape-element"
         },
         {
-            "$ref": "#/helpers/transform"
+            "$ref": "#/$defs/helpers/transform"
         },
         {
             "type": "object",

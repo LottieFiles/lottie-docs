@@ -5,7 +5,7 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/shapes/shape-element"
+            "$ref": "#/$defs/shapes/shape-element"
         },
         {
             "type": "object",
@@ -17,11 +17,11 @@
                 },
                 "a": {
                     "title": "Angle",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "c": {
                     "title": "Center",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
             "required": [

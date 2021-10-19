@@ -5,7 +5,7 @@
     "description": "Base class for all elements of ShapeLayer and Group",
     "allOf": [
         {
-            "$ref": "#/helpers/visual-object"
+            "$ref": "#/$defs/helpers/visual-object"
         },
         {
             "type": "object",
@@ -16,7 +16,69 @@
                 },
                 "ty": {
                     "title": "Type",
-                    "type": "string"
+                    "type": "string",
+                    "oneOf": [
+                        {
+                            "const": "rc",
+                            "title": "Rectangle"
+                        },
+                        {
+                            "const": "el",
+                            "title": "Ellipse"
+                        },
+                        {
+                            "const": "sr",
+                            "title": "Polygon / Star"
+                        },
+                        {
+                            "const": "sh",
+                            "title": "Path"
+                        },
+                        {
+                            "const": "fl",
+                            "title": "Fill"
+                        },
+                        {
+                            "const": "st",
+                            "title": "Stroke"
+                        },
+                        {
+                            "const": "gf",
+                            "title": "Gradient fill"
+                        },
+                        {
+                            "const": "gs",
+                            "title": "Gradient stroke"
+                        },
+                        {
+                            "const": "gr",
+                            "title": "Group"
+                        },
+                        {
+                            "const": "tr",
+                            "title": "Transform"
+                        },
+                        {
+                            "const": "rd",
+                            "title": "Rounded corners"
+                        },
+                        {
+                            "const": "pb",
+                            "title": "Pucker / bloat"
+                        },
+                        {
+                            "const": "mm",
+                            "title": "Merge"
+                        },
+                        {
+                            "const": "tw",
+                            "title": "Twist"
+                        },
+                        {
+                            "const": "op",
+                            "title": "Offset path"
+                        }
+                    ]
                 },
                 "cix": {
                     "title": "Property Index",
@@ -27,7 +89,7 @@
                     "type": "integer"
                 }
             },
-            "required": []
+            "required": ["ty"]
         }
     ]
 }

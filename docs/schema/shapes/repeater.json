@@ -5,7 +5,7 @@
     "description": "Duplicates previous shapes in a group",
     "allOf": [
         {
-            "$ref": "#/shapes/modifier"
+            "$ref": "#/$defs/shapes/modifier"
         },
         {
             "type": "object",
@@ -17,20 +17,20 @@
                 },
                 "c": {
                     "title": "Copies",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "o": {
                     "title": "Offset",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "m": {
                     "title": "Composite",
-                    "$ref": "#/constants/composite",
+                    "$ref": "#/$defs/constants/composite",
                     "default": 1
                 },
                 "tr": {
                     "title": "Transform",
-                    "$ref": "#/shapes/repeater-transform"
+                    "$ref": "#/$defs/shapes/repeater-transform"
                 }
             },
             "required": [

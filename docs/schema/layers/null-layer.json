@@ -5,7 +5,7 @@
     "description": "Layer with no data, useful to group layers together",
     "allOf": [
         {
-            "$ref": "#/layers/layer"
+            "$ref": "#/$defs/layers/layer"
         },
         {
             "type": "object",

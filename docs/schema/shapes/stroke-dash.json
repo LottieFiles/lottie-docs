@@ -5,19 +5,19 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/helpers/visual-object"
+            "$ref": "#/$defs/helpers/visual-object"
         },
         {
             "type": "object",
             "properties": {
                 "n": {
                     "title": "Type",
-                    "$ref": "#/constants/stroke-dash-type",
+                    "$ref": "#/$defs/constants/stroke-dash-type",
                     "default": "d"
                 },
                 "v": {
                     "title": "Length",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": []

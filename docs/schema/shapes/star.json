@@ -5,7 +5,7 @@
     "description": "Star shape",
     "allOf": [
         {
-            "$ref": "#/shapes/shape"
+            "$ref": "#/$defs/shapes/shape"
         },
         {
             "type": "object",
@@ -17,27 +17,27 @@
                 },
                 "p": {
                     "title": "Position",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "or": {
                     "title": "Outer Radius",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "os": {
                     "title": "Outer Roundness",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "r": {
                     "title": "Rotation",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "pt": {
                     "title": "Points",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "sy": {
                     "title": "Star Type",
-                    "$ref": "#/constants/star-type",
+                    "$ref": "#/$defs/constants/star-type",
                     "default": 1
                 }
             },
@@ -53,11 +53,11 @@
                 "properties": {
                     "ir": {
                         "title": "Inner Radius",
-                        "$ref": "#/properties/value"
+                        "$ref": "#/$defs/animated-properties/value"
                     },
                     "is": {
                         "title": "Inner Roundness",
-                        "$ref": "#/properties/value"
+                        "$ref": "#/$defs/animated-properties/value"
                     }
                 }
             }

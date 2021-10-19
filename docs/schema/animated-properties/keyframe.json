@@ -11,7 +11,7 @@
         },
         "h": {
             "title": "Hold",
-            "$ref": "#/types/int-boolean",
+            "$ref": "#/$defs/types/int-boolean",
             "default": 0
         },
         "s": {
@@ -26,7 +26,7 @@
             "title": "Value In Tangent",
             "description": "Tangent for values (eg: moving position around a curved path",
             "type": "array",
-            "item": {
+            "items": {
                 "type": "number"
             }
         },
@@ -34,7 +34,7 @@
             "title": "Value Out Tangent",
             "description": "Tangent for values (eg: moving position around a curved path",
             "type": "array",
-            "item": {
+            "items": {
                 "type": "number"
             }
         }
@@ -51,12 +51,12 @@
                     "i": {
                         "title": "In Tangent",
                         "description": "Easing tangent going into the next keyframe",
-                        "$ref": "#/properties/keyframe-bezier-handle"
+                        "$ref": "#/$defs/animated-properties/keyframe-bezier-handle"
                     },
                     "o": {
                         "title": "Out Tangent",
                         "description": "Easing tangent leaving the current keyframe",
-                        "$ref": "#/properties/keyframe-bezier-handle"
+                        "$ref": "#/$defs/animated-properties/keyframe-bezier-handle"
                     }
                 }
             }

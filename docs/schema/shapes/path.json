@@ -5,7 +5,7 @@
     "description": "Animatable Bezier curve",
     "allOf": [
         {
-            "$ref": "#/shapes/shape"
+            "$ref": "#/$defs/shapes/shape"
         },
         {
             "type": "object",
@@ -17,7 +17,7 @@
                 },
                 "ks": {
                     "title": "Shape",
-                    "$ref": "#/properties/shape-property"
+                    "$ref": "#/$defs/animated-properties/shape-property"
                 },
                 "ind": {
                     "title": "Index",

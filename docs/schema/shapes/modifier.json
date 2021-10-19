@@ -5,7 +5,7 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/shapes/shape-element"
+            "$ref": "#/$defs/shapes/shape-element"
         },
         {
             "type": "object",

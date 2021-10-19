@@ -5,10 +5,10 @@
     "description": "Gradient fill",
     "allOf": [
         {
-            "$ref": "#/shapes/shape-element"
+            "$ref": "#/$defs/shapes/shape-element"
         },
         {
-            "$ref": "#/shapes/gradient"
+            "$ref": "#/$defs/shapes/gradient"
         },
         {
             "type": "object",
@@ -20,11 +20,11 @@
                 },
                 "o": {
                     "title": "Opacity",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "r": {
                     "title": "Fill Rule",
-                    "$ref": "#/constants/fill-rule"
+                    "$ref": "#/$defs/constants/fill-rule"
                 }
             },
             "required": [

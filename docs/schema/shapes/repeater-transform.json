@@ -5,18 +5,18 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/helpers/transform"
+            "$ref": "#/$defs/helpers/transform"
         },
         {
             "type": "object",
             "properties": {
                 "so": {
                     "title": "Start Opacity",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "eo": {
                     "title": "End Opacity",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": []

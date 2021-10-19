@@ -14,7 +14,7 @@
                 "k": {
                     "title": "Keywords",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "string"
                     }
                 },

@@ -5,13 +5,13 @@
     "description": "Gradient stroke",
     "allOf": [
         {
-            "$ref": "#/shapes/shape-element"
+            "$ref": "#/$defs/shapes/shape-element"
         },
         {
-            "$ref": "#/shapes/base-stroke"
+            "$ref": "#/$defs/shapes/base-stroke"
         },
         {
-            "$ref": "#/shapes/gradient"
+            "$ref": "#/$defs/shapes/gradient"
         },
         {
             "type": "object",

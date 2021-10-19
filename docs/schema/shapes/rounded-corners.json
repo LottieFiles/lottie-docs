@@ -5,7 +5,7 @@
     "description": "Rounds corners of other shapes",
     "allOf": [
         {
-            "$ref": "#/shapes/modifier"
+            "$ref": "#/$defs/shapes/modifier"
         },
         {
             "type": "object",
@@ -17,7 +17,7 @@
                 },
                 "r": {
                     "title": "Radius",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": [

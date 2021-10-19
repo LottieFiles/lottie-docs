@@ -5,7 +5,7 @@
     "description": "Keyframe holding Bezier objects",
     "allOf": [
         {
-            "$ref": "#/properties/keyframe"
+            "$ref": "#/$defs/animated-properties/keyframe"
         },
         {
             "type": "object",
@@ -13,8 +13,8 @@
                 "s": {
                     "title": "Start",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/helpers/bezier"
+                    "items": {
+                        "$ref": "#/$defs/helpers/bezier"
                     }
                 }
             }

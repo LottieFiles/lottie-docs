@@ -5,7 +5,7 @@
     "description": "Replaces the whole layer with the given color. Note: Opacity is in [0, 1]",
     "allOf": [
         {
-            "$ref": "#/effects/effect"
+            "$ref": "#/$defs/effects/effect"
         },
         {
             "type": "object",

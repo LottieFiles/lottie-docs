@@ -5,14 +5,14 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/helpers/visual-object"
+            "$ref": "#/$defs/helpers/visual-object"
         },
         {
             "type": "object",
             "properties": {
                 "ddd": {
                     "title": "Threedimensional",
-                    "$ref": "#/types/int-boolean",
+                    "$ref": "#/$defs/types/int-boolean",
                     "default": 0
                 },
                 "hd": {
@@ -21,7 +21,70 @@
                 },
                 "ty": {
                     "title": "Type",
-                    "type": "integer"
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "oneOf": [
+                        {
+                            "const": 0,
+                            "title": "Precomposition layer"
+                        },
+                        {
+                            "const": 1,
+                            "title": "Solid color layer"
+                        },
+                        {
+                            "const": 2,
+                            "title": "Image layer"
+                        },
+                        {
+                            "const": 3,
+                            "title": "Null layer"
+                        },
+                        {
+                            "const": 4,
+                            "title": "Shape layer"
+                        },
+                        {
+                            "const": 5,
+                            "title": "Text layer"
+                        },
+                        {
+                            "const": 6,
+                            "title": "Audio layer"
+                        },
+                        {
+                            "const": 7,
+                            "title": "Video placeholder"
+                        },
+                        {
+                            "const": 8,
+                            "title": "Image sequence"
+                        },
+                        {
+                            "const": 9,
+                            "title": "Video layer"
+                        },
+                        {
+                            "const": 10,
+                            "title": "Image placeholder"
+                        },
+                        {
+                            "const": 11,
+                            "title": "Guide layer"
+                        },
+                        {
+                            "const": 12,
+                            "title": "Adjustment layer"
+                        },
+                        {
+                            "const": 13,
+                            "title": "Camera"
+                        },
+                        {
+                            "const": 14,
+                            "title": "Light layer"
+                        }
+                    ]
                 },
                 "parent": {
                     "title": "Parent Index",
@@ -34,11 +97,11 @@
                 },
                 "ks": {
                     "title": "Transform",
-                    "$ref": "#/helpers/transform"
+                    "$ref": "#/$defs/helpers/transform"
                 },
                 "ao": {
                     "title": "Auto Orient",
-                    "$ref": "#/types/int-boolean",
+                    "$ref": "#/$defs/types/int-boolean",
                     "default": 0
                 },
                 "ip": {
@@ -56,12 +119,12 @@
                 },
                 "bm": {
                     "title": "Blend Mode",
-                    "$ref": "#/constants/blend-mode",
+                    "$ref": "#/$defs/constants/blend-mode",
                     "default": 0
                 },
                 "tt": {
                     "title": "Matte Mode",
-                    "$ref": "#/constants/matte-mode"
+                    "$ref": "#/$defs/constants/matte-mode"
                 },
                 "ind": {
                     "title": "Index",
@@ -74,15 +137,15 @@
                 "masksProperties": {
                     "title": "Masks",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/helpers/mask"
+                    "items": {
+                        "$ref": "#/$defs/helpers/mask"
                     }
                 },
                 "ef": {
                     "title": "Effects",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/effects/effect"
+                    "items": {
+                        "$ref": "#/$defs/effects/effect"
                     }
                 },
                 "td": {

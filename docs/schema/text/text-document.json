@@ -15,7 +15,7 @@
                 "fc": {
                     "title": "Color",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "number",
                         "default": [
                             0,
@@ -36,7 +36,7 @@
                 "sz": {
                     "title": "Wrap Size",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "number"
                     }
                 },
@@ -47,7 +47,7 @@
                 },
                 "j": {
                     "title": "Justify",
-                    "$ref": "#/constants/text-justify",
+                    "$ref": "#/$defs/constants/text-justify",
                     "default": 0
                 }
             },

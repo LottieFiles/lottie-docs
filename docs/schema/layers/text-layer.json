@@ -5,7 +5,7 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/layers/layer"
+            "$ref": "#/$defs/layers/layer"
         },
         {
             "type": "object",
@@ -17,7 +17,7 @@
                 },
                 "t": {
                     "title": "Data",
-                    "$ref": "#/text/text-animator-data"
+                    "$ref": "#/$defs/text/text-animator-data"
                 }
             },
             "required": [

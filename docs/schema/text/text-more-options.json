@@ -9,7 +9,7 @@
             "properties": {
                 "a": {
                     "title": "Alignment",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "g": {
                     "title": "G",

@@ -5,10 +5,10 @@
     "description": "Solid stroke",
     "allOf": [
         {
-            "$ref": "#/shapes/shape-element"
+            "$ref": "#/$defs/shapes/shape-element"
         },
         {
-            "$ref": "#/shapes/base-stroke"
+            "$ref": "#/$defs/shapes/base-stroke"
         },
         {
             "type": "object",
@@ -20,7 +20,7 @@
                 },
                 "c": {
                     "title": "Color",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
             "required": [

@@ -5,7 +5,7 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/effects/effect-value"
+            "$ref": "#/$defs/effects/effect-value"
         },
         {
             "type": "object",

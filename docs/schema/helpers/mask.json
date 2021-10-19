@@ -5,7 +5,7 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/helpers/visual-object"
+            "$ref": "#/$defs/helpers/visual-object"
         },
         {
             "type": "object",
@@ -17,20 +17,20 @@
                 },
                 "pt": {
                     "title": "Shape",
-                    "$ref": "#/properties/shape-property"
+                    "$ref": "#/$defs/animated-properties/shape-property"
                 },
                 "o": {
                     "title": "Opacity",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "mode": {
                     "title": "Mode",
-                    "$ref": "#/constants/mask-mode",
+                    "$ref": "#/$defs/constants/mask-mode",
                     "default": "i"
                 },
                 "x": {
                     "title": "Dilate",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": []

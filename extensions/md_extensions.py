@@ -207,6 +207,8 @@ class SchemaData:
         return cls._data
 
     def get_ref(self, ref: str):
+        if not ref.startswith("#/"):
+            ref = "$defs/" + ref
         return self.get_path(ref.strip("#").strip("/").split("/"))
 
     def get_path(self, path):
@@ -216,7 +218,7 @@ class SchemaData:
         return schema
 
     def get_enum_values(self, name):
-        enum = self.get_path(["constants", name])
+        enum = self.get_path(["$defs", "constants", name])
         data = []
         for item in enum["oneOf"]:
             data.append((item["const"], item["title"], item.get("description", "")))
@@ -445,7 +447,7 @@ class SchemaObject(BlockProcessor):
                 etree.SubElement(etree.SubElement(tr, "td"), "code").text = name
 
                 type_cell = etree.SubElement(tr, "td")
-                if prop.type == "#/types/int-boolean":
+                if prop.type == "#/$defs/types/int-boolean":
                     type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#booleans"})
                     type_text.text = "0-1 "
                     etree.SubElement(type_text, "code").text = "integer"

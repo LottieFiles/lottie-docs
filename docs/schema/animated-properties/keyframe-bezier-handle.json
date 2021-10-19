@@ -10,7 +10,7 @@
                 "x": {
                     "title": "X",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "number",
                         "default": 0,
                         "minimum": 0,
@@ -22,7 +22,7 @@
                 "y": {
                     "title": "Y",
                     "type": "array",
-                    "item": {
+                    "items": {
                         "type": "number",
                         "default": 0,
                         "minimum": 0,

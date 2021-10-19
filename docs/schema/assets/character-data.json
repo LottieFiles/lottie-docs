@@ -10,8 +10,8 @@
                 "shapes": {
                     "title": "Shapes",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/shapes/shape-element"
+                    "items": {
+                        "$ref": "#/$defs/shapes/shape-element"
                     }
                 }
             },

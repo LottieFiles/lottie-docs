@@ -5,7 +5,7 @@
     "description": "Ellipse shape",
     "allOf": [
         {
-            "$ref": "#/shapes/shape"
+            "$ref": "#/$defs/shapes/shape"
         },
         {
             "type": "object",
@@ -17,11 +17,11 @@
                 },
                 "p": {
                     "title": "Position",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "s": {
                     "title": "Size",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
             "required": [

@@ -5,7 +5,7 @@
     "description": "Colorizes the layer. Note: Opacity is in [0, 100]",
     "allOf": [
         {
-            "$ref": "#/effects/effect"
+            "$ref": "#/$defs/effects/effect"
         },
         {
             "type": "object",

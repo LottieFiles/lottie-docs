@@ -10,7 +10,7 @@
         },
         "a": {
             "title": "Animated",
-            "$ref": "#/types/int-boolean",
+            "$ref": "#/$defs/types/int-boolean",
             "default": 0
         }
     },
@@ -28,7 +28,7 @@
                         "title": "Animated Value",
                         "description": "Array of keyframes",
                         "items": {
-                            "$ref": "#/properties/shape-keyframe"
+                            "$ref": "#/$defs/animated-properties/shape-keyframe"
                         }
                     }
                 }
@@ -36,7 +36,7 @@
             "else": {
                 "properties": {
                     "k": {
-                        "$ref": "#/helpers/bezier",
+                        "$ref": "#/$defs/helpers/bezier",
                         "title": "Static Value"
                     }
                 }

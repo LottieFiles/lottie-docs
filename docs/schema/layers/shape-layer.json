@@ -5,7 +5,7 @@
     "description": "Layer containing ShapeElement objects",
     "allOf": [
         {
-            "$ref": "#/layers/layer"
+            "$ref": "#/$defs/layers/layer"
         },
         {
             "type": "object",
@@ -18,8 +18,8 @@
                 "shapes": {
                     "title": "Shapes",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/shapes/shape-element"
+                    "items": {
+                        "$ref": "#/$defs/shapes/concrete-shape"
                     }
                 }
             },

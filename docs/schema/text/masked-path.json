@@ -13,11 +13,11 @@
                 },
                 "f": {
                     "title": "F",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "l": {
                     "title": "L",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "r": {
                     "title": "R",

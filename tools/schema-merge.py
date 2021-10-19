@@ -8,14 +8,16 @@ id = "https://lottiefiles.github.io/lottie-docs/schema/lottie.schema.json"
 json_data = {
     "$schema": schema,
     "$id": id,
+    "$comment": "Do not use this file for editing, as it gets overwritten, edit the split files instead",
     "type": "object",
     "allOf": [{
-        "$ref": "#/animation/animation"
+        "$ref": "#/$defs/animation/animation"
     }]
 }
 
 root = pathlib.Path(__file__).parent.parent / "docs" / "schema"
 
+defs = {}
 for subdir in root.iterdir():
     dir_schema = {}
     if subdir.is_dir():
@@ -25,7 +27,9 @@ for subdir in root.iterdir():
                     file_schema = json.load(file)
                 file_schema.pop("$schema", None)
                 dir_schema[file_item.stem] = file_schema
-        json_data[subdir.name] = dir_schema
+        defs[subdir.name] = dir_schema
+
+json_data["$defs"] = defs
 
 with open(root / "lottie.schema.json", "w") as file:
     json.dump(json_data, file, indent=4)

@@ -5,50 +5,50 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/helpers/transform"
+            "$ref": "#/$defs/helpers/transform"
         },
         {
             "type": "object",
             "properties": {
                 "rx": {
                     "title": "Rx",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "ry": {
                     "title": "Ry",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "sw": {
                     "title": "Stroke Width",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "sc": {
                     "title": "Stroke Color",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "fc": {
                     "title": "Fill Color",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "fh": {
                     "title": "Fh",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "fs": {
                     "title": "Fs",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "fb": {
                     "title": "Fb",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "t": {
                     "title": "Tracking",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "s": {
                     "title": "Scale",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
             "required": []

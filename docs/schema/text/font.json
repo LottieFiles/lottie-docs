@@ -36,7 +36,7 @@
                 },
                 "origin": {
                     "title": "Origin",
-                    "$ref": "#/constants/font-path-origin"
+                    "$ref": "#/$defs/constants/font-path-origin"
                 }
             },
             "required": []

@@ -5,7 +5,7 @@
     "description": "Maps layers colors based on bright/mid/dark colors",
     "allOf": [
         {
-            "$ref": "#/effects/effect"
+            "$ref": "#/$defs/effects/effect"
         },
         {
             "type": "object",

@@ -5,10 +5,10 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/assets/asset"
+            "$ref": "#/$defs/assets/asset"
         },
         {
-            "$ref": "#/animation/composition"
+            "$ref": "#/$defs/animation/composition"
         }
     ]
 }

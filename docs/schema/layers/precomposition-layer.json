@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Pre Comp Layer",
+    "title": "Precomposition Layer",
     "description": "",
     "allOf": [
         {
-            "$ref": "#/layers/layer"
+            "$ref": "#/$defs/layers/layer"
         },
         {
             "type": "object",
@@ -22,7 +22,7 @@
                 },
                 "tm": {
                     "title": "Time Remapping",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "w": {
                     "title": "Width",

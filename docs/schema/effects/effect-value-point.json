@@ -5,7 +5,7 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/effects/effect-value"
+            "$ref": "#/$defs/effects/effect-value"
         },
         {
             "type": "object",
@@ -17,7 +17,7 @@
                 },
                 "v": {
                     "title": "Value",
-                    "$ref": "#/properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
             "required": [

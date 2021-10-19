@@ -5,10 +5,10 @@
     "description": "Top level object, describing the animation",
     "allOf": [
         {
-            "$ref": "#/helpers/visual-object"
+            "$ref": "#/$defs/helpers/visual-object"
         },
         {
-            "$ref": "#/animation/composition"
+            "$ref": "#/$defs/animation/composition"
         },
         {
             "type": "object",
@@ -49,25 +49,25 @@
                 },
                 "ddd": {
                     "title": "Threedimensional",
-                    "$ref": "#/types/int-boolean",
+                    "$ref": "#/$defs/types/int-boolean",
                     "default": 0
                 },
                 "assets": {
                     "title": "Assets",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/assets/asset"
+                    "items": {
+                        "$ref": "#/$defs/assets/asset"
                     }
                 },
                 "fonts": {
                     "title": "Fonts",
-                    "$ref": "#/text/font-list"
+                    "$ref": "#/$defs/text/font-list"
                 },
                 "chars": {
                     "title": "Chars",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/assets/chars"
+                    "items": {
+                        "$ref": "#/$defs/assets/chars"
                     }
                 }
             },

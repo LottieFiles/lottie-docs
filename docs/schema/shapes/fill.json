@@ -5,7 +5,7 @@
     "description": "Solid fill color",
     "allOf": [
         {
-            "$ref": "#/shapes/shape-element"
+            "$ref": "#/$defs/shapes/shape-element"
         },
         {
             "type": "object",
@@ -17,15 +17,15 @@
                 },
                 "o": {
                     "title": "Opacity",
-                    "$ref": "#/properties/value"
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "c": {
                     "title": "Color",
-                    "$ref": "#/properties/color-value"
+                    "$ref": "#/$defs/animated-properties/color-value"
                 },
                 "r": {
                     "title": "Fill Rule",
-                    "$ref": "#/constants/fill-rule"
+                    "$ref": "#/$defs/constants/fill-rule"
                 }
             },
             "required": [

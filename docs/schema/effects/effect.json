@@ -5,7 +5,7 @@
     "description": "Layer effect",
     "allOf": [
         {
-            "$ref": "#/helpers/visual-object"
+            "$ref": "#/$defs/helpers/visual-object"
         },
         {
             "type": "object",
@@ -21,8 +21,8 @@
                 "ef": {
                     "title": "Effects",
                     "type": "array",
-                    "item": {
-                        "$ref": "#/effects/effect-value"
+                    "items": {
+                        "$ref": "#/$defs/effects/effect-value"
                     }
                 }
             },

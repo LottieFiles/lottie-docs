@@ -34,7 +34,7 @@
                 },
                 "data": {
                     "title": "Data",
-                    "$ref": "#/assets/character-data"
+                    "$ref": "#/$defs/assets/character-data"
                 }
             },
             "required": []
