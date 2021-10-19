@@ -151,7 +151,13 @@ Here we use `origin` 3.
 </td></tr>
 </table>
 
+### Character Data
 
+You can also have font data directly into the lottie, this is done by having an
+array of character data objects in the `chars` attribute of the [animation](animation.md).
+
+{schema_object:text/character-data}
+data:Object containing a single attribute `shapes`, which is an array of [shapes](shapes.md)
 
 
 ## Text Layer

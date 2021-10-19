@@ -3,40 +3,58 @@
     "type": "object",
     "title": "Transform",
     "description": "Layer transform",
-    "allOf": [
+    "properties": {
+        "a": {
+            "title": "Anchor Point",
+            "description": "Anchor point: a position (relative to its parent) around which transformations are applied (ie: center for rotation / scale)",
+            "$ref": "#/$defs/animated-properties/multi-dimensional"
+        },
+        "s": {
+            "title": "Scale",
+            "description": "Scale factor, `[100, 100]` for no scaling",
+            "$ref": "#/$defs/animated-properties/multi-dimensional"
+        },
+        "r": {
+            "title": "Rotation",
+            "description": "Rotation in degrees, clockwise",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "o": {
+            "title": "Opacity",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "sk": {
+            "title": "Skew",
+            "description": "Skew amount as an angle in degrees",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "sa": {
+            "title": "Skew Axis",
+            "description": "Direction along which skew is applied, in degrees (`0` skews along the X axis, `90` along the Y axis)",
+            "$ref": "#/$defs/animated-properties/value"
+        }
+    },
+    "anyOf": [
         {
-            "type": "object",
-            "properties": {
-                "a": {
-                    "title": "Anchor Point",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
-                },
+            "properties":  {
                 "p": {
                     "title": "Position",
+                    "description": "Position / Translation",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
-                },
-                "s": {
-                    "title": "Scale",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
-                },
-                "r": {
-                    "title": "Rotation",
+                }
+            }
+        },
+        {
+            "properties":  {
+                "px": {
+                    "title": "Split position X component",
                     "$ref": "#/$defs/animated-properties/value"
                 },
-                "o": {
-                    "title": "Opacity",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
-                "sk": {
-                    "title": "Skew",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
-                "sa": {
-                    "title": "Skew Axis",
+                "py": {
+                    "title": "Split position Y component",
                     "$ref": "#/$defs/animated-properties/value"
                 }
-            },
-            "required": []
+            }
         }
     ]
 }

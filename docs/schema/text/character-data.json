@@ -32,7 +32,18 @@
         },
         "data": {
             "title": "Data",
-            "$ref": "#/$defs/assets/character-data"
+            "type": "object",
+            "properties": {
+                "shapes": {
+                    "title": "Shapes",
+                    "description": "Shapes forming the character",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/shapes/concrete-shape"
+                    }
+                }
+            },
+            "required": ["shapes"]
         }
     }
 }

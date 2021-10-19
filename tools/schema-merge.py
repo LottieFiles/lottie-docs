@@ -24,7 +24,11 @@ for subdir in root.iterdir():
         for file_item in subdir.iterdir():
             if file_item.is_file() and file_item.suffix == ".json":
                 with open(file_item, "r") as file:
-                    file_schema = json.load(file)
+                    try:
+                        file_schema = json.load(file)
+                    except Exception:
+                        print(file_item)
+                        raise
                 file_schema.pop("$schema", None)
                 dir_schema[file_item.stem] = file_schema
         defs[subdir.name] = dir_schema

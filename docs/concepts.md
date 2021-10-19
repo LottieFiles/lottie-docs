@@ -1,4 +1,4 @@
-# Common values and concepts
+# General concepts
 
 This page describes values and other objects used throughout the lottie format
 
@@ -175,6 +175,16 @@ For easing in and out, you move the `x` towards the center, this makes the anima
 }
 ```
 
+#### Old Lottie Keyframes
+
+Old lotties have an additional attribute for keyframes, `e` which works
+similarly to `s` but represents the value at the end of the keyframe.
+
+They also have a final keyframe with only the `t` attribute and you
+need to determine its value based on the `s` value of the previous keyframe.
+
+#### Easing example
+
 In the following example, the ball moves left and right, on the background
 you can see a representation of its easing function.
 
@@ -186,14 +196,6 @@ In tangent x :slider:assets[0].layers[1].shapes[0].ks.k.i[2][0]!-1,assets[0].lay
 In tangent y :slider:assets[0].layers[1].shapes[0].ks.k.i[2][1]!-1,assets[0].layers[1].shapes[0].ks.k.v[3][1],assets[0].layers[0].shapes[1].p.k[1],layers[0].ks.p.k[0].i.y[0],layers[0].ks.p.k[1].i.y[0]:0:1:1:0.01
 Hold:select:layers[0].ks.p.k[0].h,layers[0].ks.p.k[1].h:No=0:Yes=1
 :json:layers[0].ks.p
-
-#### Old Lottie Keyframes
-
-Old lotties have an additional attribute for keyframes, `e` which works
-similarly to `s` but represents the value at the end of the keyframe.
-
-They also have a final keyframe with only the `t` attribute and you
-need to determine its value based on the `s` value of the previous keyframe.
 
 ## Transform
 
@@ -210,10 +212,32 @@ It has the properties from [Visual Object](#visual-object) and its own propertie
 |`r`    |`number` |Rotation     |Rotation in degrees, clockwise|
 |`sk`   |`number` |Skew         |Skew amount as an angle in degrees|
 |`sa`   |`number` |Skew Axis    |Direction at which skew is applied, in degrees (`0` skews along the X axis, `90` along the Y axis)|
+|`o`    |`number` |Opacity      |Opacity, `100` for fully opaque|
 
 Sometimes `p` might be replaced by its individual components (`px` and `py`) animated independently.
 
-### Transforming to a matrix
+To make the anchor point properly line up with the center of location, `p` and `a` should have the same value.
+
+
+This example allows you to tweak transform attributes and see how the shape changes.
+
+The anchor point is highlighted with an orange dot.
+
+{lottie_playground:transform.json:512:512}
+Anchor X:slider:layers[0].ks.p.k[0],layers[1].ks.a.k[0]:0:256:512
+Anchor Y:slider:layers[0].ks.p.k[1],layers[1].ks.a.k[1]:0:256:512
+Position X:slider:layers[1].ks.p.k[0]:0:256:512
+Position Y:slider:layers[1].ks.p.k[1]:0:256:512
+Scale X:slider:layers[1].ks.s.k[0]:0:100:200
+Scale Y:slider:layers[1].ks.s.k[1]:0:100:200
+Rotation:slider:layers[1].ks.r.k:0:0:360
+Skew:slider:layers[1].ks.sk.k:0:0:360
+Skew Angle:slider:layers[1].ks.sa.k:0:0:360
+Opacity:slider:layers[1].ks.o.k:0:100:100
+:json:layers[1].ks
+
+
+### Converting to matrix
 
 Assuming the matrix
 
@@ -315,3 +339,30 @@ If the bezier is closed, you need an extra segment going from the last point to 
 If you want linear bezier, you can have `i` and `o` for a segment to be `[0, 0]`.
 If you want it quadratic, set them to 2/3rd of what the quadratic control point would be.
 
+If you want a point to be smooth you need to make sure that `i = -o`.
+
+
+{lottie_playground:bezier.json:512:512}
+Closed:select:layers[0].shapes[0].ks.k.c:Open=false:Closed=true
+Point 0:label:
+Vertex X     :slider:layers[0].shapes[0].ks.k.v[0][0],assets[0].layers[0].ks.p.k[0]:0:53:512
+Vertex Y     :slider:layers[0].shapes[0].ks.k.v[0][1],assets[0].layers[0].ks.p.k[1]:0:325:512
+In Tangent X :slider:layers[0].shapes[0].ks.k.i[0][0],assets[0].layers[0].shapes[0].ks.k.v[0][0]:-512:0:512
+In Tangent Y :slider:layers[0].shapes[0].ks.k.i[0][1],assets[0].layers[0].shapes[0].ks.k.v[0][1]:-512:0:512
+Out Tangent X:slider:layers[0].shapes[0].ks.k.o[0][0],assets[0].layers[0].shapes[0].ks.k.v[2][0]:-512:89:512
+Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[0][1],assets[0].layers[0].shapes[0].ks.k.v[2][1]:-512:-189:512
+Point 1:label:
+Vertex X     :slider:layers[0].shapes[0].ks.k.v[1][0],assets[1].layers[0].ks.p.k[0]:0:429:512
+Vertex Y     :slider:layers[0].shapes[0].ks.k.v[1][1],assets[1].layers[0].ks.p.k[1]:0:147:512
+In Tangent X :slider:layers[0].shapes[0].ks.k.i[1][0],assets[1].layers[0].shapes[0].ks.k.v[0][0]:-512:-147:512
+In Tangent Y :slider:layers[0].shapes[0].ks.k.i[1][1],assets[1].layers[0].shapes[0].ks.k.v[0][1]:-512:186:512
+Out Tangent X:slider:layers[0].shapes[0].ks.k.o[1][0],assets[1].layers[0].shapes[0].ks.k.v[2][0]:-512:40:512
+Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[1][1],assets[1].layers[0].shapes[0].ks.k.v[2][1]:-512:189:512
+Point 2:label:
+Vertex X     :slider:layers[0].shapes[0].ks.k.v[2][0],assets[2].layers[0].ks.p.k[0]:0:215:512
+Vertex Y     :slider:layers[0].shapes[0].ks.k.v[2][1],assets[2].layers[0].ks.p.k[1]:0:430:512
+In Tangent X :slider:layers[0].shapes[0].ks.k.i[2][0],assets[2].layers[0].shapes[0].ks.k.v[0][0]:-512:114:512
+In Tangent Y :slider:layers[0].shapes[0].ks.k.i[2][1],assets[2].layers[0].shapes[0].ks.k.v[0][1]:-512:36:512
+Out Tangent X:slider:layers[0].shapes[0].ks.k.o[2][0],assets[2].layers[0].shapes[0].ks.k.v[2][0]:-512:-114:512
+Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[2][1],assets[2].layers[0].shapes[0].ks.k.v[2][1]:-512:-16:512
+:json:layers[0].shapes[0].ks.k

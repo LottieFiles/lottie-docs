@@ -281,11 +281,41 @@ class SchemaAttribute(InlineProcessor):
 
 
 class LottiePlayground(BlockProcessor):
-    re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))\}')
-    re_row = re.compile(r'^\s*(?P<label>[^:]*)\s*:\s*(?P<type>\w+)\s*:\s*(?P<path>[^:]+)\s*(?::\s*(?P<args>.*))?')
+    re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?\}')
+    re_row = re.compile(r'^\s*(?P<label>[^:]*)\s*:\s*(?P<type>\w+)\s*:\s*(?P<path>[^:]*)\s*(?::\s*(?P<args>.*))?')
 
     def test(self, parent, block):
         return self.re_fence_start.match(block)
+
+    def _json_viewer(self, element, anim_id, id_base, paths):
+        json_viewer = id_base + "_json_viewer"
+        json_viewer_parent = json_viewer + "_parent"
+
+        toggle_json = etree.SubElement(element, "button")
+        toggle_json.attrib["onclick"] = inspect.cleandoc(r"""
+            var element = document.getElementById('{json_viewer_parent}');
+            element.hidden = !element.hidden;
+        """).format(json_viewer_parent=json_viewer_parent)
+        icon = etree_fontawesome("file-code")
+        icon.tail = " Show JSON"
+        toggle_json.append(icon)
+        toggle_json.attrib["title"] = "Toggle JSON"
+
+        pre = etree.SubElement(element, "pre", {"id": json_viewer_parent, "hidden": "hidden"})
+        etree.SubElement(pre, "code", {"id": json_viewer, "class": "language-json hljs"}).text = ""
+        etree.SubElement(element, "script").text = inspect.cleandoc(r"""
+            reload_lottie_{id} = (function(){{
+                var old = reload_lottie_{id};
+                return function(){{
+                    old();
+                    var raw_json = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
+                    var pretty_json = hljs.highlight("json", raw_json).value;
+                    var code = document.getElementById('{json_viewer}').innerHTML = pretty_json;
+                }}
+            }}
+            )();
+            document.getElementById('{json_viewer}').innerText = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
+            """).format(id=anim_id, json_viewer=json_viewer, path=paths[0])
 
     def run(self, parent, blocks):
         block = blocks.pop(0)
@@ -303,38 +333,42 @@ class LottiePlayground(BlockProcessor):
 
         element.attrib["class"] = "playground"
 
+        contols_container = etree.Element("table", {"class": "table-plain"})
+        element.insert(0, contols_container)
+
         for index, line in enumerate(block.strip().split("\n")[1:]):
             row_match = self.re_row.match(line)
             if not row_match:
-                continue
+                raise Exception("Unexpected playground line %r" % line)
 
-            label = row_match.group("label")
             type = row_match.group("type")
             paths = row_match.group("path").split(",")
             args = (row_match.group("args") or "").split(":")
-
-            input_p = etree.Element("p")
-            element.insert(index, input_p)
-            label_element = etree.SubElement(input_p, "label")
-            label_element.text = label
-            label_element.tail = " "
             id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
+
+            if type == "json":
+                self._json_viewer(element, anim_id, id_base, paths)
+                continue
+
+            tr = etree.SubElement(contols_container, "tr")
+
+            label_cell = etree.SubElement(tr, "td")
+            label_element = etree.SubElement(label_cell, "label")
+            label_element.text = row_match.group("label")
+            label_element.tail = " "
+
+            td = etree.SubElement(tr, "td")
 
             setter = "lottie_setter({id}, {paths})".format(id=anim_id, paths=repr(paths))
 
             if type == "enum":
-                input = etree.SubElement(input_p, "select")
-                input.attrib["onchange"] = setter + "(event.target.value);"
-                default_value = args[1] if len(args) > 1 else None
-
-                for value, title, _ in SchemaData().get_enum_values(args[0]):
-                    option = etree.SubElement(input, "option", {"value": str(value)})
-                    option.text = title
-                    if str(value) == default_value:
-                        option.attrib["selected"] = "selected"
+                input = self._select(td, setter, args, (
+                    (title, value)
+                    for value, title, _ in SchemaData().get_enum_values(args[0])
+                ))
 
             elif type == "slider":
-                input = etree.SubElement(input_p, "input", {
+                input = etree.SubElement(td, "input", {
                     "type": "range",
                     "min": args[0],
                     "value": args[1],
@@ -346,65 +380,43 @@ class LottiePlayground(BlockProcessor):
                         reload_lottie_{id}();
                     """.format(id=anim_id, setter=setter, span=id_base + "_span"))
                 })
-                etree.SubElement(input_p, "span", {
+                etree.SubElement(td, "span", {
                     "id": id_base + "_span"
                 }).text = args[1]
 
             elif type == "select":
-                input = etree.SubElement(input_p, "select")
-                input.attrib["onchange"] = setter + "(event.target.value);"
-                default_value = args[1] if len(args) > 1 else None
-
-                for item in args:
-                    label, value = item.split("=")
-                    option = etree.SubElement(input, "option", {"value": value})
-                    option.text = label
-                    if str(value) == default_value:
-                        option.attrib["selected"] = "selected"
+                input = self._select(td, setter, args, (item.split("=") for item in args))
 
             elif type == "text":
-                input = etree.SubElement(input_p, "input", {
+                input = etree.SubElement(td, "input", {
                     "type": "text",
                     "value": args[0],
-                    "oninput": inspect.cleandoc("""
-                        {setter}(event.target.value);
-                        document.getElementById('{span}').innerText = event.target.value;
-                        reload_lottie_{id}();
-                    """.format(id=anim_id, setter=setter, span=id_base + "_span"))
+                    "oninput": "{setter}(event.target.value)".format(setter=setter)
                 })
 
-            elif type == "json":
-                json_viewer = id_base + "_json_viewer"
-                json_viewer_parent = json_viewer + "_parent"
+            elif type == "label":
+                label_cell.tag = "th"
+                label_element.tag = "span"
+                label_cell.attrib["colspan"] = "2"
+                tr.remove(td)
 
-                toggle_json = etree.SubElement(element, "button")
-                toggle_json.attrib["onclick"] = inspect.cleandoc(r"""
-                    var element = document.getElementById('{json_viewer_parent}');
-                    element.hidden = !element.hidden;
-                """).format(json_viewer_parent=json_viewer_parent)
-                icon = etree_fontawesome("file-code")
-                icon.tail = " Show JSON"
-                toggle_json.append(icon)
-                toggle_json.attrib["title"] = "Toggle JSON"
-
-                pre = etree.SubElement(element, "pre", {"id": json_viewer_parent, "hidden": "hidden"})
-                etree.SubElement(pre, "code", {"id": json_viewer, "class": "language-json hljs"}).text = ""
-                etree.SubElement(element, "script").text = inspect.cleandoc(r"""
-                    reload_lottie_{id} = (function(){{
-                        var old = reload_lottie_{id};
-                        return function(){{
-                            old();
-                            var raw_json = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
-                            var pretty_json = hljs.highlight("json", raw_json).value;
-                            var code = document.getElementById('{json_viewer}').innerHTML = pretty_json;
-                        }}
-                    }}
-                    )();
-                    document.getElementById('{json_viewer}').innerText = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
-                    """).format(id=anim_id, json_viewer=json_viewer, path=paths[0])
+            else:
+                raise Exception("Unknown playground control %s" % type)
 
             if input is not None:
                 input.attrib["autocomplete"] = "off"
+
+    def _select(self, td, setter, args, items):
+        input = etree.SubElement(td, "select")
+        input.attrib["onchange"] = setter + "(event.target.value);"
+        default_value = args[1] if len(args) > 1 else None
+
+        for label, value in items:
+            option = etree.SubElement(input, "option", {"value": str(value)})
+            option.text = label
+            if str(value) == default_value:
+                option.attrib["selected"] = "selected"
+        return input
 
 
 @dataclasses.dataclass
