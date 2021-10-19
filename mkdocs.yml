@@ -13,6 +13,7 @@ use_directory_urls: true
 site_url: https://lottiefiles.github.io/lottie-docs/
 markdown_extensions:
     - fontawesome_markdown
+    - md_in_html
     - md_extensions
 extra_css:
     - /lottie-docs/style/style.css
@@ -23,7 +24,8 @@ nav:
     - "<i class='fa fa-book'></i> Lottie":
         - animation.md
         - layers.md
-        - shapes.md
+        - "Shapes": shapes.md
         - assets.md
         - concepts.md
         - constants.md
+        - text.md

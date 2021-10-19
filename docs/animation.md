@@ -2,18 +2,22 @@
 
 This is the top-level JSON object, describing the document, layers, assets, etc.
 
-The most notable attributes are:
+The size of the canvas is determined by `w` and `h`. Duration is expressed in frames with `op`, and the framerate is in `fr`.
 
-|Attribute|Type|Description|
-|---------|----|-----------|
-|`w`, `h`   |`number`|Width and height of the animation|
-|`fr`       |`number`|Framerate (frames per second)|
-|`ip`       |`number`|"In Point", which frame the animation starts at (usually 0)|
-|`op`       |`number`|"Out Point", which frame the animation stops/loops at, which makes it the duration in frames|
-|`assets`   |`array` |An array of [assets](assets.md)
-|`layers`   |`array` |An array of [layers](layers.md) (See: [Lists of layers and shapes](concepts.md#lists-of-layers-and-shapes))
-|`v`        |`string`|Lottie version, on very old versions some things might be different from what is explained here|
-|`ddd`|[0-1 `int`](concepts.md#booleans)|Whether the animation has 3D layers. Lottie doesn't actually support 3D stuff so this should always be 0|
+Most of the contents are in [`layers`](layers.md) and [`assets`](assets.md).
 
-Also has attributes from [Visual Object](concepts.md#visual-object).
+{schema_object:animation/animation}
+EXPAND:#/$defs/animation/composition
+EXPAND:#/$defs/helpers/visual-object
+assets: An array of [assets](assets.md)
+layers: An array of [layers](layers.md) (See: [Lists of layers and shapes](concepts.md#lists-of-layers-and-shapes))
+v: Lottie version, on very old versions some things might be slightly different from what is explained here
+ddd: Whether the animation has 3D layers. Lottie doesn't actually support 3D stuff so this should always be 0
 
+
+## Metadata
+
+Some (but not all) lottie files will have a metadata object describing the
+program used to create the file and other useful information:
+
+{schema_object:animation/metadata}

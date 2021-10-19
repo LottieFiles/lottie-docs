@@ -19,7 +19,7 @@
             "title": "Description",
             "type": "string"
         },
-        "c": {
+        "tc": {
             "title": "Theme Color",
             "type": "string"
         },

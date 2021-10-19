@@ -22,13 +22,15 @@
                     "type": "number",
                     "default": 0
                 },
-                "p": {
-                    "title": "Image",
+                "u": {
+                    "title": "Path",
+                    "description": "Path to the directory containing an image",
                     "type": "string",
                     "default": ""
                 },
-                "u": {
-                    "title": "Image Path",
+                "p": {
+                    "title": "File name",
+                    "description": "Image filename",
                     "type": "string",
                     "default": ""
                 },

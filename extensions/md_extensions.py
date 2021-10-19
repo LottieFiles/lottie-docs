@@ -362,6 +362,17 @@ class LottiePlayground(BlockProcessor):
                     if str(value) == default_value:
                         option.attrib["selected"] = "selected"
 
+            elif type == "text":
+                input = etree.SubElement(input_p, "input", {
+                    "type": "text",
+                    "value": args[0],
+                    "oninput": inspect.cleandoc("""
+                        {setter}(event.target.value);
+                        document.getElementById('{span}').innerText = event.target.value;
+                        reload_lottie_{id}();
+                    """.format(id=anim_id, setter=setter, span=id_base + "_span"))
+                })
+
             elif type == "json":
                 json_viewer = id_base + "_json_viewer"
                 json_viewer_parent = json_viewer + "_parent"
@@ -504,6 +515,8 @@ class SchemaObject(BlockProcessor):
                 elif prop.type.startswith("#/$defs/"):
                     split = prop.type.split("/")
                     page = split[-2]
+                    if page == "types":
+                        page = "concepts"
                     title = SchemaData().get_ref(prop.type)["title"]
                     type_text = etree.SubElement(type_cell, "a")
                     type_text.attrib["href"] = "%s.md#%s" % (page, title.replace(" ", "-").lower())

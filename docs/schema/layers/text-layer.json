@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Layer type",
                     "type": "integer",
                     "const": 5
                 },

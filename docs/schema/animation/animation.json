@@ -19,33 +19,32 @@
                     "default": "5.5.2"
                 },
                 "fr": {
-                    "title": "Frame Rate",
+                    "title": "Framerate",
+                    "description": "Framerate in frames per second",
                     "type": "number",
                     "default": 60
                 },
                 "ip": {
                     "title": "In Point",
+                    "description": "\"In Point\", which frame the animation starts at (usually 0)",
                     "type": "number",
                     "default": 0
                 },
                 "op": {
                     "title": "Out Point",
+                    "description": "\"Out Point\", which frame the animation stops/loops at, which makes this the duration in frames when `ip` is 0",
                     "type": "number",
                     "default": 60
                 },
                 "w": {
-                    "title": "Width",
+                    "title": "Width of the animation",
                     "type": "integer",
                     "default": 512
                 },
                 "h": {
-                    "title": "Height",
+                    "title": "Height of the animation",
                     "type": "integer",
                     "default": 512
-                },
-                "mn": {
-                    "title": "Match Name",
-                    "type": "string"
                 },
                 "ddd": {
                     "title": "Threedimensional",
@@ -65,10 +64,15 @@
                 },
                 "chars": {
                     "title": "Chars",
+                    "description": "Source chars for text layers",
                     "type": "array",
                     "items": {
                         "$ref": "#/$defs/assets/chars"
                     }
+                },
+                "meta": {
+                    "description": "Document metadata",
+                    "$ref": "#/$defs/animation/metadata"
                 }
             },
             "required": ["w", "h", "fr", "layers", "op"]

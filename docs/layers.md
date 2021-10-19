@@ -146,11 +146,13 @@ to half way for the next half second, and plays back to the end for the remainin
 
 This layer doesn't have any special properties.
 
-It's often used by animators as a parent to multiple other layers.
+It's often used by animators as a parent to multiple other layers (see [parenting](#parenting)).
 
 ## Text Layer
 
-TODO
+For text data, please refer to the [section about text](text.md) for details.
+
+{schema_object:layers/text-layer}
 
 ## Image Layer
 
