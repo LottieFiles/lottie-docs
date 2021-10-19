@@ -282,7 +282,7 @@ class SchemaAttribute(InlineProcessor):
 
 class LottiePlayground(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))\}')
-    re_row = re.compile(r'^\s*(?P<label>[^:]+)\s*:\s*(?P<type>\w+)\s*:\s*(?P<path>[^:]+)\s*:\s*(?P<args>.*)')
+    re_row = re.compile(r'^\s*(?P<label>[^:]*)\s*:\s*(?P<type>\w+)\s*:\s*(?P<path>[^:]+)\s*(?::\s*(?P<args>.*))?')
 
     def test(self, parent, block):
         return self.re_fence_start.match(block)
@@ -311,7 +311,7 @@ class LottiePlayground(BlockProcessor):
             label = row_match.group("label")
             type = row_match.group("type")
             paths = row_match.group("path").split(",")
-            args = row_match.group("args").split(":")
+            args = (row_match.group("args") or "").split(":")
 
             input_p = etree.Element("p")
             element.insert(index, input_p)
@@ -335,6 +335,7 @@ class LottiePlayground(BlockProcessor):
                     "min": args[0],
                     "value": args[1],
                     "max": args[2],
+                    "step": args[3] if len(args) > 3 else "1",
                     "oninput": inspect.cleandoc("""
                         {setter}(event.target.value);
                         document.getElementById('{span}').innerText = event.target.value;
@@ -352,6 +353,36 @@ class LottiePlayground(BlockProcessor):
                 for item in args:
                     label, value = item.split("=")
                     etree.SubElement(input, "option", {"value": value}).text = label
+
+            elif type == "json":
+                json_viewer = id_base + "_json_viewer"
+                json_viewer_parent = json_viewer + "_parent"
+
+                toggle_json = etree.SubElement(element, "button")
+                toggle_json.attrib["onclick"] = inspect.cleandoc(r"""
+                    var element = document.getElementById('{json_viewer_parent}');
+                    element.hidden = !element.hidden;
+                """).format(json_viewer_parent=json_viewer_parent)
+                icon = etree_fontawesome("file-code")
+                icon.tail = " Show JSON"
+                toggle_json.append(icon)
+                toggle_json.attrib["title"] = "Toggle JSON"
+
+                pre = etree.SubElement(element, "pre", {"id": json_viewer_parent, "hidden": "hidden"})
+                etree.SubElement(pre, "code", {"id": json_viewer, "class": "language-json hljs"}).text = ""
+                etree.SubElement(element, "script").text = inspect.cleandoc(r"""
+                    reload_lottie_{id} = (function(){{
+                        var old = reload_lottie_{id};
+                        return function(){{
+                            old();
+                            var raw_json = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
+                            var pretty_json = hljs.highlight("json", raw_json).value;
+                            var code = document.getElementById('{json_viewer}').innerHTML = pretty_json;
+                        }}
+                    }}
+                    )();
+                    document.getElementById('{json_viewer}').innerText = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
+                    """).format(id=anim_id, json_viewer=json_viewer, path=paths[0])
 
             if input is not None:
                 input.attrib["autocomplete"] = "off"
@@ -462,6 +493,13 @@ class SchemaObject(BlockProcessor):
                     type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#booleans"})
                     type_text.text = "0-1 "
                     etree.SubElement(type_text, "code").text = "integer"
+                elif prop.type.startswith("#/$defs/"):
+                    split = prop.type.split("/")
+                    page = split[-2]
+                    anchor = split[-1]
+                    type_text = etree.SubElement(type_cell, "a")
+                    type_text.attrib["href"] = "%s.md#%s" % (page, anchor)
+                    type_text.text = SchemaData().get_ref(prop.type)["title"]
                 else:
                     type_text = etree.SubElement(type_cell, "code")
                     type_text.text = prop.type

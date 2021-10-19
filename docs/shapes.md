@@ -9,13 +9,11 @@ it's worth distinguishing across a few categories:
 * **Modifier** These change other shapes
 * **Transform** Special shape that defines the transforms in a group shape
 
-All shapes have the attributes from [Visual Object](concepts.md#visual-object) and the following:
+All shapes have the following properties:
 
-|Attribute|Type     |Name           |Description                    |
-|---------|---------|---------------|-----------                    |
-|`hd`     |`boolean`|Hidden         |Whether the layer is hidden    |
-|`ty`     |`string` |Type           |Shape type (see values below)  |
-|`cix`    |`integer`|Property Index |Used in expressions            |
+{schema_object:shapes/shape-element}
+EXPAND:#/$defs/helpers/visual-object
+ty:Shape type (see values below)
 
 
 ### Shape Types
@@ -59,12 +57,29 @@ A rectangle, defined by its center point and size.
 |`s` |[Animated](concepts.md#animated-property) 2D Vector|Size                  |
 |`r` |[Animated](concepts.md#animated-property) `number` |Rounded corners radius|
 
+
+{lottie_playground:rectangle.json:512:512}
+Position x:slider:layers[0].shapes[0].it[0].p.k[0]:0:256:512
+Position y:slider:layers[0].shapes[0].it[0].p.k[1]:0:256:512
+Width:slider:layers[0].shapes[0].it[0].s.k[0]:0:256:512
+Height:slider:layers[0].shapes[0].it[0].s.k[1]:0:256:512
+Roundness:slider:layers[0].shapes[0].it[0].r.k:0:0:512
+:json:layers[0].shapes[0].it[0]
+
 ### Ellipse
 
 |Attribute|Type                                          |Description           |
 |----|---------------------------------------------------|----------------------|
 |`p` |[Animated](concepts.md#animated-property) 2D Vector|Position              |
 |`s` |[Animated](concepts.md#animated-property) 2D Vector|Size                  |
+
+
+{lottie_playground:ellipse.json:512:512}
+Position x:slider:layers[0].shapes[0].it[0].p.k[0]:0:256:512
+Position y:slider:layers[0].shapes[0].it[0].p.k[1]:0:256:512
+Width:slider:layers[0].shapes[0].it[0].s.k[0]:0:256:512
+Height:slider:layers[0].shapes[0].it[0].s.k[1]:0:256:512
+:json:layers[0].shapes[0].it[0]
 
 ### PolyStar
 
@@ -127,7 +142,17 @@ Defines a single color fill.
 |----|------------------------------------------------------------------------------------------|-------------------------------|
 |`o` |[Animated](concepts.md#animated-property) `number`                                        |Opacity, 100 means fully opaque|
 |`c` |[Animated](concepts.md#animated-property) [Color](concepts.md#color)                      |Color                          |
-|`r` |[Fill Rule](constants.md#FillRule)   |                               |
+|`r` |[Fill Rule](constants.md#FillRule)                                                        |                               |
+
+
+{lottie_playground:fill.json:512:512}
+Red:slider:layers[0].shapes[0].it[1].c.k[0]:0:1:1:0.01
+Green:slider:layers[0].shapes[0].it[1].c.k[1]:0:0.98:1:0.01
+Blue:slider:layers[0].shapes[0].it[1].c.k[2]:0:0.28:1:0.01
+Opacity:slider:layers[0].shapes[0].it[1].o.k:0:100:100
+Fill Rule:enum:layers[0].shapes[0].it[1].r:fill-rule
+:json:layers[0].shapes[0].it[1]
+
 
 
 ### Stroke
@@ -255,7 +280,17 @@ it has two:
 
 The first copy will use `so`, the last `eo`, and copies between them will have an interpolated value.
 
-{lottie:repeater.json:512:512}
+{lottie_playground:repeater.json:512:512}
+Copies:slider:layers[0].shapes[0].it[3].c.k:0:4:20
+Start Opacity:slider:layers[0].shapes[0].it[3].tr.so.k:0:100:100
+End Opacity:slider:layers[0].shapes[0].it[3].tr.eo.k:0:50:100
+Position x:slider:layers[0].shapes[0].it[3].tr.p.k[0]:0:130:200
+Position y:slider:layers[0].shapes[0].it[3].tr.p.k[1]:0:0:200
+Rotation:slider:layers[0].shapes[0].it[3].tr.r.k:0:137:360
+Offset:slider:layers[0].shapes[0].it[3].o.k:-1:0:2:0.1
+Conposite:enum:layers[0].shapes[0].it[3].m:composite
+:json:layers[0].shapes[0].it[3]
+
 
 ### Trim Path
 
@@ -288,6 +323,7 @@ Start:slider:layers[0].shapes[4].s.k:0:0:100
 End:slider:layers[0].shapes[4].e.k:0:50:100
 Offset:slider:layers[0].shapes[4].o.k:0:0:360
 Multiple Shapes:enum:layers[0].shapes[4].m:trim-multiple-shapes
+:json:layers[0].shapes[4]
 
 
 ### Rounded Corners
@@ -300,6 +336,7 @@ Self explanatory
 
 {lottie_playground:rounded_corners.json:512:512}
 Radius:slider:layers[0].shapes[0].it[1].r.k:0:50:100
+:json:layers[0].shapes[0].it[1]
 
 ### Pucker / Bloat
 
@@ -316,3 +353,4 @@ When `a` is negative the vertices are pushed away from the center with `100` bei
 
 {lottie_playground:pucker_bloat.json:512:512}
 Amount:slider:layers[0].shapes[0].it[1].a.k:-100:50:100
+:json:layers[0].shapes[0].it[1]

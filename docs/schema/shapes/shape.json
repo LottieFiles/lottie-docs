@@ -10,20 +10,12 @@
         {
             "type": "object",
             "properties": {
-                "ty": {
-                    "title": "Type",
-                    "type": "string",
-                    "const": null
-                },
                 "d": {
                     "title": "Direction",
                     "type": "number",
                     "default": 0
                 }
-            },
-            "required": [
-                "ty"
-            ]
+            }
         }
     ]
 }

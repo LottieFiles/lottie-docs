@@ -12,6 +12,7 @@
             "properties": {
                 "hd": {
                     "title": "Hidden",
+                    "description": "Whether the shape is hidden",
                     "type": "boolean"
                 },
                 "ty": {
@@ -82,11 +83,12 @@
                 },
                 "cix": {
                     "title": "Property Index",
+                    "description": "Used in expressions",
                     "type": "integer"
                 },
                 "bm": {
-                    "title": "Bm",
-                    "type": "integer"
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/constants/blend-mode"
                 }
             },
             "required": ["ty"]
