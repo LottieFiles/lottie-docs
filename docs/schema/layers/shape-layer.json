@@ -25,7 +25,7 @@
                 }
             },
             "required": [
-                "ty"
+                "ty", "shapes"
             ]
         }
     ]

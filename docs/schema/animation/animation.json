@@ -75,7 +75,7 @@
                     "$ref": "#/$defs/animation/metadata"
                 }
             },
-            "required": ["w", "h", "fr", "layers", "op"]
+            "required": ["w", "h", "fr", "layers", "op", "ip"]
         }
     ]
 }

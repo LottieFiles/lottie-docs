@@ -12,5 +12,5 @@
             }
         }
     },
-    "required": ["layer"]
+    "required": ["layers"]
 }
