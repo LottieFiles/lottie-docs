@@ -234,9 +234,9 @@ class SchemaEnum(BlockProcessor):
         return self.re_fence_start.match(block)
 
     def run(self, parent, blocks):
-        name = self.test(parent, blocks[0]).group(1)
+        enum_name = self.test(parent, blocks[0]).group(1)
 
-        enum_data = SchemaData().get_enum_values(name)
+        enum_data = SchemaData().get_enum_values(enum_name)
 
         table = etree.SubElement(parent, "table")
         descriptions = {}
@@ -257,6 +257,8 @@ class SchemaEnum(BlockProcessor):
         etree.SubElement(thead, "th").text = "Name"
         if descriptions:
             etree.SubElement(thead, "th").text = "Description"
+
+        thead[-1].append(SchemaLink.element("constants/" + enum_name))
 
         tbody = etree.SubElement(table, "tbody")
 
