@@ -50,3 +50,7 @@
     padding: 1em;
 }
 
+.schema-link {
+    font-size:small;
+    float: right;
+}

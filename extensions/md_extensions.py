@@ -511,7 +511,9 @@ class SchemaObject(BlockProcessor):
             thead = etree.SubElement(etree.SubElement(table, "thead"), "tr")
             etree.SubElement(thead, "th").text = "Attribute"
             etree.SubElement(thead, "th").text = "Type"
-            etree.SubElement(thead, "th").text = "Description"
+            desc = etree.SubElement(thead, "th")
+            desc.text = "Description"
+            desc.append(SchemaLink.element(name))
 
             tbody = etree.SubElement(table, "tbody")
 
@@ -524,6 +526,15 @@ class SchemaObject(BlockProcessor):
                     type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#booleans"})
                     type_text.text = "0-1 "
                     etree.SubElement(type_text, "code").text = "integer"
+                elif prop.type == "#/$defs/animated-properties/value":
+                    type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#animated-property"})
+                    type_text.text = "Animated"
+                    type_text.tail = " "
+                    etree.SubElement(type_text, "code").text = "number"
+                elif prop.type == "#/$defs/animated-properties/multidimensional":
+                    type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#animated-property"})
+                    type_text.text = "Animated"
+                    type_text.tail = " Vector"
                 elif prop.type.startswith("#/$defs/"):
                     split = prop.type.split("/")
                     page = split[-2]
@@ -547,6 +558,141 @@ class SchemaObject(BlockProcessor):
         return True
 
 
+class JsonHtmlSerializer:
+    def __init__(self, parent):
+        self.parent = parent
+        self.tail = None
+        self.encoder = json.JSONEncoder()
+        self.parent.text = ""
+
+    def encode(self, json_object, indent, id=None):
+        if isinstance(json_object, dict):
+            self.encode_dict(json_object, indent, id)
+        elif isinstance(json_object, list):
+            self.encode_list(json_object, indent)
+        elif isinstance(json_object, str):
+            self.encode_item(json_object, "string", json_object if json_object.startswith("https://") else None)
+        elif isinstance(json_object, (int, float)):
+            self.encode_item(json_object, "number")
+        elif isinstance(json_object, bool) or json_object is None:
+            self.encode_item(json_object, "literal")
+        else:
+            raise TypeError(json_object)
+
+    def encode_item(self, json_object, hljs_type, href=None):
+        span = etree.Element("span", {"class": "hljs-"+hljs_type})
+        span.text = self.encoder.encode(json_object)
+
+        if href:
+            link = etree.SubElement(self.parent, "a", {"href": href})
+            link.append(span)
+            self.tail = link
+        else:
+            self.tail = span
+            self.parent.append(span)
+
+        self.tail.tail = ""
+
+    def encode_dict_key(self, key, id):
+        if id is None:
+            self.encode_item(key, "attr")
+            return None
+
+        child_id = id + "/" + key
+        self.encode_item(key, "attr", "#" + child_id)
+        self.tail.attrib["id"] = child_id
+        return child_id
+
+    def encode_dict(self, json_object, indent, id):
+        if len(json_object) == 0:
+            self.write("{}")
+            return
+
+        self.write("{\n")
+
+        child_indent = indent + 1
+        for index, (key, value) in enumerate(json_object.items()):
+
+            self.indent(child_indent)
+            child_id = self.encode_dict_key(key, id if isinstance(value, dict) else None)
+            self.write(": ")
+
+            if key == "$ref" and isinstance(value, str):
+                self.encode_item(value, "string", value)
+            else:
+                self.encode(value, child_indent, child_id)
+
+            if index == len(json_object) - 1:
+                self.write("\n")
+            else:
+                self.write(",\n")
+        self.indent(indent)
+        self.write("}")
+
+    def encode_list(self, json_object, indent):
+        if len(json_object) == 0:
+            self.write("[]")
+            return
+
+        self.write("[\n")
+        child_indent = indent + 1
+        for index, value in enumerate(json_object):
+            self.indent(child_indent)
+            self.encode(value, child_indent)
+            if index == len(json_object) - 1:
+                self.write("\n")
+            else:
+                self.write(",\n")
+        self.indent(indent)
+        self.write("]")
+
+    def indent(self, amount):
+        self.write("    " * amount)
+
+    def write(self, text):
+        if self.tail is None:
+            self.parent.text += text
+        else:
+            self.tail.tail += text
+
+
+class JsonFile(InlineProcessor):
+    def __init__(self, md):
+        super().__init__(r'\{json_file:(?P<path>[^:]+)\}', md)
+
+    def handleMatch(self, match, data):
+        pre = etree.Element("pre")
+
+        with open(docs_path / match.group("path")) as file:
+            json_data = json.load(file)
+
+        # Hack to prevent PrettifyTreeprocessor from messing up indentation
+        etree.SubElement(pre, "span")
+
+        code = etree.SubElement(pre, "code")
+
+        JsonHtmlSerializer(code).encode(json_data, 0, "")
+
+        return pre, match.start(0), match.end(0)
+
+
+class SchemaLink(InlineProcessor):
+    def __init__(self, md):
+        pattern = r'{schema_link:([^:}]+)}'
+        super().__init__(pattern, md)
+
+    @staticmethod
+    def element(path):
+        href = "schema.md#/$defs/" + path
+        element = etree.Element("a", {"href": href, "class": "schema-link"})
+        element.text = "View Schema"
+        return element
+
+    def handleMatch(self, m, data):
+
+        return SchemaLink.element(m.group(1)), m.start(0), m.end(0)
+
+
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
@@ -557,6 +703,8 @@ class LottieExtension(Extension):
         md.inlinePatterns.register(SchemaAttribute(md), 'schema_attribute', 175)
         md.parser.blockprocessors.register(LottiePlayground(md.parser), 'lottie_playground', 175)
         md.parser.blockprocessors.register(SchemaObject(md.parser), 'schema_object', 175)
+        md.inlinePatterns.register(JsonFile(md), 'json_file', 175)
+        md.inlinePatterns.register(SchemaLink(md), 'schema_link', 175)
 
 
 def makeExtension(**kwargs):

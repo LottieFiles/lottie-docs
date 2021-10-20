@@ -16,9 +16,6 @@
 
 {% block footer %}
 <hr>
-<p><small>{{ config.copyright }} {{ page.meta.authors }}.</small></p>
-
-
         {%- if page and page.edit_url %}
             <a href="{{ page.edit_url }}">
                 {%- if config.repo_name == 'GitHub' -%}

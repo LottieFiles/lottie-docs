@@ -35,3 +35,10 @@ If it's animated, it has a special [representation](concepts/#animated-property)
 
 This guide provides a human-readable description of the format, but if you want
 a machine-readable description, we also have a [JSON schema](schema/lottie.schema.json).
+
+
+## Other Resources
+
+* [Lottie documentation from python-lottie](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#details)
+* [Lottie community documentation](https://github.com/lottie-animation-community/docs)
+* [Lottie community schema](https://github.com/lottie-animation-community/tests)

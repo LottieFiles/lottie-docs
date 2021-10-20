@@ -12,17 +12,15 @@
             "properties": {
                 "ty": {
                     "title": "Type",
+                    "description": "Layer type",
                     "type": "integer",
                     "const": 0
                 },
                 "refId": {
                     "title": "Reference Id",
+                    "description": "ID of the precomp as specified in the assets",
                     "type": "string",
                     "default": ""
-                },
-                "tm": {
-                    "title": "Time Remapping",
-                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "w": {
                     "title": "Width",
@@ -33,6 +31,10 @@
                     "title": "Height",
                     "type": "integer",
                     "default": 512
+                },
+                "tm": {
+                    "title": "Time Remapping",
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": [

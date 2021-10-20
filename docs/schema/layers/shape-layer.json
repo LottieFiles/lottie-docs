@@ -12,6 +12,7 @@
             "properties": {
                 "ty": {
                     "title": "Type",
+                    "description": "Layer type",
                     "type": "integer",
                     "const": 4
                 },

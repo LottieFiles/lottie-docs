@@ -51,7 +51,7 @@ can be seen when using [Trim Path](#trim-path).
 
 A rectangle, defined by its center point and size.
 
-|Attribute|Type                                          |Description           |
+|Attribute|Type                                          |Description {schema_link:shapes/rectangle}|
 |----|---------------------------------------------------|----------------------|
 |`p` |[Animated](concepts.md#animated-property) 2D Vector|Position              |
 |`s` |[Animated](concepts.md#animated-property) 2D Vector|Size                  |
@@ -68,7 +68,7 @@ Roundness:slider:layers[0].shapes[0].it[0].r.k:0:0:512
 
 ### Ellipse
 
-|Attribute|Type                                          |Description           |
+|Attribute|Type                                          |Description {schema_link:shapes/ellipse}|
 |----|---------------------------------------------------|----------------------|
 |`p` |[Animated](concepts.md#animated-property) 2D Vector|Position              |
 |`s` |[Animated](concepts.md#animated-property) 2D Vector|Size                  |
@@ -86,7 +86,7 @@ Height:slider:layers[0].shapes[0].it[0].s.k[1]:0:256:512
 Regular polygon or star.
 
 
-|Attribute|Type                                             |Description                                |
+|Attribute|Type                                             |Description {schema_link:shapes/star}      |
 |----|------------------------------------------------------|-------------------------------------------|
 |`p` |[Animated](concepts.md#animated-property) 2D Vector   |Position                                   |
 |`or`|[Animated](concepts.md#animated-property) `number`    |Outer Radius                               |
@@ -118,7 +118,7 @@ Type:select:layers[0].refId:Star=star:Polygon=poly
 Bezier path, note that it's a continuous shape, to have multiple shapes like
 when you need holes or gaps you need to create multiple Path shapes and group them together.
 
-|Attribute|Type                                       |Description|
+|Attribute|Type                                       |Description {schema_link:shapes/path}|
 |----|------------------------------------------------|-----------|
 |`ks`|[Animated](concepts.md#animated-property) [Bezier](concepts.md#bezier)|Bezier Path|
 
@@ -138,7 +138,7 @@ or a gradient fading into a solid color.
 
 Defines a single color fill.
 
-|Attribute|Type                                                                                 |Description                    |
+|Attribute|Type                                                                                 |Description {schema_link:shapes/fill}|
 |----|------------------------------------------------------------------------------------------|-------------------------------|
 |`o` |[Animated](concepts.md#animated-property) `number`                                        |Opacity, 100 means fully opaque|
 |`c` |[Animated](concepts.md#animated-property) [Color](concepts.md#color)                      |Color                          |
@@ -160,51 +160,51 @@ Fill Rule:enum:layers[0].shapes[0].it[1].r:fill-rule
 Define a stroke.
 
 
-|Attribute|Type                                                                                 |Description                    |
-|----|------------------------------------------------------------------------------------------|-------------------------------|
-|`lc`|[Line Cap](constants.md#LineCap)     |                               |
-|`lj`|[Line Join](constants.md#LineJoin)   |                               |
-|`ml`|`number`                                                                                  |Miter Limit                    |
-|`o` |[Animated](concepts.md#animated-property) `number`                                        |Opacity, 100 means fully opaque|
-|`w` |[Animated](concepts.md#animated-property) `number`                                        |Width                          |
-|`d` |Array of [Dashes](#stroke-dashes)                                                         |Dashed line definition         |
-|`c` |[Animated](concepts.md#animated-property) [Color](#color)                                 |Color                          |
+|Attribute|Type                                                     |Description {schema_link:shapes/stroke}|
+|----|--------------------------------------------------------------|-------------------------------|
+|`lc`|[Line Cap](constants.md#linecap)                              |                               |
+|`lj`|[Line Join](constants.md#linejoin)                            |                               |
+|`ml`|`number`                                                      |Miter Limit                    |
+|`o` |[Animated](concepts.md#animated-property) `number`            |Opacity, 100 means fully opaque|
+|`w` |[Animated](concepts.md#animated-property) `number`            |Width                          |
+|`d` |Array of [Dashes](#stroke-dashes)                             |Dashed line definition         |
+|`c` |[Animated](concepts.md#animated-property) [Color](#color)     |Color                          |
 
 
 #### Stroke Dashes
 
 Defined as a sequence of alternating dashes and gaps.
 
-|Attribute|Type                                                                                     |Description                    |
-|----|----------------------------------------------------------------------------------------------|-------------------------------|
-|`n` |[Dash Type](constants.md#StrokeDashType) |Dash type                      |
-|`v` |[Animated](concepts.md#animated-property) `number`                                            |Length of the dash             |
+|Attribute|Type                                             |Description {schema_link:shapes/stroke-dash}|
+|----|------------------------------------------------------|-------------------------------|
+|`n` |[Dash Type](constants.md#strokedashtype)              |Dash type                      |
+|`v` |[Animated](concepts.md#animated-property) `number`    |Length of the dash             |
 
 ### Gradient Fill / Stroke
 
 Gradient fill and gradient stroke have the same attributes as [fill](#fill) and [stroke](#stroke)
 but remove color (`c`) and add the following:
 
-|Attribute|Type                                          |Description                   |
-|----|---------------------------------------------------|------------------------------|
-|`s` |[Animated](concepts.md#animated-property) 2D Vector|Starting point for the gradient|
-|`e` |[Animated](concepts.md#animated-property) 2D Vector|End point for the gradient    |
-|`t` |`integer`|[Gradient Type](constants.md#GradientType) |
-|`g` |[Gradient Colors](#gradient-colors)                |                              |
+|Attribute|Type                                          |Description {schema_link:shapes/gradient}|
+|----|---------------------------------------------------|-----------------------------------|
+|`s` |[Animated](concepts.md#animated-property) 2D Vector|Starting point for the gradient    |
+|`e` |[Animated](concepts.md#animated-property) 2D Vector|End point for the gradient         |
+|`t` |[Gradient Type](constants.md#gradienttype)         |Type of gradient (linear or radial)|
+|`g` |[Gradient Colors](#gradient-colors)                |                                   |
 
 If it's a radial gradient, `s` refers to the center of the gradient,
 and the style object may have these additional properties:
 
-|Attribute|Type                                         |Description            |
-|----|--------------------------------------------------|-----------------------|
-|`h` |[Animated](concepts.md#animated-property) `number`|Highlight Length       |
-|`a` |[Animated](concepts.md#animated-property) `number`|Highlight Angle        |
+|Attribute|Type                                         |Description                                          |
+|----|--------------------------------------------------|-----------------------------------------------------|
+|`h` |[Animated](concepts.md#animated-property) `number`|Highlight Length, as a percentage between `s` and `e`|
+|`a` |[Animated](concepts.md#animated-property) `number`|Highlight Angle                                      |
 
 Basically the radial highlight position is defined in polar coordinates relative to `s`.
 
 #### Gradient Colors
 
-|Attribute|Type                                                                  |Description       |
+|Attribute|Type                                                                  |Description {schema_link:animated-properties/gradient-colors}|
 |----|---------------------------------------------------------------------------|------------------|
 |`l` |[Animated](concepts.md#animated-property) [Gradient](concepts.md#gradients)|Gradient Colors   |
 |`p` |`integer`                                                                  |Number of Colors  |
@@ -213,6 +213,18 @@ Since [gradient values](concepts.md#gradients) might have different representati
 they have transparency or not, you need to check `p` to determine whether a keyframe value
 has transparency.
 
+#### Gradient Example
+
+
+{lottie_playground:gradient.json:512:512}
+Start X         :slider:layers[1].shapes[0].it[1].s.k[0],layers[0].shapes[1].it[2].p.k[0]:0:256:512
+Start Y         :slider:layers[1].shapes[0].it[1].s.k[1],layers[0].shapes[1].it[2].p.k[1]:0:496:512
+End X           :slider:layers[1].shapes[0].it[1].e.k[0],layers[0].shapes[0].it[1].p.k[0]:0:256:512
+End Y           :slider:layers[1].shapes[0].it[1].e.k[1],layers[0].shapes[0].it[1].p.k[1]:0:16:512
+Type            :enum:  layers[1].shapes[0].it[1].t,layers[0].shapes[1].it[1].it[1].o.k! * 100 - 100:gradient-type
+Highlight       :slider:layers[1].shapes[0].it[1].h.k,layers[0].shapes[1].it[1].it[2].a.k[1]!*3:0:0:100
+Highlight Angle :slider:layers[1].shapes[0].it[1].a.k,layers[0].shapes[1].it[1].it[2].r.k:0:0:360
+                :json:  layers[1].shapes[0].it[1]:
 
 ## Group
 
@@ -235,7 +247,7 @@ While the contents may vary, a group must always end with a [Transform shape](#t
 
 The attributes of a Group are:
 
-|Attribute|Type                                                             |Description            |
+|Attribute|Type                                                             |Description {schema_link:shapes/group}|
 |----|----------------------------------------------------------------------|-----------------------|
 |`np`|`number`                                                              |Number of properties   |
 |`it`|[Array](concepts.md#lists-of-layers-and-shapes) of [shapes](#shape)   |Shapes                 |
@@ -255,7 +267,7 @@ account style as well.
 
 The effect of a Repeater is to duplicate the other shapes a number of times applying a transform for each copy.
 
-|Attribute|Type                                             |Description                    |
+|Attribute|Type                                             |Description {schema_link:shapes/repeater}|
 |----|------------------------------------------------------|-------------------------------|
 |`c` |[Animated](concepts.md#animated-property) `integer`   |Number of copies               |
 |`o` |[Animated](concepts.md#animated-property) `number`    |Offset (see below)             |
@@ -298,7 +310,7 @@ This is mostly useful for shapes with a stroke and not a fill.
 
 It takes the path defined by [shapes](#shapes) and only shows a segment of the resulting bezier data.
 
-|Attribute|Type                                         |Description            |
+|Attribute|Type                                         |Description {schema_link:shapes/trim}|
 |----|--------------------------------------------------|-----------------------|
 |`s` |[Animated](concepts.md#animated-property) `number`|Segment start          |
 |`e` |[Animated](concepts.md#animated-property) `number`|Segment end            |
@@ -330,7 +342,7 @@ Multiple Shapes:enum:layers[0].shapes[4].m:trim-multiple-shapes
 
 Self explanatory
 
-|Attribute|Type                                         |Description            |
+|Attribute|Type                                         |Description {schema_link:shapes/rounded-corners}|
 |----|--------------------------------------------------|-----------------------|
 |`r` |[Animated](concepts.md#animated-property) `number`|Radius                 |
 
@@ -340,7 +352,7 @@ Radius:slider:layers[0].shapes[0].it[1].r.k:0:50:100
 
 ### Pucker / Bloat
 
-|Attribute|Type                                         |Description            |
+|Attribute|Type                                         |Description {schema_link:shapes/pucker-bloat}|
 |----|--------------------------------------------------|-----------------------|
 |`a` |[Animated](concepts.md#animated-property) `number`|Amount as a percentage |
 

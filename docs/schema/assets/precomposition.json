@@ -9,6 +9,16 @@
         },
         {
             "$ref": "#/$defs/animation/composition"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "nm": {
+                    "type": "string",
+                    "title": "Name",
+                    "description": "Name of the precomposition"
+                }
+            }
         }
     ]
 }

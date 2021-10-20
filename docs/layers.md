@@ -25,7 +25,7 @@ Each layer type has its own properties but there are several common properties:
 
 They also have attributes from [Visual Object](#visual-object).
 
-|Attribute|Type|Name|Description|
+|Attribute|Type|Name|Description {schema_link:layers/layer}|
 |---------|----|----|-----------|
 |`ddd`              |[0-1 `int`](concepts.md#booleans)  |Threedimensional   |Whether the layer is 3D. Lottie doesn't actually support 3D stuff so this should always be 0||
 |`hd`               |`boolean`                          |Hidden             |Whether the layer is hidden|
@@ -107,16 +107,13 @@ Renders vector data.
 
 The only special property for this layer is **shapes**, an [array](concepts.md#lists-of-layers-and-shapes) of [shapes](shapes.md#shape-element).
 
+{schema_object:layers/shape-layer}
+
 ## PreComp Layer
 
 This layer renders a [precomposition](assets.md#precomposition).
 
-|Attribute  |Type                                            |Description                                    |
-|-----------|------------------------------------------------|-----------------------------------------------|
-|`refId`    |`string`                                        |ID of the precomp as specified in the assets   |
-|`w`        |`number`                                        |Width                                          |
-|`h`        |`number`                                        |Height                                         |
-|`tm`       |[Animated](concepts.md#animated-property) `number`|Time Remapping                                 |
+{schema_object:layers/precomposition-layer}
 
 ### Time remapping
 
@@ -148,6 +145,8 @@ This layer doesn't have any special properties.
 
 It's often used by animators as a parent to multiple other layers (see [parenting](#parenting)).
 
+{schema_object:layers/null-layer}
+
 ## Text Layer
 
 For text data, please refer to the [section about text](text.md) for details.
@@ -158,10 +157,7 @@ For text data, please refer to the [section about text](text.md) for details.
 
 This layer renders a static [image](assets.md#image).
 
-
-|Attribute|Type|Name|Description|
-|-----------|----|----|-----------|
-|`refId`    |`string` |Reference ID|ID of the image as specified in the assets|
+{schema_object:layers/image-layer}
 
 ## Solid Color Layer
 
@@ -170,11 +166,7 @@ This layer represents a rectangle with a single color.
 Anything you can do with solid layers, you can do better with a shape layer
 and a rectangle shape since none of this layer's own properties can be animated.
 
-|Attribute  |Type     |Name        |Description |
-|-----------|---------|------------|------------|
-|`sc`       |`string` |Solid Color |Color of the layer, unlike most other places, the color is a `#rrggbb` hex string |
-|`sw`       |`number` |Solid Width |            |
-|`sh`       |`number` |Solid Height|            |
+{schema_object:layers/solid-color-layer}
 
 
 ## Masks

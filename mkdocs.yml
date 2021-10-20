@@ -22,10 +22,11 @@ extra_javascript:
 nav:
     - "Introduction": index.md
     - "<i class='fa fa-book'></i> Lottie":
+        - concepts.md
         - animation.md
         - layers.md
         - "Shapes": shapes.md
         - assets.md
-        - concepts.md
         - constants.md
         - text.md
+        - schema.md

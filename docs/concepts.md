@@ -79,6 +79,7 @@ It's the same array as the case without transparency but with the following valu
 | `1`       | Alpha component for the 3rd color |
 
 
+
 ## Lists of layers and shapes
 
 Such lists appear Precomposition, Animation, ShapeLayer, and Grop.
@@ -94,22 +95,12 @@ The ellipse will show on top of the rectangle:
 This means the render order goes from the last element to the first.
 
 
-## Visual Object
-
-Most visual objects share these attributes:
-
-
-|Attribute|Type|Description|
-|---------|----|-----------|
-|`nm`   |`string`|Name, usually what you see in an editor for layer names, etc.|
-|`mn`   |`string`|"Match Name", used in expressions|
-
 ## Animated Property
 
 Animated properties have two attributes
 
 
-|Attribute|Type|Description|
+|Attribute|Type|Description {schema_link:animated-properties/animated-property}|
 |---------|----|-----------|
 |`a`|[0-1 `int`](#booleans)|Whether the property is animated. Note some old animations might not have this|
 |`k`||Value or keyframes, this changes based on the value of `a`|
@@ -121,7 +112,7 @@ If `a` is `1`, `k` will be an array of keyframes.
 ### Keyframe
 
 
-|Attribute|Type|Description|
+|Attribute|Type|Description {schema_link:animated-properties/keyframe}|
 |---------|----|-----------|
 |`t`    |`number`|Keyframe time (in frames)|
 |`s`    |Depends on the property|Value, note that sometimes properties for scalar values have the value is wrapped in an array|
@@ -135,7 +126,10 @@ until the next keyframe.
 #### Easing Handles
 
 They are objects with `x` and `y` attributes, which are numbers within 0 and 1.
-You might see these values wrapped around arrays.
+
+For multi-dimensional animated properties, these are arrays, with one element
+per dimension so you can have different easing curves per dimension.
+
 
 They represent a cubic bezier, starting at `[0,0]` and ending at `[1,1]` where
 the value determines the easing function.
@@ -161,8 +155,8 @@ For linear interpolation you'd have
 
 ```json
 {
-    "o": {"x": [0], "y": [0]},
-    "i": {"x": [1], "y": [1]}
+    "o": {"x": [0, 0], "y": [0, 0]},
+    "i": {"x": [1, 1], "y": [1, 1]}
 }
 ```
 
@@ -170,8 +164,8 @@ For easing in and out, you move the `x` towards the center, this makes the anima
 
 ```json
 {
-    "o": {"x": [0.333], "y": [0]},
-    "i": {"x": [0.667], "y": [1]}
+    "o": {"x": [0.333, 0.333], "y": [0, 0]},
+    "i": {"x": [0.667, 0.667], "y": [1, 1]}
 }
 ```
 
@@ -190,10 +184,10 @@ you can see a representation of its easing function.
 
 
 {lottie_playground:easing.json:512:512}
-Out tangent x:slider:assets[0].layers[1].shapes[0].ks.k.o[1][0]   ,assets[0].layers[1].shapes[0].ks.k.v[0][0],assets[0].layers[0].shapes[0].p.k[0],layers[0].ks.p.k[0].o.x[0],layers[0].ks.p.k[1].o.x[0]:0:0.33:1:0.01
-Out tangent y:slider:assets[0].layers[1].shapes[0].ks.k.o[1][1]   ,assets[0].layers[1].shapes[0].ks.k.v[0][1],assets[0].layers[0].shapes[0].p.k[1],layers[0].ks.p.k[0].o.y[0],layers[0].ks.p.k[1].o.y[0]:0:0:1:0.01
-In tangent x :slider:assets[0].layers[1].shapes[0].ks.k.i[2][0]!-1,assets[0].layers[1].shapes[0].ks.k.v[3][0],assets[0].layers[0].shapes[1].p.k[0],layers[0].ks.p.k[0].i.x[0],layers[0].ks.p.k[1].i.x[0]:0:0.67:1:0.01
-In tangent y :slider:assets[0].layers[1].shapes[0].ks.k.i[2][1]!-1,assets[0].layers[1].shapes[0].ks.k.v[3][1],assets[0].layers[0].shapes[1].p.k[1],layers[0].ks.p.k[0].i.y[0],layers[0].ks.p.k[1].i.y[0]:0:1:1:0.01
+Out tangent x:slider:assets[0].layers[1].shapes[0].ks.k.o[1][0]   ,assets[0].layers[1].shapes[0].ks.k.v[0][0],assets[0].layers[0].shapes[0].p.k[0],layers[0].ks.p.k[0].o.x[0],layers[0].ks.p.k[0].o.x[1],layers[0].ks.p.k[1].o.x[0],layers[0].ks.p.k[1].o.x[1]:0:0.33:1:0.01
+Out tangent y:slider:assets[0].layers[1].shapes[0].ks.k.o[1][1]   ,assets[0].layers[1].shapes[0].ks.k.v[0][1],assets[0].layers[0].shapes[0].p.k[1],layers[0].ks.p.k[0].o.y[0],layers[0].ks.p.k[0].o.y[1],layers[0].ks.p.k[1].o.y[0],layers[0].ks.p.k[1].o.y[1]:0:0:1:0.01
+In tangent x :slider:assets[0].layers[1].shapes[0].ks.k.i[2][0]!-1,assets[0].layers[1].shapes[0].ks.k.v[3][0],assets[0].layers[0].shapes[1].p.k[0],layers[0].ks.p.k[0].i.x[0],layers[0].ks.p.k[0].i.x[1],layers[0].ks.p.k[1].i.x[0],layers[0].ks.p.k[1].i.x[1]:0:0.67:1:0.01
+In tangent y :slider:assets[0].layers[1].shapes[0].ks.k.i[2][1]!-1,assets[0].layers[1].shapes[0].ks.k.v[3][1],assets[0].layers[0].shapes[1].p.k[1],layers[0].ks.p.k[0].i.y[0],layers[0].ks.p.k[0].i.y[1],layers[0].ks.p.k[1].i.y[0],layers[0].ks.p.k[1].i.y[1]:0:1:1:0.01
 Hold:select:layers[0].ks.p.k[0].h,layers[0].ks.p.k[1].h:No=0:Yes=1
 :json:layers[0].ks.p
 
@@ -204,7 +198,7 @@ This represents a layer or shape transform.
 It has the properties from [Visual Object](#visual-object) and its own properties are all [animated](#animated-property):
 
 
-|Attribute|Type|Name|Description|
+|Attribute|Type|Name|Description  {schema_link:helpers/transform}|
 |---------|----|----|-----------|
 |`a`    |2D Vector|Anchor point |Position (relative to its parent) around which transformations are applied (ie: center for rotation / scale)|
 |`p`    |2D Vector|Position     |Position / Translation|
@@ -319,7 +313,7 @@ This represents a cubic bezier path.
 Note that for interpolation to work correctly all bezier values in a property's keyframe must have the same number of points.
 
 
-|Attribute|Type|Name|Description|
+|Attribute|Type|Name|Description {schema_link:helpers/bezier}|
 |---------|----|----|-----------|
 |`c`    |[0-1 `int`](#booleans)|Closed|Whether the bezier forms a closed loop|
 |`v`    |array of 2D Vector|Vertices|Points along the curve|

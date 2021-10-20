@@ -8,7 +8,7 @@ id = "https://lottiefiles.github.io/lottie-docs/schema/lottie.schema.json"
 json_data = {
     "$schema": schema,
     "$id": id,
-    "$comment": "Do not use this file for editing, as it gets overwritten, edit the split files instead",
+    #"$comment": "Do not use this file for editing, as it gets overwritten, edit the split files instead",
     "type": "object",
     "allOf": [{
         "$ref": "#/$defs/animation/animation"
