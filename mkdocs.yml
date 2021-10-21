@@ -30,5 +30,6 @@ nav:
         - assets.md
         - constants.md
         - text.md
+    - "<i class='fa fa-wrench'></i> Advanced Topics":
         - rendering.md
         - schema.md
