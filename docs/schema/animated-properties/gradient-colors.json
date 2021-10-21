@@ -11,6 +11,7 @@
         },
         "p": {
             "title": "Count",
+            "description": "Number of colors in `k`",
             "type": "integer",
             "default": 0
         }
