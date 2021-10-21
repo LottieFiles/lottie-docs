@@ -16,6 +16,36 @@ This documentation assumes the reader is already familiar with the following con
 * [Tweening](https://en.wikipedia.org/wiki/Inbetweening)
 * [Easing Functions](https://www.febucci.com/2018/08/easing-functions/)
 
+## What this guide is
+
+This guide aims to describe the lottie format in its entirety, while also give
+in-depth descriptions of how every aspect works, which you can't get from just
+looking at a list of JSON attributes.
+
+It contains a [section](breakdown/bouncy_ball.md) that shows a breakdown of
+simple lottie animation describing what is going on as an introduction for the format.
+
+It also has [reference pages](layers.md) which go over the details of every object
+you can find in a lottie file, and a description of its most notable attributes.
+
+It provides a complete [JSON schema](schema/lottie.schema.json), this is intended
+for people who want to write tools to parse or generate lottie and need to get
+every little detail.
+
+Finally it has a [section with details about rendering](rendering.md),
+which gives tips and provides pseudo-code on how to draw various elements to
+match with the lottie web player.
+
+## What this guide is not
+
+You won't find here information on how to animate, or how to export a lottie
+file from your editor of choice.
+
+It also won't give information on how to embed lottie animations in your
+application or website.
+
+This is because there's already a lot of documentation for creating and using
+lottie animations, while this aims at providing a description of the file format itself.
 
 ## For the Impatient
 
