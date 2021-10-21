@@ -1,4 +1,6 @@
 Authors: Mattia Basaglia
+no_nav: 1
+disable_toc: 1
 
 # A human's guide to the Lottie format
 
@@ -6,13 +8,6 @@ Lottie is a vector animation format, using JSON to represent its data.
 
 This guide aims to provide a human-readable description of the format and how
 everything works within it.
-
-Lottie has several implementations and some things might vary from player to player,
-this guide tries to follow the behaviour of [lottie web](https://github.com/airbnb/lottie-web/)
-which is the reference implementation.
-
-Note that some lottie players require certain JSON keys to be presents before others in the file
-to play properly.
 
 This documentation assumes the reader is already familiar with the following concepts:
 
@@ -25,6 +20,9 @@ This documentation assumes the reader is already familiar with the following con
 ## For the Impatient
 
 The top level JSON object is the [Animation](animation.md).
+
+Note that some lottie players require certain JSON keys to be presents before others in the file
+to play properly.
 
 Objects within the JSON may have a mixture of animatable and non-animatable properties.
 

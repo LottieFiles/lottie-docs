@@ -47,6 +47,7 @@ followed by some [style shape](#style).
 They have a `d` attribute which specifies the drawing direction, which
 can be seen when using [Trim Path](#trim-path).
 
+
 ### Rectangle
 
 A rectangle, defined by its center point and size.
@@ -111,51 +112,6 @@ Inner Radius:slider:assets[0].layers[0].shapes[0].it[0].ir.k:0:100:300
 Outer Roundness:slider:assets[0].layers[0].shapes[0].it[0].os.k,assets[1].layers[0].shapes[0].it[0].os.k:0:0:200
 Inner Roundness:slider:assets[0].layers[0].shapes[0].it[0].is.k:0:0:200
 Type:select:layers[0].refId:Star=star:Polygon=poly
-
-
-#### Pseudocode
-
-Pseudocode for rendering a PolyStar (without roundness).
-
-This should give the same orientation and stroke direction as lottie web.
-
-```typescript
-function polystar(
-    // Properties from lottie:
-    p: Point,
-    sy: number,
-    pt: number,
-    r: number,
-    or: number,
-    it: number
-)
-{
-    let result = Bezier()
-    result.close()
-
-    let half_angle = PI / pt
-    let angle_radians = r / 180 * PI
-
-    for i in 0 ... pt-1
-        let main_angle = -PI / 2 + angle_radians + i * half_angle * 2
-        let vertex = Point(
-            or * cos(main_angle),
-            or * sin(main_angle)
-        )
-        result.add_vertex(p + vertex)
-
-        // Star inner radius
-        if sy == 1
-            let inner_vertex = Point(
-                ir * cos(main_angle + half_angle),
-                ir * sin(main_angle + half_angle)
-            )
-            result.add_vertex(p + inner_vertex)
-
-    return result
-}
-
-```
 
 
 ### Path
@@ -412,51 +368,3 @@ When `a` is negative the vertices are pushed away from the center with `100` bei
 {lottie_playground:pucker_bloat.json:512:512}
 Amount:slider:layers[0].shapes[0].it[1].a.k:-100:50:100
 :json:layers[0].shapes[0].it[1]
-
-
-#### Pseudocode
-
-Pseudocode for rendering pucker/bloat
-
-```typescript
-function pucker_bloat(
-    // Beziers as collected from the other shapes
-    collected_shapes: array[Bezier],
-    // `a` property from the Pucker/Bloat modifier
-    a: number
-)
-{
-    // Normalize to [0, 1]
-    let amount = a / 100;
-
-    // Find the mean of the bezier vertices
-    let center = Point()
-    let number_of_vertices = 0
-    for input_bezier in collected_shapes
-        for vertex in input_bezier
-            center += vertex
-            number_of_vertices += 1
-    center /= number_of_vertices
-
-    let result = array[Bezier]
-
-    for input_bezier in collected_shapes
-        let output_bezier = Bezier()
-        // Assumes `in_tangent` and `out_tangent` are relative to `vertex`
-        // (this is the case in Lottie)
-        for in_tangent, out_tangent, vertex in Bezier
-            let output_vertex = lerp(vertex, center, amount)
-            let output_in_tangent = lerp(in_tangent + vertex, center, -amount) - output_vertex
-            let output_out_tangent = lerp(out_tangent + vertex, center, -amount) - output_vertex
-            output_bezier.add_vertex(output_vertex)
-            output_bezier.add_in_tangent(output_in_tangent)
-            output_bezier.add_out_tangent(output_out_tangent)
-
-        if input_bezier.is_closed
-            output_bezier.close()
-
-        result.add(output_bezier)
-
-    return result
-}
-```
