@@ -145,7 +145,7 @@ function polystar(
         result.add_vertex(p + vertex)
 
         // Star inner radius
-        if ty == 1
+        if sy == 1
             let inner_vertex = Point(
                 ir * cos(main_angle + half_angle),
                 ir * sin(main_angle + half_angle)

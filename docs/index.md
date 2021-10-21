@@ -19,9 +19,10 @@ This documentation assumes the reader is already familiar with the following con
 * [Vector Graphics](https://en.wikipedia.org/wiki/Vector_graphics)
 * [Bezier Curves](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
 * [Tweening](https://en.wikipedia.org/wiki/Inbetweening)
+* [Easing Functions](https://www.febucci.com/2018/08/easing-functions/)
 
 
-## Structure
+## For the Impatient
 
 The top level JSON object is the [Animation](animation.md).
 
@@ -30,6 +31,11 @@ Objects within the JSON may have a mixture of animatable and non-animatable prop
 If a property is not animated, the value is represented as usual within the JSON.
 
 If it's animated, it has a special [representation](concepts/#animated-property).
+
+## Anatomy of a Lottie file
+
+Go to the [next page](breakdown/bouncy_ball.md) for a breakdown of a simple
+lottie animation.
 
 ## JSON Schema
 

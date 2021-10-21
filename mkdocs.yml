@@ -21,6 +21,8 @@ extra_javascript:
     - /lottie-docs/scripts/playground.js
 nav:
     - "Introduction": index.md
+    - "<i class='fa microscope'></i> Breakdown":
+        - breakdown/bouncy_ball.md
     - "<i class='fa fa-book'></i> Lottie":
         - concepts.md
         - animation.md

@@ -129,6 +129,12 @@ class LottieRenderer:
         return (element, id)
 
 
+def get_url(md, path):
+    # Mkdocs adds a tree processor to adjust urls, but it won't work with lottie js so we do the same here
+    processor = next(proc for proc in md.treeprocessors if proc.__class__.__module__ == 'mkdocs.structure.pages')
+    return processor.files.get_file_from_path(path).url_relative_to(processor.file)
+
+
 class LottieInlineProcessor(InlineProcessor):
     def __init__(self, md):
         pattern = r'{lottie:([^:]+)(?::([0-9]+):([0-9]+))}'
@@ -136,8 +142,9 @@ class LottieInlineProcessor(InlineProcessor):
 
     def handleMatch(self, m, data):
         filename = "examples/" + m.group(1)
-        download_file = filename
-        lottie_url = "../" + filename
+        lottie_url = get_url(self.md, filename)
+        # mkdocs will perform something similar to get_url to all the href, so we counteract it...
+        download_file = lottie_url[3:]
 
         element = LottieRenderer.render(
             url=lottie_url,
