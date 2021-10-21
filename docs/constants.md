@@ -72,11 +72,11 @@ Opacity:slider:layers[0].ks.o.k:0:50:100
 Matte Mode:enum:layers[2].tt:matte-mode:1
 
 
-## {schema_attribute:title:constants/matte-mode}
+## {schema_attribute:title:constants/shape-direction}
 
-{schema_attribute:description:constants/matte-mode}
+{schema_attribute:description:constants/shape-direction}
 
-{schema_enum:matte-mode}
+{schema_enum:shape-direction}
 
 
 ## {schema_attribute:title:constants/star-type}

@@ -39,13 +39,16 @@ ty:Shape type (see values below)
 |`op`|Offset Path                               |
 
 
-## Shapes
+## Shape
 
 These shapes only define path data, to actually show something, they must be
 followed by some [style shape](#style).
 
 They have a `d` attribute which specifies the drawing direction, which
 can be seen when using [Trim Path](#trim-path).
+
+{schema_object:shapes/shape}
+SKIP:#/$defs/shapes/shape-element
 
 
 ### Rectangle

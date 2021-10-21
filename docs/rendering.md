@@ -11,6 +11,9 @@ which is the reference implementation.
 For shapes, it ensures the stroke order is the same as in lottie web, which is crucial
 for [Trim Path](shapes.md#trim-path) to work correctly.
 
+All shapes have the `d` attribute that if has the value `3` the path should be reversed.
+
+
 ### Pseudocode
 
 The pseudocode takes some shortcuts for readablility:
@@ -31,7 +34,10 @@ But it might be useful to keep them as absolute points when rendering.
 
 ## Rectangle
 
-See [Rectangle](shapes.md#rectangle)
+See [Rectangle](shapes.md#rectangle).
+
+Note that unlike other shapes, on lottie web when the `d` attribute is missing,
+the rectangle defaults as being reversed.
 
 
 ```typescript
@@ -48,9 +54,9 @@ function rect(
     let result = Bezier()
 
     bezier.add_vertex(Point(right, top))
-    bezier.add_vertex(Point(left, top))
-    bezier.add_vertex(Point(left, bottom))
     bezier.add_vertex(Point(right, bottom))
+    bezier.add_vertex(Point(left, bottom))
+    bezier.add_vertex(Point(left, top))
 
     return result
 
@@ -75,12 +81,23 @@ function rounded_rect(
 
     let result = Bezier()
 
-    // top right
+    // top right, going down
     bezier.add_vertex(Point(right, top) + vertical_delta)
     bezier.add_out_tangent(-vertical_handle)
 
-    bezier.add_vertex(Point(right, top) - horizontal_delta)
-    bezier.add_in_tangent(horizontal_handle)
+    // bottom right
+    bezier.add_vertex(Point(right, bottom) - vertical_delta)
+    bezier.add_out_tangent(vertical_handle)
+
+    bezier.add_vertex(Point(right, bottom) - horizontal_delta)
+    bezier.add_out_tangent(horizontal_handle)
+
+    // bottom left
+    bezier.add_vertex(Point(left, bottom) + horizontal_delta)
+    bezier.add_out_tangent(-horizontal_handle)
+
+    bezier.add_vertex(Point(left, bottom) - vertical_delta)
+    bezier.add_out_tangent(vertical_handle)
 
     // top left
     bezier.add_vertex(Point(left, top) + horizontal_delta)
@@ -89,19 +106,11 @@ function rounded_rect(
     bezier.add_vertex(Point(left, top) + vertical_delta)
     bezier.add_out_tangent(-vertical_handle)
 
-    // bottom left
-    bezier.add_vertex(Point(left, bottom) - vertical_delta)
-    bezier.add_out_tangent(vertical_handle)
 
-    bezier.add_vertex(Point(left, bottom) + horizontal_delta)
-    bezier.add_out_tangent(-horizontal_handle)
+    // back to top right
+    bezier.add_vertex(Point(right, top) - horizontal_delta)
+    bezier.add_in_tangent(horizontal_handle)
 
-    // bottom right
-    bezier.add_vertex(Point(right, bottom) - horizontal_delta)
-    bezier.add_out_tangent(horizontal_handle)
-
-    bezier.add_vertex(Point(right, bottom) - vertical_delta)
-    bezier.add_out_tangent(vertical_handle)
 
     return result
 ```

@@ -485,15 +485,23 @@ class SchemaObject(BlockProcessor):
         for row in rows.split("\n")[1:]:
             match = self.re_row.match(row)
             if match:
-                if match.group(1) == "EXPAND":
+                name = match.group(1)
+                if name == "EXPAND":
                     prop_dict_base = {}
                     base = match.group(2)
                     self._object_properties(SchemaData().get_ref(base), prop_dict_base, [])
                     base_list.remove(base)
                     prop_dict_base.update(prop_dict)
                     prop_dict = prop_dict_base
+                elif name == "SKIP":
+                    what = match.group(2)
+                    prop_dict.pop(what, None)
+                    try:
+                        base_list.remove(what)
+                    except ValueError:
+                        pass
                 else:
-                    prop_dict[match.group(1)].description = match.group(2)
+                    prop_dict[name].description = match.group(2)
 
         div = etree.SubElement(parent, "div")
 

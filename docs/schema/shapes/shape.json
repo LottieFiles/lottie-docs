@@ -12,8 +12,8 @@
             "properties": {
                 "d": {
                     "title": "Direction",
-                    "type": "number",
-                    "default": 0
+                    "description": "Direction the shape is drawn as, mostly relevant when using trim path",
+                    "$ref": "#/$defs/constants/shape-direction"
                 }
             }
         }
