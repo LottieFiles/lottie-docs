@@ -1,5 +1,7 @@
 # Tips for rendering
 
+## Introduction
+
 This page will give tips and pseudocode on how to render certain objects within lottie.
 
 Lottie has several implementations and some things might vary from player to player,
@@ -9,7 +11,7 @@ which is the reference implementation.
 For shapes, it ensures the stroke order is the same as in lottie web, which is crucial
 for [Trim Path](shapes.md#trim-path) to work correctly.
 
-## Pseudocode
+### Pseudocode
 
 The pseudocode takes some shortcuts for readablility:
 
