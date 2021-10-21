@@ -5,11 +5,11 @@
     "description": "",
     "oneOf": [
         {
-            "title": "Simultaneously",
+            "title": "Individually",
             "const": 1
         },
         {
-            "title": "Individually",
+            "title": "Simultaneously",
             "const": 2
         }
     ]
