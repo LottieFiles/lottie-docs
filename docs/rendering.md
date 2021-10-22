@@ -115,6 +115,15 @@ function rounded_rect(
     return result
 ```
 
+## Ellipse
+
+See [Ellipse](shapes.md#ellipse).
+
+Rendering an ellipse using bezier curves is outside the scope of this document.
+
+The stroke direction should start at the top.
+If you think of the ellipse as a clock, start at 12 go clockwise.
+
 
 ## PolyStar
 
