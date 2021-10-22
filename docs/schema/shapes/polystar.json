@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Star",
-    "description": "Star shape",
+    "title": "PolyStar",
+    "description": "Star or regular polygon",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape"
@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Shape Type",
                     "type": "string",
                     "const": "sr"
                 },
@@ -25,10 +25,12 @@
                 },
                 "os": {
                     "title": "Outer Roundness",
+                    "title": "Outer Roundness as a percentage",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "r": {
                     "title": "Rotation",
+                    "description": "Rotation, clockwise in degrees",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "pt": {
@@ -37,6 +39,7 @@
                 },
                 "sy": {
                     "title": "Star Type",
+                    "description": "Star type, `1` for Star, `2` for Polygon",
                     "$ref": "#/$defs/constants/star-type",
                     "default": 1
                 }
@@ -57,6 +60,7 @@
                     },
                     "is": {
                         "title": "Inner Roundness",
+                        "description": "Inner Roundness as a percentage",
                         "$ref": "#/$defs/animated-properties/value"
                     }
                 }

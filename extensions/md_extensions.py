@@ -205,14 +205,14 @@ class Matrix(BlockProcessor):
 
 
 class SchemaData:
-    _data = None
+    def __init__(self):
+        self._data = None
 
-    @classmethod
-    def get_schema(cls):
-        if cls._data is None:
+    def get_schema(self):
+        if self._data is None:
             with open(docs_path / "schema" / "lottie.schema.json") as file:
-                cls._data = json.load(file)
-        return cls._data
+                self._data = json.load(file)
+        return self._data
 
     def get_ref(self, ref: str):
         if not ref.startswith("#/"):
@@ -237,13 +237,17 @@ class SchemaEnum(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{schema_enum:([^}]+)\}\s*(?:\n|$)')
     re_row = re.compile(r'^\s*(\w+)\s*:\s*(.*)')
 
+    def __init__(self, parser, schema_data: SchemaData):
+        super().__init__(parser)
+        self.schema_data = schema_data
+
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
     def run(self, parent, blocks):
         enum_name = self.test(parent, blocks[0]).group(1)
 
-        enum_data = SchemaData().get_enum_values(enum_name)
+        enum_data = self.schema_data.get_enum_values(enum_name)
 
         table = etree.SubElement(parent, "table")
         descriptions = {}
@@ -280,18 +284,23 @@ class SchemaEnum(BlockProcessor):
 
 
 class SchemaAttribute(InlineProcessor):
-    def __init__(self, md):
+    def __init__(self, md, schema_data: SchemaData):
         super().__init__(r'\{schema_attribute:(?P<attribute>[^:]+):(?P<path>[^:]+)\}', md)
+        self.schema_data = schema_data
 
     def handleMatch(self, match, data):
         span = etree.Element("span")
-        span.text = SchemaData().get_ref(match.group("path")).get(match.group("attribute"), "")
+        span.text = self.schema_data.get_ref(match.group("path")).get(match.group("attribute"), "")
         return span, match.start(0), match.end(0)
 
 
 class LottiePlayground(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?\}')
     re_row = re.compile(r'^\s*(?P<label>[^:]*)\s*:\s*(?P<type>\w+)\s*:\s*(?P<path>[^:]*)\s*(?::\s*(?P<args>.*))?')
+
+    def __init__(self, parser, schema_data: SchemaData):
+        super().__init__(parser)
+        self.schema_data = schema_data
 
     def test(self, parent, block):
         return self.re_fence_start.match(block)
@@ -373,7 +382,7 @@ class LottiePlayground(BlockProcessor):
             if type == "enum":
                 input = self._select(td, setter, args, (
                     (title, value)
-                    for value, title, _ in SchemaData().get_enum_values(args[0])
+                    for value, title, _ in self.schema_data.get_enum_values(args[0])
                 ))
 
             elif type == "slider":
@@ -440,6 +449,10 @@ class SchemaObject(BlockProcessor):
     re_row = re.compile(r'^\s*(\w+)\s*:\s*(.*)')
     prop_fields = {f.name for f in dataclasses.fields(SchemaProperty)}
 
+    def __init__(self, parser, schema_data: SchemaData):
+        super().__init__(parser)
+        self.schema_data = schema_data
+
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
@@ -466,7 +479,7 @@ class SchemaObject(BlockProcessor):
 
     def _base_link(self, parent, ref):
         a = etree.SubElement(parent, "a")
-        a.text = SchemaData().get_ref(ref)["title"]
+        a.text = self.schema_data.get_ref(ref)["title"]
         path_chunks = ref.split("/")
         a.attrib["href"] = "%s.md#%s" % (path_chunks[-2], path_chunks[-1])
         return a
@@ -474,7 +487,7 @@ class SchemaObject(BlockProcessor):
     def run(self, parent, blocks):
         object_name = self.test(parent, blocks[0]).group(1)
 
-        schema_data = SchemaData().get_ref(object_name)
+        schema_data = self.schema_data.get_ref(object_name)
 
         prop_dict = {}
         base_list = []
@@ -489,7 +502,7 @@ class SchemaObject(BlockProcessor):
                 if name == "EXPAND":
                     prop_dict_base = {}
                     base = match.group(2)
-                    self._object_properties(SchemaData().get_ref(base), prop_dict_base, [])
+                    self._object_properties(self.schema_data.get_ref(base), prop_dict_base, [])
                     base_list.remove(base)
                     prop_dict_base.update(prop_dict)
                     prop_dict = prop_dict_base
@@ -563,7 +576,7 @@ class SchemaObject(BlockProcessor):
                     page = split[-2]
                     if page == "types" or page == "helpers":
                         page = "concepts"
-                    title = SchemaData().get_ref(prop.type)["title"]
+                    title = self.schema_data.get_ref(prop.type)["title"]
                     type_text = etree.SubElement(type_cell, "a")
                     type_text.attrib["href"] = "%s.md#%s" % (page, title.replace(" ", "-").lower())
                     type_text.text = title
@@ -719,6 +732,10 @@ class SchemaLink(InlineProcessor):
 class SchemaEffect(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{schema_effect:([^}]+)\}\s*(?:\n|$)')
 
+    def __init__(self, parser, schema_data: SchemaData):
+        super().__init__(parser)
+        self.schema_data = schema_data
+
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
@@ -726,7 +743,7 @@ class SchemaEffect(BlockProcessor):
         effect_name = self.test(parent, blocks[0]).group(1)
         blocks.pop(0)
 
-        effect_data = SchemaData().get_ref(effect_name)["allOf"][-1]["properties"]["ef"]["prefixItems"]
+        effect_data = self.schema_data.get_ref(effect_name)["allOf"][-1]["properties"]["ef"]["prefixItems"]
 
         table = etree.SubElement(parent, "table")
 
@@ -746,7 +763,7 @@ class SchemaEffect(BlockProcessor):
                 href = href[len("effect-value-"):]
             elif href.startswith("effect-"):
                 href = href[len("effect-"):]
-            value_name = SchemaData().get_ref(item["$ref"])["title"]
+            value_name = self.schema_data.get_ref(item["$ref"])["title"]
             etree.SubElement(etree.SubElement(tr, "td"), "a", {"href": "#" + href}).text = value_name
 
         return True
@@ -754,17 +771,18 @@ class SchemaEffect(BlockProcessor):
 
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
+        schema_data = SchemaData()
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 1), 'lottie_color', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color_255:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 255), 'lottie_color_255', 175)
         md.parser.blockprocessors.register(Matrix(md.parser), 'matrix', 175)
-        md.parser.blockprocessors.register(SchemaEnum(md.parser), 'schema_enum', 175)
-        md.inlinePatterns.register(SchemaAttribute(md), 'schema_attribute', 175)
-        md.parser.blockprocessors.register(LottiePlayground(md.parser), 'lottie_playground', 175)
-        md.parser.blockprocessors.register(SchemaObject(md.parser), 'schema_object', 175)
+        md.parser.blockprocessors.register(SchemaEnum(md.parser, schema_data), 'schema_enum', 175)
+        md.inlinePatterns.register(SchemaAttribute(md, schema_data), 'schema_attribute', 175)
+        md.parser.blockprocessors.register(LottiePlayground(md.parser, schema_data), 'lottie_playground', 175)
+        md.parser.blockprocessors.register(SchemaObject(md.parser, schema_data), 'schema_object', 175)
         md.inlinePatterns.register(JsonFile(md), 'json_file', 175)
         md.inlinePatterns.register(SchemaLink(md), 'schema_link', 175)
-        md.parser.blockprocessors.register(SchemaEffect(md.parser), 'schema_effect', 175)
+        md.parser.blockprocessors.register(SchemaEffect(md.parser, schema_data), 'schema_effect', 175)
 
 
 def makeExtension(**kwargs):

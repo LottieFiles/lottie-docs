@@ -89,22 +89,17 @@ Height:slider:layers[0].shapes[0].it[0].s.k[1]:0:256:512
 
 Regular polygon or star.
 
-
-|Attribute|Type                                             |Description {schema_link:shapes/star}      |
-|----|------------------------------------------------------|-------------------------------------------|
-|`p` |[Animated](concepts.md#animated-property) 2D Vector   |Position                                   |
-|`or`|[Animated](concepts.md#animated-property) `number`    |Outer Radius                               |
-|`os`|[Animated](concepts.md#animated-property) `number`    |Outer Roundness                            |
-|`r` |[Animated](concepts.md#animated-property) `number`    |Rotation, clockwise in degrees             |
-|`pt`|[Animated](concepts.md#animated-property) `integer`   |Number of points                           |
-|`sy`| `integer`                                            |Star type, `1` for Star, `2` for Polygon   |
+{schema_object:shapes/polystar}
+SKIP:#/$defs/shapes/shape
+SKIP:ir
+SKIP:is
 
 If `sy` is `1` (star) you also have attributes defining the inner ends of the star:
 
 |Attribute|Type                                             |Description                                |
 |----|------------------------------------------------------|-------------------------------------------|
 |`ir`|[Animated](concepts.md#animated-property) `number`    |Inner Radius                               |
-|`is`|[Animated](concepts.md#animated-property) `number`    |Inner Roundness                            |
+|`is`|[Animated](concepts.md#animated-property) `number`    |Inner Roundness as a percentage            |
 
 
 {lottie_playground:star.json:512:512}
@@ -112,8 +107,8 @@ Points:slider:assets[0].layers[0].shapes[0].it[0].pt.k,assets[1].layers[0].shape
 Rotation:slider:assets[0].layers[0].shapes[0].it[0].r.k,assets[1].layers[0].shapes[0].it[0].r.k:0:0:360
 Outer Radius:slider:assets[0].layers[0].shapes[0].it[0].or.k,assets[1].layers[0].shapes[0].it[0].or.k:0:200:300
 Inner Radius:slider:assets[0].layers[0].shapes[0].it[0].ir.k:0:100:300
-Outer Roundness:slider:assets[0].layers[0].shapes[0].it[0].os.k,assets[1].layers[0].shapes[0].it[0].os.k:0:0:200
-Inner Roundness:slider:assets[0].layers[0].shapes[0].it[0].is.k:0:0:200
+Outer Roundness:slider:assets[0].layers[0].shapes[0].it[0].os.k,assets[1].layers[0].shapes[0].it[0].os.k:0:0:100
+Inner Roundness:slider:assets[0].layers[0].shapes[0].it[0].is.k:0:0:100
 Type:select:layers[0].refId:Star=star:Polygon=poly
 
 

@@ -118,7 +118,7 @@ function rounded_rect(
 
 ## PolyStar
 
-Pseudocode for rendering a [PolyStar](shapes.md#polystar) (without roundness).
+Pseudocode for rendering a [PolyStar](shapes.md#polystar).
 
 ```typescript
 function polystar(
@@ -128,7 +128,9 @@ function polystar(
     pt: number,
     r: number,
     or: number,
-    it: number
+    ir: number,
+    os: number,
+    is: number,
 )
 {
     let result = Bezier()
@@ -137,13 +139,27 @@ function polystar(
     let half_angle = PI / pt
     let angle_radians = r / 180 * PI
 
+    // Rangents for rounded courners
+    let tangent_len_outer = os * ir * 2 * PI / (p * 4);
+    let tangent_len_inner = is * ir * 2 * PI / (p * 4);
+
     for i in 0 ... pt-1
         let main_angle = -PI / 2 + angle_radians + i * half_angle * 2
-        let vertex = Point(
+
+        let outer_vertex = Point(
             or * cos(main_angle),
             or * sin(main_angle)
         )
-        result.add_vertex(p + vertex)
+
+        // You should check for division by 0
+        let outer_tangent = Point(
+            outer_vertex.y / or,
+            -outer_vertex.x / or
+        )
+
+        result.add_vertex(p + outer_vertex)
+        result.add_in_tangent(tangent_len_outer * outer_tangent)
+        result.add_out_tangent(-tangent_len_outer * outer_tangent)
 
         // Star inner radius
         if sy == 1
@@ -151,7 +167,15 @@ function polystar(
                 ir * cos(main_angle + half_angle),
                 ir * sin(main_angle + half_angle)
             )
+            // You should check for division by 0
+            let inner_tangent = Point(
+                inner_vertex.y / ir,
+                -inner_vertex.x / ir
+            )
+
             result.add_vertex(p + inner_vertex)
+            result.add_in_tangent(tangent_len_inner * inner_tangent)
+            result.add_out_tangent(-tangent_len_inner * inner_tangent)
 
     return result
 }
