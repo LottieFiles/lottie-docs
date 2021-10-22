@@ -20,7 +20,7 @@ extra_css:
 extra_javascript:
     - /lottie-docs/scripts/playground.js
 nav:
-    - index.md
+    - "Intro": index.md
     - "<i class='fas fa-microscope'></i> Breakdown":
         - breakdown/bouncy_ball.md
     - "<i class='fa fa-book'></i> Lottie":
@@ -29,6 +29,7 @@ nav:
         - layers.md
         - "Shapes": shapes.md
         - assets.md
+        - effects.md
         - constants.md
         - text.md
     - "<i class='fa fa-wrench'></i> Advanced Topics":

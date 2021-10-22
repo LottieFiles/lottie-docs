@@ -14,6 +14,24 @@
                     "title": "Type",
                     "type": "integer",
                     "const": 23
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "bright",
+                            "$ref": "#/$defs/effects/effect-value-color"
+                        },
+                        {
+                            "title": "mid",
+                            "$ref": "#/$defs/effects/effect-value-color"
+                        },
+                        {
+                            "title": "dark",
+                            "$ref": "#/$defs/effects/effect-value-color"
+                        }
+                    ]
                 }
             },
             "required": [

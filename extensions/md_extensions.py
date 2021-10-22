@@ -472,9 +472,9 @@ class SchemaObject(BlockProcessor):
         return a
 
     def run(self, parent, blocks):
-        name = self.test(parent, blocks[0]).group(1)
+        object_name = self.test(parent, blocks[0]).group(1)
 
-        schema_data = SchemaData().get_ref(name)
+        schema_data = SchemaData().get_ref(object_name)
 
         prop_dict = {}
         base_list = []
@@ -530,7 +530,7 @@ class SchemaObject(BlockProcessor):
             etree.SubElement(thead, "th").text = "Type"
             desc = etree.SubElement(thead, "th")
             desc.text = "Description"
-            desc.append(SchemaLink.element(name))
+            desc.append(SchemaLink.element(object_name))
 
             tbody = etree.SubElement(table, "tbody")
 
@@ -543,19 +543,25 @@ class SchemaObject(BlockProcessor):
                     type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#booleans"})
                     type_text.text = "0-1 "
                     etree.SubElement(type_text, "code").text = "integer"
-                elif prop.type == "#/$defs/animated-properties/value":
+                elif prop.type.startswith("#/$defs/animated-properties/"):
+                    anim_type = prop.type.split("/")[-1]
                     type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#animated-property"})
                     type_text.text = "Animated"
                     type_text.tail = " "
-                    etree.SubElement(type_text, "code").text = "number"
-                elif prop.type == "#/$defs/animated-properties/multidimensional":
-                    type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#animated-property"})
-                    type_text.text = "Animated"
-                    type_text.tail = " Vector"
+                    if anim_type == "value":
+                        type_text = etree.SubElement(type_cell, "code").text = "number"
+                    elif anim_type == "multi-dimensional":
+                        type_text.tail += "Vector"
+                    elif anim_type == "color-value":
+                        type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#colors"})
+                        type_text.text = "Color"
+                    elif anim_type == "shape-property":
+                        type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#bezier"})
+                        type_text.text = "Bezier"
                 elif prop.type.startswith("#/$defs/"):
                     split = prop.type.split("/")
                     page = split[-2]
-                    if page == "types":
+                    if page == "types" or page == "helpers":
                         page = "concepts"
                     title = SchemaData().get_ref(prop.type)["title"]
                     type_text = etree.SubElement(type_cell, "a")
@@ -710,6 +716,42 @@ class SchemaLink(InlineProcessor):
         return SchemaLink.element(m.group(1)), m.start(0), m.end(0)
 
 
+class SchemaEffect(BlockProcessor):
+    re_fence_start = re.compile(r'^\s*\{schema_effect:([^}]+)\}\s*(?:\n|$)')
+
+    def test(self, parent, block):
+        return self.re_fence_start.match(block)
+
+    def run(self, parent, blocks):
+        effect_name = self.test(parent, blocks[0]).group(1)
+        blocks.pop(0)
+
+        effect_data = SchemaData().get_ref(effect_name)["allOf"][-1]["properties"]["ef"]["prefixItems"]
+
+        table = etree.SubElement(parent, "table")
+
+        thead = etree.SubElement(etree.SubElement(table, "thead"), "tr")
+        etree.SubElement(thead, "th").text = "Name"
+        etree.SubElement(thead, "th").text = "Type"
+
+        thead[-1].append(SchemaLink.element("effects/" + effect_name))
+
+        tbody = etree.SubElement(table, "tbody")
+
+        for item in effect_data:
+            tr = etree.SubElement(tbody, "tr")
+            etree.SubElement(tr, "td").text = item["title"]
+            href = item["$ref"].split("/")[-1]
+            if href.startswith("effect-value-"):
+                href = href[len("effect-value-"):]
+            elif href.startswith("effect-"):
+                href = href[len("effect-"):]
+            value_name = SchemaData().get_ref(item["$ref"])["title"]
+            etree.SubElement(etree.SubElement(tr, "td"), "a", {"href": "#" + href}).text = value_name
+
+        return True
+
+
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
@@ -722,6 +764,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(SchemaObject(md.parser), 'schema_object', 175)
         md.inlinePatterns.register(JsonFile(md), 'json_file', 175)
         md.inlinePatterns.register(SchemaLink(md), 'schema_link', 175)
+        md.parser.blockprocessors.register(SchemaEffect(md.parser), 'schema_effect', 175)
 
 
 def makeExtension(**kwargs):

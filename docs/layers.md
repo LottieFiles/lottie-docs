@@ -23,27 +23,17 @@ There are several layer types, which is specified by the `ty` attribute:
 
 Each layer type has its own properties but there are several common properties:
 
-They also have attributes from [Visual Object](#visual-object).
+{schema_object:layers/layer}
+EXPAND:#/$defs/helpers/visual-object
+ddd:Whether the layer is 3D. Lottie doesn't actually support 3D stuff so this should always be 0
+ty:Layer type, must be one of the values seen above
+ind:Layer index for [parenting](#parenting)
+parent:Parent index for [parenting](#parenting)
+tt:Matte mode (see [mattes](#mattes))
+td:Matte target (see [mattes](#mattes))
+masksProperties:[Masks](#masks) for the layer
+ef:[Effects](effects.md) for the layer
 
-|Attribute|Type|Name|Description {schema_link:layers/layer}|
-|---------|----|----|-----------|
-|`ddd`              |[0-1 `int`](concepts.md#booleans)  |Threedimensional   |Whether the layer is 3D. Lottie doesn't actually support 3D stuff so this should always be 0||
-|`hd`               |`boolean`                          |Hidden             |Whether the layer is hidden|
-|`ty`               |`integer`                          |Type               |One of the values as seen before|
-|`ind`              |`integer`                          |Index              |Layer index for [parenting](#parenting)|
-|`parent`           |`integer`                          |Parent             |Parent index for [parenting](#parenting)|
-|`sr`               |`number`                           |Time stretch       | |
-|`ks`               |[Transform](concepts.md#transform) |Transform          |Layer transform|
-|`ao`               |[0-1 `int`](concepts.md#booleans)  |Auto Orient        |[Auto orient](#auto-orient)|
-|`ip`               |`number`                           |In Point           |Frame when the layers becomes visible|
-|`op`               |`number`                           |Out Point          |Frame when the layers becomes invisible|
-|`st`               |`number`                           |Start time         ||
-|`bm`               |`integer`                          |[Blend Mode](constants.md#BlendMode)||
-|`tt`               |`integer`                          |[Matte Mode](constants.md#MatteMode)|See [mattes](#mattes)|
-|`td`               |`integer`                          |Matte Target       |See [mattes](#mattes)|
-|`hasMask`          |`boolean`                          |Has Mask           |Whether the layer has masks applied|
-|`masksProperties`  |`array`                            |Masks              |[Masks](#masks) for the layer|
-|`ef`               |`array`                            |Effects            |[Effects](#effects) for the layer|
 
 The layer is only visible between its `ip` and `op`.
 If they match the corresponding attributes in [Animation](animation.md), the layer
@@ -93,12 +83,27 @@ A matte allows using a layer as a mask for another layer.
 
 The way it works is the layer defining the mask has a `tt` attribute with the
 appropriate [value](constants.md#mattemode)
-and it affects the layer on top (the layer before it in the layer list).
+and it affects the layer on top (the layer before it in the layer list, which has the `td` attribute).
 
 In this example there's a layer with a rectangle and a star being masked by an ellipse:
 
 {lottie_playground:matte.json:512:512}
 Matte Mode:enum:layers[2].tt:matte-mode:1
+
+
+
+### Masks
+
+A layer can have an array of masks that clip the contents of the layer to a shape.
+
+This is similar to [mattes](#mattes), but there are a few differences.
+
+With mattes, you use a layer to define the clipping area, while with masks
+you use an [animated](concepts.md#animated-property) [bezier curve](concepts.md#bezier).
+
+{schema_object:helpers/mask}
+EXPAND:#/$defs/helpers/visual-object
+
 
 
 ## Shape Layer
@@ -167,12 +172,3 @@ Anything you can do with solid layers, you can do better with a shape layer
 and a rectangle shape since none of this layer's own properties can be animated.
 
 {schema_object:layers/solid-color-layer}
-
-
-## Masks
-
-TODO
-
-## Effects
-
-TODO

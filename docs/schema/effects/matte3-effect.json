@@ -14,6 +14,16 @@
                     "title": "Type",
                     "type": "integer",
                     "const": 28
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "index",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        }
+                    ]
                 }
             },
             "required": [

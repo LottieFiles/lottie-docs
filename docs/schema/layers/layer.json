@@ -12,11 +12,13 @@
             "properties": {
                 "ddd": {
                     "title": "Threedimensional",
+                    "description": "Whether the layer is threedimensional",
                     "$ref": "#/$defs/types/int-boolean",
                     "default": 0
                 },
                 "hd": {
                     "title": "Hidden",
+                    "description": "Whether the layer is hidden",
                     "type": "boolean"
                 },
                 "ty": {
@@ -86,17 +88,23 @@
                         }
                     ]
                 },
+                "ind": {
+                    "title": "Index",
+                    "type": "integer"
+                },
                 "parent": {
                     "title": "Parent Index",
+                    "description": "Must be the `ind` property of another layer",
                     "type": "integer"
                 },
                 "sr": {
-                    "title": "Stretch",
+                    "title": "Time Stretch",
                     "type": "number",
                     "default": 1
                 },
                 "ks": {
                     "title": "Transform",
+                    "description": "Layer transform",
                     "$ref": "#/$defs/helpers/transform"
                 },
                 "ao": {
@@ -106,10 +114,12 @@
                 },
                 "ip": {
                     "title": "In Point",
+                    "description": "Frame when the layers becomes visible",
                     "type": "number"
                 },
                 "op": {
                     "title": "Out Point",
+                    "description": "Frame when the layers becomes invisible",
                     "type": "number"
                 },
                 "st": {
@@ -126,12 +136,13 @@
                     "title": "Matte Mode",
                     "$ref": "#/$defs/constants/matte-mode"
                 },
-                "ind": {
-                    "title": "Index",
+                "td": {
+                    "title": "Matte Target",
                     "type": "integer"
                 },
                 "hasMask": {
                     "title": "Has Masks",
+                    "description": "Whether the layer has masks applied",
                     "type": "boolean"
                 },
                 "masksProperties": {
@@ -147,10 +158,6 @@
                     "items": {
                         "$ref": "#/$defs/effects/effect"
                     }
-                },
-                "td": {
-                    "title": "Matte Target",
-                    "type": "integer"
                 },
                 "cl": {
                     "title": "Class",

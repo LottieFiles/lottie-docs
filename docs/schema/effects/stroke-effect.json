@@ -14,6 +14,56 @@
                     "title": "Type",
                     "type": "integer",
                     "const": 22
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "00",
+                            "$ref": "#/$defs/effects/effect-value-color"
+                        },
+                        {
+                            "title": "01",
+                            "$ref": "#/$defs/effects/effect-value-checkbox"
+                        },
+                        {
+                            "title": "02",
+                            "$ref": "#/$defs/effects/effect-value-checkbox"
+                        },
+                        {
+                            "title": "color",
+                            "$ref": "#/$defs/effects/effect-value-color"
+                        },
+                        {
+                            "title": "04",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "05",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "06",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "07",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "08",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "09",
+                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                        },
+                        {
+                            "title": "type",
+                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                        }
+                    ]
                 }
             },
             "required": [

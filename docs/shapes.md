@@ -199,10 +199,10 @@ but remove color (`c`) and add the following:
 If it's a radial gradient, `s` refers to the center of the gradient,
 and the style object may have these additional properties:
 
-|Attribute|Type                                         |Description                                          |
-|----|--------------------------------------------------|-----------------------------------------------------|
-|`h` |[Animated](concepts.md#animated-property) `number`|Highlight Length, as a percentage between `s` and `e`|
-|`a` |[Animated](concepts.md#animated-property) `number`|Highlight Angle                                      |
+|Attribute|Type                                         |Description                                                |
+|----|--------------------------------------------------|-----------------------------------------------------------|
+|`h` |[Animated](concepts.md#animated-property) `number`|Highlight Length, as a percentage between `s` and `e`      |
+|`a` |[Animated](concepts.md#animated-property) `number`|Highlight Angle, relative to the direction from `s` to `e` |
 
 Basically the radial highlight position is defined in polar coordinates relative to `s`.
 
@@ -221,13 +221,13 @@ has transparency.
 
 
 {lottie_playground:gradient.json:512:512}
-Start X         :slider:layers[1].shapes[0].it[1].s.k[0],layers[0].shapes[1].it[2].p.k[0]:0:256:512
-Start Y         :slider:layers[1].shapes[0].it[1].s.k[1],layers[0].shapes[1].it[2].p.k[1]:0:496:512
+Start X         :slider:layers[1].shapes[0].it[1].s.k[0],layers[0].shapes[1].it[1].p.k[0]:0:256:512
+Start Y         :slider:layers[1].shapes[0].it[1].s.k[1],layers[0].shapes[1].it[1].p.k[1]:0:496:512
 End X           :slider:layers[1].shapes[0].it[1].e.k[0],layers[0].shapes[0].it[1].p.k[0]:0:256:512
 End Y           :slider:layers[1].shapes[0].it[1].e.k[1],layers[0].shapes[0].it[1].p.k[1]:0:16:512
-Type            :enum:  layers[1].shapes[0].it[1].t,layers[0].shapes[1].it[1].it[1].o.k! * 100 - 100:gradient-type
-Highlight       :slider:layers[1].shapes[0].it[1].h.k,layers[0].shapes[1].it[1].it[2].a.k[1]!*3:0:0:100
-Highlight Angle :slider:layers[1].shapes[0].it[1].a.k,layers[0].shapes[1].it[1].it[2].r.k:0:0:360
+Type            :enum:  layers[1].shapes[0].it[1].t:gradient-type
+Highlight       :slider:layers[1].shapes[0].it[1].h.k:0:0:100
+Highlight Angle :slider:layers[1].shapes[0].it[1].a.k:0:0:360
                 :json:  layers[1].shapes[0].it[1]:
 
 ## Group

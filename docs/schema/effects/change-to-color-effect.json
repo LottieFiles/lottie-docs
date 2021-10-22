@@ -14,6 +14,56 @@
                     "title": "Type",
                     "type": "integer",
                     "const": 5
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "from_color",
+                            "$ref": "#/$defs/effects/effect-value-color"
+                        },
+                        {
+                            "title": "to_color",
+                            "$ref": "#/$defs/effects/effect-value-color"
+                        },
+                        {
+                            "title": "change",
+                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                        },
+                        {
+                            "title": "change_by",
+                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                        },
+                        {
+                            "title": "tolerance",
+                            "$ref": "#/$defs/effects/effect-value-ignored"
+                        },
+                        {
+                            "title": "hue",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "lightness",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "saturation",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "saturation_",
+                            "$ref": "#/$defs/effects/effect-value-ignored"
+                        },
+                        {
+                            "title": "softness",
+                            "$ref": "#/$defs/effects/effect-value-slider"
+                        },
+                        {
+                            "title": "view_correction",
+                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                        }
+                    ]
                 }
             },
             "required": [
