@@ -11,6 +11,7 @@ everything works within it.
 
 This documentation assumes the reader is already familiar with the following concepts:
 
+* [JSON](https://en.wikipedia.org/wiki/JSON)
 * [Vector Graphics](https://en.wikipedia.org/wiki/Vector_graphics)
 * [Bezier Curves](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
 * [Tweening](https://en.wikipedia.org/wiki/Inbetweening)
