@@ -142,8 +142,7 @@ The animated properties of a transform are as follows:
 
 `p` is the position (translation). Both `a` and `p` have arrays as values representing 2D coordinates.
 
-`s` is the scale and, similar to `a` and `p`, its value has 2 components.
-
+`s` is the scale and, similar to `a` and `p`, its value has 2 components. 
 Note that values are expressed as percentages (`100` meaning 100% or no scaling).
 
 `r` is the rotation angle in degrees.
