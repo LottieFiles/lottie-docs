@@ -552,7 +552,7 @@ class SchemaObject(BlockProcessor):
                 etree.SubElement(etree.SubElement(tr, "td"), "code").text = name
 
                 type_cell = etree.SubElement(tr, "td")
-                if prop.type == "#/$defs/types/int-boolean":
+                if prop.type == "#/$defs/helpers/int-boolean":
                     type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#booleans"})
                     type_text.text = "0-1 "
                     etree.SubElement(type_text, "code").text = "integer"

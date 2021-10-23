@@ -11,7 +11,7 @@
         },
         "fc": {
             "title": "Font Color",
-            "$ref": "#/$defs/types/color",
+            "$ref": "#/$defs/helpers/color",
             "default": [
                 0,
                 0,

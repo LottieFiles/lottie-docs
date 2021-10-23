@@ -10,7 +10,7 @@
         },
         "a": {
             "title": "Animated",
-            "$ref": "#/$defs/types/int-boolean",
+            "$ref": "#/$defs/helpers/int-boolean",
             "default": 0
         }
     },

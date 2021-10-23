@@ -17,7 +17,7 @@
                 "properties": {
                     "k": {
                         "title": "Static value",
-                        "$ref": "#/$defs/types/color"
+                        "$ref": "#/$defs/helpers/color"
                     }
                 }
             }

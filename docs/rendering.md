@@ -31,6 +31,20 @@ the corresponding `add_vertex`.
 Bezier tangents are assumed to be relative to their vertex since that's how lottie works.
 But it might be useful to keep them as absolute points when rendering.
 
+Numeric for loops show the first and last values, inclusive so if you see
+
+```typescript
+for i = 0 ... n-1
+```
+
+it's the same as
+
+```typescript
+for ( let i = 0; i < n; i++ )
+```
+
+in real code.
+
 
 ## Rectangle
 
@@ -46,10 +60,10 @@ function rect(
     p: Point,
     s: Size
 )
-    let left = p.x - s.width / 2;
-    let right = p.x + s.width / 2;
-    let top = p.y - s.height / 2;
-    let bottom = p.y + s.height / 2;
+    let left = p.x - s.width / 2
+    let right = p.x + s.width / 2
+    let top = p.y - s.height / 2
+    let bottom = p.y + s.height / 2
 
     let result = Bezier()
 
@@ -67,10 +81,10 @@ function rounded_rect(
     s: Size,
     r: number
 )
-    let left = p.x - s.width / 2;
-    let right = p.x + s.width / 2;
-    let top = p.y - s.height / 2;
-    let bottom = p.y + s.height / 2;
+    let left = p.x - s.width / 2
+    let right = p.x + s.width / 2
+    let top = p.y - s.height / 2
+    let bottom = p.y + s.height / 2
 
     let rounded = min(s.width / 2, size.height / 2, rounded)
 
@@ -149,8 +163,8 @@ function polystar(
     let angle_radians = r / 180 * PI
 
     // Rangents for rounded courners
-    let tangent_len_outer = os * ir * 2 * PI / (p * 4);
-    let tangent_len_inner = is * ir * 2 * PI / (p * 4);
+    let tangent_len_outer = os * ir * 2 * PI / (p * 4)
+    let tangent_len_inner = is * ir * 2 * PI / (p * 4)
 
     for i in 0 ... pt-1
         let main_angle = -PI / 2 + angle_radians + i * half_angle * 2
@@ -205,7 +219,7 @@ function pucker_bloat(
 )
 {
     // Normalize to [0, 1]
-    let amount = a / 100;
+    let amount = a / 100
 
     // Find the mean of the bezier vertices
     let center = Point()
@@ -234,6 +248,91 @@ function pucker_bloat(
             output_bezier.close()
 
         result.add(output_bezier)
+
+    return result
+}
+```
+
+
+## Round Corners
+
+
+See [Round Corners](shapes.md#round-corners).
+
+It approximates rounding using circular arcs.
+
+The magic number `0.5519` is what lottie uses for this, based on [this article](https://spencermortensen.com/articles/bezier-circle/).
+
+```typescript
+// Helper function to perform rounding on a single vertex
+function get_vertex_tangent(
+    // Bezier to round
+    bezier: Bezier,
+    // Vertex in the bezier we are rounding
+    current_vertex: Point
+    // Index of the next point along the curve
+    closest_index: integer,
+    // Rounding radius
+    round_distance:number
+)
+{
+    const tangent_length = 0.5519
+
+    // closest_index module bezier.length
+    closest_index = closest_index % bezier.length
+    if closest_index < 0
+        closest_index += bezier.length
+
+
+    let closest_vertex = bezier.vertex[closest_index]
+    let distance = length(current_vertex - closest_vertex)
+    let new_pos_perc = distance != 0 ? min(distance/2, round_distance) / distance : 0
+    auto vertex = current_vertex + (closest_vertex - current_vertex) * new_pos_perc
+    auto tangent = - (vertex - current_vertex) * tangent_length
+    return vertex, tangent
+}
+
+// Rounding for a single continuos curve
+function round_bezier_corners(
+    // Bezier to round
+    original: Bezier,
+    // Rounding radius
+    round_distance: number
+)
+{
+    let result = Bezier
+    result.closed = original.closed
+
+    for i = 0 ... original.length - 1
+        // Start and end of a non-closed path don't get rounded
+        if !original.closed && (i == 0 || i == original.size() - 1)
+            result.add_vertex(original.vertex[i])
+            result.add_in_tangent(original.in_tangent[i])
+            result.add_out_tangent(original.out_tangent[i])
+        else
+            let (vert1, out_t) = get_vert_tan(original, original.vertex[i], i - 1, round_distance)
+            result.add_vertex(vert1)
+            result.add_out_tangent(out_t)
+
+            let (vert2, in_t) = get_vert_tan(original, original.vertex[i], i + 1, round_distance)
+            result.add_vertex(vert2)
+            result.add_in_tangent(in_t)
+
+    return result
+}
+
+// Rounding on multiple bezier
+function round_corners(
+    // Beziers as collected from the other shapes
+    collected_shapes: array[Bezier],
+    // `r` property from lottie
+    r: number
+)
+{
+    let result = array[Bezier]
+
+    for input_bezier in collected_shapes
+        result.add(round_bezier_corners(input_bezier, r))
 
     return result
 }

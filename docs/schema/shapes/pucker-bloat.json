@@ -11,12 +11,13 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Shape Type",
                     "type": "string",
                     "const": "pb"
                 },
                 "a": {
                     "title": "Amount",
+                    "description": "Amount as a percentage",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

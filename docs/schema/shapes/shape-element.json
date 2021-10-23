@@ -16,7 +16,7 @@
                     "type": "boolean"
                 },
                 "ty": {
-                    "title": "Type",
+                    "title": "Shape Type",
                     "type": "string",
                     "oneOf": [
                         {

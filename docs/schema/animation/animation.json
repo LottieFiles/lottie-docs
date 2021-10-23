@@ -37,18 +37,20 @@
                     "default": 60
                 },
                 "w": {
-                    "title": "Width of the animation",
+                    "title": "Width",
+                    "description": "Width of the animation",
                     "type": "integer",
                     "default": 512
                 },
                 "h": {
-                    "title": "Height of the animation",
+                    "title": "Height",
+                    "description": "Height of the animation",
                     "type": "integer",
                     "default": 512
                 },
                 "ddd": {
                     "title": "Threedimensional",
-                    "$ref": "#/$defs/types/int-boolean",
+                    "$ref": "#/$defs/helpers/int-boolean",
                     "default": 0
                 },
                 "assets": {
@@ -71,6 +73,7 @@
                     }
                 },
                 "meta": {
+                    "title": "Metadata",
                     "description": "Document metadata",
                     "$ref": "#/$defs/animation/metadata"
                 }

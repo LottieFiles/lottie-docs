@@ -337,24 +337,22 @@ Multiple Shapes:enum:layers[0].shapes[4].m:trim-multiple-shapes
 :json:layers[0].shapes[4]
 
 
-
-### Rounded Corners
+### Round Corners
 
 Self explanatory
 
-|Attribute|Type                                         |Description {schema_link:shapes/rounded-corners}|
-|----|--------------------------------------------------|-----------------------|
-|`r` |[Animated](concepts.md#animated-property) `number`|Radius                 |
+{schema_object:shapes/round-corners}
+SKIP:#/$defs/shapes/shape
 
 {lottie_playground:rounded_corners.json:512:512}
 Radius:slider:layers[0].shapes[0].it[1].r.k:0:50:100
 :json:layers[0].shapes[0].it[1]
 
+
 ### Pucker / Bloat
 
-|Attribute|Type                                         |Description {schema_link:shapes/pucker-bloat}|
-|----|--------------------------------------------------|-----------------------|
-|`a` |[Animated](concepts.md#animated-property) `number`|Amount as a percentage |
+{schema_object:shapes/pucker-bloat}
+SKIP:#/$defs/shapes/shape
 
 Interpolates bezier vertices towards the center of the shape, and tangent handles away from it (or vice-versa).
 

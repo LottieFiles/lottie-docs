@@ -17,7 +17,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Shape Type",
                     "type": "string",
                     "const": "gs"
                 }

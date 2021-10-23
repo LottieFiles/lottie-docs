@@ -133,7 +133,7 @@ def cmd_compare(ns):
         ("effects/tint", "effects/tint-effect"),
         ("effects/tritone", "effects/tritone-effect"),
         ("helpers/blendMode", "constants/blend-mode"),
-        ("helpers/boolean", "types/int-boolean"),
+        ("helpers/boolean", "helpers/int-boolean"),
         ("helpers/composite", "constants/composite"),
         ("helpers/lineCap", "constants/line-cap"),
         ("helpers/lineJoin", "constants/line-join"),

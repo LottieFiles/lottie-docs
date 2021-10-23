@@ -37,7 +37,7 @@
                 "e": {
                     "title": "Embedded",
                     "description": "Whether the image is embedded",
-                    "$ref": "#/$defs/types/int-boolean",
+                    "$ref": "#/$defs/helpers/int-boolean",
                     "default": 0
                 }
             },

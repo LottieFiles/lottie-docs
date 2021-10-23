@@ -8,7 +8,7 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "title": "Identifier",
+                    "title": "ID",
                     "description": "Identifier used by layers when referencing this asset",
                     "type": "string",
                     "default": ""

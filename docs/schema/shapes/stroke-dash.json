@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "n": {
-                    "title": "Type",
+                    "title": "Shape Type",
                     "$ref": "#/$defs/constants/stroke-dash-type",
                     "default": "d"
                 },
