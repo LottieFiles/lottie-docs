@@ -47,14 +47,14 @@ In this case 120 frames at 60 fps will result in 2 seconds of animation
 `w` and `h` describe the width and height of the animation,
 any content outside the box starting at `(0, 0)` and ending at `(w, h)` will not be visible.
 
-Note that a lottie file is a vector format and can be scaled up an down.
-So you shouldn't thing of these values as a size in pixels.
+Note that a lottie file is a vector format and can be scaled up and down.
+So you shouldn't think of these values as a size in pixels.
 
 ## Layers
 
 Now we look at the [layers](../layers.md).
 
-Most file will be more complex than this and have multiple layer but here we only have one:
+Most file will be more complex than this and have multiple layers but here we only have one:
 
 ```json
  {
@@ -76,9 +76,11 @@ We see the layer can also have a name (`nm`).
 
 You might note that `ip` and `op` have the same values as in the animation.
 This means the layer will always be visible.
-You can decide to show a layer only for a small amount of time, in that case
+You can decide to show a layer only for a small amount of time, in which case
 you would set `ip` to the first frame the layer should be visible at and
 `op` to the last frame, and the layer will only be visible between those frames.
+
+`ddd` is a boolean value that indicates whether this layer contains 3D elements.
 
 `ty` is the layer type. In this case it's a [shape layer](../layers.md#shape-layer).
 
@@ -134,14 +136,15 @@ In this case they don't have any animations applied to them so `a` is `0` and `k
 
 If they were animated, `a` would be `1` and `k` would have a list of keyframes (more on this later).
 
-The animated properties of a transform are:
+The animated properties of a transform are as follows:
 
-`a` the anchor point along which other transformations are applied (you can think of it as the center of rotation).
+`a` is the anchor point along which other transformations are applied (you can think of it as the center of rotation).
 
-`p` is the position (translation). Both `a` and `p` have arrays as value representing 2D coordinates.
+`p` is the position (translation). Both `a` and `p` have arrays as values representing 2D coordinates.
 
-`s` is the scale, similar to `a` and `p` its value have 2 components.
-Note that values are expressed as a percentage (`100` meaning 100% or no scaling).
+`s` is the scale and, similar to `a` and `p`, its value has 2 components.
+
+Note that values are expressed as percentages (`100` meaning 100% or no scaling).
 
 `r` is the rotation angle in degrees.
 
@@ -164,7 +167,7 @@ In this case there is only one shape:
 ```
 
 `ty` represents the type of the shape, in this case it's a [group](../shapes.md#group),
-which is simply a shape that contains other shape.
+which is simply a shape that contains other shapes.
 
 Groups add another layer of organization: you have layers at the top,
 shape layers can contain group shapes, and groups can contain other groups.
