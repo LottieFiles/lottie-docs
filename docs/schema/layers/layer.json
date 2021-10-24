@@ -178,6 +178,12 @@
                     "title": "Layer XML ID",
                     "description": "`id` attribute used by the SVG renderer",
                     "type": "string"
+                },
+                "mb": {
+                    "title": "Motion Blur",
+                    "$comment": "Not actually supported by lottie",
+                    "description": "Whether motion blur is enable for the layer",
+                    "type": "boolean"
                 }
             },
             "required": ["ty", "st", "ip", "op", "ks"]

@@ -83,6 +83,10 @@
                     "title": "Metadata",
                     "description": "Document metadata",
                     "$ref": "#/$defs/animation/metadata"
+                },
+                "mb": {
+                    "title": "Motion Blur",
+                    "$ref": "#/$defs/animation/motion-blur"
                 }
             },
             "required": ["w", "h", "fr", "layers", "op", "ip"]
