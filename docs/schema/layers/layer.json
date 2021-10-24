@@ -181,7 +181,6 @@
                 },
                 "mb": {
                     "title": "Motion Blur",
-                    "$comment": "Not actually supported by lottie",
                     "description": "Whether motion blur is enable for the layer",
                     "type": "boolean"
                 }
