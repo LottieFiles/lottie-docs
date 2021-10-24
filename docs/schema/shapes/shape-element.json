@@ -84,6 +84,11 @@
                 "bm": {
                     "title": "Blend Mode",
                     "$ref": "#/$defs/constants/blend-mode"
+                },
+                "cl": {
+                    "title": "Class",
+                    "description": "CSS class used by the SVG renderer",
+                    "type": "string"
                 }
             },
             "required": ["ty"]

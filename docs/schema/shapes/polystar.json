@@ -24,7 +24,6 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "os": {
-                    "title": "Outer Roundness",
                     "title": "Outer Roundness as a percentage",
                     "$ref": "#/$defs/animated-properties/value"
                 },
@@ -42,6 +41,11 @@
                     "description": "Star type, `1` for Star, `2` for Polygon",
                     "$ref": "#/$defs/constants/star-type",
                     "default": 1
+                },
+                "d": {
+                    "title": "Direction",
+                    "description": "Direction the shape is drawn as, mostly relevant when using trim path",
+                    "$ref": "#/$defs/constants/shape-direction"
                 }
             },
             "required": [
