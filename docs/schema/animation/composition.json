@@ -8,7 +8,14 @@
             "title": "Layers",
             "type": "array",
             "items": {
-                "$ref": "#/$defs/layers/concrete-layer"
+                "oneOf": [
+                    {"$ref": "#/$defs/layers/precomposition-layer"},
+                    {"$ref": "#/$defs/layers/solid-color-layer"},
+                    {"$ref": "#/$defs/layers/image-layer"},
+                    {"$ref": "#/$defs/layers/null-layer"},
+                    {"$ref": "#/$defs/layers/shape-layer"},
+                    {"$ref": "#/$defs/layers/text-layer"}
+                ]
             }
         }
     },

@@ -156,7 +156,17 @@
                     "title": "Effects",
                     "type": "array",
                     "items": {
-                        "$ref": "#/$defs/effects/effect"
+                        "oneOf":  [
+                            {"$ref": "#/$defs/effects/change-to-color-effect"},
+                            {"$ref": "#/$defs/effects/drop-shadow-effect"},
+                            {"$ref": "#/$defs/effects/fill-effect"},
+                            {"$ref": "#/$defs/effects/gaussian-blur-effect"},
+                            {"$ref": "#/$defs/effects/matte3-effect"},
+                            {"$ref": "#/$defs/effects/pro-levels-effect"},
+                            {"$ref": "#/$defs/effects/stroke-effect"},
+                            {"$ref": "#/$defs/effects/tint-effect"},
+                            {"$ref": "#/$defs/effects/tritone-effect"}
+                        ]
                     }
                 },
                 "cl": {

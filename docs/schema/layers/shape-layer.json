@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Shape Layer",
-    "description": "Layer containing ShapeElement objects",
+    "description": "Layer containing Shapes",
     "allOf": [
         {
             "$ref": "#/$defs/layers/layer"
@@ -18,10 +18,7 @@
                 },
                 "shapes": {
                     "title": "Shapes",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/shapes/concrete-shape"
-                    }
+                    "$ref": "#/$defs/shapes/shape-list"
                 }
             },
             "required": [

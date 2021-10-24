@@ -21,10 +21,7 @@
                 },
                 "it": {
                     "title": "Shapes",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/shapes/concrete-shape"
-                    }
+                    "$ref": "#/$defs/shapes/shape-list"
                 }
             },
             "required": [

@@ -57,7 +57,14 @@
                     "title": "Assets",
                     "type": "array",
                     "items": {
-                        "$ref": "#/$defs/assets/asset"
+                        "oneOf": [
+                            {
+                                "$ref": "#/$defs/assets/image"
+                            },
+                            {
+                                "$ref": "#/$defs/assets/precomposition"
+                            }
+                        ]
                     }
                 },
                 "fonts": {
