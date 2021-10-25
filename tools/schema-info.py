@@ -173,7 +173,7 @@ def cmd_compare(ns):
         ("shapes/repeater", "shapes/repeater"),
         ("shapes/round", "shapes/rounded-corners"),
         ("shapes/shape", "shapes/path"),
-        ("shapes/star", "shapes/star"),
+        ("shapes/star", "shapes/polystar"),
         ("shapes/stroke", "shapes/stroke"),
         ("shapes/transform", "shapes/transform"),
         ("shapes/trim", "shapes/trim"),
