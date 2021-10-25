@@ -11,11 +11,11 @@
             "type": "object",
             "properties": {
                 "rx": {
-                    "title": "Rx",
+                    "title": "Rotate X",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "ry": {
-                    "title": "Ry",
+                    "title": "Rotate Y",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "sw": {
@@ -28,18 +28,18 @@
                 },
                 "fc": {
                     "title": "Fill Color",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/color-value"
                 },
                 "fh": {
-                    "title": "Fh",
+                    "title": "Fill Hue",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "fs": {
-                    "title": "Fs",
+                    "title": "Fill Saturation",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "fb": {
-                    "title": "Fb",
+                    "title": "Fill Brightness",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "t": {

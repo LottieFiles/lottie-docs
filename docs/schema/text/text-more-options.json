@@ -12,8 +12,8 @@
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "g": {
-                    "title": "G",
-                    "type": "number"
+                    "title": "Grouping",
+                    "$ref": "#/$defs/constants/text-grouping"
                 }
             },
             "required": []

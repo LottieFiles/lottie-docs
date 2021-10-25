@@ -18,7 +18,7 @@ json_data = {
 root = pathlib.Path(__file__).parent.parent / "docs" / "schema"
 
 defs = {}
-for subdir in root.iterdir():
+for subdir in sorted(root.iterdir()):
     dir_schema = {}
     if subdir.is_dir():
         for file_item in subdir.iterdir():
