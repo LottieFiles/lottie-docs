@@ -41,7 +41,7 @@
                 }
             },
             "required": ["shapes"]
-        },
-        "required": ["data", "ch", "fFamily", "size", "style", "w"]
-    }
+        }
+    },
+    "required": ["data", "ch", "fFamily", "size", "style", "w"]
 }
