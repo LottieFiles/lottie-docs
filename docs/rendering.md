@@ -60,6 +60,7 @@ function rect(
     p: Point,
     s: Size
 )
+{
     let left = p.x - s.width / 2
     let right = p.x + s.width / 2
     let top = p.y - s.height / 2
@@ -73,7 +74,7 @@ function rect(
     bezier.add_vertex(Point(left, top))
 
     return result
-
+}
 
 function rounded_rect(
     // Properties from lottie:
@@ -81,6 +82,7 @@ function rounded_rect(
     s: Size,
     r: number
 )
+{
     let left = p.x - s.width / 2
     let right = p.x + s.width / 2
     let top = p.y - s.height / 2
@@ -127,6 +129,7 @@ function rounded_rect(
 
 
     return result
+}
 ```
 
 ## Ellipse

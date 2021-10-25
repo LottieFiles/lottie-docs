@@ -42,7 +42,9 @@ so changing the framerate means the duration of the animation will also change.
 
 `op` is the last frame of the animation, after which the animation will loop or stop,
 depending on how the player is set up.
-In this case 120 frames at 60 fps will result in 2 seconds of animation
+In this case 120 frames at 60 fps will result in 2 seconds of animation.
+
+`ip` marks the first frame of the animation, usually it's set to `0`.
 
 `w` and `h` describe the width and height of the animation,
 any content outside the box starting at `(0, 0)` and ending at `(w, h)` will not be visible.
