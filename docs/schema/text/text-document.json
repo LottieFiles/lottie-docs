@@ -43,7 +43,16 @@
             "title": "Justify",
             "$ref": "#/$defs/constants/text-justify",
             "default": 0
+        },
+        "ca": {
+            "title": "Text Caps",
+            "$ref": "#/$defs/constants/text-caps"
+        },
+        "tr": {
+            "title": "Tracking",
+            "description": "Text Tracking",
+            "type": "number"
         }
     },
-    "required": []
+    "required": ["f", "fc", "s", "t"]
 }

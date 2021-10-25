@@ -5,5 +5,15 @@
     "description": "Represents boolean values as an integer. 0 is false, 1 is true.",
     "default": 0,
     "examples": [0],
-    "enum": [0, 1]
+    "enum": [0, 1],
+    "oneOf": [
+        {
+            "title": "True",
+            "const": 1
+        },
+        {
+            "title": "False",
+            "const": 0
+        }
+    ]
 }

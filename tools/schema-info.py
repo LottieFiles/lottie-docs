@@ -139,7 +139,7 @@ def cmd_compare(ns):
         ("helpers/lineJoin", "constants/line-join"),
         ("helpers/mask", "helpers/mask"),
         ("helpers/textBased", "constants/text-based"),
-        #("helpers/textCaps", "constants/text-caps"),
+        ("helpers/textCaps", "constants/text-caps"),
         ("helpers/textGrouping", "constants/text-grouping"),
         ("helpers/textJustification", "constants/text-justify"),
         ("helpers/textShape", "constants/text-shape"),
@@ -180,6 +180,8 @@ def cmd_compare(ns):
         ("sources/image", "assets/image"),
         ("sources/precomp", "assets/precomposition"),
         ("sources/chars", "text/character-data"),
+
+        (("layers/text", "properties", "t", "properties", "d", "properties", "k", "items", "properties", "s"), "text/text-document"),
     ]
 
     here = SchemaLocationPath(pathlib.Path(__file__).parent.parent / "docs" / "schema")
@@ -188,10 +190,19 @@ def cmd_compare(ns):
     there_unused = set(str(x.relative_to(there.root))[:-5] for x in there.root.glob("**/*.json"))
 
     for there_file, here_file in mappings:
+        there_sub = tuple()
+        if isinstance(there_file, tuple):
+            there_sub = there_file[1:]
+            there_file = there_file[0]
+        else:
+            there_unused.discard(there_file)
+
         here_unused.discard(here_file)
-        there_unused.discard(there_file)
         summary_here = here.get_summary(here.fetch(here_file))
-        summary_there = there.get_summary(there.fetch(there_file))
+        data_there = there.fetch(there_file)
+        for attr in there_sub:
+            data_there = data_there[attr]
+        summary_there = there.get_summary(data_there)
         prop_diff = summary_here.properties != summary_there.properties
         req_diff = summary_here.required != summary_there.required
 

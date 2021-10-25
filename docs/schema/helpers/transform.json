@@ -47,11 +47,18 @@
         {
             "properties":  {
                 "px": {
-                    "title": "Split position X component",
+                    "title": "Position X",
+                    "description": "Split position X component",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "py": {
-                    "title": "Split position Y component",
+                    "title": "Position Y",
+                    "description": "Split position Y component",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "pz": {
+                    "title": "Position Z",
+                    "description": "Split position Y component",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             }

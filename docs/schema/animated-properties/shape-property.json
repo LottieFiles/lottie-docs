@@ -10,8 +10,13 @@
         },
         "a": {
             "title": "Animated",
+            "description": "Whether the property is animated",
             "$ref": "#/$defs/helpers/int-boolean",
             "default": 0
+        },
+        "x": {
+            "title": "Expression",
+            "type": "string"
         }
     },
     "allOf": [
@@ -42,5 +47,6 @@
                 }
             }
         }
-    ]
+    ],
+    "required": ["k"]
 }

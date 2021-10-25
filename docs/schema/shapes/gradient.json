@@ -33,7 +33,9 @@
                     "$ref": "#/$defs/animated-properties/gradient-colors"
                 }
             },
-            "required": []
+            "required": [
+                "s", "e", "g"
+            ]
         }
     ]
 }

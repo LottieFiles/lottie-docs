@@ -34,7 +34,7 @@
                 }
             },
             "required": [
-                "ty"
+                "ty", "sc", "sw", "sh"
             ]
         }
     ]

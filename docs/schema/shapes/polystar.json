@@ -45,7 +45,7 @@
                 }
             },
             "required": [
-                "ty"
+                "ty", "or", "os", "pt", "p", "r"
             ]
         },
         {
@@ -63,7 +63,8 @@
                         "description": "Inner Roundness as a percentage",
                         "$ref": "#/$defs/animated-properties/value"
                     }
-                }
+                },
+                "required": ["ir", "is"]
             }
         }
     ]

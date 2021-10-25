@@ -38,7 +38,7 @@
                 }
             },
             "required": [
-                "ty"
+                "ty", "refId"
             ]
         }
     ]
