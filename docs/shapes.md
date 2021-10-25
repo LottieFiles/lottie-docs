@@ -337,7 +337,7 @@ Multiple Shapes:enum:layers[0].shapes[4].m:trim-multiple-shapes
 :json:layers[0].shapes[4]
 
 
-### Round Corners
+### Rounded Corners
 
 Self explanatory
 
