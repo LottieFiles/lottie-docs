@@ -341,7 +341,7 @@ Multiple Shapes:enum:layers[0].shapes[4].m:trim-multiple-shapes
 
 Self explanatory
 
-{schema_object:shapes/round-corners}
+{schema_object:shapes/rounded-corners}
 SKIP:#/$defs/shapes/shape
 
 {lottie_playground:rounded_corners.json:512:512}

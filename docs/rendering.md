@@ -260,7 +260,7 @@ function pucker_bloat(
 ## Round Corners
 
 
-See [Round Corners](shapes.md#round-corners).
+See [Round Corners](shapes.md#rounded-corners).
 
 It approximates rounding using circular arcs.
 
