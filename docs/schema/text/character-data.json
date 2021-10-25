@@ -37,10 +37,7 @@
                 "shapes": {
                     "title": "Shapes",
                     "description": "Shapes forming the character",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/shapes/concrete-shape"
-                    }
+                    "$ref": "#/$defs/shapes/shape-list"
                 }
             },
             "required": ["shapes"]
