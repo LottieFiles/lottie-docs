@@ -17,7 +17,7 @@
                 },
                 "p": {
                     "title": "Position",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/position"
                 },
                 "or": {
                     "title": "Outer Radius",

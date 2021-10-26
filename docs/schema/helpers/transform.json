@@ -7,7 +7,7 @@
         "a": {
             "title": "Anchor Point",
             "description": "Anchor point: a position (relative to its parent) around which transformations are applied (ie: center for rotation / scale)",
-            "$ref": "#/$defs/animated-properties/multi-dimensional"
+            "$ref": "#/$defs/animated-properties/position"
         },
         "s": {
             "title": "Scale",
@@ -40,7 +40,7 @@
                 "p": {
                     "title": "Position",
                     "description": "Position / Translation",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/position"
                 }
             }
         },

@@ -21,22 +21,6 @@
             "items": {
                 "type": "number"
             }
-        },
-        "ti": {
-            "title": "Value In Tangent",
-            "description": "Tangent for values (eg: moving position around a curved path",
-            "type": "array",
-            "items": {
-                "type": "number"
-            }
-        },
-        "to": {
-            "title": "Value Out Tangent",
-            "description": "Tangent for values (eg: moving position around a curved path",
-            "type": "array",
-            "items": {
-                "type": "number"
-            }
         }
     },
     "allOf": [

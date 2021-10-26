@@ -11,7 +11,7 @@
             "title": "Transform",
             "properties": {
                 "s": {
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/position"
                 }
             }
         },
