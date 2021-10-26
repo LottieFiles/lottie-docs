@@ -11,6 +11,21 @@ ef:Array of [effect values](#effect-values). Each effect below shows a table wit
 Many effects have unused values which are labeled with a number.
 
 
+Effect types:
+
+|`ty`| Effect Type |
+|----|-------------|
+|`5` |[Change to Color](#change-to-color-effect)|
+|`20`|[Tint](#tint-effect)|
+|`21`|[Fill](#fill-effect)|
+|`22`|[Stroke](#stroke-effect)|
+|`23`|[Tritone](#tritone-effect)|
+|`24`|[Pro Levels](#pro-levles-effect)|
+|`25`|[Drop Shadow](#drop-shadow-effect)|
+|`28`|[Matte3](#matte3-effect)|
+|`29`|[Gaussian Blur](#gaussian-blur-effect)|
+
+
 All the examples will use this as their base:
 
 {lottie:image.json:512:512}
@@ -195,6 +210,20 @@ Blur:slider:layers[0].ef[0].ef[4].v.k:0:7:512
 
 {schema_object:effects/effect-value}
 EXPAND:#/$defs/helpers/visual-object
+
+
+|`ty`| Control Type |
+|----|--------------|
+|`0` |[Slider](#slider)|
+|`1` |[Angle](#angle)|
+|`2` |[Color](#color)|
+|`3` |[Point](#point)|
+|`4` |[Checkbox](#checkbox)|
+|`6` |[Ignored](#ignored)|
+|`7` |[Dropdown](#dropdown)|
+|`10`|[Layer](#layer)|
+
+
 
 ### No Value
 
