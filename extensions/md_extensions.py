@@ -205,8 +205,8 @@ class Matrix(BlockProcessor):
 
 
 class SchemaData:
-    def __init__(self):
-        self._data = None
+    def __init__(self, data=None):
+        self._data = data
 
     def get_schema(self):
         if self._data is None:
@@ -215,7 +215,7 @@ class SchemaData:
         return self._data
 
     def get_ref(self, ref: str):
-        if not ref.startswith("#/"):
+        if not ref.startswith("#/") and not ref.startswith("/$defs") and not ref.startswith("$defs"):
             ref = "$defs/" + ref
         return self.get_path(ref.strip("#").strip("/").split("/"))
 
@@ -231,6 +231,54 @@ class SchemaData:
         for item in enum["oneOf"]:
             data.append((item["const"], item["title"], item.get("description", "")))
         return data
+
+
+class ReferenceLink:
+    def __init__(self, group, cls, name):
+        self.page = self.group = group
+        self.anchor = self.cls = cls
+        self.name = name
+
+
+def ref_links(ref: str, data: SchemaData):
+    chunks = ref.strip("#/").split("/")
+    if len(chunks) > 0 and chunks[0] == "$defs":
+        chunks.pop(0)
+
+    if len(chunks) != 2:
+        return []
+
+    name = data.get_ref(ref).get("title", chunks[1])
+    link = ReferenceLink(chunks[0], chunks[1], name)
+
+    if link.group in ("helpers", "animated-properties"):
+        link.page = "concepts"
+
+    if link.cls == "int-boolean":
+        link.anchor = "booleans"
+        link.name = "0-1 Integer"
+    elif link.group == "animated-properties":
+        extra = None
+        link.name = "Animated "
+        link.anchor = "animated-property"
+        if link.cls == "value":
+            link.name += "number"
+        elif link.cls == "multi-dimensional":
+            link.name += "Vector"
+        elif link.cls == "color-value":
+            extra = ReferenceLink("concepts", "colors", "Color")
+        elif link.cls == "shape-property":
+            extra = ReferenceLink("concepts", "colors", "Bezier")
+        elif link.cls == "position":
+            link.anchor = "animated-position"
+            name += "Position"
+
+        if extra:
+            return [link, extra]
+    elif link.group == "constants":
+        link.anchor = link.anchor.replace("-", "")
+
+    return [link]
 
 
 class SchemaEnum(BlockProcessor):
@@ -552,34 +600,24 @@ class SchemaObject(BlockProcessor):
                 etree.SubElement(etree.SubElement(tr, "td"), "code").text = name
 
                 type_cell = etree.SubElement(tr, "td")
-                if prop.type == "#/$defs/helpers/int-boolean":
-                    type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#booleans"})
-                    type_text.text = "0-1 "
-                    etree.SubElement(type_text, "code").text = "integer"
-                elif prop.type.startswith("#/$defs/animated-properties/"):
-                    anim_type = prop.type.split("/")[-1]
-                    type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#animated-property"})
-                    type_text.text = "Animated"
-                    type_text.tail = " "
-                    if anim_type == "value":
-                        type_text = etree.SubElement(type_cell, "code").text = "number"
-                    elif anim_type == "multi-dimensional":
-                        type_text.tail += "Vector"
-                    elif anim_type == "color-value":
-                        type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#colors"})
-                        type_text.text = "Color"
-                    elif anim_type == "shape-property":
-                        type_text = etree.SubElement(type_cell, "a", {"href": "concepts.md#bezier"})
-                        type_text.text = "Bezier"
-                elif prop.type.startswith("#/$defs/"):
-                    split = prop.type.split("/")
-                    page = split[-2]
-                    if page == "types" or page == "helpers":
-                        page = "concepts"
-                    title = self.schema_data.get_ref(prop.type)["title"]
-                    type_text = etree.SubElement(type_cell, "a")
-                    type_text.attrib["href"] = "%s.md#%s" % (page, title.replace(" ", "-").lower())
-                    type_text.text = title
+
+                if prop.type.startswith("#/$defs/"):
+                    links = ref_links(prop.type, self.schema_data)
+                    for link in links:
+                        type_text = etree.SubElement(type_cell, "a")
+                        type_text.attrib["href"] = "%s.md#%s" % (link.page, link.anchor)
+                        type_text.text = link.name
+                        type_text.tail = " "
+                        if link.cls == "int-boolean":
+                            type_text.text = "0-1 "
+                            etree.SubElement(type_text, "code").text = "integer"
+                        elif link.anchor == "animated-property" and len(links) == 1:
+                            type_text.text = "Animated"
+                            type_text.tail = " "
+                            if link.cls == "value":
+                                type_text = etree.SubElement(type_cell, "code").text = "number"
+                            else:
+                                type_text.tail += link.name.split(" ", 1)[1]
                 else:
                     type_text = etree.SubElement(type_cell, "code")
                     type_text.text = prop.type
@@ -595,11 +633,13 @@ class SchemaObject(BlockProcessor):
 
 
 class JsonHtmlSerializer:
-    def __init__(self, parent):
+    def __init__(self, parent, md, json_data):
         self.parent = parent
         self.tail = None
         self.encoder = json.JSONEncoder()
         self.parent.text = ""
+        self.md = md
+        self.schema = SchemaData(json_data)
 
     def encode(self, json_object, indent, id=None):
         if isinstance(json_object, dict):
@@ -637,6 +677,15 @@ class JsonHtmlSerializer:
         child_id = id + "/" + key
         self.encode_item(key, "attr", "#" + child_id)
         self.tail.attrib["id"] = child_id
+        if child_id.count("/") == 3:
+            for link in ref_links(child_id, self.schema):
+                self.tail.tail += " "
+                self.tail = etree.SubElement(self.parent, "a")
+                self.tail.attrib["href"] = get_url(self.md, link.page + ".md") + "#" + link.anchor
+                self.tail.attrib["title"] = link.name
+                icon = etree.SubElement(self.tail, "i")
+                icon.attrib["class"] = "fas fa-book-open"
+                self.tail.tail = " "
         return child_id
 
     def encode_dict(self, json_object, indent, id):
@@ -707,7 +756,7 @@ class JsonFile(InlineProcessor):
 
         code = etree.SubElement(pre, "code")
 
-        JsonHtmlSerializer(code).encode(json_data, 0, "")
+        JsonHtmlSerializer(code, self.md, json_data).encode(json_data, 0, "")
 
         return pre, match.start(0), match.end(0)
 
