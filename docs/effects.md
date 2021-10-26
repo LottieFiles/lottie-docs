@@ -22,6 +22,7 @@ Effect types:
 |`23`|[Tritone](#tritone-effect)|
 |`24`|[Pro Levels](#pro-levles-effect)|
 |`25`|[Drop Shadow](#drop-shadow-effect)|
+|`26`|[Radial Wipe](#radial-wipe)|
 |`28`|[Matte3](#matte3-effect)|
 |`29`|[Gaussian Blur](#gaussian-blur-effect)|
 
@@ -78,7 +79,7 @@ SKIP:#/$defs/effects/effect
 Bright:label:
 Red:slider:layers[0].ef[0].ef[0].v.k[0]:0:1:1:0.1
 Green:slider:layers[0].ef[0].ef[0].v.k[1]:0:1:1:0.1
-Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:0:1:0.1
+Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:1:1:0.1
 Mid:label:
 Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0.3:1:0.1
 Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:0.8:1:0.1
@@ -205,6 +206,15 @@ Angle:slider:layers[0].ef[0].ef[2].v.k:0:135:360
 Distance:slider:layers[0].ef[0].ef[3].v.k:0:10:512
 Blur:slider:layers[0].ef[0].ef[4].v.k:0:7:512
 :json:layers[0].ef[0]
+
+
+### Radial Wipe
+
+{schema_object:effects/radial-wipe-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/radial-wipe-effect}
+
 
 ## Effect Values
 

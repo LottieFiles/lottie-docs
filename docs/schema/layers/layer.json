@@ -165,7 +165,8 @@
                             {"$ref": "#/$defs/effects/pro-levels-effect"},
                             {"$ref": "#/$defs/effects/stroke-effect"},
                             {"$ref": "#/$defs/effects/tint-effect"},
-                            {"$ref": "#/$defs/effects/tritone-effect"}
+                            {"$ref": "#/$defs/effects/tritone-effect"},
+                            {"$ref": "#/$defs/effects/radial-wipe-effect"}
                         ]
                     }
                 },

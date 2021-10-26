@@ -1,8 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Drop Shadow Effect",
-    "description": "Adds a shadow to the layer",
+    "title": "Radial Wipe",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"
@@ -13,31 +12,31 @@
                 "ty": {
                     "title": "Type",
                     "type": "integer",
-                    "const": 25
+                    "const": 26
                 },
                 "ef": {
                     "title": "Effect values",
                     "type": "array",
                     "prefixItems": [
                         {
-                            "title": "color",
-                            "$ref": "#/$defs/effects/effect-value-color"
-                        },
-                        {
-                            "title": "opacity",
-                            "description": "Opacity between 0 and 255",
+                            "title": "Completion",
+                            "description": "Between 0 and 100",
                             "$ref": "#/$defs/effects/effect-value-slider"
                         },
                         {
-                            "title": "angle",
+                            "title": "Start Angle",
                             "$ref": "#/$defs/effects/effect-value-angle"
                         },
                         {
-                            "title": "distance",
+                            "title": "Wipe Center",
+                            "$ref": "#/$defs/effects/effect-value-point"
+                        },
+                        {
+                            "title": "Wipe",
                             "$ref": "#/$defs/effects/effect-value-slider"
                         },
                         {
-                            "title": "blur",
+                            "title": "Feather",
                             "$ref": "#/$defs/effects/effect-value-slider"
                         }
                     ]
@@ -49,3 +48,4 @@
         }
     ]
 }
+
