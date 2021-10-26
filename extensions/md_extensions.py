@@ -406,7 +406,8 @@ class LottiePlayground(BlockProcessor):
             row_match = self.re_row.match(line)
             if not row_match:
                 raise Exception("Unexpected playground line %r" % line)
-
+            if line.startswith("//"):
+                continue
             type = row_match.group("type")
             paths = row_match.group("path").split(",")
             args = (row_match.group("args") or "").split(":")

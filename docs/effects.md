@@ -8,6 +8,8 @@ Layers can have post-processing effects applied to them.
 EXPAND:#/$defs/helpers/visual-object
 ef:Array of [effect values](#effect-values). Each effect below shows a table with the values it expects.
 
+Many effects have unused values which are labeled with a number.
+
 
 All the examples will use this as their base:
 
@@ -25,12 +27,12 @@ SKIP:#/$defs/effects/effect
 
 
 {lottie_playground:effects-fill.json:512:512}
-00.x:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:512
-00.y:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:512
-01:slider:layers[0].ef[0].ef[1].v.k:0:0:10
-03:slider:layers[0].ef[0].ef[3].v.k:0:0:10
-04:slider:layers[0].ef[0].ef[4].v.k:0:0:100
-05:slider:layers[0].ef[0].ef[5].v.k:0:0:100
+//00.x:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:512
+//00.y:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:512
+//01:slider:layers[0].ef[0].ef[1].v.k:0:0:10
+//03:slider:layers[0].ef[0].ef[3].v.k:0:0:10
+//04:slider:layers[0].ef[0].ef[4].v.k:0:0:100
+//05:slider:layers[0].ef[0].ef[5].v.k:0:0:100
 Opacity:slider:layers[0].ef[0].ef[6].v.k:0:1:1:0.1
 Color:label:
 Red:slider:layers[0].ef[0].ef[2].v.k[0]:0:1:1:0.1
@@ -75,10 +77,47 @@ Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0:1:0.1
 
 ### Pro Levels Effect
 
+Color correction levels.
+For more information refer to the [After Effects Documentation](https://helpx.adobe.com/after-effects/using/color-correction-effects.html#levels_effect).
+
 {schema_object:effects/pro-levels-effect}
 SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/pro-levels-effect}
+
+
+{lottie_playground:effects-prolevels.json:512:512}
+Composite:label:
+In Black    :slider:layers[0].ef[0].ef[3].v.k:0:0:1:0.1
+In White    :slider:layers[0].ef[0].ef[4].v.k:0:1:1:0.1
+Gamma       :slider:layers[0].ef[0].ef[5].v.k:0:1:3:0.1
+Out Black   :slider:layers[0].ef[0].ef[6].v.k:0:0:1:0.1
+Out White   :slider:layers[0].ef[0].ef[7].v.k:0:1:1:0.1
+Red:label:
+In Black    :slider:layers[0].ef[0].ef[10].v.k:0:0:1:0.1
+In White    :slider:layers[0].ef[0].ef[11].v.k:0:0:1:0.1
+Gamma       :slider:layers[0].ef[0].ef[12].v.k:0:1:3:0.1
+Out Black   :slider:layers[0].ef[0].ef[13].v.k:0:0:1:0.1
+Out White   :slider:layers[0].ef[0].ef[14].v.k:0:1:1:0.1
+Green:label:
+In Black    :slider:layers[0].ef[0].ef[17].v.k:0:0:1:0.1
+In White    :slider:layers[0].ef[0].ef[18].v.k:0:0:1:0.1
+Gamma       :slider:layers[0].ef[0].ef[19].v.k:0:1:3:0.1
+Out Black   :slider:layers[0].ef[0].ef[20].v.k:0:0:1:0.1
+Out White   :slider:layers[0].ef[0].ef[21].v.k:0:1:1:0.1
+Blue:label:
+In Black    :slider:layers[0].ef[0].ef[24].v.k:0:0:1:0.1
+In White    :slider:layers[0].ef[0].ef[25].v.k:0:0:1:0.1
+Gamma       :slider:layers[0].ef[0].ef[26].v.k:0:1:3:0.1
+Out Black   :slider:layers[0].ef[0].ef[27].v.k:0:0:1:0.1
+Out White   :slider:layers[0].ef[0].ef[28].v.k:0:1:1:0.1
+//Alpha:label:
+//In Black    :slider:layers[0].ef[0].ef[30].v.k:0:0:1:0.1
+//In White    :slider:layers[0].ef[0].ef[31].v.k:0:0:1:0.1
+//Gamma       :slider:layers[0].ef[0].ef[32].v.k:0:1:3:0.1
+//Out Black   :slider:layers[0].ef[0].ef[33].v.k:0:0:1:0.1
+//Out White   :slider:layers[0].ef[0].ef[34].v.k:0:1:1:0.1
+:json:layers[0].ef[0]
 
 ### Tint Effect
 
