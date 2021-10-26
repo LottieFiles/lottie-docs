@@ -84,9 +84,9 @@ Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0.3:1:0.1
 Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:0.8:1:0.1
 Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0.3:1:0.1
 Dark:label:
-Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0:1:0.1
-Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:0:1:0.1
-Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0:1:0.1
+Red:slider:layers[0].ef[0].ef[2].v.k[0]:0:0:1:0.1
+Green:slider:layers[0].ef[0].ef[2].v.k[1]:0:0:1:0.1
+Blue:slider:layers[0].ef[0].ef[2].v.k[2]:0:0:1:0.1
 :json:layers[0].ef[0]
 
 
