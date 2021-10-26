@@ -1,0 +1,56 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Selector Property",
+    "properties": {
+        "t": {
+            "title": "Start Time",
+            "type": "number"
+        },
+        "xe": {
+            "title": "Max Ease",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "ne": {
+            "title": "Min Ease",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "a": {
+            "title": "Max Amount",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "b": {
+            "title": "Based On",
+            "$ref": "#/$defs/constants/text-based"
+        },
+        "rn": {
+            "title": "Range Units",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "sh": {
+            "title": "Shape",
+            "$ref": "#/$defs/constants/text-shape"
+        },
+        "o": {
+            "title": "Offset",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "r": {
+            "title": "Randomize",
+            "$ref": "#/$defs/helpers/int-boolean"
+        },
+        "sm": {
+            "title": "Expression Selector",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "s": {
+            "title": "Start",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "e": {
+            "title": "End",
+            "$ref": "#/$defs/animated-properties/value"
+        }
+    },
+    "required": ["t", "xe", "ne", "a", "b", "rn", "sh", "o"]
+}

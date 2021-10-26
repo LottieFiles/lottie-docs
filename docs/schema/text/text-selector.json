@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Selector",
+    "properties": {
+        "nm": {
+            "title": "Name",
+            "type": "string"
+        },
+        "a": {
+            "title": "Transform",
+            "properties": {
+                "s": {
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                }
+            }
+        },
+        "s": {
+            "title": "Selector",
+            "$ref": "#/$defs/text/text-selector-property"
+        }
+    }
+}

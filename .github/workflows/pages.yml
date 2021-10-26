@@ -17,7 +17,14 @@ jobs:
             sudo apt update -q
             sudo apt install -yy python python3-pip python3-virtualenv make
             make install_dependencies
+      -
+        name: Docs
+        run: |
             make docs
+      -
+        name: Validate
+        run: |
+            make validate
       -
         name: Deploy to GitHub Pages
         if: success()

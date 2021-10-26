@@ -17,7 +17,10 @@
             {"$ref": "#/$defs/shapes/rounded-corners"},
             {"$ref": "#/$defs/shapes/stroke"},
             {"$ref": "#/$defs/shapes/transform"},
-            {"$ref": "#/$defs/shapes/trim"}
+            {"$ref": "#/$defs/shapes/trim"},
+            {"$ref": "#/$defs/shapes/twist"},
+            {"$ref": "#/$defs/shapes/merge"},
+            {"$ref": "#/$defs/shapes/offset-path"}
         ]
     }
 }

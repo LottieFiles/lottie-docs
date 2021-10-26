@@ -11,7 +11,10 @@
                     "title": "Properties",
                     "type": "array",
                     "items": {
-                        "$ref": "#/$defs/text/text-animator-data-property"
+                        "oneOf": [
+                            {"$ref": "#/$defs/text/text-animator-data-property"},
+                            {"$ref": "#/$defs/text/text-selector"}
+                        ]
                     }
                 },
                 "d": {

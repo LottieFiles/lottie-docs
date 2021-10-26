@@ -7,7 +7,7 @@ MKDOCS ?= PYTHONPATH="$(SOURCE_DIR)/extensions" mkdocs
 SOURCE_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 OUTPUT_DIR ?= $(CURDIR)/site
 
-.PHONY: all install_dependencies docs docs_serve lottie.schema.json
+.PHONY: all install_dependencies docs docs_serve lottie.schema.json validate
 
 
 all: docs
@@ -26,3 +26,6 @@ docs_serve:$(SOURCE_DIR)/docs/schema/lottie.schema.json
 
 install_dependencies:
 	$(PIP) install -r $(SOURCE_DIR)/requirements.txt
+
+validate: $(SOURCE_DIR)/docs/schema/lottie.schema.json
+	$(SOURCE_DIR)/tools/schema-validate.py
