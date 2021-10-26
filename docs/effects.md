@@ -8,26 +8,70 @@ Layers can have post-processing effects applied to them.
 EXPAND:#/$defs/helpers/visual-object
 ef:Array of [effect values](#effect-values). Each effect below shows a table with the values it expects.
 
+
+All the examples will use this as their base:
+
+{lottie:image.json:512:512}
+
+
 ### Fill Effect
+
+Fill all opaque areas with a solid color
 
 {schema_object:effects/fill-effect}
 SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/fill-effect}
 
-### Storke Effect
+
+{lottie_playground:effects-fill.json:512:512}
+00.x:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:512
+00.y:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:512
+01:slider:layers[0].ef[0].ef[1].v.k:0:0:10
+03:slider:layers[0].ef[0].ef[3].v.k:0:0:10
+04:slider:layers[0].ef[0].ef[4].v.k:0:0:100
+05:slider:layers[0].ef[0].ef[5].v.k:0:0:100
+Opacity:slider:layers[0].ef[0].ef[6].v.k:0:1:1:0.1
+Color:label:
+Red:slider:layers[0].ef[0].ef[2].v.k[0]:0:1:1:0.1
+Green:slider:layers[0].ef[0].ef[2].v.k[1]:0:0.9:1:0.1
+Blue:slider:layers[0].ef[0].ef[2].v.k[2]:0:0:1:0.1
+:json:layers[0].ef[0]
+
+
+### Stroke Effect
 
 {schema_object:effects/stroke-effect}
 SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/stroke-effect}
 
+
 ### Tritone Effect
+
+Converts the layer to greyscale, then applies the gradient based on bright/mid/dark.
 
 {schema_object:effects/tritone-effect}
 SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/tritone-effect}
+
+
+{lottie_playground:effects-tritone.json:512:512}
+Bright:label:
+Red:slider:layers[0].ef[0].ef[0].v.k[0]:0:1:1:0.1
+Green:slider:layers[0].ef[0].ef[0].v.k[1]:0:1:1:0.1
+Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:0:1:0.1
+Mid:label:
+Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0.3:1:0.1
+Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:0.8:1:0.1
+Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0.3:1:0.1
+Dark:label:
+Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0:1:0.1
+Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:0:1:0.1
+Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0:1:0.1
+:json:layers[0].ef[0]
+
 
 ### Pro Levels Effect
 
@@ -38,10 +82,29 @@ SKIP:#/$defs/effects/effect
 
 ### Tint Effect
 
+The layer is converted to grayscale, then black to white is mapped to
+the given color.
+
+The result is merged back with the original based on the intensity.
+
 {schema_object:effects/tint-effect}
 SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/tint-effect}
+
+{lottie_playground:effects-tint.json:512:512}
+Black:label:
+Red:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:1:0.1
+Green:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:1:0.1
+Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:0:1:0.1
+White:label:
+Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0:1:0.1
+Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:1:1:0.1
+Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0:1:0.1
+Intensity:label:
+Effect Intensity:slider:layers[0].ef[0].ef[2].v.k:0:90:100
+:json:layers[0].ef[0]
+
 
 ### Matte3 Effect
 
@@ -57,6 +120,13 @@ SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/gaussian-blur-effect}
 
+
+{lottie_playground:effects-blur.json:512:512}
+Sigma:slider:layers[0].ef[0].ef[0].v.k:0:25:100
+Dimensions:slider:layers[0].ef[0].ef[1].v.k:0:0:3
+Wrap:slider:layers[0].ef[0].ef[2].v.k:0:0:1
+:json:layers[0].ef[0]
+
 ### Change To Color Effect
 
 {schema_object:effects/change-to-color-effect}
@@ -64,6 +134,23 @@ SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/change-to-color-effect}
 
+
+### Drop Shadow Effect
+
+{schema_object:effects/drop-shadow-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/drop-shadow-effect}
+
+{lottie_playground:effects-shadow.json:512:512}
+Red:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:1:0.1
+Green:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:1:0.1
+Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:0:1:0.1
+Opacity:slider:layers[0].ef[0].ef[1].v.k:0:128:256
+Angle:slider:layers[0].ef[0].ef[2].v.k:0:135:360
+Distance:slider:layers[0].ef[0].ef[3].v.k:0:10:512
+Blur:slider:layers[0].ef[0].ef[4].v.k:0:7:512
+:json:layers[0].ef[0]
 
 ## Effect Values
 

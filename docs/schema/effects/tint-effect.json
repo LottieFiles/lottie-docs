@@ -20,15 +20,18 @@
                     "type": "array",
                     "prefixItems": [
                         {
-                            "title": "color_black",
+                            "title": "Black Color",
+                            "description": "Tint of the darker parts of the layer",
                             "$ref": "#/$defs/effects/effect-value-color"
                         },
                         {
-                            "title": "color_white",
+                            "title": "White Color",
+                            "description": "Tint of the lighter parts of the layer",
                             "$ref": "#/$defs/effects/effect-value-color"
                         },
                         {
-                            "title": "opacity",
+                            "title": "Intensity",
+                            "description": "Intensity of the effect, 0 means the layer is unchanged. 100 means full effect",
                             "$ref": "#/$defs/effects/effect-value-slider"
                         }
                     ]

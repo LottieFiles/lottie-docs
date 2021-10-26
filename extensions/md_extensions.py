@@ -465,6 +465,7 @@ class LottiePlayground(BlockProcessor):
                 label_element.tag = "span"
                 label_cell.attrib["colspan"] = "2"
                 tr.remove(td)
+                input = None
 
             else:
                 raise Exception("Unknown playground control %s" % type)

@@ -25,6 +25,7 @@
                         },
                         {
                             "title": "opacity",
+                            "description": "Opacity between 0 and 255",
                             "$ref": "#/$defs/effects/effect-value-slider"
                         },
                         {
