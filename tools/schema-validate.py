@@ -47,7 +47,7 @@ class SchemaPath:
 
 
 class Schema:
-    def __init__(self, schema, path):
+    def __init__(self, schema, path=None):
         self.schema = schema
         self.path = SchemaPath(path)
 
@@ -75,6 +75,11 @@ class Schema:
         for key, value in iter:
             if isinstance(value, (object, list)):
                 yield self / key
+
+    def get_ref(self, path):
+        path = SchemaPath(path)
+        obj = path.walk(self)
+        return Schema(obj, path)
 
 
 class Validator:
@@ -150,24 +155,26 @@ class Validator:
                 if link.anchor not in file_cache[link.page]:
                     self.show_error("%s: Missing anchor %s.md %s" % (ref, link.page, link.anchor))
 
-root = pathlib.Path(__file__).parent.parent
-filename = root / "docs" / "schema" / "lottie.schema.json"
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--html", help="Path to the html to check links", type=pathlib.Path)
-ns = parser.parse_args()
+if __name__ == "__main__":
+    root = pathlib.Path(__file__).parent.parent
+    filename = root / "docs" / "schema" / "lottie.schema.json"
 
-with open(filename) as file:
-    data = json.load(file)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--html", help="Path to the html to check links", type=pathlib.Path)
+    ns = parser.parse_args()
 
-validator = Validator()
-validator.validate(data)
+    with open(filename) as file:
+        data = json.load(file)
 
-if ns.html:
-    sys.path.append(str(root / "extensions"))
-    import md_extensions
-    import lxml.html
-    validator.check_links(ns.html)
+    validator = Validator()
+    validator.validate(data)
 
-if validator.has_error:
-    sys.exit(1)
+    if ns.html:
+        sys.path.append(str(root / "extensions"))
+        import md_extensions
+        import lxml.html
+        validator.check_links(ns.html)
+
+    if validator.has_error:
+        sys.exit(1)

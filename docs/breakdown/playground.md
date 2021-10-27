@@ -3,6 +3,7 @@ disable_toc: 1
 # Playground
 
 <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+<script src="../../scripts/blockly_generated.js"></script>
 <script src="../../scripts/blockly_generator.js"></script>
 
 <div id="blockly_div" style="height: 800px; width: 100%;"></div>

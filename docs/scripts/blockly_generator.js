@@ -124,7 +124,7 @@ Blockly.defineBlocksWithJsonArray([
     "helpUrl": ""
 },
 {
-  "type": "lottie_animation",
+  "type": "lottie_animation1",
   "message0": "name %1 %2 version %3 %4 width %5 %6 height %7 %8 framerate %9 %10 in point %11 %12 out point %13 %14 Assets %15 Layers %16",
   "args0": [
     {
@@ -201,8 +201,8 @@ Blockly.defineBlocksWithJsonArray([
   ],
   "colour": 260,
   "tooltip": "",
-  "helpUrl": ""
-}
+  "helpUrl": "/lottie-docs/animation/"
+},
 ]);
 
 Blockly.Blocks["json_array"] = {
@@ -295,34 +295,27 @@ Blockly.Blocks["json_array"] = {
 
 };
 
-const lottie_toolbox = {
-    "kind": "categoryToolbox",
-    "contents": [
-        {
-            "kind": "category",
-            "name": "Animation",
-            "contents": [
-                {"kind": "block", "type": "lottie_animation"},
-            ]
-        },
-        {
-            "kind": "category",
-            "name": "JSON",
-            "contents": [
-                {"kind": "block", "type": "json_object"},
-                {"kind": "block", "type": "json_object_list"},
-                {"kind": "block", "type": "json_member"},
-                {"kind": "block", "type": "json_array"},
-                {"kind": "block", "type": "json_number"},
-                {"kind": "block", "type": "json_text"},
-                {"kind": "block", "type": "json_boolean"},
-                {"kind": "block", "type": "json_null"},
-            ]
-        },
-    ]
-};
+const lottie_toolbox = generated_toolbox;
+lottie_toolbox["contents"].push(
+    {
+        "kind": "category",
+        "name": "JSON",
+        "colour": 230,
+        "contents": [
+            {"kind": "block", "type": "lottie_animation1"},
+            {"kind": "block", "type": "json_object"},
+            {"kind": "block", "type": "json_object_list"},
+            {"kind": "block", "type": "json_member"},
+            {"kind": "block", "type": "json_array"},
+            {"kind": "block", "type": "json_number"},
+            {"kind": "block", "type": "json_text"},
+            {"kind": "block", "type": "json_boolean"},
+            {"kind": "block", "type": "json_null"},
+        ]
+    },
+);
 
-class BlockyJsonGenerator
+class BlockyJsonGenerator extends GeneratedGenerator
 {
     block_to_json(block)
     {
@@ -332,7 +325,7 @@ class BlockyJsonGenerator
     input_to_json(block, input_name)
     {
         var input = block.getInput(input_name)
-        if ( !input || !input.connection.isConnected )
+        if ( !input || !input.connection.isConnected() )
             return undefined;
         return this.block_to_json(input.connection.targetBlock());
     }
@@ -407,7 +400,7 @@ class BlockyJsonGenerator
         return result;
     }
 
-    lottie_animation(block)
+    lottie_animation1(block)
     {
         return {
             "nm": block.getFieldValue("name"),

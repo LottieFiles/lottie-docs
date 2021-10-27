@@ -19,6 +19,7 @@ $(SOURCE_DIR)/docs/schema/lottie.schema.json: $(SOURCE_DIR)/tools/schema-merge.p
 	$(SOURCE_DIR)/tools/schema-merge.py
 
 docs:$(SOURCE_DIR)/docs/schema/lottie.schema.json
+docs:$(SOURCE_DIR)/docs/scripts/blockly_generated.js
 	$(MKDOCS) build -f $(SOURCE_DIR)/mkdocs.yml -d $(OUTPUT_DIR)
 
 $(OUTPUT_DIR)/index.html:$(wildcard $(SOURCE_DIR)/docs/**/*)
@@ -38,3 +39,7 @@ validate: $(SOURCE_DIR)/docs/schema/lottie.schema.json
 
 validate_links:$(OUTPUT_DIR)/index.html
 	$(SOURCE_DIR)/tools/schema-validate.py --html $(OUTPUT_DIR)
+
+$(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/tools/generate-blockly.py
+$(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/docs/schema/lottie.schema.json
+	$(SOURCE_DIR)/tools/generate-blockly.py

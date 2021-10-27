@@ -8,9 +8,6 @@
             "$ref": "#/$defs/helpers/visual-object"
         },
         {
-            "$ref": "#/$defs/animation/composition"
-        },
-        {
             "type": "object",
             "properties": {
                 "v": {
@@ -90,6 +87,9 @@
                 }
             },
             "required": ["w", "h", "fr", "layers", "op", "ip"]
+        },
+        {
+            "$ref": "#/$defs/animation/composition"
         }
     ]
 }
