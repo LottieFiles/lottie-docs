@@ -6,7 +6,7 @@ There are several layer types, which is specified by the `ty` attribute:
 
 |`ty`| Layer Type                       | Description                                                                                   |
 |----|----------------------------------|-----------------------------------------------------------------------------------------------|
-|`0` |[Precomposition](#precomp-layer)  |Renders a [Precomposition](assets.md#precomposition)                                           |
+|`0` |[Precomposition](#precomposition-layer)|Renders a [Precomposition](assets.md#precomposition)                                      |
 |`1` |[Solid Color](#solid-color-layer) |Static rectangle filling the canvas with a single color                                        |
 |`2` |[Image](#image-layer)             |Renders an [Image](assets.md#image)                                                            |
 |`3` |[Null (Empty)](#null-layer)       |No contents, only used for [parenting](#parenting)                                             |
@@ -115,7 +115,7 @@ The only special property for this layer is **shapes**, an [array](concepts.md#l
 
 {schema_object:layers/shape-layer}
 
-## PreComp Layer
+## Precomposition Layer
 
 This layer renders a [precomposition](assets.md#precomposition).
 

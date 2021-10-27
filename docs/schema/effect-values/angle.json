@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Ignored Value",
+    "title": "Effect Value Angle",
     "description": "",
     "allOf": [
         {
-            "$ref": "#/$defs/effects/effect-value"
+            "$ref": "#/$defs/effect-values/effect-value"
         },
         {
             "type": "object",
@@ -13,12 +13,11 @@
                 "ty": {
                     "title": "Type",
                     "type": "integer",
-                    "const": 6
+                    "const": 1
                 },
                 "v": {
                     "title": "Value",
-                    "type": "number",
-                    "default": 0
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": [

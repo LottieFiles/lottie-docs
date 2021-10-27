@@ -15,15 +15,15 @@
                     "type": "array",
                     "items": {
                         "anyOf": [
-                            {"$ref": "#/$defs/effects/effect-no-value"},
-                            {"$ref": "#/$defs/effects/effect-value-angle"},
-                            {"$ref": "#/$defs/effects/effect-value-checkbox"},
-                            {"$ref": "#/$defs/effects/effect-value-color"},
-                            {"$ref": "#/$defs/effects/effect-value-drop-down"},
-                            {"$ref": "#/$defs/effects/effect-value-ignored"},
-                            {"$ref": "#/$defs/effects/effect-value-layer"},
-                            {"$ref": "#/$defs/effects/effect-value-point"},
-                            {"$ref": "#/$defs/effects/effect-value-slider"}
+                            {"$ref": "#/$defs/effect-values/no-value"},
+                            {"$ref": "#/$defs/effect-values/angle"},
+                            {"$ref": "#/$defs/effect-values/checkbox"},
+                            {"$ref": "#/$defs/effect-values/color"},
+                            {"$ref": "#/$defs/effect-values/drop-down"},
+                            {"$ref": "#/$defs/effect-values/ignored"},
+                            {"$ref": "#/$defs/effect-values/layer"},
+                            {"$ref": "#/$defs/effect-values/point"},
+                            {"$ref": "#/$defs/effect-values/slider"}
                         ]
                     }
                 },

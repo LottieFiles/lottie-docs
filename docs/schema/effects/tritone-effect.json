@@ -21,15 +21,15 @@
                     "prefixItems": [
                         {
                             "title": "bright",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "mid",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "dark",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         }
                     ]
                 }

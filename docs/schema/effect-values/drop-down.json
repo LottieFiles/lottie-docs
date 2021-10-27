@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Effect Value Point",
+    "title": "Effect Value Drop Down",
     "description": "",
     "allOf": [
         {
-            "$ref": "#/$defs/effects/effect-value"
+            "$ref": "#/$defs/effect-values/effect-value"
         },
         {
             "type": "object",
@@ -13,11 +13,11 @@
                 "ty": {
                     "title": "Type",
                     "type": "integer",
-                    "const": 3
+                    "const": 7
                 },
                 "v": {
                     "title": "Value",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": [

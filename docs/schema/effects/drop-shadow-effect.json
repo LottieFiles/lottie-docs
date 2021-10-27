@@ -21,24 +21,24 @@
                     "prefixItems": [
                         {
                             "title": "color",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "opacity",
                             "description": "Opacity between 0 and 255",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "angle",
-                            "$ref": "#/$defs/effects/effect-value-angle"
+                            "$ref": "#/$defs/effect-values/angle"
                         },
                         {
                             "title": "distance",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "blur",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         }
                     ]
                 }

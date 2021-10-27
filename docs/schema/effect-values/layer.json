@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Effect Value Angle",
+    "title": "Effect Value Layer",
     "description": "",
     "allOf": [
         {
-            "$ref": "#/$defs/effects/effect-value"
+            "$ref": "#/$defs/effect-values/effect-value"
         },
         {
             "type": "object",
@@ -13,7 +13,7 @@
                 "ty": {
                     "title": "Type",
                     "type": "integer",
-                    "const": 1
+                    "const": 10
                 },
                 "v": {
                     "title": "Value",

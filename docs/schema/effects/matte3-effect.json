@@ -21,7 +21,7 @@
                     "prefixItems": [
                         {
                             "title": "index",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         }
                     ]
                 }

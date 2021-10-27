@@ -21,3 +21,7 @@ program used to create the file and other useful information:
 
 {schema_object:animation/metadata}
 
+## Motion Blur
+
+{schema_object:animation/motion-blur}
+

@@ -168,7 +168,7 @@ SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/matte3-effect}
 
-### Guassian Blur Effect
+### Gaussian Blur Effect
 
 {schema_object:effects/gaussian-blur-effect}
 SKIP:#/$defs/effects/effect
@@ -208,7 +208,7 @@ Blur:slider:layers[0].ef[0].ef[4].v.k:0:7:512
 :json:layers[0].ef[0]
 
 
-### Radial Wipe
+### Radial Wipe Effect
 
 {schema_object:effects/radial-wipe-effect}
 SKIP:#/$defs/effects/effect
@@ -218,7 +218,7 @@ SKIP:#/$defs/effects/effect
 
 ## Effect Values
 
-{schema_object:effects/effect-value}
+{schema_object:effect-values/effect-value}
 EXPAND:#/$defs/helpers/visual-object
 
 
@@ -237,45 +237,45 @@ EXPAND:#/$defs/helpers/visual-object
 
 ### No Value
 
-{schema_object:effects/effect-no-value}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/no-value}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Slider
 
-{schema_object:effects/effect-value-slider}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/slider}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Angle
 
-{schema_object:effects/effect-value-angle}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/angle}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Color
 
-{schema_object:effects/effect-value-color}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/color}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Point
 
-{schema_object:effects/effect-value-point}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/point}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Checkbox
 
-{schema_object:effects/effect-value-checkbox}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/checkbox}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Ignored
 
-{schema_object:effects/effect-value-ignored}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/ignored}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Drop Down
 
-{schema_object:effects/effect-value-drop-down}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/drop-down}
+SKIP:#/$defs/effect-values/effect-value
 
 ### Layer
 
-{schema_object:effects/effect-value-layer}
-SKIP:#/$defs/effects/effect-value
+{schema_object:effect-values/layer}
+SKIP:#/$defs/effect-values/effect-value

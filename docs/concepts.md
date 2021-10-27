@@ -191,6 +191,12 @@ In tangent y :slider:assets[0].layers[1].shapes[0].ks.k.i[2][1]!-1,assets[0].lay
 Hold:select:layers[0].ks.p.k[0].h,layers[0].ks.p.k[1].h:No=0:Yes=1
 :json:layers[0].ks.p
 
+### Animated Position
+
+Position properties have additional attributes in their keyframes to represent bezier tangents in the path followed by the animation
+
+{schema-object:animated-properties/position-keyframe}
+
 ## Transform
 
 This represents a layer or shape transform.

@@ -21,47 +21,47 @@
                     "prefixItems": [
                         {
                             "title": "00",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "01",
-                            "$ref": "#/$defs/effects/effect-value-checkbox"
+                            "$ref": "#/$defs/effect-values/checkbox"
                         },
                         {
                             "title": "02",
-                            "$ref": "#/$defs/effects/effect-value-checkbox"
+                            "$ref": "#/$defs/effect-values/checkbox"
                         },
                         {
                             "title": "color",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "04",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "05",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "06",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "07",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "08",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "09",
-                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                            "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
                             "title": "type",
-                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                            "$ref": "#/$defs/effect-values/drop-down"
                         }
                     ]
                 }

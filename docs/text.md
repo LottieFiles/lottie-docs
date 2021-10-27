@@ -201,3 +201,28 @@ Position Y:slider:layers[0].ks.p.k[1]:0:80:100
 Font Size:slider:layers[0].t.d.k[0].s.s:0:100:150
 Justify:enum:layers[0].t.d.k[0].s.j:text-justify
 :json:layers[0]
+
+
+### Text More Options
+
+{schema_object:text/text-more-options}
+
+
+### Masked Path
+
+{schema_object:text/masked-path}
+
+
+### Text Selector
+
+{schema_object:text/text-selector}
+
+### Text Selector Property
+
+{schema_object:text/text-selector-property}
+
+
+### Text Animator Data Property
+
+{schema_object:text/text-animator-data-property}
+

@@ -21,32 +21,32 @@
                     "prefixItems": [
                         {
                             "title": "00",
-                            "$ref": "#/$defs/effects/effect-value-point"
+                            "$ref": "#/$defs/effect-values/point"
                         },
                         {
                             "title": "01",
-                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                            "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
                             "title": "color",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "03",
-                            "$ref": "#/$defs/effects/effect-value-drop-down"
+                            "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
                             "title": "04",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "05",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "opacity",
                             "description": "Opacity in [0, 1]",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         }
                     ]
                 }

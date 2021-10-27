@@ -21,23 +21,23 @@
                         {
                             "title": "Completion",
                             "description": "Between 0 and 100",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "Start Angle",
-                            "$ref": "#/$defs/effects/effect-value-angle"
+                            "$ref": "#/$defs/effect-values/angle"
                         },
                         {
                             "title": "Wipe Center",
-                            "$ref": "#/$defs/effects/effect-value-point"
+                            "$ref": "#/$defs/effect-values/point"
                         },
                         {
                             "title": "Wipe",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "Feather",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         }
                     ]
                 }

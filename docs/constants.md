@@ -48,11 +48,11 @@ Opacity:slider:layers[0].ks.o.k:0:50:100
 {schema_enum:line-cap}
 
 
-## {schema_attribute:title:constants/line-cap}
+## {schema_attribute:title:constants/line-join}
 
-{schema_attribute:description:constants/line-cap}
+{schema_attribute:description:constants/line-join}
 
-{schema_enum:line-cap}
+{schema_enum:line-join}
 
 
 ## {schema_attribute:title:constants/mask-mode}
@@ -126,3 +126,9 @@ Matte Mode:enum:layers[2].tt:matte-mode:1
 {schema_attribute:description:constants/trim-multiple-shapes}
 
 {schema_enum:trim-multiple-shapes}
+
+## {schema_attribute:title:constants/text-caps}
+
+{schema_attribute:description:constants/text-caps}
+
+{schema_enum:text-caps}

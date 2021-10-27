@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Effect Value Color",
+    "title": "Effect Value Checkbox",
     "description": "",
     "allOf": [
         {
-            "$ref": "#/$defs/effects/effect-value"
+            "$ref": "#/$defs/effect-values/effect-value"
         },
         {
             "type": "object",
@@ -13,11 +13,11 @@
                 "ty": {
                     "title": "Type",
                     "type": "integer",
-                    "const": 2
+                    "const": 4
                 },
                 "v": {
                     "title": "Value",
-                    "$ref": "#/$defs/animated-properties/color-value"
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": [

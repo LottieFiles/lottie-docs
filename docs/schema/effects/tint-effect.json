@@ -22,17 +22,17 @@
                         {
                             "title": "Black Color",
                             "description": "Tint of the darker parts of the layer",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "White Color",
                             "description": "Tint of the lighter parts of the layer",
-                            "$ref": "#/$defs/effects/effect-value-color"
+                            "$ref": "#/$defs/effect-values/color"
                         },
                         {
                             "title": "Intensity",
                             "description": "Intensity of the effect, 0 means the layer is unchanged. 100 means full effect",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         }
                     ]
                 }

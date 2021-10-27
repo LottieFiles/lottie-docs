@@ -248,18 +248,13 @@ def ref_links(ref: str, data: SchemaData):
     if len(chunks) != 2:
         return []
 
-    name = data.get_ref(ref).get("title", chunks[1])
+    name = data.get_ref(ref).get("title", chunks[1]) if data else chunks[1]
     link = ReferenceLink(chunks[0], chunks[1], name)
 
-    if link.group in ("helpers", "animated-properties"):
-        link.page = "concepts"
-
-    if link.cls == "int-boolean":
-        link.anchor = "booleans"
-        link.name = "0-1 Integer"
-    elif link.group == "animated-properties":
+    if link.group == "animated-properties":
         extra = None
         link.name = "Animated "
+        link.page = "concepts"
         link.anchor = "animated-property"
         if link.cls == "value":
             link.name += "number"
@@ -275,8 +270,55 @@ def ref_links(ref: str, data: SchemaData):
 
         if extra:
             return [link, extra]
+
+    elif link.group == "shapes":
+        if link.cls == "gradient" or link.cls == "gradient-stroke" or link.cls == "gradient-fill":
+            link.anchor = "gradients"
+        elif link.cls == "shape-element":
+            link.anchor = "shape-elements"
+        elif link.cls == "base-stroke":
+            link.anchor = "stroke"
+        elif link.cls == "trim":
+            link.anchor = "trim-path"
+        elif link.cls == "shape-list":
+            link.page = "concepts"
+            link.anchor = "lists-of-layers-and-shapes"
+        elif link.cls == "transform":
+            link.anchor = "transform-shape"
+        elif link.cls == "modifier":
+            link.anchor = "modifiers"
+        elif link.cls == "stroke-dash":
+            link.anchor = "stroke-dashes"
+
+    elif link.group == "helpers":
+        link.page = "concepts"
+        if link.cls == "mask":
+            link.page = "layers"
+            link.anchor = "masks"
+        elif link.cls == "color":
+            link.anchor = "colors"
+        elif link.cls == "int-boolean":
+            link.anchor = "booleans"
+            link.name = "0-1 Integer"
+        elif link.cls == "visual-object":
+            return []
+
+    elif link.group == "effect-values":
+        link.page = "effects"
+        if link.cls == "effect-value":
+            link.anchor = "effect-values"
+
     elif link.group == "constants":
         link.anchor = link.anchor.replace("-", "")
+    elif link.group == "text" and link.cls == "font":
+        link.anchor = "font-list"
+    elif link.group == "effects" and link.cls == "effect":
+        link.anchor = "effects"
+    elif link.group == "assets" and link.cls == "asset":
+        link.anchor = "assets"
+    elif link.group == "animation" and link.cls == "composition":
+        link.page = "concepts"
+        link.anchor = "lists-of-layers-and-shapes"
 
     return [link]
 
@@ -528,10 +570,10 @@ class SchemaObject(BlockProcessor):
                     base_list.append(chunk["$ref"])
 
     def _base_link(self, parent, ref):
+        link = ref_links(ref, self.schema_data)[0]
         a = etree.SubElement(parent, "a")
-        a.text = self.schema_data.get_ref(ref)["title"]
-        path_chunks = ref.split("/")
-        a.attrib["href"] = "%s.md#%s" % (path_chunks[-2], path_chunks[-1])
+        a.text = link.name
+        a.attrib["href"] = "%s.md#%s" % (link.page, link.anchor)
         return a
 
     def run(self, parent, blocks):

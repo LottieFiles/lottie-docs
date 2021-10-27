@@ -21,15 +21,15 @@
                     "prefixItems": [
                         {
                             "title": "sigma",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "dimensions",
-                            "$ref": "#/$defs/effects/effect-value-slider"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "wrap",
-                            "$ref": "#/$defs/effects/effect-value-checkbox"
+                            "$ref": "#/$defs/effect-values/checkbox"
                         }
                     ]
                 }

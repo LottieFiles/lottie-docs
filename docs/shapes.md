@@ -26,17 +26,17 @@ ty:Shape type (see values below)
 |`sh`|[Path](#path)                             |
 |`fl`|[Fill](#fill)                             |
 |`st`|[Stroke](#stroke)                         |
-|`gf`|[Gradient Fill](#gradient-fill-stroke)    |
-|`gs`|[Gradient Stroke](#gradient-fill-stroke)  |
+|`gf`|[Gradient Fill](#gradients)               |
+|`gs`|[Gradient Stroke](#gradients)             |
 |`gr`|[Group](#group)                           |
 |`tr`|[Transform](transform-shape)              |
 |`rp`|[Repeater](#repeater)                     |
 |`tm`|[Trim](#trim-path)                        |
 |`rd`|[Rounded Corners](#rounded-corners)       |
 |`pb`|[Pucker / Bloat](#pucker-bloat)           |
-|`mm`|Merge                                     |
-|`tw`|Twist                                     |
-|`op`|Offset Path                               |
+|`mm`|[Merge](#merge)                           |
+|`tw`|[Twist](#twist)                           |
+|`op`|[Offset Path](#offset-path)               |
 
 
 ## Shape
@@ -179,7 +179,7 @@ Defined as a sequence of alternating dashes and gaps.
 |`n` |[Dash Type](constants.md#strokedashtype)              |Dash type                      |
 |`v` |[Animated](concepts.md#animated-property) `number`    |Length of the dash             |
 
-### Gradient Fill / Stroke
+### Gradients
 
 Gradient fill and gradient stroke have the same attributes as [fill](#fill) and [stroke](#stroke)
 but remove color (`c`) and add the following:
@@ -364,3 +364,20 @@ When `a` is negative the vertices are pushed away from the center with `100` bei
 {lottie_playground:pucker_bloat.json:512:512}
 Amount:slider:layers[0].shapes[0].it[1].a.k:-100:50:100
 :json:layers[0].shapes[0].it[1]
+
+
+### Twist
+
+{schema_object:shapes/twist}
+SKIP:#/$defs/shapes/twist
+
+### Merge
+
+{schema_object:shapes/merge}
+SKIP:#/$defs/shapes/merge
+
+
+### Offset Path
+
+{schema_object:shapes/offset-path}
+SKIP:#/$defs/shapes/offset-path
