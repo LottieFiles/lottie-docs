@@ -197,6 +197,7 @@ Position properties have additional attributes in their keyframes to represent b
 
 {schema-object:animated-properties/position-keyframe}
 
+
 ## Transform
 
 This represents a layer or shape transform.

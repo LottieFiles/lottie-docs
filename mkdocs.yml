@@ -23,6 +23,7 @@ nav:
     - "Intro": index.md
     - "<i class='fas fa-microscope'></i> Breakdown":
         - breakdown/bouncy_ball.md
+        - breakdown/playground.md
     - "<i class='fa fa-book'></i> Lottie":
         - concepts.md
         - animation.md
