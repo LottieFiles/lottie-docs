@@ -18,6 +18,7 @@ class BlocklyType:
         self.serialize = []
         self.name = name
         self.kwargs = kwargs
+        self.properties = {}
 
     def add_arg(self, arg):
         self.args.append(arg)
@@ -44,9 +45,14 @@ class BlocklyType:
             type = "checkbox"
         elif type == "boolean":
             type = "checkbox"
+            cast_pre = "'TRUE' =="
 
         if type == "checkbox" and "value" in kwargs:
             kwargs["checked"] = bool(kwargs.pop("value"))
+
+        if "const" in kwargs:
+            type = "label_serializable"
+            kwargs["text"] = str(kwargs.pop("const"))
 
         field = {
             "type": "field_" + type,
@@ -60,12 +66,13 @@ class BlocklyType:
             "'{name}': {cast_pre}block.getFieldValue('{name}'){cast_post}".format(name=name, cast_pre=cast_pre, cast_post=cast_post)
         )
 
-    def add_list(self, label, name):
+    def add_list(self, label, name, **kwargs):
         self.add_label(label)
 
         self.add_arg({
             "type": "input_statement",
             "name": name,
+            **kwargs
         })
 
         self.serialize.append(
@@ -78,12 +85,13 @@ class BlocklyType:
 
         self.message += " " + label
 
-    def add_input(self, label, name):
+    def add_input(self, label, name, **kwargs):
         self.add_label(label)
 
         self.add_arg({
             "type": "input_value",
             "name": name,
+            **kwargs
         })
 
         self.serialize.append(
@@ -112,6 +120,33 @@ class BlocklyType:
             **self.kwargs,
         }
 
+    def compile(self):
+        for name, property in self.properties.items():
+            label = property.get("title", None)
+            type = property.get("type", None)
+
+            if name == "parent":
+                self.add_input(label, name, check="value")
+            elif type in {"number", "integer", "boolean", "int-boolean", "string"}:
+                kwargs = {}
+                if "minimum" in property:
+                    kwargs["min"] = property["minimum"]
+                if "maximum" in property:
+                    kwargs["max"] = property["maximum"]
+                if "default" in property:
+                    kwargs["value"] = property["default"]
+                if "const" in property:
+                    kwargs["const"] = property["const"]
+                self.add_attribute(label, name, type, **kwargs)
+            elif type == "object":
+                self.add_input(label, name)
+            elif type == "array":
+                kwargs = {}
+                if "items" in property:
+                    if "oneOf" in property["items"] and "$ref" in property["items"]["oneOf"][0]:
+                        kwargs["check"] = property["items"]["oneOf"][0]["$ref"].split("/")[-2]
+                self.add_list(label, name, **kwargs)
+
 
 @dataclasses.dataclass
 class Category:
@@ -123,33 +158,17 @@ class Category:
 def add_properties(schema_object, schema, blockly):
     if "properties" in schema_object:
         for name, property in schema_object["properties"].items():
-            property_definition = property
+            property = dict(property)
             ref = property.get("$ref", None)
-            type = property.get("type", None)
 
             if ref == "#/$defs/helpers/int-boolean":
-                type = "int-boolean"
+                property["type"] = "int-boolean"
             elif ref:
-                property_definition = schema.get_ref(ref).value
-                type = property_definition.get("type", None)
+                original = property
+                property = dict(schema.get_ref(ref).value)
+                property.update(original)
 
-            label = property.get("title", property_definition.get("title", None))
-
-            if type in {"number", "integer", "boolean", "int-boolean", "string"}:
-                kwargs = {}
-                if "minimum" in property_definition:
-                    kwargs["min"] = property_definition["minimum"]
-                if "maximum" in property_definition:
-                    kwargs["max"] = property_definition["maximum"]
-                if "default" in property:
-                    kwargs["value"] = property["default"]
-                elif "default" in property_definition:
-                    kwargs["value"] = property_definition["default"]
-                blockly.add_attribute(label, name, type, **kwargs)
-            elif type == "object":
-                blockly.add_input(label, name)
-            elif type == "array":
-                blockly.add_list(label, name)
+            blockly.properties[name] = property
 
     if "allOf" in schema_object:
         for base in schema_object["allOf"]:
@@ -176,10 +195,15 @@ def convert_object(schema_object, schema):
     blockly = BlocklyType("lottie_" + cat.infix + link.cls.replace("-", "_"), label, cat.hue, help_url)
     blockly_types.setdefault(link.group, []).append(blockly)
     blockly.add_label(label)
-    if link.cls != "animation":
+
+    if link.group in ("layers", "shapes", "assets"):
+        blockly.kwargs["previousStatement"] = link.group
+        blockly.kwargs["nextStatement"] = link.group
+    elif link.cls != "animation":
         blockly.kwargs["output"] = None
 
     add_properties(schema_object.value, schema, blockly)
+    blockly.compile()
 
 
 def write_js(file):
@@ -231,7 +255,10 @@ schema_validate = __import__("schema-validate")
 schema_filename = root / "docs" / "schema" / "lottie.schema.json"
 
 categories = {
-    "animation": Category(260, "Animation")
+    "animation": Category(260, "Animation"),
+    "layers": Category(60, "Layers"),
+    "shapes": Category(120, "Shapes"),
+    "assets": Category(30, "Assets"),
 }
 blockly_types = {}
 
@@ -240,7 +267,8 @@ with open(schema_filename) as file:
 
 schema = schema_validate.Schema(data)
 
-convert_group(schema.get_ref("#/$defs/animation"), schema)
+for cat in categories.keys():
+    convert_group(schema.get_ref("#/$defs/" + cat), schema)
 
 js_filename = root / "docs" / "scripts" / "blockly_generated.js"
 with open(js_filename, "w") as file:

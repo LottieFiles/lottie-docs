@@ -4,22 +4,78 @@ disable_toc: 1
 
 <script src="https://unpkg.com/blockly/blockly.min.js"></script>
 <script src="../../scripts/blockly_generated.js"></script>
-<script src="../../scripts/blockly_generator.js"></script>
+<script src="../../scripts/lottie_blockly.js"></script>
+<style>
+html, body {
+    min-height: 100vh;
+}
+body {
+    display: flex;
+    flex-flow: column;
+}
+div[role='main'], body > .container, #playground_layout
+{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+}
 
-<div id="blockly_div" style="height: 800px; width: 100%;"></div>
+#playground_layout
+{
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+}
+#blockly_div
+{
+    flex-grow: 1;
+}
+#playground_output_container
+{
+    width: 512px;
+}
+#lottie_player
+{
+    width: 512px;
+    height: 512px
+}
+#playground_output
+{
+    margin: 0;
+    width: 512px;
+    display: flex;
+    flex-flow: column;
+}
+#playground_output pre
+{
+    margin: 0;
+    overflow: scroll;
+    flex-grow: 1;
+}
+#playground_output_buttons
+{
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+</style>
 
-<p>
-    <button onclick="update_code()">Update</button>
-    <button onclick="save()">Save</button>
-    <button onclick="load()">Load</button>
-    <button onclick="clear()">Clear</button>
-</p>
-
-<div style="display: flex">
-    <div class="alpha_checkered" id="lottie_player"  style="width: 50%; height: 512px"></div>
-    <pre style="margin: 0; width: 50%;"><code id="blockly_output"></code></pre>
-</div>
-
+<div id="playground_layout">
+    <div id="blockly_div"></div>
+    <div id="playground_output">
+        <ul id="playground_output_buttons">
+            <li><button onclick="update_code()">Update</button></li>
+            <li><button onclick="save()">Save</button></li>
+            <li><button onclick="load()">Load</button></li>
+            <li><button onclick="clear_workspace()">Clear</button></li>
+        </ul>
+        <div class="alpha_checkered" id="lottie_player"></div>
+        <pre><code id="blockly_output"></code></pre>
+    </div>
 </div>
 
 <script>
@@ -27,11 +83,15 @@ var options = {
   comments: true,
   toolbox: lottie_toolbox,
   media: 'https://unpkg.com/blockly/media/',
+  collapse: true,
 };
 
 var workspace = Blockly.inject("blockly_div", options);
 var generator = new BlockyJsonGenerator();
 var anim = null;
+
+// Hack to force blockly to resize
+window.setTimeout(function(){window.dispatchEvent(new Event('resize'))},100);
 
 function save()
 {
@@ -47,9 +107,10 @@ function load()
     update_code();
 }
 
-function clear()
+function clear_workspace()
 {
     Blockly.mainWorkspace.clear();
+    update_code();
 }
 
 function update_code()
@@ -61,7 +122,6 @@ function update_code()
 
     document.getElementById("blockly_output").innerText = JSON.stringify(json, null, 4);
 
-
     var anim_data = {
         container: document.getElementById('lottie_player'),
         renderer: 'svg',
@@ -72,7 +132,9 @@ function update_code()
 
     if ( anim != null )
     {
-        anim.destroy();
+        try {
+            anim.destroy();
+        } catch (e) {}
         anim = null;
     }
 
