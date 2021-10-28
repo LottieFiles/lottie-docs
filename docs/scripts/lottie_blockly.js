@@ -240,21 +240,6 @@ Blockly.defineBlocksWithJsonArray([
   "tooltip": "",
   "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
-// {
-//   "type": "lottie_color",
-//   "message0": "%1",
-//   "args0": [
-//     {
-//       "type": "field_colour",
-//       "name": "value",
-//       "colour": "#ff0000"
-//     }
-//   ],
-//   "output": "value",
-//   "colour": 0,
-//   "tooltip": "",
-//   "helpUrl": "/lottie-docs/concepts/#colors"
-// },
 {
   "type": "lottie_vector2d",
   "message0": "x %1 y %2",
@@ -322,6 +307,21 @@ Blockly.defineBlocksWithJsonArray([
   "colour": 330,
   "tooltip": "Transform",
   "helpUrl": "/lottie-docs/concepts/#transform"
+},
+{
+  "type": "lottie_angle",
+  "message0": "%1",
+  "args0": [
+    {
+      "type": "field_angle",
+      "name": "value",
+      "angle": 0,
+    }
+  ],
+  "output": "value",
+  "colour": 0,
+  "tooltip": "",
+  "helpUrl": ""
 }
 ]);
 
@@ -560,6 +560,9 @@ Blockly.Blocks["lottie_color"] = {
 
 };
 
+Blockly.FieldAngle.CLOCKWISE = true;
+Blockly.FieldAngle.OFFSET = 90;
+
 
 const lottie_toolbox = generated_toolbox;
 
@@ -576,6 +579,7 @@ lottie_toolbox["contents"].push({
         {"kind": "block", "type": "lottie_color"},
         {"kind": "block", "type": "lottie_vector2d"},
         {"kind": "block", "type": "json_number"},
+        {"kind": "block", "type": "lottie_angle"},
         {"kind": "block", "type": "lottie_transform"},
     ]
 });
@@ -647,6 +651,11 @@ class BlockyJsonGenerator extends GeneratedGenerator
     }
 
     json_number(block)
+    {
+        return Number(block.getFieldValue("value"))
+    }
+
+    lottie_angle(block)
     {
         return Number(block.getFieldValue("value"))
     }
