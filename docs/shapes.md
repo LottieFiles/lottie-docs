@@ -179,6 +179,23 @@ Defined as a sequence of alternating dashes and gaps.
 |`n` |[Dash Type](constants.md#strokedashtype)              |Dash type                      |
 |`v` |[Animated](concepts.md#animated-property) `number`    |Length of the dash             |
 
+
+
+{lottie_playground:stroke.json:512:512}
+Red:slider:layers[0].shapes[2].c.k[0]:0:1:1:0.01
+Green:slider:layers[0].shapes[2].c.k[1]:0:0.98:1:0.01
+Blue:slider:layers[0].shapes[2].c.k[2]:0:0.28:1:0.01
+Opacity:slider:layers[0].shapes[2].o.k:0:100:100
+Line Cap:enum:layers[0].shapes[2].lc:line-cap:2
+Line Join:enum:layers[0].shapes[2].lj:line-join:2
+Miter Limit:slider:layers[0].shapes[2].ml:0:3:10
+Dash Offset:slider:layers[0].shapes[2].d[0].v.k:0:0:512
+Dash Length:slider:layers[0].shapes[2].d[1].v.k:0:100:512
+Dash Gap:slider:layers[0].shapes[2].d[2].v.k:0:0:512
+:json:layers[0].shapes[2]
+
+
+
 ### Gradients
 
 Gradient fill and gradient stroke have the same attributes as [fill](#fill) and [stroke](#stroke)

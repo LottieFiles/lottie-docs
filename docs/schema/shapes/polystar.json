@@ -25,7 +25,7 @@
                 },
                 "os": {
                     "title": "Outer Roundness",
-                    "title": "Outer Roundness as a percentage",
+                    "description": "Outer Roundness as a percentage",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "r": {

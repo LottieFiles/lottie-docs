@@ -183,6 +183,15 @@ class BlocklyType:
                 if "items" in property:
                     if "oneOf" in property["items"] and "$ref" in property["items"]["oneOf"][0]:
                         kwargs["check"] = property["items"]["oneOf"][0]["$ref"].split("/")[-2]
+                    elif "$ref" in property["items"]:
+                        chunks = property["items"]["$ref"].split("/")
+                        group = chunks[-2]
+                        if group in categories:
+                            cat = categories[group]
+                            cls = chunks[-1]
+                            check = "lottie_" + cat.infix + cls.replace("-", "_")
+                            kwargs["check"] = check
+
                 self.add_list(label, name, **kwargs)
             elif type == "base":
                 self.add_base_input(split_bases[property["$ref"]])
@@ -235,26 +244,33 @@ def convert_object(schema_object, schema):
 
     link = help_links[0]
 
-    if link.cls == "composition":
-        return
-
     help_url = "/lottie-docs/%s/#%s" % (link.page, link.anchor)
 
     cat = categories[link.group]
     label = schema_object["title"]
+    path = str(schema_object.path)
+    name = "lottie_" + cat.infix + link.cls.replace("-", "_")
+    hue = custom_colors.get(path, cat.hue)
+    if path == "#/$defs/shapes/transform":
+        name += "_shape"
 
-    blockly = BlocklyType("lottie_" + cat.infix + link.cls.replace("-", "_"), label, cat.hue, help_url)
+    if path in exclude:
+        return
+
+    blockly = BlocklyType(name, label, hue, help_url)
     blockly_types.setdefault(link.group, []).append(blockly)
     blockly.add_label(label)
     blockly.add_newline()
 
-    if link.group in ("layers", "shapes", "assets"):
+    if link.cls in ("stroke-dash",):
+        blockly.kwargs["previousStatement"] = name
+        blockly.kwargs["nextStatement"] = name
+    elif link.group in ("layers", "shapes", "assets", "effects", "effect-values"):
         blockly.kwargs["previousStatement"] = link.group
         blockly.kwargs["nextStatement"] = link.group
     elif link.cls != "animation":
         blockly.kwargs["output"] = None
 
-    path = str(schema_object.path)
     if path in split_bases:
         base = split_bases[str(schema_object.path)]
         blockly.add_base_input(base)
@@ -315,7 +331,7 @@ def write_js(file):
 
 
 def convert_group(schema_object, schema):
-    for child in schema_object:
+    for child in sorted(schema_object, key=lambda o: o.path.chunks[-1]):
         convert_object(child, schema)
 
 
@@ -331,12 +347,31 @@ categories = {
     "layers": Category(60, "Layers"),
     "shapes": Category(120, "Shapes"),
     "assets": Category(30, "Assets"),
+    "effects": Category(330, "Effects"),
+    "effect-values": Category(300, "Effect Values", "effect_value_"),
 }
 split_bases = {
     "#/$defs/layers/layer": Category(0, "Layer Properties", "lottie_layer_common")
 }
 other_bases = {
-    "#/$defs/shapes/shape"
+    "#/$defs/shapes/shape-element",
+    "#/$defs/effects/effect",
+    "#/$defs/effects/effect-value"
+}
+custom_colors = {
+    "#/$defs/shapes/stroke-dash": 0,
+    "#/$defs/shapes/repeater-transform": 330
+}
+exclude = {
+    "#/$defs/animation/composition",
+    "#/$defs/shapes/shape",
+    "#/$defs/shapes/modifier",
+    "#/$defs/shapes/shape-list",
+    "#/$defs/shapes/gradient",
+    "#/$defs/shapes/base-stroke",
+    "#/$defs/shapes/twist",
+    "#/$defs/shapes/merge",
+    "#/$defs/shapes/offset-path",
 }
 blockly_types = {}
 

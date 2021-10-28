@@ -544,6 +544,8 @@ class BlockyJsonGenerator extends GeneratedGenerator
 {
     block_to_json(block)
     {
+        if ( !block.isEnabled() )
+            return undefined;
         return this[block.type](block);
     }
 
@@ -567,7 +569,11 @@ class BlockyJsonGenerator extends GeneratedGenerator
 
 
         for ( var item = connection.targetBlock(); item; item = item.getNextBlock() )
-            json.push(this.block_to_json(item));
+        {
+            var block = this.block_to_json(item);
+            if ( block !== undefined )
+                json.push(block);
+        }
 
         return json;
     }
