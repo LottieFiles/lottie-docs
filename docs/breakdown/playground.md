@@ -116,8 +116,13 @@ function update_code()
         animationData: json
     };
 
+    var frame = 0;
+
     if ( anim != null )
     {
+        try {
+            frame = anim.currentFrame
+        } catch (e) {}
         try {
             anim.destroy();
         } catch (e) {}
@@ -125,6 +130,9 @@ function update_code()
     }
 
     anim = bodymovin.loadAnimation(anim_data);
+    if ( frame != 0 )
+        anim.goToAndPlay(frame, true);
+
 }
 
 var options = {
