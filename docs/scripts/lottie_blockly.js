@@ -240,21 +240,21 @@ Blockly.defineBlocksWithJsonArray([
   "tooltip": "",
   "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
-{
-  "type": "lottie_color",
-  "message0": "%1",
-  "args0": [
-    {
-      "type": "field_colour",
-      "name": "value",
-      "colour": "#ff0000"
-    }
-  ],
-  "output": "value",
-  "colour": 0,
-  "tooltip": "",
-  "helpUrl": "/lottie-docs/concepts/#colors"
-},
+// {
+//   "type": "lottie_color",
+//   "message0": "%1",
+//   "args0": [
+//     {
+//       "type": "field_colour",
+//       "name": "value",
+//       "colour": "#ff0000"
+//     }
+//   ],
+//   "output": "value",
+//   "colour": 0,
+//   "tooltip": "",
+//   "helpUrl": "/lottie-docs/concepts/#colors"
+// },
 {
   "type": "lottie_vector2d",
   "message0": "x %1 y %2",
@@ -503,6 +503,64 @@ Blockly.Blocks["lottie_property_animated"] = {
 
 };
 
+
+Blockly.Blocks["lottie_color"] = {
+    init: function()
+    {
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldColour("#000000"), "value");
+        this.appendDummyInput()
+            .appendField("R")
+            .appendField(new Blockly.FieldNumber(0, 0, 1), "red");
+        this.appendDummyInput()
+            .appendField("G")
+            .appendField(new Blockly.FieldNumber(0, 0, 1), "green");
+        this.appendDummyInput()
+            .appendField("B")
+            .appendField(new Blockly.FieldNumber(0, 0, 1), "blue");
+
+        this.setInputsInline(false);
+        this.setColour(0);
+        this.setOutput(true, 'value');
+        this.setHelpUrl("/lottie-docs/concepts/#colors");
+    },
+    onchange: function(ev)
+    {
+        if ( (ev instanceof Blockly.Events.BlockChange) && ev.blockId == this.id && ev.element == "field" )
+        {
+            if ( ev.name == "value" )
+            {
+                var color = this.getFieldValue("value");
+                var offset = 1;
+                for ( var field_name of ["red", "green", "blue"] )
+                {
+                    var value = parseInt(color.substr(offset, 2), 16)
+                    offset += 2;
+                    var field = this.getField(field_name);
+                    if ( value != Math.round(field.getValue() * 255) )
+                        field.setValue(value / 255);
+                }
+            }
+            else
+            {
+                var rgb = '#';
+                for ( var field_name of ["red", "green", "blue"] )
+                {
+                    var field = this.getField(field_name);
+                    var value = Math.round(field.getValue() * 255);
+                    rgb += value.toString(16).padStart(2, '0');
+                }
+                var field =  this.getField("value");
+                if ( rgb != field.getValue() )
+                    field.setValue(rgb);
+            }
+
+        }
+    },
+
+};
+
+
 const lottie_toolbox = generated_toolbox;
 
 lottie_toolbox["contents"].push({
@@ -700,11 +758,10 @@ class BlockyJsonGenerator extends GeneratedGenerator
 
     lottie_color(block)
     {
-        var color = block.getFieldValue("value");
         return [
-            parseInt(color.substr(1, 2), 16)/255,
-            parseInt(color.substr(3, 2), 16)/255,
-            parseInt(color.substr(5, 2), 16)/255,
+            block.getFieldValue("red"),
+            block.getFieldValue("green"),
+            block.getFieldValue("blue"),
         ];
     }
 
