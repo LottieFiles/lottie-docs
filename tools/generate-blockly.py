@@ -148,13 +148,39 @@ class BlocklyType:
             "...this.input_to_json(block, '{name}')".format(name=base.infix)
         )
 
+    def add_dropdown(self, label, name, type, options):
+
+        self.add_label(label)
+
+        cast_pre = ""
+        cast_post = ""
+
+        if type == "integer" or type == "number":
+            cast_pre = "Number("
+            cast_post = ")"
+
+        field = {
+            "type": "field_dropdown",
+            "name": name,
+            "options": [['--', '']] + options
+        }
+
+        self.add_arg(field)
+
+        self.serialize.append(
+            "'{name}': block.getFieldValue('{name}') === '' ? undefined : {cast_pre}block.getFieldValue('{name}'){cast_post}"
+            .format(name=name, cast_pre=cast_pre, cast_post=cast_post)
+        )
+
+        self.add_newline()
+
     def compile(self):
         for name, property in self.properties.items():
             label = property.get("title", None)
             type = property.get("type", None)
 
-            if name == "parent":
-                self.add_input(label, name, check="value")
+            if "options" in property:
+                self.add_dropdown(label, name, type, property["options"])
             elif type in {"number", "integer", "boolean", "int-boolean", "string"}:
                 kwargs = {}
                 required = name in self.required
@@ -209,6 +235,11 @@ def add_property(name, property, schema, blockly):
 
     if ref == "#/$defs/helpers/int-boolean":
         property["type"] = "int-boolean"
+    elif ref and "/constants/" in ref:
+        property["options"] = [
+            [value["title"], str(value["const"])]
+            for value in schema.get_ref(ref)["oneOf"]
+        ]
     elif ref:
         original = property
         property = dict(schema.get_ref(ref).value)
