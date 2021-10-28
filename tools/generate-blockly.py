@@ -19,6 +19,7 @@ class BlocklyType:
         self.name = name
         self.kwargs = kwargs
         self.properties = {}
+        self.required = set()
 
     def add_arg(self, arg):
         self.args.append(arg)
@@ -66,6 +67,8 @@ class BlocklyType:
             "'{name}': {cast_pre}block.getFieldValue('{name}'){cast_post}".format(name=name, cast_pre=cast_pre, cast_post=cast_post)
         )
 
+        self.add_newline()
+
     def add_list(self, label, name, **kwargs):
         self.add_label(label)
 
@@ -79,10 +82,21 @@ class BlocklyType:
             "'{name}': this.statements_to_json(block, '{name}')".format(name=name)
         )
 
-    def add_label(self, label):
-        if self.message:
-            self.add_newline()
+    def add_custom_attributes(self):
+        self.add_label("Custom Attributes")
+        self.add_newline()
 
+        self.add_arg({
+            "type": "input_statement",
+            "name": "custom_attributes",
+            "check": "object_member",
+        })
+
+        self.serialize.append(
+            "...this.object_members_to_json(block, 'custom_attributes')"
+        )
+
+    def add_label(self, label):
         self.message += " " + label
 
     def add_input(self, label, name, **kwargs):
@@ -117,8 +131,22 @@ class BlocklyType:
             "colour": self.colour,
             "helpUrl": self.help_url,
             "tooltip": self.name,
+            "inputsInline": False,
             **self.kwargs,
         }
+
+    def add_base_input(self, base):
+        self.add_label(base.title)
+
+        self.add_arg({
+            "type": "input_value",
+            "name": base.infix,
+            "check": base.infix
+        })
+
+        self.serialize.append(
+            "...this.input_to_json(block, '{name}')".format(name=base.infix)
+        )
 
     def compile(self):
         for name, property in self.properties.items():
@@ -129,15 +157,25 @@ class BlocklyType:
                 self.add_input(label, name, check="value")
             elif type in {"number", "integer", "boolean", "int-boolean", "string"}:
                 kwargs = {}
-                if "minimum" in property:
-                    kwargs["min"] = property["minimum"]
-                if "maximum" in property:
-                    kwargs["max"] = property["maximum"]
-                if "default" in property:
-                    kwargs["value"] = property["default"]
+                required = name in self.required
                 if "const" in property:
                     kwargs["const"] = property["const"]
-                self.add_attribute(label, name, type, **kwargs)
+                    required = True
+                elif type in {"boolean", "int-boolean"}:
+                    required = True
+
+                if required:
+                    if "default" in property:
+                        kwargs["value"] = property["default"]
+                    if "minimum" in property:
+                        kwargs["min"] = property["minimum"]
+                    if "maximum" in property:
+                        kwargs["max"] = property["maximum"]
+
+                    self.add_attribute(label, name, type, **kwargs)
+                else:
+                    self.add_input(label, name, check="value")
+
             elif type == "object":
                 self.add_input(label, name)
             elif type == "array":
@@ -146,6 +184,8 @@ class BlocklyType:
                     if "oneOf" in property["items"] and "$ref" in property["items"]["oneOf"][0]:
                         kwargs["check"] = property["items"]["oneOf"][0]["$ref"].split("/")[-2]
                 self.add_list(label, name, **kwargs)
+            elif type == "base":
+                self.add_base_input(split_bases[property["$ref"]])
 
 
 @dataclasses.dataclass
@@ -155,27 +195,37 @@ class Category:
     infix: str = ""
 
 
-def add_properties(schema_object, schema, blockly):
+def add_property(name, property, schema, blockly):
+    ref = property.get("$ref", None)
+
+    if ref == "#/$defs/helpers/int-boolean":
+        property["type"] = "int-boolean"
+    elif ref:
+        original = property
+        property = dict(schema.get_ref(ref).value)
+        property.update(original)
+
+    blockly.properties[name] = property
+
+
+def add_properties(schema_object, schema, blockly, only=None):
     if "properties" in schema_object:
         for name, property in schema_object["properties"].items():
-            property = dict(property)
-            ref = property.get("$ref", None)
+            if not only or name in only:
+                add_property(name, dict(property), schema, blockly)
 
-            if ref == "#/$defs/helpers/int-boolean":
-                property["type"] = "int-boolean"
-            elif ref:
-                original = property
-                property = dict(schema.get_ref(ref).value)
-                property.update(original)
-
-            blockly.properties[name] = property
+    if "required" in schema_object:
+        blockly.required |= set(schema_object["required"])
 
     if "allOf" in schema_object:
         for base in schema_object["allOf"]:
             if "properties" in base:
-                add_properties(base, schema, blockly)
+                add_properties(base, schema, blockly, only)
             elif "$ref" in base:
-                add_properties(schema.get_ref(base["$ref"]).value, schema, blockly)
+                if base["$ref"] in split_bases:
+                    add_property(base["$ref"], {"type": "base", "$ref": base["$ref"]}, schema, blockly)
+                else:
+                    add_properties(schema.get_ref(base["$ref"]).value, schema, blockly, only)
 
 
 def convert_object(schema_object, schema):
@@ -192,9 +242,11 @@ def convert_object(schema_object, schema):
 
     cat = categories[link.group]
     label = schema_object["title"]
+
     blockly = BlocklyType("lottie_" + cat.infix + link.cls.replace("-", "_"), label, cat.hue, help_url)
     blockly_types.setdefault(link.group, []).append(blockly)
     blockly.add_label(label)
+    blockly.add_newline()
 
     if link.group in ("layers", "shapes", "assets"):
         blockly.kwargs["previousStatement"] = link.group
@@ -202,8 +254,28 @@ def convert_object(schema_object, schema):
     elif link.cls != "animation":
         blockly.kwargs["output"] = None
 
-    add_properties(schema_object.value, schema, blockly)
-    blockly.compile()
+    path = str(schema_object.path)
+    if path in split_bases:
+        base = split_bases[str(schema_object.path)]
+        blockly.add_base_input(base)
+        blockly.required = set("ty")
+        add_properties(schema_object.value, schema, blockly, ["ty"])
+        blockly.compile()
+        blockly.add_custom_attributes()
+
+        base_blockly = BlocklyType(base.infix, base.title, base.hue, help_url)
+        base_blockly.add_label(base.title)
+        base_blockly.add_newline()
+        base_blockly.kwargs["output"] = base.infix
+        add_properties(schema_object.value, schema, base_blockly)
+        base_blockly.properties.pop("ty", None)
+        base_blockly.compile()
+        blockly_types[link.group].insert(0, base_blockly)
+    else:
+        add_properties(schema_object.value, schema, blockly)
+        blockly.compile()
+        if path in other_bases:
+            blockly.add_custom_attributes()
 
 
 def write_js(file):
@@ -259,6 +331,12 @@ categories = {
     "layers": Category(60, "Layers"),
     "shapes": Category(120, "Shapes"),
     "assets": Category(30, "Assets"),
+}
+split_bases = {
+    "#/$defs/layers/layer": Category(0, "Layer Properties", "lottie_layer_common")
+}
+other_bases = {
+    "#/$defs/shapes/shape"
 }
 blockly_types = {}
 

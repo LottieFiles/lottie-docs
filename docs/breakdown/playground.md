@@ -68,7 +68,6 @@ div[role='main'], body > .container, #playground_layout
     <div id="blockly_div"></div>
     <div id="playground_output">
         <ul id="playground_output_buttons">
-            <li><button onclick="update_code()">Update</button></li>
             <li><button onclick="save()">Save</button></li>
             <li><button onclick="load()">Load</button></li>
             <li><button onclick="clear_workspace()">Clear</button></li>
@@ -79,19 +78,6 @@ div[role='main'], body > .container, #playground_layout
 </div>
 
 <script>
-var options = {
-  comments: true,
-  toolbox: lottie_toolbox,
-  media: 'https://unpkg.com/blockly/media/',
-  collapse: true,
-};
-
-var workspace = Blockly.inject("blockly_div", options);
-var generator = new BlockyJsonGenerator();
-var anim = null;
-
-// Hack to force blockly to resize
-window.setTimeout(function(){window.dispatchEvent(new Event('resize'))},100);
 
 function save()
 {
@@ -141,7 +127,21 @@ function update_code()
     anim = bodymovin.loadAnimation(anim_data);
 }
 
+var options = {
+  comments: true,
+  toolbox: lottie_toolbox,
+  media: 'https://unpkg.com/blockly/media/',
+  collapse: true,
+};
+
+var workspace = Blockly.inject("blockly_div", options);
+var generator = new BlockyJsonGenerator();
+var anim = null;
+
+workspace.addChangeListener(update_code);
 load();
+
+
 
 </script>
 

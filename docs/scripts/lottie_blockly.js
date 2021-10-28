@@ -55,6 +55,21 @@ Blockly.defineBlocksWithJsonArray([
     "colour": 190,
 },
 {
+    "type": "json_array_statements",
+    "message0": "[ %1 %2 ]",
+    "args0": [
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_statement",
+            "name": "members",
+        }
+    ],
+    "output": "value",
+    "colour": 230,
+},
+{
     "type": "json_number",
     "message0": "%1",
     "args0": [
@@ -136,7 +151,7 @@ Blockly.defineBlocksWithJsonArray([
   "output": "property",
   "colour": 180,
   "tooltip": "",
-  "helpUrl": ""
+  "helpUrl": "/lottie-docs/concepts/#animated-property"
 },
 {
   "type": "lottie_keyframe",
@@ -167,7 +182,7 @@ Blockly.defineBlocksWithJsonArray([
   "output": "keyframe",
   "colour": 45,
   "tooltip": "",
-  "helpUrl": ""
+  "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
 {
   "type": "lottie_easing",
@@ -182,14 +197,14 @@ Blockly.defineBlocksWithJsonArray([
       "name": "ox",
       "value": 0,
       "min": 0,
-      "max": 0
+      "max": 1
     },
     {
       "type": "field_number",
       "name": "oy",
       "value": 0,
       "min": 0,
-      "max": 0
+      "max": 1
     },
     {
       "type": "input_dummy",
@@ -213,7 +228,7 @@ Blockly.defineBlocksWithJsonArray([
   "output": "easing",
   "colour": 60,
   "tooltip": "",
-  "helpUrl": ""
+  "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
 {
   "type": "lottie_easing_hold",
@@ -223,7 +238,7 @@ Blockly.defineBlocksWithJsonArray([
   "output": "easing",
   "colour": 60,
   "tooltip": "",
-  "helpUrl": ""
+  "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
 {
   "type": "lottie_color",
@@ -238,7 +253,7 @@ Blockly.defineBlocksWithJsonArray([
   "output": "value",
   "colour": 0,
   "tooltip": "",
-  "helpUrl": ""
+  "helpUrl": "/lottie-docs/concepts/#colors"
 },
 {
   "type": "lottie_vector2d",
@@ -306,7 +321,7 @@ Blockly.defineBlocksWithJsonArray([
   "output": "transform",
   "colour": 330,
   "tooltip": "Transform",
-  "helpUrl": ""
+  "helpUrl": "/lottie-docs/concepts/#transform"
 }
 ]);
 
@@ -409,6 +424,7 @@ Blockly.Blocks["lottie_property_animated"] = {
         this.itemCount_ = 0;
         this.updateShape_();
         this.setOutput(true, 'property');
+        this.setHelpUrl("/lottie-docs/concepts/#animated-property");
     },
     mutationToDom: function()
     {
@@ -515,6 +531,7 @@ lottie_toolbox["contents"].push(
             {"kind": "block", "type": "json_object_list"},
             {"kind": "block", "type": "json_member"},
             {"kind": "block", "type": "json_array"},
+            {"kind": "block", "type": "json_array_statements"},
             {"kind": "block", "type": "json_number"},
             {"kind": "block", "type": "json_text"},
             {"kind": "block", "type": "json_boolean"},
@@ -592,9 +609,9 @@ class BlockyJsonGenerator extends GeneratedGenerator
         return this.json_object(block);
     }
 
-    json_object(block)
+    object_members_to_json(block, input)
     {
-        var connection = block.getInput("members").connection;
+        var connection = block.getInput(input).connection;
         if ( !connection.isConnected() )
             return {};
 
@@ -606,6 +623,11 @@ class BlockyJsonGenerator extends GeneratedGenerator
         }
 
         return result;
+    }
+
+    json_object(block)
+    {
+        return this.object_members_to_json(block, "members");
     }
 
     lottie_property_static(block)
@@ -688,5 +710,21 @@ class BlockyJsonGenerator extends GeneratedGenerator
             out[prop] = this.input_to_json(block, prop);
         }
         return out;
+    }
+
+    json_array_statements(block)
+    {
+        var connection = block.getInput("members").connection;
+        if ( !connection.isConnected() )
+            return {};
+
+        var result = [];
+
+        for ( var item = connection.targetBlock(); item; item = item.getNextBlock() )
+        {
+            result.push(this.block_to_json(item));
+        }
+
+        return result;
     }
 }
