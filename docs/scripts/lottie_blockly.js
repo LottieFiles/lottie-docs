@@ -761,11 +761,14 @@ class BlockyJsonGenerator extends GeneratedGenerator
 
     lottie_keyframe(block)
     {
+        var value = this.input_to_json(block, "value");
+        if ( typeof value == "number" )
+            value = [value];
 
         return {
             "t": Number(block.getFieldValue("time")),
             ...this.input_to_json(block, "easing"),
-            "s": this.input_to_json(block, "value"),
+            "s": value,
         };
     }
 
