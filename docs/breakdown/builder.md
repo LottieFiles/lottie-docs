@@ -1,7 +1,5 @@
 disable_toc: 1
 
-# Playground
-
 <script src="https://unpkg.com/blockly/blockly.min.js"></script>
 <script src="../../scripts/blockly_generated.js"></script>
 <script src="../../scripts/lottie_blockly.js"></script>
