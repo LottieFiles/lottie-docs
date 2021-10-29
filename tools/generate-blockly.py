@@ -298,15 +298,15 @@ class SchemaProperties:
 
         if ref == "#/$defs/helpers/int-boolean":
             property["type"] = "int-boolean"
-        elif ref and "/constants/" in ref:
-            options = [
-                [value["title"], str(value["const"])]
-                for value in schema.get_ref(ref)["oneOf"]
-            ]
         elif ref:
             original = property
             property = dict(schema.get_ref(ref).value)
             property.update(original)
+            if "/constants/" in ref:
+                options = [
+                    [value["title"], str(value["const"])]
+                    for value in schema.get_ref(ref)["oneOf"]
+                ]
 
         label = property.get("title", None)
         type = property.get("type", None)

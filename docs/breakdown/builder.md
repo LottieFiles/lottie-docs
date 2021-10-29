@@ -146,15 +146,6 @@ function copy_json()
 {
     var element = document.getElementById("blockly_output");
     var text = element.innerText;
-    /*
-    var temp_input = document.createElement("input");
-    temp_input.setAttribute('value', secretInfo)
-    temp_input.select();
-                document.execCommand('copy');
-                $body.removeChild($tempInput);
-
-    element.select();*/
-
     navigator.clipboard.writeText(text);
 }
 
