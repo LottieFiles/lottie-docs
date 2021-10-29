@@ -351,17 +351,11 @@ Blockly.defineBlocksWithJsonArray([
 },
 ]);
 
-Blockly.Blocks["json_array"] = {
+const BlocklyArrayBase = {
     init: function()
     {
-        this.appendDummyInput().appendField("[");
-        this.appendDummyInput("close").appendField("]");
-
-        this.setInputsInline(false);
-        this.setColour(230);
         this.itemCount_ = 0;
         this.updateShape_();
-        this.setOutput(true, 'value');
     },
     mutationToDom: function()
     {
@@ -394,24 +388,24 @@ Blockly.Blocks["json_array"] = {
     },
     updateShape_: function()
     {
-        this.removeInput("close");
-
         // Add new inputs.
         for ( var i = 0; i < this.itemCount_; i++ )
         {
             if ( !this.getInput('ADD' + i) )
                 this.add_input(i);
         }
+
+        var input;
         // Remove deleted inputs.
-        while ( this.getInput('ADD' + i) )
+        while ( input = this.getInput('ADD' + i) )
         {
+            if ( input.connection.isConnected() )
+                input.connection.disconnect();
             this.removeInput('ADD' + i);
             i++;
         }
 
         this.add_input(this.itemCount_);
-
-        this.appendDummyInput("close").appendField("]");
     },
     onchange: function(ev)
     {
@@ -428,8 +422,9 @@ Blockly.Blocks["json_array"] = {
                 {
                     while ( this.itemCount_ > 0 )
                     {
-                        var input = this.getInput('ADD' + this.itemCount_ - 1);
-                        if ( input && input.connection.isConnected() )
+                        var name = 'ADD' + (this.itemCount_ - 1);
+                        var input = this.getInput(name);
+                        if ( input && input.connection.isConnected() && name != ev.oldInputName )
                             break;
                         this.itemCount_ -= 1;
                     }
@@ -438,42 +433,38 @@ Blockly.Blocks["json_array"] = {
             }
         }
     },
+};
 
+Blockly.Blocks["json_array"] = {
+    ...BlocklyArrayBase,
+    init: function()
+    {
+        this.appendDummyInput().appendField("[");
+        this.appendDummyInput("close").appendField("]");
+
+        this.setInputsInline(false);
+        this.setColour(230);
+        this.setOutput(true, 'value');
+        BlocklyArrayBase.init.bind(this)();
+    },
+    updateShape_: function()
+    {
+        this.removeInput("close");
+        BlocklyArrayBase.updateShape_.bind(this)();
+        this.appendDummyInput("close").appendField("]");
+    }
 };
 
 
 Blockly.Blocks["lottie_property_animated"] = {
+    ...BlocklyArrayBase,
     init: function()
     {
         this.setInputsInline(false);
         this.setColour(180);
-        this.itemCount_ = 0;
-        this.updateShape_();
         this.setOutput(true, 'property');
         this.setHelpUrl("/lottie-docs/concepts/#animated-property");
-    },
-    mutationToDom: function()
-    {
-        var container = Blockly.utils.xml.createElement('mutation');
-        container.setAttribute('items', this.itemCount_);
-        return container;
-    },
-    domToMutation: function(xmlElement)
-    {
-        this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
-        this.updateShape_();
-    },
-    saveConnections: function(containerBlock)
-    {
-        var itemBlock = containerBlock.getInputTargetBlock('STACK');
-        var i = 0;
-        while (itemBlock)
-        {
-            var input = this.getInput('ADD' + i);
-            itemBlock.valueConnection_ = input && input.connection.targetConnection;
-            i++;
-            itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
-        }
+        BlocklyArrayBase.init.bind(this)();
     },
     add_input: function(index)
     {
@@ -484,49 +475,6 @@ Blockly.Blocks["lottie_property_animated"] = {
             input.appendField("Animated Property");
         return input;
     },
-    updateShape_: function()
-    {
-        // Add new inputs.
-        for ( var i = 0; i < this.itemCount_; i++ )
-        {
-            if ( !this.getInput('ADD' + i) )
-                this.add_input(i);
-        }
-        // Remove deleted inputs.
-        while ( this.getInput('ADD' + i) )
-        {
-            this.removeInput('ADD' + i);
-            i++;
-        }
-
-        this.add_input(this.itemCount_);
-    },
-    onchange: function(ev)
-    {
-        if ( ev instanceof Blockly.Events.Move )
-        {
-            if ( ev.newParentId == this.id || ev.oldParentId == this.id )
-            {
-                if ( this.getInput("ADD" + this.itemCount_).connection.isConnected() )
-                {
-                    this.itemCount_ += 1;
-                    this.updateShape_();
-                }
-                else
-                {
-                    while ( this.itemCount_ > 0 )
-                    {
-                        var input = this.getInput('ADD' + this.itemCount_ - 1);
-                        if ( input && input.connection.isConnected() )
-                            break;
-                        this.itemCount_ -= 1;
-                    }
-                    this.updateShape_();
-                }
-            }
-        }
-    },
-
 };
 
 
