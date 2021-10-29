@@ -17,9 +17,13 @@ class BlockDef:
         self.values = dict(values)
         self.fields = dict(fields)
         self.collapsed = set()
+        self.no_shadow = set()
 
     def collapse(self, value_name):
         self.collapsed.add(value_name)
+
+    def unshade(self,  value_name):
+        self.no_shadow.add(value_name)
 
     def populate_element(self, element: ElementTree.Element):
         element.attrib["type"] = self.type
@@ -33,8 +37,12 @@ class BlockDef:
             else:
                 shadow = ElementTree.SubElement(value, "shadow")
                 shadow_type.populate_element(shadow)
+
             if input_name in self.collapsed:
                 shadow.attrib["collapsed"] = "true"
+
+            if input_name in self.no_shadow:
+                shadow.tag = "block"
 
         for field_name, field_value in self.fields.items():
             ElementTree.SubElement(element, "field", {"name": field_name}).text = str(field_value)
@@ -195,6 +203,7 @@ class BlocklyType:
         block = BlockDef.block_definition(self.type)
         block.values[base.infix] = base.infix
         block.collapse(base.infix)
+        block.unshade(base.infix)
 
         self.serialize.append(
             "...this.input_to_json(block, '{name}')".format(name=base.infix)
