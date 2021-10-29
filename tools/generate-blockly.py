@@ -16,6 +16,10 @@ class BlockDef:
         self.type = type
         self.values = dict(values)
         self.fields = dict(fields)
+        self.collapsed = set()
+
+    def collapse(self, value_name):
+        self.collapsed.add(value_name)
 
     def populate_element(self, element: ElementTree.Element):
         element.attrib["type"] = self.type
@@ -29,6 +33,8 @@ class BlockDef:
             else:
                 shadow = ElementTree.SubElement(value, "shadow")
                 shadow_type.populate_element(shadow)
+            if input_name in self.collapsed:
+                shadow.attrib["collapsed"] = "true"
 
         for field_name, field_value in self.fields.items():
             ElementTree.SubElement(element, "field", {"name": field_name}).text = str(field_value)
@@ -186,14 +192,15 @@ class BlocklyType:
             "check": base.infix
         })
 
-        BlockDef.block_definition(self.type).values[base.infix] = base.infix
+        block = BlockDef.block_definition(self.type)
+        block.values[base.infix] = base.infix
+        block.collapse(base.infix)
 
         self.serialize.append(
             "...this.input_to_json(block, '{name}')".format(name=base.infix)
         )
 
     def add_dropdown(self, label, name, type, options):
-
         self.add_label(label)
 
         cast_pre = ""
@@ -217,6 +224,14 @@ class BlocklyType:
         )
 
         self.add_newline()
+
+    def add_image(self, src, width=16, height=16):
+        self.add_arg({
+            "type": "field_image",
+            "src": src,
+            "width": width,
+            "height": height
+        })
 
 
 @dataclasses.dataclass
@@ -258,7 +273,7 @@ class SchemaProperties:
 
         if "allOf" in schema_object:
             for base in schema_object["allOf"]:
-                if "properties" in base:
+                if "properties" in base or "if" in base:
                     self.add_properties(base, schema, only)
                 elif "$ref" in base:
                     base_ref = base["$ref"]
@@ -266,6 +281,11 @@ class SchemaProperties:
                         self.add_property(base_ref, {"type": "base", "$ref": base_ref})
                     else:
                         self.add_properties(schema.get_ref(base_ref).value, schema, only)
+
+        if "if" in schema_object:
+            self.add_properties(schema_object.get("then", {}), schema, only)
+            self.add_properties(schema_object.get("else", {}), schema, only)
+
         return self
 
     def to_blockly(self, blockly: BlocklyType, schema):
@@ -362,6 +382,11 @@ def convert_object(schema_object, schema):
     blockly = BlocklyType(name, label, hue, help_url)
     blockly_types.setdefault(link.group, []).append(blockly)
     blockly.add_label(label)
+
+    icon = icons.get(path, None)
+    if icon:
+        blockly.add_image(icon)
+
     blockly.add_newline()
 
     if link.cls in ("stroke-dash",):
@@ -490,6 +515,20 @@ exclude = {
     "#/$defs/effects/misc-effect",
 }
 blockly_types = {}
+icons = {
+    "#/$defs/shapes/ellipse": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/circle.svg",
+    "#/$defs/shapes/rectangle": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/square.svg",
+    "#/$defs/shapes/polystar": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/star.svg",
+    "#/$defs/shapes/trim": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/star-half.svg",
+    "#/$defs/shapes/fill": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/fill-drip.svg",
+    "#/$defs/shapes/stroke": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/border-style.svg",
+    "#/$defs/shapes/repeater": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/clone.svg",
+    "#/$defs/shapes/group": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/object-group.svg",
+    "#/$defs/shapes/path": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/bezier-curve.svg",
+    "#/$defs/shapes/transform": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/arrows-alt.svg",
+    "#/$defs/assets/image": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/image.svg",
+    "#/$defs/assets/precomposition": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/folder-open.svg",
+}
 
 with open(schema_filename) as file:
     data = json.load(file)
@@ -498,6 +537,10 @@ schema = schema_validate.Schema(data)
 
 for cat in categories.keys():
     convert_group(schema.get_ref("#/$defs/" + cat), schema)
+
+BlockDef.block_definition("lottie_animation").fields = {
+    "op": 60
+}
 
 BlockDef.block_definition("lottie_transform_shape").values = {
     "s": BlockDef("lottie_property_static", {
@@ -515,6 +558,9 @@ BlockDef.block_definition("lottie_transform_shape").values = {
 
 BlockDef.block_definition("lottie_layer_common").values = {
     "ks": "lottie_transform"
+}
+BlockDef.block_definition("lottie_layer_common").fields = {
+    "op": 60
 }
 
 BlockDef.block_definition("lottie_rectangle").values = {
@@ -555,9 +601,9 @@ BlockDef.block_definition("lottie_ellipse").values = {
 BlockDef.block_definition("lottie_fill").values = {
     "c": BlockDef("lottie_property_static", {
         "value": BlockDef("lottie_color", {}, {
-            "r": 0,
-            "g": 0,
-            "b": 0
+            "red": 0,
+            "green": 0,
+            "blue": 0
         })
     }),
     "o": BlockDef("lottie_property_static", {
@@ -570,9 +616,9 @@ BlockDef.block_definition("lottie_fill").values = {
 BlockDef.block_definition("lottie_stroke").values = {
     "c": BlockDef("lottie_property_static", {
         "value": BlockDef("lottie_color", {}, {
-            "r": 0,
-            "g": 0,
-            "b": 0
+            "red": 0,
+            "green": 0,
+            "blue": 0
         })
     }),
     "o": BlockDef("lottie_property_static", {
@@ -583,6 +629,36 @@ BlockDef.block_definition("lottie_stroke").values = {
     "w": BlockDef("lottie_property_static", {
         "value": BlockDef("json_number", {}, {
             "value": 1,
+        })
+    })
+}
+
+
+BlockDef.block_definition("lottie_polystar").values = {
+    "p": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_vector2d", {}, {
+            "x": 0,
+            "y": 0
+        })
+    }),
+    "pt": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 5,
+        })
+    }),
+    "or": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 100,
+        })
+    }),
+    "os": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 0,
+        })
+    }),
+    "r": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_angle", {}, {
+            "value": 0,
         })
     })
 }

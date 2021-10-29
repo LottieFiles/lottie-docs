@@ -349,20 +349,6 @@ Blockly.defineBlocksWithJsonArray([
   "tooltip": "",
   "helpUrl": ""
 },
-{
-  "type": "my_test",
-  "message0": "Foo %1",
-  "args0": [
-    {
-      "type": "input_value",
-      "name": "value",
-    }
-  ],
-  "output": "value",
-  "colour": 0,
-  "tooltip": "",
-  "helpUrl": ""
-}
 ]);
 
 Blockly.Blocks["json_array"] = {
@@ -613,7 +599,13 @@ lottie_toolbox["contents"].push({
     "contents": [
         {"kind": "block", "type": "lottie_property_static"},
         {"kind": "block", "type": "lottie_property_animated"},
-        {"kind": "block", "type": "lottie_keyframe"},
+        {"kind": "block", "type": "lottie_keyframe", "blockxml": `
+            <block type="lottie_keyframe">
+                <value name="easing">
+                    <shadow type="lottie_easing"></shadow>
+                </value>
+            </block>
+        `},
         {"kind": "block", "type": "lottie_easing"},
         {"kind": "block", "type": "lottie_easing_hold"},
         {"kind": "block", "type": "lottie_color"},
@@ -639,17 +631,6 @@ lottie_toolbox["contents"].push(
             {"kind": "block", "type": "json_text"},
             {"kind": "block", "type": "json_boolean"},
             {"kind": "block", "type": "json_null"},
-            {"kind": "block", "blockxml": `
-            <block type="my_test">
-                <value name="value">
-                    <shadow type="lottie_transform">
-                        <value name="p">
-                            <shadow type="lottie_property_static">
-                            </shadow>
-                        </value>
-                    </shadow>
-                </value>
-            </block>`},
         ]
     }
 );

@@ -53,8 +53,15 @@ div[role='main'], body > .container, #playground_layout
 #playground_output pre
 {
     margin: 0;
-    overflow: scroll;
+    overflow: auto;
     flex-grow: 1;
+
+}
+#playground_output pre code
+{
+    display: block;
+    min-height: 0;
+    height: 0;
 }
 #playground_output_buttons
 {
