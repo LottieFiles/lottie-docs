@@ -348,6 +348,20 @@ Blockly.defineBlocksWithJsonArray([
   "colour": 0,
   "tooltip": "",
   "helpUrl": ""
+},
+{
+  "type": "my_test",
+  "message0": "Foo %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "value",
+    }
+  ],
+  "output": "value",
+  "colour": 0,
+  "tooltip": "",
+  "helpUrl": ""
 }
 ]);
 
@@ -625,6 +639,17 @@ lottie_toolbox["contents"].push(
             {"kind": "block", "type": "json_text"},
             {"kind": "block", "type": "json_boolean"},
             {"kind": "block", "type": "json_null"},
+            {"kind": "block", "blockxml": `
+            <block type="my_test">
+                <value name="value">
+                    <shadow type="lottie_transform">
+                        <value name="p">
+                            <shadow type="lottie_property_static">
+                            </shadow>
+                        </value>
+                    </shadow>
+                </value>
+            </block>`},
         ]
     }
 );

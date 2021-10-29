@@ -6,6 +6,45 @@ import inspect
 import pathlib
 import argparse
 import dataclasses
+from xml.etree import ElementTree
+
+
+class BlockDef:
+    _blocks = {}
+
+    def __init__(self, type, values={}, fields={}):
+        self.type = type
+        self.values = dict(values)
+        self.fields = dict(fields)
+
+    def populate_element(self, element: ElementTree.Element):
+        element.attrib["type"] = self.type
+
+        for input_name, shadow_type in self.values.items():
+            value = ElementTree.SubElement(element, "value", {"name": input_name})
+            if isinstance(shadow_type, str):
+                shadow = ElementTree.SubElement(value, "shadow", {"type": shadow_type})
+                if shadow_type in BlockDef._blocks:
+                    BlockDef._blocks[shadow_type].populate_element(shadow)
+            else:
+                shadow = ElementTree.SubElement(value, "shadow")
+                shadow_type.populate_element(shadow)
+
+        for field_name, field_value in self.fields.items():
+            ElementTree.SubElement(element, "field", {"name": field_name}).text = str(field_value)
+
+    def get_element(self):
+        element = ElementTree.Element("block")
+        self.populate_element(element)
+        return element
+
+    @staticmethod
+    def block_definition(type, create=True):
+        if type not in BlockDef._blocks:
+            if not create:
+                return None
+            BlockDef._blocks[type] = BlockDef(type)
+        return BlockDef._blocks[type]
 
 
 class BlocklyType:
@@ -147,6 +186,8 @@ class BlocklyType:
             "check": base.infix
         })
 
+        BlockDef.block_definition(self.type).values[base.infix] = base.infix
+
         self.serialize.append(
             "...this.input_to_json(block, '{name}')".format(name=base.infix)
         )
@@ -220,10 +261,11 @@ class SchemaProperties:
                 if "properties" in base:
                     self.add_properties(base, schema, only)
                 elif "$ref" in base:
-                    if base["$ref"] in split_bases:
-                        self.add_property(base["$ref"], {"type": "base", "$ref": base["$ref"]})
+                    base_ref = base["$ref"]
+                    if base_ref in split_bases:
+                        self.add_property(base_ref, {"type": "base", "$ref": base_ref})
                     else:
-                        self.add_properties(schema.get_ref(base["$ref"]).value, schema, only)
+                        self.add_properties(schema.get_ref(base_ref).value, schema, only)
         return self
 
     def to_blockly(self, blockly: BlocklyType, schema):
@@ -373,7 +415,11 @@ def write_js(file):
         for obj in object_list:
             json.dump(obj.to_json_array(), file, indent=4)
             file.write(",\n")
-            cat_contents.append({"kind": "block", "type": obj.type})
+            toolbox_item = {"kind": "block", "type": obj.type}
+            blockxml = BlockDef.block_definition(obj.type, False)
+            if blockxml:
+                toolbox_item["blockxml"] = ElementTree.tostring(blockxml.get_element()).decode("us-ascii")
+            cat_contents.append(toolbox_item)
 
         toolbox_items.append({
             "kind": "category",
@@ -441,6 +487,7 @@ exclude = {
     "#/$defs/shapes/twist",
     "#/$defs/shapes/merge",
     "#/$defs/shapes/offset-path",
+    "#/$defs/effects/misc-effect",
 }
 blockly_types = {}
 
@@ -451,6 +498,94 @@ schema = schema_validate.Schema(data)
 
 for cat in categories.keys():
     convert_group(schema.get_ref("#/$defs/" + cat), schema)
+
+BlockDef.block_definition("lottie_transform_shape").values = {
+    "s": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_vector2d", {}, {
+            "x": 100,
+            "y": 100
+        })
+    }),
+    "o": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 100,
+        })
+    })
+}
+
+BlockDef.block_definition("lottie_layer_common").values = {
+    "ks": "lottie_transform"
+}
+
+BlockDef.block_definition("lottie_rectangle").values = {
+    "p": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_vector2d", {}, {
+            "x": 0,
+            "y": 0
+        })
+    }),
+    "s": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_vector2d", {}, {
+            "x": 100,
+            "y": 100
+        })
+    }),
+    "r": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 0,
+        })
+    })
+}
+
+BlockDef.block_definition("lottie_ellipse").values = {
+    "p": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_vector2d", {}, {
+            "x": 0,
+            "y": 0
+        })
+    }),
+    "s": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_vector2d", {}, {
+            "x": 100,
+            "y": 100
+        })
+    })
+}
+
+BlockDef.block_definition("lottie_fill").values = {
+    "c": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_color", {}, {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        })
+    }),
+    "o": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 100,
+        })
+    })
+}
+
+BlockDef.block_definition("lottie_stroke").values = {
+    "c": BlockDef("lottie_property_static", {
+        "value": BlockDef("lottie_color", {}, {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        })
+    }),
+    "o": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 100,
+        })
+    }),
+    "w": BlockDef("lottie_property_static", {
+        "value": BlockDef("json_number", {}, {
+            "value": 1,
+        })
+    })
+}
 
 js_filename = root / "docs" / "scripts" / "blockly_generated.js"
 with open(js_filename, "w") as file:
