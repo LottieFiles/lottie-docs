@@ -157,7 +157,7 @@
                     "type": "array",
                     "items": {
                         "oneOf":  [
-                            {"$ref": "#/$defs/effects/change-to-color-effect"},
+                            {"$ref": "#/$defs/effects/misc-effect"},
                             {"$ref": "#/$defs/effects/drop-shadow-effect"},
                             {"$ref": "#/$defs/effects/fill-effect"},
                             {"$ref": "#/$defs/effects/gaussian-blur-effect"},
@@ -166,7 +166,13 @@
                             {"$ref": "#/$defs/effects/stroke-effect"},
                             {"$ref": "#/$defs/effects/tint-effect"},
                             {"$ref": "#/$defs/effects/tritone-effect"},
-                            {"$ref": "#/$defs/effects/radial-wipe-effect"}
+                            {"$ref": "#/$defs/effects/radial-wipe-effect"},
+                            {"$ref": "#/$defs/effects/wavy-effect"},
+                            {"$ref": "#/$defs/effects/puppet-effect"},
+                            {"$ref": "#/$defs/effects/spherize-effect"},
+                            {"$ref": "#/$defs/effects/paint-over-transparent-effect"},
+                            {"$ref": "#/$defs/effects/mesh-warp-effect"},
+                            {"$ref": "#/$defs/effects/displacement-map-effect"}
                         ]
                     }
                 },

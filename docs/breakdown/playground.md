@@ -71,6 +71,7 @@ div[role='main'], body > .container, #playground_layout
             <li><button onclick="save()">Save</button></li>
             <li><button onclick="load()">Load</button></li>
             <li><button onclick="clear_workspace()">Clear</button></li>
+            <li><button onclick="copy_json()">Copy JSON</button></li>
         </ul>
         <div class="alpha_checkered" id="lottie_player"></div>
         <pre><code id="blockly_output"></code></pre>
@@ -133,6 +134,23 @@ function update_code()
     if ( frame != 0 )
         anim.goToAndPlay(frame, true);
 
+}
+
+
+function copy_json()
+{
+    var element = document.getElementById("blockly_output");
+    var text = element.innerText;
+    /*
+    var temp_input = document.createElement("input");
+    temp_input.setAttribute('value', secretInfo)
+    temp_input.select();
+                document.execCommand('copy');
+                $body.removeChild($tempInput);
+
+    element.select();*/
+
+    navigator.clipboard.writeText(text);
 }
 
 var options = {

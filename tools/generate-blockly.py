@@ -18,8 +18,6 @@ class BlocklyType:
         self.serialize = []
         self.name = name
         self.kwargs = kwargs
-        self.properties = {}
-        self.required = set()
 
     def add_arg(self, arg):
         self.args.append(arg)
@@ -99,7 +97,7 @@ class BlocklyType:
     def add_label(self, label):
         self.message += " " + label
 
-    def add_input(self, label, name, **kwargs):
+    def add_input(self, label, name, split=False, **kwargs):
         self.add_label(label)
 
         self.add_arg({
@@ -108,9 +106,14 @@ class BlocklyType:
             **kwargs
         })
 
-        self.serialize.append(
-            "'{name}': this.input_to_json(block, '{name}')".format(name=name)
-        )
+        if split:
+            self.serialize.append(
+                "...this.maybe_split_property(block, '{name}')".format(name=name)
+            )
+        else:
+            self.serialize.append(
+                "'{name}': this.input_to_json(block, '{name}')".format(name=name)
+            )
 
     def to_serialize_function(self):
         indent = " " * 4 * 2
@@ -174,54 +177,6 @@ class BlocklyType:
 
         self.add_newline()
 
-    def compile(self):
-        for name, property in self.properties.items():
-            label = property.get("title", None)
-            type = property.get("type", None)
-
-            if "options" in property:
-                self.add_dropdown(label, name, type, property["options"])
-            elif type in {"number", "integer", "boolean", "int-boolean", "string"}:
-                kwargs = {}
-                required = name in self.required
-                if "const" in property:
-                    kwargs["const"] = property["const"]
-                    required = True
-                elif type in {"boolean", "int-boolean"}:
-                    required = True
-
-                if required:
-                    if "default" in property:
-                        kwargs["value"] = property["default"]
-                    if "minimum" in property:
-                        kwargs["min"] = property["minimum"]
-                    if "maximum" in property:
-                        kwargs["max"] = property["maximum"]
-
-                    self.add_attribute(label, name, type, **kwargs)
-                else:
-                    self.add_input(label, name, check="value")
-
-            elif type == "object":
-                self.add_input(label, name)
-            elif type == "array":
-                kwargs = {}
-                if "items" in property:
-                    if "oneOf" in property["items"] and "$ref" in property["items"]["oneOf"][0]:
-                        kwargs["check"] = property["items"]["oneOf"][0]["$ref"].split("/")[-2]
-                    elif "$ref" in property["items"]:
-                        chunks = property["items"]["$ref"].split("/")
-                        group = chunks[-2]
-                        if group in categories:
-                            cat = categories[group]
-                            cls = chunks[-1]
-                            check = "lottie_" + cat.infix + cls.replace("-", "_")
-                            kwargs["check"] = check
-
-                self.add_list(label, name, **kwargs)
-            elif type == "base":
-                self.add_base_input(split_bases[property["$ref"]])
-
 
 @dataclasses.dataclass
 class Category:
@@ -230,42 +185,116 @@ class Category:
     infix: str = ""
 
 
-def add_property(name, property, schema, blockly):
-    ref = property.get("$ref", None)
+class SchemaProperties:
+    def __init__(self):
+        self.properties = {}
+        self.required = set()
+        self.order = []
 
-    if ref == "#/$defs/helpers/int-boolean":
-        property["type"] = "int-boolean"
-    elif ref and "/constants/" in ref:
-        property["options"] = [
-            [value["title"], str(value["const"])]
-            for value in schema.get_ref(ref)["oneOf"]
-        ]
-    elif ref:
-        original = property
-        property = dict(schema.get_ref(ref).value)
-        property.update(original)
+    def add_property(self, name, property, order=None):
+        if name not in self.order:
+            if order:
+                self.order.insert(order, name)
+            else:
+                self.order.append(name)
+        self.properties[name] = property
 
-    blockly.properties[name] = property
+    def index_of(self, name):
+        return self.order.index(name)
 
+    def remove_property(self, name):
+        if self.properties.pop(name, None) is not None:
+            self.order.remove(name)
 
-def add_properties(schema_object, schema, blockly, only=None):
-    if "properties" in schema_object:
-        for name, property in schema_object["properties"].items():
-            if not only or name in only:
-                add_property(name, dict(property), schema, blockly)
+    def add_properties(self, schema_object, schema, only=None):
+        if "properties" in schema_object:
+            for name, property in schema_object["properties"].items():
+                if not only or name in only:
+                    self.add_property(name, property)
 
-    if "required" in schema_object:
-        blockly.required |= set(schema_object["required"])
+        if "required" in schema_object:
+            self.required |= set(schema_object["required"])
 
-    if "allOf" in schema_object:
-        for base in schema_object["allOf"]:
-            if "properties" in base:
-                add_properties(base, schema, blockly, only)
-            elif "$ref" in base:
-                if base["$ref"] in split_bases:
-                    add_property(base["$ref"], {"type": "base", "$ref": base["$ref"]}, schema, blockly)
-                else:
-                    add_properties(schema.get_ref(base["$ref"]).value, schema, blockly, only)
+        if "allOf" in schema_object:
+            for base in schema_object["allOf"]:
+                if "properties" in base:
+                    self.add_properties(base, schema, only)
+                elif "$ref" in base:
+                    if base["$ref"] in split_bases:
+                        self.add_property(base["$ref"], {"type": "base", "$ref": base["$ref"]})
+                    else:
+                        self.add_properties(schema.get_ref(base["$ref"]).value, schema, only)
+        return self
+
+    def to_blockly(self, blockly: BlocklyType, schema):
+        for name in self.order:
+            self.property_to_blockly(blockly, schema, name, dict(self.properties[name]))
+
+    def property_to_blockly(self, blockly: BlocklyType, schema, name, property):
+        ref = property.get("$ref", "")
+        options = None
+
+        if ref == "#/$defs/helpers/int-boolean":
+            property["type"] = "int-boolean"
+        elif ref and "/constants/" in ref:
+            options = [
+                [value["title"], str(value["const"])]
+                for value in schema.get_ref(ref)["oneOf"]
+            ]
+        elif ref:
+            original = property
+            property = dict(schema.get_ref(ref).value)
+            property.update(original)
+
+        label = property.get("title", None)
+        type = property.get("type", None)
+
+        if options:
+            blockly.add_dropdown(label, name, type, options)
+        elif type in {"number", "integer", "boolean", "int-boolean", "string"}:
+            kwargs = {}
+            required = name in self.required
+            if "const" in property:
+                kwargs["const"] = property["const"]
+                required = True
+            elif type in {"boolean", "int-boolean"}:
+                required = True
+
+            if required:
+                if "default" in property:
+                    kwargs["value"] = property["default"]
+                if "minimum" in property:
+                    kwargs["min"] = property["minimum"]
+                if "maximum" in property:
+                    kwargs["max"] = property["maximum"]
+
+                blockly.add_attribute(label, name, type, **kwargs)
+            else:
+                blockly.add_input(label, name, check="value")
+
+        elif type == "object":
+            kwargs = {}
+            if "animated-properties" in ref:
+                kwargs["check"] = "property"
+            if name == "p":
+                kwargs["split"] = True
+            blockly.add_input(label, name, **kwargs)
+        elif type == "array":
+            kwargs = {}
+            if "items" in property:
+                if "oneOf" in property["items"] and "$ref" in property["items"]["oneOf"][0]:
+                    kwargs["check"] = property["items"]["oneOf"][0]["$ref"].split("/")[-2]
+                elif "$ref" in property["items"]:
+                    chunks = property["items"]["$ref"].split("/")
+                    group = chunks[-2]
+                    if group in categories:
+                        cat = categories[group]
+                        cls = chunks[-1]
+                        check = "lottie_" + cat.infix + cls.replace("-", "_")
+                        kwargs["check"] = check
+            blockly.add_list(label, name, **kwargs)
+        elif type == "base":
+            blockly.add_base_input(split_bases[property["$ref"]])
 
 
 def convert_object(schema_object, schema):
@@ -305,22 +334,31 @@ def convert_object(schema_object, schema):
     if path in split_bases:
         base = split_bases[str(schema_object.path)]
         blockly.add_base_input(base)
-        blockly.required = set("ty")
-        add_properties(schema_object.value, schema, blockly, ["ty"])
-        blockly.compile()
+        properties = SchemaProperties()
+        properties.required = set("ty")
+        properties.add_properties(schema_object.value, schema, ["ty"])
+        properties.to_blockly(blockly, schema)
         blockly.add_custom_attributes()
-
+        properties = SchemaProperties()
         base_blockly = BlocklyType(base.infix, base.title, base.hue, help_url)
         base_blockly.add_label(base.title)
         base_blockly.add_newline()
         base_blockly.kwargs["output"] = base.infix
-        add_properties(schema_object.value, schema, base_blockly)
-        base_blockly.properties.pop("ty", None)
-        base_blockly.compile()
+
+        properties.add_properties(schema_object.value, schema)
+        properties.remove_property("ty")
+        properties.to_blockly(base_blockly, schema)
         blockly_types[link.group].insert(0, base_blockly)
     else:
-        add_properties(schema_object.value, schema, blockly)
-        blockly.compile()
+        properties = SchemaProperties()
+        properties.add_properties(schema_object.value, schema)
+        if path == "#/$defs/shapes/transform":
+            properties.add_property(
+                "p",
+                {"title": "Position", "$ref": "#/$defs/animated-properties/position"},
+                properties.index_of("a") + 1
+            )
+        properties.to_blockly(blockly, schema)
         if path in other_bases:
             blockly.add_custom_attributes()
 

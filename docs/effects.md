@@ -15,16 +15,22 @@ Effect types:
 
 |`ty`| Effect Type |
 |----|-------------|
-|`5` |[Change to Color](#change-to-color-effect)|
+|`5` |[Old-style Effect](#misc-effect)|
+|`7` |[Paint Over Transparent](#paint-over-transparent-effect)|
 |`20`|[Tint](#tint-effect)|
 |`21`|[Fill](#fill-effect)|
 |`22`|[Stroke](#stroke-effect)|
 |`23`|[Tritone](#tritone-effect)|
 |`24`|[Pro Levels](#pro-levles-effect)|
 |`25`|[Drop Shadow](#drop-shadow-effect)|
-|`26`|[Radial Wipe](#radial-wipe)|
+|`26`|[Radial Wipe](#radial-wipe-effect)|
+|`27`|[Displacement Map](#displacement-map-wipe)|
 |`28`|[Matte3](#matte3-effect)|
 |`29`|[Gaussian Blur](#gaussian-blur-effect)|
+|`31`|[Mesh Warp](#mesh-warp-effect)|
+|`32`|[Wavy](#wavy-effect)|
+|`33`|[Spherize](#spherize-effect)|
+|`34`|[Puppet](#puppet-effect)|
 
 
 All the examples will use this as their base:
@@ -182,13 +188,6 @@ Dimensions:slider:layers[0].ef[0].ef[1].v.k:0:0:3
 Wrap:slider:layers[0].ef[0].ef[2].v.k:0:0:1
 :json:layers[0].ef[0]
 
-### Change To Color Effect
-
-{schema_object:effects/change-to-color-effect}
-SKIP:#/$defs/effects/effect
-
-{schema_effect:effects/change-to-color-effect}
-
 
 ### Drop Shadow Effect
 
@@ -216,6 +215,62 @@ SKIP:#/$defs/effects/effect
 {schema_effect:effects/radial-wipe-effect}
 
 
+### Displacement Map Effect
+
+{schema_object:effects/displacement-map-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/displacement-map-effect}
+
+
+### Mesh Warp Effect
+
+{schema_object:effects/mesh-warp-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/mesh-warp-effect}
+
+
+### Paint Over Transparent Effect
+
+{schema_object:effects/paint-over-transparent-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/paint-over-transparent-effect}
+
+
+### Puppet Effect
+
+{schema_object:effects/puppet-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/puppet-effect}
+
+
+### Spherize Effect
+
+{schema_object:effects/spherize-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/spherize-effect}
+
+
+### Wavy Effect
+
+{schema_object:effects/wavy-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/wavy-effect}
+
+
+### Misc Effect
+
+On older lottie versions, you might find various different effects all with `ty` = 5.
+
+{schema_object:effects/misc-effect}
+SKIP:#/$defs/effects/effect
+
+
 ## Effect Values
 
 {schema_object:effect-values/effect-value}
@@ -230,7 +285,7 @@ EXPAND:#/$defs/helpers/visual-object
 |`3` |[Point](#point)|
 |`4` |[Checkbox](#checkbox)|
 |`6` |[Ignored](#ignored)|
-|`7` |[Dropdown](#dropdown)|
+|`7` |[Dropdown](#drop-down)|
 |`10`|[Layer](#layer)|
 
 

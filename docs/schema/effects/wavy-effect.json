@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Change To Color Effect",
-    "description": "Change to color",
+    "title": "Wavy Effect",
+    "description": "",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"
@@ -13,61 +13,46 @@
                 "ty": {
                     "title": "Type",
                     "type": "integer",
-                    "const": 5
+                    "const": 32
                 },
                 "ef": {
                     "title": "Effect values",
                     "type": "array",
                     "prefixItems": [
                         {
-                            "title": "from_color",
-                            "$ref": "#/$defs/effect-values/color"
+                            "title": "Radius",
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
-                            "title": "to_color",
-                            "$ref": "#/$defs/effect-values/color"
+                            "title": "Center",
+                            "$ref": "#/$defs/effect-values/point"
                         },
                         {
-                            "title": "change",
+                            "title": "Conversion type",
                             "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
-                            "title": "change_by",
+                            "title": "Speed",
                             "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
-                            "title": "tolerance",
-                            "$ref": "#/$defs/effect-values/ignored"
-                        },
-                        {
-                            "title": "hue",
+                            "title": "Width",
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {
-                            "title": "lightness",
+                            "title": "Height",
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {
-                            "title": "saturation",
+                            "title": "Phase",
                             "$ref": "#/$defs/effect-values/slider"
-                        },
-                        {
-                            "title": "saturation_",
-                            "$ref": "#/$defs/effect-values/ignored"
-                        },
-                        {
-                            "title": "softness",
-                            "$ref": "#/$defs/effect-values/slider"
-                        },
-                        {
-                            "title": "view_correction",
-                            "$ref": "#/$defs/effect-values/drop-down"
                         }
                     ]
                 }
             },
             "required": [
-                "ty"
+                "ty",
+                "ef"
             ]
         }
     ]

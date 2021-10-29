@@ -32,11 +32,11 @@
                     "type": "integer"
                 },
                 "ty": {
-                    "title": "Type",
+                    "title": "Effect type",
                     "type": "integer"
                 }
             },
-            "required": []
+            "required": ["ty", "ef"]
         }
     ]
 }

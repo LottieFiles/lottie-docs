@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Misc Effect",
+    "description": "Old lottie files use `ty` = 5 for many different effects",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 5
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}
+

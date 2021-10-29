@@ -79,7 +79,7 @@ Blockly.defineBlocksWithJsonArray([
         "value": 0
         }
     ],
-    "output": null,
+    "output": "value",
     "colour": 210,
     "tooltip": "",
     "helpUrl": ""
@@ -306,6 +306,32 @@ Blockly.defineBlocksWithJsonArray([
   "output": "transform",
   "colour": 330,
   "tooltip": "Transform",
+  "helpUrl": "/lottie-docs/concepts/#transform"
+},
+
+{
+  "type": "lottie_split_property",
+  "message0": "X %1 Y %2 Z %3",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "property"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "property"
+    },
+    {
+      "type": "input_value",
+      "name": "z",
+      "check": "property"
+    },
+  ],
+  "output": "property",
+  "colour": 320,
+  "tooltip": "Split Property",
   "helpUrl": "/lottie-docs/concepts/#transform"
 },
 {
@@ -581,6 +607,7 @@ lottie_toolbox["contents"].push({
         {"kind": "block", "type": "json_number"},
         {"kind": "block", "type": "lottie_angle"},
         {"kind": "block", "type": "lottie_transform"},
+        {"kind": "block", "type": "lottie_split_property"},
     ]
 });
 lottie_toolbox["contents"].push(
@@ -779,7 +806,7 @@ class BlockyJsonGenerator extends GeneratedGenerator
         var out = {};
         for ( var prop of ["a", "p", "r", "s", "o", "sk", "sa"] )
         {
-            out[prop] = this.input_to_json(block, prop);
+            Object.assign(out, this.maybe_split_property(block, prop));
         }
         return out;
     }
@@ -798,5 +825,28 @@ class BlockyJsonGenerator extends GeneratedGenerator
         }
 
         return result;
+    }
+
+    lottie_split_property(block, prefix='')
+    {
+        var out = {};
+        for ( var comp of ["x", "y", "z"] )
+            out[prefix + comp] = this.input_to_json(block, comp);
+        return out;
+    }
+
+    maybe_split_property(block, prefix)
+    {
+        var input = block.getInput(prefix)
+        if ( !input || !input.connection.isConnected() )
+            return {};
+
+        var target = input.connection.targetBlock();
+        if ( target.type == "lottie_split_property" )
+            return this.lottie_split_property(target, prefix)
+
+        var out = {};
+        out[prefix] = this.block_to_json(target);
+        return out;
     }
 }
