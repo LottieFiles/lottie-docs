@@ -16,21 +16,17 @@ Blockly.defineBlocksWithJsonArray([
     "colour": 230,
 },
 {
-    "type": "json_object_list",
-    "message0": "{ %1 %2 }",
+    "type": "json_statement_adapter",
+    "message0": "%1",
     "args0": [
         {
-            "type": "input_dummy"
-        },
-        {
-            "type": "input_statement",
-            "name": "members",
-            "check": "object_member",
+            "type": "input_value",
+            "name": "value"
         }
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 230,
+    "colour": 190,
 },
 {
     "type": "json_member",
@@ -139,215 +135,230 @@ Blockly.defineBlocksWithJsonArray([
     "helpUrl": ""
 },
 {
-  "type": "lottie_property_static",
-  "message0": "Static Property %1",
-  "args0": [
-    {
-      "type": "input_value",
-      "name": "value",
-      "check": "value"
-    }
-  ],
-  "output": "property",
-  "colour": 180,
-  "tooltip": "",
-  "helpUrl": "/lottie-docs/concepts/#animated-property"
+    "type": "lottie_property_static",
+    "message0": "Static Property %1",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "value",
+            "check": "value"
+        }
+    ],
+    "output": "property",
+    "colour": 180,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#animated-property"
 },
 {
-  "type": "lottie_keyframe",
-  "message0": "Keyframe %1 time %2 %3 easing %4 value %5",
-  "args0": [
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "field_number",
-      "name": "time",
-      "value": 0
-    },
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "input_value",
-      "name": "easing",
-      "check": "easing"
-    },
-    {
-      "type": "input_value",
-      "name": "value",
-      "check": "value"
-    }
-  ],
-  "output": "keyframe",
-  "colour": 45,
-  "tooltip": "",
-  "helpUrl": "/lottie-docs/concepts/#keyframe"
+    "type": "lottie_property_animated",
+    "message0": "Animated Property %1",
+    "args0": [
+        {
+            "type": "input_statement",
+            "name": "keyframes",
+            "check": "keyframe"
+        }
+    ],
+    "output": "property",
+    "colour": 180,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#animated-property"
 },
 {
-  "type": "lottie_easing",
-  "lastDummyAlign0": "RIGHT",
-  "message0": "Easing %1 Start %2 %3 %4 End %5 %6",
-  "args0": [
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "field_number",
-      "name": "ox",
-      "value": 0,
-      "min": 0,
-      "max": 1
-    },
-    {
-      "type": "field_number",
-      "name": "oy",
-      "value": 0,
-      "min": 0,
-      "max": 1
-    },
-    {
-      "type": "input_dummy",
-      "align": "RIGHT"
-    },
-    {
-      "type": "field_number",
-      "name": "ix",
-      "value": 1,
-      "min": 0,
-      "max": 1
-    },
-    {
-      "type": "field_number",
-      "name": "iy",
-      "value": 1,
-      "min": 0,
-      "max": 1
-    }
-  ],
-  "output": "easing",
-  "colour": 60,
-  "tooltip": "",
-  "helpUrl": "/lottie-docs/concepts/#keyframe"
+    "type": "lottie_keyframe",
+    "message0": "Keyframe %1 time %2 %3 easing %4 value %5",
+    "args0": [
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "field_number",
+            "name": "time",
+            "value": 0
+        },
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_value",
+            "name": "easing",
+            "check": "easing"
+        },
+        {
+            "type": "input_value",
+            "name": "value",
+            "check": "value"
+        }
+    ],
+    "previousStatement": "keyframe",
+    "nextStatement": "keyframe",
+    "colour": 45,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
 {
-  "type": "lottie_easing_hold",
-  "message0": "Hold",
-  "args0": [
-  ],
-  "output": "easing",
-  "colour": 60,
-  "tooltip": "",
-  "helpUrl": "/lottie-docs/concepts/#keyframe"
+    "type": "lottie_easing",
+    "lastDummyAlign0": "RIGHT",
+    "message0": "Easing %1 Start %2 %3 %4 End %5 %6",
+    "args0": [
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "field_number",
+            "name": "ox",
+            "value": 0,
+            "min": 0,
+            "max": 1
+        },
+        {
+            "type": "field_number",
+            "name": "oy",
+            "value": 0,
+            "min": 0,
+            "max": 1
+        },
+        {
+            "type": "input_dummy",
+            "align": "RIGHT"
+        },
+        {
+            "type": "field_number",
+            "name": "ix",
+            "value": 1,
+            "min": 0,
+            "max": 1
+        },
+        {
+            "type": "field_number",
+            "name": "iy",
+            "value": 1,
+            "min": 0,
+            "max": 1
+        }
+    ],
+    "output": "easing",
+    "colour": 60,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
 {
-  "type": "lottie_vector2d",
-  "message0": "x %1 y %2",
-  "args0": [
-    {
-      "type": "field_number",
-      "name": "x",
-      "value": 0
-    },
-    {
-      "type": "field_number",
-      "name": "y",
-      "value": 0
-    }
-  ],
-  "output": "value",
-  "colour": 0,
-  "tooltip": "",
-  "helpUrl": ""
+    "type": "lottie_easing_hold",
+    "message0": "Hold",
+    "args0": [
+    ],
+    "output": "easing",
+    "colour": 60,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#keyframe"
 },
 {
-  "type": "lottie_transform",
-  "message0": "Transform %1 Anchor %2 Position %3 Rotation %4 Scale %5 Opacity %6 Skew %7 Skew Angle %8",
-  "args0": [
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "input_value",
-      "name": "a",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "p",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "r",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "s",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "o",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "sk",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "sa",
-      "check": "property"
-    }
-  ],
-  "output": "transform",
-  "colour": 330,
-  "tooltip": "Transform",
-  "helpUrl": "/lottie-docs/concepts/#transform"
-},
-
-{
-  "type": "lottie_split_property",
-  "message0": "X %1 Y %2 Z %3",
-  "args0": [
-    {
-      "type": "input_value",
-      "name": "x",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "y",
-      "check": "property"
-    },
-    {
-      "type": "input_value",
-      "name": "z",
-      "check": "property"
-    },
-  ],
-  "output": "property",
-  "colour": 320,
-  "tooltip": "Split Property",
-  "helpUrl": "/lottie-docs/concepts/#transform"
+    "type": "lottie_vector2d",
+    "message0": "x %1 y %2",
+    "args0": [
+        {
+            "type": "field_number",
+            "name": "x",
+            "value": 0
+        },
+        {
+            "type": "field_number",
+            "name": "y",
+            "value": 0
+        }
+    ],
+    "output": "value",
+    "colour": 0,
+    "tooltip": "",
+    "helpUrl": ""
 },
 {
-  "type": "lottie_angle",
-  "message0": "%1",
-  "args0": [
-    {
-      "type": "field_angle",
-      "name": "value",
-      "angle": 0,
-    }
-  ],
-  "output": "value",
-  "colour": 0,
-  "tooltip": "",
-  "helpUrl": ""
+    "type": "lottie_transform",
+    "message0": "Transform %1 Anchor %2 Position %3 Rotation %4 Scale %5 Opacity %6 Skew %7 Skew Angle %8",
+    "args0": [
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_value",
+            "name": "a",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "p",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "r",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "s",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "o",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "sk",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "sa",
+            "check": "property"
+        }
+    ],
+    "output": "transform",
+    "colour": 330,
+    "tooltip": "Transform",
+    "helpUrl": "/lottie-docs/concepts/#transform"
+},
+{
+    "type": "lottie_split_property",
+    "message0": "X %1 Y %2 Z %3",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "x",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "y",
+            "check": "property"
+        },
+        {
+            "type": "input_value",
+            "name": "z",
+            "check": "property"
+        },
+    ],
+    "output": "property",
+    "colour": 320,
+    "tooltip": "Split Property",
+    "helpUrl": "/lottie-docs/concepts/#transform"
+},
+{
+    "type": "lottie_angle",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "field_angle",
+            "name": "value",
+            "angle": 0,
+        }
+    ],
+    "output": "value",
+    "colour": 0,
+    "tooltip": "",
+    "helpUrl": ""
 },
 ]);
 
@@ -456,28 +467,6 @@ Blockly.Blocks["json_array"] = {
 };
 
 
-Blockly.Blocks["lottie_property_animated"] = {
-    ...BlocklyArrayBase,
-    init: function()
-    {
-        this.setInputsInline(false);
-        this.setColour(180);
-        this.setOutput(true, 'property');
-        this.setHelpUrl("/lottie-docs/concepts/#animated-property");
-        BlocklyArrayBase.init.bind(this)();
-    },
-    add_input: function(index)
-    {
-        var input = this.appendValueInput('ADD' + index)
-            .setAlign(Blockly.ALIGN_RIGHT)
-            .setCheck("keyframe");
-        if ( index == 0 )
-            input.appendField("Animated Property");
-        return input;
-    },
-};
-
-
 Blockly.Blocks["lottie_color"] = {
     init: function()
     {
@@ -571,10 +560,10 @@ lottie_toolbox["contents"].push(
         "colour": 230,
         "contents": [
             {"kind": "block", "type": "json_object"},
-            {"kind": "block", "type": "json_object_list"},
             {"kind": "block", "type": "json_member"},
             {"kind": "block", "type": "json_array"},
             {"kind": "block", "type": "json_array_statements"},
+            {"kind": "block", "type": "json_statement_adapter"},
             {"kind": "block", "type": "json_number"},
             {"kind": "block", "type": "json_text"},
             {"kind": "block", "type": "json_boolean"},
@@ -658,9 +647,9 @@ class BlockyJsonGenerator extends GeneratedGenerator
         return values;
     }
 
-    json_object_list(block)
+    json_statement_adapter(block)
     {
-        return this.json_object(block);
+        return this.input_to_json(block, "value")
     }
 
     object_members_to_json(block, input)
@@ -695,12 +684,18 @@ class BlockyJsonGenerator extends GeneratedGenerator
     lottie_property_animated(block)
     {
         const keyframes = [];
-        for ( var i = 0; i < block.itemCount_; i++ )
+
+        var connection = block.getInput("keyframes").connection;
+        if ( connection.isConnected() )
         {
-            let keyframe = this.input_to_json(block, 'ADD' + i)
-            if ( keyframes !== undefined )
-                keyframes.push(keyframe);
+            for ( var item = connection.targetBlock(); item; item = item.getNextBlock() )
+            {
+                let keyframe = this.block_to_json(item);
+                if ( keyframes !== undefined )
+                    keyframes.push(keyframe);
+            }
         }
+
         return {
             "a": 1,
             "k": keyframes,
@@ -824,13 +819,17 @@ class BlocklyJsonParser //extends GeneratedParser
         if ( type in this )
             return this[type](parent, json);
 
-        if ( json.constructor === Array )
-            return this.json_array(parent, json);
-
         if ( connection == BlocklyJsonParser.Output )
-            return this.json_object(parent, json);
+            return this.create_value_block(parent, json);
 
-        return this.json_object_list(parent, json);
+
+        return this.create_value_block_statement(parent, json);
+    }
+
+    create_value_block_statement(parent, json)
+    {
+        var wrapper = this.create_block(parent, "json_statement_adapter");
+        return this.create_value_block(this.value(wrapper, "value"), json);
     }
 
     create_block(parent, type)
@@ -874,16 +873,8 @@ class BlocklyJsonParser //extends GeneratedParser
 
     json_object(parent, json)
     {
-        return this.populate_json_object(this.create_block(parent, "json_object"), json);
-    }
+        var block = this.create_block(parent, "json_object");
 
-    json_object_list(parent, json)
-    {
-        return this.populate_json_object(this.create_block(parent, "json_object_list"), json);
-    }
-
-    populate_json_object(block, json)
-    {
         var members = this.statement(block, "members");
         var parent = members;
         for ( var [name, value] of Object.entries(json) )
@@ -895,11 +886,19 @@ class BlocklyJsonParser //extends GeneratedParser
             this.create_value_block(this.value(member, "value"), value);
             parent = this.next(member);
         }
+
         return block;
     }
 
-    create_value_block(parent, json)
+    create_value_block(parent, json, value_hint=null)
     {
+        if ( value_hint == "vector" )
+            return this.lottie_vector2d(parent, json);
+        if ( value_hint == "color" )
+            return this.lottie_color(parent, json);
+        if ( value_hint == "angle" )
+            return this.lottie_angle(parent, json);
+
         if ( typeof json == "number" )
             return this.json_number(parent, json);
         if ( typeof json == "string" )
@@ -908,7 +907,7 @@ class BlocklyJsonParser //extends GeneratedParser
             return this.json_boolean(parent, json);
         if ( typeof json === null )
             return this.json_null(parent, json);
-        if ( json.constructor === Array )
+        if ( Array.isArray(json) )
             return this.json_array(parent, json);
         return this.json_object(parent, json);
     }
@@ -960,7 +959,185 @@ class BlocklyJsonParser //extends GeneratedParser
 
         return block;
     }
+
+    json_array_statements(parent, json)
+    {
+        var block = this.create_block(parent, "json_array_statements");
+
+        var members = this.statement(block, "members");
+        var parent = members;
+        for ( var value of json )
+        {
+            if ( value === undefined )
+                continue;
+
+            var member = this.create_value_block_statement(parent, value);
+            parent = this.next(member);
+        }
+        return block;
+    }
+
+    lottie_property(parent, json, type_hint)
+    {
+        var animated;
+
+        if ( "a" in json )
+        {
+            animated = json.a;
+        }
+        else
+        {
+            animated = Array.isArray(json) && json.length > 0 && ("s" in json);
+        }
+
+        if ( animated )
+            return this.lottie_property_animated(parent, json, type_hint);
+        else
+            return this.lottie_property_static(parent, json, type_hint);
+    }
+
+    lottie_property_static(parent, json, type_hint)
+    {
+        var block = this.create_block(parent, "lottie_property_static");
+        var value = this.value(block, "value");
+        this.create_value_block(value, json.k, type_hint);
+        return block;
+    }
+
+    lottie_property_animated(parent, json, type_hint)
+    {
+        var block = this.create_block(parent, "lottie_property_animated");
+
+        var members = this.statement(block, "keyframes");
+        var parent = members;
+        var e;
+        for ( var value of json )
+        {
+            if ( value === undefined )
+                continue;
+
+            var member = this.lottie_keyframe(parent, value, type_hint, e);
+            e = value.e;
+            parent = this.next(member);
+        }
+        return block;
+    }
+
+    lottie_keyframe(parent, json, type_hint, e)
+    {
+        var block = this.create_block(parent, "lottie_keyframe");
+
+        var easing = this.value(block, "easing");
+
+        if ( "h" in json && json.h )
+        {
+            this.create_block(easing, "lottie_easing_hold");
+        }
+        else if ( "i" in json )
+        {
+            this.lottie_easing(easing, json);
+        }
+
+
+        var value = json.s;
+
+        if ( value === undefined )
+        {
+            if ( e === undefined )
+                return block;
+
+            value = e;
+        }
+
+        this.create_value_block(this.value("value"), value, type_hint);
+
+        return block;
+    }
+
+    lottie_easing_item(json)
+    {
+        var x, y;
+        if ( Array.isArray(json.x) )
+            x = json.x[0];
+        if ( Array.isArray(json.y) )
+            y = json.y[0];
+        return [x, y];
+    }
+
+    lottie_easing(parent, json)
+    {
+        var ix, iy, ox, oy;
+        [ix, iy] = this.lottie_easing_item(json.i);
+        [ox, oy] = this.lottie_easing_item(json.o);
+        var block = this.create_block(parent, "lottie_easing");
+        this.set_field(block, "ox", ox);
+        this.set_field(block, "oy", oy);
+        this.set_field(block, "ix", ix);
+        this.set_field(block, "iy", iy);
+        return block;
+    }
+
+    lottie_vector2d(parent, json)
+    {
+        if ( !Array.isArray(json) || json.length != 2 )
+            return this.create_value_block(parent, json);
+
+        var block = this.create_block(parent, "lottie_vector2d");
+        this.set_field(block, "x", json[0]);
+        this.set_field(block, "y", json[1]);
+        return block;
+    }
+
+    lottie_color(parent, json)
+    {
+        if ( !Array.isArray(json) || json.length != 3 )
+            return this.create_value_block(parent, json);
+
+        var block = this.create_block(parent, "lottie_color");
+        this.set_field(block, "red", json[0]);
+        this.set_field(block, "green", json[1]);
+        this.set_field(block, "blue", json[2]);
+        return block;
+    }
+
+    create_property_block(block, json, property, type_hint, input_name=null)
+    {
+        if ( json[property] === undefined )
+            return;
+
+        if ( input_name == null )
+            input_name = property;
+
+        var input = this.value(block, input_name);
+        this.lottie_property(input, json[property], type_hint);
+    }
+
+    lottie_transform(parent, json)
+    {
+        var block = this.create_block(parent, "lottie_transform");
+
+        this.create_property_block(block, "a", "vector");
+        this.create_property_block(block, "r", "angle");
+        this.create_property_block(block, "s", "vector");
+        this.create_property_block(block, "o", "");
+        this.create_property_block(block, "sk", "");
+        this.create_property_block(block, "sa", "");
+
+        if ( "p" in json )
+        {
+            this.create_property_block(block, "p", "vector");
+        }
+        else if ( "px" in json )
+        {
+            var value = this.value(block, "p");
+            var split = this.create_block(value, "lottie_split_property");
+            this.create_property_block(split, "px", "", "x");
+            this.create_property_block(split, "py", "", "y");
+            this.create_property_block(split, "pz", "", "z");
+        }
+    }
 }
+
 BlocklyJsonParser.NoConnection = 0;
 BlocklyJsonParser.Output = 1;
 BlocklyJsonParser.BeforeAfter = 2;
