@@ -48,18 +48,18 @@ div[role='main'], body > .container, #playground_layout
     display: flex;
     flex-flow: column;
 }
-#playground_output pre
+#blockly_output
 {
     margin: 0;
     overflow: auto;
     flex-grow: 1;
-
-}
-#playground_output pre code
-{
-    display: block;
-    min-height: 0;
-    height: 0;
+    font-family: Hack,Menlo,Monaco,Consolas,"Courier New",monospace;
+    white-space: pre;
+    font-size: small;
+    color: #333;
+    font-size: 14px;
+    background-color: #fcfdff;
+    border: none;
 }
 #playground_output_buttons
 {
@@ -79,7 +79,7 @@ div[role='main'], body > .container, #playground_layout
             <li><button onclick="copy_json()">Copy JSON</button></li>
         </ul>
         <div class="alpha_checkered" id="lottie_player"></div>
-        <pre><code id="blockly_output"></code></pre>
+        <textarea id="blockly_output" onchange="parse_json()"></textarea>
     </div>
 </div>
 
@@ -112,7 +112,7 @@ function update_code()
     if ( top_block !== undefined )
         json = generator.block_to_json(top_block);
 
-    document.getElementById("blockly_output").innerText = JSON.stringify(json, null, 4);
+    document.getElementById("blockly_output").value = JSON.stringify(json, null, 4);
 
     var anim_data = {
         container: document.getElementById('lottie_player'),
@@ -147,6 +147,13 @@ function copy_json()
     var element = document.getElementById("blockly_output");
     var text = element.innerText;
     navigator.clipboard.writeText(text);
+}
+
+function parse_json()
+{
+    var parser = new BlocklyJsonParser();
+    var json = JSON.parse(document.getElementById("blockly_output").value);
+    parser.parse(json, workspace);
 }
 
 var options = {

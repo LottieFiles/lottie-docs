@@ -12,7 +12,7 @@ Blockly.defineBlocksWithJsonArray([
             "check": "object_member",
         }
     ],
-    "output": "value",
+    "output": null,
     "colour": 230,
 },
 {
@@ -28,8 +28,8 @@ Blockly.defineBlocksWithJsonArray([
             "check": "object_member",
         }
     ],
-    "previousStatement": "object",
-    "nextStatement": "object",
+    "previousStatement": null,
+    "nextStatement": null,
     "colour": 230,
 },
 {
@@ -807,3 +807,160 @@ class BlockyJsonGenerator extends GeneratedGenerator
         return out;
     }
 }
+
+class BlocklyJsonParser //extends GeneratedParser
+{
+
+    parse(json, workspace)
+    {
+        var root = document.createElement("xml");
+        this.json_to_block(root, json, "lottie_animation", BlocklyJsonParser.NoConnection);
+        workspace.clear();
+        Blockly.Xml.domToWorkspace(root, workspace);
+    }
+
+    json_to_block(parent, json, type, connection)
+    {
+        if ( type in this )
+            return this[type](parent, json);
+
+        if ( json.constructor === Array )
+            return this.json_array(parent, json);
+
+        if ( connection == BlocklyJsonParser.Output )
+            return this.json_object(parent, json);
+
+        return this.json_object_list(parent, json);
+    }
+
+    create_block(parent, type)
+    {
+        var block = document.createElement("block");
+        block.setAttribute("type", type);
+        parent.appendChild(block);
+        return block;
+    }
+
+    statement(block, name)
+    {
+        var statement = document.createElement("statement");
+        statement.setAttribute("name", name);
+        block.appendChild(statement);
+        return statement;
+    }
+
+    set_field(block, name, value)
+    {
+        var field = document.createElement("field");
+        field.setAttribute("name", name);
+        field.innerText = value;
+        block.appendChild(field);
+    }
+
+    value(block, name)
+    {
+        var value = document.createElement("value");
+        value.setAttribute("name", name);
+        block.appendChild(value);
+        return value;
+    }
+
+    next(block)
+    {
+        var next = document.createElement("next");
+        block.appendChild(next);
+        return next;
+    }
+
+    json_object(parent, json)
+    {
+        return this.populate_json_object(this.create_block(parent, "json_object"), json);
+    }
+
+    json_object_list(parent, json)
+    {
+        return this.populate_json_object(this.create_block(parent, "json_object_list"), json);
+    }
+
+    populate_json_object(block, json)
+    {
+        var members = this.statement(block, "members");
+        var parent = members;
+        for ( var [name, value] of Object.entries(json) )
+        {
+            if ( value === undefined )
+                continue;
+            var member = this.create_block(parent, "json_member");
+            this.set_field(member, "name", name);
+            this.create_value_block(this.value(member, "value"), value);
+            parent = this.next(member);
+        }
+        return block;
+    }
+
+    create_value_block(parent, json)
+    {
+        if ( typeof json == "number" )
+            return this.json_number(parent, json);
+        if ( typeof json == "string" )
+            return this.json_text(parent, json);
+        if ( typeof json == "boolean" )
+            return this.json_boolean(parent, json);
+        if ( typeof json === null )
+            return this.json_null(parent, json);
+        if ( json.constructor === Array )
+            return this.json_array(parent, json);
+        return this.json_object(parent, json);
+    }
+
+    json_null(parent, json)
+    {
+        return this.create_block(parent, "json_null");
+    }
+
+    json_text(parent, json)
+    {
+        var block = this.create_block(parent, "json_text");
+        this.set_field(block, "value", json);
+        return block;
+    }
+
+    json_number(parent, json)
+    {
+        var block = this.create_block(parent, "json_number");
+        this.set_field(block, "value", json.toString());
+        return block;
+    }
+
+    lottie_angle(parent, json)
+    {
+        var block = this.create_block(parent, "lottie_angle");
+        this.set_field(block, "value", json.toString());
+        return block;
+    }
+
+    json_boolean(parent, json)
+    {
+        var block = this.create_block(parent, "json_boolean");
+        this.set_field(block, "value", json ? "true" : "false");
+        return block;
+    }
+
+    json_array(parent, json)
+    {
+        var block = this.create_block(parent, "json_array");
+
+        block.appendChild(document.createElement("mutation")).setAttribute("items", json.length.toString());
+
+        for ( var i = 0; i < json.length; i++ )
+        {
+            var value = this.value(block, "ADD" + i);
+            this.create_value_block(value, json[i]);
+        }
+
+        return block;
+    }
+}
+BlocklyJsonParser.NoConnection = 0;
+BlocklyJsonParser.Output = 1;
+BlocklyJsonParser.BeforeAfter = 2;
