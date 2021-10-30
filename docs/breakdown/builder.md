@@ -77,6 +77,7 @@ div[role='main'], body > .container, #playground_layout
             <li><button onclick="load()">Load</button></li>
             <li><button onclick="clear_workspace()">Clear</button></li>
             <li><button onclick="copy_json()">Copy JSON</button></li>
+            <li><button onclick="load_url_prompt()">Load from URL</button></li>
         </ul>
         <div class="alpha_checkered" id="lottie_player"></div>
         <textarea id="blockly_output" onchange="parse_json()"></textarea>
@@ -156,6 +157,50 @@ function parse_json()
     parser.parse(json, workspace);
 }
 
+function load_url_prompt()
+{
+    var url = prompt("URL to a lottie JSON");
+    if ( url )
+        load_url(url)
+}
+
+function load_url(url)
+{
+    try {
+        new URL(url);
+    } catch (e) {
+        alert("Invalid URL");
+        return;
+    }
+
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4)
+        {
+            if ( this.status == 200 || xhttp.status == 304 )
+            {
+                var parser = new BlocklyJsonParser();
+                var json
+                try {
+                    json = JSON.parse(xmlhttp.responseText);
+                } catch (e) {
+                    alert("Invalid JSON");
+                    return;
+                }
+                parser.parse(json, workspace);
+            }
+            else
+            {
+                alert("Could not fetch the JSON");
+            }
+        }
+    };
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
+
 var options = {
   comments: true,
   toolbox: lottie_toolbox,
@@ -168,9 +213,12 @@ var generator = new BlockyJsonGenerator();
 var anim = null;
 
 workspace.addChangeListener(update_code);
-load();
 
-
+var current_url = new URL(window.location.href);
+var requested_url = current_url.searchParams.get("url");
+if ( requested_url )
+    load_url(requested_url);
+else
+    load();
 
 </script>
-
