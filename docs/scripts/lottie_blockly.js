@@ -315,7 +315,7 @@ Blockly.defineBlocksWithJsonArray([
             "check": "property"
         }
     ],
-    "output": "transform",
+    "output": "lottie_transform",
     "colour": 330,
     "tooltip": "Transform",
     "helpUrl": "/lottie-docs/concepts/#transform"
@@ -803,7 +803,7 @@ class BlockyJsonGenerator extends GeneratedGenerator
     }
 }
 
-class BlocklyJsonParser //extends GeneratedParser
+class BlocklyJsonParser extends GeneratedParser
 {
 
     parse(json, workspace)
@@ -829,7 +829,8 @@ class BlocklyJsonParser //extends GeneratedParser
     create_value_block_statement(parent, json)
     {
         var wrapper = this.create_block(parent, "json_statement_adapter");
-        return this.create_value_block(this.value(wrapper, "value"), json);
+        this.create_value_block(this.value(wrapper, "value"), json);
+        return wrapper;
     }
 
     create_block(parent, type)
@@ -871,11 +872,9 @@ class BlocklyJsonParser //extends GeneratedParser
         return next;
     }
 
-    json_object(parent, json)
+    object_members_from_json(block, json, members_name)
     {
-        var block = this.create_block(parent, "json_object");
-
-        var members = this.statement(block, "members");
+        var members = this.statement(block, members_name);
         var parent = members;
         for ( var [name, value] of Object.entries(json) )
         {
@@ -886,7 +885,12 @@ class BlocklyJsonParser //extends GeneratedParser
             this.create_value_block(this.value(member, "value"), value);
             parent = this.next(member);
         }
+    }
 
+    json_object(parent, json)
+    {
+        var block = this.create_block(parent, "json_object");
+        this.object_members_from_json(block, json, "members");
         return block;
     }
 
@@ -1011,7 +1015,7 @@ class BlocklyJsonParser //extends GeneratedParser
         var members = this.statement(block, "keyframes");
         var parent = members;
         var e;
-        for ( var value of json )
+        for ( var value of json.k )
         {
             if ( value === undefined )
                 continue;
@@ -1026,6 +1030,8 @@ class BlocklyJsonParser //extends GeneratedParser
     lottie_keyframe(parent, json, type_hint, e)
     {
         var block = this.create_block(parent, "lottie_keyframe");
+
+        this.set_field(block, "time", json.t);
 
         var easing = this.value(block, "easing");
 
@@ -1049,7 +1055,7 @@ class BlocklyJsonParser //extends GeneratedParser
             value = e;
         }
 
-        this.create_value_block(this.value("value"), value, type_hint);
+        this.create_value_block(this.value(block, "value"), value, type_hint);
 
         return block;
     }
@@ -1112,29 +1118,70 @@ class BlocklyJsonParser //extends GeneratedParser
         this.lottie_property(input, json[property], type_hint);
     }
 
+    maybe_split_property(block, json, property)
+    {
+        if ( property in json )
+        {
+            this.create_property_block(block, json, property, "vector");
+        }
+        else if ( (property+"x") in json )
+        {
+            var value = this.value(block, property);
+            var split = this.create_block(value, "lottie_split_property");
+            this.create_property_block(split, json, property + "x", "", "x");
+            this.create_property_block(split, json, property + "y", "", "y");
+            this.create_property_block(split, json, property + "z", "", "z");
+        }
+    }
+
     lottie_transform(parent, json)
     {
         var block = this.create_block(parent, "lottie_transform");
 
         this.create_property_block(block, "a", "vector");
+        this.maybe_split_property(block, json, "p", "vector");
         this.create_property_block(block, "r", "angle");
         this.create_property_block(block, "s", "vector");
         this.create_property_block(block, "o", "");
         this.create_property_block(block, "sk", "");
         this.create_property_block(block, "sa", "");
+    }
 
-        if ( "p" in json )
+    statements_from_json(block, name, json, type)
+    {
+        var members = this.statement(block, name);
+        var parent = members;
+        for ( var value of json )
         {
-            this.create_property_block(block, "p", "vector");
+            if ( value === undefined )
+                continue;
+
+
+            var member = this.statement_from_json(parent, value, type);
+            parent = this.next(member);
         }
-        else if ( "px" in json )
+        return block;
+    }
+
+    statement_from_json(parent, json, type)
+    {
+        var type_callback = "get_type_for_" + type;
+
+        if ( type_callback in this )
         {
-            var value = this.value(block, "p");
-            var split = this.create_block(value, "lottie_split_property");
-            this.create_property_block(split, "px", "", "x");
-            this.create_property_block(split, "py", "", "y");
-            this.create_property_block(split, "pz", "", "z");
+            var block_type = this[type_callback](json);
+            return this.json_to_block(parent, json, block_type, BlocklyJsonParser.BeforeAfter);
         }
+
+
+        return this.create_value_block_statement(parent, json);
+    }
+
+    get_type_for_assets(json)
+    {
+        if ( "layers" in json )
+            return "lottie_precomposition";
+        return "lottie_image";
     }
 }
 

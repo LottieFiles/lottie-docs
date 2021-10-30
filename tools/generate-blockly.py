@@ -71,6 +71,7 @@ class BlocklyType:
         self.serialize = []
         self.name = name
         self.kwargs = kwargs
+        self.deserialize = []
 
     def add_arg(self, arg):
         self.args.append(arg)
@@ -84,20 +85,24 @@ class BlocklyType:
 
         cast_pre = ""
         cast_post = ""
+        deserialize_expression = ""
 
         if type == "integer" or type == "number":
             cast_pre = "Number("
             cast_post = ")"
             type = "number"
+            deserialize_expression = ".toString()"
         elif type == "string":
             type = "input"
         elif type == "int-boolean":
-            cast_pre = "'TRUE' =="
+            cast_pre = "'TRUE' == "
             cast_post = " ? 1 : 0"
             type = "checkbox"
+            deserialize_expression = " ? 'TRUE' : 'FALSE'"
         elif type == "boolean":
             type = "checkbox"
-            cast_pre = "'TRUE' =="
+            cast_pre = "'TRUE' == "
+            deserialize_expression = " ? 'TRUE' : 'FALSE'"
 
         if type == "checkbox" and "value" in kwargs:
             kwargs["checked"] = bool(kwargs.pop("value"))
@@ -113,16 +118,22 @@ class BlocklyType:
         }
 
         self.add_arg(field)
+        self.add_newline()
 
         self.serialize.append(
-            "'{name}': {cast_pre}block.getFieldValue('{name}'){cast_post}".format(name=name, cast_pre=cast_pre, cast_post=cast_post)
+            "'{name}': {cast_pre}block.getFieldValue('{name}'){cast_post}"
+            .format(name=name, cast_pre=cast_pre, cast_post=cast_post)
         )
 
-        self.add_newline()
+        self.deserialize.append(
+            'if ( json.{name} !== undefined ) this.set_field(block, "{name}", json.{name}{deserialize_expression})'
+            .format(name=name, deserialize_expression=deserialize_expression)
+        )
 
     def add_list(self, label, name, **kwargs):
         self.add_label(label)
 
+        item_type = kwargs.get("check", "")
         self.add_arg({
             "type": "input_statement",
             "name": name,
@@ -131,6 +142,11 @@ class BlocklyType:
 
         self.serialize.append(
             "'{name}': this.statements_to_json(block, '{name}')".format(name=name)
+        )
+
+        self.deserialize.append(
+            "if ( Array.isArray(json.{name}) ) this.statements_from_json(block, '{name}', json.{name}, '{item_type}')"
+            .format(name=name, item_type=item_type)
         )
 
     def add_custom_attributes(self):
@@ -146,11 +162,14 @@ class BlocklyType:
         self.serialize.append(
             "...this.object_members_to_json(block, 'custom_attributes')"
         )
+        self.deserialize.append(
+            'this.object_members_from_json(block, json, "custom_attributes")'
+        )
 
     def add_label(self, label):
         self.message += " " + label
 
-    def add_input(self, label, name, split=False, **kwargs):
+    def add_input(self, label, name, split=False, type_hint="", animated=False, fixed_object=None, **kwargs):
         self.add_label(label)
 
         self.add_arg({
@@ -163,10 +182,29 @@ class BlocklyType:
             self.serialize.append(
                 "...this.maybe_split_property(block, '{name}')".format(name=name)
             )
+            self.deserialize.append(
+                'this.maybe_split_property(block, json, "{name}")'.format(name=name)
+            )
         else:
             self.serialize.append(
                 "'{name}': this.input_to_json(block, '{name}')".format(name=name)
             )
+
+            if animated:
+                self.deserialize.append(
+                    'this.create_property_block(block, json, "{name}", "{type_hint}")'
+                    .format(name=name, type_hint=type_hint)
+                )
+            elif fixed_object:
+                self.deserialize.append(
+                    'if ( json.{name} !== undefined ) this.{fixed_object}(this.value(block, "{name}"), json.{name})'
+                    .format(name=name, fixed_object=fixed_object)
+                )
+            else:
+                self.deserialize.append(
+                    'if ( json.{name} !== undefined ) this.create_value_block(this.value(block, "{name}"), json.{name}, "{type_hint}")'
+                    .format(name=name, type_hint=type_hint)
+                )
 
     def to_serialize_function(self):
         indent = " " * 4 * 2
@@ -209,15 +247,22 @@ class BlocklyType:
             "...this.input_to_json(block, '{name}')".format(name=base.infix)
         )
 
+        self.deserialize.append(
+            "this.json_to_block(this.value(block, '{name}'), json, '{type}', BlocklyJsonParser.Output)"
+            .format(name=base.infix, type=base.infix)
+        )
+
     def add_dropdown(self, label, name, type, options):
         self.add_label(label)
 
         cast_pre = ""
         cast_post = ""
+        deserialize_expression = ""
 
         if type == "integer" or type == "number":
             cast_pre = "Number("
             cast_post = ")"
+            deserialize_expression = ".toString()"
 
         field = {
             "type": "field_dropdown",
@@ -232,6 +277,11 @@ class BlocklyType:
             .format(name=name, cast_pre=cast_pre, cast_post=cast_post)
         )
 
+        self.deserialize.append(
+            'if ( json.{name} !== undefined ) this.set_field(block, "{name}", json.{name}{deserialize_expression})'
+            .format(name=name, deserialize_expression=deserialize_expression)
+        )
+
         self.add_newline()
 
     def add_image(self, src, width=16, height=16):
@@ -241,6 +291,17 @@ class BlocklyType:
             "width": width,
             "height": height
         })
+
+    def to_deserialize_function(self):
+        indent = " " * 4
+        return inspect.cleandoc(r"""
+            {type}(parent, json)
+            {{
+                var block = this.create_block(parent, '{type}');
+                {code}
+                return block;
+            }}
+        """).format(type=self.type, code=(";\n"+indent).join(self.deserialize))
 
 
 @dataclasses.dataclass
@@ -255,6 +316,7 @@ class SchemaProperties:
         self.properties = {}
         self.required = set()
         self.order = []
+        self.ty = None
 
     def add_property(self, name, property, order=None):
         if name not in self.order:
@@ -328,6 +390,8 @@ class SchemaProperties:
             if "const" in property:
                 kwargs["const"] = property["const"]
                 required = True
+                if name == "ty":
+                    self.ty = property["const"]
             elif type in {"boolean", "int-boolean"}:
                 required = True
 
@@ -345,27 +409,55 @@ class SchemaProperties:
 
         elif type == "object":
             kwargs = {}
+            type_hint = ""
+            split = False
+            animated = False
+            fixed_object = None
+
             if "animated-properties" in ref:
                 kwargs["check"] = "property"
+                animated = True
+
+                if "color-value" in ref:
+                    type_hint = "color"
+                elif "position" in ref or "multi" in ref:
+                    type_hint = "vector"
+                elif "rotation" in label.lower():
+                    type_hint = "angle"
+            else:
+                fixed_object = self.ref_to_object_check(ref)
+                if fixed_object:
+                    kwargs["check"] = fixed_object
+
             if name == "p":
-                kwargs["split"] = True
-            blockly.add_input(label, name, **kwargs)
+                split = True
+
+            blockly.add_input(label, name, split, type_hint, animated, fixed_object, **kwargs)
         elif type == "array":
             kwargs = {}
             if "items" in property:
                 if "oneOf" in property["items"] and "$ref" in property["items"]["oneOf"][0]:
-                    kwargs["check"] = property["items"]["oneOf"][0]["$ref"].split("/")[-2]
+                    kwargs["check"] = property["items"]["oneOf"][0]["$ref"].split("/")[-2].replace("-", "_")
                 elif "$ref" in property["items"]:
-                    chunks = property["items"]["$ref"].split("/")
-                    group = chunks[-2]
-                    if group in categories:
-                        cat = categories[group]
-                        cls = chunks[-1]
-                        check = "lottie_" + cat.infix + cls.replace("-", "_")
+                    check = self.ref_to_object_check(property["items"]["$ref"])
+                    if check:
                         kwargs["check"] = check
             blockly.add_list(label, name, **kwargs)
         elif type == "base":
             blockly.add_base_input(split_bases[property["$ref"]])
+
+    def ref_to_object_check(self, ref):
+        chunks = ref.split("/")
+        if len(chunks) < 2:
+            return None
+        group = chunks[-2]
+        cls = chunks[-1]
+        if group in categories:
+            cat = categories[group]
+            return "lottie_" + cat.infix + cls.replace("-", "_")
+        elif cls == "transform":
+            return "lottie_" + cls
+        return None
 
 
 def convert_object(schema_object, schema):
@@ -437,6 +529,8 @@ def convert_object(schema_object, schema):
         properties.to_blockly(blockly, schema)
         if path in other_bases:
             blockly.add_custom_attributes()
+        if properties.ty is not None:
+            ty_to_block_types.setdefault(link.group.replace("-", "_"), {})[properties.ty] = name
 
 
 def write_js(file):
@@ -471,11 +565,27 @@ def write_js(file):
     json.dump(toolbox, file, indent=4)
     file.write(";\n\n")
 
-    file.write("class GeneratedGenerator{\n")
+    file.write("class GeneratedGenerator {\n")
     for cat_name, object_list in blockly_types.items():
         for obj in object_list:
             file.write(obj.to_serialize_function())
             file.write("\n")
+    file.write("}\n")
+
+    file.write("class GeneratedParser {\n")
+    for cat_name, object_list in blockly_types.items():
+        for obj in object_list:
+            file.write(obj.to_deserialize_function())
+            file.write("\n")
+
+    for statement_type, tymap in ty_to_block_types.items():
+        file.write("get_type_for_%s(json){\n" % statement_type)
+        file.write("    switch ( json.ty ) {\n")
+        for ty, block_type in sorted(tymap.items()):
+            file.write("        case %r: return %r;\n" % (ty, block_type))
+        file.write("        default: return '';\n")
+        file.write("    }\n")
+        file.write("}\n")
     file.write("}\n")
 
 
@@ -490,6 +600,8 @@ md_extensions = __import__("md_extensions")
 schema_validate = __import__("schema-validate")
 
 schema_filename = root / "docs" / "schema" / "lottie.schema.json"
+
+ty_to_block_types = {}
 
 categories = {
     "animation": Category(260, "Animation"),
