@@ -1210,7 +1210,7 @@ class LottieBlockly
     load_json_url(url)
     {
         try {
-            new URL(url);
+            new URL(url, window.location.href);
         } catch (e) {
             this.on_error("Invalid URL");
             return;
@@ -1224,14 +1224,21 @@ class LottieBlockly
             {
                 if ( this.status == 200 || xhttp.status == 304 )
                 {
-                    var json;
-                    try {
-                        json = JSON.parse(xmlhttp.responseText);
-                    } catch (e) {
-                        lottie_blockly.on_error("Invalid JSON");
-                        return;
+                    if ( xmlhttp.responseXML )
+                    {
+                        lottie_blockly.xml_to_workspace(xmlhttp.responseXML.documentElement);
                     }
-                    lottie_blockly.json_to_workspace(json);
+                    else
+                    {
+                        var json;
+                        try {
+                            json = JSON.parse(xmlhttp.responseText);
+                        } catch (e) {
+                            lottie_blockly.on_error("Invalid JSON");
+                            return;
+                        }
+                        lottie_blockly.json_to_workspace(json);
+                    }
                 }
                 else
                 {

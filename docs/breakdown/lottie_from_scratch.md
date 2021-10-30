@@ -37,6 +37,8 @@ For simplicity all the common layer properties are in a separate block in the bu
 this allows you to duplicate those blocks to copy the settings across layers and
 the block is collapsed by default to avoid cluttering the workspace.
 
+[View workspace at the end of this step](/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/setting_up.xml)
+
 ## Adding Shapes
 
 In order to show something, we need to add some shapes to the layer.
@@ -48,6 +50,8 @@ Note that the order is important:
 ![Screenshot of the workspace](images/builder/adding_shapes.png)
 
 This should result in a black pentagon showing in the corner.
+
+[View workspace at the end of this step](/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/adding_shapes.xml)
 
 ## Basic Properties
 
@@ -70,6 +74,9 @@ of course you need to select the right block types from the properties toolbox.
 The color can be changed by manually updating the RGB components or by selecting
 a color from the palette shown after clicking the color preview on the block.
 
+
+[View workspace at the end of this step](/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/basic_properties.xml)
+
 ## Making a Star
 
 We can turn the pentagon into a star by changing the star type and filling in
@@ -82,6 +89,9 @@ using the angle block allows you to edit the angle in a more intuitive way.
 You can tell these block apart because they are a different color and the
 angle block shows the &deg; symbol.
 
+
+[View workspace at the end of this step](/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/star.xml)
+
 ## Animating the Star
 
 Until now we've only seen static properties, but now we can have a look at some
@@ -90,18 +100,16 @@ animated ones.
 To animate the star rotation, we need to first disconnect the static property from it
 and connect an animated property in its place.
 
-The attach two keyframe blocks to the animated property.
-As you fill the available slots in the animated property with keyframes,
-more slots are created so you can keep adding more keyframes.
-But 2 keyframes should be enough for now.
+Thne attach two keyframe blocks to the animated property.
 
-After adding the two keyframes, add angle blocks to their value slots.
-
-Then change the second keyframe to have a time of 60 and a value of 72&deg;.
+Once the keyframes are added, attach angle blocks to their value slots and change the second keyframe to have a time of 60 and a value of 72&deg;.
 
 ![Screenshot of the workspace](images/builder/animation.png)
 
 You should now see the star spinning in the preview.
+
+
+[View workspace at the end of this step](/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/animation.xml)
 
 ## Making the Animation longer
 
@@ -126,3 +134,5 @@ to match with the Animation block.
 Now the star remains visible the whole time, but it stops rotating at the second mark.
 To fix that you can update the second keyframe in the star rotation to have a time of 120.
 Alternatively you can add a third keyframe with that time and an appropriate value.
+
+[View the final workspace](/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/final.xml)
