@@ -75,7 +75,7 @@ div[role='main'], body > .container, #playground_layout
         <ul id="playground_output_buttons">
             <li><button onclick="save()">Save</button></li>
             <li><button onclick="load()">Load</button></li>
-            <li><button onclick="clear_workspace()">Clear</button></li>
+            <li><button onclick="lottie_blockly.clear_workspace()">Clear</button></li>
             <li><button onclick="copy_json()">Copy JSON</button></li>
             <li><button onclick="load_url_prompt()">Load from URL</button></li>
         </ul>
@@ -88,30 +88,18 @@ div[role='main'], body > .container, #playground_layout
 
 function save()
 {
-    var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-    localStorage.setItem("blockly_lottie", Blockly.Xml.domToText(xml));
+    localStorage.setItem("blockly_lottie", lottie_blockly.workspace_to_xml());
 }
 
 function load()
 {
-    Blockly.mainWorkspace.clear();
-    var xml = Blockly.Xml.textToDom(localStorage.getItem("blockly_lottie"));
-    Blockly.Xml.domToWorkspace(xml, Blockly.mainWorkspace);
-    update_code();
+    lottie_blockly.xml_to_workspace(localStorage.getItem("blockly_lottie"));
 }
 
-function clear_workspace()
-{
-    Blockly.mainWorkspace.clear();
-    update_code();
-}
 
 function update_code()
 {
-    var top_block = workspace.getTopBlocks()[0];
-    var json = {};
-    if ( top_block !== undefined )
-        json = generator.block_to_json(top_block);
+    var json = lottie_blockly.workspace_to_json();
 
     document.getElementById("blockly_output").value = JSON.stringify(json, null, 4);
 
@@ -142,7 +130,6 @@ function update_code()
 
 }
 
-
 function copy_json()
 {
     var element = document.getElementById("blockly_output");
@@ -150,55 +137,21 @@ function copy_json()
     navigator.clipboard.writeText(text);
 }
 
+function copy_xml()
+{
+    navigator.clipboard.writeText(lottie_blockly.workspace_to_xml_string());
+}
+
 function parse_json()
 {
-    var parser = new BlocklyJsonParser();
-    var json = JSON.parse(document.getElementById("blockly_output").value);
-    parser.parse(json, workspace);
+    lottie_blockly.json_to_workspace(document.getElementById("blockly_output").value);
 }
 
 function load_url_prompt()
 {
     var url = prompt("URL to a lottie JSON");
     if ( url )
-        load_url(url)
-}
-
-function load_url(url)
-{
-    try {
-        new URL(url);
-    } catch (e) {
-        alert("Invalid URL");
-        return;
-    }
-
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4)
-        {
-            if ( this.status == 200 || xhttp.status == 304 )
-            {
-                var parser = new BlocklyJsonParser();
-                var json
-                try {
-                    json = JSON.parse(xmlhttp.responseText);
-                } catch (e) {
-                    alert("Invalid JSON");
-                    return;
-                }
-                parser.parse(json, workspace);
-            }
-            else
-            {
-                alert("Could not fetch the JSON");
-            }
-        }
-    };
-
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
+        lottie_blockly.load_json_url(url)
 }
 
 var options = {
@@ -208,16 +161,16 @@ var options = {
   collapse: true,
 };
 
-var workspace = Blockly.inject("blockly_div", options);
-var generator = new BlockyJsonGenerator();
 var anim = null;
 
-workspace.addChangeListener(update_code);
+var lottie_blockly = new LottieBlockly(options, "blockly_div", alert);
+
+lottie_blockly.workspace.addChangeListener(update_code);
 
 var current_url = new URL(window.location.href);
 var requested_url = current_url.searchParams.get("url");
 if ( requested_url )
-    load_url(requested_url);
+    lottie_blockly.load_json_url(requested_url);
 else
     load();
 

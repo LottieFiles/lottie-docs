@@ -1188,3 +1188,90 @@ class BlocklyJsonParser extends GeneratedParser
 BlocklyJsonParser.NoConnection = 0;
 BlocklyJsonParser.Output = 1;
 BlocklyJsonParser.BeforeAfter = 2;
+
+
+class LottieBlockly
+{
+    constructor(blockly_options, workspace_id, on_error)
+    {
+        this.workspace = Blockly.inject(workspace_id, options);
+        this.generator = new BlockyJsonGenerator();
+        this.parser = new BlocklyJsonParser();
+    }
+
+    json_to_workspace(json)
+    {
+        if ( typeof json == "string" )
+            json = JSON.parse(json);
+
+        this.parser.parse(json, this.workspace);
+    }
+
+    load_json_url(url)
+    {
+        try {
+            new URL(url);
+        } catch (e) {
+            this.on_error("Invalid URL");
+            return;
+        }
+
+        var xmlhttp = new XMLHttpRequest();
+
+        var lottie_blockly = this;
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4)
+            {
+                if ( this.status == 200 || xhttp.status == 304 )
+                {
+                    var json;
+                    try {
+                        json = JSON.parse(xmlhttp.responseText);
+                    } catch (e) {
+                        lottie_blockly.on_error("Invalid JSON");
+                        return;
+                    }
+                    lottie_blockly.json_to_workspace(json);
+                }
+                else
+                {
+                    lottie_blockly.on_error("Could not fetch the JSON");
+                }
+            }
+        };
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+    xml_to_workspace(xml)
+    {
+        this.workspace.clear();
+        if ( typeof xml == "string" )
+            xml = Blockly.Xml.textToDom(xml);
+        Blockly.Xml.domToWorkspace(xml, this.workspace);
+    }
+
+    workspace_to_xml()
+    {
+        return Blockly.Xml.workspaceToDom(this.workspace);
+    }
+
+    workspace_to_xml_string()
+    {
+        return Blockly.Xml.domToText(this.workspace_to_xml());
+    }
+
+    clear_workspace()
+    {
+        this.workspace.clear();
+    }
+
+    workspace_to_json()
+    {
+        var top_block = this.workspace.getTopBlocks()[0];
+        if ( top_block !== undefined )
+            return this.generator.block_to_json(top_block);
+        return {};
+    }
+}
