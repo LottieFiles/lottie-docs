@@ -494,7 +494,7 @@ Blockly.defineBlocksWithJsonArray([
     "colour": 250,
     "tooltip": "",
     "helpUrl": ""
-}
+},
 /*{
     "type": "lottie_gradient_value",
     "message0": "Gradient %1 %2",
@@ -548,6 +548,291 @@ Blockly.defineBlocksWithJsonArray([
     "tooltip": "",
     "helpUrl": "/lottie-docs/shapes/#gradients"
 }*/
+{
+    "type": "expression_number",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "field_number",
+            "name": "value",
+            "value": 0
+        }
+    ],
+    "output": "x_value",
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_variable",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "field_input",
+            "name": "name",
+            "text": "varname"
+        }
+    ],
+    "output": ["x_value", "x_variable"],
+    "colour": 315,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_variable_definition",
+    "message0": "var %1 = %2",
+    "args0": [
+        {
+            "type": "field_input",
+            "name": "name",
+            "text": "varname"
+        },
+        {
+            "type": "input_value",
+            "name": "value",
+            "check": "x_value",
+        }
+    ],
+    "previousStatement": "x_stetement",
+    "nextStatement": "x_stetement",
+    "colour": 315,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_assign",
+    "message0": "%1 = %2 %3",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "variable",
+            "check": "x_variable"
+        },
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_value",
+            "name": "value",
+            "check": "x_value",
+        }
+    ],
+    "inputsInline": true,
+    "previousStatement": "x_statement",
+    "nextStatement": "x_statement",
+    "colour": 10,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_var_bm_ret",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "$bm_rt"
+        }
+    ],
+    "output": [
+        "x_value",
+        "x_variable",
+    ],
+    "colour": 315,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_var_time",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "time"
+        }
+    ],
+    "output": "x_value",
+    "colour": 315,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_fn_bm_isinstanceofarray",
+    "message0": "%1 ( %2 )",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "$bm_isInstanceOfArray"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG0",
+            "check": "x_value"
+        }
+    ],
+    "output": "x_value",
+    "colour": 290,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_statements",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "input_statement",
+            "name": "statements",
+            "check": "x_statement"
+        }
+    ],
+    "output": "expression",
+    "colour": 10,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_fn_mul",
+    "message0": "%1 ( %2 , %3 )",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "$bm_mul"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG0",
+            "check": "x_value"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG1",
+            "check": "x_value"
+        }
+    ],
+    "output": "x_value",
+    "colour": 260,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_statement_expression",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "input_statement",
+            "name": "value",
+            "check": "x_value"
+        }
+    ],
+    "previousStatement": "x_statement",
+    "nextStatement": "x_statement",
+    "colour": 10,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_fn_div",
+    "message0": "%1 ( %2 , %3 )",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "$bm_div"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG0",
+            "check": "x_value"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG1",
+            "check": "x_value"
+        }
+    ],
+    "output": "x_value",
+    "colour": 260,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_fn_sum",
+    "message0": "%1 ( %2 , %3 )",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "$bm_sum"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG0",
+            "check": "x_value"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG1",
+            "check": "x_value"
+        }
+    ],
+    "output": "x_value",
+    "colour": 260,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_fn_sub",
+    "message0": "%1 ( %2 , %3 )",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "$bm_sub"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG0",
+            "check": "x_value"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG1",
+            "check": "x_value"
+        }
+    ],
+    "output": "x_value",
+    "colour": 260,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "expression_fn_mod",
+    "message0": "%1 ( %2 , %3 )",
+    "args0": [
+        {
+            "type": "field_label_serializable",
+            "name": "name",
+            "text": "$bm_mod"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG0",
+            "check": "x_value"
+        },
+        {
+            "type": "input_value",
+            "name": "ARG1",
+            "check": "x_value"
+        }
+    ],
+    "output": "x_value",
+    "colour": 260,
+    "tooltip": "",
+    "helpUrl": ""
+},
 ]);
 
 const BlocklyArrayBase = {
@@ -817,21 +1102,73 @@ lottie_toolbox["contents"].push({
     "name": "Expressions",
     "colour": 10,
     "contents": [
-        {"kind": "block", "type": "lottie_property_static_expression", "blockxml": `
-            <block type="lottie_property_static_expression">
-                <value name="expression">
-                    <shadow type="lottie_expression_source"></shadow>
-                </value>
-            </block>
-        `},
-        {"kind": "block", "type": "lottie_property_animated_expression", "blockxml": `
-            <block type="lottie_property_animated_expression">
-                <value name="expression">
-                    <shadow type="lottie_expression_source"></shadow>
-                </value>
-            </block>
-        `},
-        {"kind": "block", "type": "lottie_expression_source"},
+        {
+            "kind": "category",
+            "name": "Properties",
+            "colour": 180,
+            "contents": [
+                {"kind": "block", "type": "lottie_property_static_expression", "blockxml": `
+                    <block type="lottie_property_static_expression">
+                        <value name="expression">
+                            <block type="expression_statements"></block>
+                        </value>
+                    </block>
+                `},
+                {"kind": "block", "type": "lottie_property_animated_expression", "blockxml": `
+                    <block type="lottie_property_animated_expression">
+                        <value name="expression">
+                            <block type="expression_statements"></block>
+                        </value>
+                    </block>
+                `},
+                {"kind": "block", "type": "lottie_expression_source"},
+                {"kind": "block", "type": "expression_statements"},
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Statements",
+            "colour": 60,
+            "contents": [
+                {"kind": "block", "type": "expression_statement_expression"},
+                {"kind": "block", "type": "expression_variable_definition"},
+                {"kind": "block", "type": "expression_assign"},
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Values",
+            "colour": 230,
+            "contents": [
+                {"kind": "block", "type": "expression_number"},
+                {"kind": "block", "type": "expression_variable"},
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Variables",
+            "colour": 315,
+            "contents": [
+                {"kind": "block", "type": "expression_variable_definition"},
+                {"kind": "block", "type": "expression_variable"},
+                {"kind": "block", "type": "expression_assign"},
+                {"kind": "block", "type": "expression_var_bm_ret"},
+                {"kind": "block", "type": "expression_var_time"},
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Functions",
+            "colour": 290,
+            "contents": [
+                {"kind": "block", "type": "expression_fn_sum"},
+                {"kind": "block", "type": "expression_fn_sub"},
+                {"kind": "block", "type": "expression_fn_mul"},
+                {"kind": "block", "type": "expression_fn_div"},
+                {"kind": "block", "type": "expression_fn_mod"},
+                {"kind": "block", "type": "expression_fn_bm_isinstanceofarray"},
+            ]
+        }
     ]
 });
 
@@ -841,6 +1178,13 @@ class BlockyJsonGenerator extends GeneratedGenerator
     {
         if ( !block.isEnabled() )
             return undefined;
+
+        if ( block.type.startsWith("expression_var_") )
+            return this.expression_variable(block);
+
+        if ( block.type.startsWith("expression_fn_") )
+            return this.expression_function(block);
+
         return this[block.type](block);
     }
 
@@ -1100,6 +1444,77 @@ class BlockyJsonGenerator extends GeneratedGenerator
             "p": block.getFieldValue("count"),
             "k":  this.input_to_json(block, "colors")
         };
+    }
+
+    expression_statements(block)
+    {
+        var connection = block.getInput("statements").connection;
+        if ( !connection.isConnected() )
+            return "";
+
+        var code = "var $bm_rt;\n";
+        for ( var item = connection.targetBlock(); item; item = item.getNextBlock() )
+        {
+            code += this.block_to_json(item) + "\n";
+        }
+
+        return code;
+    }
+
+    expression_number(block)
+    {
+        return block.getFieldValue("value").toString();
+    }
+
+    expression_variable(block)
+    {
+        return block.getFieldValue("name");
+    }
+
+    expression_variable_definition(block)
+    {
+        var code = "var " + block.getFieldValue("name");
+
+        var input = block.getInput("value")
+        if ( input && input.connection.isConnected() )
+            code += " = " + this.block_to_json(input.connection.targetBlock());
+
+        return code + ";";
+    }
+
+    expression_assign(block)
+    {
+        var code = "";
+        code += this.input_to_json(block, "variable");
+        code += " = ";
+        code += this.input_to_json(block, "value");
+        return code + ";";
+    }
+
+    expression_function(block)
+    {
+        var code = block.getFieldValue("name");
+        code += "(";
+        for ( var i = 0; ; i++ )
+        {
+            var input = block.getInput("ARG" + i)
+            if ( !input )
+                break;
+
+            if ( i > 0 )
+                code += ", ";
+
+            if ( !input.connection.isConnected() )
+                code += "undefined";
+            else
+                code += this.block_to_json(input.connection.targetBlock());
+        }
+        return code + ")";
+    }
+
+    expression_statement_expression(block)
+    {
+        return this.input_to_json(block, "value") + ";";
     }
 }
 
