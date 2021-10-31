@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Split Vector",
+    "description": "An animatable property that is split into individually anaimated components",
+    "properties": {
+        "s": {
+            "title": "Split",
+            "type": "boolean"
+        },
+        "x": {
+            "title": "X",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "y": {
+            "title": "X",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "z": {
+            "title": "Z",
+            "$ref": "#/$defs/animated-properties/value"
+        }
+    },
+    "required": ["s", "x", "y"]
+}
+
+
