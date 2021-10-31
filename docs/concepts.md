@@ -215,7 +215,6 @@ It has the properties from [Visual Object](#visual-object) and its own propertie
 |`sa`   |`number` |Skew Axis    |Direction at which skew is applied, in degrees (`0` skews along the X axis, `90` along the Y axis)|
 |`o`    |`number` |Opacity      |Opacity, `100` for fully opaque|
 
-Sometimes `p` might be replaced by its individual components (`px` and `py`) animated independently.
 
 To make the anchor point properly line up with the center of location, `p` and `a` should have the same value.
 
@@ -237,6 +236,11 @@ Skew Angle:slider:layers[1].ks.sa.k:0:0:360
 Opacity:slider:layers[1].ks.o.k:0:100:100
 :json:layers[1].ks
 
+### Split vector
+
+Sometimes `p` might be split into separate components animated independently and have the following structure
+
+{schema_object:animated-properties/split-vector}
 
 ## Bezier
 

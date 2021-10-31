@@ -178,33 +178,29 @@ class BlocklyType:
             **kwargs
         })
 
+        self.serialize.append(
+            "'{name}': this.input_to_json(block, '{name}')".format(name=name)
+        )
+
         if split:
-            self.serialize.append(
-                "...this.maybe_split_property(block, '{name}')".format(name=name)
-            )
             self.deserialize.append(
                 'this.maybe_split_property(block, json, "{name}")'.format(name=name)
             )
-        else:
-            self.serialize.append(
-                "'{name}': this.input_to_json(block, '{name}')".format(name=name)
+        elif animated:
+            self.deserialize.append(
+                'this.create_property_block(block, json, "{name}", "{type_hint}")'
+                .format(name=name, type_hint=type_hint)
             )
-
-            if animated:
-                self.deserialize.append(
-                    'this.create_property_block(block, json, "{name}", "{type_hint}")'
-                    .format(name=name, type_hint=type_hint)
-                )
-            elif fixed_object:
-                self.deserialize.append(
-                    'if ( json.{name} !== undefined ) this.{fixed_object}(this.value(block, "{name}"), json.{name})'
-                    .format(name=name, fixed_object=fixed_object)
-                )
-            else:
-                self.deserialize.append(
-                    'if ( json.{name} !== undefined ) this.create_value_block(this.value(block, "{name}"), json.{name}, "{type_hint}")'
-                    .format(name=name, type_hint=type_hint)
-                )
+        elif fixed_object:
+            self.deserialize.append(
+                'if ( json.{name} !== undefined ) this.{fixed_object}(this.value(block, "{name}"), json.{name})'
+                .format(name=name, fixed_object=fixed_object)
+            )
+        else:
+            self.deserialize.append(
+                'if ( json.{name} !== undefined ) this.create_value_block(this.value(block, "{name}"), json.{name}, "{type_hint}")'
+                .format(name=name, type_hint=type_hint)
+            )
 
     def to_serialize_function(self):
         indent = " " * 4 * 2

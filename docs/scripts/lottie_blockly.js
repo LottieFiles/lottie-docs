@@ -343,7 +343,7 @@ Blockly.defineBlocksWithJsonArray([
     "output": "property",
     "colour": 320,
     "tooltip": "Split Property",
-    "helpUrl": "/lottie-docs/concepts/#transform"
+    "helpUrl": "/lottie-docs/concepts/#split-vector"
 },
 {
     "type": "lottie_angle",
@@ -758,7 +758,7 @@ class BlockyJsonGenerator extends GeneratedGenerator
         var out = {};
         for ( var prop of ["a", "p", "r", "s", "o", "sk", "sa"] )
         {
-            Object.assign(out, this.maybe_split_property(block, prop));
+            out[prop] = this.input_to_json(block, prop);
         }
         return out;
     }
@@ -779,26 +779,13 @@ class BlockyJsonGenerator extends GeneratedGenerator
         return result;
     }
 
-    lottie_split_property(block, prefix='')
+    lottie_split_property(block)
     {
-        var out = {};
+        var out = {
+            "s": true
+        };
         for ( var comp of ["x", "y", "z"] )
-            out[prefix + comp] = this.input_to_json(block, comp);
-        return out;
-    }
-
-    maybe_split_property(block, prefix)
-    {
-        var input = block.getInput(prefix)
-        if ( !input || !input.connection.isConnected() )
-            return {};
-
-        var target = input.connection.targetBlock();
-        if ( target.type == "lottie_split_property" )
-            return this.lottie_split_property(target, prefix)
-
-        var out = {};
-        out[prefix] = this.block_to_json(target);
+            out[comp] = this.input_to_json(block, comp);
         return out;
     }
 }
@@ -874,6 +861,9 @@ class BlocklyJsonParser extends GeneratedParser
 
     object_members_from_json(block, json, members_name)
     {
+        if ( json === undefined )
+            return;
+
         var members = this.statement(block, members_name);
         var parent = members;
         for ( var [name, value] of Object.entries(json) )
@@ -1118,19 +1108,26 @@ class BlocklyJsonParser extends GeneratedParser
         this.lottie_property(input, json[property], type_hint);
     }
 
+    lottie_split_property(parent, json)
+    {
+        this.create_property_block(parent, json, "x");
+        this.create_property_block(parent, json, "y");
+        this.create_property_block(parent, json, "z");
+    }
+
     maybe_split_property(block, json, property)
     {
-        if ( property in json )
+        if ( json[property] === undefined )
+            return;
+
+        if ( json[property].s )
+        {
+            var input = this.value(block, input_name);
+            this.lottie_split_property(input, json[property]);
+        }
+        else
         {
             this.create_property_block(block, json, property, "vector");
-        }
-        else if ( (property+"x") in json )
-        {
-            var value = this.value(block, property);
-            var split = this.create_block(value, "lottie_split_property");
-            this.create_property_block(split, json, property + "x", "", "x");
-            this.create_property_block(split, json, property + "y", "", "y");
-            this.create_property_block(split, json, property + "z", "", "z");
         }
     }
 

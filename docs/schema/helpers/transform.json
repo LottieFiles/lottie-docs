@@ -46,20 +46,10 @@
         },
         {
             "properties":  {
-                "px": {
-                    "title": "Position X",
-                    "description": "Split position X component",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
-                "py": {
-                    "title": "Position Y",
-                    "description": "Split position Y component",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
-                "pz": {
-                    "title": "Position Z",
-                    "description": "Split position Y component",
-                    "$ref": "#/$defs/animated-properties/value"
+                "p": {
+                    "title": "Position",
+                    "description": "Position / Translation",
+                    "$ref": "#/$defs/animated-properties/split-vector"
                 }
             }
         }
