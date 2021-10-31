@@ -560,6 +560,7 @@ Blockly.Blocks["lottie_color_rgba"] = {
 
 Blockly.FieldAngle.CLOCKWISE = true;
 Blockly.FieldAngle.OFFSET = 90;
+Blockly.FieldAngle.prototype.wrapValue_ = function(value) { return value; }
 
 
 const lottie_toolbox = generated_toolbox;
