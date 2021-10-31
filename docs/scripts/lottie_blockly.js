@@ -273,6 +273,31 @@ Blockly.defineBlocksWithJsonArray([
     "helpUrl": ""
 },
 {
+    "type": "lottie_vector3d",
+    "message0": "x %1 y %2 z %3",
+    "args0": [
+        {
+            "type": "field_number",
+            "name": "x",
+            "value": 0
+        },
+        {
+            "type": "field_number",
+            "name": "y",
+            "value": 0
+        },
+        {
+            "type": "field_number",
+            "name": "z",
+            "value": 0
+        }
+    ],
+    "output": "value",
+    "colour": 0,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
     "type": "lottie_transform",
     "message0": "Transform %1 Anchor %2 Position %3 Rotation %4 Scale %5 Opacity %6 Skew %7 Skew Angle %8",
     "args0": [
@@ -520,8 +545,18 @@ Blockly.Blocks["lottie_color"] = {
 
         }
     },
-
 };
+
+Blockly.Blocks["lottie_color_rgba"] = {
+    init: function()
+    {
+        Blockly.Blocks["lottie_color"].init.bind(this)();
+        this.appendDummyInput()
+            .appendField("A")
+            .appendField(new Blockly.FieldNumber(1, 0, 1), "alpha");
+    },
+    onchange: Blockly.Blocks["lottie_color"].onchange,
+}
 
 Blockly.FieldAngle.CLOCKWISE = true;
 Blockly.FieldAngle.OFFSET = 90;
@@ -546,7 +581,9 @@ lottie_toolbox["contents"].push({
         {"kind": "block", "type": "lottie_easing"},
         {"kind": "block", "type": "lottie_easing_hold"},
         {"kind": "block", "type": "lottie_color"},
+        {"kind": "block", "type": "lottie_color_rgba"},
         {"kind": "block", "type": "lottie_vector2d"},
+        {"kind": "block", "type": "lottie_vector3d"},
         {"kind": "block", "type": "json_number"},
         {"kind": "block", "type": "lottie_angle"},
         {"kind": "block", "type": "lottie_transform"},
@@ -744,12 +781,31 @@ class BlockyJsonGenerator extends GeneratedGenerator
         ]
     }
 
+    lottie_vector3d(block)
+    {
+        return [
+            Number(block.getFieldValue("x")),
+            Number(block.getFieldValue("y")),
+            Number(block.getFieldValue("z")),
+        ]
+    }
+
     lottie_color(block)
     {
         return [
             block.getFieldValue("red"),
             block.getFieldValue("green"),
             block.getFieldValue("blue"),
+        ];
+    }
+
+    lottie_color_rgba(block)
+    {
+        return [
+            block.getFieldValue("red"),
+            block.getFieldValue("green"),
+            block.getFieldValue("blue"),
+            block.getFieldValue("alpha"),
         ];
     }
 
@@ -859,7 +915,7 @@ class BlocklyJsonParser extends GeneratedParser
         return next;
     }
 
-    object_members_from_json(block, json, members_name)
+    object_members_from_json(block, json, members_name, check_animated=false)
     {
         if ( json === undefined )
             return;
@@ -872,7 +928,13 @@ class BlocklyJsonParser extends GeneratedParser
                 continue;
             var member = this.create_block(parent, "json_member");
             this.set_field(member, "name", name);
-            this.create_value_block(this.value(member, "value"), value);
+            var input = this.value(member, "value");
+
+            if ( check_animated && typeof value == "object" && "s" in value && "k" in value )
+                this.create_property_block(input, json, name, "");
+            else
+                this.create_value_block(input, value);
+
             parent = this.next(member);
         }
     }
@@ -1075,24 +1137,31 @@ class BlocklyJsonParser extends GeneratedParser
 
     lottie_vector2d(parent, json)
     {
-        if ( !Array.isArray(json) || json.length != 2 )
+        if ( !Array.isArray(json) || json.length < 2 || json.length > 3 )
             return this.create_value_block(parent, json);
 
-        var block = this.create_block(parent, "lottie_vector2d");
+        var block = this.create_block(parent, `lottie_vector${json.length}d`);
         this.set_field(block, "x", json[0]);
         this.set_field(block, "y", json[1]);
+        if ( json.length == 3 )
+            this.set_field(block, "z", json[2]);
         return block;
     }
 
     lottie_color(parent, json)
     {
-        if ( !Array.isArray(json) || json.length != 3 )
+        if ( !Array.isArray(json) || json.length < 3 || json.length > 4 )
             return this.create_value_block(parent, json);
 
-        var block = this.create_block(parent, "lottie_color");
+        var block_type = "lottie_color";
+        if ( json.length == 4 )
+            block_type += "_rgba";
+        var block = this.create_block(parent, block_type);
         this.set_field(block, "red", json[0]);
         this.set_field(block, "green", json[1]);
         this.set_field(block, "blue", json[2]);
+        if ( json.length == 4 )
+            this.set_field(block, "alpha", json[3]);
         return block;
     }
 
@@ -1122,8 +1191,9 @@ class BlocklyJsonParser extends GeneratedParser
 
         if ( json[property].s )
         {
-            var input = this.value(block, input_name);
-            this.lottie_split_property(input, json[property]);
+            this.create_property_block(block, json[property], "x", "");
+            this.create_property_block(block, json[property], "y", "");
+            this.create_property_block(block, json[property], "z", "");
         }
         else
         {
@@ -1133,6 +1203,15 @@ class BlocklyJsonParser extends GeneratedParser
 
     lottie_transform(parent, json)
     {
+        var has_extra = Object.keys(json).filter(prop => ["a", "p", "r", "s", "o", "sk", "sa"].indexOf(prop) < 0).length;
+
+        if ( has_extra )
+        {
+            var block = this.create_block(parent, "json_object");
+            this.object_members_from_json(block, json, "members");
+            return block;
+        }
+
         var block = this.create_block(parent, "lottie_transform");
 
         this.create_property_block(block, json, "a", "vector");
@@ -1142,6 +1221,7 @@ class BlocklyJsonParser extends GeneratedParser
         this.create_property_block(block, json, "o", "");
         this.create_property_block(block, json, "sk", "");
         this.create_property_block(block, json, "sa", "");
+        return block;
     }
 
     statements_from_json(block, name, json, type)
