@@ -165,6 +165,89 @@ Blockly.defineBlocksWithJsonArray([
     "helpUrl": "/lottie-docs/concepts/#animated-property"
 },
 {
+    "type": "lottie_property_static_expression",
+    "type": "lottie_property_static_expression",
+    "message0": "Static Property %1 Expression %2 Index %3",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "value",
+            "check": "value"
+        },
+        {
+            "type": "input_value",
+            "name": "expression",
+            "check": "expression"
+        },
+        {
+            "type": "input_value",
+            "name": "index",
+            "check": "value"
+        }
+    ],
+    "output": "property",
+    "colour": 180,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#animated-property"
+},
+{
+    "type": "lottie_property_animated_expression",
+    "type": "lottie_property_animated_expression",
+    "message0": "Animated Property %1 Expression %2 Index %3",
+    "args0": [
+        {
+            "type": "input_statement",
+            "name": "keyframes",
+            "check": "keyframe"
+        },
+        {
+            "type": "input_value",
+            "name": "expression",
+            "check": "expression"
+        },
+        {
+            "type": "input_value",
+            "name": "index",
+            "check": "value"
+        }
+    ],
+    "output": "property",
+    "colour": 180,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#animated-property"
+},
+{
+    "type": "lottie_expression_source",
+    "message0": "Expression %1",
+    "args0": [
+        {
+            "type": "field_input",
+            "name": "value",
+            "text": ""
+        }
+    ],
+    "inputsInline": true,
+    "output": "expression",
+    "colour": 10,
+    "tooltip": "",
+    "helpUrl": ""
+},
+{
+    "type": "lottie_property_animated",
+    "message0": "Animated Property %1",
+    "args0": [
+        {
+            "type": "input_statement",
+            "name": "keyframes",
+            "check": "keyframe"
+        }
+    ],
+    "output": "property",
+    "colour": 180,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/concepts/#animated-property"
+},
+{
     "type": "lottie_keyframe",
     "message0": "Keyframe %1 time %2 %3 easing %4 value %5",
     "args0": [
@@ -609,6 +692,28 @@ lottie_toolbox["contents"].push(
         ]
     }
 );
+lottie_toolbox["contents"].push({
+    "kind": "category",
+    "name": "Expressions",
+    "colour": 10,
+    "contents": [
+        {"kind": "block", "type": "lottie_property_static_expression", "blockxml": `
+            <block type="lottie_property_static_expression">
+                <value name="expression">
+                    <shadow type="lottie_expression_source"></shadow>
+                </value>
+            </block>
+        `},
+        {"kind": "block", "type": "lottie_property_animated_expression", "blockxml": `
+            <block type="lottie_property_animated_expression">
+                <value name="expression">
+                    <shadow type="lottie_expression_source"></shadow>
+                </value>
+            </block>
+        `},
+        {"kind": "block", "type": "lottie_expression_source"},
+    ]
+});
 
 class BlockyJsonGenerator extends GeneratedGenerator
 {
@@ -740,6 +845,24 @@ class BlockyJsonGenerator extends GeneratedGenerator
         };
     }
 
+    lottie_property_animated_expression(block)
+    {
+        return {
+            ...this.lottie_property_animated(block),
+            "x": this.input_to_json(block, "expression"),
+            "ix": this.input_to_json(block, "index")
+        }
+    }
+
+    lottie_property_static_expression(block)
+    {
+        return {
+            ...this.lottie_property_static(block),
+            "x": this.input_to_json(block, "expression"),
+            "ix": this.input_to_json(block, "index")
+        }
+    }
+
     lottie_keyframe(block)
     {
         var value = this.input_to_json(block, "value");
@@ -845,6 +968,11 @@ class BlockyJsonGenerator extends GeneratedGenerator
             out[comp] = this.input_to_json(block, comp);
         return out;
     }
+
+    lottie_expression_source(block)
+    {
+        return block.getFieldValue("value");
+    }
 }
 
 class BlocklyJsonParser extends GeneratedParser
@@ -948,12 +1076,17 @@ class BlocklyJsonParser extends GeneratedParser
 
     create_value_block(parent, json, value_hint=null)
     {
+        if ( json === undefined )
+            return;
+
         if ( value_hint == "vector" )
             return this.lottie_vector2d(parent, json);
         if ( value_hint == "color" )
             return this.lottie_color(parent, json);
         if ( value_hint == "angle" )
             return this.lottie_angle(parent, json);
+        if ( value_hint == "expression" )
+            return this.lottie_expression_source(parent, json);
 
         if ( typeof json == "number" )
             return this.json_number(parent, json);
@@ -976,6 +1109,13 @@ class BlocklyJsonParser extends GeneratedParser
     json_text(parent, json)
     {
         var block = this.create_block(parent, "json_text");
+        this.set_field(block, "value", json);
+        return block;
+    }
+
+    lottie_expression_source(parent, json)
+    {
+        var block = this.create_block(parent, "lottie_expression_source");
         this.set_field(block, "value", json);
         return block;
     }
@@ -1046,23 +1186,35 @@ class BlocklyJsonParser extends GeneratedParser
             animated = Array.isArray(json) && json.length > 0 && ("s" in json);
         }
 
+        var expression = "";
+        if ( "x" in json )
+            expression = "_expression";
+
         if ( animated )
-            return this.lottie_property_animated(parent, json, type_hint);
+            return this.lottie_property_animated(parent, json, type_hint, expression);
         else
-            return this.lottie_property_static(parent, json, type_hint);
+            return this.lottie_property_static(parent, json, type_hint,expression);
     }
 
-    lottie_property_static(parent, json, type_hint)
+    lottie_property_expression(block, json)
     {
-        var block = this.create_block(parent, "lottie_property_static");
+        this.create_value_block(this.value(block, "expression"), json.x, "expression");
+        this.create_value_block(this.value(block, "index"), json.ix);
+    }
+
+    lottie_property_static(parent, json, type_hint, expression)
+    {
+        var block = this.create_block(parent, "lottie_property_static" + expression);
         var value = this.value(block, "value");
         this.create_value_block(value, json.k, type_hint);
+        if ( expression )
+            this.lottie_property_expression(block, json);
         return block;
     }
 
-    lottie_property_animated(parent, json, type_hint)
+    lottie_property_animated(parent, json, type_hint, expression)
     {
-        var block = this.create_block(parent, "lottie_property_animated");
+        var block = this.create_block(parent, "lottie_property_animated" + expression);
 
         var members = this.statement(block, "keyframes");
         var parent = members;
@@ -1076,6 +1228,10 @@ class BlocklyJsonParser extends GeneratedParser
             e = value.e;
             parent = this.next(member);
         }
+
+        if ( expression )
+            this.lottie_property_expression(block, json);
+
         return block;
     }
 
@@ -1179,9 +1335,11 @@ class BlocklyJsonParser extends GeneratedParser
 
     lottie_split_property(parent, json)
     {
-        this.create_property_block(parent, json, "x");
-        this.create_property_block(parent, json, "y");
-        this.create_property_block(parent, json, "z");
+        var block = this.create_block(parent, "lottie_split_property");
+        this.create_property_block(block, json, "x");
+        this.create_property_block(block, json, "y");
+        this.create_property_block(block, json, "z");
+        return block;
     }
 
     maybe_split_property(block, json, property)
@@ -1191,9 +1349,8 @@ class BlocklyJsonParser extends GeneratedParser
 
         if ( json[property].s )
         {
-            this.create_property_block(block, json[property], "x", "");
-            this.create_property_block(block, json[property], "y", "");
-            this.create_property_block(block, json[property], "z", "");
+            var input = this.value(block, property);
+            this.lottie_split_property(input, json[property]);
         }
         else
         {
