@@ -410,7 +410,7 @@ class SchemaProperties:
             animated = False
             fixed_object = None
 
-            if "animated-properties" in ref:
+            if "animated-properties" in ref and "gradient-colors" not in ref:
                 kwargs["check"] = "property"
                 animated = True
 
@@ -451,8 +451,8 @@ class SchemaProperties:
         if group in categories:
             cat = categories[group]
             return "lottie_" + cat.infix + cls.replace("-", "_")
-        elif cls == "transform":
-            return "lottie_" + cls
+        elif cls in ("transform", "gradient-colors"):
+            return "lottie_" + cls.replace("-", "_")
         return None
 
 

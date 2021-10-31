@@ -133,7 +133,7 @@ function update_code()
 function copy_json()
 {
     var element = document.getElementById("blockly_output");
-    var text = element.innerText;
+    var text = element.value;
     navigator.clipboard.writeText(text);
 }
 

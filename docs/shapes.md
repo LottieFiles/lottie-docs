@@ -222,7 +222,7 @@ Basically the radial highlight position is defined in polar coordinates relative
 
 |Attribute|Type                                                                  |Description {schema_link:animated-properties/gradient-colors}|
 |----|---------------------------------------------------------------------------|------------------|
-|`l` |[Animated](concepts.md#animated-property) [Gradient](concepts.md#gradients)|Gradient Colors   |
+|`k` |[Animated](concepts.md#animated-property) [Gradient](concepts.md#gradients)|Gradient Colors   |
 |`p` |`integer`                                                                  |Number of Colors  |
 
 Since [gradient values](concepts.md#gradients) might have different representation based on whether

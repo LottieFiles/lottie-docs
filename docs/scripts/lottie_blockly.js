@@ -468,6 +468,86 @@ Blockly.defineBlocksWithJsonArray([
     "tooltip": "",
     "helpUrl": ""
 },
+{
+    "type": "lottie_gradient_colors",
+    "message0": "Gradient %1 Count %2 %3 Colors %4",
+    "args0": [
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "field_number",
+            "name": "count",
+            "value": 0,
+            "min": 0
+        },
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_value",
+            "name": "colors",
+            "check": "property"
+        }
+    ],
+    "output": "lottie_gradient_colors",
+    "colour": 250,
+    "tooltip": "",
+    "helpUrl": ""
+}
+/*{
+    "type": "lottie_gradient_value",
+    "message0": "Gradient %1 %2",
+    "args0": [
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_statement",
+            "name": "colors",
+            "check": "gradient_stop"
+        }
+    ],
+    "inputsInline": false,
+    "output": "property",
+    "colour": 320,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/shapes/#gradients"
+},
+{
+    "type": "lottie_gradient_stop",
+    "message0": "Gradient Stop %1 Offset %2 %3 Color %4 Alpha %5",
+    "args0": [
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "field_number",
+            "name": "offset",
+            "value": 0,
+            "min": 0,
+            "max": 1
+        },
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_value",
+            "name": "color",
+            "check": "value"
+        },
+        {
+            "type": "input_value",
+            "name": "alpha",
+            "check": "value"
+        }
+    ],
+    "previousStatement": "gradient_stop",
+    "nextStatement": "gradient_stop",
+    "colour": 190,
+    "tooltip": "",
+    "helpUrl": "/lottie-docs/shapes/#gradients"
+}*/
 ]);
 
 const BlocklyArrayBase = {
@@ -672,6 +752,46 @@ lottie_toolbox["contents"].push({
         {"kind": "block", "type": "lottie_angle"},
         {"kind": "block", "type": "lottie_transform"},
         {"kind": "block", "type": "lottie_split_property"},
+        {"kind": "block", "type": "lottie_gradient_colors"},
+        /*{"kind": "block", "type": "lottie_gradient_value", "blockxml": `
+            <block type="lottie_gradient_value">
+                <statement name="colors">
+                    <block type="lottie_gradient_stop">
+                        <field name="offset">0</field>
+                        <value name="color">
+                            <shadow type="lottie_color">
+                                <field name="red">0</field>
+                                <field name="green">0</field>
+                                <field name="blue">0</field>
+                            </shadow>
+                        </value>
+                        <next>
+                            <block type="lottie_gradient_stop">
+                                <field name="offset">1</field>
+                                <value name="color">
+                                    <shadow type="lottie_color">
+                                        <field name="red">0</field>
+                                        <field name="green">0</field>
+                                        <field name="blue">0</field>
+                                    </shadow>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </value>
+            </block>
+        `},
+        {"kind": "block", "type": "lottie_gradient_stop", "blockxml": `
+            <block type="lottie_gradient_stop">
+                <value name="color">
+                    <shadow type="lottie_color">
+                        <field name="red">0</field>
+                        <field name="green">0</field>
+                        <field name="blue">0</field>
+                    </shadow>
+                </value>
+            </block>
+        `}*/,
     ]
 });
 lottie_toolbox["contents"].push(
@@ -972,6 +1092,14 @@ class BlockyJsonGenerator extends GeneratedGenerator
     lottie_expression_source(block)
     {
         return block.getFieldValue("value");
+    }
+
+    lottie_gradient_colors(block)
+    {
+        return {
+            "p": block.getFieldValue("count"),
+            "k":  this.input_to_json(block, "colors")
+        };
     }
 }
 
@@ -1416,6 +1544,14 @@ class BlocklyJsonParser extends GeneratedParser
         if ( "layers" in json )
             return "lottie_precomposition";
         return "lottie_image";
+    }
+
+    lottie_gradient_colors(parent, json)
+    {
+        var block = this.create_block(parent, "lottie_gradient_colors");
+        this.set_field(block, "count", json.p);
+        this.create_property_block(block, json, "k", "", "colors");
+        return block;
     }
 }
 
