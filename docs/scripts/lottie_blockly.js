@@ -1138,13 +1138,13 @@ class BlocklyJsonParser extends GeneratedParser
     {
         var block = this.create_block(parent, "lottie_transform");
 
-        this.create_property_block(block, "a", "vector");
+        this.create_property_block(block, json, "a", "vector");
         this.maybe_split_property(block, json, "p", "vector");
-        this.create_property_block(block, "r", "angle");
-        this.create_property_block(block, "s", "vector");
-        this.create_property_block(block, "o", "");
-        this.create_property_block(block, "sk", "");
-        this.create_property_block(block, "sa", "");
+        this.create_property_block(block, json, "r", "angle");
+        this.create_property_block(block, json, "s", "vector");
+        this.create_property_block(block, json, "o", "");
+        this.create_property_block(block, json, "sk", "");
+        this.create_property_block(block, json, "sa", "");
     }
 
     statements_from_json(block, name, json, type)
