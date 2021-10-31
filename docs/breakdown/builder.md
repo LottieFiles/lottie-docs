@@ -88,7 +88,7 @@ div[role='main'], body > .container, #playground_layout
 
 function save()
 {
-    localStorage.setItem("blockly_lottie", lottie_blockly.workspace_to_xml());
+    localStorage.setItem("blockly_lottie", lottie_blockly.workspace_to_xml_string());
 }
 
 function load()

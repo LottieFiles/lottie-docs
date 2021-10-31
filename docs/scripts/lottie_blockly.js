@@ -928,12 +928,11 @@ class BlocklyJsonParser extends GeneratedParser
                 continue;
             var member = this.create_block(parent, "json_member");
             this.set_field(member, "name", name);
-            var input = this.value(member, "value");
 
-            if ( check_animated && typeof value == "object" && "s" in value && "k" in value )
-                this.create_property_block(input, json, name, "");
+            if ( check_animated && typeof value == "object" && "a" in value && "k" in value )
+                this.create_property_block(member, json, name, "", "value");
             else
-                this.create_value_block(input, value);
+                this.create_value_block(this.value(member, "value"), value);
 
             parent = this.next(member);
         }
@@ -1208,7 +1207,7 @@ class BlocklyJsonParser extends GeneratedParser
         if ( has_extra )
         {
             var block = this.create_block(parent, "json_object");
-            this.object_members_from_json(block, json, "members");
+            this.object_members_from_json(block, json, "members", true);
             return block;
         }
 
