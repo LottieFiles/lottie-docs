@@ -34,6 +34,7 @@ nav:
         - effects.md
         - constants.md
         - text.md
+        - expressions.md
     - "<i class='fa fa-wrench'></i> Advanced Topics":
         - rendering.md
         - schema.md

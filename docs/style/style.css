@@ -82,3 +82,13 @@
         padding-bottom: 10px;
     }
 }
+
+.code-input {
+    font-family: Hack,Menlo,Monaco,Consolas,"Courier New",monospace;
+    white-space: pre;
+    font-size: small;
+    color: #333;
+    font-size: 14px;
+    background-color: #fcfdff;
+    border: 1px solid #ccc;
+}

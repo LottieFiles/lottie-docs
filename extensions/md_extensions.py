@@ -116,7 +116,11 @@ class LottieRenderer:
                         animationData: JSON.parse(JSON.stringify(lottie_json_{id}))
                     }};
                     if ( anim_{id} != null )
-                        anim_{id} = anim_{id}.destroy();
+                    {{
+                        try {{
+                            anim_{id} = anim_{id}.destroy();
+                        }} catch ( e ) {{}}
+                    }}
                     anim_{id} = bodymovin.loadAnimation(animData);
                 }}
 
@@ -411,7 +415,7 @@ class LottiePlayground(BlockProcessor):
 
         pre = etree.SubElement(element, "pre", {"id": json_viewer_parent, "hidden": "hidden"})
         etree.SubElement(pre, "code", {"id": json_viewer, "class": "language-json hljs"}).text = ""
-        etree.SubElement(element, "script").text = inspect.cleandoc(r"""
+        return inspect.cleandoc(r"""
             reload_lottie_{id} = (function(){{
                 var old = reload_lottie_{id};
                 return function(){{
@@ -424,6 +428,76 @@ class LottiePlayground(BlockProcessor):
             )();
             document.getElementById('{json_viewer}').innerText = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
             """).format(id=anim_id, json_viewer=json_viewer, path=paths[0])
+
+    def add_control(self, anim_id, id_base, contols_container, label, type, paths, args):
+        tr = etree.SubElement(contols_container, "tr")
+
+        label_cell = etree.SubElement(tr, "td", {"style": "white-space: pre"})
+        label_element = etree.SubElement(label_cell, "label")
+        label_element.text = label
+        label_element.tail = " "
+
+        td = etree.SubElement(tr, "td", {"style": "width: 100%"})
+
+        setter = "lottie_setter({id}, {paths})".format(id=anim_id, paths=repr(paths))
+
+        if type == "enum":
+            input = self._select(td, setter, args, (
+                (title, value)
+                for value, title, _ in self.schema_data.get_enum_values(args[0])
+            ))
+
+        elif type == "slider":
+            input = etree.SubElement(td, "input", {
+                "type": "range",
+                "min": args[0],
+                "value": args[1],
+                "max": args[2],
+                "step": args[3] if len(args) > 3 else "1",
+                "oninput": inspect.cleandoc("""
+                    {setter}(event.target.value);
+                    document.getElementById('{span}').innerText = event.target.value;
+                    reload_lottie_{id}();
+                """.format(id=anim_id, setter=setter, span=id_base + "_span"))
+            })
+            etree.SubElement(td, "span", {
+                "id": id_base + "_span"
+            }).text = args[1]
+
+        elif type == "select":
+            input = self._select(td, setter, args, (item.split("=") for item in args))
+
+        elif type == "text":
+            input = etree.SubElement(td, "input", {
+                "type": "text",
+                "value": args[0],
+                "oninput": "{setter}(event.target.value)".format(setter=setter)
+            })
+
+        elif type == "label":
+            label_cell.tag = "th"
+            label_element.tag = "span"
+            label_cell.attrib["colspan"] = "2"
+            tr.remove(td)
+            input = None
+
+        elif type == "textarea":
+            tr = etree.SubElement(contols_container, "tr")
+            td = etree.SubElement(tr, "td", {"colspan": "2"})
+            input = etree.SubElement(td, "textarea", {
+                "type": "text",
+                "oninput": "{setter}(event.target.value)".format(setter=setter),
+                "style": "width: 100%",
+                "class": "code-input",
+            })
+            input.text = args[0].replace("\\n", "\n") if "\n" not in args[0] else args[0]
+            input.attrib["rows"] = str(max(3, input.text.count("\n")))
+
+        else:
+            raise Exception("Unknown playground control %s" % type)
+
+        if input is not None:
+            input.attrib["autocomplete"] = "off"
 
     def run(self, parent, blocks):
         block = blocks.pop(0)
@@ -441,80 +515,63 @@ class LottiePlayground(BlockProcessor):
 
         element.attrib["class"] = "playground"
 
-        contols_container = etree.Element("table", {"class": "table-plain"})
+        contols_container = etree.Element("table", {"class": "table-plain", "style": "width: 100%"})
         element.insert(0, contols_container)
+        exec = ""
+        expression = None
+        expression_target = None
+        expression_title = None
 
         for index, line in enumerate(block.strip().split("\n")[1:]):
             row_match = self.re_row.match(line)
-            if not row_match:
-                raise Exception("Unexpected playground line %r" % line)
             if line.startswith("//"):
                 continue
+            id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
+
+            if expression is not None:
+                if line.startswith(":end:"):
+                    self.add_control(
+                        anim_id, id_base, contols_container, expression_title,
+                        "textarea", [expression_target], [expression]
+                    )
+                    exec += "lottie.%s = %r;" % (expression_target, expression)
+                    expression = None
+                    continue
+                expression += line + "\n"
+                continue
+
+            if not row_match:
+                raise Exception("Unexpected playground line %r" % line)
+
+            label = row_match.group("label")
             type = row_match.group("type")
             paths = row_match.group("path").split(",")
             args = (row_match.group("args") or "").split(":")
-            id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
 
             if type == "json":
-                self._json_viewer(element, anim_id, id_base, paths)
+                exec += self._json_viewer(element, anim_id, id_base, paths)
+                continue
+            elif type == "exec":
+                exec += row_match.group("path") + ";\n"
+                continue
+            elif type == "expression":
+                expression_title = row_match.group("label")
+                expression_target = paths[0]
+                expression = ""
                 continue
 
-            tr = etree.SubElement(contols_container, "tr")
+            self.add_control(anim_id, id_base, contols_container, label, type, paths, args)
 
-            label_cell = etree.SubElement(tr, "td")
-            label_element = etree.SubElement(label_cell, "label")
-            label_element.text = row_match.group("label")
-            label_element.tail = " "
-
-            td = etree.SubElement(tr, "td")
-
-            setter = "lottie_setter({id}, {paths})".format(id=anim_id, paths=repr(paths))
-
-            if type == "enum":
-                input = self._select(td, setter, args, (
-                    (title, value)
-                    for value, title, _ in self.schema_data.get_enum_values(args[0])
-                ))
-
-            elif type == "slider":
-                input = etree.SubElement(td, "input", {
-                    "type": "range",
-                    "min": args[0],
-                    "value": args[1],
-                    "max": args[2],
-                    "step": args[3] if len(args) > 3 else "1",
-                    "oninput": inspect.cleandoc("""
-                        {setter}(event.target.value);
-                        document.getElementById('{span}').innerText = event.target.value;
-                        reload_lottie_{id}();
-                    """.format(id=anim_id, setter=setter, span=id_base + "_span"))
-                })
-                etree.SubElement(td, "span", {
-                    "id": id_base + "_span"
-                }).text = args[1]
-
-            elif type == "select":
-                input = self._select(td, setter, args, (item.split("=") for item in args))
-
-            elif type == "text":
-                input = etree.SubElement(td, "input", {
-                    "type": "text",
-                    "value": args[0],
-                    "oninput": "{setter}(event.target.value)".format(setter=setter)
-                })
-
-            elif type == "label":
-                label_cell.tag = "th"
-                label_element.tag = "span"
-                label_cell.attrib["colspan"] = "2"
-                tr.remove(td)
-                input = None
-
-            else:
-                raise Exception("Unknown playground control %s" % type)
-
-            if input is not None:
-                input.attrib["autocomplete"] = "off"
+        if exec:
+            etree.SubElement(element, "script").text = """
+            function init_{id}()
+            {{
+                var lottie = lottie_json_{id};
+                {source}
+                window.addEventListener("load", reload_lottie_{id});
+            }}
+            init_{id}();
+            """.format(id=anim_id, source=exec)
 
     def _select(self, td, setter, args, items):
         input = etree.SubElement(td, "select")
@@ -862,6 +919,162 @@ class SchemaEffect(BlockProcessor):
         return True
 
 
+class VariableDocInfo:
+    def __init__(self, name, type, description, default=None, notes=None):
+        self.default = default
+        self.description = description
+        self.name = name
+        self.type = type
+        self.notes = notes
+
+    @classmethod
+    def from_chunks(cls, name, chunks):
+        type = chunks[0]
+        description = chunks[1] if len(chunks) > 1 else ""
+        default = chunks[2] if len(chunks) > 2 else None
+        return cls(name, type, description, default)
+
+    def type_code(self):
+        if " " in self.type:
+            return "any"
+
+        return self.type
+
+    def type_html(self, parent):
+        if " " in self.type:
+            parent.text = self.type
+        elif self.type in ("array", "number", "boolean", "string"):
+            etree.SubElement(parent, "code").text = self.type
+        else:
+            etree.SubElement(parent, "a", {"href": "#" + self.type.lower()}).text = self.type
+
+
+class FunctionDocs(BlockProcessor):
+    re_fence_start = re.compile(r'^\s*\{function_docs}\s*(?:\n|$)')
+
+    def __init__(self, parser):
+        super().__init__(parser)
+
+    def test(self, parent, block):
+        return self.re_fence_start.match(block)
+
+    def run(self, parent, blocks):
+        block = blocks.pop(0)
+
+        description = None
+        name = None
+        params = []
+        ret = None
+
+        for line in block.strip().split("\n")[1:]:
+            chunks = [c.strip() for c in line.split(":")]
+            if chunks[0] == "name":
+                name = chunks[1]
+            elif chunks[0] == "return":
+                ret = VariableDocInfo.from_chunks("return", chunks[1:])
+            elif chunks[0] == "param":
+                params.append(VariableDocInfo.from_chunks(chunks[1], chunks[2:]))
+            elif chunks[0] == "description":
+                description = chunks[1]
+
+        etree.SubElement(etree.SubElement(parent, "p"), "strong").text = "Synopsis"
+        signature = name
+        if params:
+            signature += " (\n"
+            for param in params:
+                signature += "    "
+                signature += param.name
+                signature += ": "
+                signature += param.type_code()
+                if param.default:
+                    signature += " = "
+                    signature += param.default
+                signature += "\n"
+        else:
+            signature += " ("
+
+        signature += ")"
+
+        if ret:
+            signature += ": "
+            signature += ret.type_code()
+
+        etree.SubElement(etree.SubElement(parent, "pre"), "code", {"class": "language-ts"}).text = signature
+
+        if description:
+            self.parser.parseBlocks(etree.SubElement(parent, "p"), [description])
+
+        if params:
+            etree.SubElement(etree.SubElement(parent, "p"), "strong").text = "Parameters"
+            table = etree.SubElement(parent, "table")
+            header_tr = etree.SubElement(table, "tr")
+            etree.SubElement(header_tr, "th").text = "Name"
+            etree.SubElement(header_tr, "th").text = "Type"
+            etree.SubElement(header_tr, "th").text = "Default"
+            etree.SubElement(header_tr, "th").text = "Description"
+
+            for param in params:
+                tr = etree.SubElement(table, "tr")
+                etree.SubElement(etree.SubElement(tr, "td"), "code").text = param.name
+                param.type_html(etree.SubElement(tr, "td"))
+                td = etree.SubElement(tr, "td")
+                if param.default:
+                    etree.SubElement(td, "code").text = param.default
+                self.parser.parseBlocks(etree.SubElement(tr, "td"), [param.description])
+
+        if ret:
+            etree.SubElement(etree.SubElement(parent, "p"), "strong").text = "Return"
+            table = etree.SubElement(parent, "table")
+            tr = etree.SubElement(table, "tr")
+            etree.SubElement(tr, "th").text = "Type"
+            ret.type_html(etree.SubElement(tr, "td"))
+
+            if ret.description:
+                tr = etree.SubElement(table, "tr")
+                etree.SubElement(tr, "th").text = "Description"
+                self.parser.parseBlocks(etree.SubElement(tr, "td"), [ret.description])
+
+        return True
+
+
+class VariableDocs(BlockProcessor):
+    re_fence_start = re.compile(r'^\s*\{variable_docs}\s*(?:\n|$)')
+
+    def __init__(self, parser):
+        super().__init__(parser)
+
+    def test(self, parent, block):
+        return self.re_fence_start.match(block)
+
+    def run(self, parent, blocks):
+        block = blocks.pop(0)
+        var = VariableDocInfo("", "", "")
+
+        for line in block.strip().split("\n")[1:]:
+            chunks = [c.strip() for c in line.split(":")]
+            setattr(var, chunks[0], chunks[1])
+
+        table = etree.SubElement(parent, "table")
+
+        tr = etree.SubElement(table, "tr")
+        etree.SubElement(tr, "th").text = "Name"
+        etree.SubElement(etree.SubElement(tr, "td"), "code").text = var.name
+
+        tr = etree.SubElement(table, "tr")
+        etree.SubElement(tr, "th").text = "Type"
+        var.type_html(etree.SubElement(tr, "td"))
+
+        tr = etree.SubElement(table, "tr")
+        etree.SubElement(tr, "th").text = "Description"
+        self.parser.parseBlocks(etree.SubElement(tr, "td"), [var.description])
+
+        tr = etree.SubElement(table, "tr")
+        etree.SubElement(tr, "th").text = "Notes"
+        self.parser.parseBlocks(etree.SubElement(tr, "td"), [var.notes])
+
+        return True
+
+
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
         schema_data = SchemaData()
@@ -876,6 +1089,8 @@ class LottieExtension(Extension):
         md.inlinePatterns.register(JsonFile(md), 'json_file', 175)
         md.inlinePatterns.register(SchemaLink(md), 'schema_link', 175)
         md.parser.blockprocessors.register(SchemaEffect(md.parser, schema_data), 'schema_effect', 175)
+        md.parser.blockprocessors.register(FunctionDocs(md.parser), 'function_docs', 175)
+        md.parser.blockprocessors.register(VariableDocs(md.parser), 'variable_docs', 175)
 
 
 def makeExtension(**kwargs):

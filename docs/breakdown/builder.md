@@ -53,12 +53,6 @@ div[role='main'], body > .container, #playground_layout
     margin: 0;
     overflow: auto;
     flex-grow: 1;
-    font-family: Hack,Menlo,Monaco,Consolas,"Courier New",monospace;
-    white-space: pre;
-    font-size: small;
-    color: #333;
-    font-size: 14px;
-    background-color: #fcfdff;
     border: none;
 }
 #playground_output_buttons
@@ -80,7 +74,7 @@ div[role='main'], body > .container, #playground_layout
             <li><button onclick="load_url_prompt()">Load from URL</button></li>
         </ul>
         <div class="alpha_checkered" id="lottie_player"></div>
-        <textarea id="blockly_output" onchange="parse_json()"></textarea>
+        <textarea id="blockly_output" class="code-input" onchange="parse_json()"></textarea>
     </div>
 </div>
 

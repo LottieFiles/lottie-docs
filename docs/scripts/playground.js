@@ -17,8 +17,11 @@ function lottie_cast(lottie_object, value)
 
 function lottie_setter(lottie_id, paths)
 {
+    // Object with the JSON data
     var lottie_global = "lottie_json_" + lottie_id;
+    // Called to update the player
     var reload_function = "reload_lottie_" + lottie_id;
+
     var source = "";
     for ( var item of paths )
     {
