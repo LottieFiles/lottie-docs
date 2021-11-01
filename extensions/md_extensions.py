@@ -941,12 +941,17 @@ class VariableDocInfo:
         return self.type
 
     def type_html(self, parent):
-        if " " in self.type:
-            parent.text = self.type
-        elif self.type in ("array", "number", "boolean", "string"):
-            etree.SubElement(parent, "code").text = self.type
-        else:
-            etree.SubElement(parent, "a", {"href": "#" + self.type.lower()}).text = self.type
+        for subtype in self.type.split("|"):
+            if " " in subtype:
+                tail = etree.SubElement(parent, "span")
+            elif subtype in ("array", "number", "boolean", "string", "object") or subtype.startswith("array"):
+                tail = etree.SubElement(parent, "code")
+            else:
+                tail = etree.SubElement(parent, "a", {"href": "#" + subtype.lower()})
+
+            tail.text = subtype
+            tail.tail = "|"
+        tail.tail = ""
 
 
 class FunctionDocs(BlockProcessor):
@@ -1068,9 +1073,10 @@ class VariableDocs(BlockProcessor):
         etree.SubElement(tr, "th").text = "Description"
         self.parser.parseBlocks(etree.SubElement(tr, "td"), [var.description])
 
-        tr = etree.SubElement(table, "tr")
-        etree.SubElement(tr, "th").text = "Notes"
-        self.parser.parseBlocks(etree.SubElement(tr, "td"), [var.notes])
+        if var.notes:
+            tr = etree.SubElement(table, "tr")
+            etree.SubElement(tr, "th").text = "Notes"
+            self.parser.parseBlocks(etree.SubElement(tr, "td"), [var.notes])
 
         return True
 

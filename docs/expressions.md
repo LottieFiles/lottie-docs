@@ -6,7 +6,7 @@
     https://helpx.adobe.com/after-effects/using/expression-language-reference.html
 
     continue from
-    https://helpx.adobe.com/after-effects/using/expression-language-reference.html#time_conversion_methods_expression_reference
+    https://helpx.adobe.com/after-effects/using/expression-language-reference.html#layer_space_transforms_methods_expression_reference
 -->
 
 Properties can have expressions associated with them,
@@ -18,7 +18,7 @@ For the most part it uses what is described in the [After Effects expressions](h
 
 
 
-## Global objects and methods
+## Global objects
 
 ### `$bm_rt`
 
@@ -101,6 +101,8 @@ type: Layer
 description: Layer the property is in
 notes: Read only
 
+## Animation Structure functions
+
 ### comp()
 
 {function_docs}
@@ -108,6 +110,8 @@ name: comp
 param: name : string : Composition name
 return: Composition :
 
+
+## Misc Functions
 
 ### posterizeTime()
 
@@ -134,6 +138,21 @@ param: frames : number : Number of frames
 param: fps : number : Frames per second : 1.0 / thisComp.frameDuration
 return: number : Time in seconds
 description: Converts a number of frames to a time in seconds
+
+### rgbToHsl()
+
+{function_docs}
+name: rgbToHsl
+param: rgb : array[3]|array[4] : RGB(A) color, with components in 0, 1
+return: array[3]|array[4] : HSL(A) color, with components in 0, 1
+
+### hslToRgb()
+{function_docs}
+name: hslToRgb
+param: hsl : array[3]|array[4] : HSL(A) color, with components in 0, 1
+return: array[3]|array[4] : RGB(A) color, with components in 0, 1
+
+
 
 ## Math functions
 
@@ -256,14 +275,6 @@ param: from_point : array[3]
 param: to_point : array[3]
 return: number : length of `vector`
 
-<!--
-not implemented:
-    dot
-    cross
--->
-
-
-## Random Numbers
 
 ### seedRandom()
 
@@ -279,7 +290,121 @@ description: Sets the seed for random functions
 name: random
 return: number : Random number between 0 and 1
 
+{function_docs}
+name: random
+param: max : number|array
+return: number|array : Random number between 0 and `max`, element wise if the argument is an array
 
+{function_docs}
+name: random
+param: min : number|array
+param: max : number|array
+return: number|array : Random number between `min` and `max`, element wise if the arguments are arrays
+
+### linear()
+
+{function_docs}
+name: linear
+param: t : number : Interpolation factor between 0 and 1
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Linear interpolation between `value1` and `value2`
+
+{function_docs}
+name: linear
+param: t : number : Interpolation factor between `t_min` and `t_max`
+param: t_min : number : Lower bound for the `t` range
+param: t_max : number : Lower bound for the `t` range
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Linear interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
+
+### ease()
+
+Works the same as `linear()` but with a smooth cubic interpolation.
+
+{function_docs}
+name: ease
+param: t : number : Interpolation factor between 0 and 1
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Interpolation between `value1` and `value2`
+
+{function_docs}
+name: ease
+param: t : number : Interpolation factor between `t_min` and `t_max`
+param: t_min : number : Lower bound for the `t` range
+param: t_max : number : Lower bound for the `t` range
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
+
+### easeIn()
+
+Interpolation, starts the same as `ease()` and ends the same as `linear()`
+
+{function_docs}
+name: easeIn
+param: t : number : Interpolation factor between 0 and 1
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Interpolation between `value1` and `value2`
+
+{function_docs}
+name: easeIn
+param: t : number : Interpolation factor between `t_min` and `t_max`
+param: t_min : number : Lower bound for the `t` range
+param: t_max : number : Lower bound for the `t` range
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
+
+### easeOut()
+
+Interpolation, starts the same as `linear()` and ends the same as `ease()`
+
+{function_docs}
+name: easeOut
+param: t : number : Interpolation factor between 0 and 1
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Interpolation between `value1` and `value2`
+
+{function_docs}
+name: easeOut
+param: t : number : Interpolation factor between `t_min` and `t_max`
+param: t_min : number : Lower bound for the `t` range
+param: t_max : number : Lower bound for the `t` range
+param: value1 : number|array
+param: value2 : number|array
+return: number|array : Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
+
+### degreesToRadians()
+
+{function_docs}
+name: degreesToRadians
+param: degrees : number : Angle in degrees
+return: number : Angle in radians
+
+### radiansToDegrees()
+
+{function_docs}
+name: degreesToRadians
+param: radians : number : Angle in radians
+return: number : Angle in degrees
+
+
+<!--
+Not implemented:
+    footage()
+    colorDepth()
+    dot()
+    cross()
+    gaussRandom()
+    noise()
+    Footage
+
+-->
 
 ## Property
 
@@ -361,7 +486,7 @@ return: Depends on the property :
 
 ## Composition
 
-Function that can be used to search layer / properties
+Composition object
 
 {lottie_playground:image_animated.json:512:512}
 Position Expression:expression:layers[0].ks.p.x
@@ -372,3 +497,239 @@ $bm_rt[1] += Math.sin(rotation) * 200;
 :end:
 :exec:window.foo = {}
 :json:layers[0].ks.p
+
+### Composition.numLayers
+
+
+{variable_docs}
+name: numLayers
+type: number
+description: Number of layers in the composition
+
+### Composition.width
+
+{variable_docs}
+name: width
+type: number
+description: Width of the composition, same as `w` in the JSON
+
+### Composition.height
+
+{variable_docs}
+name: height
+type: number
+description: Height of the composition, same as `h` in the JSON
+
+### Composition.displayStartTime
+
+
+{variable_docs}
+name: displayStartTime
+type: number
+description: Start time of the composition, in seconds. Similar to `ip` in the JSON but converted into seconds
+
+
+### Composition.frameDuration
+
+{variable_docs}
+name: frameDuration
+type: number
+description: Duration of a frame in second, reciprocal of frames per second
+
+
+### Composition.pixelAspect
+
+{variable_docs}
+name: pixelAspect
+type: number
+description: Pixel aspect ratio, generally `1`
+
+
+### Composition.layer()
+
+{function_docs}
+name: layer
+param: layer : number|string : Layer name or index
+return: Layer :
+description: Returns the given layer
+
+<!--
+
+Not implemented:
+    layer(otherLayer, relIndex)
+    marker
+    activeCamera
+    duration
+    ntscDropFrame
+    shutterAngle
+    shutterPhase
+    bgColor
+    name
+-->
+
+## Layer
+
+Layer object.
+
+Note that it also has all the attributes from [Transform](#transform).
+
+
+### Layer.index
+
+{variable_docs}
+name: index
+type: number
+description: Layer index, same as `ind` in the JSON
+
+### Layer.inPoint
+
+{variable_docs}
+name: inPoint
+type: number
+description: Same as `ip` in the JSON but in seconds
+
+### Layer.outPoint
+
+{variable_docs}
+name: outPoint
+type: number
+description: Same as `op` in the JSON but in seconds
+
+### Layer.startTime
+
+{variable_docs}
+name: startTime
+type: number
+description: Same as `st` in the JSON but in seconds
+
+### Layer.transform
+
+{variable_docs}
+name: transofrm
+type: Transform
+
+### Layer.source
+
+{variable_docs}
+name: source
+type: string
+description: For layers referencing an asset, the `id` of that asses. (Same as `refId` in the JSON)
+
+### Layer.width
+
+{variable_docs}
+name: width
+type: number
+description: Same as `Layer.sourceRectAtTime().width`
+
+### Layer.height
+
+{variable_docs}
+name: height
+type: number
+description: Same as `Layer.sourceRectAtTime().height`
+
+
+### Layer.hasParent
+
+{variable_docs}
+name: hasParent
+type: boolean
+description: Whether the layer has a parent
+
+### Layer.parent
+
+{variable_docs}
+name: parent
+type: Layer
+description: Parent layer
+
+
+### Layer.sourceRectAtTime
+
+{function_docs}
+name: sourceRectAtTime
+return: object : Object with these attributes: `top`, `left`, `width`, `height`
+
+
+### Layer.effect
+
+{function_docs}
+name: effect
+param: effect : number|string : Name or index
+return: Effect :
+description: Returns the given effect
+
+<!--
+Not Implemented:
+    sourceTime()
+    mask
+    hasVideo
+    hasAudio
+    active
+    enabled
+    audioActive
+    audioLevels
+    timeRemap
+    marker
+    name
+    Layer 3D attributes and methods
+
+Implemented but dummy:
+    sourceRectAtTime()
+    sampleImage()
+
+0: "getMatrix"
+1: "invertPoint"
+2: "applyPoint"
+3: "toWorld"
+4: "toWorldVec"
+5: "fromWorld"
+6: "fromWorldVec"
+7: "toComp"
+8: "fromComp"
+10: "sourceRectAtTime"
+20: "registerMaskInterface"
+21: "registerEffectsInterface"
+23: "shapeInterface"
+24: "content"
+-->
+
+
+### Transform
+
+
+{variable_docs}
+name: anchorPoint
+type: array[2]
+description: Value of `a`
+
+{variable_docs}
+name: position
+type: array[2]
+description: Value of `p`
+
+{variable_docs}
+name: scale
+type: number
+description: Value of `s`
+
+{variable_docs}
+name: rotation
+type: number
+description: Value of `r`
+
+{variable_docs}
+name: opacity
+type: number
+description: Value of `o`
+
+{variable_docs}
+name: skew
+type: number
+description: Value of `sk`
+
+{variable_docs}
+name: skewAxis
+type: number
+description: Value of `sa`
