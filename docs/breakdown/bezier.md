@@ -64,6 +64,7 @@ Each point has two tangents associated with them, one "in" thangent, and one "ou
 The "out" tangent is the second point defining the bezier segment following the vertex
 and the "in" tangent is the third point defining the bezier segment coming into the vertex.
 
+
 ## Beziers in Lottie
 
 An shape in Lotttie is represented as a cubic polybezier and it's represented in the JSON
@@ -77,3 +78,29 @@ as an object with the following attributes:
 
 `c` is a boolean determining whether the polybezier is closed.
 If it is, there's an additional bezier segment between the last point in `v` and the first.
+
+
+{lottie_playground:bezier.json:512:512}
+Closed:select:layers[0].shapes[0].ks.k.c:Open=false:Closed=true
+Point 0:label:
+Vertex X     :slider:layers[0].shapes[0].ks.k.v[0][0],assets[0].layers[0].ks.p.k[0]:0:53:512
+Vertex Y     :slider:layers[0].shapes[0].ks.k.v[0][1],assets[0].layers[0].ks.p.k[1]:0:325:512
+In Tangent X :slider:layers[0].shapes[0].ks.k.i[0][0],assets[0].layers[0].shapes[0].ks.k.v[0][0]:-512:0:512
+In Tangent Y :slider:layers[0].shapes[0].ks.k.i[0][1],assets[0].layers[0].shapes[0].ks.k.v[0][1]:-512:0:512
+Out Tangent X:slider:layers[0].shapes[0].ks.k.o[0][0],assets[0].layers[0].shapes[0].ks.k.v[2][0]:-512:89:512
+Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[0][1],assets[0].layers[0].shapes[0].ks.k.v[2][1]:-512:-189:512
+Point 1:label:
+Vertex X     :slider:layers[0].shapes[0].ks.k.v[1][0],assets[1].layers[0].ks.p.k[0]:0:429:512
+Vertex Y     :slider:layers[0].shapes[0].ks.k.v[1][1],assets[1].layers[0].ks.p.k[1]:0:147:512
+In Tangent X :slider:layers[0].shapes[0].ks.k.i[1][0],assets[1].layers[0].shapes[0].ks.k.v[0][0]:-512:-147:512
+In Tangent Y :slider:layers[0].shapes[0].ks.k.i[1][1],assets[1].layers[0].shapes[0].ks.k.v[0][1]:-512:186:512
+Out Tangent X:slider:layers[0].shapes[0].ks.k.o[1][0],assets[1].layers[0].shapes[0].ks.k.v[2][0]:-512:40:512
+Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[1][1],assets[1].layers[0].shapes[0].ks.k.v[2][1]:-512:189:512
+Point 2:label:
+Vertex X     :slider:layers[0].shapes[0].ks.k.v[2][0],assets[2].layers[0].ks.p.k[0]:0:215:512
+Vertex Y     :slider:layers[0].shapes[0].ks.k.v[2][1],assets[2].layers[0].ks.p.k[1]:0:430:512
+In Tangent X :slider:layers[0].shapes[0].ks.k.i[2][0],assets[2].layers[0].shapes[0].ks.k.v[0][0]:-512:114:512
+In Tangent Y :slider:layers[0].shapes[0].ks.k.i[2][1],assets[2].layers[0].shapes[0].ks.k.v[0][1]:-512:36:512
+Out Tangent X:slider:layers[0].shapes[0].ks.k.o[2][0],assets[2].layers[0].shapes[0].ks.k.v[2][0]:-512:-114:512
+Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[2][1],assets[2].layers[0].shapes[0].ks.k.v[2][1]:-512:-16:512
+:json:layers[0].shapes[0].ks.k
