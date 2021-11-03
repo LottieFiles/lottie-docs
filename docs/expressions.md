@@ -651,7 +651,6 @@ description: Parent layer
 name: sourceRectAtTime
 return: object : Object with these attributes: `top`, `left`, `width`, `height`
 
-
 ### Layer.effect
 
 {function_docs}
@@ -659,6 +658,14 @@ name: effect
 param: effect : number|string : Name or index
 return: Effect :
 description: Returns the given effect
+
+### Layer.contents
+
+{function_docs}
+name: contents
+param: shape : number|string : Name or index
+return: Shape :
+description: For shape layers, returns the given shape
 
 <!--
 Not Implemented:
