@@ -17,6 +17,11 @@
                     "type": "string",
                     "title": "Name",
                     "description": "Name of the precomposition"
+                },
+                "fr": {
+                    "title": "Framerate",
+                    "description": "Framerate in frames per second",
+                    "type": "number"
                 }
             }
         }
