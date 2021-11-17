@@ -6,7 +6,7 @@
     https://helpx.adobe.com/after-effects/using/expression-language-reference.html
 
     continue from
-    https://helpx.adobe.com/after-effects/using/expression-language-reference.html#layer_space_transforms_methods_expression_reference
+    https://helpx.adobe.com/after-effects/using/expression-language-reference.html#mask_attributes_and_methods_expression_reference
 -->
 
 Properties can have expressions associated with them,
@@ -14,7 +14,13 @@ when this is the case the value of such properties can be modified by using the 
 
 The expression language is based on JavaScript / ECMAScript.
 
-For the most part it uses what is described in the [After Effects expressions](https://helpx.adobe.com/after-effects/using/expression-language-reference.html).
+For the most part it uses what is described in the After Effects expressions.
+
+
+More resources on AE expressions:
+
+* [Expression Language Reference](https://helpx.adobe.com/after-effects/using/expression-language-reference.html)
+* [After Effects Expression Reference](https://ae-expressions.docsforadobe.dev/)
 
 
 
@@ -40,6 +46,9 @@ $bm_rt = 60;
 {lottie_playground:image.json:512:512}
 Rotation Expression:expression:layers[0].ks.r.x
 var $bm_rt = 60;
+:end:
+Position Expression:expression:layers[0].ks.p.x
+var $bm_rt = [256, 256];
 :end:
 :json:layers[0].ks.r
 
@@ -495,7 +504,6 @@ var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.
 $bm_rt[0] += Math.cos(rotation) * 200;
 $bm_rt[1] += Math.sin(rotation) * 200;
 :end:
-:exec:window.foo = {}
 :json:layers[0].ks.p
 
 ### Composition.numLayers
@@ -604,6 +612,8 @@ description: Same as `st` in the JSON but in seconds
 
 ### Layer.transform
 
+Transform attributes can also be accessed from the layer object directly
+
 {variable_docs}
 name: transofrm
 type: Transform
@@ -667,6 +677,88 @@ param: shape : number|string : Name or index
 return: Shape :
 description: For shape layers, returns the given shape
 
+## Layer space transforms
+
+These methods convert between coordinates systems within a layer.
+
+Some of these functions have a `Vec` suffix, which means they should be used
+for difference between points (the version without this suffix is for points).
+
+### Layer.toComp
+
+{function_docs}
+name: toComp
+param: point : Array : Point
+param: time : number : Time : time
+return: Array :
+description: Maps a point from Layer coordinates to composition coordinates
+
+### Layer.fromComp
+
+{function_docs}
+name: toComp
+param: point : Array : Point
+param: time : number : Time : time
+return: Array :
+description: Maps a point from composition coordinates to Layer coordinates
+
+### Layer.toCompVec
+
+{function_docs}
+name: toComp
+param: point : Array : Vector
+param: time : number : Time : time
+return: Array :
+description: Maps a vector from Layer coordinates to composition coordinates
+
+### Layer.fromCompVec
+
+{function_docs}
+name: toComp
+param: point : Array : Vector
+param: time : number : Time : time
+return: Array :
+description: Maps a vector from composition coordinates to Layer coordinates
+
+
+### Layer.toWorld
+
+{function_docs}
+name: toWorld
+param: point : Array : Point
+param: time : number : Time : time
+return: Array :
+description: Maps a point from Layer coordinates to world coordinates
+
+### Layer.fromWorld
+
+{function_docs}
+name: toWorld
+param: point : Array : Point
+param: time : number : Time : time
+return: Array :
+description: Maps a point from world coordinates to Layer coordinates
+
+### Layer.toWorldVec
+
+{function_docs}
+name: toWorld
+param: point : Array : Vector
+param: time : number : Time : time
+return: Array :
+description: Maps a vector from Layer coordinates to world coordinates
+
+### Layer.fromWorldVec
+
+{function_docs}
+name: toWorld
+param: point : Array : Vector
+param: time : number : Time : time
+return: Array :
+description: Maps a vector from world coordinates to Layer coordinates
+
+
+
 <!--
 Not Implemented:
     sourceTime()
@@ -681,25 +773,11 @@ Not Implemented:
     marker
     name
     Layer 3D attributes and methods
+    fromCompToSurface
 
 Implemented but dummy:
     sourceRectAtTime()
     sampleImage()
-
-0: "getMatrix"
-1: "invertPoint"
-2: "applyPoint"
-3: "toWorld"
-4: "toWorldVec"
-5: "fromWorld"
-6: "fromWorldVec"
-7: "toComp"
-8: "fromComp"
-10: "sourceRectAtTime"
-20: "registerMaskInterface"
-21: "registerEffectsInterface"
-23: "shapeInterface"
-24: "content"
 -->
 
 
@@ -740,3 +818,25 @@ description: Value of `sk`
 name: skewAxis
 type: number
 description: Value of `sa`
+
+
+### Effect
+
+{variable_docs}
+name: active
+type: boolean
+description: Whether the effect is active
+
+### Effect()
+
+{function_docs}
+name:
+param: property : number|string : Name or index of the property
+return: number|Array :
+description: Returns the value for the given property of the effect
+
+
+<!--
+Not Implemented:
+    param()
+-->
