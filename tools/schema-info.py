@@ -122,7 +122,7 @@ def cmd_compare(ns):
         #("effects/customValue", "effect-values/"),
         ("effects/dropDown", "effect-values/drop-down"),
         ("effects/fill", "effects/fill-effect"),
-        #("effects/group", "effects/"),
+        ("effects/group", "effects/misc-effect"),
         #("effects/index", "effects/"),
         #("effects/layer", "effects/"),
         ("effects/noValue", "effect-values/no-value"),
