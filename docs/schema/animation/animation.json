@@ -81,6 +81,14 @@
                     "description": "Document metadata",
                     "$ref": "#/$defs/animation/metadata"
                 },
+                "markers": {
+                    "title": "Markers",
+                    "description": "Markers defining named sections of the composition.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/helpers/marker"
+                    }
+                },
                 "mb": {
                     "title": "Motion Blur",
                     "$ref": "#/$defs/animation/motion-blur"
