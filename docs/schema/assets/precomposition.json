@@ -11,13 +11,11 @@
             "$ref": "#/$defs/animation/composition"
         },
         {
+            "$ref": "#/$defs/helpers/name"
+        },
+        {
             "type": "object",
             "properties": {
-                "nm": {
-                    "type": "string",
-                    "title": "Name",
-                    "description": "Name of the precomposition"
-                },
                 "fr": {
                     "title": "Framerate",
                     "description": "Framerate in frames per second",
