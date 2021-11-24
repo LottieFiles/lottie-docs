@@ -17,7 +17,7 @@
                     "default": "sans"
                 },
                 "fName": {
-                    "title": "Name",
+                    "title": "Font Name",
                     "description": "Name used by text documents to reference this font, usually it's `fFamily` followed by `fStyle`",
                     "type": "string",
                     "default": "sans-Regular"

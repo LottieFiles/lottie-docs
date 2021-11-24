@@ -2,22 +2,25 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Selector",
-    "properties": {
-        "nm": {
-            "title": "Name",
-            "type": "string"
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/name"
         },
-        "a": {
-            "title": "Transform",
+        {
             "properties": {
+                "a": {
+                    "title": "Transform",
+                    "properties": {
+                        "s": {
+                            "$ref": "#/$defs/animated-properties/position"
+                        }
+                    }
+                },
                 "s": {
-                    "$ref": "#/$defs/animated-properties/position"
+                    "title": "Selector",
+                    "$ref": "#/$defs/text/text-selector-property"
                 }
             }
-        },
-        "s": {
-            "title": "Selector",
-            "$ref": "#/$defs/text/text-selector-property"
         }
-    }
+    ]
 }

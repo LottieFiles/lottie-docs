@@ -18,10 +18,6 @@
                     "title": "Match Name",
                     "type": "string"
                 },
-                "nm": {
-                    "title": "Name",
-                    "type": "string"
-                },
                 "ty": {
                     "title": "Type",
                     "type": "integer"
