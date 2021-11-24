@@ -34,6 +34,11 @@
                 "ty": {
                     "title": "Effect type",
                     "type": "integer"
+                },
+                "en": {
+                    "title": "Enabled",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 1
                 }
             },
             "required": ["ty", "ef"]

@@ -493,6 +493,14 @@ class LottiePlayground(BlockProcessor):
             input.text = args[0].replace("\\n", "\n") if "\n" not in args[0] else args[0]
             input.attrib["rows"] = str(max(3, input.text.count("\n")))
 
+        elif type == "intcheckbox":
+            input = etree.SubElement(td, "input", {
+                "type": "checkbox",
+                "oninput": "{setter}(event.target.checked ? 1 : 0)".format(setter=setter)
+            })
+            if len(args) > 0 and args[0] == "1":
+                input.attrib["checked"] = "checked"
+
         else:
             raise Exception("Unknown playground control %s" % type)
 

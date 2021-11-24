@@ -37,6 +37,7 @@ ty:Shape type (see values below)
 |`mm`|[Merge](#merge)                           |
 |`tw`|[Twist](#twist)                           |
 |`op`|[Offset Path](#offset-path)               |
+|`zz`|[Zig Zag](#zig-zag)                       |
 
 
 ## Shape
@@ -398,3 +399,11 @@ SKIP:#/$defs/shapes/merge
 
 {schema_object:shapes/offset-path}
 SKIP:#/$defs/shapes/offset-path
+
+
+### Zig Zag
+
+{schema_attribute:description:shapes/zig-zag}
+
+{schema_object:shapes/zig-zag}
+SKIP:#/$defs/shapes/shape
