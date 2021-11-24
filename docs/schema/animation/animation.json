@@ -8,9 +8,6 @@
             "$ref": "#/$defs/helpers/visual-object"
         },
         {
-            "$ref": "#/$defs/animation/composition"
-        },
-        {
             "type": "object",
             "properties": {
                 "v": {
@@ -57,7 +54,14 @@
                     "title": "Assets",
                     "type": "array",
                     "items": {
-                        "$ref": "#/$defs/assets/asset"
+                        "oneOf": [
+                            {
+                                "$ref": "#/$defs/assets/image"
+                            },
+                            {
+                                "$ref": "#/$defs/assets/precomposition"
+                            }
+                        ]
                     }
                 },
                 "fonts": {
@@ -76,9 +80,24 @@
                     "title": "Metadata",
                     "description": "Document metadata",
                     "$ref": "#/$defs/animation/metadata"
+                },
+                "markers": {
+                    "title": "Markers",
+                    "description": "Markers defining named sections of the composition.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/helpers/marker"
+                    }
+                },
+                "mb": {
+                    "title": "Motion Blur",
+                    "$ref": "#/$defs/animation/motion-blur"
                 }
             },
             "required": ["w", "h", "fr", "layers", "op", "ip"]
+        },
+        {
+            "$ref": "#/$defs/animation/composition"
         }
     ]
 }

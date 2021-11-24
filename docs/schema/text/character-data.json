@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Chars",
     "description": "Defines character shapes to avoid loading system fonts",
-    "type": "object",
     "properties": {
         "ch": {
             "title": "Character",
