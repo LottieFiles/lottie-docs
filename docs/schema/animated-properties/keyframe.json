@@ -3,27 +3,29 @@
     "type": "object",
     "title": "Keyframe",
     "description": "",
-    "properties": {
-        "t": {
-            "title": "Time",
-            "type": "number",
-            "default": 0
-        },
-        "h": {
-            "title": "Hold",
-            "$ref": "#/$defs/helpers/int-boolean",
-            "default": 0
-        },
-        "s": {
-            "title": "Value",
-            "description": "Value at this keyframe. Note the if the property is a scalar, keyframe values are still represented as arrays",
-            "type": "array",
-            "items": {
-                "type": "number"
-            }
-        }
-    },
     "allOf": [
+        {
+            "properties": {
+                "t": {
+                    "title": "Time",
+                    "type": "number",
+                    "default": 0
+                },
+                "h": {
+                    "title": "Hold",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 0
+                },
+                "s": {
+                    "title": "Value",
+                    "description": "Value at this keyframe. Note the if the property is a scalar, keyframe values are still represented as arrays",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
         {
             "if": {
                 "properties": {
