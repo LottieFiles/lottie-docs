@@ -1,0 +1,12 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Match Name",
+    "type": "object",
+    "description": "Match name, used in expression",
+    "properties": {
+        "mn": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

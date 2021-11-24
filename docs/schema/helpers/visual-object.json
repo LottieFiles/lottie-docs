@@ -8,15 +8,7 @@
             "$ref": "#/$defs/helpers/name"
         },
         {
-            "type": "object",
-            "properties": {
-                "mn": {
-                    "title": "Match Name",
-                    "description": "Match name, used in expression",
-                    "type": "string"
-                }
-            },
-            "required": []
+            "$ref": "#/$defs/helpers/match-name"
         }
     ]
 }
