@@ -28,7 +28,7 @@
                     "default": 512
                 },
                 "h": {
-                    "title": "Height",
+                    "title": "Precomposition Layer Height",
                     "type": "integer",
                     "default": 512
                 },

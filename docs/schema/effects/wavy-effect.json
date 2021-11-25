@@ -40,7 +40,7 @@
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {
-                            "title": "Height",
+                            "title": "Effect Height",
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {

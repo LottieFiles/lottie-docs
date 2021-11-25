@@ -16,8 +16,7 @@
                     "default": 0
                 },
                 "h": {
-                    "title": "Height",
-                    "description": "Height of the image",
+                    "title": "Image Height",
                     "type": "number",
                     "default": 0
                 },

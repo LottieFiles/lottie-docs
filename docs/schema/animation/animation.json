@@ -39,8 +39,7 @@
                     "default": 512
                 },
                 "h": {
-                    "title": "Height",
-                    "description": "Height of the animation",
+                    "title": "Animation Height",
                     "type": "integer",
                     "default": 512
                 },

@@ -23,7 +23,7 @@
                     "default": ""
                 },
                 "sh": {
-                    "title": "Height",
+                    "title": "Solid Color Layer Height",
                     "type": "number",
                     "default": 512
                 },
