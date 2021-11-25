@@ -16,7 +16,7 @@
                     "const": "rc"
                 },
                 "p": {
-                    "title": "Position",
+                    "title": "Rectangle Position",
                     "description": "Center of the rectangle",
                     "$ref": "#/$defs/animated-properties/position"
                 },

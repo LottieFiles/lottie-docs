@@ -16,7 +16,6 @@
                     "const": "el"
                 },
                 "p": {
-                    "title": "Position",
                     "$ref": "#/$defs/animated-properties/position"
                 },
                 "s": {

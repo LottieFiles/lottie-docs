@@ -16,7 +16,6 @@
                     "const": "sr"
                 },
                 "p": {
-                    "title": "Position",
                     "$ref": "#/$defs/animated-properties/position"
                 },
                 "or": {

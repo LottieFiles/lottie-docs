@@ -43,8 +43,6 @@
                         {
                             "properties":  {
                                 "p": {
-                                    "title": "Position",
-                                    "description": "Position / Translation",
                                     "$ref": "#/$defs/animated-properties/position"
                                 }
                             }
@@ -52,8 +50,6 @@
                         {
                             "properties":  {
                                 "p": {
-                                    "title": "Position",
-                                    "description": "Position / Translation with split components",
                                     "$ref": "#/$defs/animated-properties/split-vector"
                                 }
                             }
