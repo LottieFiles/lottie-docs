@@ -23,7 +23,7 @@
                     "default": ""
                 },
                 "w": {
-                    "title": "Width",
+                    "title": "Precomposition Layer Width",
                     "type": "integer",
                     "default": 512
                 },

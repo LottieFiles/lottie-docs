@@ -36,7 +36,7 @@
                             "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
-                            "title": "Width",
+                            "title": "Effect Width",
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {

@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Chars",
     "description": "Defines character shapes to avoid loading system fonts",
-    "type": "object",
     "properties": {
         "ch": {
             "title": "Character",
@@ -26,7 +25,7 @@
             "default": ""
         },
         "w": {
-            "title": "Width",
+            "title": "Font Width",
             "type": "number",
             "default": 0
         },

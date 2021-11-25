@@ -34,8 +34,7 @@
                     "default": 60
                 },
                 "w": {
-                    "title": "Width",
-                    "description": "Width of the animation",
+                    "title": "Animation Width",
                     "type": "integer",
                     "default": 512
                 },

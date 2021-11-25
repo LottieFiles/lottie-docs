@@ -11,8 +11,7 @@
             "type": "object",
             "properties": {
                 "w": {
-                    "title": "Width",
-                    "description": "Width of the image",
+                    "title": "Image Width",
                     "type": "number",
                     "default": 0
                 },

@@ -27,7 +27,7 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "w": {
-                    "title": "Width",
+                    "title": "Base Stroke Width",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "d": {

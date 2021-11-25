@@ -28,7 +28,7 @@
                     "default": 512
                 },
                 "sw": {
-                    "title": "Width",
+                    "title": "Solid Color Layer Width",
                     "type": "number",
                     "default": 512
                 }
