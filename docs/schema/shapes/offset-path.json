@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Shape Type",
+                    "title": "Offset Type",
                     "type": "string",
                     "const": "op"
                 },

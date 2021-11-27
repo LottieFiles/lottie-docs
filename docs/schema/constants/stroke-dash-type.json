@@ -1,19 +1,19 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "string",
-    "title": "StrokeDashType",
+    "title": "Stroke Dash Type",
     "description": "",
     "oneOf": [
         {
-            "title": "Dash",
+            "title": "Stroke Dash Type Default",
             "const": "d"
         },
         {
-            "title": "Gap",
+            "title": "Stroke Dash Type Gap",
             "const": "g"
         },
         {
-            "title": "Offset",
+            "title": "Stroke Dash Type Offset",
             "const": "o"
         }
     ]

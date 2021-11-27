@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Shape Type",
+                    "title": "PolyStar Type",
                     "type": "string",
                     "const": "sr"
                 },
@@ -37,10 +37,7 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "sy": {
-                    "title": "Star Type",
-                    "description": "Star type, `1` for Star, `2` for Polygon",
-                    "$ref": "#/$defs/constants/star-type",
-                    "default": 1
+                    "$ref": "#/$defs/constants/star-type"
                 }
             },
             "required": [

@@ -16,9 +16,7 @@
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "t": {
-                    "title": "Gradient Type",
-                    "$ref": "#/$defs/constants/gradient-type",
-                    "default": 1
+                    "$ref": "#/$defs/constants/gradient-type"
                 },
                 "h": {
                     "title": "Highlight Length",

@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Drop Shadow Effect Type",
                     "type": "integer",
                     "const": 25
                 },

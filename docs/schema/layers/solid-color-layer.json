@@ -11,8 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
-                    "description": "Layer type",
+                    "title": "Solid Color Layer Type",
                     "type": "integer",
                     "const": 1
                 },

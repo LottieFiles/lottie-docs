@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Type Effect Value Angle",
                     "type": "integer",
                     "const": 1
                 },

@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Puppet Effect Type",
                     "type": "integer",
                     "const": 34
                 },

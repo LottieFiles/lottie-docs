@@ -14,7 +14,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Shape Type",
+                    "title": "Stroke Type",
                     "type": "string",
                     "const": "st"
                 },

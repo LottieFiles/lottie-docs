@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Radial Wipe",
+    "title": "Radial Wipe Effect",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"
@@ -10,7 +10,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Radial Wipe Effect Type",
                     "type": "integer",
                     "const": 26
                 },

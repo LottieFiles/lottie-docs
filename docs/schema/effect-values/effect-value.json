@@ -15,7 +15,7 @@
                     "type": "integer"
                 },
                 "ty": {
-                    "title": "Type",
+                    "title": "Effect Value Type",
                     "type": "integer"
                 }
             }

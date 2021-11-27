@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Shape Type",
+                    "title": "Rounded Corners Type",
                     "type": "string",
                     "const": "rd"
                 },

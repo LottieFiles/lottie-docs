@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Misc Effect Type",
                     "type": "integer",
                     "const": 5
                 }

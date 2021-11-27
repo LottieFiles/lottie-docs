@@ -1,15 +1,16 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "StarType",
-    "description": "",
+    "title": "Star Type",
+    "default": 1,
+    "description": "Star type, `1` for Star, `2` for Polygon",
     "oneOf": [
         {
-            "title": "Star",
+            "title": "Star Type Default",
             "const": 1
         },
         {
-            "title": "Polygon",
+            "title": "Star Type Polygon",
             "const": 2
         }
     ]

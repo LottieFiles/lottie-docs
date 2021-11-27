@@ -11,8 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Layer type",
-                    "description": "Layer type",
+                    "title": "Text Layer Type",
                     "type": "integer",
                     "const": 5
                 },

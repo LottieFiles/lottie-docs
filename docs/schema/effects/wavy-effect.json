@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Wavy Effect Type",
                     "type": "integer",
                     "const": 32
                 },
@@ -28,7 +28,7 @@
                             "$ref": "#/$defs/effect-values/point"
                         },
                         {
-                            "title": "Conversion type",
+                            "title": "Conversion Type",
                             "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {

@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Shape Type",
+                    "title": "Ellipse Type",
                     "type": "string",
                     "const": "el"
                 },

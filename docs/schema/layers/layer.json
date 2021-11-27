@@ -22,69 +22,68 @@
                     "type": "boolean"
                 },
                 "ty": {
-                    "title": "Type",
-                    "description": "Layer Type",
+                    "title": "Layer Type",
                     "type": "integer",
                     "oneOf": [
                         {
                             "const": 0,
-                            "title": "Precomposition layer"
+                            "title": "Precomposition Layer"
                         },
                         {
                             "const": 1,
-                            "title": "Solid color layer"
+                            "title": "Solid color Layer"
                         },
                         {
                             "const": 2,
-                            "title": "Image layer"
+                            "title": "Image Layer"
                         },
                         {
                             "const": 3,
-                            "title": "Null layer"
+                            "title": "Null Layer"
                         },
                         {
                             "const": 4,
-                            "title": "Shape layer"
+                            "title": "Shape Layer"
                         },
                         {
                             "const": 5,
-                            "title": "Text layer"
+                            "title": "Text Layer"
                         },
                         {
                             "const": 6,
-                            "title": "Audio layer"
+                            "title": "Audio Layer"
                         },
                         {
                             "const": 7,
-                            "title": "Video placeholder"
+                            "title": "Video Placeholder Layer"
                         },
                         {
                             "const": 8,
-                            "title": "Image sequence"
+                            "title": "Image Sequence Layer"
                         },
                         {
                             "const": 9,
-                            "title": "Video layer"
+                            "title": "Video Layer"
                         },
                         {
                             "const": 10,
-                            "title": "Image placeholder"
+                            "title": "Image Placeholder Layer"
                         },
                         {
                             "const": 11,
-                            "title": "Guide layer"
+                            "title": "Guide Layer"
                         },
                         {
                             "const": 12,
-                            "title": "Adjustment layer"
+                            "title": "Adjustment Layer"
                         },
                         {
                             "const": 13,
-                            "title": "Camera"
+                            "title": "Camera Layer"
                         },
                         {
                             "const": 14,
-                            "title": "Light layer"
+                            "title": "Light Layer"
                         }
                     ]
                 },
@@ -94,7 +93,7 @@
                 },
                 "parent": {
                     "title": "Parent Index",
-                    "description": "Must be the `ind` property of another layer",
+                    "description": "Must be the `ind` property of another Layer",
                     "type": "integer"
                 },
                 "sr": {
@@ -109,7 +108,7 @@
                 },
                 "op": {
                     "title": "Out Point",
-                    "description": "Frame when the layers becomes invisible",
+                    "description": "Frame when the Layers becomes invisible",
                     "type": "number"
                 },
                 "st": {

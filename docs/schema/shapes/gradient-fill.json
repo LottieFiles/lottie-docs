@@ -2,7 +2,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Gradient Fill",
-    "description": "Gradient fill",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape-element"
@@ -14,7 +13,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Shape Type",
+                    "title": "Gradient Fill Type",
                     "type": "string",
                     "const": "gf"
                 },

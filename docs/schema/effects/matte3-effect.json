@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Matte3 Effect Type",
                     "type": "integer",
                     "const": 28
                 },

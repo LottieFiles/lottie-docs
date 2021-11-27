@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Type",
+                    "title": "Effect Value Checkbox Type",
                     "type": "integer",
                     "const": 4
                 },
