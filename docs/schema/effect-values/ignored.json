@@ -16,7 +16,6 @@
                     "const": 6
                 },
                 "v": {
-                    "title": "Value",
                     "type": "number",
                     "default": 0
                 }

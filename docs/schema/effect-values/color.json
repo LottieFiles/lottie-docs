@@ -16,7 +16,6 @@
                     "const": 2
                 },
                 "v": {
-                    "title": "Value",
                     "$ref": "#/$defs/animated-properties/color-value"
                 }
             },

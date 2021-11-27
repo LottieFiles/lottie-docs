@@ -16,7 +16,6 @@
                     "const": 7
                 },
                 "v": {
-                    "title": "Value",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

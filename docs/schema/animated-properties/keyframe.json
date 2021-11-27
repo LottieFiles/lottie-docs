@@ -17,7 +17,7 @@
                     "default": 0
                 },
                 "s": {
-                    "title": "Value",
+                    "title": "Keyframe Value",
                     "description": "Value at this keyframe. Note the if the property is a scalar, keyframe values are still represented as arrays",
                     "type": "array",
                     "items": {

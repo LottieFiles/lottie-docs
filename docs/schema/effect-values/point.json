@@ -16,7 +16,7 @@
                     "const": 3
                 },
                 "v": {
-                    "title": "Value",
+                    "title": "Effect Point Value",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
