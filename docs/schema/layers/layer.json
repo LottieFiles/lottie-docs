@@ -157,7 +157,7 @@
                     "type": "array",
                     "items": {
                         "oneOf":  [
-                            {"$ref": "#/$defs/effects/misc-effect"},
+                            {"$ref": "#/$defs/effects/custom-effect"},
                             {"$ref": "#/$defs/effects/drop-shadow-effect"},
                             {"$ref": "#/$defs/effects/fill-effect"},
                             {"$ref": "#/$defs/effects/gaussian-blur-effect"},
@@ -177,7 +177,7 @@
                     }
                 },
                 "cl": {
-                    "title": "Class",
+                    "title": "CSS Class",
                     "description": "CSS class used by the SVG renderer",
                     "type": "string"
                 },
@@ -188,7 +188,7 @@
                 },
                 "mb": {
                     "title": "Motion Blur",
-                    "description": "Whether motion blur is enable for the layer",
+                    "description": "Whether motion blur is enabled for the layer",
                     "type": "boolean"
                 }
             },

@@ -6,14 +6,15 @@
     "properties": {
         "s": {
             "title": "Split",
-            "type": "boolean"
+            "type": "boolean",
+            "const": true
         },
         "x": {
             "title": "X",
             "$ref": "#/$defs/animated-properties/value"
         },
         "y": {
-            "title": "X",
+            "title": "Y",
             "$ref": "#/$defs/animated-properties/value"
         },
         "z": {

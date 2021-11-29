@@ -25,10 +25,12 @@
         },
         "lh": {
             "title": "Line Height",
+            "description": "Line height when wrapping",
             "type": "number"
         },
         "sz": {
             "title": "Wrap Size",
+            "description": "Size of the box containing the text",
             "type": "array",
             "items": {
                 "type": "number"

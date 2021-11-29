@@ -24,7 +24,7 @@
                 },
                 "sc": {
                     "title": "Stroke Color",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/color-value"
                 },
                 "fc": {
                     "title": "Fill Color",

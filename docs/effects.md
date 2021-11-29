@@ -263,11 +263,13 @@ SKIP:#/$defs/effects/effect
 {schema_effect:effects/wavy-effect}
 
 
-### Misc Effect
+### Custom Effect
 
-On older lottie versions, you might find various different effects all with `ty` = 5.
+You might find various different effects all with `ty` = 5.
 
-{schema_object:effects/misc-effect}
+Sometimes these are used together with expressions.
+
+{schema_object:effects/custom-effect}
 SKIP:#/$defs/effects/effect
 
 

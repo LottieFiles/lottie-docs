@@ -78,12 +78,21 @@
                         {
                             "const": "op",
                             "title": "Offset path"
+                        },
+                        {
+                            "const": "zz",
+                            "title": "Zig zag"
                         }
                     ]
                 },
                 "bm": {
                     "title": "Blend Mode",
                     "$ref": "#/$defs/constants/blend-mode"
+                },
+                "cix": {
+                    "title": "Property index",
+                    "description": "Index used in expressions",
+                    "type": "integer"
                 }
             },
             "required": ["ty"]

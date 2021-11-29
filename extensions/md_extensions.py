@@ -306,6 +306,8 @@ def ref_links(ref: str, data: SchemaData):
             link.name = "0-1 Integer"
         elif link.cls == "visual-object":
             return []
+        elif link.cls == "marker":
+            link.page = "animation"
 
     elif link.group == "effect-values":
         link.page = "effects"

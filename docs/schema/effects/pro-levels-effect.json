@@ -77,7 +77,7 @@
                         },
                         {
                             "title": "r_outwhite",
-                            "$ref": "#/$defs/effect-values/no-value"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "15",
@@ -105,14 +105,14 @@
                         },
                         {
                             "title": "g_outwhite",
-                            "$ref": "#/$defs/effect-values/no-value"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "22",
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {
-                            "title": "b3",
+                            "title": "23",
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {
@@ -133,7 +133,7 @@
                         },
                         {
                             "title": "b_outwhite",
-                            "$ref": "#/$defs/effect-values/no-value"
+                            "$ref": "#/$defs/effect-values/slider"
                         },
                         {
                             "title": "29",

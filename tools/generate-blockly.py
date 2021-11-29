@@ -629,7 +629,7 @@ exclude = {
     "#/$defs/shapes/twist",
     "#/$defs/shapes/merge",
     "#/$defs/shapes/offset-path",
-    "#/$defs/effects/misc-effect",
+    "#/$defs/effects/custom-effect",
 }
 blockly_types = {}
 icons = {
