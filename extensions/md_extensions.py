@@ -601,6 +601,7 @@ class SchemaProperty:
     description: str = ""
     const: Any = None
     type: str = ""
+    item_type: str = ""
 
 
 class SchemaObject(BlockProcessor):
@@ -615,13 +616,19 @@ class SchemaObject(BlockProcessor):
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
+    def _type(self, prop):
+        if "$ref" in prop and "type" not in prop:
+            return prop["$ref"]
+        return prop.get("type", "")
+
     def _add_properties(self, schema_props, prop_dict):
         for name, prop in schema_props.items():
             data = dict((k, v) for k, v in prop.items() if k in self.prop_fields)
-            if "$ref" in prop and "type" not in prop:
-                data["type"] = prop["$ref"]
+            data["type"] = self._type(prop)
             if "title" in prop and "description" not in prop:
                 data["description"] = prop["title"]
+            if "items" in prop:
+                data["item_type"] = self._type(prop["items"])
 
             prop_dict[name] = SchemaProperty(**data)
 
@@ -642,6 +649,30 @@ class SchemaObject(BlockProcessor):
         a.text = link.name
         a.attrib["href"] = "%s.md#%s" % (link.page, link.anchor)
         return a
+
+    def _base_type(self, type, parent):
+        if type.startswith("#/$defs/"):
+            links = ref_links(type, self.schema_data)
+            for link in links:
+                type_text = etree.SubElement(parent, "a")
+                type_text.attrib["href"] = "%s.md#%s" % (link.page, link.anchor)
+                type_text.text = link.name
+                type_text.tail = " "
+                if link.cls == "int-boolean":
+                    type_text.text = "0-1 "
+                    etree.SubElement(type_text, "code").text = "integer"
+                elif link.anchor == "animated-property" and len(links) == 1:
+                    type_text.text = "Animated"
+                    type_text.tail = " "
+                    if link.cls == "value":
+                        type_text = etree.SubElement(parent, "code").text = "number"
+                    else:
+                        type_text.tail += link.name.split(" ", 1)[1]
+        else:
+            type_text = etree.SubElement(parent, "code")
+            type_text.text = type
+
+        return type_text
 
     def run(self, parent, blocks):
         object_name = self.test(parent, blocks[0]).group(1)
@@ -712,26 +743,10 @@ class SchemaObject(BlockProcessor):
 
                 type_cell = etree.SubElement(tr, "td")
 
-                if prop.type.startswith("#/$defs/"):
-                    links = ref_links(prop.type, self.schema_data)
-                    for link in links:
-                        type_text = etree.SubElement(type_cell, "a")
-                        type_text.attrib["href"] = "%s.md#%s" % (link.page, link.anchor)
-                        type_text.text = link.name
-                        type_text.tail = " "
-                        if link.cls == "int-boolean":
-                            type_text.text = "0-1 "
-                            etree.SubElement(type_text, "code").text = "integer"
-                        elif link.anchor == "animated-property" and len(links) == 1:
-                            type_text.text = "Animated"
-                            type_text.tail = " "
-                            if link.cls == "value":
-                                type_text = etree.SubElement(type_cell, "code").text = "number"
-                            else:
-                                type_text.tail += link.name.split(" ", 1)[1]
-                else:
-                    type_text = etree.SubElement(type_cell, "code")
-                    type_text.text = prop.type
+                type_text = self._base_type(prop.type, type_cell)
+                if prop.type == "array" and prop.item_type:
+                    type_text.tail = " of "
+                    type_text = self._base_type(prop.item_type, type_cell)
 
                 if prop.const is not None:
                     type_text.tail = " = "
