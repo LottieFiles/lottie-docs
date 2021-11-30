@@ -1,7 +1,7 @@
 # Executable names
 PIP ?= pip
 PYTHON ?= python
-MKDOCS ?= PYTHONPATH="$(SOURCE_DIR)/extensions" mkdocs
+MKDOCS ?= PYTHONPATH="$(SOURCE_DIR)/tools" mkdocs
 
 # Paths
 SOURCE_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
@@ -24,7 +24,7 @@ docs:$(SOURCE_DIR)/docs/scripts/blockly_generated.js
 
 $(OUTPUT_DIR)/index.html:$(wildcard $(SOURCE_DIR)/docs/**/*)
 $(OUTPUT_DIR)/index.html:$(SOURCE_DIR)/docs/schema/lottie.schema.json
-$(OUTPUT_DIR)/index.html:$(SOURCE_DIR)/extensions/md_extensions.py
+$(OUTPUT_DIR)/index.html:$(SOURCE_DIR)/tools/md_extensions.py
 $(OUTPUT_DIR)/index.html:docs
 
 docs_serve:$(SOURCE_DIR)/docs/schema/lottie.schema.json

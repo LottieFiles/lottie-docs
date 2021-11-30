@@ -9,6 +9,10 @@ import dataclasses
 from xml.etree import ElementTree
 
 
+import md_extensions
+from schema_lib import Schema
+
+
 class BlockDef:
     _blocks = {}
 
@@ -591,9 +595,6 @@ def convert_group(schema_object, schema):
 
 
 root = pathlib.Path(__file__).parent.parent
-sys.path.append(str(root / "extensions"))
-md_extensions = __import__("md_extensions")
-schema_validate = __import__("schema-validate")
 
 schema_filename = root / "docs" / "schema" / "lottie.schema.json"
 
@@ -650,7 +651,7 @@ icons = {
 with open(schema_filename) as file:
     data = json.load(file)
 
-schema = schema_validate.Schema(data)
+schema = Schema(data)
 
 for cat in categories.keys():
     convert_group(schema.get_ref("#/$defs/" + cat), schema)
