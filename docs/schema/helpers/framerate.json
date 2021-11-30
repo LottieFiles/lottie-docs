@@ -1,0 +1,13 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Framerate",
+    "description": "Framerate in frames per second",
+    "type": "object",
+    "properties": {
+        "fr": {
+            "type": "number",
+            "default": 60
+        }
+    },
+    "additionalProperties": false
+}

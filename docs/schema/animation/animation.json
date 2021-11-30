@@ -11,18 +11,15 @@
             "$ref": "#/$defs/helpers/three-dimensional"
         },
         {
+            "$ref": "#/$defs/helpers/framerate"
+        },
+        {
             "type": "object",
             "properties": {
                 "v": {
                     "title": "Version",
                     "type": "string",
                     "default": "5.5.2"
-                },
-                "fr": {
-                    "title": "Framerate",
-                    "description": "Framerate in frames per second",
-                    "type": "number",
-                    "default": 60
                 },
                 "ip": {
                     "title": "In Point",
