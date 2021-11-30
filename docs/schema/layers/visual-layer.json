@@ -65,7 +65,7 @@
                     }
                 },
                 "mb": {
-                    "title": "Motion Blur",
+                    "title": "Layer Motion Blur",
                     "description": "Whether motion blur is enabled for the layer",
                     "type": "boolean"
                 }

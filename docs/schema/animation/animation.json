@@ -86,7 +86,6 @@
                     }
                 },
                 "mb": {
-                    "title": "Motion Blur",
                     "$ref": "#/$defs/animation/motion-blur"
                 }
             },
