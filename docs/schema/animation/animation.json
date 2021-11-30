@@ -8,6 +8,9 @@
             "$ref": "#/$defs/helpers/visual-object"
         },
         {
+            "$ref": "#/$defs/helpers/three-dimensional"
+        },
+        {
             "type": "object",
             "properties": {
                 "v": {
@@ -42,11 +45,6 @@
                     "title": "Animation Height",
                     "type": "integer",
                     "default": 512
-                },
-                "ddd": {
-                    "title": "Threedimensional",
-                    "$ref": "#/$defs/helpers/int-boolean",
-                    "default": 0
                 },
                 "assets": {
                     "title": "Assets",
