@@ -5,7 +5,7 @@
     "description": "",
     "oneOf": [
         {
-            "title": "Normal",
+            "title": "Blend Mode Normal",
             "const": 0
         },
         {
