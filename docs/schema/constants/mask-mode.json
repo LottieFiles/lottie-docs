@@ -29,7 +29,7 @@
             "const": "d"
         },
         {
-            "title": "Difference",
+            "title": "Mask Mode Difference",
             "const": "f"
         }
     ]
