@@ -21,67 +21,67 @@
                     "oneOf": [
                         {
                             "const": "rc",
-                            "title": "Rectangle"
+                            "title": "Const Type Rectangle"
                         },
                         {
                             "const": "el",
-                            "title": "Ellipse"
+                            "title": "Const Type Ellipse"
                         },
                         {
                             "const": "sr",
-                            "title": "Polygon / Star"
+                            "title": "Const Type Polygon Or Star"
                         },
                         {
                             "const": "sh",
-                            "title": "Path Const"
+                            "title": "Const Type Path"
                         },
                         {
                             "const": "fl",
-                            "title": "Fill Const"
+                            "title": "Const Type Fill"
                         },
                         {
                             "const": "st",
-                            "title": "Stroke"
+                            "title": "Const Type Stroke"
                         },
                         {
                             "const": "gf",
-                            "title": "Gradient fill"
+                            "title": "Const Type Gradient fill"
                         },
                         {
                             "const": "gs",
-                            "title": "Gradient stroke"
+                            "title": "Const Type Gradient stroke"
                         },
                         {
                             "const": "gr",
-                            "title": "Group Const"
+                            "title": "Const Type Group"
                         },
                         {
                             "const": "tr",
-                            "title": "Transform"
+                            "title": "Const Type Transform"
                         },
                         {
                             "const": "rd",
-                            "title": "Rounded corners"
+                            "title": "Const Type Rounded corners"
                         },
                         {
                             "const": "pb",
-                            "title": "Pucker or Bloat Const"
+                            "title": "Const Type Pucker or Bloat"
                         },
                         {
                             "const": "mm",
-                            "title": "Merge"
+                            "title": "Const Type Merge"
                         },
                         {
                             "const": "tw",
-                            "title": "Twist"
+                            "title": "Const Type Twist"
                         },
                         {
                             "const": "op",
-                            "title": "Offset path"
+                            "title": "Const Type Offset Path"
                         },
                         {
                             "const": "zz",
-                            "title": "Zig zag"
+                            "title": "Cosnt Type Zig zag"
                         }
                     ]
                 },
