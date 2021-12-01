@@ -21,7 +21,7 @@
                     "$ref": "#/$defs/animated-properties/position"
                 },
                 "s": {
-                    "title": "Size",
+                    "title": "Rectangle Size",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "r": {

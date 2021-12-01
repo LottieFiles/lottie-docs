@@ -21,7 +21,7 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "s": {
-                    "title": "Size",
+                    "title": "Zig Zags Size",
                     "description": "Distance between peaks and troughs",
                     "$ref": "#/$defs/animated-properties/value"
                 },

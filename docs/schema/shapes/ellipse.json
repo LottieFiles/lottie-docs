@@ -19,7 +19,7 @@
                     "$ref": "#/$defs/animated-properties/position"
                 },
                 "s": {
-                    "title": "Size",
+                    "title": "Ellipse Size",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
