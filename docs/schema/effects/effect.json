@@ -8,6 +8,9 @@
             "$ref": "#/$defs/helpers/visual-object"
         },
         {
+            "$ref": "#/$defs/helpers/property-index"
+        },
+        {
             "type": "object",
             "properties": {
                 "ef": {
@@ -26,10 +29,6 @@
                             {"$ref": "#/$defs/effect-values/slider"}
                         ]
                     }
-                },
-                "ix": {
-                    "title": "Effect Index",
-                    "type": "integer"
                 },
                 "ty": {
                     "title": "Effect Type",

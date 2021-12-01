@@ -8,12 +8,11 @@
             "$ref": "#/$defs/helpers/visual-object"
         },
         {
+            "$ref": "#/$defs/helpers/property-index"
+        },
+        {
             "type": "object",
             "properties": {
-                "ix": {
-                    "title": "Effect Index",
-                    "type": "integer"
-                },
                 "ty": {
                     "title": "Effect Value Type",
                     "type": "integer"

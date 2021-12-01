@@ -8,12 +8,11 @@
             "$ref": "#/$defs/animated-properties/animated"
         },
         {
+            "$ref": "#/$defs/helpers/property-index"
+        },
+        {
 
             "properties": {
-                "ix": {
-                    "title": "Property Index",
-                    "type": "integer"
-                },
                 "x": {
                     "title": "Expression",
                     "type": "string"
