@@ -11,12 +11,7 @@
             "$ref": "#/$defs/helpers/property-index"
         },
         {
-            "properties": {
-                "x": {
-                    "title": "Expression",
-                    "type": "string"
-                }
-            }
+            "$ref": "#/$defs/helpers/property-index"
         },
         {
             "if": {

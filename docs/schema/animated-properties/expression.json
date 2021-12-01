@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Expression",
+    "type": "object",
+    "properties": {
+        "x": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}
