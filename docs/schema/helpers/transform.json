@@ -12,7 +12,7 @@
                     "$ref": "#/$defs/animated-properties/position"
                 },
                 "s": {
-                    "title": "Scale",
+                    "title": "Transform Scale",
                     "description": "Scale factor, `[100, 100]` for no scaling",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
