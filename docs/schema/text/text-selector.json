@@ -9,7 +9,7 @@
         {
             "properties": {
                 "a": {
-                    "title": "Transform",
+                    "title": "Text Selector Transform",
                     "properties": {
                         "s": {
                             "$ref": "#/$defs/animated-properties/position"

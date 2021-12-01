@@ -11,8 +11,6 @@
             "type": "object",
             "properties": {
                 "ks": {
-                    "title": "Transform",
-                    "description": "Layer transform",
                     "$ref": "#/$defs/helpers/transform"
                 },
                 "ao": {

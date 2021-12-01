@@ -29,7 +29,6 @@
                     "default": 1
                 },
                 "tr": {
-                    "title": "Transform",
                     "$ref": "#/$defs/shapes/repeater-transform"
                 }
             },
