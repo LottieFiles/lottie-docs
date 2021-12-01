@@ -32,7 +32,6 @@
                             "$ref": "#/$defs/effect-values/checkbox"
                         },
                         {
-                            "title": "color",
                             "$ref": "#/$defs/effect-values/color"
                         },
                         {

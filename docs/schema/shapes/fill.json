@@ -20,7 +20,7 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "c": {
-                    "title": "Color",
+                    "title": "Fill Color",
                     "$ref": "#/$defs/animated-properties/color-value"
                 },
                 "r": {

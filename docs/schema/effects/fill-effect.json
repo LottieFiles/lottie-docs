@@ -28,7 +28,6 @@
                             "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
-                            "title": "color",
                             "$ref": "#/$defs/effect-values/color"
                         },
                         {

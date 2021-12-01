@@ -19,7 +19,7 @@
                     "const": "st"
                 },
                 "c": {
-                    "title": "Color",
+                    "title": "Shape Stroke Color",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },

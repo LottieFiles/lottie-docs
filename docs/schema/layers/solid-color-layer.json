@@ -16,7 +16,7 @@
                     "const": 1
                 },
                 "sc": {
-                    "title": "Color",
+                    "title": "Solid Color Layer Color",
                     "description": "Color of the layer, unlike most other places, the color is a `#rrggbb` hex string",
                     "type": "string",
                     "default": ""
