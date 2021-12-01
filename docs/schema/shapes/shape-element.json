@@ -86,7 +86,7 @@
                     ]
                 },
                 "bm": {
-                    "title": "Blend Mode",
+                    "title": "Shape Blend Mode",
                     "$ref": "#/$defs/constants/blend-mode"
                 },
                 "cix": {

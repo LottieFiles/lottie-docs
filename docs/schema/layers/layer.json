@@ -114,7 +114,7 @@
                     "default": 0
                 },
                 "bm": {
-                    "title": "Blend Mode",
+                    "title": "Layer Blend Mode",
                     "$ref": "#/$defs/constants/blend-mode",
                     "default": 0
                 },
