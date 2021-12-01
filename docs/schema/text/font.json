@@ -29,7 +29,7 @@
                     "default": "Regular"
                 },
                 "fPath": {
-                    "title": "Path",
+                    "title": "Font Path",
                     "type": "string"
                 },
                 "fWeight": {

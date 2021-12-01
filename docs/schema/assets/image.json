@@ -21,7 +21,7 @@
                     "default": 0
                 },
                 "u": {
-                    "title": "Path",
+                    "title": "Image Path",
                     "description": "Path to the directory containing an image",
                     "type": "string",
                     "default": ""

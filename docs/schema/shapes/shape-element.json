@@ -33,7 +33,7 @@
                         },
                         {
                             "const": "sh",
-                            "title": "Path"
+                            "title": "Path Const"
                         },
                         {
                             "const": "fl",
