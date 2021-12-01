@@ -14,7 +14,7 @@
             "type": "object",
             "properties": {
                 "hd": {
-                    "title": "Hidden",
+                    "title": "Layer Hidden",
                     "description": "Whether the layer is hidden",
                     "type": "boolean"
                 },

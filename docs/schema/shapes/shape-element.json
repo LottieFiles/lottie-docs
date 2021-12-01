@@ -11,7 +11,7 @@
             "type": "object",
             "properties": {
                 "hd": {
-                    "title": "Hidden",
+                    "title": "Shape Hidden",
                     "description": "Whether the shape is hidden",
                     "type": "boolean"
                 },
