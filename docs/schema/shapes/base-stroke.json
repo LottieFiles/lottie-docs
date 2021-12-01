@@ -5,15 +5,15 @@
     "description": "",
     "allOf": [
         {
+            "$ref": "#/$defs/constants/line-join"
+        },
+        {
             "type": "object",
             "properties": {
                 "lc": {
                     "title": "Line Cap",
                     "$ref": "#/$defs/constants/line-cap",
                     "default": 2
-                },
-                "lj": {
-                    "$ref": "#/$defs/constants/line-join"
                 },
                 "ml": {
                     "title": "Miter Limit",

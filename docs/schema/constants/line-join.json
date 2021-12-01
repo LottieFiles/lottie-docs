@@ -4,18 +4,22 @@
     "title": "LineJoin",
     "description": "",
     "default": 2,
-    "oneOf": [
-        {
-            "title": "Miter",
-            "const": 1
-        },
-        {
-            "title": "Round",
-            "const": 2
-        },
-        {
-            "title": "Bevel",
-            "const": 3
+    "properties": {
+        "lj": {
+            "oneOf": [
+                {
+                    "title": "Line Join Miter",
+                    "const": 1
+                },
+                {
+                    "title": "Line Join Round",
+                    "const": 2
+                },
+                {
+                    "title": "Line Join Bevel",
+                    "const": 3
+                }
+            ]
         }
-    ]
+    }
 }

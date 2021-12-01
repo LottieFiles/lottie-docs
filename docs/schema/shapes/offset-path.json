@@ -8,6 +8,9 @@
             "$ref": "#/$defs/shapes/shape-element"
         },
         {
+            "$ref": "#/$defs/constants/line-join"
+        },
+        {
             "type": "object",
             "properties": {
                 "ty": {
@@ -18,9 +21,6 @@
                 "a": {
                     "title": "Amount",
                     "$ref": "#/$defs/animated-properties/value"
-                },
-                "lj": {
-                    "$ref": "#/$defs/constants/line-join"
                 },
                 "ml": {
                     "title": "Miter Limit",
