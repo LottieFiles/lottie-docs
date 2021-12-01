@@ -99,7 +99,7 @@
                     "default": 1
                 },
                 "ip": {
-                    "title": "In Point",
+                    "title": "Layer In Point",
                     "description": "Frame when the layers becomes visible",
                     "type": "number"
                 },

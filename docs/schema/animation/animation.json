@@ -22,7 +22,7 @@
                     "default": "5.5.2"
                 },
                 "ip": {
-                    "title": "In Point",
+                    "title": "Animation In Point",
                     "description": "\"In Point\", which frame the animation starts at (usually 0)",
                     "type": "number",
                     "default": 0
