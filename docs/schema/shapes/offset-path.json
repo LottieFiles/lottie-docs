@@ -20,9 +20,7 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "lj": {
-                    "title": "Line Join",
-                    "$ref": "#/$defs/constants/line-join",
-                    "default": 2
+                    "$ref": "#/$defs/constants/line-join"
                 },
                 "ml": {
                     "title": "Miter Limit",

@@ -3,6 +3,7 @@
     "type": "integer",
     "title": "LineJoin",
     "description": "",
+    "default": 2,
     "oneOf": [
         {
             "title": "Miter",
