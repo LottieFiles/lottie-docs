@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Image",
-    "description": "External image",
+    "title": "Sound",
+    "description": "External sound",
     "allOf": [
         {
             "$ref": "#/$defs/assets/asset"
@@ -10,33 +10,21 @@
         {
             "type": "object",
             "properties": {
-                "w": {
-                    "title": "Width",
-                    "description": "Width of the image",
-                    "type": "number",
-                    "default": 0
-                },
-                "h": {
-                    "title": "Height",
-                    "description": "Height of the image",
-                    "type": "number",
-                    "default": 0
-                },
                 "u": {
                     "title": "Path",
-                    "description": "Path to the directory containing an image",
+                    "description": "Path to the directory containing a sound file",
                     "type": "string",
                     "default": ""
                 },
                 "p": {
                     "title": "File name",
-                    "description": "Image filename or data url",
+                    "description": "Sound filename or data url",
                     "type": "string",
                     "default": ""
                 },
                 "e": {
                     "title": "Embedded",
-                    "description": "Whether the image is embedded",
+                    "description": "Whether the sound is embedded",
                     "$ref": "#/$defs/helpers/int-boolean",
                     "default": 0
                 }
@@ -45,3 +33,4 @@
         }
     ]
 }
+

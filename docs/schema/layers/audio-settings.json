@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Audio Settings",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "lv": {
+                    "title": "Level",
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                }
+            },
+            "required": [
+                "lv"
+            ]
+        }
+    ]
+}
+
+

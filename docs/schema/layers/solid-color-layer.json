@@ -5,7 +5,7 @@
     "description": "Layer with a solid color rectangle",
     "allOf": [
         {
-            "$ref": "#/$defs/layers/layer"
+            "$ref": "#/$defs/layers/visual-layer"
         },
         {
             "type": "object",

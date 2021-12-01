@@ -1,11 +1,11 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Shape Layer",
-    "description": "Layer containing Shapes",
+    "title": "Audio Layer",
+    "description": "A layer playing sounds",
     "allOf": [
         {
-            "$ref": "#/$defs/layers/visual-layer"
+            "$ref": "#/$defs/layers/layer"
         },
         {
             "type": "object",
@@ -14,16 +14,17 @@
                     "title": "Type",
                     "description": "Layer type",
                     "type": "integer",
-                    "const": 4
+                    "const": 6
                 },
-                "shapes": {
-                    "title": "Shapes",
-                    "$ref": "#/$defs/shapes/shape-list"
+                "au": {
+                    "title": "Audio Settings",
+                    "$ref": "#/$defs/layers/audio-settings"
                 }
             },
             "required": [
-                "ty", "shapes"
+                "ty", "au"
             ]
         }
     ]
 }
+

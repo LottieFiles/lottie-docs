@@ -14,7 +14,8 @@
                     {"$ref": "#/$defs/layers/image-layer"},
                     {"$ref": "#/$defs/layers/null-layer"},
                     {"$ref": "#/$defs/layers/shape-layer"},
-                    {"$ref": "#/$defs/layers/text-layer"}
+                    {"$ref": "#/$defs/layers/text-layer"},
+                    {"$ref": "#/$defs/layers/audio-layer"}
                 ]
             }
         }

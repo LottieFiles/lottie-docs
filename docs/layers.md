@@ -12,7 +12,7 @@ There are several layer types, which is specified by the `ty` attribute:
 |`3` |[Null (Empty)](#null-layer)       |No contents, only used for [parenting](#parenting)                                             |
 |`4` |[Shape](#shape-layer)             |Has an [array](concepts.md#lists-of-layers-and-shapes) of [shapes](shapes.md#shape-element)    |
 |`5` |[Text](#text-layer)               |Renders text                                                                                   |
-|`6` |Audio                             |                                                                                               |
+|`6` |[Audio](#audio-layer)             |Plays some audio                                                                               |
 |`7` |Video Placeholder                 |                                                                                               |
 |`8` |Image Sequence                    |                                                                                               |
 |`9` |Video                             |                                                                                               |
@@ -24,8 +24,9 @@ There are several layer types, which is specified by the `ty` attribute:
 
 Each layer type has its own properties but there are several common properties:
 
-{schema_object:layers/layer}
+{schema_object:layers/visual-layer}
 EXPAND:#/$defs/helpers/visual-object
+EXPAND:#/$defs/layers/layer
 ddd:Whether the layer is 3D. Lottie doesn't actually support 3D stuff so this should always be 0
 ty:Layer type, must be one of the values seen above
 ind:Layer index for [parenting](#parenting)
@@ -35,6 +36,8 @@ td:Matte target (see [mattes](#mattes))
 masksProperties:[Masks](#masks) for the layer
 ef:[Effects](effects.md) for the layer
 
+Note that layers that don't have a visual component (Audio layers for example),
+won't have a transform and similar.
 
 The layer is only visible between its `ip` and `op`.
 If they match the corresponding attributes in [Animation](animation.md), the layer
@@ -173,3 +176,13 @@ Anything you can do with solid layers, you can do better with a shape layer
 and a rectangle shape since none of this layer's own properties can be animated.
 
 {schema_object:layers/solid-color-layer}
+
+## Audio Layer
+
+This layer plays a [sound](assets.md#sound).
+
+{schema_object:layers/audio-layer}
+
+## Audio Settings
+
+{schema_object:layers/audio-settings}

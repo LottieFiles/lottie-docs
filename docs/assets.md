@@ -54,6 +54,14 @@ If you want to store the image at `https://example.com/images/image.png`, you'd 
 }
 ```
 
+### Sound
+
+Similar to [Image](#image) but for audio files.
+
+{schema_object:assets/sound}
+EXPAND:#/$defs/assets/asset
+
+
 ### Precomposition
 
 You can think of precompositions as self-contained animation within the main animation file.

@@ -5,7 +5,7 @@
     "description": "",
     "allOf": [
         {
-            "$ref": "#/$defs/layers/layer"
+            "$ref": "#/$defs/layers/visual-layer"
         },
         {
             "type": "object",

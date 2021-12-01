@@ -325,6 +325,8 @@ def ref_links(ref: str, data: SchemaData):
     elif link.group == "animation" and link.cls == "composition":
         link.page = "concepts"
         link.anchor = "lists-of-layers-and-shapes"
+    elif link.group == "layers" and link.cls == "visual-layer":
+        link.anchor = "layer"
 
     return [link]
 
@@ -693,7 +695,10 @@ class SchemaObject(BlockProcessor):
                     prop_dict_base = {}
                     base = match.group(2)
                     self._object_properties(self.schema_data.get_ref(base), prop_dict_base, [])
-                    base_list.remove(base)
+                    try:
+                        base_list.remove(base)
+                    except ValueError:
+                        pass
                     prop_dict_base.update(prop_dict)
                     prop_dict = prop_dict_base
                 elif name == "SKIP":

@@ -102,16 +102,6 @@
                     "type": "number",
                     "default": 1
                 },
-                "ks": {
-                    "title": "Transform",
-                    "description": "Layer transform",
-                    "$ref": "#/$defs/helpers/transform"
-                },
-                "ao": {
-                    "title": "Auto Orient",
-                    "$ref": "#/$defs/helpers/int-boolean",
-                    "default": 0
-                },
                 "ip": {
                     "title": "In Point",
                     "description": "Frame when the layers becomes visible",
@@ -132,50 +122,6 @@
                     "$ref": "#/$defs/constants/blend-mode",
                     "default": 0
                 },
-                "tt": {
-                    "title": "Matte Mode",
-                    "$ref": "#/$defs/constants/matte-mode"
-                },
-                "td": {
-                    "title": "Matte Target",
-                    "type": "integer"
-                },
-                "hasMask": {
-                    "title": "Has Masks",
-                    "description": "Whether the layer has masks applied",
-                    "type": "boolean"
-                },
-                "masksProperties": {
-                    "title": "Masks",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/helpers/mask"
-                    }
-                },
-                "ef": {
-                    "title": "Effects",
-                    "type": "array",
-                    "items": {
-                        "oneOf":  [
-                            {"$ref": "#/$defs/effects/custom-effect"},
-                            {"$ref": "#/$defs/effects/drop-shadow-effect"},
-                            {"$ref": "#/$defs/effects/fill-effect"},
-                            {"$ref": "#/$defs/effects/gaussian-blur-effect"},
-                            {"$ref": "#/$defs/effects/matte3-effect"},
-                            {"$ref": "#/$defs/effects/pro-levels-effect"},
-                            {"$ref": "#/$defs/effects/stroke-effect"},
-                            {"$ref": "#/$defs/effects/tint-effect"},
-                            {"$ref": "#/$defs/effects/tritone-effect"},
-                            {"$ref": "#/$defs/effects/radial-wipe-effect"},
-                            {"$ref": "#/$defs/effects/wavy-effect"},
-                            {"$ref": "#/$defs/effects/puppet-effect"},
-                            {"$ref": "#/$defs/effects/spherize-effect"},
-                            {"$ref": "#/$defs/effects/paint-over-transparent-effect"},
-                            {"$ref": "#/$defs/effects/mesh-warp-effect"},
-                            {"$ref": "#/$defs/effects/displacement-map-effect"}
-                        ]
-                    }
-                },
                 "cl": {
                     "title": "CSS Class",
                     "description": "CSS class used by the SVG renderer",
@@ -185,14 +131,9 @@
                     "title": "Layer XML ID",
                     "description": "`id` attribute used by the SVG renderer",
                     "type": "string"
-                },
-                "mb": {
-                    "title": "Motion Blur",
-                    "description": "Whether motion blur is enabled for the layer",
-                    "type": "boolean"
                 }
             },
-            "required": ["ty", "st", "ip", "op", "ks"]
+            "required": ["ty", "st", "ip", "op"]
         }
     ]
 }
