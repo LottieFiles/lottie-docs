@@ -20,7 +20,7 @@
                     "$ref": "#/$defs/animated-properties/shape-property"
                 },
                 "ind": {
-                    "title": "Index",
+                    "title": "Path Index",
                     "type": "integer"
                 }
             },

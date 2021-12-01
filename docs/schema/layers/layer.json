@@ -85,7 +85,7 @@
                     ]
                 },
                 "ind": {
-                    "title": "Index",
+                    "title": "Layer Index",
                     "type": "integer"
                 },
                 "parent": {

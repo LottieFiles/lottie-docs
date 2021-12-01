@@ -20,7 +20,7 @@
                     "type": "array",
                     "prefixItems": [
                         {
-                            "title": "index",
+                            "title": "Effect Index",
                             "$ref": "#/$defs/effect-values/slider"
                         }
                     ]
