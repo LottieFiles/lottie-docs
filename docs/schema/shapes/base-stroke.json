@@ -23,7 +23,7 @@
                     "default": 0
                 },
                 "o": {
-                    "title": "Opacity",
+                    "title": "Base Stroke Opacity",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "w": {

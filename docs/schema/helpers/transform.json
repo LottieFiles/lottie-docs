@@ -17,7 +17,7 @@
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "o": {
-                    "title": "Opacity",
+                    "title": "Transform Opacity",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "sk": {

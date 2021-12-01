@@ -20,7 +20,7 @@
                     "$ref": "#/$defs/animated-properties/shape-property"
                 },
                 "o": {
-                    "title": "Opacity",
+                    "title": "Mask Opacity",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "mode": {

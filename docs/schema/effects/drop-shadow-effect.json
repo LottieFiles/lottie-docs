@@ -24,7 +24,7 @@
                             "$ref": "#/$defs/effect-values/color"
                         },
                         {
-                            "title": "opacity",
+                            "title": "Drop Shadow Effect Opacity",
                             "description": "Opacity between 0 and 255",
                             "$ref": "#/$defs/effect-values/slider"
                         },

@@ -16,7 +16,7 @@
                     "const": "fl"
                 },
                 "o": {
-                    "title": "Opacity",
+                    "title": "Fill Opacity",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "c": {

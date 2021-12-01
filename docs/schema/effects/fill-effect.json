@@ -44,7 +44,7 @@
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {
-                            "title": "opacity",
+                            "title": "Fill Effect Opacity",
                             "description": "Opacity in [0, 1]",
                             "$ref": "#/$defs/effect-values/slider"
                         }
