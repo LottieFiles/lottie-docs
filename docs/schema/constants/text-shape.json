@@ -5,27 +5,27 @@
     "description": "",
     "oneOf": [
         {
-            "title": "Square",
+            "title": "Text Shape Square",
             "const": 1
         },
         {
-            "title": "Ramp Up",
+            "title": "Text Shape Ramp Up",
             "const": 2
         },
         {
-            "title": "Ramp Down",
+            "title": "Text Shape Ramp Down",
             "const": 3
         },
         {
-            "title": "Triangle",
+            "title": "Text Shape Triangle",
             "const": 4
         },
         {
-            "title": "Round",
+            "title": "Text Shape Round",
             "const": 5
         },
         {
-            "title": "Smooth",
+            "title": "Text Shape Smooth",
             "const": 6
         }
     ]
