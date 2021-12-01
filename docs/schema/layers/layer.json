@@ -104,8 +104,8 @@
                     "type": "number"
                 },
                 "op": {
-                    "title": "Out Point",
-                    "description": "Frame when the Layers becomes invisible",
+                    "title": "Layer Out Point",
+                    "description": "Frame when the layers becomes invisible",
                     "type": "number"
                 },
                 "st": {

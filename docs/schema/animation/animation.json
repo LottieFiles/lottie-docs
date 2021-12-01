@@ -28,7 +28,7 @@
                     "default": 0
                 },
                 "op": {
-                    "title": "Out Point",
+                    "title": "Animation Out Point",
                     "description": "\"Out Point\", which frame the animation stops/loops at, which makes this the duration in frames when `ip` is 0",
                     "type": "number",
                     "default": 60
