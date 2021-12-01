@@ -16,7 +16,7 @@
                     "default": false
                 },
                 "pt": {
-                    "title": "Shape",
+                    "title": "Mask Shape",
                     "$ref": "#/$defs/animated-properties/shape-property"
                 },
                 "o": {

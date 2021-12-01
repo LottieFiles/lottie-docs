@@ -28,7 +28,6 @@
             "$ref": "#/$defs/animated-properties/value"
         },
         "sh": {
-            "title": "Shape",
             "$ref": "#/$defs/constants/text-shape"
         },
         "o": {
