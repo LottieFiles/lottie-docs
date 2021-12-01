@@ -5,15 +5,15 @@
     "description": "",
     "oneOf": [
         {
-            "title": "Butt",
+            "title": "Line Cap Butt",
             "const": 1
         },
         {
-            "title": "Round",
+            "title": "Line Cap Round",
             "const": 2
         },
         {
-            "title": "Square",
+            "title": "Line Cap Square",
             "const": 3
         }
     ]
