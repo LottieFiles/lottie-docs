@@ -21,67 +21,67 @@
                     "oneOf": [
                         {
                             "const": "rc",
-                            "title": "Const Type Rectangle"
+                            "title": "Shape Element Type Rectangle"
                         },
                         {
                             "const": "el",
-                            "title": "Const Type Ellipse"
+                            "title": "Shape Element Type Ellipse"
                         },
                         {
                             "const": "sr",
-                            "title": "Const Type Polygon Or Star"
+                            "title": "Shape Element Type Polygon Or Star"
                         },
                         {
                             "const": "sh",
-                            "title": "Const Type Path"
+                            "title": "Shape Element Type Path"
                         },
                         {
                             "const": "fl",
-                            "title": "Const Type Fill"
+                            "title": "Shape Element Type Fill"
                         },
                         {
                             "const": "st",
-                            "title": "Const Type Stroke"
+                            "title": "Shape Element Type Stroke"
                         },
                         {
                             "const": "gf",
-                            "title": "Const Type Gradient fill"
+                            "title": "Shape Element Type Gradient fill"
                         },
                         {
                             "const": "gs",
-                            "title": "Const Type Gradient stroke"
+                            "title": "Shape Element Type Gradient stroke"
                         },
                         {
                             "const": "gr",
-                            "title": "Const Type Group"
+                            "title": "Shape Element Type Group"
                         },
                         {
                             "const": "tr",
-                            "title": "Const Type Transform"
+                            "title": "Shape Element Type Transform"
                         },
                         {
                             "const": "rd",
-                            "title": "Const Type Rounded corners"
+                            "title": "Shape Element Type Rounded corners"
                         },
                         {
                             "const": "pb",
-                            "title": "Const Type Pucker or Bloat"
+                            "title": "Shape Element Type Pucker or Bloat"
                         },
                         {
                             "const": "mm",
-                            "title": "Const Type Merge"
+                            "title": "Shape Element Type Merge"
                         },
                         {
                             "const": "tw",
-                            "title": "Const Type Twist"
+                            "title": "Shape Element Type Twist"
                         },
                         {
                             "const": "op",
-                            "title": "Const Type Offset Path"
+                            "title": "Shape Element Type Offset Path"
                         },
                         {
                             "const": "zz",
-                            "title": "Cosnt Type Zig zag"
+                            "title": "Shape Element Type Zig zag"
                         }
                     ]
                 },
