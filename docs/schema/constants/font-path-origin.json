@@ -1,23 +1,22 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "FontPathOrigin",
-    "description": "",
+    "title": "Font Path Origin",
     "oneOf": [
         {
-            "title": "Local",
+            "title": "Font Path Origin Local",
             "const": 0
         },
         {
-            "title": "Css Url",
+            "title": "Font Path Origin Css Url",
             "const": 1
         },
         {
-            "title": "Script Url",
+            "title": "Font Path Origin Script Url",
             "const": 2
         },
         {
-            "title": "Font Url",
+            "title": "Font Path Origin Font Url",
             "const": 3
         }
     ]
