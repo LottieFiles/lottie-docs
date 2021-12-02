@@ -24,63 +24,63 @@
                     "oneOf": [
                         {
                             "const": 0,
-                            "title": "Precomposition Layer"
+                            "title": "Precomposition Layer Type"
                         },
                         {
                             "const": 1,
-                            "title": "Solid color Layer"
+                            "title": "Solid color Layer Type"
                         },
                         {
                             "const": 2,
-                            "title": "Image Layer"
+                            "title": "Image Layer Type"
                         },
                         {
                             "const": 3,
-                            "title": "Null Layer"
+                            "title": "Null Layer Type"
                         },
                         {
                             "const": 4,
-                            "title": "Shape Layer"
+                            "title": "Shape Layer Type"
                         },
                         {
                             "const": 5,
-                            "title": "Text Layer"
+                            "title": "Text Layer Type"
                         },
                         {
                             "const": 6,
-                            "title": "Audio Layer"
+                            "title": "Audio Layer Type"
                         },
                         {
                             "const": 7,
-                            "title": "Video Placeholder Layer"
+                            "title": "Video Placeholder Layer Type"
                         },
                         {
                             "const": 8,
-                            "title": "Image Sequence Layer"
+                            "title": "Image Sequence Layer Type"
                         },
                         {
                             "const": 9,
-                            "title": "Video Layer"
+                            "title": "Video Layer Type"
                         },
                         {
                             "const": 10,
-                            "title": "Image Placeholder Layer"
+                            "title": "Image Placeholder Layer Type"
                         },
                         {
                             "const": 11,
-                            "title": "Guide Layer"
+                            "title": "Guide Layer Type"
                         },
                         {
                             "const": 12,
-                            "title": "Adjustment Layer"
+                            "title": "Adjustment Layer Type"
                         },
                         {
                             "const": 13,
-                            "title": "Camera Layer"
+                            "title": "Camera Layer Type"
                         },
                         {
                             "const": 14,
-                            "title": "Light Layer"
+                            "title": "Light Layer Type"
                         }
                     ]
                 },
