@@ -2,7 +2,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Layer",
-    "description": "",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"
@@ -16,7 +15,7 @@
                     "const": 5
                 },
                 "t": {
-                    "title": "Data",
+                    "title": "Text Layer Data",
                     "$ref": "#/$defs/text/text-animator-data"
                 }
             },
