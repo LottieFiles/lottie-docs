@@ -1,15 +1,14 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "TrimMultipleShapes",
-    "description": "",
+    "title": "Trim Multiple Shapes",
     "oneOf": [
         {
-            "title": "Individually",
+            "title": "Trim Multiple Shapes Individually",
             "const": 1
         },
         {
-            "title": "Simultaneously",
+            "title": "Trim Multiple Shapes Simultaneously",
             "const": 2
         }
     ]
