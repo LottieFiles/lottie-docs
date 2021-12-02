@@ -5,11 +5,11 @@
     "description": "",
     "properties": {
         "s": {
-            "title": "Start",
+            "title": "Text Data Keyframe Start",
             "$ref": "#/$defs/text/text-document"
         },
         "t": {
-            "title": "Time",
+            "title": "Text Data Keyframe Time",
             "type": "number",
             "default": 0
         }
