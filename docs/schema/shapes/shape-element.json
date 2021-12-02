@@ -16,72 +16,72 @@
                     "type": "boolean"
                 },
                 "ty": {
-                    "title": "Shape Element Type",
+                    "title": "Shape Type",
                     "type": "string",
                     "oneOf": [
                         {
                             "const": "rc",
-                            "title": "Shape Element Type Rectangle"
+                            "title": "Shape Type Rectangle"
                         },
                         {
                             "const": "el",
-                            "title": "Shape Element Type Ellipse"
+                            "title": "Shape Type Ellipse"
                         },
                         {
                             "const": "sr",
-                            "title": "Shape Element Type Polygon Or Star"
+                            "title": "Shape Type Polygon Or Star"
                         },
                         {
                             "const": "sh",
-                            "title": "Shape Element Type Path"
+                            "title": "Shape Type Path"
                         },
                         {
                             "const": "fl",
-                            "title": "Shape Element Type Fill"
+                            "title": "Shape Type Fill"
                         },
                         {
                             "const": "st",
-                            "title": "Shape Element Type Stroke"
+                            "title": "Shape Type Stroke"
                         },
                         {
                             "const": "gf",
-                            "title": "Shape Element Type Gradient fill"
+                            "title": "Shape Type Gradient fill"
                         },
                         {
                             "const": "gs",
-                            "title": "Shape Element Type Gradient stroke"
+                            "title": "Shape Type Gradient stroke"
                         },
                         {
                             "const": "gr",
-                            "title": "Shape Element Type Group"
+                            "title": "Shape Type Group"
                         },
                         {
                             "const": "tr",
-                            "title": "Shape Element Type Transform"
+                            "title": "Shape Type Transform"
                         },
                         {
                             "const": "rd",
-                            "title": "Shape Element Type Rounded corners"
+                            "title": "Shape Type Rounded corners"
                         },
                         {
                             "const": "pb",
-                            "title": "Shape Element Type Pucker or Bloat"
+                            "title": "Shape Type Pucker or Bloat"
                         },
                         {
                             "const": "mm",
-                            "title": "Shape Element Type Merge"
+                            "title": "Shape Type Merge"
                         },
                         {
                             "const": "tw",
-                            "title": "Shape Element Type Twist"
+                            "title": "Shape Type Twist"
                         },
                         {
                             "const": "op",
-                            "title": "Shape Element Type Offset Path"
+                            "title": "Shape Type Offset Path"
                         },
                         {
                             "const": "zz",
-                            "title": "Shape Element Type Zig zag"
+                            "title": "Shape Type Zig zag"
                         }
                     ]
                 },
@@ -90,7 +90,7 @@
                     "$ref": "#/$defs/constants/blend-mode"
                 },
                 "cix": {
-                    "title": "Property index",
+                    "title": "Shape Property Index",
                     "description": "Index used in expressions",
                     "type": "integer"
                 }
