@@ -1,27 +1,26 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "MatteMode",
-    "description": "",
+    "title": "Matte Mode",
     "oneOf": [
         {
             "title": "Matte Mode Normal",
             "const": 0
         },
         {
-            "title": "Alpha",
+            "title": "Matte Mode Alpha",
             "const": 1
         },
         {
-            "title": "Inverted Alpha",
+            "title": "Matte Mode Inverted Alpha",
             "const": 2
         },
         {
-            "title": "Luma",
+            "title": "Matte Mode Luma",
             "const": 3
         },
         {
-            "title": "Inverted Luma",
+            "title": "Matte Mode Inverted Luma",
             "const": 4
         }
     ]
