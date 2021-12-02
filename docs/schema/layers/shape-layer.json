@@ -16,7 +16,6 @@
                     "const": 4
                 },
                 "shapes": {
-                    "title": "Shapes",
                     "$ref": "#/$defs/shapes/shape-list"
                 }
             },

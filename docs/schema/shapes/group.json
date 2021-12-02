@@ -20,7 +20,6 @@
                     "type": "number"
                 },
                 "it": {
-                    "title": "Shapes",
                     "$ref": "#/$defs/shapes/shape-list"
                 }
             },

@@ -34,7 +34,7 @@
             "type": "object",
             "properties": {
                 "shapes": {
-                    "title": "Shapes",
+                    "title": "Chars Shapes",
                     "description": "Shapes forming the character",
                     "$ref": "#/$defs/shapes/shape-list"
                 }
