@@ -2,21 +2,18 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text More Options",
-    "description": "",
     "allOf": [
         {
             "type": "object",
             "properties": {
                 "a": {
-                    "title": "Alignment",
+                    "title": "Text More Options Alignment",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "g": {
-                    "title": "Grouping",
                     "$ref": "#/$defs/constants/text-grouping"
                 }
-            },
-            "required": []
+            }
         }
     ]
 }
