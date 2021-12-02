@@ -5,11 +5,11 @@
     "description": "",
     "oneOf": [
         {
-            "title": "Above",
+            "title": "Composite Above",
             "const": 1
         },
         {
-            "title": "Below",
+            "title": "Composite Below",
             "const": 2
         }
     ]
