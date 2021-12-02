@@ -5,11 +5,11 @@
     "description": "",
     "oneOf": [
         {
-            "title": "Non Zero",
+            "title": "Fill Rule Non Zero",
             "const": 1
         },
         {
-            "title": "Even Odd",
+            "title": "Fill Rule Even Odd",
             "const": 2
         }
     ]
