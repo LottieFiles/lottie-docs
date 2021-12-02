@@ -11,9 +11,6 @@
             "$ref": "#/$defs/helpers/property-index"
         },
         {
-            "$ref": "#/$defs/helpers/property-index"
-        },
-        {
             "if": {
                 "properties": {
                     "a": { "const": 1  }
