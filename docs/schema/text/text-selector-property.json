@@ -4,7 +4,7 @@
     "title": "Text Selector Property",
     "properties": {
         "t": {
-            "title": "Start Time",
+            "title": "Text Selector Start Time",
             "type": "number"
         },
         "xe": {

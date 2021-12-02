@@ -109,7 +109,7 @@
                     "type": "number"
                 },
                 "st": {
-                    "title": "Start Time",
+                    "title": "Layer Start Time",
                     "type": "number",
                     "default": 0
                 },
