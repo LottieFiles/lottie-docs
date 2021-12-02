@@ -2,13 +2,12 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Animator Data",
-    "description": "",
     "allOf": [
         {
             "type": "object",
             "properties": {
                 "a": {
-                    "title": "Properties",
+                    "title": "Text Animator Data Properties",
                     "type": "array",
                     "items": {
                         "oneOf": [
@@ -18,19 +17,15 @@
                     }
                 },
                 "d": {
-                    "title": "Data",
                     "$ref": "#/$defs/text/text-data"
                 },
                 "m": {
-                    "title": "More Options",
                     "$ref": "#/$defs/text/text-more-options"
                 },
                 "p": {
-                    "title": "Masked Path",
                     "$ref": "#/$defs/text/masked-path"
                 }
-            },
-            "required": []
+            }
         }
     ]
 }
