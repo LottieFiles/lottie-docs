@@ -9,15 +9,15 @@
             "const": 0
         },
         {
-            "title": "Multiply",
+            "title": "Blend Mode Multiply",
             "const": 1
         },
         {
-            "title": "Screen",
+            "title": "Blend Mode Screen",
             "const": 2
         },
         {
-            "title": "Overlay",
+            "title": "Blend Mode Overlay",
             "const": 3
         },
         {
@@ -29,19 +29,19 @@
             "const": 5
         },
         {
-            "title": "Color Dodge",
+            "title": "Blend Mode Color Dodge",
             "const": 6
         },
         {
-            "title": "Color Burn",
+            "title": "Blend Mode Color Burn",
             "const": 7
         },
         {
-            "title": "Hard Light",
+            "title": "Blend Mode Hard Light",
             "const": 8
         },
         {
-            "title": "Soft Light",
+            "title": "Blend Mode Soft Light",
             "const": 9
         },
         {
@@ -49,15 +49,15 @@
             "const": 10
         },
         {
-            "title": "Exclusion",
+            "title": "Blend Mode Exclusion",
             "const": 11
         },
         {
-            "title": "Hue",
+            "title": "Blend Mode Hue",
             "const": 12
         },
         {
-            "title": "Saturation",
+            "title": "Blend Mode Saturation",
             "const": 13
         },
         {
@@ -65,7 +65,7 @@
             "const": 14
         },
         {
-            "title": "Luminosity",
+            "title": "Blend Mode Luminosity",
             "const": 15
         }
     ]
