@@ -10,22 +10,22 @@
             "default": ""
         },
         "fFamily": {
-            "title": "Font Family",
+            "title": "Chars Font Family",
             "type": "string",
             "default": ""
         },
         "size": {
-            "title": "Font Size",
+            "title": "Chars Font Size",
             "type": "number",
             "default": 0
         },
         "style": {
-            "title": "Font Style",
+            "title": "Chars Font Style",
             "type": "string",
             "default": ""
         },
         "w": {
-            "title": "Font Width",
+            "title": "Chars Font Width",
             "type": "number",
             "default": 0
         },

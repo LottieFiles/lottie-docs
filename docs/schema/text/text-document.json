@@ -5,12 +5,12 @@
     "description": "Note that for multi-line text, lines are separated by \\r",
     "properties": {
         "f": {
-            "title": "Font Family",
+            "title": "Text Document Font Family",
             "type": "string",
             "default": ""
         },
         "fc": {
-            "title": "Font Color",
+            "title": "Text Document Font Color",
             "$ref": "#/$defs/helpers/color",
             "default": [
                 0,
@@ -19,17 +19,17 @@
             ]
         },
         "s": {
-            "title": "Font Size",
+            "title": "Text Document Font Size",
             "type": "number",
             "default": 10
         },
         "lh": {
-            "title": "Line Height",
+            "title": "Text Document Line Height",
             "description": "Line height when wrapping",
             "type": "number"
         },
         "sz": {
-            "title": "Wrap Size",
+            "title": "Text Document Wrap Size",
             "description": "Size of the box containing the text",
             "type": "array",
             "items": {
@@ -37,21 +37,21 @@
             }
         },
         "t": {
-            "title": "Text",
+            "title": "Text Document Text",
             "type": "string",
             "default": ""
         },
         "j": {
-            "title": "Justify",
+            "title": "Text Document Justify",
             "$ref": "#/$defs/constants/text-justify",
             "default": 0
         },
         "ca": {
-            "title": "Text Caps",
+            "title": "Text Document Text Caps",
             "$ref": "#/$defs/constants/text-caps"
         },
         "tr": {
-            "title": "Tracking",
+            "title": "Text Document Tracking",
             "description": "Text Tracking",
             "type": "number"
         }

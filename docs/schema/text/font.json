@@ -33,16 +33,15 @@
                     "type": "string"
                 },
                 "fWeight": {
-                    "title": "Weight",
+                    "title": "Font Weight",
                     "type": "string"
                 },
                 "origin": {
-                    "title": "Origin",
                     "$ref": "#/$defs/constants/font-path-origin"
                 },
                 "fClass": {
                     "type": "string",
-                    "title": "CSS Class",
+                    "title": "Font CSS Class",
                     "description": "CSS Class applied to text objects using this font"
                 }
             },
