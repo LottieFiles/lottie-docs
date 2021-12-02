@@ -65,7 +65,7 @@
                     "$ref": "#/$defs/text/font-list"
                 },
                 "chars": {
-                    "title": "Chars",
+                    "title": "Animation Chars Data",
                     "description": "Data defining text characters as lottie shapes",
                     "type": "array",
                     "items": {
