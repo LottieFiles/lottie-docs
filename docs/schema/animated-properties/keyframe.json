@@ -7,12 +7,12 @@
         {
             "properties": {
                 "t": {
-                    "title": "Time",
+                    "title": "Keyframe Time",
                     "type": "number",
                     "default": 0
                 },
                 "h": {
-                    "title": "Hold",
+                    "title": "Keyframe Hold",
                     "$ref": "#/$defs/helpers/int-boolean",
                     "default": 0
                 },
