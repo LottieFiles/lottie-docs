@@ -1,8 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "ShapeDirection",
-    "description": "",
+    "title": "Shape Direction",
     "oneOf": [
         {
             "title": "Shape Direction Normal",
@@ -10,7 +9,7 @@
             "const": 1
         },
         {
-            "title": "Reversed",
+            "title": "Shape Direction Reversed",
             "description": "Usually counter clockwise",
             "const": 3
         }
