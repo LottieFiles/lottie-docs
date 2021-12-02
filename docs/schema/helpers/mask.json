@@ -24,9 +24,7 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "mode": {
-                    "title": "Mode",
-                    "$ref": "#/$defs/constants/mask-mode",
-                    "default": "i"
+                    "$ref": "#/$defs/constants/mask-mode"
                 },
                 "x": {
                     "title": "Dilate",

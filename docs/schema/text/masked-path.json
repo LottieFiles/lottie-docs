@@ -8,23 +8,22 @@
             "type": "object",
             "properties": {
                 "m": {
-                    "title": "Mask",
+                    "title": "Masked Path Mask",
                     "type": "number"
                 },
                 "f": {
-                    "title": "F",
+                    "title": "Masked Path F",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "l": {
-                    "title": "L",
+                    "title": "Masked Path L",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "r": {
-                    "title": "R",
+                    "title": "Masked Path R",
                     "type": "number"
                 }
-            },
-            "required": []
+            }
         }
     ]
 }
