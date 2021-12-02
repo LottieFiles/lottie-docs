@@ -5,15 +5,15 @@
     "description": "Defines named portions of the composition.",
     "properties": {
         "cm": {
-            "title": "Comment",
+            "title": "Marker Comment",
             "type": "string"
         },
         "tm": {
-            "title": "Time",
+            "title": "Marker Time",
             "type": "number"
         },
         "dr": {
-            "title": "Duration",
+            "title": "Marker Duration",
             "type": "number"
         }
     }
