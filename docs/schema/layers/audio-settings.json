@@ -8,7 +8,7 @@
             "type": "object",
             "properties": {
                 "lv": {
-                    "title": "Level",
+                    "title": "Audio Settings Level",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             },
