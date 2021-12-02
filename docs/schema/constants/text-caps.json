@@ -1,18 +1,18 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "TextCaps",
+    "title": "Text Caps",
     "oneOf": [
         {
-            "title": "Regular",
+            "title": "Text Caps Regular",
             "const": 0
         },
         {
-            "title": "All Caps",
+            "title": "Text Caps All",
             "const": 1
         },
         {
-            "title": "Small Caps",
+            "title": "Text Caps Small",
             "const": 2
         }
     ],
