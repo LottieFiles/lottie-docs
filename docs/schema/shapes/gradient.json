@@ -27,7 +27,6 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "g": {
-                    "title": "Colors",
                     "$ref": "#/$defs/animated-properties/gradient-colors"
                 }
             },

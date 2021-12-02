@@ -6,7 +6,7 @@
 
     "properties": {
         "k": {
-            "title": "Colors",
+            "title": "Gradient Colors Multi Dimensional",
             "$ref": "#/$defs/animated-properties/multi-dimensional"
         },
         "p": {
