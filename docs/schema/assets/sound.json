@@ -11,19 +11,19 @@
             "type": "object",
             "properties": {
                 "u": {
-                    "title": "Path",
+                    "title": "Sound Path",
                     "description": "Path to the directory containing a sound file",
                     "type": "string",
                     "default": ""
                 },
                 "p": {
-                    "title": "File name",
+                    "title": "Sound File name",
                     "description": "Sound filename or data url",
                     "type": "string",
                     "default": ""
                 },
                 "e": {
-                    "title": "Embedded",
+                    "title": "Sound Embedded",
                     "description": "Whether the sound is embedded",
                     "$ref": "#/$defs/helpers/int-boolean",
                     "default": 0
