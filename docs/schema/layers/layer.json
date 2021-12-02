@@ -119,7 +119,7 @@
                     "default": 0
                 },
                 "cl": {
-                    "title": "CSS Class",
+                    "title": "Layer CSS Class",
                     "description": "CSS class used by the SVG renderer",
                     "type": "string"
                 },
