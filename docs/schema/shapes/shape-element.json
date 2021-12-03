@@ -20,68 +20,52 @@
                     "type": "string",
                     "oneOf": [
                         {
-                            "const": "rc",
-                            "title": "Shape Type Rectangle"
+                            "$ref": "#/$defs/constants/rectangle-type"
                         },
                         {
-                            "const": "el",
-                            "title": "Shape Type Ellipse"
+                            "$ref": "#/$defs/constants/ellipse-type"
                         },
                         {
-                            "const": "sr",
-                            "title": "Shape Type Polygon Or Star"
+                            "$ref": "#/$defs/constants/polystar-type"
                         },
                         {
-                            "const": "sh",
-                            "title": "Shape Type Path"
+                            "$ref": "#/$defs/constants/path-type"
                         },
                         {
-                            "const": "fl",
-                            "title": "Shape Type Fill"
+                            "$ref": "#/$defs/constants/fill-type"
                         },
                         {
-                            "const": "st",
-                            "title": "Shape Type Stroke"
+                            "$ref": "#/$defs/constants/stroke-type"
                         },
                         {
-                            "const": "gf",
-                            "title": "Shape Type Gradient fill"
+                            "$ref": "#/$defs/constants/gradient-fill-type"
                         },
                         {
-                            "const": "gs",
-                            "title": "Shape Type Gradient stroke"
+                            "$ref": "#/$defs/constants/gradient-stroke-type"
                         },
                         {
-                            "const": "gr",
-                            "title": "Shape Type Group"
+                            "$ref": "#/$defs/constants/group-type"
                         },
                         {
-                            "const": "tr",
-                            "title": "Shape Type Transform"
+                            "$ref": "#/$defs/constants/transform-type"
                         },
                         {
-                            "const": "rd",
-                            "title": "Shape Type Rounded corners"
+                            "$ref": "#/$defs/constants/rounded-corners-type"
                         },
                         {
-                            "const": "pb",
-                            "title": "Shape Type Pucker or Bloat"
+                            "$ref": "#/$defs/constants/pucker-bloat-type"
                         },
                         {
-                            "const": "mm",
-                            "title": "Shape Type Merge"
+                            "$ref": "#/$defs/constants/merge-type"
                         },
                         {
-                            "const": "tw",
-                            "title": "Shape Type Twist"
+                            "$ref": "#/$defs/constants/twist-type"
                         },
                         {
-                            "const": "op",
-                            "title": "Shape Type Offset Path"
+                            "$ref": "#/$defs/constants/offset-path-type"
                         },
                         {
-                            "const": "zz",
-                            "title": "Shape Type Zig zag"
+                            "$ref": "#/$defs/constants/zig-zag-type"
                         }
                     ]
                 },

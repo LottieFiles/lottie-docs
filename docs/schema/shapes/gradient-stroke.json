@@ -16,9 +16,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Gradient Stroke Type",
-                    "type": "string",
-                    "const": "gs"
+                    "$ref": "#/$defs/constants/gradient-stroke-type"
                 }
             },
             "required": [

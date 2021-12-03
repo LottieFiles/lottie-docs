@@ -14,9 +14,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Stroke Type",
-                    "type": "string",
-                    "const": "st"
+                    "$ref": "#/$defs/constants/stroke-type"
                 },
                 "c": {
                     "title": "Shape Stroke Color",

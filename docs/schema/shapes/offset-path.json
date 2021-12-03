@@ -14,9 +14,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Offset Type",
-                    "type": "string",
-                    "const": "op"
+                    "$ref": "#/$defs/constants/offset-path-type"
                 },
                 "a": {
                     "title": "Amount",

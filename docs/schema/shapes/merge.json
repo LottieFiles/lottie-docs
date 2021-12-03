@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Merge Type",
-                    "type": "string",
-                    "const": "mm"
+                    "$ref": "#/$defs/constants/merge-type"
                 },
                 "mm": {
                     "title": "Merge Mode",

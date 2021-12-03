@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Pucker Bloat Type",
-                    "type": "string",
-                    "const": "pb"
+                    "$ref": "#/$defs/constants/pucker-bloat-type"
                 },
                 "a": {
                     "title": "Amount",

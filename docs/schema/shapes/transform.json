@@ -14,9 +14,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Transform Type",
-                    "type": "string",
-                    "const": "tr"
+                    "$ref": "#/$defs/constants/transform-type"
                 }
             },
             "required": [

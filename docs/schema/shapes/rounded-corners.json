@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Rounded Corners Type",
-                    "type": "string",
-                    "const": "rd"
+                    "$ref": "#/$defs/constants/rounded-corners-type"
                 },
                 "r": {
                     "title": "Radius",

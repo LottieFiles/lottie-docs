@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Zig Zags Type",
-                    "type": "string",
-                    "const": "zz"
+                    "$ref": "#/$defs/constants/zig-zag-type"
                 },
                 "r": {
                     "title": "Roundness",

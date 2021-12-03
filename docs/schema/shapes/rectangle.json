@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Rectangle Type",
-                    "type": "string",
-                    "const": "rc"
+                    "$ref": "#/$defs/constants/rectangle-type"
                 },
                 "p": {
                     "title": "Rectangle Position",

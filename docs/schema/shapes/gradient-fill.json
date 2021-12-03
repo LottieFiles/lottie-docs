@@ -13,9 +13,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Gradient Fill Type",
-                    "type": "string",
-                    "const": "gf"
+                    "$ref": "#/$defs/constants/gradient-fill-type"
                 },
                 "o": {
                     "title": "Gradient Fill Opacity",

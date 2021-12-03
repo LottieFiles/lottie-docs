@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "PolyStar Type",
-                    "type": "string",
-                    "const": "sr"
+                    "$ref": "#/$defs/constants/polystar-type"
                 },
                 "p": {
                     "$ref": "#/$defs/animated-properties/position"

@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Fill Type",
-                    "type": "string",
-                    "const": "fl"
+                    "$ref": "#/$defs/constants/fill-type"
                 },
                 "o": {
                     "title": "Fill Opacity",

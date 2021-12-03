@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Ellipse Type",
-                    "type": "string",
-                    "const": "el"
+                    "$ref": "#/$defs/constants/ellipse-type"
                 },
                 "p": {
                     "$ref": "#/$defs/animated-properties/position"

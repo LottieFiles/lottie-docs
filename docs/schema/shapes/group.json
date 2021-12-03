@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Group Type",
-                    "type": "string",
-                    "const": "gr"
+                    "$ref": "#/$defs/constants/group-type"
                 },
                 "np": {
                     "title": "Number Of Properties",

@@ -11,9 +11,7 @@
             "type": "object",
             "properties": {
                 "ty": {
-                    "title": "Path Type",
-                    "type": "string",
-                    "const": "sh"
+                    "$ref": "#/$defs/constants/path-type"
                 },
                 "ks": {
                     "title": "Path Shape",
