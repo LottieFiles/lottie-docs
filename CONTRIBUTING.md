@@ -13,6 +13,10 @@ It can be merged into a single file using
 If you need to make changes to the schema, edit the individual files then
 run the merge script to get the final one.
 
+Please use unique naming for `title` property because it's important for auto-generating-type tools.
+For example, if you need to auto-convert JSON-Schema into Typescript (TS), the `title` naming will be
+utilized for Interface and Type.
+
 Some places in the documentation pull information from the unified schema file
 so you will only see them if you merge the files.
 
