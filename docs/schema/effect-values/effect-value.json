@@ -14,16 +14,11 @@
                     "title": "Effect Index",
                     "type": "integer"
                 },
-                "mn": {
-                    "title": "Match Name",
-                    "type": "string"
-                },
                 "ty": {
                     "title": "Type",
                     "type": "integer"
                 }
-            },
-            "required": []
+            }
         }
     ]
 }
