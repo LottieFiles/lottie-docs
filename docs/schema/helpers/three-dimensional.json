@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "Threedimensional",
+    "title": "Three Dimensional",
     "description": "Whether the layer is three dimensional",
     "type": "object",
     "properties": {
