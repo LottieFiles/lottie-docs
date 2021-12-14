@@ -27,7 +27,7 @@ Each layer type has its own properties but there are several common properties:
 {schema_object:layers/visual-layer}
 EXPAND:#/$defs/helpers/visual-object
 EXPAND:#/$defs/layers/layer
-ddd:Whether the layer is 3D. Lottie doesn't actually support 3D stuff so this should always be 0
+EXPAND:#/$defs/helpers/three-dimensional
 ty:Layer type, must be one of the values seen above
 ind:Layer index for [parenting](#parenting)
 parent:Parent index for [parenting](#parenting)

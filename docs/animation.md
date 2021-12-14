@@ -9,10 +9,10 @@ Most of the contents are in [`layers`](layers.md) and [`assets`](assets.md).
 {schema_object:animation/animation}
 EXPAND:#/$defs/animation/composition
 EXPAND:#/$defs/helpers/visual-object
+EXPAND:#/$defs/helpers/three-dimensional
 assets: An array of [assets](assets.md)
 layers: An array of [layers](layers.md) (See: [Lists of layers and shapes](concepts.md#lists-of-layers-and-shapes))
 v: Lottie version, on very old versions some things might be slightly different from what is explained here
-ddd: Whether the animation has 3D layers. Lottie doesn't actually support 3D stuff so this should always be 0
 
 ## Metadata
 

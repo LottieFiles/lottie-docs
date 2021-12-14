@@ -1,10 +1,10 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "description": "Whether the layer is three dimensional",
     "type": "object",
     "properties": {
         "ddd": {
             "title": "Three Dimensional",
+            "description": "Whether the animation has 3D layers. Lottie doesn't actually support 3D stuff so this should always be 0",
             "default": 0,
             "$ref": "#/$defs/helpers/int-boolean"
         }
