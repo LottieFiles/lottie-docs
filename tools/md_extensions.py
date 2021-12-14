@@ -308,6 +308,8 @@ def ref_links(ref: str, data: SchemaData):
             return []
         elif link.cls == "marker":
             link.page = "animation"
+        elif link.cls == "three-dimensional":
+            link.anchor = "booleans"
 
     elif link.group == "effect-values":
         link.page = "effects"
