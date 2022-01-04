@@ -82,6 +82,14 @@
                         {
                             "const": "zz",
                             "title": "Zig zag"
+                        },
+                        {
+                            "const": "rp",
+                            "title": "Repeater"
+                        },
+                        {
+                            "const": "tm",
+                            "title": "Trim"
                         }
                     ]
                 },
