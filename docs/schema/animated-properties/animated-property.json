@@ -5,14 +5,17 @@
     "description": "An animatable property that holds an array of numbers",
     "allOf": [
         {
-            "$ref": "#/$defs/animated-properties/animated"
-        },
-        {
 
             "properties": {
                 "ix": {
                     "title": "Property Index",
                     "type": "integer"
+                },
+                "a": {
+                    "title": "Animated",
+                    "description": "Whether the property is animated",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 0
                 },
                 "x": {
                     "title": "Expression",
