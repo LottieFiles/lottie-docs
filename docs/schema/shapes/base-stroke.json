@@ -22,6 +22,11 @@
                     "type": "number",
                     "default": 0
                 },
+                "ml2": {
+                    "title": "Miter Limit",
+                    "description": "Animatable alternative to ml",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
                 "o": {
                     "title": "Opacity",
                     "$ref": "#/$defs/animated-properties/value"
