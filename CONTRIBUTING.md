@@ -18,6 +18,8 @@ so you will only see them if you merge the files.
 
 Making changes to the merged file is not recommended as it will be overwritten by the script.
 
+Try to keep a single "object" in a single file.
+
 You can also check for errors in the schema with
 
     make validate
