@@ -166,8 +166,8 @@ function polystar(
     let angle_radians = r / 180 * PI
 
     // Tangents for rounded courners
-    let tangent_len_outer = os * ir * 2 * PI / (pt * 4)
-    let tangent_len_inner = is * ir * 2 * PI / (pt * 4)
+    let tangent_len_outer = os * ir * 2 * PI / (pt * 4 * 100)
+    let tangent_len_inner = is * ir * 2 * PI / (pt * 4 * 100)
 
     for i in 0 ... pt-1
         let main_angle = -PI / 2 + angle_radians + i * half_angle * 2
