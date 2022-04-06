@@ -44,13 +44,18 @@ $bm_rt = 60;
 ```
 
 {lottie_playground:image.json:512:512}
-Rotation Expression:expression:layers[0].ks.r.x
+Rotation Expression:<textarea>
 var $bm_rt = 60;
-:end:
-Position Expression:expression:layers[0].ks.p.x
+</textarea>
+Position Expression:<textarea>
 var $bm_rt = [256, 256];
-:end:
-:json:layers[0].ks.r
+</textarea>
+<json>lottie.layers[0].ks</json>
+<script>
+lottie.layers[0].ks.r.x = data["Rotation Expression"];
+lottie.layers[0].ks.p.x = data["Position Expression"];
+</script>
+
 
 
 ### `time`
@@ -62,11 +67,15 @@ type: number
 description: The current time within the composition in seconds
 notes: Read only
 
+
 {lottie_playground:image.json:512:512}
-Rotation Expression:expression:layers[0].ks.r.x
+Rotation Expression:<textarea>
 var $bm_rt = time * 360;
-:end:
-:json:layers[0].ks.r
+</textarea>
+<json>lottie.layers[0].ks.r</json>
+<script>
+lottie.layers[0].ks.r.x = data["Rotation Expression"];
+</script>
 
 
 ### `value`
@@ -77,14 +86,17 @@ type: Depends on the property
 description: The value the property would have without expressions
 notes: Read only
 
-
 {lottie_playground:image.json:512:512}
-Position Expression:expression:layers[0].ks.p.x
+Position Expression:<textarea>
 var $bm_rt = [];
 $bm_rt[0] = value[0] + Math.cos(2 * Math.PI * time) * 100;
 $bm_rt[1] = value[1];
-:end:
-:json:layers[0].ks.p
+</textarea>
+<json>lottie.layers[0].ks.p</json>
+<script>
+lottie.layers[0].ks.p.x = data["Position Expression"];
+</script>
+
 
 ### `thisProperty`
 
@@ -498,13 +510,16 @@ return: Depends on the property :
 Composition object
 
 {lottie_playground:image_animated.json:512:512}
-Position Expression:expression:layers[0].ks.p.x
+Position Expression:<textarea>
 var $bm_rt = [256, 256]
 var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.PI;
 $bm_rt[0] += Math.cos(rotation) * 200;
 $bm_rt[1] += Math.sin(rotation) * 200;
-:end:
-:json:layers[0].ks.p
+</textarea>
+<json>lottie.layers[0].ks.p</json>
+<script>
+lottie.layers[0].ks.p.x = data["Position Expression"];
+</script>
 
 ### Composition.numLayers
 

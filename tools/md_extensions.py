@@ -10,6 +10,7 @@ from xml.etree.ElementTree import parse as parse_xml
 from markdown.inlinepatterns import InlineProcessor
 from markdown.blockprocessors import BlockProcessor
 from markdown.extensions import Extension
+from markdown.util import HTML_PLACEHOLDER_RE, AtomicString
 
 
 docs_path = Path(__file__).parent.parent / "docs"
@@ -394,7 +395,7 @@ class SchemaAttribute(InlineProcessor):
 
 class LottiePlayground(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?\}')
-    re_row = re.compile(r'^\s*(?P<label>[^:]*)\s*:\s*(?P<type>\w+)\s*:\s*(?P<path>[^:]*)\s*(?::\s*(?P<args>.*))?')
+    re_row = re.compile(r'^\s*(?:(?P<label>[^:]*)\s*:)?\s*(?P<html><(?P<tag>[-a-zA-Z_]+).*>)?')
 
     def __init__(self, parser, schema_data: SchemaData):
         super().__init__(parser)
@@ -403,7 +404,7 @@ class LottiePlayground(BlockProcessor):
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
-    def _json_viewer(self, element, anim_id, id_base, paths):
+    def _json_viewer(self, element, id_base):
         json_viewer = id_base + "_json_viewer"
         json_viewer_parent = json_viewer + "_parent"
 
@@ -419,97 +420,69 @@ class LottiePlayground(BlockProcessor):
 
         pre = etree.SubElement(element, "pre", {"id": json_viewer_parent, "hidden": "hidden"})
         etree.SubElement(pre, "code", {"id": json_viewer, "class": "language-json hljs"}).text = ""
-        return inspect.cleandoc(r"""
-            reload_lottie_{id} = (function(){{
-                var old = reload_lottie_{id};
-                return function(){{
-                    old();
-                    var raw_json = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
-                    var pretty_json = hljs.highlight("json", raw_json).value;
-                    var code = document.getElementById('{json_viewer}').innerHTML = pretty_json;
-                }}
-            }}
-            )();
-            document.getElementById('{json_viewer}').innerText = JSON.stringify(lottie_json_{id}.{path}, undefined, 4);
-            """).format(id=anim_id, json_viewer=json_viewer, path=paths[0])
+        return json_viewer
 
-    def add_control(self, anim_id, id_base, contols_container, label, type, paths, args):
+    def add_control(self, anim_id, id_base, contols_container, label, input):
         tr = etree.SubElement(contols_container, "tr")
 
         label_cell = etree.SubElement(tr, "td", {"style": "white-space: pre"})
         label_element = etree.SubElement(label_cell, "label")
         label_element.text = label
-        label_element.tail = " "
 
+        if input is None:
+            label_cell.tag = "th"
+            label_cell.attrib["colspan"] = "2"
+            label_element.tag = "span"
+            return
+
+        label_element.tail = " "
         td = etree.SubElement(tr, "td", {"style": "width: 100%"})
 
-        setter = "lottie_setter({id}, {paths})".format(id=anim_id, paths=repr(paths))
+        if input.tag == "enum":
+            enum_id = input.text
+            default_value = input.attrib.get("value", "")
 
-        if type == "enum":
-            input = self._select(td, setter, args, (
-                (title, value)
-                for value, title, _ in self.schema_data.get_enum_values(args[0])
-            ))
+            input = etree.Element("select")
+            for value, opt_label, _ in self.schema_data.get_enum_values(enum_id):
+                option = etree.SubElement(input, "option", {"value": str(value)})
+                option.text = opt_label
+                if str(value) == default_value:
+                    option.attrib["selected"] = "selected"
 
-        elif type == "slider":
-            input = etree.SubElement(td, "input", {
-                "type": "range",
-                "min": args[0],
-                "value": args[1],
-                "max": args[2],
-                "step": args[3] if len(args) > 3 else "1",
-                "oninput": inspect.cleandoc("""
-                    {setter}(event.target.value);
-                    document.getElementById('{span}').innerText = event.target.value;
-                    reload_lottie_{id}();
-                """.format(id=anim_id, setter=setter, span=id_base + "_span"))
-            })
+        input.attrib["oninput"] = "update_lottie_{id}();".format(id=anim_id)
+        input.attrib["data-lottie-input"] = str(anim_id)
+        input.attrib["autocomplete"] = "off"
+        if "name" not in input.attrib:
+            input.attrib["name"] = label
+        td.append(input)
+
+        if input.attrib.get("type", "") == "range":
             etree.SubElement(td, "span", {
                 "id": id_base + "_span"
-            }).text = args[1]
-
-        elif type == "select":
-            input = self._select(td, setter, args, (item.split("=") for item in args))
-
-        elif type == "text":
-            input = etree.SubElement(td, "input", {
-                "type": "text",
-                "value": args[0],
-                "oninput": "{setter}(event.target.value)".format(setter=setter)
-            })
-
-        elif type == "label":
-            label_cell.tag = "th"
-            label_element.tag = "span"
-            label_cell.attrib["colspan"] = "2"
+            }).text = input.attrib["value"]
+            input.attrib["oninput"] += (
+                "document.getElementById('{span}').innerText = event.target.value;"
+                .format(span=id_base + "_span")
+            )
+        elif input.tag == "textarea":
             tr.remove(td)
-            input = None
-
-        elif type == "textarea":
             tr = etree.SubElement(contols_container, "tr")
-            td = etree.SubElement(tr, "td", {"colspan": "2"})
-            input = etree.SubElement(td, "textarea", {
-                "type": "text",
-                "oninput": "{setter}(event.target.value)".format(setter=setter),
-                "style": "width: 100%",
-                "class": "code-input",
-            })
-            input.text = args[0].replace("\\n", "\n") if "\n" not in args[0] else args[0]
+            tr.append(td)
+            td.attrib["colspan"] = "2"
+            label_cell.attrib["colspan"] = "2"
             input.attrib["rows"] = str(max(3, input.text.count("\n")))
+            input.attrib["class"] = "code-input"
+            input.attrib["style"] = "width: 100%"
 
-        elif type == "intcheckbox":
-            input = etree.SubElement(td, "input", {
-                "type": "checkbox",
-                "oninput": "{setter}(event.target.checked ? 1 : 0)".format(setter=setter)
-            })
-            if len(args) > 0 and args[0] == "1":
-                input.attrib["checked"] = "checked"
+    def _on_line(self, anim_id, index, label, html_string, element, controls_container):
+        id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
 
+        html = etree.fromstring(html_string)
+        if html.tag == "json":
+            json_viewer_id = self._json_viewer(element, id_base)
+            json_viewer_path = html.text
         else:
-            raise Exception("Unknown playground control %s" % type)
-
-        if input is not None:
-            input.attrib["autocomplete"] = "off"
+            self.add_control(anim_id, id_base, controls_container, label, html)
 
     def run(self, parent, blocks):
         block = blocks.pop(0)
@@ -527,75 +500,84 @@ class LottiePlayground(BlockProcessor):
 
         element.attrib["class"] = "playground"
 
-        contols_container = etree.Element("table", {"class": "table-plain", "style": "width: 100%"})
-        element.insert(0, contols_container)
-        exec = ""
-        expression = None
-        expression_target = None
-        expression_title = None
+        controls_container = etree.Element("table", {"class": "table-plain", "style": "width: 100%"})
+        element.insert(0, controls_container)
+        json_viewer_id = None
+        json_viewer_path = None
+        html_append_until = None
 
         for index, line in enumerate(block.strip().split("\n")[1:]):
+            if html_append_until:
+                html_string += line + "\n"
+                if html_append_until in line:
+                    html_append_until = None
+                    self._on_line(anim_id, index, label, html_string, element, controls_container)
+                continue
+
             row_match = self.re_row.match(line)
-            if line.startswith("//"):
-                continue
-            id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
-
-            if expression is not None:
-                if line.startswith(":end:"):
-                    self.add_control(
-                        anim_id, id_base, contols_container, expression_title,
-                        "textarea", [expression_target], [expression]
-                    )
-                    exec += "lottie.%s = %r;" % (expression_target, expression)
-                    expression = None
-                    continue
-                expression += line + "\n"
-                continue
-
             if not row_match:
                 raise Exception("Unexpected playground line %r" % line)
 
+            id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
+
             label = row_match.group("label")
-            type = row_match.group("type")
-            paths = row_match.group("path").split(",")
-            args = (row_match.group("args") or "").split(":")
-
-            if type == "json":
-                exec += self._json_viewer(element, anim_id, id_base, paths)
+            html_string = row_match.group("html")
+            tag = row_match.group("tag")
+            if not html_string:
+                self.add_control(anim_id, id_base, controls_container, label, None)
                 continue
-            elif type == "exec":
-                exec += row_match.group("path") + ";\n"
-                continue
-            elif type == "expression":
-                expression_title = row_match.group("label")
-                expression_target = paths[0]
-                expression = ""
+            if "/>" not in html_string and "</" + tag not in html_string:
+                html_append_until = "</" + tag + ">"
                 continue
 
-            self.add_control(anim_id, id_base, contols_container, label, type, paths, args)
+            self._on_line(anim_id, index, label, html_string, element, controls_container)
 
-        if exec:
-            etree.SubElement(element, "script").text = """
-            function init_{id}()
+        # <script> are gobbled up by a preprocessor
+        script = ""
+        script_match = HTML_PLACEHOLDER_RE.match(blocks[0])
+        if script_match:
+            blocks.pop(0)
+            index = int(script_match.group(1))
+            raw_string = self.parser.md.htmlStash.rawHtmlBlocks[index]
+            if "<script>" in raw_string:
+                script_element = etree.fromstring(raw_string)
+                script = script_element.text
+                self.parser.md.htmlStash.rawHtmlBlocks.pop(index)
+                self.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
+
+        if json_viewer_id:
+            script += """
+            if ( typeof hljs !== "undefined" )
             {{
-                var lottie = lottie_json_{id};
-                {source}
-                window.addEventListener("load", reload_lottie_{id});
+                var raw_json = JSON.stringify({path}, undefined, 4);
+                var pretty_json = hljs.highlight("json", raw_json).value;
+                document.getElementById('{json_viewer_id}').innerHTML = pretty_json;
             }}
-            init_{id}();
-            """.format(id=anim_id, source=exec)
+            """.format(id=anim_id, path=json_viewer_path, json_viewer_id=json_viewer_id)
 
-    def _select(self, td, setter, args, items):
-        input = etree.SubElement(td, "select")
-        input.attrib["onchange"] = setter + "(event.target.value);"
-        default_value = args[1] if len(args) > 1 else None
-
-        for label, value in items:
-            option = etree.SubElement(input, "option", {"value": str(value)})
-            option.text = label
-            if str(value) == default_value:
-                option.attrib["selected"] = "selected"
-        return input
+        script_element = etree.SubElement(element, "script")
+        script_element.text = AtomicString("""
+        function update_lottie_{id}()
+        {{
+            var lottie = lottie_json_{id};
+            var data = Object.fromEntries(
+                Array.from(document.querySelectorAll("*[data-lottie-input='{id}']"))
+                .map(a => {{
+                    var value = a.value;
+                    if ( ["number", "range"].includes(a.type) )
+                        value = Number(a.value);
+                    else if ( a.type == "checkbox" )
+                        value = a.checked;
+                    return [a.name, value];
+                }})
+            );
+            {source}
+            reload_lottie_{id}();
+            // need to defer to wait for hljs to load
+            window.addEventListener("load", update_lottie_{id});
+        }}
+        update_lottie_{id}();
+        """.format(id=anim_id, source=script))
 
 
 @dataclasses.dataclass
@@ -1131,4 +1113,3 @@ class LottieExtension(Extension):
 
 def makeExtension(**kwargs):
     return LottieExtension(**kwargs)
-

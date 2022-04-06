@@ -84,41 +84,33 @@ You can pull a string from the schema and into Markdown
 This is similar to `{lottie:...}` but it's a block instead of being inline.
 
     {lottie_playground:filename.json:width:height}
-    control 1
-    control 2
+    Label 1:<input 1>
+    Label 2:<input 2>
+    <json>lottie.path.to[object].to.display</json>
+    <script>
+        lottie.path.to[object].to.modify = data["Label 1"];
+    </script>
 
 The header works the same as with `{lottie:...}` but it's followed by a sequence of controls in the form:
 
-    label:type:path.in[the].json:type-specific arguments...
+    label:input element...
 
-The `label` is just text shown before the input element
+The `label` is just text shown before the input element, the elements are as you would add them in HTML.
 
-`type` is the type of control, described below.
+There's a shorthand for dropdowns showing enum values (`enum-name` is as you'd pass it to `{schema_enum:...}`):
 
-The JSON path is what you'd use to access the property if you had a javascript object representing the JSON data.
+    <enum>enum-name</enum>
 
-Then follows a `:` list of arguments specific to the given `type`
+Due to limitation of the parser, the HTML elements must be valid XML.
+Also multiline elements are only allowed if the opening tag is in the same line as the label.
 
-### `enum`
+You can have a label without input to show a separator.
 
-If the `type` is `enum`, it will show a selection box with enum values pulled from the schema.
+The `<json>` element contains a JS expression that will be serialized as JSON
+and displayed to the user. Usually this would be an object from the lottie structure.
 
-At the end it takes the enum name, as you'd pass it to `{schema_enum:...}`
+At the end of everything, you can use a `<script>` element to modify the JSON
+when the user makes some changes on the HTML inputs. You have access to the following variables:
 
-For example:
-
-    {lottie_playground:blend_mode.json:512:512}
-    Blend Mode:enum:layers[0].bm:blend-mode
-
-### `slider`
-
-Shows an integer slider between a min and max value.
-
-The arguments are: `min`, `initial_value`, `max`.
-
-Try to set `initial_value` to the value in the JSON.
-
-Example:
-
-    {lottie_playground:blend_mode.json:512:512}
-    Opacity:slider:layers[0].ks.o.k:0:50:100
+* `lottie` The Lottie structure as a JS object
+* `data` Data from all controls as an object, keys are based on element names or labels

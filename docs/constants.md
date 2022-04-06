@@ -9,8 +9,12 @@
 In the following example you can change the blend mode of the top layer
 
 {lottie_playground:blend_mode.json:512:512}
-Blend Mode:enum:layers[0].bm:blend-mode
-Opacity:slider:layers[0].ks.o.k:0:50:100
+Blend Mode:<enum>blend-mode</enum>
+Opacity:<input type="range" min="0" value="50" max="100"/>
+<script>
+lottie.layers[0].bm = Number(data["Blend Mode"]);
+lottie.layers[0].ks.o.k = data["Opacity"];
+</script>
 
 
 ## {schema_attribute:title:constants/composite}
@@ -69,7 +73,11 @@ Opacity:slider:layers[0].ks.o.k:0:50:100
 {schema_enum:matte-mode}
 
 {lottie_playground:matte.json:512:512}
-Matte Mode:enum:layers[2].tt:matte-mode:1
+Matte Mode:<enum value="1">matte-mode</enum>
+<script>
+lottie.layers[2].tt = Number(data["Matte Mode"]);
+</script>
+
 
 
 ## {schema_attribute:title:constants/shape-direction}

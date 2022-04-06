@@ -17,8 +17,6 @@ markdown_extensions:
     - md_extensions
 extra_css:
     - /lottie-docs/style/style.css
-extra_javascript:
-    - /lottie-docs/scripts/playground.js
 nav:
     - "Intro": index.md
     - "<i class='fas fa-microscope'></i> Breakdown":

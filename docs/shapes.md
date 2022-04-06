@@ -63,13 +63,23 @@ A rectangle, defined by its center point and size.
 |`r` |[Animated](concepts.md#animated-property) `number` |Rounded corners radius|
 
 
+
 {lottie_playground:rectangle.json:512:512}
-Position x:slider:layers[0].shapes[0].it[0].p.k[0]:0:256:512
-Position y:slider:layers[0].shapes[0].it[0].p.k[1]:0:256:512
-Width:slider:layers[0].shapes[0].it[0].s.k[0]:0:256:512
-Height:slider:layers[0].shapes[0].it[0].s.k[1]:0:256:512
-Roundness:slider:layers[0].shapes[0].it[0].r.k:0:0:512
-:json:layers[0].shapes[0].it[0]
+Position x:<input type="range" min="0" max="512" value="256"/>
+Position y:<input type="range" min="0" max="512" value="256"/>
+Width:<input type="range" min="0" max="512" value="256"/>
+Height:<input type="range" min="0" max="512" value="256"/>
+Roundness:<input type="range" min="0" max="512" value="0"/>
+<json>lottie.layers[0].shapes[0].it[0]</json>
+<script>
+lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
+</script>
 
 ### Ellipse
 
@@ -80,11 +90,19 @@ Roundness:slider:layers[0].shapes[0].it[0].r.k:0:0:512
 
 
 {lottie_playground:ellipse.json:512:512}
-Position x:slider:layers[0].shapes[0].it[0].p.k[0]:0:256:512
-Position y:slider:layers[0].shapes[0].it[0].p.k[1]:0:256:512
-Width:slider:layers[0].shapes[0].it[0].s.k[0]:0:256:512
-Height:slider:layers[0].shapes[0].it[0].s.k[1]:0:256:512
-:json:layers[0].shapes[0].it[0]
+Position x:<input type="range" min="0" max="512" value="256"/>
+Position y:<input type="range" min="0" max="512" value="256"/>
+Width:<input type="range" min="0" max="512" value="256"/>
+Height:<input type="range" min="0" max="512" value="256"/>
+<json>lottie.layers[0].shapes[0].it[0]</json>
+<script>
+lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+</script>
 
 ### PolyStar
 
@@ -104,13 +122,59 @@ If `sy` is `1` (star) you also have attributes defining the inner ends of the st
 
 
 {lottie_playground:star.json:512:512}
-Points:slider:assets[0].layers[0].shapes[0].it[0].pt.k,assets[1].layers[0].shapes[0].it[0].pt.k:3:5:10
-Rotation:slider:assets[0].layers[0].shapes[0].it[0].r.k,assets[1].layers[0].shapes[0].it[0].r.k:0:0:360
-Outer Radius:slider:assets[0].layers[0].shapes[0].it[0].or.k,assets[1].layers[0].shapes[0].it[0].or.k:0:200:300
-Inner Radius:slider:assets[0].layers[0].shapes[0].it[0].ir.k:0:100:300
-Outer Roundness:slider:assets[0].layers[0].shapes[0].it[0].os.k,assets[1].layers[0].shapes[0].it[0].os.k:0:0:100
-Inner Roundness:slider:assets[0].layers[0].shapes[0].it[0].is.k:0:0:100
-Type:select:layers[0].refId:Star=star:Polygon=poly
+Points:<input type="range" min="3" max="10" value="5"/>
+Rotation:<input type="range" min="0" max="360" value="0"/>
+Outer Radius:<input type="range" min="0" max="300" value="200"/>
+Inner Radius:<input type="range" min="0" max="300" value="100"/>
+Outer Roundness:<input type="range" min="0" max="100" value="0"/>
+Inner Roundness:<input type="range" min="0" max="100" value="0"/>
+Type:<select><option value="1">Star</option><option value="2">Polygon</option></select>
+<json>lottie.layers[0].shapes[0].it[0]</json>
+<script>
+var star = {
+    "ty": "sr",
+    "nm": "PolyStar",
+    "sy": Number(data["Type"]),
+    "p": {
+        "a": 0,
+        "k": [
+            249.3134328358209,
+            254.47164179104476
+        ]
+    },
+    "r": {
+        "a": 0,
+        "k": data["Rotation"]
+    },
+    "pt": {
+        "a": 0,
+        "k": data["Points"]
+    },
+    "or": {
+        "a": 0,
+        "k": data["Outer Radius"]
+    },
+    "os": {
+        "a": 0,
+        "k": data["Outer Roundness"]
+    },
+};
+if ( data["Type"] == "1" )
+{
+    star = {
+        ...star,
+        "ir": {
+            "a": 0,
+            "k": data["Inner Radius"]
+        },
+        "is": {
+            "a": 0,
+            "k": data["Inner Roundness"]
+        },
+    };
+}
+lottie.layers[0].shapes[0].it[0] = star;
+</script>
 
 
 ### Path
@@ -146,13 +210,18 @@ Defines a single color fill.
 
 
 {lottie_playground:fill.json:512:512}
-Red:slider:layers[0].shapes[0].it[1].c.k[0]:0:1:1:0.01
-Green:slider:layers[0].shapes[0].it[1].c.k[1]:0:0.98:1:0.01
-Blue:slider:layers[0].shapes[0].it[1].c.k[2]:0:0.28:1:0.01
-Opacity:slider:layers[0].shapes[0].it[1].o.k:0:100:100
-Fill Rule:enum:layers[0].shapes[0].it[1].r:fill-rule
-:json:layers[0].shapes[0].it[1]
-
+Red:<input type="range" min="0" max="1" step="0.01" value="1"/>
+Green:<input type="range" min="0" max="1" step="0.01" value="0.98"/>
+Blue:<input type="range" min="0" max="1" step="0.01" value="0.28"/>
+Opacity:<input type="range" min="0" max="100" value="100"/>
+Fill Rule:<enum>fill-rule</enum>
+<json>lottie.layers[0].shapes[0].it[1]</json>
+<script>
+var shape = lottie.layers[0].shapes[0].it[1];
+shape.c.k = [data["Red"], data["Green"], data["Blue"]];
+shape.o.k = data["Opacity"];
+shape.r = Number(data["Fill Rule"]);
+</script>
 
 
 ### Stroke
@@ -183,18 +252,29 @@ Defined as a sequence of alternating dashes and gaps.
 
 
 {lottie_playground:stroke.json:512:512}
-Red:slider:layers[0].shapes[2].c.k[0]:0:1:1:0.01
-Green:slider:layers[0].shapes[2].c.k[1]:0:0.98:1:0.01
-Blue:slider:layers[0].shapes[2].c.k[2]:0:0.28:1:0.01
-Opacity:slider:layers[0].shapes[2].o.k:0:100:100
-Line Cap:enum:layers[0].shapes[2].lc:line-cap:2
-Line Join:enum:layers[0].shapes[2].lj:line-join:2
-Miter Limit:slider:layers[0].shapes[2].ml:0:3:10
-Dash Offset:slider:layers[0].shapes[2].d[0].v.k:0:0:512
-Dash Length:slider:layers[0].shapes[2].d[1].v.k:0:100:512
-Dash Gap:slider:layers[0].shapes[2].d[2].v.k:0:0:512
-:json:layers[0].shapes[2]
-
+Red:<input type="range" min="0" max="1" step="0.01" value="1"/>
+Green:<input type="range" min="0" max="1" step="0.01" value="0.98"/>
+Blue:<input type="range" min="0" max="1" step="0.01" value="0.28"/>
+Opacity:<input type="range" min="0" max="100" value="100"/>
+Line Cap:<enum value="2">line-cap</enum>
+Line Join:<enum value="2">line-join</enum>
+Miter Limit:<input type="range" min="0" max="10" value="3"/>
+Dash Offset:<input type="range" min="0" max="512" value="0"/>
+Dash Length:<input type="range" min="0" max="512" value="100"/>
+Dash Gap:<input type="range" min="0" max="512" value="0"/>
+<json>lottie.layers[0].shapes[2]</json>
+<script>
+var shape = lottie.layers[0].shapes[2];
+shape.c.k = [data["Red"], data["Green"], data["Blue"]];
+shape.o.k = data["Opacity"];
+shape.r = Number(data["Fill Rule"]);
+shape.lc = Number(data["Line Cap"]);
+shape.lj = Number(data["Line Join"]);
+shape.ml = data["Miter Limit"];
+shape.d[0].v.k = data["Dash Offset"];
+shape.d[1].v.k = data["Dash Length"];
+shape.d[2].v.k = data["Dash Gap"];
+</script>
 
 
 ### Gradients
@@ -234,14 +314,25 @@ has transparency.
 
 
 {lottie_playground:gradient.json:512:512}
-Start X         :slider:layers[1].shapes[0].it[1].s.k[0],layers[0].shapes[1].it[1].p.k[0]:0:256:512
-Start Y         :slider:layers[1].shapes[0].it[1].s.k[1],layers[0].shapes[1].it[1].p.k[1]:0:496:512
-End X           :slider:layers[1].shapes[0].it[1].e.k[0],layers[0].shapes[0].it[1].p.k[0]:0:256:512
-End Y           :slider:layers[1].shapes[0].it[1].e.k[1],layers[0].shapes[0].it[1].p.k[1]:0:16:512
-Type            :enum:  layers[1].shapes[0].it[1].t:gradient-type
-Highlight       :slider:layers[1].shapes[0].it[1].h.k:0:0:100
-Highlight Angle :slider:layers[1].shapes[0].it[1].a.k:0:0:360
-                :json:  layers[1].shapes[0].it[1]:
+Start X:<input type="range" min="0" value="256" max="512"/>
+Start Y:<input type="range" min="0" value="496" max="512"/>
+End X:<input type="range" min="0" value="256" max="512"/>
+End Y:<input type="range" min="0" value="16" max="512"/>
+Type:<enum>gradient-type</enum>
+Highlight:<input type="range" min="0" max="100" value="0"/>
+Highlight Angle:<input type="range" min="0" max="360" value="0"/>
+<json>lottie.layers[1].shapes[0].it[1]</json>
+<script>
+var gradient = lottie.layers[1].shapes[0].it[1];
+var start_marker = lottie.layers[0].shapes[1].it[1];
+var end_marker = lottie.layers[0].shapes[0].it[1];
+gradient.s.k = start_marker.p.k = [data["Start X"], data["Start Y"]];
+gradient.e.k = end_marker.p.k = [data["End X"], data["End Y"]];
+gradient.t = Number(data["Type"]);
+gradient.h.k = data["Highlight"];
+gradient.a.k = data["Highlight Angle"];
+</script>
+
 
 ## Group
 
@@ -310,15 +401,25 @@ it has two:
 The first copy will use `so`, the last `eo`, and copies between them will have an interpolated value.
 
 {lottie_playground:repeater.json:512:512}
-Copies:slider:layers[0].shapes[0].it[3].c.k:0:4:20
-Start Opacity:slider:layers[0].shapes[0].it[3].tr.so.k:0:100:100
-End Opacity:slider:layers[0].shapes[0].it[3].tr.eo.k:0:50:100
-Position x:slider:layers[0].shapes[0].it[3].tr.p.k[0]:0:130:200
-Position y:slider:layers[0].shapes[0].it[3].tr.p.k[1]:0:0:200
-Rotation:slider:layers[0].shapes[0].it[3].tr.r.k:0:137:360
-Offset:slider:layers[0].shapes[0].it[3].o.k:-1:0:2:0.1
-Conposite:enum:layers[0].shapes[0].it[3].m:composite
-:json:layers[0].shapes[0].it[3]
+Copies:<input type="range" min="0" value="4" max="20"/>
+Start Opacity:<input type="range" min="0" value="100" max="100"/>
+End Opacity:<input type="range" min="0" value="50" max="100"/>
+Position x:<input type="range" min="0" value="130" max="200"/>
+Position y:<input type="range" min="0" value="0" max="200"/>
+Rotation:<input type="range" min="0" value="137" max="360"/>
+Offset:<input type="range" min="-1" value="0" max="2" step="0.1"/>
+Composite:<enum>composite</enum>
+<json>lottie.layers[0].shapes[0].it[3]</json>
+<script>
+lottie.layers[0].shapes[0].it[3].c.k = data["Copies"];
+lottie.layers[0].shapes[0].it[3].tr.so.k = data["Start Opacity"];
+lottie.layers[0].shapes[0].it[3].tr.eo.k = data["End Opacity"];
+lottie.layers[0].shapes[0].it[3].tr.p.k[0] = data["Position x"];
+lottie.layers[0].shapes[0].it[3].tr.p.k[1] = data["Position y"];
+lottie.layers[0].shapes[0].it[3].tr.r.k = data["Rotation"];
+lottie.layers[0].shapes[0].it[3].o.k = data["Offset"];
+lottie.layers[0].shapes[0].it[3].m = Number(data["Composite"]);
+</script>
 
 
 ### Trim Path
@@ -346,13 +447,18 @@ that with `o` you can go over `360` or below `0` to shift the whole segment alon
 
 Here is an interactive example:
 
-
 {lottie_playground:trim_path.json:512:512}
-Start:slider:layers[0].shapes[4].s.k:0:0:100
-End:slider:layers[0].shapes[4].e.k:0:50:100
-Offset:slider:layers[0].shapes[4].o.k:0:0:360
-Multiple Shapes:enum:layers[0].shapes[4].m:trim-multiple-shapes
-:json:layers[0].shapes[4]
+Start:<input type="range" min="0" value="0" max="100"/>
+End:<input type="range" min="0" value="50" max="100"/>
+Offset:<input type="range" min="0" value="0" max="360"/>
+Multiple Shapes:<enum>trim-multiple-shapes</enum>
+<json>lottie.layers[0].shapes[4]</json>
+<script>
+lottie.layers[0].shapes[4].s.k = data["Start"];
+lottie.layers[0].shapes[4].e.k = data["End"];
+lottie.layers[0].shapes[4].o.k = data["Offset"];
+lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
+</script>
 
 
 ### Rounded Corners
@@ -363,8 +469,11 @@ Self explanatory
 SKIP:#/$defs/shapes/shape
 
 {lottie_playground:rounded_corners.json:512:512}
-Radius:slider:layers[0].shapes[0].it[1].r.k:0:50:100
-:json:layers[0].shapes[0].it[1]
+Radius:<input type="range" min="0" value="50" max="100"/>
+<json>lottie.layers[0].shapes[0].it[1]</json>
+<script>
+lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
+</script>
 
 
 ### Pucker / Bloat
@@ -380,8 +489,11 @@ When `a` is negative the vertices are pushed away from the center with `100` bei
 
 
 {lottie_playground:pucker_bloat.json:512:512}
-Amount:slider:layers[0].shapes[0].it[1].a.k:-100:50:100
-:json:layers[0].shapes[0].it[1]
+Amount:<input type="range" min="-100" value="50" max="100"/>
+<json>lottie.layers[0].shapes[0].it[1]</json>
+<script>
+lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+</script>
 
 
 ### Twist

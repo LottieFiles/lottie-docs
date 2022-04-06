@@ -47,21 +47,19 @@ SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/fill-effect}
 
-
 {lottie_playground:effects-fill.json:512:512}
-//00.x:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:512
-//00.y:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:512
-//01:slider:layers[0].ef[0].ef[1].v.k:0:0:10
-//03:slider:layers[0].ef[0].ef[3].v.k:0:0:10
-//04:slider:layers[0].ef[0].ef[4].v.k:0:0:100
-//05:slider:layers[0].ef[0].ef[5].v.k:0:0:100
-Opacity:slider:layers[0].ef[0].ef[6].v.k:0:1:1:0.1
-Color:label:
-Red:slider:layers[0].ef[0].ef[2].v.k[0]:0:1:1:0.1
-Green:slider:layers[0].ef[0].ef[2].v.k[1]:0:0.9:1:0.1
-Blue:slider:layers[0].ef[0].ef[2].v.k[2]:0:0:1:0.1
-:json:layers[0].ef[0]
-
+Opacity:<input type="range" min="0" value="1" max="1" step="0.1"/>
+Color:
+Red:<input type="range" min="0" value="1" max="1" step="0.1"/>
+Green:<input type="range" min="0" value="0.9" max="1" step="0.1"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[6].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["Blue"];
+</script>
 
 ### Stroke Effect
 
@@ -82,19 +80,31 @@ SKIP:#/$defs/effects/effect
 
 
 {lottie_playground:effects-tritone.json:512:512}
-Bright:label:
-Red:slider:layers[0].ef[0].ef[0].v.k[0]:0:1:1:0.1
-Green:slider:layers[0].ef[0].ef[0].v.k[1]:0:1:1:0.1
-Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:1:1:0.1
-Mid:label:
-Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0.3:1:0.1
-Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:0.8:1:0.1
-Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0.3:1:0.1
-Dark:label:
-Red:slider:layers[0].ef[0].ef[2].v.k[0]:0:0:1:0.1
-Green:slider:layers[0].ef[0].ef[2].v.k[1]:0:0:1:0.1
-Blue:slider:layers[0].ef[0].ef[2].v.k[2]:0:0:1:0.1
-:json:layers[0].ef[0]
+Bright:
+Red:<input type="range" min="0" value="1" max="1" step="0.1" name="r1"/>
+Green:<input type="range" min="0" value="1" max="1" step="0.1" name="g1"/>
+Blue:<input type="range" min="0" value="1" max="1" step="0.1" name="b1"/>
+Mid:
+Red:<input type="range" min="0" value="0.3" max="1" step="0.1" name="r2"/>
+Green:<input type="range" min="0" value="0.8" max="1" step="0.1" name="g2"/>
+Blue:<input type="range" min="0" value="0.3" max="1" step="0.1" name="b2"/>
+Dark:
+Red:<input type="range" min="0" value="0" max="1" step="0.1" name="r3"/>
+Green:<input type="range" min="0" value="0" max="1" step="0.1" name="g3"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1" name="b3"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k[0] = data["r1"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["g1"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["b1"];
+lottie.layers[0].ef[0].ef[1].v.k[0] = data["r2"];
+lottie.layers[0].ef[0].ef[1].v.k[1] = data["g2"];
+lottie.layers[0].ef[0].ef[1].v.k[2] = data["b2"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["r3"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["g3"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["b3"];
+</script>
+
 
 
 ### Pro Levels Effect
@@ -107,39 +117,55 @@ SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/pro-levels-effect}
 
-
 {lottie_playground:effects-prolevels.json:512:512}
-Composite:label:
-In Black    :slider:layers[0].ef[0].ef[3].v.k:0:0:1:0.1
-In White    :slider:layers[0].ef[0].ef[4].v.k:0:1:1:0.1
-Gamma       :slider:layers[0].ef[0].ef[5].v.k:0:1:3:0.1
-Out Black   :slider:layers[0].ef[0].ef[6].v.k:0:0:1:0.1
-Out White   :slider:layers[0].ef[0].ef[7].v.k:0:1:1:0.1
-Red:label:
-In Black    :slider:layers[0].ef[0].ef[10].v.k:0:0:1:0.1
-In White    :slider:layers[0].ef[0].ef[11].v.k:0:0:1:0.1
-Gamma       :slider:layers[0].ef[0].ef[12].v.k:0:1:3:0.1
-Out Black   :slider:layers[0].ef[0].ef[13].v.k:0:0:1:0.1
-Out White   :slider:layers[0].ef[0].ef[14].v.k:0:1:1:0.1
-Green:label:
-In Black    :slider:layers[0].ef[0].ef[17].v.k:0:0:1:0.1
-In White    :slider:layers[0].ef[0].ef[18].v.k:0:0:1:0.1
-Gamma       :slider:layers[0].ef[0].ef[19].v.k:0:1:3:0.1
-Out Black   :slider:layers[0].ef[0].ef[20].v.k:0:0:1:0.1
-Out White   :slider:layers[0].ef[0].ef[21].v.k:0:1:1:0.1
-Blue:label:
-In Black    :slider:layers[0].ef[0].ef[24].v.k:0:0:1:0.1
-In White    :slider:layers[0].ef[0].ef[25].v.k:0:0:1:0.1
-Gamma       :slider:layers[0].ef[0].ef[26].v.k:0:1:3:0.1
-Out Black   :slider:layers[0].ef[0].ef[27].v.k:0:0:1:0.1
-Out White   :slider:layers[0].ef[0].ef[28].v.k:0:1:1:0.1
-//Alpha:label:
-//In Black    :slider:layers[0].ef[0].ef[30].v.k:0:0:1:0.1
-//In White    :slider:layers[0].ef[0].ef[31].v.k:0:0:1:0.1
-//Gamma       :slider:layers[0].ef[0].ef[32].v.k:0:1:3:0.1
-//Out Black   :slider:layers[0].ef[0].ef[33].v.k:0:0:1:0.1
-//Out White   :slider:layers[0].ef[0].ef[34].v.k:0:1:1:0.1
-:json:layers[0].ef[0]
+Composite:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Composite In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Composite In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Composite Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Composite Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Composite Out White"/>
+Red:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Red In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Red In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Red Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Red Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Red Out White"/>
+Green:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Green In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Green In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Green Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Green Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Green Out White"/>
+Blue:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Blue In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Blue In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Blue Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Blue Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Blue Out White"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[3].v.k = data["Composite In Black"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Composite In White"];
+lottie.layers[0].ef[0].ef[5].v.k = data["Composite Gamma"];
+lottie.layers[0].ef[0].ef[6].v.k = data["Composite Out Black"];
+lottie.layers[0].ef[0].ef[7].v.k = data["Composite Out White"];
+lottie.layers[0].ef[0].ef[10].v.k = data["Red In Black"];
+lottie.layers[0].ef[0].ef[11].v.k = data["Red In White"];
+lottie.layers[0].ef[0].ef[12].v.k = data["Red Gamma"];
+lottie.layers[0].ef[0].ef[13].v.k = data["Red Out Black"];
+lottie.layers[0].ef[0].ef[14].v.k = data["Red Out White"];
+lottie.layers[0].ef[0].ef[17].v.k = data["Green In Black"];
+lottie.layers[0].ef[0].ef[18].v.k = data["Green In White"];
+lottie.layers[0].ef[0].ef[19].v.k = data["Green Gamma"];
+lottie.layers[0].ef[0].ef[20].v.k = data["Green Out Black"];
+lottie.layers[0].ef[0].ef[21].v.k = data["Green Out White"];
+lottie.layers[0].ef[0].ef[24].v.k = data["Blue In Black"];
+lottie.layers[0].ef[0].ef[25].v.k = data["Blue In White"];
+lottie.layers[0].ef[0].ef[26].v.k = data["Blue Gamma"];
+lottie.layers[0].ef[0].ef[27].v.k = data["Blue Out Black"];
+lottie.layers[0].ef[0].ef[28].v.k = data["Blue Out White"];
+</script>
+
 
 ### Tint Effect
 
@@ -154,18 +180,26 @@ SKIP:#/$defs/effects/effect
 {schema_effect:effects/tint-effect}
 
 {lottie_playground:effects-tint.json:512:512}
-Black:label:
-Red:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:1:0.1
-Green:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:1:0.1
-Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:0:1:0.1
-White:label:
-Red:slider:layers[0].ef[0].ef[1].v.k[0]:0:0:1:0.1
-Green:slider:layers[0].ef[0].ef[1].v.k[1]:0:1:1:0.1
-Blue:slider:layers[0].ef[0].ef[1].v.k[2]:0:0:1:0.1
-Intensity:label:
-Effect Intensity:slider:layers[0].ef[0].ef[2].v.k:0:90:100
-:json:layers[0].ef[0]
-
+Black:
+Red:<input type="range" min="0" value="0" max="1" step="0.1" name="Black Red"/>
+Green:<input type="range" min="0" value="0" max="1" step="0.1" name="Black Green"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1" name="Black Blue"/>
+White:
+Red:<input type="range" min="0" value="0" max="1" step="0.1" name="White Red"/>
+Green:<input type="range" min="0" value="1" max="1" step="0.1" name="White Green"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1" name="White Blue"/>
+Intensity:
+Effect Intensity:<input type="range" min="0" value="90" max="100"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k[0] = data["Black Red"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["Black Green"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["Black Blue"];
+lottie.layers[0].ef[0].ef[1].v.k[0] = data["White Red"];
+lottie.layers[0].ef[0].ef[1].v.k[1] = data["White Green"];
+lottie.layers[0].ef[0].ef[1].v.k[2] = data["White Blue"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Effect Intensity"];
+</script>
 
 ### Matte3 Effect
 
@@ -183,10 +217,16 @@ SKIP:#/$defs/effects/effect
 
 
 {lottie_playground:effects-blur.json:512:512}
-Sigma:slider:layers[0].ef[0].ef[0].v.k:0:25:100
-Dimensions:slider:layers[0].ef[0].ef[1].v.k:0:0:3
-Wrap:slider:layers[0].ef[0].ef[2].v.k:0:0:1
-:json:layers[0].ef[0]
+Sigma:<input type="range" min="0" value="25" max="100"/>
+Dimensions:<input type="range" min="0" value="0" max="3"/>
+Wrap:<input type="range" min="0" value="0" max="1"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = data["Sigma"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Dimensions"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Wrap"];
+</script>
+
 
 
 ### Drop Shadow Effect
@@ -197,14 +237,24 @@ SKIP:#/$defs/effects/effect
 {schema_effect:effects/drop-shadow-effect}
 
 {lottie_playground:effects-shadow.json:512:512}
-Red:slider:layers[0].ef[0].ef[0].v.k[0]:0:0:1:0.1
-Green:slider:layers[0].ef[0].ef[0].v.k[1]:0:0:1:0.1
-Blue:slider:layers[0].ef[0].ef[0].v.k[2]:0:0:1:0.1
-Opacity:slider:layers[0].ef[0].ef[1].v.k:0:128:256
-Angle:slider:layers[0].ef[0].ef[2].v.k:0:135:360
-Distance:slider:layers[0].ef[0].ef[3].v.k:0:10:512
-Blur:slider:layers[0].ef[0].ef[4].v.k:0:7:512
-:json:layers[0].ef[0]
+Red:<input type="range" min="0" value="0" max="1" step="0.1"/>
+Green:<input type="range" min="0" value="0" max="1" step="0.1"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1"/>
+Opacity:<input type="range" min="0" value="128" max="256"/>
+Angle:<input type="range" min="0" value="135" max="360"/>
+Distance:<input type="range" min="0" value="10" max="512"/>
+Blur:<input type="range" min="0" value="7" max="512"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["Blue"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Angle"];
+lottie.layers[0].ef[0].ef[3].v.k = data["Distance"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Blur"];
+</script>
+
 
 
 ### Radial Wipe Effect

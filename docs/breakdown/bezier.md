@@ -37,9 +37,12 @@ The black dots are the ones that define the bezier, and the red dot is the posit
 along the bezier at the given _t_.
 
 {lottie_playground:bezier_expression.json:512:512}
-t:slider:layers[0].ef[0].ef[0].v.k:0:0.5:1:0.1
-:exec:lottie.layers[0].ef[0].ef[0].v.a = 0
-:exec:lottie.layers[0].ef[0].ef[0].v.k = 0.5
+t:<input type="range" min="0" value="0.5" max="1" step="0.1"/>
+<script>
+lottie.layers[0].ef[0].ef[0].v.a = 0;
+lottie.layers[0].ef[0].ef[0].v.k = data["t"];
+</script>
+
 
 ### Poly Beziers
 
@@ -81,26 +84,65 @@ If it is, there's an additional bezier segment between the last point in `v` and
 
 
 {lottie_playground:bezier.json:512:512}
-Closed:select:layers[0].shapes[0].ks.k.c:Open=false:Closed=true
-Point 0:label:
-Vertex X     :slider:layers[0].shapes[0].ks.k.v[0][0],assets[0].layers[0].ks.p.k[0]:0:53:512
-Vertex Y     :slider:layers[0].shapes[0].ks.k.v[0][1],assets[0].layers[0].ks.p.k[1]:0:325:512
-In Tangent X :slider:layers[0].shapes[0].ks.k.i[0][0],assets[0].layers[0].shapes[0].ks.k.v[0][0]:-512:0:512
-In Tangent Y :slider:layers[0].shapes[0].ks.k.i[0][1],assets[0].layers[0].shapes[0].ks.k.v[0][1]:-512:0:512
-Out Tangent X:slider:layers[0].shapes[0].ks.k.o[0][0],assets[0].layers[0].shapes[0].ks.k.v[2][0]:-512:89:512
-Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[0][1],assets[0].layers[0].shapes[0].ks.k.v[2][1]:-512:-189:512
-Point 1:label:
-Vertex X     :slider:layers[0].shapes[0].ks.k.v[1][0],assets[1].layers[0].ks.p.k[0]:0:429:512
-Vertex Y     :slider:layers[0].shapes[0].ks.k.v[1][1],assets[1].layers[0].ks.p.k[1]:0:147:512
-In Tangent X :slider:layers[0].shapes[0].ks.k.i[1][0],assets[1].layers[0].shapes[0].ks.k.v[0][0]:-512:-147:512
-In Tangent Y :slider:layers[0].shapes[0].ks.k.i[1][1],assets[1].layers[0].shapes[0].ks.k.v[0][1]:-512:186:512
-Out Tangent X:slider:layers[0].shapes[0].ks.k.o[1][0],assets[1].layers[0].shapes[0].ks.k.v[2][0]:-512:40:512
-Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[1][1],assets[1].layers[0].shapes[0].ks.k.v[2][1]:-512:189:512
-Point 2:label:
-Vertex X     :slider:layers[0].shapes[0].ks.k.v[2][0],assets[2].layers[0].ks.p.k[0]:0:215:512
-Vertex Y     :slider:layers[0].shapes[0].ks.k.v[2][1],assets[2].layers[0].ks.p.k[1]:0:430:512
-In Tangent X :slider:layers[0].shapes[0].ks.k.i[2][0],assets[2].layers[0].shapes[0].ks.k.v[0][0]:-512:114:512
-In Tangent Y :slider:layers[0].shapes[0].ks.k.i[2][1],assets[2].layers[0].shapes[0].ks.k.v[0][1]:-512:36:512
-Out Tangent X:slider:layers[0].shapes[0].ks.k.o[2][0],assets[2].layers[0].shapes[0].ks.k.v[2][0]:-512:-114:512
-Out Tangent Y:slider:layers[0].shapes[0].ks.k.o[2][1],assets[2].layers[0].shapes[0].ks.k.v[2][1]:-512:-16:512
-:json:layers[0].shapes[0].ks.k
+Closed:<input type="checkbox" />
+Point 0:
+Vertex X:<input type="range" min="0" value="53" max="512" name="Point 0 Vertex X"/>
+Vertex Y:<input type="range" min="0" value="325" max="512" name="Point 0 Vertex Y"/>
+In Tangent X:<input type="range" min="-512" value="0" max="512" name="Point 0 In Tangent X"/>
+In Tangent Y:<input type="range" min="-512" value="0" max="512" name="Point 0 In Tangent Y"/>
+Out Tangent X:<input type="range" min="-512" value="89" max="512" name="Point 0 Out Tangent X"/>
+Out Tangent Y:<input type="range" min="-512" value="-189" max="512" name="Point 0 Out Tangent Y"/>
+Point 1:
+Vertex X:<input type="range" min="0" value="429" max="512" name="Point 1 Vertex X"/>
+Vertex Y:<input type="range" min="0" value="147" max="512" name="Point 1 Vertex Y"/>
+In Tangent X:<input type="range" min="-512" value="-147" max="512" name="Point 1 In Tangent X"/>
+In Tangent Y:<input type="range" min="-512" value="186" max="512" name="Point 1 In Tangent Y"/>
+Out Tangent X:<input type="range" min="-512" value="40" max="512" name="Point 1 Out Tangent X"/>
+Out Tangent Y:<input type="range" min="-512" value="189" max="512" name="Point 1 Out Tangent Y"/>
+Point 2:
+Vertex X:<input type="range" min="0" value="215" max="512" name="Point 2 Vertex X"/>
+Vertex Y:<input type="range" min="0" value="430" max="512" name="Point 2 Vertex Y"/>
+In Tangent X:<input type="range" min="-512" value="114" max="512" name="Point 2 In Tangent X"/>
+In Tangent Y:<input type="range" min="-512" value="36" max="512" name="Point 2 In Tangent Y"/>
+Out Tangent X:<input type="range" min="-512" value="-114" max="512" name="Point 2 Out Tangent X"/>
+Out Tangent Y:<input type="range" min="-512" value="-16" max="512" name="Point 2 Out Tangent Y"/>
+<json>lottie.layers[0].shapes[0].ks.k</json>
+<script>
+lottie.layers[0].shapes[0].ks.k.c = data["Closed"];
+lottie.layers[0].shapes[0].ks.k.v[0][0] = data["Point 0 Vertex X"];
+lottie.assets[0].layers[0].ks.p.k[0] = data["Point 0 Vertex X"];
+lottie.layers[0].shapes[0].ks.k.v[0][1] = data["Point 0 Vertex Y"];
+lottie.assets[0].layers[0].ks.p.k[1] = data["Point 0 Vertex Y"];
+lottie.layers[0].shapes[0].ks.k.i[0][0] = data["Point 0 In Tangent X"];
+lottie.assets[0].layers[0].shapes[0].ks.k.v[0][0] = data["Point 0 In Tangent X"];
+lottie.layers[0].shapes[0].ks.k.i[0][1] = data["Point 0 In Tangent Y"];
+lottie.assets[0].layers[0].shapes[0].ks.k.v[0][1] = data["Point 0 In Tangent Y"];
+lottie.layers[0].shapes[0].ks.k.o[0][0] = data["Point 0 Out Tangent X"];
+lottie.assets[0].layers[0].shapes[0].ks.k.v[2][0] = data["Point 0 Out Tangent X"];
+lottie.layers[0].shapes[0].ks.k.o[0][1] = data["Point 0 Out Tangent Y"];
+lottie.assets[0].layers[0].shapes[0].ks.k.v[2][1] = data["Point 0 Out Tangent Y"];
+lottie.layers[0].shapes[0].ks.k.v[1][0] = data["Point 1 Vertex X"];
+lottie.assets[1].layers[0].ks.p.k[0] = data["Point 1 Vertex X"];
+lottie.layers[0].shapes[0].ks.k.v[1][1] = data["Point 1 Vertex Y"];
+lottie.assets[1].layers[0].ks.p.k[1] = data["Point 1 Vertex Y"];
+lottie.layers[0].shapes[0].ks.k.i[1][0] = data["Point 1 In Tangent X"];
+lottie.assets[1].layers[0].shapes[0].ks.k.v[0][0] = data["Point 1 In Tangent X"];
+lottie.layers[0].shapes[0].ks.k.i[1][1] = data["Point 1 In Tangent Y"];
+lottie.assets[1].layers[0].shapes[0].ks.k.v[0][1] = data["Point 1 In Tangent Y"];
+lottie.layers[0].shapes[0].ks.k.o[1][0] = data["Point 1 Out Tangent X"];
+lottie.assets[1].layers[0].shapes[0].ks.k.v[2][0] = data["Point 1 Out Tangent X"];
+lottie.layers[0].shapes[0].ks.k.o[1][1] = data["Point 1 Out Tangent Y"];
+lottie.assets[1].layers[0].shapes[0].ks.k.v[2][1] = data["Point 1 Out Tangent Y"];
+lottie.layers[0].shapes[0].ks.k.v[2][0] = data["Point 2 Vertex X"];
+lottie.assets[2].layers[0].ks.p.k[0] = data["Point 2 Vertex X"];
+lottie.layers[0].shapes[0].ks.k.v[2][1] = data["Point 2 Vertex Y"];
+lottie.assets[2].layers[0].ks.p.k[1] = data["Point 2 Vertex Y"];
+lottie.layers[0].shapes[0].ks.k.i[2][0] = data["Point 2 In Tangent X"];
+lottie.assets[2].layers[0].shapes[0].ks.k.v[0][0] = data["Point 2 In Tangent X"];
+lottie.layers[0].shapes[0].ks.k.i[2][1] = data["Point 2 In Tangent Y"];
+lottie.assets[2].layers[0].shapes[0].ks.k.v[0][1] = data["Point 2 In Tangent Y"];
+lottie.layers[0].shapes[0].ks.k.o[2][0] = data["Point 2 Out Tangent X"];
+lottie.assets[2].layers[0].shapes[0].ks.k.v[2][0] = data["Point 2 Out Tangent X"];
+lottie.layers[0].shapes[0].ks.k.o[2][1] = data["Point 2 Out Tangent Y"];
+lottie.assets[2].layers[0].shapes[0].ks.k.v[2][1] = data["Point 2 Out Tangent Y"];
+</script>

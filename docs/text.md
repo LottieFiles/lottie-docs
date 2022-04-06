@@ -192,15 +192,25 @@ This is where the actual text data is stored.
 {schema_object:text/text-document}
 
 {lottie_playground:text-document.json:300:100}
-Text:text:layers[0].t.d.k[0].s.t:Hello
-Color Red:slider:layers[0].t.d.k[0].s.fc[0]:0:0:1:0.01
-Color Green:slider:layers[0].t.d.k[0].s.fc[1]:0:0:1:0.01
-Color Blue:slider:layers[0].t.d.k[0].s.fc[2]:0:0:1:0.01
-Position X:slider:layers[0].ks.p.k[0]:0:5:300
-Position Y:slider:layers[0].ks.p.k[1]:0:80:100
-Font Size:slider:layers[0].t.d.k[0].s.s:0:100:150
-Justify:enum:layers[0].t.d.k[0].s.j:text-justify
-:json:layers[0]
+Text:<input type="text" value="Hello"/>
+Color Red:<input type="range" min="0" value="0" max="1" step="0.01"/>
+Color Green:<input type="range" min="0" value="0" max="1" step="0.01"/>
+Color Blue:<input type="range" min="0" value="0" max="1" step="0.01"/>
+Position X:<input type="range" min="0" value="5" max="300"/>
+Position Y:<input type="range" min="0" value="80" max="100"/>
+Font Size:<input type="range" min="0" value="100" max="150"/>
+Justify:<enum>text-justify</enum>
+<json>lottie.layers[0]</json>
+<script>
+lottie.layers[0].t.d.k[0].s.t = data["Text"];
+lottie.layers[0].t.d.k[0].s.fc[0] = data["Color Red"];
+lottie.layers[0].t.d.k[0].s.fc[1] = data["Color Green"];
+lottie.layers[0].t.d.k[0].s.fc[2] = data["Color Blue"];
+lottie.layers[0].ks.p.k[0] = data["Position X"];
+lottie.layers[0].ks.p.k[1] = data["Position Y"];
+lottie.layers[0].t.d.k[0].s.s = data["Font Size"];
+lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
+</script>
 
 
 ### Text More Options

@@ -92,8 +92,10 @@ and it affects the layer on top (the layer before it in the layer list, which ha
 In this example there's a layer with a rectangle and a star being masked by an ellipse:
 
 {lottie_playground:matte.json:512:512}
-Matte Mode:enum:layers[2].tt:matte-mode:1
-
+Matte Mode:<enum value="1">matte-mode</enum>
+<script>
+lottie.layers[2].tt = Number(data["Matte Mode"]);
+</script>
 
 
 ### Masks
@@ -107,7 +109,6 @@ you use an [animated](concepts.md#animated-property) [bezier curve](concepts.md#
 
 {schema_object:helpers/mask}
 EXPAND:#/$defs/helpers/visual-object
-
 
 
 ## Shape Layer
