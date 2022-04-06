@@ -474,16 +474,6 @@ class LottiePlayground(BlockProcessor):
             input.attrib["class"] = "code-input"
             input.attrib["style"] = "width: 100%"
 
-    def _on_line(self, anim_id, index, label, html_string, element, controls_container):
-        id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
-
-        html = etree.fromstring(html_string)
-        if html.tag == "json":
-            json_viewer_id = self._json_viewer(element, id_base)
-            json_viewer_path = html.text
-        else:
-            self.add_control(anim_id, id_base, controls_container, label, html)
-
     def run(self, parent, blocks):
         block = blocks.pop(0)
         match = self.test(parent, block)
@@ -511,7 +501,9 @@ class LottiePlayground(BlockProcessor):
                 html_string += line + "\n"
                 if html_append_until in line:
                     html_append_until = None
-                    self._on_line(anim_id, index, label, html_string, element, controls_container)
+                    id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
+                    html = etree.fromstring(html_string)
+                    self.add_control(anim_id, id_base, controls_container, label, html)
                 continue
 
             row_match = self.re_row.match(line)
@@ -530,7 +522,14 @@ class LottiePlayground(BlockProcessor):
                 html_append_until = "</" + tag + ">"
                 continue
 
-            self._on_line(anim_id, index, label, html_string, element, controls_container)
+            id_base = "playground_{id}_{index}".format(id=anim_id, index=index)
+
+            html = etree.fromstring(html_string)
+            if html.tag == "json":
+                json_viewer_id = self._json_viewer(element, id_base)
+                json_viewer_path = html.text
+            else:
+                self.add_control(anim_id, id_base, controls_container, label, html)
 
         # <script> are gobbled up by a preprocessor
         script = ""
