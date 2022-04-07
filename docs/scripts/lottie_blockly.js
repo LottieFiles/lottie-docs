@@ -1196,16 +1196,15 @@ class BlockyJsonGenerator extends GeneratedGenerator
         return this.block_to_json(input.connection.targetBlock());
     }
 
-    statements_to_json(block, input_name)
+    statements_to_json(block, input_name, null_empty=false)
     {
         var json = [];
 
         var connection = block.getInput(input_name).connection;
         if ( !connection.isConnected() )
-            return [];
+            return null_empty ? undefined : [];
 
         var result = {};
-
 
         for ( var item = connection.targetBlock(); item; item = item.getNextBlock() )
         {
@@ -1213,6 +1212,9 @@ class BlockyJsonGenerator extends GeneratedGenerator
             if ( block !== undefined )
                 json.push(block);
         }
+
+        if ( null_empty && json.length == 0 )
+            return undefined;
 
         return json;
     }

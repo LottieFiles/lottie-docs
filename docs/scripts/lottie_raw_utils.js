@@ -121,7 +121,7 @@ function syntax_edit_tab(element, event)
         event.preventDefault();
         let before_tab = code.slice(0, element.selectionStart);
         let after_tab = code.slice(element.selectionEnd, element.value.length);
-        let cursor_pos = element.selectionEnd + 1;
+        let cursor_pos = element.selectionEnd + 4;
         element.value = before_tab + "    " + after_tab;
         element.selectionStart = cursor_pos;
         element.selectionEnd = cursor_pos;

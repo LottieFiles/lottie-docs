@@ -46,7 +46,9 @@
                     "description": "CSS Class applied to text objects using this font"
                 }
             },
-            "required": []
+            "required": [
+                "fFamily", "origin", "fName", "fStyle"
+            ]
         }
     ]
 }

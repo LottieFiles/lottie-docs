@@ -74,7 +74,19 @@ div[role='main'], body > .container, #playground_layout
             <li><button onclick="load_url_prompt()">Load from URL</button></li>
         </ul>
         <div class="alpha_checkered" id="lottie_player"></div>
-        <textarea id="blockly_output" class="code-input" onchange="parse_json()"></textarea>
+        <div class="highlighted-input" style="height: 100%">
+            <textarea
+                autocomplete="off"
+                class="code-input"
+                data-lang="js"
+                data-lottie-input="editor"
+                 oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); parse_json();"
+                onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);"
+                spellcheck="false"
+                id="blockly_output"
+            ></textarea>
+            <pre aria-hidden="true"><code class="language-js hljs"></code></pre>
+        </div>
     </div>
 </div>
 
@@ -95,14 +107,16 @@ function update_code()
 {
     var json = lottie_blockly.workspace_to_json();
 
-    document.getElementById("blockly_output").value = JSON.stringify(json, null, 4);
+    var output = document.getElementById("blockly_output");
+    output.value = JSON.stringify(json, null, 4);
+    syntax_edit_update(output, output.value);
 
     var anim_data = {
         container: document.getElementById('lottie_player'),
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        animationData: json
+        animationData: JSON.parse(output.value)
     };
 
     var frame = 0;
@@ -121,7 +135,6 @@ function update_code()
     anim = bodymovin.loadAnimation(anim_data);
     if ( frame != 0 )
         anim.goToAndPlay(frame, true);
-
 }
 
 function copy_json()

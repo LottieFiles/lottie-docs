@@ -134,7 +134,7 @@ class BlocklyType:
             .format(name=name, deserialize_expression=deserialize_expression)
         )
 
-    def add_list(self, label, name, **kwargs):
+    def add_list(self, label, name, null_empty=False, **kwargs):
         self.add_label(label)
 
         item_type = kwargs.get("check", "")
@@ -145,7 +145,7 @@ class BlocklyType:
         })
 
         self.serialize.append(
-            "'{name}': this.statements_to_json(block, '{name}')".format(name=name)
+            "'{name}': this.statements_to_json(block, '{name}', {null_empty})".format(name=name, null_empty=str(null_empty).lower())
         )
 
         self.deserialize.append(
@@ -173,7 +173,7 @@ class BlocklyType:
     def add_label(self, label):
         self.message += " " + label
 
-    def add_input(self, label, name, split=False, type_hint="", animated=False, fixed_object=None, **kwargs):
+    def add_input(self, label, name, split=False, type_hint="", animated=False, fixed_object=None, default_block=None, **kwargs):
         self.add_label(label)
 
         self.add_arg({
@@ -205,6 +205,11 @@ class BlocklyType:
                 'if ( json.{name} !== undefined ) this.create_value_block(this.value(block, "{name}"), json.{name}, "{type_hint}")'
                 .format(name=name, type_hint=type_hint)
             )
+
+        if default_block:
+            block = BlockDef.block_definition(self.type)
+            block.values[name] = default_block
+            block.unshade(name)
 
     def to_serialize_function(self):
         indent = " " * 4 * 2
@@ -397,7 +402,10 @@ class SchemaProperties:
 
             if required:
                 if "default" in property:
-                    kwargs["value"] = property["default"]
+                    if type == "string":
+                        kwargs["text"] = property["default"]
+                    else:
+                        kwargs["value"] = property["default"]
                 if "minimum" in property:
                     kwargs["min"] = property["minimum"]
                 if "maximum" in property:
@@ -406,7 +414,6 @@ class SchemaProperties:
                 blockly.add_attribute(label, name, type, **kwargs)
             else:
                 blockly.add_input(label, name, check="value")
-
         elif type == "object":
             kwargs = {}
             type_hint = ""
@@ -432,7 +439,11 @@ class SchemaProperties:
             if name == "p":
                 split = True
 
-            blockly.add_input(label, name, split, type_hint, animated, fixed_object, **kwargs)
+            default_block = self.ref_to_object_check(ref) if name in self.required else None
+            blockly.add_input(label, name, split, type_hint, animated, fixed_object, default_block, **kwargs)
+        elif ref == "#/$defs/helpers/color":
+            default_block = self.ref_to_object_check(ref) if name in self.required else None
+            blockly.add_input(label, name, default_block=default_block, check="value")
         elif type == "array":
             kwargs = {}
             if "items" in property:
@@ -442,7 +453,10 @@ class SchemaProperties:
                     check = self.ref_to_object_check(property["items"]["$ref"])
                     if check:
                         kwargs["check"] = check
-            blockly.add_list(label, name, **kwargs)
+                elif property["items"].get("type", "") == "number":
+                    blockly.add_input(label, name, check="color")
+                    return
+            blockly.add_list(label, name, name == "chars", **kwargs)
         elif type == "base":
             blockly.add_base_input(split_bases[property["$ref"]])
 
@@ -490,7 +504,7 @@ def convert_object(schema_object, schema):
 
     blockly.add_newline()
 
-    if link.cls in ("stroke-dash",):
+    if link.cls in ("stroke-dash", "font", "text-data-keyframe"):
         blockly.kwargs["previousStatement"] = name
         blockly.kwargs["nextStatement"] = name
     elif link.group in ("layers", "shapes", "assets", "effects", "effect-values"):
@@ -607,6 +621,7 @@ categories = {
     "assets": Category(30, "Assets"),
     "effects": Category(330, "Effects"),
     "effect-values": Category(300, "Effect Values", "effect_value_"),
+    "text": Category(200, "Text"),
 }
 split_bases = {
     "#/$defs/layers/layer": Category(0, "Layer Properties", "lottie_layer_common")
@@ -618,7 +633,9 @@ other_bases = {
 }
 custom_colors = {
     "#/$defs/shapes/stroke-dash": 0,
-    "#/$defs/shapes/repeater-transform": 330
+    "#/$defs/shapes/repeater-transform": 330,
+    "#/$defs/text/font": 30,
+    "#/$defs/text/text-data-keyframe": 45,
 }
 exclude = {
     "#/$defs/animation/composition",

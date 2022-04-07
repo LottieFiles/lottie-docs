@@ -4,7 +4,7 @@ In this example, we'll build a simple lottie animation from scratch.
 
 ## Introducing the builder tool
 
-The [builder tool](builder.md) allows you to build lottie animations
+The [builder tool](../playground/builder.md) allows you to build lottie animations
 from its JSON components using a more convenient interface than manually
 editing the cryptic lottie JSON attributes.
 

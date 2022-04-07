@@ -18,12 +18,11 @@ markdown_extensions:
 extra_css:
     - /lottie-docs/style/style.css
 nav:
-    - "Intro": index.md
     - "<i class='fas fa-microscope'></i> Breakdown":
+        - "Intro": index.md
         - breakdown/bouncy_ball.md
         - breakdown/lottie_from_scratch.md
         - breakdown/bezier.md
-        - "Builder": breakdown/builder.md
     - "<i class='fa fa-book'></i> Lottie":
         - concepts.md
         - animation.md
@@ -34,6 +33,9 @@ nav:
         - constants.md
         - text.md
         - expressions.md
-    - "<i class='fa fa-wrench'></i> Advanced Topics":
+    - "<i class='fa fa-puzzle-piece'></i> Playground":
+        - "Builder": playground/builder.md
+        - "JSON Editor": playground/json_editor.md
+    - "<i class='fa fa-wrench'></i> Advanced":
         - rendering.md
         - schema.md

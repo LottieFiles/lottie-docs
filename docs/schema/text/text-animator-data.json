@@ -30,7 +30,7 @@
                     "$ref": "#/$defs/text/masked-path"
                 }
             },
-            "required": []
+            "required": ["a", "d", "m", "p"]
         }
     ]
 }
