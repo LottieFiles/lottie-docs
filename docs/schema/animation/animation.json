@@ -73,7 +73,7 @@
                 },
                 "chars": {
                     "title": "Chars",
-                    "description": "Data defining text characters as lottie shapes",
+                    "description": "Data defining text characters as lottie shapes. If present a player might only render characters defined here and nothing else.",
                     "type": "array",
                     "items": {
                         "$ref": "#/$defs/text/character-data"
