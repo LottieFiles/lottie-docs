@@ -12,6 +12,15 @@
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/{{ config.extra.lottie_player_version }}/lottie.js'></script>
 
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    {% if config.theme.hljs_languages %}
+        {%- for lang in config.theme.hljs_languages %}
+            <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/{{lang}}.min.js"></script>
+        {%- endfor %}
+    {% endif %}
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+
 {% endblock %}
 
 {% block footer %}
@@ -34,12 +43,6 @@
 {% block scripts %}
 
     {{ super() }}
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
-        {% if config.theme.hljs_languages %}
-            {%- for lang in config.theme.hljs_languages %}
-                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/{{lang}}.min.js"></script>
-            {%- endfor %}
-        {% endif %}
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             document.querySelectorAll('pre code').forEach((block) => {

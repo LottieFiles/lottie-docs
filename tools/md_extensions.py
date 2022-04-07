@@ -39,8 +39,10 @@ def css_style(**args):
 class LottieRenderer:
     _id = 0
 
-    @staticmethod
-    def render(*, parent: etree.Element = None, url=None, json_data=None, download_file=None, width=None, height=None):
+    def __init__(self, *, parent: etree.Element = None, download_file=None, width=None, height=None):
+        self.id = LottieRenderer._id
+        LottieRenderer._id += 1
+
         element = etree.Element("div")
 
         if parent is not None:
@@ -48,31 +50,31 @@ class LottieRenderer:
 
         animation = etree.SubElement(element, "div")
         animation.attrib["class"] = "alpha_checkered"
-        animation.attrib["id"] = "lottie_target_%s" % LottieRenderer._id
+        animation.attrib["id"] = "lottie_target_%s" % self.id
 
         if width:
             animation.attrib["style"] = "width:%spx;height:%spx" % (width, height)
 
         play = etree.Element("button")
         element.append(play)
-        play.attrib["id"] = "lottie_play_{id}".format(id=LottieRenderer._id)
+        play.attrib["id"] = "lottie_play_{id}".format(id=self.id)
         play.attrib["onclick"] = (
-            "anim_{id}.play(); " +
+            "lottie_player_{id}.play(); " +
             "document.getElementById('lottie_pause_{id}').style.display = 'inline-block'; " +
             "this.style.display = 'none'"
-        ).format(id=LottieRenderer._id)
+        ).format(id=self.id)
         play.append(etree_fontawesome("play"))
         play.attrib["title"] = "Play"
         play.attrib["style"] = "display:none"
 
         pause = etree.Element("button")
         element.append(pause)
-        pause.attrib["id"] = "lottie_pause_{id}".format(id=LottieRenderer._id)
+        pause.attrib["id"] = "lottie_pause_{id}".format(id=self.id)
         pause.attrib["onclick"] = (
-            "anim_{id}.pause(); " +
+            "lottie_player_{id}.pause(); " +
             "document.getElementById('lottie_play_{id}').style.display = 'inline-block'; " +
             "this.style.display = 'none'"
-        ).format(id=LottieRenderer._id)
+        ).format(id=self.id)
         pause.append(etree_fontawesome("pause"))
         pause.attrib["title"] = "Pause"
 
@@ -87,51 +89,35 @@ class LottieRenderer:
             download.append(download_button)
             download_button.append(etree_fontawesome("download"))
 
+        self.element = element
+        self.variable_name = "lottie_player_{id}".format(id=self.id)
+        self.target_id = "lottie_target_{id}".format(id=self.id)
+
+    def populate_script(self, script_src):
         script = etree.Element("script")
-        element.append(script)
+        self.element.append(script)
+        script.text = AtomicString(script_src)
 
+    @staticmethod
+    def render(*, parent: etree.Element = None, url=None, json_data=None, download_file=None, width=None, height=None):
+        obj = LottieRenderer(parent=parent, download_file=download_file, width=width, height=height)
         if json_data is None:
-            script.text = """
-                var anim_{id} = bodymovin.loadAnimation({{
-                    container: document.getElementById('lottie_target_{id}'),
-                    renderer: 'svg',
-                    loop: true,
-                    autoplay: true,
-                    path: '{file}'
-                }});
-            """.format(id=LottieRenderer._id, file=url)
+            script_src = """
+                var lottie_player_{id} = new LottiePlayer(
+                    'lottie_target_{id}',
+                    '{file}'
+                );
+            """.format(id=obj.id, file=url)
         else:
-            script.text = """
-                var lottie_json_{id} = {json_data};
+            script_src = """
+                var lottie_player_{id} = new LottiePlayer(
+                    'lottie_target_{id}',
+                    {json_data}
+                );
+            """.format(id=obj.id, json_data=json.dumps(json_data))
 
-                var anim_{id} = null;
-
-                function reload_lottie_{id}()
-                {{
-                    var animData = {{
-                        container: document.getElementById('lottie_target_{id}'),
-                        renderer: 'svg',
-                        loop: true,
-                        autoplay: true,
-                        // parse/stringify because the player modifies the passed object
-                        animationData: JSON.parse(JSON.stringify(lottie_json_{id}))
-                    }};
-                    if ( anim_{id} != null )
-                    {{
-                        try {{
-                            anim_{id} = anim_{id}.destroy();
-                        }} catch ( e ) {{}}
-                    }}
-                    anim_{id} = bodymovin.loadAnimation(animData);
-                }}
-
-                reload_lottie_{id}();
-            """.format(id=LottieRenderer._id, json_data=json.dumps(json_data))
-
-        id = LottieRenderer._id
-        LottieRenderer._id += 1
-
-        return (element, id)
+        obj.populate_script(script_src)
+        return (obj.element, obj.id)
 
 
 def get_url(md, path):
@@ -404,8 +390,8 @@ class LottiePlayground(BlockProcessor):
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
-    def _json_viewer(self, element, id_base):
-        json_viewer = id_base + "_json_viewer"
+    def _json_viewer(self, element, anim_id):
+        json_viewer = "json_viewer_%s" % anim_id
         json_viewer_parent = json_viewer + "_parent"
 
         toggle_json = etree.SubElement(element, "button")
@@ -449,7 +435,7 @@ class LottiePlayground(BlockProcessor):
                 if str(value) == default_value:
                     option.attrib["selected"] = "selected"
 
-        input.attrib["oninput"] = "update_lottie_{id}();".format(id=anim_id)
+        input.attrib["oninput"] = "lottie_player_{id}.reload();".format(id=anim_id)
         input.attrib["data-lottie-input"] = str(anim_id)
         input.attrib["autocomplete"] = "off"
         if "name" not in input.attrib:
@@ -481,12 +467,14 @@ class LottiePlayground(BlockProcessor):
         with open(docs_path / "examples" / match.group(1)) as file:
             json_data = json.load(file)
 
-        element, anim_id = LottieRenderer.render(
+        renderer = LottieRenderer(
             parent=parent,
-            json_data=json_data,
             width=match.group(2),
-            height=match.group(3)
+            height=match.group(3),
         )
+
+        element = renderer.element
+        anim_id = renderer.id
 
         element.attrib["class"] = "playground"
 
@@ -526,7 +514,7 @@ class LottiePlayground(BlockProcessor):
 
             html = etree.fromstring(html_string)
             if html.tag == "json":
-                json_viewer_id = self._json_viewer(element, id_base)
+                json_viewer_id = self._json_viewer(element, anim_id)
                 json_viewer_path = html.text
             else:
                 self.add_control(anim_id, id_base, controls_container, label, html)
@@ -545,38 +533,19 @@ class LottiePlayground(BlockProcessor):
                 self.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
 
         if json_viewer_id:
-            script += """
-            if ( typeof hljs !== "undefined" )
-            {{
-                var raw_json = JSON.stringify({path}, undefined, 4);
-                var pretty_json = hljs.highlight("json", raw_json).value;
-                document.getElementById('{json_viewer_id}').innerHTML = pretty_json;
-            }}
-            """.format(id=anim_id, path=json_viewer_path, json_viewer_id=json_viewer_id)
+            script += "this.json_viewer_contents = %s;" % json_viewer_path
 
-        script_element = etree.SubElement(element, "script")
-        script_element.text = AtomicString("""
-        function update_lottie_{id}()
-        {{
-            var lottie = lottie_json_{id};
-            var data = Object.fromEntries(
-                Array.from(document.querySelectorAll("*[data-lottie-input='{id}']"))
-                .map(a => {{
-                    var value = a.value;
-                    if ( ["number", "range"].includes(a.type) )
-                        value = Number(a.value);
-                    else if ( a.type == "checkbox" )
-                        value = a.checked;
-                    return [a.name, value];
-                }})
-            );
-            {source}
-            reload_lottie_{id}();
-            // need to defer to wait for hljs to load
-            window.addEventListener("load", update_lottie_{id});
-        }}
-        update_lottie_{id}();
-        """.format(id=anim_id, source=script))
+        renderer.populate_script("""
+        var lottie_player_{id} = new PlaygroundPlayer(
+            {id},
+            'lottie_target_{id}',
+            {json_data},
+            function (lottie, data)
+            {{
+                {source}
+            }}
+        );
+        """.format(id=anim_id, source=script, json_data=json.dumps(json_data)))
 
 
 @dataclasses.dataclass
