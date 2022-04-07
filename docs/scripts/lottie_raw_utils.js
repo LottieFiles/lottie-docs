@@ -97,3 +97,35 @@ class PlaygroundPlayer extends LottiePlayer
         }
     }
 }
+
+function syntax_edit_update(element, text)
+{
+    let result_element = element.parentElement.querySelector("code");
+    if ( text[text.length-1] == "\n" )
+        text += " ";
+    result_element.innerHTML = hljs.highlight(element.dataset.lang, text).value;
+}
+
+function syntax_edit_scroll(element)
+{
+    let result_element = element.parentElement.querySelector("pre");
+    result_element.scrollTop = element.scrollTop;
+    result_element.scrollLeft = element.scrollLeft;
+}
+
+function syntax_edit_tab(element, event)
+{
+    let code = element.value;
+    if ( event.key == "Tab" )
+    {
+        event.preventDefault();
+        let before_tab = code.slice(0, element.selectionStart);
+        let after_tab = code.slice(element.selectionEnd, element.value.length);
+        let cursor_pos = element.selectionEnd + 1;
+        element.value = before_tab + "    " + after_tab;
+        element.selectionStart = cursor_pos;
+        element.selectionEnd = cursor_pos;
+        syntax_edit_update(element, element.value);
+    }
+}
+

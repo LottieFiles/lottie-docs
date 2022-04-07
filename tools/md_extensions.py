@@ -423,6 +423,7 @@ class LottiePlayground(BlockProcessor):
 
         label_element.tail = " "
         td = etree.SubElement(tr, "td", {"style": "width: 100%"})
+        input_wrapper = input
 
         if input.tag == "enum":
             enum_id = input.text
@@ -434,13 +435,29 @@ class LottiePlayground(BlockProcessor):
                 option.text = opt_label
                 if str(value) == default_value:
                     option.attrib["selected"] = "selected"
+        elif input.tag == "highlight":
+            input_wrapper = etree.Element("div", {"class": "highlighted-input"})
+            lang = input.attrib.get("lang", "javascript")
+            contents = input.text.strip()
+            input = etree.SubElement(input_wrapper, "textarea", {
+                "spellcheck": "false",
+                "oninput": "syntax_edit_update(this, this.value); syntax_edit_scroll(this);",
+                "onscroll": "syntax_edit_scroll(this);",
+                "onkeydown": "syntax_edit_tab(this, event);",
+                "data-lang": lang,
+            })
+            input.text = contents
+            pre = etree.SubElement(input_wrapper, "pre", {"aria-hidden": "true"})
+            code = etree.SubElement(pre, "code", {"class": "language-js hljs"})
+            code.text = contents
 
-        input.attrib["oninput"] = "lottie_player_{id}.reload();".format(id=anim_id)
+        input.attrib.setdefault("oninput", "")
+        input.attrib["oninput"] += "lottie_player_{id}.reload();".format(id=anim_id)
         input.attrib["data-lottie-input"] = str(anim_id)
         input.attrib["autocomplete"] = "off"
         if "name" not in input.attrib:
             input.attrib["name"] = label
-        td.append(input)
+        td.append(input_wrapper)
 
         if input.attrib.get("type", "") == "range":
             etree.SubElement(td, "span", {

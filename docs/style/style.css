@@ -83,12 +83,66 @@
     }
 }
 
-.code-input {
+.code-input, .highlighted-input {
+    background-color: #fcfdff;
+    border: 1px solid #ccc;
+}
+
+.code-input, .highlighted-input, .highlighted-input * {
     font-family: Hack,Menlo,Monaco,Consolas,"Courier New",monospace;
     white-space: pre;
     font-size: small;
     color: #333;
     font-size: 14px;
-    background-color: #fcfdff;
-    border: 1px solid #ccc;
 }
+
+.highlighted-input {
+    position: relative;
+    resize: vertical;
+    overflow: auto;
+    height: 128px;
+}
+
+.highlighted-input:focus-within {
+    outline: 2px solid #3daee9;
+}
+
+.highlighted-input textarea, .highlighted-input pre {
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
+    border: 0;
+    overflow: auto;
+    white-space: nowrap;
+
+    text-align: left;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+}
+
+.highlighted-input textarea {
+    color: transparent;
+    background: transparent;
+    z-index: 1;
+    resize: none;
+    caret-color: black;
+    white-space: pre;
+    outline: none;
+}
+
+.highlighted-input pre {
+    z-index: 0;
+}
+.highlighted-input code {
+    background-color: transparent;
+    padding: 0;
+    background: none;
+}
+

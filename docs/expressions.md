@@ -23,7 +23,6 @@ More resources on AE expressions:
 * [After Effects Expression Reference](https://ae-expressions.docsforadobe.dev/)
 
 
-
 ## Global objects
 
 ### `$bm_rt`
@@ -44,12 +43,12 @@ $bm_rt = 60;
 ```
 
 {lottie_playground:image.json:512:512}
-Rotation Expression:<textarea>
+Rotation Expression:<highlight>
 var $bm_rt = 60;
-</textarea>
-Position Expression:<textarea>
+</highlight>
+Position Expression:<highlight>
 var $bm_rt = [256, 256];
-</textarea>
+</highlight>
 <json>lottie.layers[0].ks</json>
 <script>
 lottie.layers[0].ks.r.x = data["Rotation Expression"];
@@ -69,9 +68,9 @@ notes: Read only
 
 
 {lottie_playground:image.json:512:512}
-Rotation Expression:<textarea>
+Rotation Expression:<highlight>
 var $bm_rt = time * 360;
-</textarea>
+</highlight>
 <json>lottie.layers[0].ks.r</json>
 <script>
 lottie.layers[0].ks.r.x = data["Rotation Expression"];
@@ -87,11 +86,11 @@ description: The value the property would have without expressions
 notes: Read only
 
 {lottie_playground:image.json:512:512}
-Position Expression:<textarea>
+Position Expression:<highlight>
 var $bm_rt = [];
 $bm_rt[0] = value[0] + Math.cos(2 * Math.PI * time) * 100;
 $bm_rt[1] = value[1];
-</textarea>
+</highlight>
 <json>lottie.layers[0].ks.p</json>
 <script>
 lottie.layers[0].ks.p.x = data["Position Expression"];
@@ -510,12 +509,12 @@ return: Depends on the property :
 Composition object
 
 {lottie_playground:image_animated.json:512:512}
-Position Expression:<textarea>
+Position Expression:<highlight>
 var $bm_rt = [256, 256]
 var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.PI;
 $bm_rt[0] += Math.cos(rotation) * 200;
 $bm_rt[1] += Math.sin(rotation) * 200;
-</textarea>
+</highlight>
 <json>lottie.layers[0].ks.p</json>
 <script>
 lottie.layers[0].ks.p.x = data["Position Expression"];

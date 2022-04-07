@@ -97,10 +97,6 @@ The header works the same as with `{lottie:...}` but it's followed by a sequence
 
 The `label` is just text shown before the input element, the elements are as you would add them in HTML.
 
-There's a shorthand for dropdowns showing enum values (`enum-name` is as you'd pass it to `{schema_enum:...}`):
-
-    <enum>enum-name</enum>
-
 Due to limitation of the parser, the HTML elements must be valid XML.
 Also multiline elements are only allowed if the opening tag is in the same line as the label.
 
@@ -114,3 +110,23 @@ when the user makes some changes on the HTML inputs. You have access to the foll
 
 * `lottie` The Lottie structure as a JS object
 * `data` Data from all controls as an object, keys are based on element names or labels
+
+
+### Custom Inputs
+
+
+#### <enum>
+
+It's a for dropdowns showing enum values.
+`enum-name` is as you'd pass it to `{schema_enum:...}`.
+
+    <enum>enum-name</enum>
+
+
+### <highlight>
+
+For a textarea with syntax highlighting.
+
+    <highlight lang="javascript">
+    var foo = 123;
+    </highlight>
