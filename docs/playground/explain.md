@@ -118,7 +118,7 @@ class SchemaData
     get root()
     {
         if ( !this._root )
-            this._root = this.get_ref("$defs/animation/animation");
+            this._root = this.get_ref("#/$defs/animation/animation");
         return this._root;
     }
 
@@ -217,6 +217,27 @@ class SchemaProperty
             box.appendChild(document.createTextNode(this.description));
         }
     }
+
+    explain_value(object, value, formatter)
+    {
+        if ( Array.isArray(value) )
+        {
+            formatter.write_item("[todo]", "comment");
+        }
+        else if ( typeof value == "object" )
+        {
+            if ( value === null )
+            {
+                formatter.encode_item(value);
+                return;
+            }
+            formatter.write_item("{todo}", "comment");
+        }
+        else
+        {
+            formatter.encode_item(value);
+        }
+    }
 }
 
 class SchemaObject
@@ -233,7 +254,7 @@ class SchemaObject
             this.cls = match[2];
         }
         this.properties = [];
-        this._title = null;
+        this._title = this.cls;
         this._description = null;
     }
 
@@ -319,25 +340,21 @@ class SchemaObject
         for ( var i = 0; i < entries.length; i++ )
         {
             var name = entries[i][0];
+            var value = entries[i][1];
             formatter.write_indent();
             if ( this.properties[name] )
             {
                 var prop_box = formatter.info_box(JSON.stringify(name), "string")
                 this.properties[name].populate_info_box(prop_box);
+                formatter.write(": ");
+                this.properties[name].explain_value(this, value, formatter);
             }
             else
             {
                 formatter.encode(name);
-            }
-
-            formatter.write(": ");
-
-            var value = entries[i][1];
-            if ( (typeof value == "object" && value !== null) || typeof value == "array" )
-                formatter.encode_item("todo", "comment");
-            else
+                formatter.write(": ");
                 formatter.encode_item(value);
-
+            }
 
             if ( i != entries.length -1 )
                 formatter.write(",\n");
@@ -349,6 +366,24 @@ class SchemaObject
 
     populate_info_box(box)
     {
+        var title = box.appendChild(document.createElement("strong"));
+        var links = this.schema.get_links(this.group, this.cls, this.title);
+        if ( links.length == 0 )
+        {
+            title.appendChild(document.createTextNode(this.title));
+        }
+        else
+        {
+            for ( var link of links )
+            {
+                var a = title.appendChild(document.createElement("a"));
+                a.setAttribute("href", `/lottie-docs/${link.page}#${link.anchor}`);
+                a.appendChild(document.createTextNode(link.name));
+                title.appendChild(document.createTextNode(" "));
+            }
+        }
+        title.appendChild(document.createElement("br"));
+
         box.appendChild(document.createTextNode(this.description));
     }
 }
