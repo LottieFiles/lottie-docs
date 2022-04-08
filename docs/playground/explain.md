@@ -97,7 +97,7 @@ function critical_error(err)
 
 class ReferenceLink
 {
-    constructor(anchor, page, name)
+    constructor(page, anchor, name)
     {
         this.page = page;
         this.anchor = anchor;
@@ -236,7 +236,6 @@ class SchemaData
 
     find_object(json_object, schema_definitions)
     {
-        console.log("checking", json_object);
         for ( var def of schema_definitions )
         {
             if ( schema_definitions.properties || schema_definitions.allOf )
@@ -340,6 +339,18 @@ class SchemaData
     }
 }
 
+
+function info_box_simple(box, title, description)
+{
+    box.appendChild(document.createElement("strong"))
+    .appendChild(document.createTextNode(title));
+    if ( description )
+    {
+        box.appendChild(document.createElement("br"));
+        box.appendChild(document.createTextNode(description));
+    }
+}
+
 class SchemaProperty
 {
     constructor(schema, name)
@@ -362,13 +373,7 @@ class SchemaProperty
 
     populate_info_box(box)
     {
-        box.appendChild(document.createElement("strong"))
-        .appendChild(document.createTextNode(this.title ?? this.name));
-        if ( this.description )
-        {
-            box.appendChild(document.createElement("br"));
-            box.appendChild(document.createTextNode(this.description));
-        }
+        info_box_simple(box, this.title ?? this.name, this.description);
     }
 
     explain_value(object, value, formatter)
@@ -383,11 +388,6 @@ class SchemaProperty
             {
                 formatter.encode_item(value);
             }
-            else if ( Object.keys(value).length == 0 )
-            {
-                formatter.write("{}");
-                return;
-            }
             else
             {
                 var found = this.schema.find_object(value, this.definitions);
@@ -399,7 +399,23 @@ class SchemaProperty
         }
         else
         {
-            formatter.encode_item(value);
+            var const_description = null;
+            function callback(object)
+            {
+                if ( object.const === value && object.title != this.title )
+                    const_description = object;
+            }
+            this.schema.resolve_callback(this.definitions, callback.bind(this));
+
+            if ( const_description && (const_description.title || const_description.description) )
+            {
+                var box = formatter.info_box(JSON.stringify(value), formatter.hljs_type(value));
+                info_box_simple(box, const_description.title ?? value, const_description.description);
+            }
+            else
+            {
+                formatter.encode_item(value);
+            }
         }
     }
 
@@ -522,10 +538,16 @@ class SchemaObject
 
     explain(json, formatter)
     {
-        formatter.open("{ ");
-        this.populate_info_box (
-            formatter.info_box(this.title, "comment", icons[this.ref] ?? "fas fa-info-circle")
-        );
+        if ( Object.keys(json).length == 0 )
+        {
+            formatter.write("{");
+            this.info_box(formatter);
+            formatter.write("}");
+            return;
+        }
+
+        formatter.open("{");
+        this.info_box(formatter);
         formatter.write("\n");
         var entries = Object.entries(json);
         for ( var i = 0; i < entries.length; i++ )
@@ -555,8 +577,9 @@ class SchemaObject
         formatter.close("}");
     }
 
-    populate_info_box(box)
+    info_box(formatter)
     {
+        var box = formatter.info_box(this.title, "comment", icons[this.ref] ?? "fas fa-info-circle");
         var title = box.appendChild(document.createElement("strong"));
         var links = this.schema.get_links(this.group, this.cls, this.title);
         if ( links.length == 0 )
@@ -568,7 +591,7 @@ class SchemaObject
             for ( var link of links )
             {
                 var a = title.appendChild(document.createElement("a"));
-                a.setAttribute("href", `/lottie-docs/${link.page}#${link.anchor}`);
+                a.setAttribute("href", `/lottie-docs/${link.page}/#${link.anchor}`);
                 a.appendChild(document.createTextNode(link.name));
                 title.appendChild(document.createTextNode(" "));
             }
@@ -587,14 +610,17 @@ class JsonFormatter
         this.indent = 0;
     }
 
+    hljs_type(json_object)
+    {
+        if ( json_object === null || json_object === true || json_object === false )
+            return "literal";
+        return typeof json_object;
+    }
+
     encode_item(json_object, hljs_type=null)
     {
         if ( hljs_type === null )
-        {
-            hljs_type = typeof json_object;
-            if ( json_object === null || json_object === true || json_object === false )
-                hljs_type = "literal";
-        }
+            hljs_type = this.hljs_type(json_object);
 
         this.write_item(JSON.stringify(json_object), hljs_type);
     }
