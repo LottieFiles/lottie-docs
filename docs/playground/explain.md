@@ -105,6 +105,8 @@ class ReferenceLink
     }
 }
 
+class SchemaRecursionStop {}
+
 class SchemaData
 {
     constructor(schema, mapping_data)
@@ -186,12 +188,163 @@ class SchemaData
         }
         return links;
     }
+
+    /**
+     * Calls a callback on every referenced object definition
+     *
+     * Basically runs through all the $ref and nested definitions,
+     * calling \p callback.
+     *
+     * \param object    Object from the schema dict
+     * \param callback  Callback to call
+     */
+    resolve_callback(obj, callback)
+    {
+        if ( !obj )
+            return;
+
+        if ( Array.isArray(obj) )
+        {
+            for ( let sub of obj )
+                this.resolve_callback(sub, callback);
+            return;
+        }
+
+        if ( obj["$ref"] )
+            this.resolve_callback(this.get_raw(obj["$ref"]), callback);
+
+        if ( obj.allOf )
+            for ( let val of obj.allOf )
+                this.resolve_callback(val, callback);
+
+        if ( obj.anyOf )
+            for ( let val of obj.anyOf )
+                this.resolve_callback(val, callback);
+
+        if ( obj.oneOf )
+            for ( let val of obj.oneOf )
+                this.resolve_callback(val, callback);
+
+        if ( obj.if )
+        {
+            this.resolve_callback(obj.then, callback);
+            this.resolve_callback(obj.else, callback);
+        }
+
+        callback(obj);
+    }
+
+    find_object(json_object, schema_definitions)
+    {
+        console.log("checking", json_object);
+        for ( var def of schema_definitions )
+        {
+            if ( schema_definitions.properties || schema_definitions.allOf )
+            {
+                if ( this.validate(json_object, def) )
+                    return def;
+            }
+            else
+            {
+                if ( def.$ref )
+                {
+                    var ref = this.get_ref(def.$ref);
+                    if ( this.validate(json_object, ref.object) )
+                        return ref;
+                }
+
+                var look_into = [];
+                if ( def.oneOf )
+                    look_into = look_into.concat(def.oneOf);
+                if ( def.anyOf )
+                    look_into = look_into.concat(def.anyOf);
+                var found = this.find_object(json_object, look_into);
+                if ( found )
+                    return found;
+            }
+
+            if ( found )
+                return found;
+        }
+
+        return null;
+    }
+
+    _type_of(json_value)
+    {
+        if ( Array.isArray(json_value) )
+            return "array";
+        return typeof json_value;
+    }
+
+    _norm_type(schema_type)
+    {
+        if ( schema_type == "integer" )
+            return "number";
+        return schema_type;
+    }
+
+    validate(json_value, def)
+    {
+        if ( "const" in def && json_value === def.const )
+            return true;
+
+        if ( "type" in def )
+        {
+            if ( this._type_of(json_value) != this._norm_type(def.type) )
+                return false;
+        }
+
+        if ( typeof json_value == "object" )
+        {
+            if ( def.properties )
+            {
+                for ( var [name, prop] of Object.entries(json_value) )
+                {
+                    if ( name in def.properties )
+                        if ( !this.validate(prop, def.properties[name]) )
+                            return false;
+                }
+            }
+
+            if ( "required" in def )
+            {
+                for ( var req of def.required )
+                    if ( !(req in json_value) )
+                        return false;
+            }
+        }
+
+        if ( def.allOf )
+        {
+            for ( var base of def.allOf )
+                if ( !this.validate(json_value, base) )
+                    return false;
+        }
+
+        if ( def.$ref )
+        {
+            if ( !this.validate(json_value, this.get_raw(def.$ref)) )
+                return false;
+        }
+
+        // leave this last
+        if ( def.oneOf )
+        {
+            for ( var base of def.oneOf )
+                if ( this.validate(json_value, base) )
+                    return true;
+            return false;
+        }
+        return true;
+    }
 }
 
 class SchemaProperty
 {
-    constructor(name)
+    constructor(schema, name)
     {
+        this.schema = schema;
         this.name = name;
         this.title = null;
         this.description = null;
@@ -222,21 +375,77 @@ class SchemaProperty
     {
         if ( Array.isArray(value) )
         {
-            formatter.write_item("[todo]", "comment");
+            this.explain_array(value, formatter);
         }
         else if ( typeof value == "object" )
         {
             if ( value === null )
             {
                 formatter.encode_item(value);
+            }
+            else if ( Object.keys(value).length == 0 )
+            {
+                formatter.write("{}");
                 return;
             }
-            formatter.write_item("{todo}", "comment");
+            else
+            {
+                var found = this.schema.find_object(value, this.definitions);
+                if ( found )
+                    found.explain(value, formatter);
+                else
+                    formatter.write_item(JSON.stringify(value), "comment");
+            }
         }
         else
         {
             formatter.encode_item(value);
         }
+    }
+
+    explain_array(value, formatter)
+    {
+        if ( value.length == 0 )
+        {
+            formatter.write("[]");
+            return;
+        }
+
+        var items = [];
+        var can_be_array = false;
+        function callback(object)
+        {
+            if ( object.type == "array" )
+                can_be_array = true;
+            if ( object.items )
+                items.push(object.items);
+        }
+        this.schema.resolve_callback(this.definitions, callback);
+
+        if ( !can_be_array || items.length == 0 )
+        {
+            formatter.write_item(JSON.stringify(value), "comment");
+            return;
+        }
+
+        items = [items[0].oneOf[4]];
+        formatter.open("[\n");
+        for ( var i = 0; i < value.length; i++ )
+        {
+            formatter.write_indent();
+
+            var found = this.schema.find_object(value[i], items);
+            if ( found )
+                found.explain(value[i], formatter);
+            else
+                formatter.write_item(JSON.stringify(value[i]), "comment");
+
+            if ( i != value.length -1 )
+                formatter.write(",\n");
+            else
+                formatter.write("\n");
+        }
+        formatter.close("]");
     }
 }
 
@@ -266,34 +475,17 @@ class SchemaObject
 
         this._title = this.cls ?? this.ref;
         this._description = "";
-        this._collect_object(this.object);
+        this.schema.resolve_callback(this.object, this._on_collect_object.bind(this));
     }
 
-    _collect_object(obj)
+    _on_collect_object(obj)
     {
-        if ( !obj )
-            return;
-
-        if ( obj["$ref"] )
-            this._collect_object(this.schema.get_raw(obj["$ref"]));
-
-        if ( obj.allOf )
-            for ( let val of obj.allOf )
-                this._collect_object(val);
-
-        if ( obj.if )
-        {
-            this._collect_object(obj.if);
-            this._collect_object(obj.then);
-            this._collect_object(obj.else);
-        }
-
         if ( obj.properties )
         {
             for ( let [name, val] of Object.entries(obj.properties) )
             {
                 if ( !this.properties[name] )
-                    this.properties[name] = new SchemaProperty(name);
+                    this.properties[name] = new SchemaProperty(this.schema, name);
                 this.properties[name].add_definition(val);
             }
         }
@@ -330,7 +522,6 @@ class SchemaObject
 
     explain(json, formatter)
     {
-        formatter.write_indent();
         formatter.open("{ ");
         this.populate_info_box (
             formatter.info_box(this.title, "comment", icons[this.ref] ?? "fas fa-info-circle")
@@ -351,7 +542,7 @@ class SchemaObject
             }
             else
             {
-                formatter.encode(name);
+                formatter.encode_item(name);
                 formatter.write(": ");
                 formatter.encode_item(value);
             }
@@ -463,7 +654,7 @@ class JsonFormatter
     {
         this.indent -= 1;
         this.write_indent();
-        this.write(char+"\n");
+        this.write(char);
     }
 }
 
@@ -471,7 +662,25 @@ var lottie = null;
 var parent = document.getElementById("explainer");
 var schema = null;
 var icons = {
-    "$defs/animation/animation": "fas fa-video",
+    "#/$defs/animation/animation": "fas fa-video",
+    "#/$defs/assets/image": "fas fa-file-image",
+    "#/$defs/assets/sound": "fas fa-file-audio",
+    "#/$defs/assets/precomposition": "fas fa-file-video",
+    "#/$defs/layers/shape-layer": "fas fa-shapes",
+    "#/$defs/layers/image-layer": "fas fa-image",
+    "#/$defs/shapes/group": "fas fa-object-group",
+    "#/$defs/shapes/ellipse": "fas fa-circle",
+    "#/$defs/shapes/rectangle": "fas fa-rectangle",
+    "#/$defs/shapes/polystar": "fas fa-star",
+    "#/$defs/shapes/polystar": "fas fa-star",
+    "#/$defs/shapes/path": "fas fa-bezier-curve",
+    "#/$defs/shapes/path": "fas fa-bezier-curve",
+    "#/$defs/shapes/fill": "fas fa-fill-drip",
+    "#/$defs/shapes/stroke": "fas fa-paint-brush",
+    "#/$defs/shapes/gradient-fill": "fas fa-fill-drip",
+    "#/$defs/shapes/gradient-stroke": "fas fa-paint-brush",
+    "#/$defs/shapes/transform": "fas fa-arrows-alt",
+    "#/$defs/helpers/transform": "fas fa-arrows-alt",
 }
 
 var requests = [fetch("/lottie-docs/schema/lottie.schema.json"), fetch("/lottie-docs/schema/docs_mapping.json")]

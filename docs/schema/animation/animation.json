@@ -53,6 +53,7 @@
                 "assets": {
                     "title": "Assets",
                     "type": "array",
+                    "description": "List of assets that can be referenced by layers",
                     "items": {
                         "oneOf": [
                             {
