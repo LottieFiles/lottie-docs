@@ -11,6 +11,7 @@ from markdown.inlinepatterns import InlineProcessor
 from markdown.blockprocessors import BlockProcessor
 from markdown.extensions import Extension
 from markdown.util import HTML_PLACEHOLDER_RE, AtomicString
+from schema_lib import Schema
 
 
 docs_path = Path(__file__).parent.parent / "docs"
@@ -195,43 +196,33 @@ class Matrix(BlockProcessor):
         return True
 
 
-class SchemaData:
-    def __init__(self, data=None):
-        self._data = data
-
-    def get_schema(self):
-        if self._data is None:
-            with open(docs_path / "schema" / "lottie.schema.json") as file:
-                self._data = json.load(file)
-        return self._data
-
-    def get_ref(self, ref: str):
-        if not ref.startswith("#/") and not ref.startswith("/$defs") and not ref.startswith("$defs"):
-            ref = "$defs/" + ref
-        return self.get_path(ref.strip("#").strip("/").split("/"))
-
-    def get_path(self, path):
-        schema = self.get_schema()
-        for chunk in path:
-            schema = schema[chunk]
-        return schema
-
-    def get_enum_values(self, name):
-        enum = self.get_path(["$defs", "constants", name])
-        data = []
-        for item in enum["oneOf"]:
-            data.append((item["const"], item["title"], item.get("description", "")))
-        return data
+def enum_values(schema: Schema, name):
+    enum = schema.get_ref(["$defs", "constants", name])
+    data = []
+    for item in enum["oneOf"]:
+        data.append((item["const"], item["title"], item.get("description", "")))
+    return data
 
 
 class ReferenceLink:
-    def __init__(self, group, cls, name):
-        self.page = self.group = group
-        self.anchor = self.cls = cls
+    _link_mapping = None
+
+    def __init__(self, page, anchor, name, group=None, cls=None):
+        self.group = group
+        self.cls = cls
         self.name = name
+        self.page = page or group
+        self.anchor = anchor or cls
+
+    @classmethod
+    def mapping_data(cls):
+        if cls._link_mapping is None:
+            with open(docs_path / "schema" / "docs_mapping.json") as file:
+                cls._link_mapping = json.load(file)
+        return cls._link_mapping
 
 
-def ref_links(ref: str, data: SchemaData):
+def ref_links(ref: str, data: Schema):
     chunks = ref.strip("#/").split("/")
     if len(chunks) > 0 and chunks[0] == "$defs":
         chunks.pop(0)
@@ -239,90 +230,45 @@ def ref_links(ref: str, data: SchemaData):
     if len(chunks) != 2:
         return []
 
-    name = data.get_ref(ref).get("title", chunks[1]) if data else chunks[1]
-    link = ReferenceLink(chunks[0], chunks[1], name)
+    group = chunks[0]
+    cls = chunks[1]
 
-    if link.group == "animated-properties":
-        extra = None
-        link.name = "Animated "
-        link.page = "concepts"
-        link.anchor = "animated-property"
-        if link.cls == "value":
-            link.name += "number"
-        elif link.cls == "multi-dimensional":
-            link.name += "Vector"
-        elif link.cls == "color-value":
-            extra = ReferenceLink("concepts", "colors", "Color")
-        elif link.cls == "shape-property":
-            extra = ReferenceLink("concepts", "colors", "Bezier")
-        elif link.cls == "position":
-            link.anchor = "animated-position"
-            name += "Position"
+    values = {
+        "extra": None,
+        "page": group,
+        "anchor": cls,
+        "name": data.get_ref(ref).get("title", cls) if data else cls,
+        "name_prefix": "",
+    }
 
-        if extra:
-            return [link, extra]
+    if group == "constants":
+        values["anchor"] = values["anchor"].replace("-", "")
 
-    elif link.group == "shapes":
-        if link.cls == "gradient" or link.cls == "gradient-stroke" or link.cls == "gradient-fill":
-            link.anchor = "gradients"
-        elif link.cls == "shape-element":
-            link.anchor = "shape-elements"
-        elif link.cls == "base-stroke":
-            link.anchor = "stroke"
-        elif link.cls == "trim":
-            link.anchor = "trim-path"
-        elif link.cls == "shape-list":
-            link.page = "concepts"
-            link.anchor = "lists-of-layers-and-shapes"
-        elif link.cls == "transform":
-            link.anchor = "transform-shape"
-        elif link.cls == "modifier":
-            link.anchor = "modifiers"
-        elif link.cls == "stroke-dash":
-            link.anchor = "stroke-dashes"
+    mapping_data = ReferenceLink.mapping_data().get(group, None)
+    if mapping_data:
+        values.update(mapping_data.get("_defaults", {}))
+        values.update(mapping_data.get(cls, {}))
 
-    elif link.group == "helpers":
-        link.page = "concepts"
-        if link.cls == "mask":
-            link.page = "layers"
-            link.anchor = "masks"
-        elif link.cls == "color":
-            link.anchor = "colors"
-        elif link.cls == "int-boolean":
-            link.anchor = "booleans"
-            link.name = "0-1 Integer"
-        elif link.cls == "visual-object":
-            return []
-        elif link.cls == "marker":
-            link.page = "animation"
+    links = []
+    if values["page"]:
+        links.append(ReferenceLink(
+            values["page"], values["anchor"], values["name_prefix"] + values["name"], group, cls
+        ))
 
-    elif link.group == "effect-values":
-        link.page = "effects"
-        if link.cls == "effect-value":
-            link.anchor = "effect-values"
+    if values["extra"]:
+        extra = values["extra"]
+        links.append(ReferenceLink(
+            extra["page"], extra["anchor"], extra["name"],
+        ))
 
-    elif link.group == "constants":
-        link.anchor = link.anchor.replace("-", "")
-    elif link.group == "text" and link.cls == "font":
-        link.anchor = "font-list"
-    elif link.group == "effects" and link.cls == "effect":
-        link.anchor = "effects"
-    elif link.group == "assets" and link.cls == "asset":
-        link.anchor = "assets"
-    elif link.group == "animation" and link.cls == "composition":
-        link.page = "concepts"
-        link.anchor = "lists-of-layers-and-shapes"
-    elif link.group == "layers" and link.cls == "visual-layer":
-        link.anchor = "layer"
-
-    return [link]
+    return links
 
 
 class SchemaEnum(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{schema_enum:([^}]+)\}\s*(?:\n|$)')
     re_row = re.compile(r'^\s*(\w+)\s*:\s*(.*)')
 
-    def __init__(self, parser, schema_data: SchemaData):
+    def __init__(self, parser, schema_data: Schema):
         super().__init__(parser)
         self.schema_data = schema_data
 
@@ -332,7 +278,7 @@ class SchemaEnum(BlockProcessor):
     def run(self, parent, blocks):
         enum_name = self.test(parent, blocks[0]).group(1)
 
-        enum_data = self.schema_data.get_enum_values(enum_name)
+        enum_data = enum_values(self.schema_data, enum_name)
 
         table = etree.SubElement(parent, "table")
         descriptions = {}
@@ -369,13 +315,13 @@ class SchemaEnum(BlockProcessor):
 
 
 class SchemaAttribute(InlineProcessor):
-    def __init__(self, md, schema_data: SchemaData):
+    def __init__(self, md, schema_data: Schema):
         super().__init__(r'\{schema_attribute:(?P<attribute>[^:]+):(?P<path>[^:]+)\}', md)
         self.schema_data = schema_data
 
     def handleMatch(self, match, data):
         span = etree.Element("span")
-        span.text = self.schema_data.get_ref(match.group("path")).get(match.group("attribute"), "")
+        span.text = self.schema_data.get_ref("$defs/" + match.group("path")).get(match.group("attribute"), "")
         return span, match.start(0), match.end(0)
 
 
@@ -383,7 +329,7 @@ class LottiePlayground(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?\}')
     re_row = re.compile(r'^\s*(?:(?P<label>[^:]*)\s*:)?\s*(?P<html><(?P<tag>[-a-zA-Z_]+).*>)?')
 
-    def __init__(self, parser, schema_data: SchemaData):
+    def __init__(self, parser, schema_data: Schema):
         super().__init__(parser)
         self.schema_data = schema_data
 
@@ -430,7 +376,7 @@ class LottiePlayground(BlockProcessor):
             default_value = input.attrib.get("value", "")
 
             input = etree.Element("select")
-            for value, opt_label, _ in self.schema_data.get_enum_values(enum_id):
+            for value, opt_label, _ in enum_values(self.schema_data, enum_id):
                 option = etree.SubElement(input, "option", {"value": str(value)})
                 option.text = opt_label
                 if str(value) == default_value:
@@ -578,7 +524,7 @@ class SchemaObject(BlockProcessor):
     re_row = re.compile(r'^\s*(\w+)\s*:\s*(.*)')
     prop_fields = {f.name for f in dataclasses.fields(SchemaProperty)}
 
-    def __init__(self, parser, schema_data: SchemaData):
+    def __init__(self, parser, schema_data: Schema):
         super().__init__(parser)
         self.schema_data = schema_data
 
@@ -646,7 +592,7 @@ class SchemaObject(BlockProcessor):
     def run(self, parent, blocks):
         object_name = self.test(parent, blocks[0]).group(1)
 
-        schema_data = self.schema_data.get_ref(object_name)
+        schema_data = self.schema_data.get_ref("$defs/" + object_name)
 
         prop_dict = {}
         base_list = []
@@ -737,7 +683,7 @@ class JsonHtmlSerializer:
         self.encoder = json.JSONEncoder()
         self.parent.text = ""
         self.md = md
-        self.schema = SchemaData(json_data)
+        self.schema = Schema(json_data)
 
     def encode(self, json_object, indent, id=None):
         if isinstance(json_object, dict):
@@ -879,7 +825,7 @@ class SchemaLink(InlineProcessor):
 class SchemaEffect(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{schema_effect:([^}]+)\}\s*(?:\n|$)')
 
-    def __init__(self, parser, schema_data: SchemaData):
+    def __init__(self, parser, schema_data: Schema):
         super().__init__(parser)
         self.schema_data = schema_data
 
@@ -890,7 +836,7 @@ class SchemaEffect(BlockProcessor):
         effect_name = self.test(parent, blocks[0]).group(1)
         blocks.pop(0)
 
-        effect_data = self.schema_data.get_ref(effect_name)["allOf"][-1]["properties"]["ef"]["prefixItems"]
+        effect_data = self.schema_data.get_ref("$defs/" + effect_name)["allOf"][-1]["properties"]["ef"]["prefixItems"]
 
         table = etree.SubElement(parent, "table")
 
@@ -1080,7 +1026,8 @@ class VariableDocs(BlockProcessor):
 
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
-        schema_data = SchemaData()
+        with open(docs_path / "schema" / "lottie.schema.json") as file:
+            schema_data = Schema(json.load(file))
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 1), 'lottie_color', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color_255:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 255), 'lottie_color_255', 175)

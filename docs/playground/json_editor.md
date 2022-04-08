@@ -4,6 +4,7 @@ disable_toc: 1
 <div class="alpha_checkered" id="lottie_target" style="width:512px;height:512px">
 </div>
 
+<button onclick="pretty()">Prettify JSON</button>
 <div class="highlighted-input" style="height: 100vh;">
 <textarea autocomplete="off" class="code-input" data-lang="js" data-lottie-input="editor"
 name="json" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); lottie_player.reload();"
@@ -15,6 +16,7 @@ rows="3" spellcheck="false" id="editor_input">
 </div>
 
 <script>
+var textarea = document.getElementById("editor_input");
 
 var lottie_player = new PlaygroundPlayer(
     "editor",
@@ -39,7 +41,6 @@ var lottie_player = new PlaygroundPlayer(
                 "markers": [],
                 "layers": []
             };
-            var textarea = document.getElementById("editor_input");
             textarea.value = JSON.stringify(this.lottie, undefined, 4);
             syntax_edit_update(textarea, textarea.value);
         }
@@ -51,5 +52,11 @@ var lottie_player = new PlaygroundPlayer(
         }
     }
 );
+
+function pretty()
+{
+    textarea.value = JSON.stringify(lottie_player.lottie, undefined, 4);
+    syntax_edit_update(textarea, textarea.value);
+}
 
 </script>

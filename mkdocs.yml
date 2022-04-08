@@ -36,6 +36,7 @@ nav:
     - "<i class='fa fa-puzzle-piece'></i> Playground":
         - "Builder": playground/builder.md
         - "JSON Editor": playground/json_editor.md
+        - playground/explain.md
     - "<i class='fa fa-wrench'></i> Advanced":
         - rendering.md
         - schema.md
