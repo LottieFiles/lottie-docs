@@ -28,9 +28,16 @@
         },
         {
             "if": {
-                "properties": {
-                    "h": { "const": 0  }
-                }
+                "oneOf": [
+                    {
+                        "properties": {
+                            "h": { "const": 0  }
+                        }
+                    },
+                    {
+                        "not": {"required": ["h"]}
+                    }
+                ]
             },
             "then": {
                 "properties": {

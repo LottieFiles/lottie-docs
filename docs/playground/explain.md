@@ -24,7 +24,7 @@ Explain my Lottie
     z-index: 1;
     top: 0;
     left: 0;
-    margin-left: 15px;
+    margin-left: 30px;
 /*     opacity: 0; */
 /*     transition: opacity 0.3s; */
     background: white;
@@ -413,6 +413,12 @@ class SchemaData
                 return false;
         }
 
+        if ( def.not )
+        {
+            if ( this.validate(json_value, def.not) )
+                return false;
+        }
+
         // leave this last
         if ( def.oneOf )
         {
@@ -441,36 +447,45 @@ class SchemaProperty
 
     find_definition(value)
     {
+        var best = null;
         for ( var def of this.definitions )
         {
             if ( schema.validate(value, def) )
             {
-                var items = [];
-                var type;
-                var ref;
-                function callback(object)
-                {
-                    if ( object.items )
-                        items.push(object.items);
-                    if ( object.type )
-                        type = object.type;
-                    if ( object.$ref )
-                        ref = object.$ref;
-                }
-                this.schema.resolve_callback(def, callback, value);
-                return {
-                    ...def,
-                    _collected: {
-                        items: items,
-                        type: type,
-                        $ref: ref,
-                    }
-                };
+                best = def;
+                break;
             }
         }
 
-        console.warn(this, value);
-        return null;
+        if ( !best )
+        {
+            console.warn("no definition for property", this, value);
+            if ( !this.definitions.length )
+                return null;
+            best = this.definitions[0];
+        }
+
+        var items = [];
+        var type;
+        var ref;
+        function callback(object)
+        {
+            if ( object.items )
+                items.push(object.items);
+            if ( object.type )
+                type = object.type;
+            if ( object.$ref )
+                ref = object.$ref;
+        }
+        this.schema.resolve_callback(best, callback, value);
+        return {
+            ...best,
+            _collected: {
+                items: items,
+                type: type,
+                $ref: ref,
+            }
+        };
     }
 
     _format_type(box, type_data)
@@ -1219,11 +1234,34 @@ function quick_test()
                     {
                         "hd": false,
                         "ty": "el",
-                        "p": {
+                        /*"p": {
                             "a": 0,
                             "k": [
                                 256,
                                 256
+                            ]
+                        },*/
+                        "p": {
+                            "a": 1,
+                            "k": [
+                                {
+                                    "t": 0,
+                                    "s": [100, 256],
+                                    "o": {x: 0.3, y: 0},
+                                    "i": {x: 0.7, y: 1},
+                                },
+                                {
+                                    "t": 30,
+                                    "s": [300, 256],
+                                    "o": {x: [0.3], y: [0]},
+                                    "i": {x: [0.7], y: [1]},
+                                },
+                                {
+                                    "t": 60,
+                                    "s": [100, 256],
+                                    "o": {x: [0.3], y: [0]},
+                                    "i": {x: [0.7], y: [1]},
+                                }
                             ]
                         },
                         "s": {
