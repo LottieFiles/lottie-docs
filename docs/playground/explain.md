@@ -350,6 +350,9 @@ class SchemaData
 
             if ( found )
                 return found;
+
+            if ( this.validate(json_object, def) )
+                return def;
         }
 
         return null;
@@ -562,7 +565,7 @@ class SchemaProperty
     {
         if ( !definition )
         {
-            formatter.write_item(JSON.stringify(value), "comment");
+            formatter.write_item(JSON.stringify(value), "deletion");
         }
         else if ( Array.isArray(value) )
         {
@@ -580,7 +583,7 @@ class SchemaProperty
                 if ( found )
                     found.explain(value, formatter);
                 else
-                    formatter.write_item(JSON.stringify(value), "comment");
+                    formatter.write_item(JSON.stringify(value), "deletion");
             }
         }
         else
@@ -622,27 +625,50 @@ class SchemaProperty
 
         if ( items.length == 0 )
         {
-            formatter.write_item(JSON.stringify(value), "comment");
+            formatter.write_item(JSON.stringify(value), "deletion");
             return;
         }
 
-        formatter.open("[\n");
+        formatter.open("[");
+        var container = null;
+        if ( definition.$ref )
+        {
+            var object = this.schema.get_ref(definition.$ref);
+            object.info_box(value, formatter);
+            container = formatter.set_container(object.collapser(formatter));
+        }
+        var space = "\n";
+        if ( !container && value.map(x => typeof x != "object").reduce((a, b) => a && b) )
+            space = " ";
+
+        if ( space == "\n" )
+            formatter.write(space);
+
         for ( var i = 0; i < value.length; i++ )
         {
-            formatter.write_indent();
+            if ( space == "\n" )
+                formatter.write_indent();
 
             var found = this.schema.find_object(value[i], items);
-            if ( found )
+            if ( !found )
+                formatter.write_item(JSON.stringify(value[i]), "deletion");
+            else if ( found instanceof SchemaObject )
                 found.explain(value[i], formatter);
             else
-                formatter.write_item(JSON.stringify(value[i]), "comment");
+                formatter.encode_item(value[i]);
 
             if ( i != value.length -1 )
-                formatter.write(",\n");
-            else
-                formatter.write("\n");
+                formatter.write("," + space);
+            else if ( space == "\n" )
+                formatter.write(space);
         }
-        formatter.write_indent();
+
+        if ( space == "\n" )
+            formatter.write_indent(-1);
+
+        if ( container )
+            formatter.set_container(container);
+
         formatter.close("]");
     }
 }
@@ -739,23 +765,8 @@ class SchemaObject
 
         formatter.open("{");
         this.info_box(json, formatter);
+        var container = formatter.set_container(this.collapser(formatter));
 
-        var collapse_button = formatter.parent.appendChild(document.createElement("i"));
-        collapse_button.setAttribute("class", "collapse-button hljs-comment fas fa-caret-down");
-        collapse_button.title = "Collapse object";
-
-        var collapser = formatter.parent.appendChild(document.createElement("span"));
-        collapser.classList.add("collapser");
-        var container = formatter.set_container(collapser);
-
-        collapse_button.addEventListener("click", ev => {
-            collapser.classList.toggle("collapsed");
-            collapse_button.classList.toggle("fa-caret-down");
-            collapse_button.classList.toggle("fa-ellipsis-h");
-        })
-
-
-        collapser.id = "object_" + (formatter.object_id++);
         formatter.write("\n");
 
         var entries = Object.entries(json);
@@ -786,9 +797,29 @@ class SchemaObject
                 formatter.write("\n");
         }
 
-        formatter.write_indent();
+        formatter.write_indent(-1);
         formatter.set_container(container);
         formatter.close("}");
+    }
+
+    collapser(formatter)
+    {
+        var collapse_button = formatter.parent.appendChild(document.createElement("i"));
+        collapse_button.setAttribute("class", "collapse-button hljs-comment fas fa-caret-down");
+        collapse_button.title = "Collapse object";
+
+        var collapser = formatter.parent.appendChild(document.createElement("span"));
+        collapser.classList.add("collapser");
+
+        collapse_button.addEventListener("click", ev => {
+            collapser.classList.toggle("collapsed");
+            collapse_button.classList.toggle("fa-caret-down");
+            collapse_button.classList.toggle("fa-ellipsis-h");
+        });
+
+        collapser.id = "object_" + (formatter.object_id++);
+
+        return collapser;
     }
 
     info_box(json, formatter)
@@ -840,13 +871,13 @@ class SchemaObject
             };
             if ( this.cls == "group" )
             {
-                box.lottie_json = lottie_clone(lottie);
+                box.lottie_json = dummy_lottie(lottie.w, lottie.h, lottie);
                 box.lottie_json.layers = [shape_layer];
                 shape_layer.shapes = [json];
             }
             else if ( ["rectangle", "ellipse", "polystar", "path"].includes(this.cls) )
             {
-                box.lottie_json = lottie_clone(lottie);
+                box.lottie_json = dummy_lottie(lottie.w, lottie.h, lottie);
                 box.lottie_json.layers = [shape_layer];
                 var fill = {
                     "ty": "fl",
@@ -858,78 +889,48 @@ class SchemaObject
             }
             else if ( ["fill", "gradient-fill", "stroke", "gradient-stroke"].includes(this.cls) )
             {
-                if ( this.cls.includes("gradient") )
-                    box.lottie_json = dummy_lottie(lottie.w, lottie.h, lottie);
-                else
-                    box.lottie_json = dummy_lottie(96, 48, lottie);
+                var w = 96;
+                var h = 48;
 
-                box.lottie_json.layers = [shape_layer];
-                shape_layer.ip = 0;
-                shape_layer.op = box.lottie_json.op;
-                shape_layer.shapes = [
-                    {
-                        "ty": "rc",
-                        "p": {"a": 0, "k": [box.lottie_json.w/2, box.lottie_json.h/2]},
-                        "s": {"a": 0, "k": [box.lottie_json.w, box.lottie_json.h]},
-                        "r": {"a": 0, "k": 0},
-                    },
-                    json
-                ];
+                if ( this.cls.includes("gradient") )
+                    [w, h] = [lottie.w, lottie.h];
+
+                box.lottie_json = rect_shape_lottie(w, h, lottie);
+                box.lottie_json.layers[0].shapes.push(json);
             }
         }
         else if ( this.group == "animated-properties" )
         {
             if ( this.cls == "color-value" )
             {
-                box.lottie_json = dummy_lottie(96, 48, lottie);
-                box.lottie_json.layers = [{
-                    "ip": box.lottie_json.ip,
-                    "op": box.lottie_json.op,
-                    "st": 0,
-                    "ks": {},
-                    "ty": 4,
-                    "shapes": [
-                        {
-                            "ty": "rc",
-                            "p": {"a": 0, "k": [box.lottie_json.w/2, box.lottie_json.h/2]},
-                            "s": {"a": 0, "k": [box.lottie_json.w, box.lottie_json.h]},
-                            "r": {"a": 0, "k": 0},
-                        },
-                        {
-                            "ty": "fl",
-                            "o": {"a": 0, "k": 100 },
-                            "c": json
-                        }
-                    ]
-                }];
+                box.lottie_json = rect_shape_lottie(96, 48, lottie);
+                box.lottie_json.layers[0].shapes.push({
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100 },
+                    "c": json
+                });
             }
             else if ( this.cls == "gradient-colors"  )
             {
-                box.lottie_json = dummy_lottie(300, 48, lottie);
-                box.lottie_json.layers = [{
-                    "ip": box.lottie_json.ip,
-                    "op": box.lottie_json.op,
-                    "st": 0,
-                    "ks": {},
-                    "ty": 4,
-                    "shapes": [
-                        {
-                            "ty": "rc",
-                            "p": {"a": 0, "k": [box.lottie_json.w/2, box.lottie_json.h/2]},
-                            "s": {"a": 0, "k": [box.lottie_json.w, box.lottie_json.h]},
-                            "r": {"a": 0, "k": 0},
-                        },
-                        {
-                            "ty": "gf",
-                            "o": {"a": 0, "k": 100 },
-                            "s": {"a":0, "k":[0, 0]},
-                            "e": {"a":0, "k":[box.lottie_json.w, 0]},
-                            "t": 1,
-                            "g": json
-                        }
-                    ]
-                }];
+                box.lottie_json = rect_shape_lottie(300, 48, lottie);
+                box.lottie_json.layers[0].shapes.push({
+                    "ty": "gf",
+                    "o": {"a": 0, "k": 100 },
+                    "s": {"a":0, "k":[0, 0]},
+                    "e": {"a":0, "k":[box.lottie_json.w, 0]},
+                    "t": 1,
+                    "g": json
+                });
             }
+        }
+        else if ( this.group == "helpers" && this.cls == "color" )
+        {
+            box.lottie_json = rect_shape_lottie(96, 48, lottie);
+            box.lottie_json.layers[0].shapes.push({
+                "ty": "fl",
+                "o": {"a": 0, "k": 100 },
+                "c": {"a": 0, "k": json},
+            });
         }
     }
 
@@ -990,6 +991,8 @@ class JsonFormatter
         span.classList.add("hljs-"+hljs_type);
         span.appendChild(document.createTextNode(content));
         this.parent.appendChild(span);
+        if ( hljs_type == "deletion" )
+            span.title = "This value appears to be invalid according to the schema";
         return span;
     }
 
@@ -1016,9 +1019,9 @@ class JsonFormatter
         this.parent.appendChild(document.createTextNode(str));
     }
 
-    write_indent()
+    write_indent(delta = 0)
     {
-        this.write("    ".repeat(this.indent));
+        this.write("    ".repeat(this.indent + delta));
     }
 
     open(char)
@@ -1119,6 +1122,28 @@ class InfoBoxContents
 
         return add_to;
     }
+}
+
+function rect_shape_lottie(w, h, timing)
+{
+    var lottie_json = dummy_lottie(w, h, timing);
+    lottie_json.layers = [{
+        "ip": lottie_json.ip,
+        "op": lottie_json.op,
+        "st": 0,
+        "ks": {},
+        "ty": 4,
+        "shapes": [
+            {
+                "ty": "rc",
+                "p": {"a": 0, "k": [lottie_json.w/2, lottie_json.h/2]},
+                "s": {"a": 0, "k": [lottie_json.w, lottie_json.h]},
+                "r": {"a": 0, "k": 0},
+            }
+        ]
+    }];
+
+    return lottie_json;
 }
 
 function dummy_lottie(w, h, timing = {})
@@ -1278,7 +1303,6 @@ function quick_test()
                             "a": 0,
                             "k": 100
                         },
-                        /*
                         "ty": "fl",
                         "c": {
                             "a": 0,
@@ -1287,7 +1311,8 @@ function quick_test()
                                 0,
                                 0
                             ]
-                        },*/
+                        },
+                        /*
                         "ty": "gf",
                         "g": {
                             "p": 2,
@@ -1308,6 +1333,7 @@ function quick_test()
                         "s": {"a":0, "k":[300, 0]},
                         "e": {"a":0, "k":[400, 0]},
                         "t": 1,
+                        */
                     }
                 ]
             }
