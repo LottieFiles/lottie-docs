@@ -762,9 +762,9 @@ class SchemaObject
             else if ( ["fill", "gradient-fill", "stroke", "gradient-stroke"].includes(this.cls) )
             {
                 if ( this.cls.includes("gradient") )
-                    box.lottie_json = dummy_lottie(lottie.w, lottie.h);
+                    box.lottie_json = dummy_lottie(lottie.w, lottie.h, lottie);
                 else
-                    box.lottie_json = dummy_lottie(96, 48);
+                    box.lottie_json = dummy_lottie(96, 48, lottie);
 
                 box.lottie_json.layers = [shape_layer];
                 shape_layer.ip = 0;
@@ -782,24 +782,9 @@ class SchemaObject
         }
         else if ( this.group == "animated-properties" )
         {
-            if ( this.cls == "color-value" || this.cls == "gradient-colors" )
+            if ( this.cls == "color-value" )
             {
-                box.lottie_json = dummy_lottie(96, 48);
-                if ( this.cls == "color-value" )
-                    fill = {
-                        "ty": "fl",
-                        "o": {"a": 0, "k": 100 },
-                        "c": json
-                    }
-                else
-                    fill = {
-                        "ty": "gf",
-                        "o": {"a": 0, "k": 100 },
-                        "s": {"a":0, "k":[0, 0]},
-                        "e": {"a":0, "k":[box.lottie_json.w, 0]},
-                        "t": 1,
-                        "g": json
-                    }
+                box.lottie_json = dummy_lottie(96, 48, lottie);
                 box.lottie_json.layers = [{
                     "ip": box.lottie_json.ip,
                     "op": box.lottie_json.op,
@@ -813,7 +798,38 @@ class SchemaObject
                             "s": {"a": 0, "k": [box.lottie_json.w, box.lottie_json.h]},
                             "r": {"a": 0, "k": 0},
                         },
-                        fill
+                        {
+                            "ty": "fl",
+                            "o": {"a": 0, "k": 100 },
+                            "c": json
+                        }
+                    ]
+                }];
+            }
+            else if ( this.cls == "gradient-colors"  )
+            {
+                box.lottie_json = dummy_lottie(300, 48, lottie);
+                box.lottie_json.layers = [{
+                    "ip": box.lottie_json.ip,
+                    "op": box.lottie_json.op,
+                    "st": 0,
+                    "ks": {},
+                    "ty": 4,
+                    "shapes": [
+                        {
+                            "ty": "rc",
+                            "p": {"a": 0, "k": [box.lottie_json.w/2, box.lottie_json.h/2]},
+                            "s": {"a": 0, "k": [box.lottie_json.w, box.lottie_json.h]},
+                            "r": {"a": 0, "k": 0},
+                        },
+                        {
+                            "ty": "gf",
+                            "o": {"a": 0, "k": 100 },
+                            "s": {"a":0, "k":[0, 0]},
+                            "e": {"a":0, "k":[box.lottie_json.w, 0]},
+                            "t": 1,
+                            "g": json
+                        }
                     ]
                 }];
             }
@@ -1000,12 +1016,12 @@ class InfoBoxContents
     }
 }
 
-function dummy_lottie(w, h)
+function dummy_lottie(w, h, timing = {})
 {
     return {
-        "fr": 60,
-        "ip": 0,
-        "op": 60,
+        "fr": timing.fr ?? 60,
+        "ip": timing.ip ?? 0,
+        "op": timing.op ?? 60,
         "w": w,
         "h": h,
         "assets": [],
@@ -1130,11 +1146,12 @@ function quick_test()
                     },
                     {
                         "hd": false,
-                        "ty": "fl",
                         "o": {
                             "a": 0,
                             "k": 100
                         },
+                        /*
+                        "ty": "fl",
                         "c": {
                             "a": 0,
                             "k": [
@@ -1142,8 +1159,9 @@ function quick_test()
                                 0,
                                 0
                             ]
-                        },
-                        /*"g": {
+                        },*/
+                        "ty": "gf",
+                        "g": {
                             "p": 2,
                             "k": {
                                 "a": 0,
@@ -1161,7 +1179,7 @@ function quick_test()
                         },
                         "s": {"a":0, "k":[300, 0]},
                         "e": {"a":0, "k":[400, 0]},
-                        "t": 1,*/
+                        "t": 1,
                     }
                 ]
             }
