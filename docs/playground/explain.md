@@ -52,8 +52,9 @@ Explain my Lottie
 }
 
 .info_box_lottie {
-    width: 300px;
-    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    margin-top: 1.2em;
 }
 
 </style>
@@ -699,7 +700,7 @@ class SchemaObject
         this.info_box_title(box);
         box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.ref});
         box.add("br");
-        box.add(null, this.description);
+        box.add("span", this.description, {style: "white-space: pre-wrap;"});
 
         if ( this.group == "animation" && this.cls == "animation" )
         {
@@ -760,17 +761,61 @@ class SchemaObject
             }
             else if ( ["fill", "gradient-fill", "stroke", "gradient-stroke"].includes(this.cls) )
             {
-                box.lottie_json = dummy_lottie(512, 512);
+                if ( this.cls.includes("gradient") )
+                    box.lottie_json = dummy_lottie(lottie.w, lottie.h);
+                else
+                    box.lottie_json = dummy_lottie(96, 48);
+
                 box.lottie_json.layers = [shape_layer];
+                shape_layer.ip = 0;
+                shape_layer.op = box.lottie_json.op;
                 shape_layer.shapes = [
                     {
                         "ty": "rc",
-                        "p": {"a": 0, "k": [256, 256]},
-                        "s": {"a": 0, "k": [512, 512]},
+                        "p": {"a": 0, "k": [box.lottie_json.w/2, box.lottie_json.h/2]},
+                        "s": {"a": 0, "k": [box.lottie_json.w, box.lottie_json.h]},
                         "r": {"a": 0, "k": 0},
                     },
                     json
                 ];
+            }
+        }
+        else if ( this.group == "animated-properties" )
+        {
+            if ( this.cls == "color-value" || this.cls == "gradient-colors" )
+            {
+                box.lottie_json = dummy_lottie(96, 48);
+                if ( this.cls == "color-value" )
+                    fill = {
+                        "ty": "fl",
+                        "o": {"a": 0, "k": 100 },
+                        "c": json
+                    }
+                else
+                    fill = {
+                        "ty": "gf",
+                        "o": {"a": 0, "k": 100 },
+                        "s": {"a":0, "k":[0, 0]},
+                        "e": {"a":0, "k":[box.lottie_json.w, 0]},
+                        "t": 1,
+                        "g": json
+                    }
+                box.lottie_json.layers = [{
+                    "ip": box.lottie_json.ip,
+                    "op": box.lottie_json.op,
+                    "st": 0,
+                    "ks": {},
+                    "ty": 4,
+                    "shapes": [
+                        {
+                            "ty": "rc",
+                            "p": {"a": 0, "k": [box.lottie_json.w/2, box.lottie_json.h/2]},
+                            "s": {"a": 0, "k": [box.lottie_json.w, box.lottie_json.h]},
+                            "r": {"a": 0, "k": 0},
+                        },
+                        fill
+                    ]
+                }];
             }
         }
     }
@@ -914,10 +959,13 @@ class InfoBox
         this.element.style.top = (this.target.offsetTop - 5) + "px";
         this.element.style.left = (this.target.offsetLeft + this.target.offsetWidth) + "px";
 
-        if ( this.contents.info_box_data.lottie_json )
+        var lottie_json = this.contents.info_box_data.lottie_json;
+        if ( lottie_json )
         {
             this.lottie_target.style.display = "block";
-            this.lottie_player.lottie = this.contents.info_box_data.lottie_json;
+            this.lottie_target.style.width = lottie_json.w + "px";
+            this.lottie_target.style.height = lottie_json.h + "px";
+            this.lottie_player.lottie = lottie_json;
             this.lottie_player.reload();
         }
     }
@@ -1075,8 +1123,8 @@ function quick_test()
                         "s": {
                             "a": 0,
                             "k": [
-                                100,
-                                100
+                                200,
+                                200
                             ]
                         }
                     },
@@ -1094,7 +1142,26 @@ function quick_test()
                                 0,
                                 0
                             ]
-                        }
+                        },
+                        /*"g": {
+                            "p": 2,
+                            "k": {
+                                "a": 0,
+                                "k": [
+                                    0,
+                                    1,
+                                    0,
+                                    0,
+                                    1,
+                                    0,
+                                    0,
+                                    0,
+                                ]
+                            }
+                        },
+                        "s": {"a":0, "k":[300, 0]},
+                        "e": {"a":0, "k":[400, 0]},
+                        "t": 1,*/
                     }
                 ]
             }
