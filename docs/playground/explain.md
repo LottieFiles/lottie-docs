@@ -914,7 +914,33 @@ class SchemaObject
         box.add("br");
         box.add("span", this.description, {class: "description"});
 
-        if ( this.group == "animation" && this.cls == "animation" )
+        if ( this.cls == "transform" )
+        {
+            box.lottie_json = rect_shape_lottie(lottie.w, lottie.h, lottie);
+            box.lottie_json.layers[0].shapes[0].s.k = [lottie.w / 3, lottie.h / 3];
+            box.lottie_json.layers[0].shapes.push({
+                "ty": "fl",
+                "o": {"a": 0, "k": 80},
+                "c": {"a": 0, "k": [1, 0, 0]},
+            });
+            box.lottie_json.layers[0].ks = json;
+            box.lottie_json.layers.push({
+                "ip": lottie.ip,
+                "op": lottie.op,
+                "st": 0,
+                "ks": {},
+                "ty": 4,
+                "shapes": [
+                    box.lottie_json.layers[0].shapes[0],{
+                        "ty": "fl",
+                        "o": {"a": 0, "k": 60},
+                        "c": {"a": 0, "k": [0.5, 0.2, 0.2]},
+                    }
+
+                ]
+            });
+        }
+        else if ( this.group == "animation" && this.cls == "animation" )
         {
             box.lottie_json = lottie_clone(lottie);
         }
@@ -1026,6 +1052,17 @@ class SchemaObject
             {
                 var prop = {"a": 0, "k": json};
                 box.lottie_json = bezier_shape_lottie(lottie, prop);
+            }
+            else if ( this.cls == "mask" )
+            {
+                box.lottie_json = rect_shape_lottie(lottie.w, lottie.h, lottie);
+                box.lottie_json.layers[0].shapes.push({
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 0, 0]},
+                });
+                box.lottie_json.layers[0].hasMask = true;
+                box.lottie_json.layers[0].masksProperties = [json];
             }
         }
         else if ( this.group == "text" )

@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Mask",
-    "description": "",
+    "description": "Bezier shape used to mask/clip a layer",
     "allOf": [
         {
             "$ref": "#/$defs/helpers/visual-object"
