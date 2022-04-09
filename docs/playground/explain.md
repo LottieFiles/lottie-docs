@@ -57,6 +57,10 @@ Explain my Lottie
     margin-top: 1.2em;
 }
 
+.info_box_content .description {
+    white-space: pre-wrap;
+}
+
 .collapse-button {
     cursor: pointer;
     margin: 0 1ch;
@@ -468,6 +472,11 @@ class SchemaProperty
             best = this.definitions[0];
         }
 
+        return this.collect_definitions(best, value);
+    }
+
+    collect_definitions(definition, value)
+    {
         var items = [];
         var type;
         var ref;
@@ -480,9 +489,10 @@ class SchemaProperty
             if ( object.$ref )
                 ref = object.$ref;
         }
-        this.schema.resolve_callback(best, callback, value);
+        this.schema.resolve_callback(definition, callback, value);
+
         return {
-            ...best,
+            ...definition,
             _collected: {
                 items: items,
                 type: type,
@@ -508,8 +518,9 @@ class SchemaProperty
         }
         else if ( type_data.type == "array" && type_data.items )
         {
+            var items = Array.isArray(type_data.items) ? type_data.items : [type_data.items];
             box.add("", "Array of ");
-            for ( var item of type_data.items )
+            for ( var item of items )
             {
                 if ( "oneOf" in item )
                 {
@@ -557,7 +568,7 @@ class SchemaProperty
         if ( definition.description )
         {
             box.add("br");
-            box.add(null, definition.description);
+            box.add("span", definition.description, {class: "description"});
         }
     }
 
@@ -654,6 +665,8 @@ class SchemaProperty
                 formatter.write_item(JSON.stringify(value[i]), "deletion");
             else if ( found instanceof SchemaObject )
                 found.explain(value[i], formatter);
+            else if ( Array.isArray(value[i]) )
+                this.explain_array(this.collect_definitions(found, value[i]), value[i], formatter);
             else
                 formatter.encode_item(value[i]);
 
@@ -828,7 +841,7 @@ class SchemaObject
         this.info_box_title(box);
         box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.ref});
         box.add("br");
-        box.add("span", this.description, {style: "white-space: pre-wrap;"});
+        box.add("span", this.description, {class: "description"});
 
         if ( this.group == "animation" && this.cls == "animation" )
         {
@@ -1332,6 +1345,33 @@ function quick_test()
                 "ty": 4,
                 "shapes": [
                     {
+                        "ty": "sh",
+                        "ks": {
+                            "a": 0,
+                            "k": {
+                                "v": [
+                                    [100, 10],
+                                    [190, 100],
+                                    [100, 190],
+                                    [0, 100],
+                                ],
+                                "i": [
+                                    [0, 0],
+                                    [0, 0],
+                                    [0, 0],
+                                    [0, 0],
+                                ],
+                                "o": [
+                                    [0, 0],
+                                    [0, 0],
+                                    [0, 0],
+                                    [0, 0],
+                                ],
+                                "c": true
+                            }
+                        }
+                    },
+                    {
                         "hd": false,
                         "ty": "el",
                         /*"p": {
@@ -1415,7 +1455,7 @@ function quick_test()
         ]
     };
 
-    lottie_json = {
+    /*lottie_json = {
         "v": "5.5.2",
         "fr": 60,
         "ip": 0,
@@ -1467,7 +1507,7 @@ function quick_test()
                 }
             }
         ]
-    };
+    };*/
     lottie_set_json(lottie_json);
 }
 
