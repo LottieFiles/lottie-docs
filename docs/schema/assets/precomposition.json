@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Precomposition",
-    "description": "",
+    "description": "Asset containing an animation that can be referenced by layers.",
     "allOf": [
         {
             "$ref": "#/$defs/assets/asset"

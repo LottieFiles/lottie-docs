@@ -426,14 +426,25 @@ class SchemaData
                 return false;
         }
 
-        // leave this last
         if ( def.oneOf )
         {
+            var count = 0;
             for ( let base of def.oneOf )
+                if ( this.validate(json_value, base) )
+                    count += 1;
+            // Should only be true if exactly 1, but we can be more lax
+            if ( count == 0 )
+                return false;
+        }
+
+        if ( def.anyOf )
+        {
+            for ( let base of def.anyOf )
                 if ( this.validate(json_value, base) )
                     return true;
             return false;
         }
+
         return true;
     }
 }
@@ -1390,6 +1401,7 @@ function quick_test()
         "w": 512,
         "h": 512,
         "ddd": 0,
+        "meta": {"g":"Test","a":"","k":"","d":"","tc":"#FFFFFF"},
         "assets": [],
         "markers": [],
         "layers": [
@@ -1407,7 +1419,7 @@ function quick_test()
                 "mb": false,
                 "ty": 4,
                 "shapes": [
-                    {
+                    /*{
                         "ty": "sh",
                         "ks": {
                             "a": 0,
@@ -1433,18 +1445,18 @@ function quick_test()
                                 "c": true
                             }
                         }
-                    },
+                    },*/
                     {
                         "hd": false,
                         "ty": "el",
-                        /*"p": {
+                        "p": {
                             "a": 0,
                             "k": [
                                 256,
                                 256
                             ]
-                        },*/
-                        "p": {
+                        },
+                        /*"p": {
                             "a": 1,
                             "k": [
                                 {
@@ -1466,7 +1478,7 @@ function quick_test()
                                     "i": {x: [0.7], y: [1]},
                                 }
                             ]
-                        },
+                        },*/
                         "s": {
                             "a": 0,
                             "k": [
