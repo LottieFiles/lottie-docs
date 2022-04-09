@@ -57,13 +57,49 @@ Explain my Lottie
     margin-top: 1.2em;
 }
 
+.collapse-button {
+    cursor: pointer;
+    margin: 0 1ch;
+}
+.collapser {
+    display: inline;
+}
+.collapser.collapsed {
+    display: none;
+}
+
+
 </style>
-<div>
+<details>
+    <summary>Upload file</summary>
     <p><input type="file" onchange="lottie_file_input(event);" /></p>
-</div>
+</details>
+<details>
+    <summary>From URL</summary>
+    <p><input type="text" id="input_from_url" /></p>
+    <p><button onclick="lottie_url_input(document.getElementById('input_from_url').value)">Explain</button>
+</details>
+<details>
+    <summary>From Input</summary>
+    <div class="highlighted-input" style="height: 512px;">
+    <textarea autocomplete="off" class="code-input" data-lang="js" data-lottie-input="editor"
+    name="json" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); "
+    onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);"
+    rows="3" spellcheck="false" id="editor_input"></textarea>
+    <pre aria-hidden="true"><code class="language-js hljs">
+    </code></pre>
+    </div>
+    <p><button onclick="lottie_string_input(document.getElementById('editor_input').value)">Explain</button>
+</details>
 <pre><code id="explainer"></code></pre>
 <div id="info_box"><div class="info_box_details"></div><div class="info_box_lottie alpha_checkered"></div><div>
 <script>
+function input_error(e)
+{
+    console.error(e);
+    alert("Could not load input!");
+}
+
 function lottie_file_input(ev)
 {
     lottie_receive_files(ev.target.files);
@@ -80,12 +116,28 @@ function lottie_receive_files(files)
 
             reader.onload = function(e2)
             {
-                lottie_set_json(JSON.parse(e2.target.result));
+                lottie_string_input(e2.target.result);
             };
 
             reader.readAsText(file);
             return;
         }
+    }
+}
+
+function lottie_url_input(url)
+{
+    fetch(url).then(
+        r => r.json().then(lottie_set_json).catch(input_error)
+    ).catch(input_error);
+}
+
+function lottie_string_input(string)
+{
+    try {
+        lottie_set_json(JSON.parse(string));
+    } catch ( e ) {
+        input_error(e);
     }
 }
 
@@ -101,7 +153,7 @@ function lottie_set_json(json)
 
 function critical_error(err)
 {
-    console.warn(err);
+    console.error(err);
     alert("Could not load data");
 }
 
@@ -416,6 +468,8 @@ class SchemaProperty
                 };
             }
         }
+
+        console.warn(this, value);
         return null;
     }
 
@@ -467,6 +521,12 @@ class SchemaProperty
     {
         object.info_box_title(box);
         box.add(null, " \u2192 ");
+        if ( !definition )
+        {
+            box.add("strong", this.name);
+            return;
+        }
+
         box.add("strong", definition.title ?? this.name);
 
 
@@ -567,6 +627,7 @@ class SchemaProperty
             else
                 formatter.write("\n");
         }
+        formatter.write_indent();
         formatter.close("]");
     }
 }
@@ -663,7 +724,25 @@ class SchemaObject
 
         formatter.open("{");
         this.info_box(json, formatter);
+
+        var collapse_button = formatter.parent.appendChild(document.createElement("i"));
+        collapse_button.setAttribute("class", "collapse-button hljs-comment fas fa-caret-down");
+        collapse_button.title = "Collapse object";
+
+        var collapser = formatter.parent.appendChild(document.createElement("span"));
+        collapser.classList.add("collapser");
+        var container = formatter.set_container(collapser);
+
+        collapse_button.addEventListener("click", ev => {
+            collapser.classList.toggle("collapsed");
+            collapse_button.classList.toggle("fa-caret-down");
+            collapse_button.classList.toggle("fa-ellipsis-h");
+        })
+
+
+        collapser.id = "object_" + (formatter.object_id++);
         formatter.write("\n");
+
         var entries = Object.entries(json);
         for ( var i = 0; i < entries.length; i++ )
         {
@@ -691,6 +770,9 @@ class SchemaObject
             else
                 formatter.write("\n");
         }
+
+        formatter.write_indent();
+        formatter.set_container(container);
         formatter.close("}");
     }
 
@@ -859,8 +941,17 @@ class JsonFormatter
 {
     constructor(element)
     {
+        this.element = element;
         this.parent = element;
         this.indent = 0;
+        this.object_id = 0;
+    }
+
+    set_container(element)
+    {
+        var old = this.parent;
+        this.parent = element;
+        return old;
     }
 
     hljs_type(json_object)
@@ -924,7 +1015,6 @@ class JsonFormatter
     close(char)
     {
         this.indent -= 1;
-        this.write_indent();
         this.write(char);
     }
 }
