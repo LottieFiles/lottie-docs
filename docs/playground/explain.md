@@ -212,8 +212,9 @@ class SchemaData
      *
      * \param object    Object from the schema dict
      * \param callback  Callback to call
+     * \param condition_object Object to check conditions
      */
-    resolve_callback(obj, callback)
+    resolve_callback(obj, callback, condition_object=undefined)
     {
         if ( !obj )
             return;
@@ -221,29 +222,40 @@ class SchemaData
         if ( Array.isArray(obj) )
         {
             for ( let sub of obj )
-                this.resolve_callback(sub, callback);
+                this.resolve_callback(sub, callback, condition_object);
             return;
         }
 
         if ( obj["$ref"] )
-            this.resolve_callback(this.get_raw(obj["$ref"]), callback);
+            this.resolve_callback(this.get_raw(obj["$ref"]), callback, condition_object);
 
         if ( obj.allOf )
             for ( let val of obj.allOf )
-                this.resolve_callback(val, callback);
+                this.resolve_callback(val, callback, condition_object);
 
         if ( obj.anyOf )
             for ( let val of obj.anyOf )
-                this.resolve_callback(val, callback);
+                this.resolve_callback(val, callback, condition_object);
 
         if ( obj.oneOf )
             for ( let val of obj.oneOf )
-                this.resolve_callback(val, callback);
+                this.resolve_callback(val, callback, condition_object);
 
         if ( obj.if )
         {
-            this.resolve_callback(obj.then, callback);
-            this.resolve_callback(obj.else, callback);
+            if ( condition_object === undefined )
+            {
+                this.resolve_callback(obj.then, callback, condition_object);
+                this.resolve_callback(obj.else, callback, condition_object);
+            }
+            else if ( this.validate(condition_object, obj.if) )
+            {
+                this.resolve_callback(obj.then, callback, condition_object);
+            }
+            else
+            {
+                this.resolve_callback(obj.else, callback, condition_object)
+            }
         }
 
         callback(obj);
@@ -386,7 +398,7 @@ class SchemaProperty
                     if ( object.$ref )
                         ref = object.$ref;
                 }
-                this.schema.resolve_callback(def, callback);
+                this.schema.resolve_callback(def, callback, value);
                 return {
                     ...def,
                     _collected: {
@@ -565,7 +577,6 @@ class SchemaObject
             this.group = path[1];
             this.cls = path[2];
         }
-        this.properties = [];
         this._title = this.cls;
         this._description = null;
         this._links = [];
@@ -593,27 +604,11 @@ class SchemaObject
 
     _on_collect_object(obj)
     {
-        if ( obj.properties )
-        {
-            for ( let [name, val] of Object.entries(obj.properties) )
-            {
-                if ( !this.properties[name] )
-                    this.properties[name] = new SchemaProperty(this.schema, name);
-                this.properties[name].add_definition(val);
-            }
-        }
-
         if ( obj.title )
             this._title = obj.title;
 
         if ( obj.description )
             this._description = obj.description;
-    }
-
-    get_property(name)
-    {
-        this._collect();
-        return this.properties[name];
     }
 
     get title()
@@ -644,6 +639,21 @@ class SchemaObject
             return;
         }
 
+        var properties = {};
+        function callback(obj)
+        {
+            if ( obj.properties )
+            {
+                for ( let [name, val] of Object.entries(obj.properties) )
+                {
+                    if ( !properties[name] )
+                        properties[name] = new SchemaProperty(this.schema, name);
+                    properties[name].add_definition(val);
+                }
+            }
+        }
+        this.schema.resolve_callback(this.object, callback.bind(this), json);
+
         formatter.open("{");
         this.info_box(formatter);
         formatter.write("\n");
@@ -653,14 +663,15 @@ class SchemaObject
             var name = entries[i][0];
             var value = entries[i][1];
             formatter.write_indent();
-            if ( this.properties[name] )
+            var property = properties[name];
+            if ( property )
             {
                 var prop_box = formatter.info_box(JSON.stringify(name), "string")
-                var def = this.properties[name].find_definition(value);
+                var def = property.find_definition(value);
                 console.log(this.cls, name, def);
-                this.properties[name].populate_info_box(this, def, prop_box);
+                property.populate_info_box(this, def, prop_box);
                 formatter.write(": ");
-                this.properties[name].explain_value(this, def, value, formatter);
+                property.explain_value(this, def, value, formatter);
             }
             else
             {
@@ -857,13 +868,13 @@ var icons = {
     "#/$defs/animated-properties/gradient-colors": "fas fa-swatchbook",
     //"#/$defs/animated-properties/keyframe-bezier-handle": "fas fa-bezier-curve",
     "#/$defs/animated-properties/keyframe": "fas fa-key",
-    "#/$defs/animated-properties/multi-dimensional": "fas fa-ellipsis-v",
+    "#/$defs/animated-properties/multi-dimensional": "fas fa-running",
     "#/$defs/animated-properties/position-keyframe": "fas fa-key",
     "#/$defs/animated-properties/position": "fas fa-map-marker-alt",
     "#/$defs/animated-properties/shape-keyframe": "fas fa-key",
     "#/$defs/animated-properties/shape-property": "fas fa-bezier-curve",
     "#/$defs/animated-properties/split-vector": "fas fa-map-marker-alt",
-    // "#/$defs/animated-properties/position-value": "fas fa-",
+    "#/$defs/animated-properties/position-value": "fas fa-running",
 
     "#/$defs/animation/animation": "fas fa-video",
     "#/$defs/animation/metadata": "fas fa-info-circle",
