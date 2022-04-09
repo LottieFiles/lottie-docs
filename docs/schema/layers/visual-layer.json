@@ -18,7 +18,8 @@
                 "ao": {
                     "title": "Auto Orient",
                     "$ref": "#/$defs/helpers/int-boolean",
-                    "default": 0
+                    "default": 0,
+                    "description": "If 1, The layer will rotate itself to match its animated position path"
                 },
                 "tt": {
                     "title": "Matte Mode",
@@ -42,6 +43,7 @@
                 },
                 "ef": {
                     "title": "Effects",
+                    "description": "List of layer effects",
                     "type": "array",
                     "items": {
                         "oneOf":  [

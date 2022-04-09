@@ -48,7 +48,8 @@
                 "ddd": {
                     "title": "Threedimensional",
                     "$ref": "#/$defs/helpers/int-boolean",
-                    "default": 0
+                    "default": 0,
+                    "description": "Whether the animation has 3D layers"
                 },
                 "assets": {
                     "title": "Assets",

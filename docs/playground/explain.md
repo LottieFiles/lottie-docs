@@ -5,25 +5,28 @@ Explain my Lottie
 
 <style>
 .info_box_trigger {
-    position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
     cursor: pointer;
 }
 
-.info_box {
-    visibility: hidden;
+.info_box_content {
+    display: none;
+}
+
+#info_box {
+    display: none;
     width: 512px;
     border: 5px solid #555;
     border-radius: 6px;
     padding: 5px;
     position: absolute;
     z-index: 1;
-    top: 0%;
-    left: 100%;
+    top: 0;
+    left: 0;
     margin-left: 15px;
-    opacity: 0;
-    transition: opacity 0.3s;
+/*     opacity: 0; */
+/*     transition: opacity 0.3s; */
     background: white;
     color: black;
     font-style: normal;
@@ -31,7 +34,7 @@ Explain my Lottie
 }
 
 
-.info_box::before {
+#info_box::before {
     content: "";
     position: absolute;
     top: 0;
@@ -44,15 +47,15 @@ Explain my Lottie
     height: 5px;
 }
 
-.info_box_trigger.active .info_box {
-    visibility: visible;
-    opacity: 1;
+#info_box .info_box_content{
+    display: block;
 }
 </style>
 <div>
     <p><input type="file" onchange="lottie_file_input(event);" /></p>
 </div>
 <pre><code id="explainer"></code></pre>
+<div id="info_box"><div>
 <script>
 function lottie_file_input(ev)
 {
@@ -103,6 +106,14 @@ class ReferenceLink
         this.anchor = anchor;
         this.name = name;
     }
+
+    to_element()
+    {
+        var a = document.createElement("a");
+        a.setAttribute("href", `/lottie-docs/${this.page}/#${this.anchor}`);
+        a.appendChild(document.createTextNode(this.name));
+        return a;
+    }
 }
 
 class SchemaRecursionStop {}
@@ -126,16 +137,20 @@ class SchemaData
 
     get_ref(ref)
     {
-        if ( !this.cache[ref] )
-            this.cache[ref] = new SchemaObject(this, this.get_raw(ref), ref);
-        return this.cache[ref];
+        if ( this.cache[ref] )
+            return this.cache[ref];
+
+        var path = this.ref_to_path(ref);
+        var data = this.walk_schema(this.schema, path);
+        var object = new SchemaObject(this, data, ref, path);
+        this.cache[ref] = object;
+        return object;
+
     }
 
     get_raw(ref)
     {
-        if ( this.cache[ref] )
-            return this.cache[ref].object;
-        return this.walk_schema(this.schema, this.ref_to_path(ref));
+        return this.get_ref(ref).object;
     }
 
     ref_to_path(ref)
@@ -339,48 +354,125 @@ class SchemaData
     }
 }
 
-
-function info_box_simple(box, title, description)
-{
-    box.appendChild(document.createElement("strong"))
-    .appendChild(document.createTextNode(title));
-    if ( description )
-    {
-        box.appendChild(document.createElement("br"));
-        box.appendChild(document.createTextNode(description));
-    }
-}
-
 class SchemaProperty
 {
     constructor(schema, name)
     {
         this.schema = schema;
         this.name = name;
-        this.title = null;
-        this.description = null;
         this.definitions = [];
     }
 
     add_definition(schema)
     {
         this.definitions.push(schema);
-        if ( schema.title && !this.title )
-            this.title = schema.title;
-        if ( schema.description && !this.description )
-            this.description = schema.description;
     }
 
-    populate_info_box(box)
+    find_definition(value)
     {
-        info_box_simple(box, this.title ?? this.name, this.description);
-    }
-
-    explain_value(object, value, formatter)
-    {
-        if ( Array.isArray(value) )
+        for ( var def of this.definitions )
         {
-            this.explain_array(value, formatter);
+            if ( schema.validate(value, def) )
+            {
+                var items = [];
+                var type;
+                var ref;
+                function callback(object)
+                {
+                    if ( object.items )
+                        items.push(object.items);
+                    if ( object.type )
+                        type = object.type;
+                    if ( object.$ref )
+                        ref = object.$ref;
+                }
+                this.schema.resolve_callback(def, callback);
+                return {
+                    ...def,
+                    _collected: {
+                        items: items,
+                        type: type,
+                        $ref: ref,
+                    }
+                };
+            }
+        }
+        return null;
+    }
+
+    _format_type(box, type_data)
+    {
+        if ( type_data.$ref )
+        {
+            var links = this.schema.get_ref(type_data.$ref).links;
+            for ( var link of links )
+            {
+                box.element.appendChild(link.to_element());
+                box.add(null, " ");
+            }
+            if ( links.length )
+                box.element.removeChild(box.element.lastChild);
+            else
+                box.add(null, "??");
+        }
+        else if ( type_data.type == "array" && type_data.items )
+        {
+            box.add("", "Array of ");
+            for ( var item of type_data.items )
+            {
+                if ( "oneOf" in item )
+                {
+                    for ( var subitem of item.oneOf )
+                    {
+                        this._format_type(box, subitem);
+                        box.add(null, ", ");
+                    }
+
+                }
+                else
+                {
+                    this._format_type(box, item);
+                    box.add(null, ", ");
+                }
+            }
+
+            box.element.removeChild(box.element.lastChild);
+        }
+        else
+        {
+            box.add("code", type_data.type);
+        }
+    }
+
+    populate_info_box(object, definition, box)
+    {
+        object.info_box_title(box);
+        box.add(null, " \u2192 ");
+        box.add("strong", definition.title ?? this.name);
+
+
+        if ( definition._collected.type || definition._collected.ref )
+        {
+            box.add("br");
+            this._format_type(box, definition._collected);
+        }
+
+        if ( definition.description )
+        {
+            box.add("br");
+            box.add(null, definition.description);
+        }
+    }
+
+    explain_value(object, definition, value, formatter)
+    {
+        if ( !definition )
+        {
+            formatter.write_item(JSON.stringify(value), "comment");
+        }
+        else if ( Array.isArray(value) )
+        {
+            this.explain_array(definition, value, formatter);
         }
         else if ( typeof value == "object" )
         {
@@ -390,7 +482,7 @@ class SchemaProperty
             }
             else
             {
-                var found = this.schema.find_object(value, this.definitions);
+                var found = definition ? this.schema.find_object(value, [definition]) : null;
                 if ( found )
                     found.explain(value, formatter);
                 else
@@ -402,15 +494,20 @@ class SchemaProperty
             var const_description = null;
             function callback(object)
             {
-                if ( object.const === value && object.title != this.title )
+                if ( object.const === value && object.title != definition.title )
                     const_description = object;
             }
-            this.schema.resolve_callback(this.definitions, callback.bind(this));
+            this.schema.resolve_callback(definition, callback.bind(this));
 
             if ( const_description && (const_description.title || const_description.description) )
             {
                 var box = formatter.info_box(JSON.stringify(value), formatter.hljs_type(value));
-                info_box_simple(box, const_description.title ?? value, const_description.description);
+                box.add("strong", const_description.title ?? value);
+                if ( const_description.description )
+                {
+                    box.add("br");
+                    box.add(null, const_description.description);
+                }
             }
             else
             {
@@ -419,7 +516,7 @@ class SchemaProperty
         }
     }
 
-    explain_array(value, formatter)
+    explain_array(definition, value, formatter)
     {
         if ( value.length == 0 )
         {
@@ -427,24 +524,14 @@ class SchemaProperty
             return;
         }
 
-        var items = [];
-        var can_be_array = false;
-        function callback(object)
-        {
-            if ( object.type == "array" )
-                can_be_array = true;
-            if ( object.items )
-                items.push(object.items);
-        }
-        this.schema.resolve_callback(this.definitions, callback);
+        var items = definition._collected.items;
 
-        if ( !can_be_array || items.length == 0 )
+        if ( items.length == 0 )
         {
             formatter.write_item(JSON.stringify(value), "comment");
             return;
         }
 
-        items = [items[0].oneOf[4]];
         formatter.open("[\n");
         for ( var i = 0; i < value.length; i++ )
         {
@@ -467,16 +554,16 @@ class SchemaProperty
 
 class SchemaObject
 {
-    constructor(schema, object, ref)
+    constructor(schema, object, ref, path)
     {
         this.schema = schema;
         this.object = object;
         this.ref = ref;
-        var match = ref.match(/#\/\$defs\/([a-z]+)\/([a-z]+)/);
-        if ( match )
+        this.path = path;
+        if ( path.length == 3 )
         {
-            this.group = match[1];
-            this.cls = match[2];
+            this.group = path[1];
+            this.cls = path[2];
         }
         this.properties = [];
         this._title = this.cls;
@@ -558,9 +645,11 @@ class SchemaObject
             if ( this.properties[name] )
             {
                 var prop_box = formatter.info_box(JSON.stringify(name), "string")
-                this.properties[name].populate_info_box(prop_box);
+                var def = this.properties[name].find_definition(value);
+                console.log(this.cls, name, def);
+                this.properties[name].populate_info_box(this, def, prop_box);
                 formatter.write(": ");
-                this.properties[name].explain_value(this, value, formatter);
+                this.properties[name].explain_value(this, def, value, formatter);
             }
             else
             {
@@ -580,8 +669,15 @@ class SchemaObject
     info_box(formatter)
     {
         var box = formatter.info_box(this.title, "comment", icons[this.ref] ?? "fas fa-info-circle");
-        var title = box.appendChild(document.createElement("strong"));
-        var links = this.schema.get_links(this.group, this.cls, this.title);
+        this.info_box_title(box);
+        box.add("br");
+        box.add(null, this.description);
+    }
+
+    info_box_title(box)
+    {
+        var title = box.element.appendChild(document.createElement("strong"));
+        var links = this.links;
         if ( links.length == 0 )
         {
             title.appendChild(document.createTextNode(this.title));
@@ -590,15 +686,10 @@ class SchemaObject
         {
             for ( var link of links )
             {
-                var a = title.appendChild(document.createElement("a"));
-                a.setAttribute("href", `/lottie-docs/${link.page}/#${link.anchor}`);
-                a.appendChild(document.createTextNode(link.name));
+                title.appendChild(link.to_element());
                 title.appendChild(document.createTextNode(" "));
             }
         }
-        title.appendChild(document.createElement("br"));
-
-        box.appendChild(document.createTextNode(this.description));
     }
 }
 
@@ -638,12 +729,7 @@ class JsonFormatter
     {
         var wrapper = this.write_item(content, hljs_type);
         wrapper.classList.add("info_box_trigger");
-        wrapper.addEventListener("click", function(){
-            document.querySelectorAll(".info_box_trigger").forEach(
-                e => e != wrapper ? e.classList.remove("active") : null
-            );
-            wrapper.classList.toggle("active");
-        });
+        wrapper.addEventListener("click", e => {info_box.show(wrapper); e.stopPropagation();});
 
         if ( icon_class )
         {
@@ -654,10 +740,7 @@ class JsonFormatter
             wrapper.insertBefore(document.createTextNode(" "), after);
         }
 
-        var box = document.createElement("span");
-        box.setAttribute("class", "info_box");
-        wrapper.appendChild(box);
-        return box;
+        return new InfoBoxContents(wrapper);
     }
 
     write(str)
@@ -684,9 +767,79 @@ class JsonFormatter
     }
 }
 
+class InfoBox
+{
+    constructor(element)
+    {
+        this.element = element;
+        this.target = null;
+        this.contents = null;
+        this.element.addEventListener("click", e => e.stopPropagation());
+    }
+
+    clear()
+    {
+        if ( this.target )
+        {
+            this.target.appendChild(this.contents);
+
+            while ( this.element.firstChild )
+                this.element.removeChild(this.element.firstChild);
+
+            this.target = null;
+            this.contents = null;
+        }
+    }
+
+    hide()
+    {
+        this.clear();
+        this.element.style.display = "none";
+    }
+
+    show(trigger)
+    {
+        this.clear();
+        this.target = trigger;
+        this.contents = this.target.querySelector(".info_box_content");
+        this.element.appendChild(this.contents);
+        this.element.style.display = "block";
+        this.element.style.top = (this.target.offsetTop - 5) + "px";
+        this.element.style.left = (this.target.offsetLeft + this.target.offsetWidth) + "px";
+    }
+}
+
+class InfoBoxContents
+{
+    constructor(parent)
+    {
+        this.element = document.createElement("span");
+        this.element.setAttribute("class", "info_box_content");
+        parent.appendChild(this.element);
+    }
+
+    add(tag, text = null, attrs = {})
+    {
+        var add_to = this.element;
+        if ( tag )
+        {
+            add_to = document.createElement(tag);
+            this.element.appendChild(add_to);
+            for ( var [n, v] of Object.entries(attrs) )
+                add_to.setAttribute(n, v);
+        }
+
+        if ( text )
+            add_to.appendChild(document.createTextNode(text));
+
+        return add_to;
+    }
+}
+
 var lottie = null;
 var parent = document.getElementById("explainer");
 var schema = null;
+var info_box = new InfoBox(document.getElementById("info_box"));
 var icons = {
     "#/$defs/animation/animation": "fas fa-video",
     "#/$defs/assets/image": "fas fa-file-image",
@@ -717,6 +870,8 @@ Promise.all(requests)
     .catch(critical_error);
 })
 .catch(critical_error);
+
+document.body.addEventListener("click", e => info_box.hide());
 
 
 function quick_test()
