@@ -10,7 +10,7 @@ Explain my Lottie
     cursor: pointer;
 }
 
-.info_box_content {
+.info_box_content, .info_box_lottie {
     display: none;
 }
 
@@ -50,12 +50,18 @@ Explain my Lottie
 #info_box .info_box_content{
     display: block;
 }
+
+.info_box_lottie {
+    width: 300px;
+    height: 300px;
+}
+
 </style>
 <div>
     <p><input type="file" onchange="lottie_file_input(event);" /></p>
 </div>
 <pre><code id="explainer"></code></pre>
-<div id="info_box"><div>
+<div id="info_box"><div class="info_box_details"></div><div class="info_box_lottie alpha_checkered"></div><div>
 <script>
 function lottie_file_input(ev)
 {
@@ -634,7 +640,7 @@ class SchemaObject
         if ( Object.keys(json).length == 0 )
         {
             formatter.write("{");
-            this.info_box(formatter);
+            this.info_box(json, formatter);
             formatter.write("}");
             return;
         }
@@ -655,7 +661,7 @@ class SchemaObject
         this.schema.resolve_callback(this.object, callback.bind(this), json);
 
         formatter.open("{");
-        this.info_box(formatter);
+        this.info_box(json, formatter);
         formatter.write("\n");
         var entries = Object.entries(json);
         for ( var i = 0; i < entries.length; i++ )
@@ -668,7 +674,6 @@ class SchemaObject
             {
                 var prop_box = formatter.info_box(JSON.stringify(name), "string")
                 var def = property.find_definition(value);
-                console.log(this.cls, name, def);
                 property.populate_info_box(this, def, prop_box);
                 formatter.write(": ");
                 property.explain_value(this, def, value, formatter);
@@ -688,13 +693,86 @@ class SchemaObject
         formatter.close("}");
     }
 
-    info_box(formatter)
+    info_box(json, formatter)
     {
         var box = formatter.info_box(this.title, "comment", icons[this.ref] ?? "fas fa-info-circle");
         this.info_box_title(box);
         box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.ref});
         box.add("br");
         box.add(null, this.description);
+
+        if ( this.group == "animation" && this.cls == "animation" )
+        {
+            box.lottie_json = lottie_clone(lottie);
+        }
+        else if ( this.group == "layers" )
+        {
+            box.lottie_json = lottie_clone(lottie);
+            box.lottie_json.layers = [json];
+        }
+        else if ( this.group == "assets" && this.cls == "precomposition" )
+        {
+            box.lottie_json = lottie_clone(lottie);
+            box.lottie_json.layers = json.layers;
+            if ( json.fr )
+                box.lottie_json.fr = json.fr;
+        }
+        else if ( this.group == "assets" && this.cls == "image" )
+        {
+            box.lottie_json = dummy_lottie(json.w, json.h);
+            box.lottie_json.assets = [json];
+            box.lottie_json.layers = [{
+                "ip": 0,
+                "op": 60,
+                "st": 0,
+                "ks": {},
+                "ty": 2,
+                "refId": asset.id
+            }];
+        }
+        else if ( this.group == "shapes" )
+        {
+            var shape_layer = {
+                "ip": lottie.ip,
+                "op": lottie.op,
+                "st": 0,
+                "ks": {},
+                "ty": 4,
+                "shapes": []
+            };
+            if ( this.cls == "group" )
+            {
+                box.lottie_json = lottie_clone(lottie);
+                box.lottie_json.layers = [shape_layer];
+                shape_layer.shapes = [json];
+            }
+            else if ( ["rectangle", "ellipse", "polystar", "path"].includes(this.cls) )
+            {
+                box.lottie_json = lottie_clone(lottie);
+                box.lottie_json.layers = [shape_layer];
+                var fill = {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 0, 0]}
+                };
+                shape_layer.shapes = [json, fill];
+
+            }
+            else if ( ["fill", "gradient-fill", "stroke", "gradient-stroke"].includes(this.cls) )
+            {
+                box.lottie_json = dummy_lottie(512, 512);
+                box.lottie_json.layers = [shape_layer];
+                shape_layer.shapes = [
+                    {
+                        "ty": "rc",
+                        "p": {"a": 0, "k": [256, 256]},
+                        "s": {"a": 0, "k": [512, 512]},
+                        "r": {"a": 0, "k": 0},
+                    },
+                    json
+                ];
+            }
+        }
     }
 
     info_box_title(box)
@@ -798,6 +876,9 @@ class InfoBox
         this.target = null;
         this.contents = null;
         this.element.addEventListener("click", e => e.stopPropagation());
+        this.lottie_target = this.element.querySelector(".info_box_lottie");
+        this.contents_target = this.element.querySelector(".info_box_details");
+        this.lottie_player = new LottiePlayer(this.lottie_target, null, false);
     }
 
     clear()
@@ -806,9 +887,12 @@ class InfoBox
         {
             this.target.appendChild(this.contents);
 
-            while ( this.element.firstChild )
-                this.element.removeChild(this.element.firstChild);
+            while ( this.contents_target.firstChild )
+                this.contents_target.removeChild(this.contents_target.firstChild);
 
+            this.lottie_player.clear();
+
+            this.lottie_target.style.display = "none";
             this.target = null;
             this.contents = null;
         }
@@ -825,10 +909,17 @@ class InfoBox
         this.clear();
         this.target = trigger;
         this.contents = this.target.querySelector(".info_box_content");
-        this.element.appendChild(this.contents);
+        this.contents_target.appendChild(this.contents);
         this.element.style.display = "block";
         this.element.style.top = (this.target.offsetTop - 5) + "px";
         this.element.style.left = (this.target.offsetLeft + this.target.offsetWidth) + "px";
+
+        if ( this.contents.info_box_data.lottie_json )
+        {
+            this.lottie_target.style.display = "block";
+            this.lottie_player.lottie = this.contents.info_box_data.lottie_json;
+            this.lottie_player.reload();
+        }
     }
 }
 
@@ -839,6 +930,8 @@ class InfoBoxContents
         this.element = document.createElement("span");
         this.element.setAttribute("class", "info_box_content");
         parent.appendChild(this.element);
+        this.element.info_box_data = this;
+        this.lottie_json = null;
     }
 
     add(tag, text = null, attrs = {})
@@ -856,6 +949,19 @@ class InfoBoxContents
             add_to.appendChild(document.createTextNode(text));
 
         return add_to;
+    }
+}
+
+function dummy_lottie(w, h)
+{
+    return {
+        "fr": 60,
+        "ip": 0,
+        "op": 60,
+        "w": w,
+        "h": h,
+        "assets": [],
+        "layers": []
     }
 }
 

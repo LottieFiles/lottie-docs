@@ -30,14 +30,10 @@ class LottiePlayer
             options.path = this.lottie;
         else
             // parse/stringify because the player modifies the passed object
-            options.animationData = JSON.parse(JSON.stringify(this.lottie));
+            options.animationData = lottie_clone(this.lottie);
 
         if ( this.anim != null )
-        {
-            try {
-                this.anim.destroy();
-            } catch ( e ) {}
-        }
+            this.clear();
 
         this.anim = bodymovin.loadAnimation(options);
     }
@@ -54,6 +50,14 @@ class LottiePlayer
 
     on_reload()
     {
+    }
+
+    clear()
+    {
+        try {
+            this.anim.destroy();
+            this.anim = null;
+        } catch ( e ) {}
     }
 }
 
@@ -97,6 +101,13 @@ class PlaygroundPlayer extends LottiePlayer
         }
     }
 }
+
+
+function lottie_clone(json)
+{
+    return JSON.parse(JSON.stringify(json));
+}
+
 
 function syntax_edit_update(element, text)
 {
