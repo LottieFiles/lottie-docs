@@ -935,15 +935,27 @@ class SchemaObject
                     "g": json
                 });
             }
+            else if ( this.cls == "shape-property" )
+            {
+                box.lottie_json = bezier_shape_lottie(lottie, json);
+            }
         }
-        else if ( this.group == "helpers" && this.cls == "color" )
+        else if ( this.group == "helpers" )
         {
-            box.lottie_json = rect_shape_lottie(96, 48, lottie);
-            box.lottie_json.layers[0].shapes.push({
-                "ty": "fl",
-                "o": {"a": 0, "k": 100 },
-                "c": {"a": 0, "k": json},
-            });
+            if ( this.cls == "color" )
+            {
+                box.lottie_json = rect_shape_lottie(96, 48, lottie);
+                box.lottie_json.layers[0].shapes.push({
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": json},
+                });
+            }
+            else if ( this.cls == "bezier" )
+            {
+                var prop = {"a": 0, "k": json};
+                box.lottie_json = bezier_shape_lottie(lottie, prop);
+            }
         }
         else if ( this.group == "text" )
         {
@@ -1207,6 +1219,49 @@ class InfoBoxContents
 
         return add_to;
     }
+}
+
+function bezier_shape_lottie(timing, shape_prop)
+{
+    var minx = Infinity;
+    var miny = Infinity;
+    var maxx = -Infinity;
+    var maxy = -Infinity;
+    var k = shape_prop.a ? shape_prop.k : [{s: shape_prop.k}];
+    for ( var kf of k )
+    {
+        for ( var [x, y] of kf.s.v )
+        {
+            if ( x < minx ) minx = x;
+            if ( x > maxx ) maxx = x;
+            if ( y < miny ) miny = y;
+            if ( y > maxy ) maxy = y;
+        }
+    }
+
+    var lottie_json = dummy_lottie(maxx - minx, maxy - miny, timing);
+    lottie_json.layers = [{
+        "ip": lottie_json.ip,
+        "op": lottie_json.op,
+        "st": 0,
+        "ks": {
+            "p": {"a": 0, "k": [-minx, -miny]},
+        },
+        "ty": 4,
+        "shapes": [
+            {
+                "ty": "sh",
+                "ks": shape_prop,
+            },
+            {
+                "ty": "fl",
+                "o": {"a": 0, "k": 100},
+                "c": {"a": 0, "k": [0, 0, 0]},
+            }
+        ]
+    }];
+
+    return lottie_json;
 }
 
 function rect_shape_lottie(w, h, timing)
