@@ -47,7 +47,7 @@
                 }
             },
             "required": [
-                "fFamily", "origin", "fName", "fStyle"
+                "fFamily", "fName", "fStyle"
             ]
         }
     ]

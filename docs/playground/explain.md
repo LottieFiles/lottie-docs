@@ -932,6 +932,78 @@ class SchemaObject
                 "c": {"a": 0, "k": json},
             });
         }
+        else if ( this.group == "text" )
+        {
+            var doc = null;
+            var font = null;
+            var bg = null;
+            if ( this.cls == "font" )
+            {
+                font = json;
+                doc = {
+                    "f": json.fName,
+                    "fc": [0, 0, 0],
+                    "s": 24,
+                    "t": "The quick brown fox\rjumps over the lazy dog",
+                    "lh": 24 * 1.2,
+                    "j": 0
+                };
+                bg = "#ffffff";
+            }
+            else if ( this.cls == "text-document" )
+            {
+                doc = json;
+                font = lottie.fonts.list.find(x => x.fName == json.f);
+            }
+
+            if ( doc && font )
+            {
+                var lh = doc.lh ?? (1.2 * doc.s);
+                var height = Math.ceil(lh * ((doc.t.match(/\r/g)?.length ?? 0) + 1));
+
+                box.lottie_json = dummy_lottie(300, height, lottie);
+                box.lottie_json.fonts = {list:[font]};
+                box.lottie_json.layers = [{
+                    "ip": lottie.ip,
+                    "op": lottie.op,
+                    "st": 0,
+                    "ks": {
+                        "p": {"a": 0, "k": [10, doc.s]}
+                    },
+                    "ty": 5,
+                    "t": {
+                        "a": [],
+                        "d": {
+                            "k": [
+                                {
+                                    "s": doc,
+                                    "t": 0
+                                }
+                            ]
+                        },
+                        "m": {
+                            "a": {"a": 0, "k": [0,0]},
+                            "g": 3
+                        },
+                        "p": {}
+                    }
+                }];
+
+                if ( bg )
+                {
+                    box.lottie_json.layers.push({
+                        "ip": lottie.ip,
+                        "op": lottie.op,
+                        "st": 0,
+                        "ks": {"o": {"a":0, "k": 80}},
+                        "ty": 1,
+                        "sc": bg,
+                        "sh": height,
+                        "sw": 300
+                    });
+                }
+            }
+        }
     }
 
     info_box_title(box)
@@ -1209,7 +1281,10 @@ var icons = {
     "#/$defs/text/character-data": "fas fa-font",
     "#/$defs/text/font-list": "fas fa-list",
     "#/$defs/text/font": "fas fa-font",
+    "#/$defs/text/text-animator-data": "fas fa-font",
+    "#/$defs/text/text-data": "fas fa-running",
     "#/$defs/text/text-document": "far fa-file-alt",
+    "#/$defs/text/text-data-keyframe": "fas fa-key",
 }
 
 var requests = [fetch("/lottie-docs/schema/lottie.schema.json"), fetch("/lottie-docs/schema/docs_mapping.json")]
@@ -1336,6 +1411,60 @@ function quick_test()
                         */
                     }
                 ]
+            }
+        ]
+    };
+
+    lottie_json = {
+        "v": "5.5.2",
+        "fr": 60,
+        "ip": 0,
+        "op": 60,
+        "w": 512,
+        "h": 512,
+        "assets": [],
+        "fonts": {
+            "list": [
+                {
+                    "ascent": 72,
+                    "fFamily": "sans",
+                    "fName": "sans-Regular",
+                    "fStyle": "Regular",
+                    "fPath": "sans"
+                }
+            ]
+        },
+        "layers": [
+            {
+                "ip": 0,
+                "op": 60,
+                "st": 0,
+                "ks": {
+                    "p": {"a": 0, "k": [200, 200]}
+                },
+                "ty": 5,
+                "t": {
+                    "a": [],
+                    "d": {
+                        "k": [
+                            {
+                                "s": {
+                                    "f": "sans-Regular",
+                                    "fc": [1, 0, 0],
+                                    "s": 50,
+                                    "t": "Hello",
+                                    "j": 0
+                                },
+                                "t": 0
+                            }
+                        ]
+                    },
+                    "m": {
+                        "a": {"a": 0, "k": [0,0]},
+                        "g": 3
+                    },
+                    "p": {}
+                }
             }
         ]
     };
