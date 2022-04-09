@@ -1227,15 +1227,22 @@ function bezier_shape_lottie(timing, shape_prop)
     var miny = Infinity;
     var maxx = -Infinity;
     var maxy = -Infinity;
-    var k = shape_prop.a ? shape_prop.k : [{s: shape_prop.k}];
-    for ( var kf of k )
+
+    var keyframes = shape_prop.a ? shape_prop.k : [{s: shape_prop.k}];
+    for ( var kf of keyframes )
     {
-        for ( var [x, y] of kf.s.v )
+        for ( var i = 0; i < kf.s.v.length; i++ )
         {
-            if ( x < minx ) minx = x;
-            if ( x > maxx ) maxx = x;
-            if ( y < miny ) miny = y;
-            if ( y > maxy ) maxy = y;
+            var offsets = [[0, 0], kf.s.i[i], kf.s.o[i]];
+            for ( var off of offsets )
+            {
+                var x = kf.s.v[i][0] + off[0];
+                var y = kf.s.v[i][1] + off[1];
+                if ( x < minx ) minx = x;
+                if ( x > maxx ) maxx = x;
+                if ( y < miny ) miny = y;
+                if ( y > maxy ) maxy = y;
+            }
         }
     }
 
@@ -1315,6 +1322,7 @@ var icons = {
     "#/$defs/animated-properties/shape-property": "fas fa-bezier-curve",
     "#/$defs/animated-properties/split-vector": "fas fa-map-marker-alt",
     "#/$defs/animated-properties/position-value": "fas fa-running",
+    "#/$defs/animated-properties/value": "fas fa-running",
 
     "#/$defs/animation/animation": "fas fa-video",
     "#/$defs/animation/metadata": "fas fa-info-circle",
