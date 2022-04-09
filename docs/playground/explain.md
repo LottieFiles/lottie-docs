@@ -251,7 +251,7 @@ class SchemaData
 
     find_object(json_object, schema_definitions)
     {
-        for ( var def of schema_definitions )
+        for ( let def of schema_definitions )
         {
             if ( schema_definitions.properties || schema_definitions.allOf )
             {
@@ -300,8 +300,8 @@ class SchemaData
 
     validate(json_value, def)
     {
-        if ( "const" in def && json_value === def.const )
-            return true;
+        if ( "const" in def )
+            return json_value === def.const;
 
         if ( "type" in def )
         {
@@ -313,7 +313,7 @@ class SchemaData
         {
             if ( def.properties )
             {
-                for ( var [name, prop] of Object.entries(json_value) )
+                for ( let [name, prop] of Object.entries(json_value) )
                 {
                     if ( name in def.properties )
                         if ( !this.validate(prop, def.properties[name]) )
@@ -323,7 +323,7 @@ class SchemaData
 
             if ( "required" in def )
             {
-                for ( var req of def.required )
+                for ( let req of def.required )
                     if ( !(req in json_value) )
                         return false;
             }
@@ -331,7 +331,7 @@ class SchemaData
 
         if ( def.allOf )
         {
-            for ( var base of def.allOf )
+            for ( let base of def.allOf )
                 if ( !this.validate(json_value, base) )
                     return false;
         }
@@ -345,7 +345,7 @@ class SchemaData
         // leave this last
         if ( def.oneOf )
         {
-            for ( var base of def.oneOf )
+            for ( let base of def.oneOf )
                 if ( this.validate(json_value, base) )
                     return true;
             return false;
@@ -568,6 +568,7 @@ class SchemaObject
         this.properties = [];
         this._title = this.cls;
         this._description = null;
+        this._links = [];
     }
 
     _collect()
@@ -579,6 +580,15 @@ class SchemaObject
         this._title = this.cls ?? this.ref;
         this._description = "";
         this.schema.resolve_callback(this.object, this._on_collect_object.bind(this));
+
+        if ( this.cls )
+        {
+            this._links = this.schema.get_links(this.group, this.cls, this.title);
+            if ( this._links.length )
+            {
+                this._title = this._links.map(l => l.name).join(" ");
+            }
+        }
     }
 
     _on_collect_object(obj)
@@ -612,15 +622,16 @@ class SchemaObject
         return this._title;
     }
 
+    get links()
+    {
+        this._collect();
+        return this._links;
+    }
+
     get description()
     {
         this._collect();
         return this._description;
-    }
-
-    get links()
-    {
-        return this.schema.get_links(this.group, this.cls, this.title);
     }
 
     explain(json, formatter)
@@ -670,6 +681,7 @@ class SchemaObject
     {
         var box = formatter.info_box(this.title, "comment", icons[this.ref] ?? "fas fa-info-circle");
         this.info_box_title(box);
+        box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.ref});
         box.add("br");
         box.add(null, this.description);
     }
@@ -841,25 +853,52 @@ var parent = document.getElementById("explainer");
 var schema = null;
 var info_box = new InfoBox(document.getElementById("info_box"));
 var icons = {
+    "#/$defs/animated-properties/color-value": "fas fa-palette",
+    "#/$defs/animated-properties/gradient-colors": "fas fa-swatchbook",
+    //"#/$defs/animated-properties/keyframe-bezier-handle": "fas fa-bezier-curve",
+    "#/$defs/animated-properties/keyframe": "fas fa-key",
+    "#/$defs/animated-properties/multi-dimensional": "fas fa-ellipsis-v",
+    "#/$defs/animated-properties/position-keyframe": "fas fa-key",
+    "#/$defs/animated-properties/position": "fas fa-map-marker-alt",
+    "#/$defs/animated-properties/shape-keyframe": "fas fa-key",
+    "#/$defs/animated-properties/shape-property": "fas fa-bezier-curve",
+    "#/$defs/animated-properties/split-vector": "fas fa-map-marker-alt",
+    // "#/$defs/animated-properties/position-value": "fas fa-",
+
     "#/$defs/animation/animation": "fas fa-video",
+    "#/$defs/animation/metadata": "fas fa-info-circle",
+    "#/$defs/animation/motion-blur": "fas fa-wind",
+
     "#/$defs/assets/image": "fas fa-file-image",
     "#/$defs/assets/sound": "fas fa-file-audio",
     "#/$defs/assets/precomposition": "fas fa-file-video",
+
+    "#/$defs/helpers/bezier": "fas fa-bezier-curve",
+    "#/$defs/helpers/color": "fas fa-palette",
+    "#/$defs/helpers/mask": "fas fa-theater-mask",
+    "#/$defs/helpers/transform": "fas fa-arrows-alt",
+
     "#/$defs/layers/shape-layer": "fas fa-shapes",
     "#/$defs/layers/image-layer": "fas fa-image",
-    "#/$defs/shapes/group": "fas fa-object-group",
+    "#/$defs/layers/precomposition-layer": "fas fa-video",
+    "#/$defs/layers/solid-color-layer": "fas fa-square-full",
+    "#/$defs/layers/text-layer": "fas fa-font",
+
     "#/$defs/shapes/ellipse": "fas fa-circle",
-    "#/$defs/shapes/rectangle": "fas fa-rectangle",
-    "#/$defs/shapes/polystar": "fas fa-star",
-    "#/$defs/shapes/polystar": "fas fa-star",
-    "#/$defs/shapes/path": "fas fa-bezier-curve",
-    "#/$defs/shapes/path": "fas fa-bezier-curve",
     "#/$defs/shapes/fill": "fas fa-fill-drip",
-    "#/$defs/shapes/stroke": "fas fa-paint-brush",
     "#/$defs/shapes/gradient-fill": "fas fa-fill-drip",
     "#/$defs/shapes/gradient-stroke": "fas fa-paint-brush",
+    "#/$defs/shapes/group": "fas fa-object-group",
+    "#/$defs/shapes/path": "fas fa-bezier-curve",
+    "#/$defs/shapes/polystar": "fas fa-star",
+    "#/$defs/shapes/rectangle": "fas fa-rectangle",
+    "#/$defs/shapes/stroke": "fas fa-paint-brush",
     "#/$defs/shapes/transform": "fas fa-arrows-alt",
-    "#/$defs/helpers/transform": "fas fa-arrows-alt",
+
+    "#/$defs/text/character-data": "fas fa-font",
+    "#/$defs/text/font-list": "fas fa-list",
+    "#/$defs/text/font": "fas fa-font",
+    "#/$defs/text/text-document": "far fa-file-alt",
 }
 
 var requests = [fetch("/lottie-docs/schema/lottie.schema.json"), fetch("/lottie-docs/schema/docs_mapping.json")]
@@ -882,7 +921,7 @@ function quick_test()
         return;
     }
 
-    lottie_set_json({
+    var lottie_json = {
         "fr": 60,
         "ip": 0,
         "op": 60,
@@ -943,8 +982,10 @@ function quick_test()
                 ]
             }
         ]
-    });
+    };
+    lottie_set_json(lottie_json);
 }
+
 quick_test();
 
 </script>
