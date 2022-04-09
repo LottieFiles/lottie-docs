@@ -179,7 +179,33 @@ class ReferenceLink
     }
 }
 
-class SchemaRecursionStop {}
+class SchemaValidation
+{
+    constructor(lax)
+    {
+        this.lax = lax;
+        this.penalty = 0;
+        this.best = null;
+        this.best_penalty = Infinity;
+    }
+
+    fail(penalty)
+    {
+        if ( this.lax )
+            this.penalty += penalty;
+        else
+            throw this;
+    }
+
+    record(object)
+    {
+        if ( this.penalty < this.best_penalty )
+        {
+            this.best = object;
+            this.best_penalty = this.penalty;
+        }
+    }
+}
 
 class SchemaData
 {
@@ -324,22 +350,26 @@ class SchemaData
         callback(obj);
     }
 
-    find_object(json_object, schema_definitions)
+    _find_object(json_object, schema_definitions, validation)
     {
         for ( let def of schema_definitions )
         {
             if ( schema_definitions.properties || schema_definitions.allOf )
             {
-                if ( this.validate(json_object, def) )
+                if ( this.validate(json_object, def, validation) )
                     return def;
+
+                validation.record(def);
             }
             else
             {
                 if ( def.$ref )
                 {
                     var ref = this.get_ref(def.$ref);
-                    if ( this.validate(json_object, ref.object) )
+                    if ( this.validate(json_object, ref.object, validation) )
                         return ref;
+
+                    validation.record(ref);
                 }
 
                 var look_into = [];
@@ -347,7 +377,7 @@ class SchemaData
                     look_into = look_into.concat(def.oneOf);
                 if ( def.anyOf )
                     look_into = look_into.concat(def.anyOf);
-                var found = this.find_object(json_object, look_into);
+                var found = this._find_object(json_object, look_into, validation);
                 if ( found )
                     return found;
             }
@@ -355,10 +385,23 @@ class SchemaData
             if ( found )
                 return found;
 
-            if ( this.validate(json_object, def) )
+            if ( this.validate(json_object, def, validation) )
                 return def;
+
+            validation.record(def);
         }
 
+        return null;
+    }
+
+    find_object(json_object, schema_definitions, lax=false)
+    {
+        var validation = new SchemaValidation(lax);
+        var found = this._find_object(json_object, schema_definitions, validation);
+        if ( found )
+            return found;
+        if ( lax )
+            return validation.best;
         return null;
     }
 
@@ -376,16 +419,29 @@ class SchemaData
         return schema_type;
     }
 
-    validate(json_value, def)
+    validate(json_value, def, validation = new SchemaValidation(false))
     {
-        if ( "const" in def )
-            return json_value === def.const;
+        try {
+            return this._validate(json_value, def, validation)
+        } catch ( e ) {
+            if ( e !== validation )
+                throw e;
+            return false;
+        }
+    }
+
+    _validate(json_value, def, validation)
+    {
+        validation.penalty = 0;
 
         if ( "type" in def )
         {
             if ( this._type_of(json_value) != this._norm_type(def.type) )
-                return false;
+                validation.fail(100);
         }
+
+        if ( "const" in def && json_value !== def.const )
+            validation.fail(10);
 
         if ( typeof json_value == "object" )
         {
@@ -395,7 +451,7 @@ class SchemaData
                 {
                     if ( name in def.properties )
                         if ( !this.validate(prop, def.properties[name]) )
-                            return false;
+                            validation.fail(1);
                 }
             }
 
@@ -411,19 +467,19 @@ class SchemaData
         {
             for ( let base of def.allOf )
                 if ( !this.validate(json_value, base) )
-                    return false;
+                    validation.fail(20);
         }
 
         if ( def.$ref )
         {
             if ( !this.validate(json_value, this.get_raw(def.$ref)) )
-                return false;
+                validation.fail(20);
         }
 
         if ( def.not )
         {
             if ( this.validate(json_value, def.not) )
-                return false;
+                validation.fail(50);
         }
 
         if ( def.oneOf )
@@ -434,7 +490,7 @@ class SchemaData
                     count += 1;
             // Should only be true if exactly 1, but we can be more lax
             if ( count == 0 )
-                return false;
+                validation.fail(10);
         }
 
         if ( def.anyOf )
@@ -442,10 +498,10 @@ class SchemaData
             for ( let base of def.anyOf )
                 if ( this.validate(json_value, base) )
                     return true;
-            return false;
+            validation.fail(10);
         }
 
-        return true;
+        return validation.penalty == 0;
     }
 }
 
@@ -601,7 +657,7 @@ class SchemaProperty
             }
             else
             {
-                var found = definition ? this.schema.find_object(value, [definition]) : null;
+                var found = definition ? this.schema.find_object(value, [definition], true) : null;
                 if ( found )
                     found.explain(value, formatter);
                 else
@@ -627,6 +683,10 @@ class SchemaProperty
                     box.add("br");
                     box.add(null, const_description.description);
                 }
+            }
+            else if ( !this.schema.validate(value, definition) )
+            {
+                formatter.write_item(JSON.stringify(value), "deletion");
             }
             else
             {
@@ -671,7 +731,7 @@ class SchemaProperty
             if ( space == "\n" )
                 formatter.write_indent();
 
-            var found = this.schema.find_object(value[i], items);
+            var found = this.schema.find_object(value[i], items, true);
             if ( !found )
                 formatter.write_item(JSON.stringify(value[i]), "deletion");
             else if ( found instanceof SchemaObject )
@@ -1401,7 +1461,7 @@ function quick_test()
         "w": 512,
         "h": 512,
         "ddd": 0,
-        "meta": {"g":"Test","a":"","k":"","d":"","tc":"#FFFFFF"},
+        "meta": {"g":"Test","a":"","k":"","d":123,"tc":"#FFFFFF"},
         "assets": [],
         "markers": [],
         "layers": [
@@ -1449,14 +1509,14 @@ function quick_test()
                     {
                         "hd": false,
                         "ty": "el",
-                        "p": {
+                        /*"p": {
                             "a": 0,
                             "k": [
                                 256,
                                 256
                             ]
-                        },
-                        /*"p": {
+                        },*/
+                        "p": {
                             "a": 1,
                             "k": [
                                 {
@@ -1478,7 +1538,7 @@ function quick_test()
                                     "i": {x: [0.7], y: [1]},
                                 }
                             ]
-                        },*/
+                        },
                         "s": {
                             "a": 0,
                             "k": [
