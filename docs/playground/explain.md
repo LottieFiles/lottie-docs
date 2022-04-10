@@ -155,6 +155,7 @@ function lottie_set_json(json)
     var object = new SchemaObject(json);
     schema.root.validate(object, true, true);
     object.explain(formatter);
+    formatter.finalize();
 }
 
 function critical_error(err)
@@ -268,231 +269,8 @@ class ValidationResult
 
         this.info_box_description(box, false);
 
-        if ( this.cls == "transform" )
-        {
-            box.lottie_json = rect_shape_lottie(lottie.w, lottie.h, lottie);
-            box.lottie_json.layers[0].shapes[0].s.k = [lottie.w / 3, lottie.h / 3];
-            box.lottie_json.layers[0].shapes.push({
-                "ty": "fl",
-                "o": {"a": 0, "k": 80},
-                "c": {"a": 0, "k": [1, 0, 0]},
-            });
-            box.lottie_json.layers[0].ks = json;
-            box.lottie_json.layers.push({
-                "ip": lottie.ip,
-                "op": lottie.op,
-                "st": 0,
-                "ks": {},
-                "ty": 4,
-                "shapes": [
-                    box.lottie_json.layers[0].shapes[0],{
-                        "ty": "fl",
-                        "o": {"a": 0, "k": 60},
-                        "c": {"a": 0, "k": [0.5, 0.2, 0.2]},
-                    }
-
-                ]
-            });
-        }
-        else if ( this.group == "animation" && this.cls == "animation" )
-        {
-            box.lottie_json = lottie_clone(lottie);
-        }
-        else if ( this.group == "layers" )
-        {
-            box.lottie_json = lottie_clone(lottie);
-            box.lottie_json.layers = [json];
-        }
-        else if ( this.group == "assets" && this.cls == "precomposition" )
-        {
-            box.lottie_json = lottie_clone(lottie);
-            box.lottie_json.layers = json.layers;
-            if ( json.fr )
-                box.lottie_json.fr = json.fr;
-        }
-        else if ( this.group == "assets" && this.cls == "image" )
-        {
-            box.lottie_json = dummy_lottie(json.w, json.h);
-            box.lottie_json.assets = [json];
-            box.lottie_json.layers = [{
-                "ip": 0,
-                "op": 60,
-                "st": 0,
-                "ks": {},
-                "ty": 2,
-                "refId": asset.id
-            }];
-        }
-        else if ( this.group == "shapes" )
-        {
-            var shape_layer = {
-                "ip": lottie.ip,
-                "op": lottie.op,
-                "st": 0,
-                "ks": {},
-                "ty": 4,
-                "shapes": []
-            };
-            if ( this.cls == "group" )
-            {
-                box.lottie_json = dummy_lottie(lottie.w, lottie.h, lottie);
-                box.lottie_json.layers = [shape_layer];
-                shape_layer.shapes = [json];
-            }
-            else if ( ["rectangle", "ellipse", "polystar", "path"].includes(this.cls) )
-            {
-                box.lottie_json = dummy_lottie(lottie.w, lottie.h, lottie);
-                box.lottie_json.layers = [shape_layer];
-                var fill = {
-                    "ty": "fl",
-                    "o": {"a": 0, "k": 100},
-                    "c": {"a": 0, "k": [0, 0, 0]}
-                };
-                shape_layer.shapes = [json, fill];
-
-            }
-            else if ( ["fill", "gradient-fill", "stroke", "gradient-stroke"].includes(this.cls) )
-            {
-                var w = 96;
-                var h = 48;
-
-                if ( this.cls.includes("gradient") )
-                    [w, h] = [lottie.w, lottie.h];
-
-                box.lottie_json = rect_shape_lottie(w, h, lottie);
-                box.lottie_json.layers[0].shapes.push(json);
-            }
-        }
-        else if ( this.group == "animated-properties" )
-        {
-            if ( this.cls == "color-value" )
-            {
-                box.lottie_json = rect_shape_lottie(96, 48, lottie);
-                box.lottie_json.layers[0].shapes.push({
-                    "ty": "fl",
-                    "o": {"a": 0, "k": 100 },
-                    "c": json
-                });
-            }
-            else if ( this.cls == "gradient-colors"  )
-            {
-                box.lottie_json = rect_shape_lottie(300, 48, lottie);
-                box.lottie_json.layers[0].shapes.push({
-                    "ty": "gf",
-                    "o": {"a": 0, "k": 100 },
-                    "s": {"a":0, "k":[0, 0]},
-                    "e": {"a":0, "k":[box.lottie_json.w, 0]},
-                    "t": 1,
-                    "g": json
-                });
-            }
-            else if ( this.cls == "shape-property" )
-            {
-                box.lottie_json = bezier_shape_lottie(lottie, json);
-            }
-        }
-        else if ( this.group == "helpers" )
-        {
-            if ( this.cls == "color" )
-            {
-                box.lottie_json = rect_shape_lottie(96, 48, lottie);
-                box.lottie_json.layers[0].shapes.push({
-                    "ty": "fl",
-                    "o": {"a": 0, "k": 100},
-                    "c": {"a": 0, "k": json},
-                });
-            }
-            else if ( this.cls == "bezier" )
-            {
-                var prop = {"a": 0, "k": json};
-                box.lottie_json = bezier_shape_lottie(lottie, prop);
-            }
-            else if ( this.cls == "mask" )
-            {
-                box.lottie_json = rect_shape_lottie(lottie.w, lottie.h, lottie);
-                box.lottie_json.layers[0].shapes.push({
-                    "ty": "fl",
-                    "o": {"a": 0, "k": 100},
-                    "c": {"a": 0, "k": [0, 0, 0]},
-                });
-                box.lottie_json.layers[0].hasMask = true;
-                box.lottie_json.layers[0].masksProperties = [json];
-            }
-        }
-        else if ( this.group == "text" )
-        {
-            var doc = null;
-            var font = null;
-            var bg = null;
-            if ( this.cls == "font" )
-            {
-                font = json;
-                doc = {
-                    "f": json.fName,
-                    "fc": [0, 0, 0],
-                    "s": 24,
-                    "t": "The quick brown fox\rjumps over the lazy dog",
-                    "lh": 24 * 1.2,
-                    "j": 0
-                };
-                bg = "#ffffff";
-            }
-            else if ( this.cls == "text-document" )
-            {
-                doc = json;
-                font = lottie.fonts.list.find(x => x.fName == json.f);
-            }
-
-            if ( doc && font )
-            {
-                var lh = doc.lh ?? (1.2 * doc.s);
-                var height = Math.ceil(lh * ((doc.t.match(/\r/g)?.length ?? 0) + 1));
-
-                box.lottie_json = dummy_lottie(300, height, lottie);
-                box.lottie_json.fonts = {list:[font]};
-                box.lottie_json.layers = [{
-                    "ip": lottie.ip,
-                    "op": lottie.op,
-                    "st": 0,
-                    "ks": {
-                        "p": {"a": 0, "k": [10, doc.s]}
-                    },
-                    "ty": 5,
-                    "t": {
-                        "a": [],
-                        "d": {
-                            "k": [
-                                {
-                                    "s": doc,
-                                    "t": 0
-                                }
-                            ]
-                        },
-                        "m": {
-                            "a": {"a": 0, "k": [0,0]},
-                            "g": 3
-                        },
-                        "p": {}
-                    }
-                }];
-
-                if ( bg )
-                {
-                    box.lottie_json.layers.push({
-                        "ip": lottie.ip,
-                        "op": lottie.op,
-                        "st": 0,
-                        "ks": {"o": {"a":0, "k": 80}},
-                        "ty": 1,
-                        "sc": bg,
-                        "sh": height,
-                        "sw": 300
-                    });
-                }
-            }
-        }
+        box.lottie_loader = new LottiePreviewGenerator(this.group, this.cls, json, lottie);
     }
-
 
     get_links()
     {
@@ -559,6 +337,334 @@ class ValidationResult
         else
             box.add("code", this.type ?? "???");
     }
+}
+
+class LottiePreviewGenerator
+{
+    constructor(group, cls, json, lottie)
+    {
+        this.group = group;
+        this.cls = cls;
+        this.json = json;
+        this.lottie = lottie;
+    }
+
+    generate()
+    {
+        var generated = null;
+
+        if ( this.cls == "transform" )
+        {
+            generated = this.rect_shape_lottie(this.lottie.w, this.lottie.h);
+            generated.layers[0].shapes[0].s.k = [this.lottie.w / 3, this.lottie.h / 3];
+            generated.layers[0].shapes.push({
+                "ty": "fl",
+                "o": {"a": 0, "k": 80},
+                "c": {"a": 0, "k": [1, 0, 0]},
+            });
+            generated.layers[0].ks = this.json;
+            generated.layers.push({
+                "ip": this.lottie.ip,
+                "op": this.lottie.op,
+                "st": 0,
+                "ks": {},
+                "ty": 4,
+                "shapes": [
+                    generated.layers[0].shapes[0],{
+                        "ty": "fl",
+                        "o": {"a": 0, "k": 60},
+                        "c": {"a": 0, "k": [0.5, 0.2, 0.2]},
+                    }
+
+                ]
+            });
+        }
+        else if ( this.group == "animation" && this.cls == "animation" )
+        {
+            generated = lottie_clone(lottie);
+        }
+        else if ( this.group == "layers" )
+        {
+            generated = lottie_clone(lottie);
+            generated.layers = [this.json];
+        }
+        else if ( this.group == "assets" && this.cls == "precomposition" )
+        {
+            generated = lottie_clone(lottie);
+            generated.layers = this.json.layers;
+            if ( this.json.fr )
+                generated.fr = this.json.fr;
+        }
+        else if ( this.group == "assets" && this.cls == "image" )
+        {
+            generated = this.dummy_lottie(this.json.w, this.json.h);
+            generated.assets = [this.json];
+            generated.layers = [{
+                "ip": 0,
+                "op": 60,
+                "st": 0,
+                "ks": {},
+                "ty": 2,
+                "refId": asset.id
+            }];
+        }
+        else if ( this.group == "shapes" )
+        {
+            var shape_layer = {
+                "ip": this.lottie.ip,
+                "op": this.lottie.op,
+                "st": 0,
+                "ks": {},
+                "ty": 4,
+                "shapes": []
+            };
+            if ( this.cls == "group" )
+            {
+                generated = this.dummy_lottie(this.lottie.w, this.lottie.h);
+                generated.layers = [shape_layer];
+                shape_layer.shapes = [this.json];
+            }
+            else if ( ["rectangle", "ellipse", "polystar", "path"].includes(this.cls) )
+            {
+                generated = this.dummy_lottie(this.lottie.w, this.lottie.h);
+                generated.layers = [shape_layer];
+                var fill = {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 0, 0]}
+                };
+                shape_layer.shapes = [this.json, fill];
+
+            }
+            else if ( ["fill", "gradient-fill", "stroke", "gradient-stroke"].includes(this.cls) )
+            {
+                var w = 96;
+                var h = 48;
+
+                if ( this.cls.includes("gradient") )
+                    [w, h] = [this.lottie.w, this.lottie.h];
+
+                generated = this.rect_shape_lottie(w, h);
+                generated.layers[0].shapes.push(this.json);
+            }
+        }
+        else if ( this.group == "animated-properties" )
+        {
+            if ( this.cls == "color-value" )
+            {
+                generated = this.rect_shape_lottie(96, 48);
+                generated.layers[0].shapes.push({
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100 },
+                    "c": this.json
+                });
+            }
+            else if ( this.cls == "gradient-colors"  )
+            {
+                generated = this.rect_shape_lottie(300, 48);
+                generated.layers[0].shapes.push({
+                    "ty": "gf",
+                    "o": {"a": 0, "k": 100 },
+                    "s": {"a":0, "k":[0, 0]},
+                    "e": {"a":0, "k":[generated.w, 0]},
+                    "t": 1,
+                    "g": this.json
+                });
+            }
+            else if ( this.cls == "shape-property" )
+            {
+                generated = this.bezier_shape_lottie(this.json);
+            }
+        }
+        else if ( this.group == "helpers" )
+        {
+            if ( this.cls == "color" )
+            {
+                generated = this.rect_shape_lottie(96, 48);
+                generated.layers[0].shapes.push({
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": this.json},
+                });
+            }
+            else if ( this.cls == "bezier" )
+            {
+                var prop = {"a": 0, "k": this.json};
+                generated = this.bezier_shape_lottie(prop);
+            }
+            else if ( this.cls == "mask" )
+            {
+                generated = this.rect_shape_lottie(this.lottie.w, this.lottie.h);
+                generated.layers[0].shapes.push({
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 0, 0]},
+                });
+                generated.layers[0].hasMask = true;
+                generated.layers[0].masksProperties = [this.json];
+            }
+        }
+        else if ( this.group == "text" )
+        {
+            var doc = null;
+            var font = null;
+            var bg = null;
+            if ( this.cls == "font" )
+            {
+                font = this.json;
+                doc = {
+                    "f": this.json.fName,
+                    "fc": [0, 0, 0],
+                    "s": 24,
+                    "t": "The quick brown fox\rjumps over the lazy dog",
+                    "lh": 24 * 1.2,
+                    "j": 0
+                };
+                bg = "#ffffff";
+            }
+            else if ( this.cls == "text-document" )
+            {
+                doc = this.json;
+                font = this.lottie.fonts.list.find(x => x.fName == this.json.f);
+            }
+
+            if ( doc && font )
+            {
+                var lh = doc.lh ?? (1.2 * doc.s);
+                var height = Math.ceil(lh * ((doc.t.match(/\r/g)?.length ?? 0) + 1));
+
+                generated = this.dummy_lottie(300, height);
+                generated.fonts = {list:[font]};
+                generated.layers = [{
+                    "ip": this.lottie.ip,
+                    "op": this.lottie.op,
+                    "st": 0,
+                    "ks": {
+                        "p": {"a": 0, "k": [10, doc.s]}
+                    },
+                    "ty": 5,
+                    "t": {
+                        "a": [],
+                        "d": {
+                            "k": [
+                                {
+                                    "s": doc,
+                                    "t": 0
+                                }
+                            ]
+                        },
+                        "m": {
+                            "a": {"a": 0, "k": [0,0]},
+                            "g": 3
+                        },
+                        "p": {}
+                    }
+                }];
+
+                if ( bg )
+                {
+                    generated.layers.push({
+                        "ip": this.lottie.ip,
+                        "op": this.lottie.op,
+                        "st": 0,
+                        "ks": {"o": {"a":0, "k": 80}},
+                        "ty": 1,
+                        "sc": bg,
+                        "sh": height,
+                        "sw": 300
+                    });
+                }
+            }
+        }
+
+        return generated;
+    }
+
+    bezier_shape_lottie(shape_prop)
+    {
+        var minx = Infinity;
+        var miny = Infinity;
+        var maxx = -Infinity;
+        var maxy = -Infinity;
+
+        var keyframes = shape_prop.a ? shape_prop.k : [{s: shape_prop.k}];
+        for ( var kf of keyframes )
+        {
+            for ( var i = 0; i < kf.s.v.length; i++ )
+            {
+                var offsets = [[0, 0], kf.s.i[i], kf.s.o[i]];
+                for ( var off of offsets )
+                {
+                    var x = kf.s.v[i][0] + off[0];
+                    var y = kf.s.v[i][1] + off[1];
+                    if ( x < minx ) minx = x;
+                    if ( x > maxx ) maxx = x;
+                    if ( y < miny ) miny = y;
+                    if ( y > maxy ) maxy = y;
+                }
+            }
+        }
+
+        var lottie_json = this.dummy_lottie(maxx - minx, maxy - miny);
+        lottie_json.layers = [{
+            "ip": lottie_json.ip,
+            "op": lottie_json.op,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [-minx, -miny]},
+            },
+            "ty": 4,
+            "shapes": [
+                {
+                    "ty": "sh",
+                    "ks": shape_prop,
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 0, 0]},
+                }
+            ]
+        }];
+
+        return lottie_json;
+    }
+
+    rect_shape_lottie(w, h)
+    {
+        var lottie_json = this.dummy_lottie(w, h);
+        lottie_json.layers = [{
+            "ip": lottie_json.ip,
+            "op": lottie_json.op,
+            "st": 0,
+            "ks": {},
+            "ty": 4,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [lottie_json.w/2, lottie_json.h/2]},
+                    "s": {"a": 0, "k": [lottie_json.w, lottie_json.h]},
+                    "r": {"a": 0, "k": 0},
+                }
+            ]
+        }];
+
+        return lottie_json;
+    }
+
+    dummy_lottie(w, h)
+    {
+        return {
+            "fr": this.lottie.fr ?? 60,
+            "ip": this.lottie.ip ?? 0,
+            "op": this.lottie.op ?? 60,
+            "w": w,
+            "h": h,
+            "assets": [],
+            "layers": []
+        }
+    }
+
 }
 
 class SchemaDefinition
@@ -1043,10 +1149,16 @@ class JsonFormatter
 {
     constructor(element)
     {
-        this.element = element;
-        this.parent = element;
+        this.container = element;
+        this.element = document.createElement("span");
+        this.parent = this.element;
         this.indent = 0;
         this.object_id = 0;
+    }
+
+    finalize()
+    {
+        this.container.appendChild(this.element);
     }
 
     set_container(element)
@@ -1216,7 +1328,15 @@ class InfoBoxContents
         this.element.setAttribute("class", "info_box_content");
         parent.appendChild(this.element);
         this.element.info_box_data = this;
-        this.lottie_json = null;
+        this._lottie_json = undefined;
+        this.lottie_loader = null;
+    }
+
+    get lottie_json()
+    {
+        if ( this._lottie_json === undefined && this.lottie_loader )
+            this._lottie_json = this.lottie_loader.generate();
+        return this._lottie_json;
     }
 
     add(tag, text = null, attrs = {})
@@ -1237,90 +1357,6 @@ class InfoBoxContents
     }
 }
 
-function bezier_shape_lottie(timing, shape_prop)
-{
-    var minx = Infinity;
-    var miny = Infinity;
-    var maxx = -Infinity;
-    var maxy = -Infinity;
-
-    var keyframes = shape_prop.a ? shape_prop.k : [{s: shape_prop.k}];
-    for ( var kf of keyframes )
-    {
-        for ( var i = 0; i < kf.s.v.length; i++ )
-        {
-            var offsets = [[0, 0], kf.s.i[i], kf.s.o[i]];
-            for ( var off of offsets )
-            {
-                var x = kf.s.v[i][0] + off[0];
-                var y = kf.s.v[i][1] + off[1];
-                if ( x < minx ) minx = x;
-                if ( x > maxx ) maxx = x;
-                if ( y < miny ) miny = y;
-                if ( y > maxy ) maxy = y;
-            }
-        }
-    }
-
-    var lottie_json = dummy_lottie(maxx - minx, maxy - miny, timing);
-    lottie_json.layers = [{
-        "ip": lottie_json.ip,
-        "op": lottie_json.op,
-        "st": 0,
-        "ks": {
-            "p": {"a": 0, "k": [-minx, -miny]},
-        },
-        "ty": 4,
-        "shapes": [
-            {
-                "ty": "sh",
-                "ks": shape_prop,
-            },
-            {
-                "ty": "fl",
-                "o": {"a": 0, "k": 100},
-                "c": {"a": 0, "k": [0, 0, 0]},
-            }
-        ]
-    }];
-
-    return lottie_json;
-}
-
-function rect_shape_lottie(w, h, timing)
-{
-    var lottie_json = dummy_lottie(w, h, timing);
-    lottie_json.layers = [{
-        "ip": lottie_json.ip,
-        "op": lottie_json.op,
-        "st": 0,
-        "ks": {},
-        "ty": 4,
-        "shapes": [
-            {
-                "ty": "rc",
-                "p": {"a": 0, "k": [lottie_json.w/2, lottie_json.h/2]},
-                "s": {"a": 0, "k": [lottie_json.w, lottie_json.h]},
-                "r": {"a": 0, "k": 0},
-            }
-        ]
-    }];
-
-    return lottie_json;
-}
-
-function dummy_lottie(w, h, timing = {})
-{
-    return {
-        "fr": timing.fr ?? 60,
-        "ip": timing.ip ?? 0,
-        "op": timing.op ?? 60,
-        "w": w,
-        "h": h,
-        "assets": [],
-        "layers": []
-    }
-}
 
 var lottie = null;
 var parent = document.getElementById("explainer");
