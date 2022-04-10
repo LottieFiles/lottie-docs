@@ -109,13 +109,14 @@ summary {
     </div>
     <p><button onclick="lottie_string_input(document.getElementById('editor_input').value)">Explain</button>
 </details>
-<pre><code id="explainer"></code></pre>
+<pre><code id="explainer">Load a Lottie to view its contents</code></pre>
 <div id="info_box"><div class="info_box_details"></div><div class="info_box_lottie alpha_checkered"></div><div>
 <script>
 function input_error(e)
 {
+    clear_element(parent);
+    parent.appendChild(document.createTextNode("Could not load input!"));
     console.error(e);
-    alert("Could not load input!");
 }
 
 function lottie_file_input(ev)
@@ -145,6 +146,9 @@ function lottie_receive_files(files)
 
 function lottie_url_input(url)
 {
+    clear_element(parent);
+    parent.appendChild(document.createTextNode("Loading..."));
+
     fetch(url).then(
         r => r.json().then(lottie_set_json).catch(input_error)
     ).catch(input_error);
@@ -159,23 +163,33 @@ function lottie_string_input(string)
     }
 }
 
+function clear_element(parent)
+{
+    while ( parent.firstChild )
+        parent.removeChild(parent.firstChild);
+}
+
 function lottie_set_json(json)
 {
     lottie = json;
-    while ( parent.firstChild )
-        parent.removeChild(parent.firstChild);
 
-    var formatter = new JsonFormatter(parent);
-    var object = new SchemaObject(json);
-    schema.root.validate(object, true, true);
-    object.explain(formatter);
-    formatter.finalize();
+    clear_element(parent);
+    parent.appendChild(document.createTextNode("Loading..."));
+
+    setTimeout(function(){
+        clear_element(parent);
+        var formatter = new JsonFormatter(parent);
+        var object = new SchemaObject(json);
+        schema.root.validate(object, true, true);
+        object.explain(formatter);
+        formatter.finalize();
+    });
 }
 
 function critical_error(err)
 {
-    console.error(err);
     alert("Could not load data");
+    console.error(err);
 }
 
 class ReferenceLink
@@ -414,7 +428,7 @@ class LottiePreviewGenerator
         {
             generated = lottie_clone(lottie);
         }
-        else if ( this.group == "layers" )
+        else if ( this.group == "layers" && this.cls != "null-layer" )
         {
             generated = lottie_clone(lottie);
             generated.layers = [this.json];
@@ -1360,8 +1374,7 @@ class InfoBox
         {
             this.target.appendChild(this.contents);
 
-            while ( this.contents_target.firstChild )
-                this.contents_target.removeChild(this.contents_target.firstChild);
+            clear_element(this.contents_target);
 
             this.lottie_player.clear();
 
@@ -1473,6 +1486,7 @@ var icons = {
     "#/$defs/layers/precomposition-layer": "fas fa-video",
     "#/$defs/layers/solid-color-layer": "fas fa-square-full",
     "#/$defs/layers/text-layer": "fas fa-font",
+    "#/$defs/layers/null-layer": "fas fa-sitemap",
 
     "#/$defs/shapes/ellipse": "fas fa-circle",
     "#/$defs/shapes/fill": "fas fa-fill-drip",
@@ -1484,6 +1498,7 @@ var icons = {
     "#/$defs/shapes/rectangle": "fas fa-rectangle",
     "#/$defs/shapes/stroke": "fas fa-paint-brush",
     "#/$defs/shapes/transform": "fas fa-arrows-alt",
+    "#/$defs/shapes/shape-list": "fas fa-list",
 
     "#/$defs/text/character-data": "fas fa-font",
     "#/$defs/text/font-list": "fas fa-list",
