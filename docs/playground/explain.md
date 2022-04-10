@@ -267,14 +267,14 @@ class ValidationResult
         }
     }
 
-    info_box(json, formatter)
+    info_box(json, formatter, link_defs = true)
     {
         this.get_links();
         var box = formatter.info_box(this.title, "comment", icons[this.def] ?? "fas fa-info-circle");
         this.info_box_title(box);
         box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.def});
 
-        this.info_box_type_line(box);
+        this.info_box_type_line(box, link_defs);
 
         if ( this.description )
         {
@@ -1017,7 +1017,7 @@ class SchemaObject
         var container = null;
         if ( this.validation.cls )
         {
-            this.validation.info_box(this.json_value, formatter);
+            this.validation.info_box(this.json_value, formatter, false);
             container = formatter.collapser();
         }
 
