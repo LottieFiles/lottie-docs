@@ -75,41 +75,64 @@ Explain my Lottie
 summary {
     display: list-item;
 }
+
+.tab-content {
+    margin: 1em 0;
+}
+
+.drop-area {
+    border: 1px solid #ccc;
+    color: #ccc;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
 </style>
 <script src="../../scripts/lottie_explain.js"></script>
-<details>
-    <summary>About this page</summary>
-    <p>This page allows you to load a lottie animation and, once you do,
-    it shows an interactive explanation of the animation you loaded.</p>
-    <p>It will render the file as a Formatted JSON,
-    where you can click on objects and properties to open up a dialog with
-    A brief explanation of what that object is.</p>
-    <p>On that dialog you can also find links to a more in-depth explanation
-    and a preview of the object you clicked on.</p>
-    <p>If an object contains something that looks invalid, it will be highlighted accordingly.</p>
-</details>
-
-<details>
-    <summary>Upload file</summary>
-    <p><input type="file" onchange="lottie_file_input(event);" /></p>
-</details>
-<details>
-    <summary>From URL</summary>
-    <p><input type="text" id="input_from_url" /></p>
-    <p><button onclick="lottie_url_input(document.getElementById('input_from_url').value)">Explain</button>
-</details>
-<details>
-    <summary>From Input</summary>
-    <div class="highlighted-input" style="height: 512px;">
-    <textarea autocomplete="off" class="code-input" data-lang="js" data-lottie-input="editor"
-    name="json" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); "
-    onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);"
-    rows="3" spellcheck="false" id="editor_input"></textarea>
-    <pre aria-hidden="true"><code class="language-js hljs">
-    </code></pre>
+<ul class="nav nav-pills">
+    <li class="active"><a href="#tab_about">About this page</a></li>
+    <li><a href="#tab_file">Upload File</a></li>
+    <li><a href="#tab_url">From URL</a></li>
+    <li><a href="#tab_textarea">Direct Input</a></li>
+</ul>
+<div class="tab-content">
+    <div id="tab_about" class="tab-pane fade in active">
+        <p>This page allows you to load a lottie animation and, once you do,
+        it shows an interactive explanation of the animation you loaded.</p>
+        <p>It will render the file as a Formatted JSON,
+        where you can click on objects and properties to open up a dialog with
+        A brief explanation of what that object is.</p>
+        <p>On that dialog you can also find links to a more in-depth explanation
+        and a preview of the object you clicked on.</p>
+        <p>If an object contains something that looks invalid, it will be highlighted accordingly.</p>
     </div>
-    <p><button onclick="lottie_string_input(document.getElementById('editor_input').value)">Explain</button>
-</details>
+    <div id="tab_file" class="tab-pane fade in">
+        <div class="drop-area" ondrop="lottie_drop_input(event);" ondragover="event.preventDefault();">
+            <p>Drop JSON file here</p>
+            <input type="file" onchange="lottie_file_input(event);" class="form-control-file" />
+        </div>
+    </div>
+    <div id="tab_url" class="tab-pane fade in">
+        <p><input type="text" id="input_from_url" class="form-control" /></p>
+        <p><button onclick="lottie_url_input(document.getElementById('input_from_url').value)" class="btn btn-primary">Explain</button>
+    </div>
+    <div id="tab_textarea" class="tab-pane fade in">
+        <div class="highlighted-input" style="height: 512px;">
+            <textarea
+                autocomplete="off" class="code-input"
+                data-lang="js" data-lottie-input="editor"
+                name="json" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); "
+                onkeydown="syntax_edit_tab(this, event);"
+                onscroll="syntax_edit_scroll(this);"
+                rows="3" spellcheck="false" id="editor_input"></textarea>
+            <pre aria-hidden="true"><code class="language-js hljs"></code></pre>
+        </div>
+        <button onclick="lottie_string_input(document.getElementById('editor_input').value)" class="btn btn-primary">Explain</button>
+    </div>
+</div>
 <pre><code id="explainer">Load a Lottie to view its contents</code></pre>
 <div id="info_box"><div class="info_box_details"></div><div class="info_box_lottie alpha_checkered"></div><div>
 <script>
@@ -143,6 +166,18 @@ function lottie_receive_files(files)
             return;
         }
     }
+}
+
+function lottie_drop_input(ev)
+{
+    ev.preventDefault();
+
+    if (ev.dataTransfer.items)
+        lottie_receive_files(
+            Array.from(ev.dataTransfer.items)
+            .filter(i => i.kind === 'file')
+            .map(i => i.getAsFile())
+        );
 }
 
 function lottie_url_input(url)
@@ -261,6 +296,9 @@ Promise.all(requests)
 
 document.body.addEventListener("click", e => info_box.hide());
 
+document.querySelectorAll(".nav-pills a").forEach( link =>
+    link.addEventListener("click", e => jQuery(e.target).tab("show"))
+);
 
 function quick_test()
 {
