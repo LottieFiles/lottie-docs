@@ -1,4 +1,3 @@
-
 class ReferenceLink
 {
     constructor(page, anchor, name)
@@ -1199,6 +1198,12 @@ class InfoBox
 
     show(trigger)
     {
+        if ( trigger === this.target )
+        {
+            this.hide();
+            return;
+        }
+
         this.clear();
         this.target = trigger;
         this.contents = this.target.querySelector(".info_box_content");
