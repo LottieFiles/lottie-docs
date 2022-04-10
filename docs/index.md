@@ -58,8 +58,12 @@ to play properly.
 Objects within the JSON may have a mixture of animatable and non-animatable properties.
 
 If a property is not animated, the value is represented as usual within the JSON.
-
 If it's animated, it has a special [representation](concepts/#animated-property).
+
+## Interactive Explanation
+
+If you have a lottie animation and you want to see an interactive description
+of its contents, you can visit the [Explain my Lottie](playground/explain.md) page.
 
 ## Anatomy of a Lottie file
 

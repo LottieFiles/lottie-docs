@@ -72,8 +72,22 @@ Explain my Lottie
     display: none;
 }
 
-
+summary {
+    display: list-item;
+}
 </style>
+<details>
+    <summary>About this page</summary>
+    <p>This page allows you to load a lottie animation and, once you do,
+    it shows an interactive explanation of the animation you loaded.</p>
+    <p>It will render the file as a Formatted JSON,
+    where you can click on objects and properties to open up a dialog with
+    A brief explanation of what that object is.</p>
+    <p>On that dialog you can also find links to a more in-depth explanation
+    and a preview of the object you clicked on.</p>
+    <p>If an object contains something that looks invalid, it will be highlighted accordingly.</p>
+</details>
+
 <details>
     <summary>Upload file</summary>
     <p><input type="file" onchange="lottie_file_input(event);" /></p>
@@ -184,8 +198,7 @@ class ReferenceLink
 
 class ValidationResult
 {
-    static merge_props = ["title", "description", "type"];
-    static merge_on_def = ["group", "cls", "def"].concat(ValidationResult.merge_props);
+    static merge_props = ["title", "description", "type", "group", "cls", "def", "const"];
 
     constructor(
         schema_definition
@@ -202,6 +215,8 @@ class ValidationResult
         this.def = null;
         this.type = null;
         this.items_array = [];
+        this._links = null;
+        this.const = null;
     }
 
     fail(penalty)
@@ -209,19 +224,20 @@ class ValidationResult
         this.penalty += penalty;
     }
 
+    set_key_validation(name)
+    {
+        this.key = new ValidationResult(this.schema_definition);
+        this.key.merge_from(this.schema_definition);
+//         this.key.merge_from(this);
+        if ( !this.key.title )
+            this.key.title = name;
+    }
+
     merge_from(other)
     {
         for ( var prop of ValidationResult.merge_props )
             if ( !this[prop] )
                 this[prop] = other[prop];
-
-        if ( !this.def && other.def )
-        {
-            for ( var prop of ValidationResult.merge_on_def )
-                if ( other[prop] )
-                    this[prop] = other[prop];
-        }
-
 
         if ( other.items_array && other.items_array.length )
             this.items_array = this.items_array.concat(other.items_array);
@@ -241,42 +257,50 @@ class ValidationResult
         }
     }
 
-    info_box_description(box, concise_type)
+    info_box_type_line(box, link_defs)
     {
         if ( this.type || this.def )
         {
-            if ( concise_type )
-            {
-                box.add("br");
-                this.format_type(box, concise_type);
-            }
-            else if ( this.type == "array" && this.items_array )
-            {
-                box.add("br");
-                this._format_type_array(box);
-            }
+            box.add("br");
+            this.format_type(box, link_defs);
+            return true;
         }
-
-        box.add("br");
-        box.add("span", this.description, {class: "description"});
     }
 
     info_box(json, formatter)
     {
+        this.get_links();
         var box = formatter.info_box(this.title, "comment", icons[this.def] ?? "fas fa-info-circle");
         this.info_box_title(box);
         box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.def});
 
-        this.info_box_description(box, false);
+        this.info_box_type_line(box);
+
+        if ( this.description )
+        {
+            box.add("br");
+            box.add("span", this.description, {class: "description"});
+        }
 
         box.lottie_loader = new LottiePreviewGenerator(this.group, this.cls, json, lottie);
     }
 
     get_links()
     {
-        if ( this.cls )
-            return this.schema_definition.schema.get_links(this.group, this.cls, this.title);
-        return [];
+        if ( this._links === null )
+        {
+            if ( this.cls )
+            {
+                this._links = this.schema_definition.schema.get_links(this.group, this.cls, this.title);
+                if ( this._links.length )
+                    this.title = this._links.map(l => l.name).join(" ");
+            }
+            else
+            {
+                this._links = [];
+            }
+        }
+        return this._links;
     }
 
     links_to_element(parent)
@@ -328,9 +352,9 @@ class ValidationResult
             box.add(null, "???");
     }
 
-    format_type(box)
+    format_type(box, link_defs = true)
     {
-        if ( this.def )
+        if ( link_defs && this.def )
             this.links_to_element(box.element);
         else if ( this.type == "array" && this.items_array )
             this._format_type_array(box);
@@ -697,11 +721,12 @@ class SchemaDefinition
 
         this.title = this.schema_definition.title;
         this.description = this.schema_definition.description;
+        this.type = this.schema_definition.type;
 
         if ( this.schema_definition.type )
-            this.type = this._norm_type(this.schema_definition.type);
+            this.norm_type = this._norm_type(this.schema_definition.type);
         else
-            this.type = null;
+            this.norm_type = null;
 
         if ( this.schema_definition.properties )
         {
@@ -787,19 +812,24 @@ class SchemaDefinition
         return best;
     }
 
-    validate(object, add_validation, positive)
+    validate(object, add_validation, positive, ref_description = false)
     {
         this.build();
 
         var validation = new ValidationResult(this);
-        if ( positive )
+        if ( positive && !ref_description )
             validation.merge_from(this);
 
-        if ( this.type && this._type_of(object.json_value) != this.type )
+        if ( this.norm_type && this._type_of(object.json_value) != this.norm_type )
             validation.fail(100);
 
-        if ( "const" in this.schema_definition && object.json_value !== this.schema_definition.const )
-            validation.fail(10);
+        if ( "const" in this.schema_definition )
+        {
+            if ( object.json_value !== this.schema_definition.const )
+                validation.fail(10);
+            else if ( positive )
+                validation.const = validation;
+        }
 
         if ( object.is_object )
         {
@@ -808,8 +838,12 @@ class SchemaDefinition
                 for ( let [name, prop] of object.properties )
                 {
                     if ( name in this.properties )
-                        if ( !this.properties[name].validate(prop, positive, positive).valid )
+                    {
+                        var propval = this.properties[name].validate(prop, positive, positive, true);
+                        propval.set_key_validation(name);
+                        if ( !propval.valid )
                             validation.fail(1);
+                    }
                 }
             }
 
@@ -832,6 +866,9 @@ class SchemaDefinition
             var val = this.ref._sub_validate(object, validation, positive);
             validation.fail(val.penalty);
         }
+
+        if ( positive && ref_description )
+            validation.merge_from(this);
 
         if ( this.if )
         {
@@ -937,7 +974,7 @@ class SchemaObject
     {
         if ( !this.validation )
         {
-            formatter.write_item(JSON.stringify(this.json_value), "deletion");
+            formatter.encode_item(this.json_value, "deletion");
         }
         else if ( this.is_array )
         {
@@ -949,11 +986,19 @@ class SchemaObject
         }
         else if ( this.validation.valid )
         {
-            formatter.encode_item(this.json_value);
+            if ( this.validation.const )
+            {
+                var box = formatter.info_box(JSON.stringify(this.json_value), formatter.hljs_type(this.json_value));
+                this.enum_info_box(box);
+            }
+            else
+            {
+                formatter.encode_item(this.json_value);
+            }
         }
         else
         {
-            formatter.write_item(JSON.stringify(this.json_value), "deletion");
+            formatter.encode_item(this.json_value, "deletion");
         }
     }
 
@@ -1010,18 +1055,17 @@ class SchemaObject
 
     explain_object(formatter)
     {
-        if ( this.json_value.length == 0 )
-        {
-            if ( !this.validation.valid )
-                formatter.write_item("{}", "deletion");
-            else
-                formatter.write("{}");
-            return;
-        }
-
         formatter.open("{");
         if ( this.validation.cls )
             this.validation.info_box(this.json_value, formatter);
+
+        if ( Object.keys(this.json_value).length == 0 )
+        {
+            if ( !this.validation.valid )
+                formatter.warn_invalid();
+            formatter.close("}");
+            return;
+        }
 
         var container = formatter.collapser();
 
@@ -1038,7 +1082,7 @@ class SchemaObject
             if ( item.validation )
             {
                 var prop_box = formatter.info_box(JSON.stringify(name), "string")
-                this.property_info_box(prop_box, name, item);
+                this.property_info_box(prop_box, item);
                 formatter.write(": ");
                 item.explain(formatter);
             }
@@ -1060,14 +1104,38 @@ class SchemaObject
         formatter.close("}");
     }
 
-    property_info_box(box, prop_name, prop_object)
+    property_info_box(box, item)
     {
         this.validation.info_box_title(box);
+        item.validation.get_links();
+        item.validation.key.get_links();
         box.add(null, " \u2192 ");
+        box.add("strong", item.validation.key.title);
+        box.add("br");
+        item.validation.format_type(box);
+        if ( item.validation.key.description )
+        {
+            box.add("br");
+            box.add("span", item.validation.key.description, {class: "description"});
+        }
+    }
 
-        box.add("strong", prop_object.validation.title ?? prop_name);
+    enum_info_box(box)
+    {
+        if ( this.validation.def || !this.validation.key )
+            this.validation.info_box_title(box);
+        else
+            this.validation.key.info_box_title(box);
 
-        prop_object.validation.info_box_description(box, true);
+        this.validation.info_box_type_line(box, false);
+
+        box.add("br");
+        box.add("code", JSON.stringify(this.json_value));
+        box.add(null, " = ");
+        box.add("", this.validation.const.title);
+
+        box.add("br");
+        box.add("", this.validation.const.description);
     }
 }
 
@@ -1490,14 +1558,14 @@ function quick_test()
                     {
                         "hd": false,
                         "ty": "el",
-                        /*"p": {
+                        "p": {
                             "a": 0,
                             "k": [
                                 256,
                                 256
                             ]
-                        },*/
-                        "p": {
+                        },
+                        /*"p": {
                             "a": 1,
                             "k": [
                                 {
@@ -1519,7 +1587,7 @@ function quick_test()
                                     "i": {x: [0.7], y: [1]},
                                 }
                             ]
-                        },
+                        },*/
                         "s": {
                             "a": 0,
                             "k": [
