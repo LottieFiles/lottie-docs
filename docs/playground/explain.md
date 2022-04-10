@@ -267,14 +267,21 @@ class ValidationResult
         }
     }
 
-    info_box(json, formatter, link_defs = true)
+    info_box_schema_link(box)
+    {
+        if ( this.def )
+            box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.def});
+    }
+
+    info_box(json, formatter, link_defs = true, show_type = true)
     {
         this.get_links();
         var box = formatter.info_box(this.title, "comment", icons[this.def] ?? "fas fa-info-circle");
         this.info_box_title(box);
-        box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.def});
+        this.info_box_schema_link(box);
 
-        this.info_box_type_line(box, link_defs);
+        if ( show_type )
+            this.info_box_type_line(box, link_defs);
 
         if ( this.description )
         {
@@ -1020,12 +1027,16 @@ class SchemaObject
             this.validation.info_box(this.json_value, formatter, false);
             container = formatter.collapser();
         }
+        else if ( this.json_value.map(x => typeof x == "object").reduce((a, b) => a || b) )
+        {
+            container = formatter.collapser();
+        }
 
         if ( !this.validation.valid )
             formatter.warn_invalid();
 
         var space = "\n";
-        if ( !container && this.json_value.map(x => typeof x != "object").reduce((a, b) => a && b) )
+        if ( !container )
             space = " ";
 
         if ( space == "\n" )
@@ -1057,7 +1068,7 @@ class SchemaObject
     {
         formatter.open("{");
         if ( this.validation.cls )
-            this.validation.info_box(this.json_value, formatter);
+            this.validation.info_box(this.json_value, formatter, false, false);
 
         if ( Object.keys(this.json_value).length == 0 )
         {
@@ -1122,10 +1133,10 @@ class SchemaObject
 
     enum_info_box(box)
     {
-        if ( this.validation.def || !this.validation.key )
-            this.validation.info_box_title(box);
-        else
-            this.validation.key.info_box_title(box);
+        var title_val = this.validation.def || !this.validation.key ? this.validation : this.validation.key;
+
+        title_val.info_box_title(box);
+        title_val.info_box_schema_link(box);
 
         this.validation.info_box_type_line(box, false);
 
@@ -1611,6 +1622,7 @@ function quick_test()
                                 0
                             ]
                         },
+                        "bm": 1
                         /*
                         "ty": "gf",
                         "g": {
