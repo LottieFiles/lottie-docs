@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Data",
-    "description": "",
+    "description": "Animated property representing the text contents",
     "properties": {
         "k": {
             "title": "Keyframes",

@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Data Keyframe",
-    "description": "",
+    "description": "A keyframe containing a text document",
     "properties": {
         "s": {
             "title": "Start",

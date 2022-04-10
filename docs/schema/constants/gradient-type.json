@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
     "title": "GradientType",
-    "description": "",
+    "description": "Type of a gradient",
     "oneOf": [
         {
             "title": "Linear",

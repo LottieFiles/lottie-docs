@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Font",
-    "description": "",
+    "description": "Describes how a font with given settings should be loaded",
     "allOf": [
         {
             "type": "object",

@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Repeater Transform",
-    "description": "",
+    "description": "Transform used by a repeater, the transform is applied to each subsequent repeated object.",
     "allOf": [
         {
             "$ref": "#/$defs/helpers/transform"
@@ -12,10 +12,12 @@
             "properties": {
                 "so": {
                     "title": "Start Opacity",
+                    "description": "Opacity of the first repeated object.",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "eo": {
                     "title": "End Opacity",
+                    "description": "Opacity of the last repeated object.",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

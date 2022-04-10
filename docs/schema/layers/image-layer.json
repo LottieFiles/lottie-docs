@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Image Layer",
-    "description": "",
+    "description": "Layer that shows an image asset",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"

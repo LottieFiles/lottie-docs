@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Precomposition Layer",
-    "description": "",
+    "description": "Layer that renders a Precomposition asset",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"
