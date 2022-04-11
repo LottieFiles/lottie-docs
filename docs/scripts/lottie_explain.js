@@ -439,8 +439,6 @@ class LottiePreviewGenerator
                     "t": animator
                 }];
 
-                console.log(generated);
-
                 generated.svg_style = svg_style;
             }
             else

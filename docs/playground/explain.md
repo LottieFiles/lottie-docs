@@ -10,7 +10,7 @@ Explain my Lottie
     cursor: pointer;
 }
 
-.info_box_content, .info_box_lottie .info_box_buttons {
+.info_box_content, .info_box_lottie {
     display: none;
 }
 
@@ -137,7 +137,7 @@ summary {
 <div id="info_box">
     <div class="info_box_details"></div>
     <div class="info_box_lottie alpha_checkered"></div>
-    <div class="btn-group btn-group-toggle info_box_buttons" data-toggle="buttons">
+    <div class="btn-group btn-group-toggle info_box_buttons" style="display: none" data-toggle="buttons">
         <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
             <input type="radio" name="options" autocomplete="off"> Fit in View
         </label>
