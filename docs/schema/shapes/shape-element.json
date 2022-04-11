@@ -101,6 +101,11 @@
                     "title": "Property index",
                     "description": "Index used in expressions",
                     "type": "integer"
+                },
+                "ix": {
+                    "title": "Property index",
+                    "description": "Index used in expressions",
+                    "type": "integer"
                 }
             },
             "required": ["ty"]

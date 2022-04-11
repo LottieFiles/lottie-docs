@@ -37,11 +37,14 @@ class ValidationResult
         this.items_array = [];
         this._links = null;
         this.const = null;
+        this.issues = [];
     }
 
-    fail(penalty)
+    fail(penalty, issue = null)
     {
         this.penalty += penalty;
+        if ( issue )
+            this.issues.push(issue + ".");
     }
 
     set_key_validation(name)
@@ -75,6 +78,9 @@ class ValidationResult
             if ( other.items.anyOf )
                 this.items_array = this.items_array.concat(other.items.anyOf);
         }
+
+        if ( other.issues )
+            this.issues = this.issues.concat(other.issues);
     }
 
     info_box_type_line(box, link_defs)
@@ -642,13 +648,21 @@ class SchemaDefinition
         if ( positive && !ref_description )
             validation.merge_from(this);
 
-        if ( this.norm_type && this._type_of(object.json_value) != this.norm_type )
-            validation.fail(100);
+        if ( this.norm_type )
+        {
+            var val_type = this._type_of(object.json_value);
+            if ( val_type != this.norm_type )
+                validation.fail(100,
+                    `Type doesn't match (should be <code>${this.type}</code> instead of <code>${val_type}</code>)`
+                );
+        }
 
         if ( "const" in this.schema_definition )
         {
             if ( object.json_value !== this.schema_definition.const )
-                validation.fail(10);
+                validation.fail(10,
+                    `Value should be <code>${JSON.stringify(this.schema_definition.const)}</code>`
+                );
             else if ( positive )
                 validation.const = validation;
         }
@@ -664,7 +678,7 @@ class SchemaDefinition
                         var propval = this.properties[name].validate(prop, positive, positive, true);
                         propval.set_key_validation(name);
                         if ( !propval.valid )
-                            validation.fail(1);
+                            validation.fail(name == "ty" ? 20 : 1, `Property <code>${name}</code> doesn't match`);
                     }
                 }
             }
@@ -673,14 +687,14 @@ class SchemaDefinition
             {
                 for ( let req of this.schema_definition.required )
                     if ( !(req in object.json_value) )
-                        validation.fail(10);
+                        validation.fail(10, `Missing required property <code>${req}</code>`);
             }
         }
         else if ( object.is_array && this.items )
         {
-            for ( var it of object.items )
-                if ( !this.items.validate(it, positive, positive).valid )
-                    validation.fail(1);
+            for ( var i = 0; i < object.items.length; i++ )
+                if ( !this.items.validate(object.items[i], positive, positive).valid )
+                    validation.fail(1, `Item ${i} doesn't match`);
         }
 
         if ( this.ref )
@@ -714,7 +728,7 @@ class SchemaDefinition
         if ( this.not )
         {
             if ( this.not.validate(object, false, false).valid )
-                validation.fail(50);
+                validation.fail(50, `Matches <code>not</code> condition.`);
         }
 
         if ( this.oneOf )
@@ -821,6 +835,8 @@ class SchemaObject
         else
         {
             formatter.encode_item(this.json_value, "deletion");
+            formatter.write(" ");
+            formatter.warn_invalid(this.validation);
         }
     }
 
@@ -829,9 +845,14 @@ class SchemaObject
         if ( this.json_value.length == 0 )
         {
             if ( !this.validation.valid )
+            {
                 formatter.write_item("[]", "deletion");
+                formatter.warn_invalid(this.validation);
+            }
             else
+            {
                 formatter.write("[]");
+            }
             return;
         }
 
@@ -848,7 +869,7 @@ class SchemaObject
         }
 
         if ( !this.validation.valid )
-            formatter.warn_invalid();
+            formatter.warn_invalid(this.validation);
 
         var space = "\n";
         if ( !container )
@@ -888,7 +909,7 @@ class SchemaObject
         if ( Object.keys(this.json_value).length == 0 )
         {
             if ( !this.validation.valid )
-                formatter.warn_invalid();
+                formatter.warn_invalid(this.validation);
             formatter.close("}");
             return;
         }
@@ -896,7 +917,7 @@ class SchemaObject
         var container = formatter.collapser();
 
         if ( !this.validation.valid )
-            formatter.warn_invalid();
+            formatter.warn_invalid(this.validation);
 
         formatter.write("\n");
 
@@ -915,6 +936,11 @@ class SchemaObject
             else
             {
                 formatter.encode_item(name);
+                formatter.warn_invalid(
+                    {issues: [`Property not recognized`]},
+                    "fas fa-question-circle",
+                    "Unknown Property"
+                );
                 formatter.write(": ");
                 formatter.encode_item(item.json_value, "deletion");
             }
@@ -1083,14 +1109,13 @@ class JsonFormatter
         span.classList.add("hljs-"+hljs_type);
         span.appendChild(document.createTextNode(content));
         this.parent.appendChild(span);
-        if ( hljs_type == "deletion" )
-            span.title = "This value appears to be invalid according to the schema";
         return span;
     }
 
     info_box(content, hljs_type, icon_class=null)
     {
         var wrapper = this.write_item(content, hljs_type);
+
         wrapper.classList.add("info_box_trigger");
         wrapper.addEventListener("click", e => {info_box.show(wrapper); e.stopPropagation();});
 
@@ -1100,7 +1125,8 @@ class JsonFormatter
             var after = wrapper.firstChild;
             wrapper.insertBefore(icon, after);
             icon.setAttribute("class", icon_class);
-            wrapper.insertBefore(document.createTextNode(" "), after);
+            if ( content )
+                wrapper.insertBefore(document.createTextNode(" "), after);
         }
 
         return new InfoBoxContents(wrapper);
@@ -1148,11 +1174,26 @@ class JsonFormatter
         return this.set_container(collapser);
     }
 
-    warn_invalid()
+    warn_invalid(validation, icon = "fas fa-exclamation-triangle", title = "Validation Error")
     {
-        var icon = this.parent.appendChild(document.createElement("i"));
-        icon.setAttribute("class", "schema-invalid fas fa-exclamation-triangle")
-        icon.title = "There are some validation issues in this object";
+        var box = this.info_box("", "invalid", icon);
+        box.add("strong", title);
+        box.add("br");
+
+        if ( validation.issues.length == 1 )
+        {
+            box.element.appendChild(document.createElement("p")).innerHTML = validation.issues[0];
+        }
+        else if ( validation.issues.length )
+        {
+            var ul = box.element.appendChild(document.createElement("ul"));
+            for ( var issue of validation.issues )
+                ul.appendChild(document.createElement("li")).innerHTML = issue;
+        }
+        else
+        {
+            box.add("p", "This value doesn't match the schema.");
+        }
     }
 }
 

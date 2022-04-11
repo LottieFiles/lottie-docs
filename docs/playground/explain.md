@@ -330,6 +330,7 @@ function quick_test()
         "w": 512,
         "h": 512,
         "ddd": 0,
+        "foo": 234,
         "meta": {"g":"Test","a":"","k":"","d":123,"tc":"#FFFFFF"},
         "assets": [],
         "markers": [],
@@ -484,7 +485,8 @@ function quick_test()
         ]
     };
 
-    lottie_json = {
+    var _lottie_json;
+    _lottie_json = {
         "v": "5.5.2",
         "fr": 60,
         "ip": 0,
