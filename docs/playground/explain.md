@@ -484,7 +484,7 @@ function quick_test()
         ]
     };
 
-    /*lottie_json = {
+    lottie_json = {
         "v": "5.5.2",
         "fr": 60,
         "ip": 0,
@@ -536,7 +536,7 @@ function quick_test()
                 }
             }
         ]
-    };*/
+    };
     lottie_set_json(lottie_json);
 }
 

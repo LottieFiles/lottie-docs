@@ -364,11 +364,13 @@ class LottiePreviewGenerator
         else if ( this.group == "text" )
         {
             var doc = null;
-            var font = null;
-            var bg = null;
+            var fonts = [];
+            var svg_style = "";
+            var animator = null;
+
             if ( this.cls == "font" )
             {
-                font = this.json;
+                fonts = [this.json];
                 doc = {
                     "f": this.json.fName,
                     "fc": [0, 0, 0],
@@ -377,30 +379,29 @@ class LottiePreviewGenerator
                     "lh": 24 * 1.2,
                     "j": 0
                 };
-                bg = "#ffffff";
+                svg_style = "background: #ffffff;";
             }
             else if ( this.cls == "text-document" )
             {
                 doc = this.json;
-                font = this.lottie.fonts.list.find(x => x.fName == this.json.f);
+                fonts = [this.lottie.fonts.list.find(x => x.fName == this.json.f)];
+            }
+            else if ( this.cls == "text-data-keyframe" )
+            {
+                doc = this.json.s;
+                fonts = [this.lottie.fonts.list.find(x => x.fName == doc.f)];
+            }
+            else if ( this.cls == "text-animator-data" )
+            {
+                fonts = this.lottie.fonts.list;
+                animator = this.json;
             }
 
-            if ( doc && font )
+            if ( doc || animator )
             {
-                var lh = doc.lh ?? (1.2 * doc.s);
-                var height = Math.ceil(lh * ((doc.t.match(/\r/g)?.length ?? 0) + 1));
-
-                generated = this.dummy_lottie(300, height);
-                generated.fonts = {list:[font]};
-                generated.layers = [{
-                    "ip": this.lottie.ip,
-                    "op": this.lottie.op,
-                    "st": 0,
-                    "ks": {
-                        "p": {"a": 0, "k": [10, doc.s]}
-                    },
-                    "ty": 5,
-                    "t": {
+                if ( !animator )
+                {
+                    animator = {
                         "a": [],
                         "d": {
                             "k": [
@@ -415,22 +416,36 @@ class LottiePreviewGenerator
                             "g": 3
                         },
                         "p": {}
+                    };
+                }
+
+                var [height, font_size] = animator.d.k.map(
+                    kf => {
+                        var lh = kf.s.lh ?? (1.2 * kf.s.s);
+                        return [Math.ceil(lh * ((kf.s.t.match(/\r/g)?.length ?? 0) + 1)), kf.s.s];
                     }
+                ).reduce((a, b) => (a < b) ? b : a);
+
+                generated = this.dummy_lottie(300, height);
+                generated.fonts = {list: fonts};
+                generated.layers = [{
+                    "ip": this.lottie.ip,
+                    "op": this.lottie.op,
+                    "st": 0,
+                    "ks": {
+                        "p": {"a": 0, "k": [10, font_size]}
+                    },
+                    "ty": 5,
+                    "t": animator
                 }];
 
-                if ( bg )
-                {
-                    generated.layers.push({
-                        "ip": this.lottie.ip,
-                        "op": this.lottie.op,
-                        "st": 0,
-                        "ks": {"o": {"a":0, "k": 80}},
-                        "ty": 1,
-                        "sc": bg,
-                        "sh": height,
-                        "sw": 300
-                    });
-                }
+                console.log(generated);
+
+                generated.svg_style = svg_style;
+            }
+            else
+            {
+                generated = null;
             }
         }
 
@@ -1208,6 +1223,12 @@ class InfoBox
             this.lottie_target.style.height = lottie_json.h + "px";
             this.lottie_player.lottie = lottie_json;
             this.lottie_player.reload();
+            if ( lottie_json.svg_style )
+            {
+                var svg = this.lottie_target.querySelector("svg");
+                svg.setAttribute("style", svg.getAttribute("style") + ";" + lottie_json.svg_style);
+            }
+
             if ( lottie_json.auto_fit )
             {
                 $(this.btn_center_lottie).button("toggle");

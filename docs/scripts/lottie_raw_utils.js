@@ -17,7 +17,7 @@ class LottiePlayer
             this.reload();
     }
 
-    reload()
+    reload(extra_options={})
     {
         var options = {
             container: this.container,
@@ -25,6 +25,7 @@ class LottiePlayer
             loop: true,
             autoplay: true,
             ...this.custom_options,
+            ...extra_options,
         };
 
         this.on_reload();
