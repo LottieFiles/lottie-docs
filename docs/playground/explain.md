@@ -137,10 +137,15 @@ summary {
 <div id="info_box">
     <div class="info_box_details"></div>
     <div class="info_box_lottie alpha_checkered"></div>
-    <div class="info_box_buttons">
-        <button class="btn btn-primary btn_center_lottie btn-sm" title="Show items centered in the preview">Fit in View</button>
-        <button class="btn btn-primary btn_reset_view btn-sm" title="Show items as they appear on the file">Normal View</button>
+    <div class="btn-group btn-group-toggle info_box_buttons" data-toggle="buttons">
+        <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
+            <input type="radio" name="options" autocomplete="off"> Fit in View
+        </label>
+        <label class="btn btn-primary btn-sm" id="btn_reset_view" title="Show items as they appear on the file">
+            <input type="radio" name="options" autocomplete="off"> Normal View
+        </label>
     </div>
+</div>
 <div>
 <script>
 function input_error(e)
@@ -301,7 +306,10 @@ Promise.all(requests)
 })
 .catch(critical_error);
 
-document.body.addEventListener("click", e => info_box.hide());
+document.body.addEventListener("click", e => {
+    if ( !info_box.element.contains(e.target) )
+        info_box.hide()
+});
 
 document.querySelectorAll(".nav-pills a").forEach( link =>
     link.addEventListener("click", e => jQuery(e.target).tab("show"))

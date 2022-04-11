@@ -275,7 +275,6 @@ class LottiePreviewGenerator
                 generated = this.dummy_lottie(this.lottie.w, this.lottie.h);
                 generated.layers = [shape_layer];
                 shape_layer.shapes = [this.json];
-                generated.auto_fit = true;
             }
             else if ( ["rectangle", "ellipse", "polystar", "path"].includes(this.cls) )
             {
@@ -1151,12 +1150,13 @@ class InfoBox
         this.element = element;
         this.target = null;
         this.contents = null;
-        this.element.addEventListener("click", e => e.stopPropagation());
         this.lottie_target = this.element.querySelector(".info_box_lottie");
         this.contents_target = this.element.querySelector(".info_box_details");
         this.lottie_player = new LottiePlayer(this.lottie_target, null, false, {viewBoxOnly: false});
-        this.element.querySelector(".btn_center_lottie").addEventListener("click", this.on_btn_center.bind(this));
-        this.element.querySelector(".btn_reset_view").addEventListener("click", this.on_btn_reset_view.bind(this));
+        this.btn_center_lottie = this.element.querySelector("#btn_center_lottie");
+        this.btn_center_lottie.addEventListener("click", this.on_btn_center.bind(this));
+        this.btn_reset_view = this.element.querySelector("#btn_reset_view");
+        this.btn_reset_view.addEventListener("click", this.on_btn_reset_view.bind(this));
         this.button_container = this.element.querySelector(".info_box_buttons");
     }
 
@@ -1209,7 +1209,14 @@ class InfoBox
             this.lottie_player.lottie = lottie_json;
             this.lottie_player.reload();
             if ( lottie_json.auto_fit )
+            {
+                $(this.btn_center_lottie).button("toggle");
                 this.on_btn_center();
+            }
+            else
+            {
+                $(this.btn_reset_view).button("toggle");
+            }
         }
     }
 
