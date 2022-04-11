@@ -1,6 +1,6 @@
 class LottiePlayer
 {
-    constructor(container, lottie, auto_load=true)
+    constructor(container, lottie, auto_load=true, custom_options={})
     {
         if ( typeof container == "string" )
             this.container = document.getElementById(container);
@@ -10,6 +10,8 @@ class LottiePlayer
         this.lottie = lottie;
 
         this.anim = null;
+
+        this.custom_options = custom_options;
 
         if ( auto_load )
             this.reload();
@@ -22,6 +24,7 @@ class LottiePlayer
             renderer: 'svg',
             loop: true,
             autoplay: true,
+            ...this.custom_options,
         };
 
         this.on_reload();

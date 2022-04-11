@@ -10,7 +10,7 @@ Explain my Lottie
     cursor: pointer;
 }
 
-.info_box_content, .info_box_lottie {
+.info_box_content, .info_box_lottie .info_box_buttons {
     display: none;
 }
 
@@ -134,7 +134,14 @@ summary {
     </div>
 </div>
 <pre><code id="explainer">Load a Lottie to view its contents</code></pre>
-<div id="info_box"><div class="info_box_details"></div><div class="info_box_lottie alpha_checkered"></div><div>
+<div id="info_box">
+    <div class="info_box_details"></div>
+    <div class="info_box_lottie alpha_checkered"></div>
+    <div class="info_box_buttons">
+        <button class="btn btn-primary btn_center_lottie btn-sm" title="Show items centered in the preview">Fit in View</button>
+        <button class="btn btn-primary btn_reset_view btn-sm" title="Show items as they appear on the file">Normal View</button>
+    </div>
+<div>
 <script>
 function input_error(e)
 {
@@ -325,7 +332,31 @@ function quick_test()
                 "ip": 0,
                 "op": 60,
                 "st": 0,
-                "ks": {},
+                "ks": {
+                    /*"p": {
+                        "a": 1,
+                        "k": [
+                            {
+                                "t": 0,
+                                "s": [0, 0],
+                                "o": {x: 0.3, y: 0},
+                                "i": {x: 0.7, y: 1},
+                            },
+                            {
+                                "t": 30,
+                                "s": [400, 400],
+                                "o": {x: [0.3], y: [0]},
+                                "i": {x: [0.7], y: [1]},
+                            },
+                            {
+                                "t": 60,
+                                "s": [0, 0],
+                                "o": {x: [0.3], y: [0]},
+                                "i": {x: [0.7], y: [1]},
+                            }
+                        ]
+                    },*/
+                },
                 "ao": 0,
                 "hasMask": false,
                 "masksProperties": [],
