@@ -10,6 +10,10 @@
             "items": {
                 "$ref": "#/$defs/text/text-data-keyframe"
             }
+        },
+        "x": {
+            "title": "Expression",
+            "type": "string"
         }
     },
     "required": ["k"]

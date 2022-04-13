@@ -21,6 +21,7 @@ There are several layer types, which is specified by the `ty` attribute:
 |`12`|Adjustment                        |                                                                                               |
 |`13`|Camera                            |                                                                                               |
 |`14`|Light                             |                                                                                               |
+|`15`|Footage                           |                                                                                               |
 
 Each layer type has its own properties but there are several common properties:
 
