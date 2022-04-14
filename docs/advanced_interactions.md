@@ -913,6 +913,15 @@ else if ( event.key == "ArrowRight" )
 event.preventDefault();
 ```
 
+We should also reset these when the lottie element loses focus:
+
+`focusout`:
+
+```js
+    thisComp("star").left = false;
+    thisComp("star").right = false;
+```
+
 We need to add some logic to the layer position property:
 
 ```js
@@ -991,7 +1000,11 @@ else if ( event.key == "ArrowRight" )
 event.preventDefault();
 `,
         "focusin": "thisComp.focus = true;",
-        "focusout": "thisComp.focus = false;",
+        "focusout": `
+    thisComp("star").left = false;
+    thisComp("star").right = false;
+    thisComp.focus = false;
+`,
     },
     "layers": [
         {
