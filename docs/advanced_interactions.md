@@ -6,6 +6,9 @@ specifically when used with [lottie-web](https://github.com/airbnb/lottie-web/) 
 This page is divided into "levels", each level adds more obscure features
 which are less portable but add increased interaction capabilities.
 
+There are 9 levels below _Regular Lottie_, which is the same as the
+number of circles of hell in Dante's Inferno. Reader discretion is advised.
+
 
 The techniques described below require knowledge on the following topics:
 
@@ -712,7 +715,7 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 After this step, you're all set to hanle DOM events automatically from a lottie.
 The next couple steps add some polish to the event interface for a smoother experience.
 
-### Mouse Event Position
+### Mouse Events
 
 
 Events like `click`, `mousemove`, etc. provide the mouse coordinates,
@@ -864,7 +867,7 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 ```
 </script_playground>
 
-### Handling Keyboard Events Nicely
+### Keyboard Events
 
 To allow keyboard events to be fired correctly, you need to ensure the
 element containing the lottie is focusable.
@@ -1270,7 +1273,7 @@ class LottieInteractionPlayer
 
 #### Deferring Animation Load
 
-### Resulting Wrapper
+## Level 9: Resulting Wrapper
 
 Here's the same wrapper class as described earlier, but with patching
 code applied to support the `preload` event and layer events.
