@@ -38,6 +38,13 @@ class ValidationResult
         this._links = null;
         this.const = null;
         this.issues = [];
+        this.deprecated = false;
+        this.warnings = [];
+    }
+
+    get show_warning()
+    {
+        return this.valid === false || this.warnings.length > 0;
     }
 
     fail(penalty, issue = null)
@@ -51,6 +58,8 @@ class ValidationResult
     {
         this.key = new ValidationResult(this.schema_definition);
         this.key.merge_from(this.schema_definition);
+        if ( this.deprecated )
+            this.key.warnings.push("This property is deprecated");
 //         this.key.merge_from(this);
         if ( !this.key.title )
             this.key.title = name;
@@ -79,8 +88,14 @@ class ValidationResult
                 this.items_array = this.items_array.concat(other.items.anyOf);
         }
 
+        if ( other.deprecated )
+            this.deprecated = true;
+
         if ( other.issues )
             this.issues = this.issues.concat(other.issues);
+
+        if ( other.warnings )
+            this.warnings = this.warnings.concat(other.warnings);
     }
 
     info_box_type_line(box, link_defs)
@@ -521,6 +536,8 @@ class LottiePreviewGenerator
 
 class SchemaDefinition
 {
+    static _id = 0;
+
     constructor(
         schema,
         schema_definition,
@@ -528,6 +545,8 @@ class SchemaDefinition
         def_path = null,
     )
     {
+        this.id = SchemaDefinition._id;
+        SchemaDefinition._id += 1;
         this.schema = schema;
         this.schema_definition = schema_definition;
         this.def = def;
@@ -642,6 +661,9 @@ class SchemaDefinition
 
     validate(object, add_validation, positive, ref_description = false)
     {
+        if ( this.id in object.results )
+            return object.results[this.id];
+
         this.build();
 
         var validation = new ValidationResult(this);
@@ -656,6 +678,9 @@ class SchemaDefinition
                     `Type doesn't match (should be <code>${this.type}</code> instead of <code>${val_type}</code>)`
                 );
         }
+
+        if ( positive && this.schema_definition.deprecated )
+            validation.deprecated = true;
 
         if ( "const" in this.schema_definition )
         {
@@ -677,8 +702,11 @@ class SchemaDefinition
                     {
                         var propval = this.properties[name].validate(prop, positive, positive, true);
                         propval.set_key_validation(name);
+
                         if ( !propval.valid )
                             validation.fail(name == "ty" ? 20 : 1, `Property <code>${name}</code> doesn't match`);
+                        if ( positive && propval.deprecated )
+                            validation.warnings.push(`Property <code>${name}</code> is deprecated`);
                     }
                 }
             }
@@ -710,18 +738,11 @@ class SchemaDefinition
         {
             if ( this.if.validate(object, false, false).valid )
             {
-                if ( this.else )
-                    this._any_of(object, validation, [this.then, this.else], positive);
-                else if ( !this.then._sub_validate(object, validation, positive).valid )
-                    validation.fail(20);
+                this.then._sub_validate(object, validation, positive);
             }
             else if ( this.else )
             {
-                this._any_of(object, validation, [this.else, this.then], positive);
-            }
-            else if ( positive )
-            {
-                this.then._sub_validate(object, validation, positive)
+                this.else._sub_validate(object, validation, positive);
             }
         }
 
@@ -755,6 +776,8 @@ class SchemaDefinition
         if ( add_validation )
             object.validations.push(validation);
 
+        object.results[this.id] = validation;
+
         return validation;
     }
 }
@@ -770,6 +793,7 @@ class SchemaObject
         this.json_value = json_value;
         this.parent = parent;
         this.validations = [];
+        this.results = {};
         this.is_array = false;
         this.is_object = false;
         this._validation = null;
@@ -831,6 +855,12 @@ class SchemaObject
             {
                 formatter.encode_item(this.json_value);
             }
+
+            if ( this.validation.show_warning )
+            {
+                formatter.write(" ");
+                formatter.warn_invalid(this.validation);
+            }
         }
         else
         {
@@ -852,6 +882,12 @@ class SchemaObject
             else
             {
                 formatter.write("[]");
+
+                if ( this.validation.show_warning )
+                {
+                    formatter.write(" ");
+                    formatter.warn_invalid(this.validation);
+                }
             }
             return;
         }
@@ -868,7 +904,7 @@ class SchemaObject
             container = formatter.collapser();
         }
 
-        if ( !this.validation.valid )
+        if ( this.validation.show_warning )
             formatter.warn_invalid(this.validation);
 
         var space = "\n";
@@ -908,7 +944,7 @@ class SchemaObject
 
         if ( Object.keys(this.json_value).length == 0 )
         {
-            if ( !this.validation.valid )
+            if ( this.validation.show_warning )
                 formatter.warn_invalid(this.validation);
             formatter.close("}");
             return;
@@ -916,7 +952,7 @@ class SchemaObject
 
         var container = formatter.collapser();
 
-        if ( !this.validation.valid )
+        if ( this.validation.show_warning )
             formatter.warn_invalid(this.validation);
 
         formatter.write("\n");
@@ -930,6 +966,8 @@ class SchemaObject
             {
                 var prop_box = formatter.info_box(JSON.stringify(name), "string")
                 this.property_info_box(prop_box, item);
+                if ( item.validation.key.show_warning )
+                    formatter.warn_invalid(item.validation.key);
                 formatter.write(": ");
                 item.explain(formatter);
             }
@@ -1175,26 +1213,29 @@ class JsonFormatter
         return this.set_container(collapser);
     }
 
-    warn_invalid(validation, icon = "fas fa-exclamation-triangle", title = "Validation Error")
+    warn_invalid(validation, icon = "fas fa-exclamation-triangle", title = null)
     {
+        if ( !title )
+            title = !validation.valid ? "Validation Error" : "Deprecation Warning";
 
         var box = this.info_box("", "invalid", icon);
         box.add("strong", title);
         box.add("br");
 
         box.element.parentElement.setAttribute("id", "invalid_" +  this.invalid_id);
-        console.log("Invalid value found!", "#invalid_" +  this.invalid_id);
+        console.warn("Invalid value found!", "#invalid_" +  this.invalid_id);
         this.invalid_id += 1;
 
+        var issues = validation.issues.concat(validation.warnings);
 
-        if ( validation.issues.length == 1 )
+        if ( issues.length == 1 )
         {
-            box.element.appendChild(document.createElement("p")).innerHTML = validation.issues[0];
+            box.element.appendChild(document.createElement("p")).innerHTML = issues[0];
         }
-        else if ( validation.issues.length )
+        else if ( issues.length )
         {
             var ul = box.element.appendChild(document.createElement("ul"));
-            for ( var issue of validation.issues )
+            for ( var issue of issues )
                 ul.appendChild(document.createElement("li")).innerHTML = issue;
         }
         else

@@ -16,6 +16,15 @@
                     "items": {
                         "type": "number"
                     }
+                },
+                "e": {
+                    "title": "End value",
+                    "description": "Value at the end of the keyframe, note that this is deprecated and you should use `s` from the next keyframe to get this value",
+                    "deprecated": true,
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
                 }
             }
         },

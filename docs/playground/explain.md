@@ -227,6 +227,7 @@ function lottie_set_json(json)
         var formatter = new JsonFormatter(parent);
         formatter.lottie = json;
         var object = new SchemaObject(json);
+        window.validated = object;
         schema.root.validate(object, true, true);
         object.explain(formatter);
         formatter.finalize();
