@@ -9,6 +9,7 @@ import xml.etree.ElementTree as etree
 from xml.etree.ElementTree import parse as parse_xml
 from markdown.inlinepatterns import InlineProcessor
 from markdown.blockprocessors import BlockProcessor
+from markdown.preprocessors import Preprocessor
 from markdown.extensions import Extension
 from markdown.util import HTML_PLACEHOLDER_RE, AtomicString
 from schema_lib import Schema
@@ -1024,6 +1025,87 @@ class VariableDocs(BlockProcessor):
         return True
 
 
+class ScriptPlayground(Preprocessor):
+    fence_start = "<script_playground>"
+    fence_end = "</script_playground>"
+    tabs = {
+        "json": ("javascript", "Lottie"),
+        "css": ("css", "CSS"),
+        "html": ("html", "HTML"),
+        "js": ("javascript", "Script"),
+    }
+
+    def run(self, lines):
+        new_lines = []
+        data = None
+        current = None
+        id = 0
+        found = False
+
+        for line in lines:
+            if data is not None:
+                if current is None and line.startswith("```"):
+                    current = line[3:]
+                    data[current] = ""
+                elif line == "```":
+                    current = None
+                elif line == self.fence_end:
+                    element = etree.Element("div")
+
+                    tab_nav = etree.SubElement(element, "ul", {"class": "nav nav-tabs"})
+                    tab_content = etree.SubElement(element, "div", {"class": "tab-content"})
+
+                    for k, v in data.items():
+                        tab_id = "script_playground_%s_%s" % (id, k)
+                        etree.SubElement(etree.SubElement(tab_nav, "li"), "a", {"href": "#" + tab_id}).text = self.tabs[k][1]
+                        div = etree.SubElement(tab_content, "div", {"id": tab_id, "class": "tab-pane fade in"})
+                        etree.SubElement(etree.SubElement(div, "pre"), "code", {"class": self.tabs[k][0]}).text = v
+
+                    if "css" in data:
+                        etree.SubElement(element, "style").text = data["css"]
+
+                    if "html" in data:
+                        tab_id = "script_playground_%s_preview" % (id)
+                        li = etree.SubElement(tab_nav, "li", {"class": "active"})
+                        etree.SubElement(li, "a", {"href": "#" + tab_id}).text = "Result"
+                        div = etree.SubElement(tab_content, "div", {"id": tab_id, "class": "tab-pane fade in active"})
+                        div.append(etree.fromstring("<div>" + data["html"] + "</div>"))
+
+                    html = etree.tostring(element, "unicode")
+
+                    script = ""
+                    if "json" in data:
+                        script += "var json = %s;\n" % data["json"]
+                    if "js" in data:
+                        script += data["js"]
+                    if script:
+                        html += "<script>(function(){%s})();</script>" % script
+
+                    placeholder = self.md.htmlStash.store(html)
+                    new_lines.append(placeholder)
+                    data = None
+                    id += 1
+                else:
+                    data[current] += line + "\n"
+            elif line == self.fence_start:
+                data = {}
+                current = None
+                found = True
+            else:
+                new_lines.append(line)
+
+        if found:
+            script = """<script>
+            document.querySelectorAll(".nav-tabs a").forEach( link =>
+                link.addEventListener("click", e => jQuery(e.target).tab("show"))
+            );
+            </script>"""
+            placeholder = self.md.htmlStash.store(script)
+            new_lines.append(placeholder)
+
+        return new_lines
+
+
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
         with open(docs_path / "schema" / "lottie.schema.json") as file:
@@ -1041,6 +1123,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(SchemaEffect(md.parser, schema_data), 'schema_effect', 175)
         md.parser.blockprocessors.register(FunctionDocs(md.parser), 'function_docs', 175)
         md.parser.blockprocessors.register(VariableDocs(md.parser), 'variable_docs', 175)
+        md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
 
 
 def makeExtension(**kwargs):
