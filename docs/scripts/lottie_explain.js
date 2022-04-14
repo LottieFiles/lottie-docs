@@ -1074,6 +1074,7 @@ class JsonFormatter
         this.parent = this.element;
         this.indent = 0;
         this.object_id = 0;
+        this.invalid_id = 0;
     }
 
     finalize()
@@ -1176,9 +1177,15 @@ class JsonFormatter
 
     warn_invalid(validation, icon = "fas fa-exclamation-triangle", title = "Validation Error")
     {
+
         var box = this.info_box("", "invalid", icon);
         box.add("strong", title);
         box.add("br");
+
+        box.element.parentElement.setAttribute("id", "invalid_" +  this.invalid_id);
+        console.log("Invalid value found!", "#invalid_" +  this.invalid_id);
+        this.invalid_id += 1;
+
 
         if ( validation.issues.length == 1 )
         {
