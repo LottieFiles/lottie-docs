@@ -520,6 +520,22 @@ $bm_rt[1] += Math.sin(rotation) * 200;
 lottie.layers[0].ks.p.x = data["Position Expression"];
 </script>
 
+### As a function
+
+As a function a composition object can give you access to the layers by name or index
+
+{lottie_playground:image_animated.json:512:512}
+Position Expression:<highlight>
+var $bm_rt = [256, 256]
+var rotation = thisComp("Layer").transform.rotation / 180 * Math.PI;
+$bm_rt[0] += Math.cos(rotation) * 200;
+$bm_rt[1] += Math.sin(rotation) * 200;
+</highlight>
+<json>lottie.layers[0].ks.p</json>
+<script>
+lottie.layers[0].ks.p.x = data["Position Expression"];
+</script>
+
 ### Composition.numLayers
 
 

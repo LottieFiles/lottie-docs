@@ -1069,7 +1069,7 @@ class ScriptPlayground(Preprocessor):
                         li = etree.SubElement(tab_nav, "li", {"class": "active"})
                         etree.SubElement(li, "a", {"href": "#" + tab_id}).text = "Result"
                         div = etree.SubElement(tab_content, "div", {"id": tab_id, "class": "tab-pane fade in active"})
-                        div.append(etree.fromstring("<div>" + data["html"] + "</div>"))
+                        div.append(etree.fromstring("<div class='playground_html'>" + data["html"] + "</div>"))
 
                     html = etree.tostring(element, "unicode")
 
