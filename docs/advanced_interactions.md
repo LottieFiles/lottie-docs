@@ -764,6 +764,106 @@ star.py = event.lottie_y;
 }
 ```
 
+In the example below you can click to move the star to a given position:
+
+<script_playground>
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "click": `
+var star = thisComp("star");
+star.px = event.lottie_x;
+star.py = event.lottie_y;
+`
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization, we use === undefined instead of time == 0 because
+// when the animation loops, you might get time going back to zero
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+```html
+<div id="level6a" tabindex="0"></div>
+```
+```js
+var container = document.getElementById("level6a");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev => event_handler(ev, expression_function));
+}
+```
+</script_playground>
+
 ### Handling Keyboard Events Nicely
 
 To allow keyboard events to be fired correctly, you need to ensure the
@@ -772,7 +872,7 @@ element containing the lottie is focusable.
 You can do this by setting the `tabindex` attribute in HTML or with JavaScript.
 
 ```html
-<div id="level6" tabindex="0"></div>
+<div id="level6b" tabindex="0"></div>
 ```
 
 or
@@ -797,6 +897,7 @@ if ( event.key == "ArrowLeft" )
 else if ( event.key == "ArrowRight" )
     thisComp("star").right = true;
 
+// Prevent scrolling and other browser shortcuts
 event.preventDefault();
 ```
 
@@ -808,6 +909,7 @@ if ( event.key == "ArrowLeft" )
 else if ( event.key == "ArrowRight" )
     thisComp("star").right = false;
 
+// Prevent scrolling and other browser shortcuts
 event.preventDefault();
 ```
 
@@ -855,14 +957,10 @@ if ( direction != 0 )
 var $bm_rt = [thisLayer.px, thisLayer.py];
 ```
 
+The example below shows how to handle keyboard event.
 
-### Result
-
-The example below shows a range of different events:
-
-* Mouse clicks move the star to the position where the click occurred
-* Focusing on the element changes the star color
-* When focused (blue star) left and right arrow keys move the star in the corresponding direction
+Focusing on the element changes the star color.
+When focused (blue star) left and right arrow keys move the star in the corresponding direction.
 
 <script_playground>
 ```json
@@ -880,6 +978,7 @@ if ( event.key == "ArrowLeft" )
 else if ( event.key == "ArrowRight" )
     thisComp("star").right = true;
 
+// Prevent scrolling and other browser shortcuts
 event.preventDefault();
 `,
         "keyup": `
@@ -888,15 +987,11 @@ if ( event.key == "ArrowLeft" )
 else if ( event.key == "ArrowRight" )
     thisComp("star").right = false;
 
+// Prevent scrolling and other browser shortcuts
 event.preventDefault();
 `,
         "focusin": "thisComp.focus = true;",
         "focusout": "thisComp.focus = false;",
-        "click": `
-var star = thisComp("star");
-star.px = event.lottie_x;
-star.py = event.lottie_y;
-`
     },
     "layers": [
         {
@@ -974,10 +1069,10 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="level6" tabindex="0"></div>
+<div id="level6b" tabindex="0"></div>
 ```
 ```js
-var container = document.getElementById("level6");
+var container = document.getElementById("level6b");
 var options = {
     container: container,
     renderer: "svg",
