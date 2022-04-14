@@ -19,6 +19,11 @@
                 "x": {
                     "title": "Expression",
                     "type": "string"
+                },
+                "l": {
+                    "title": "Length",
+                    "description": "Number of components in the value arrays.\nIf present values will be truncated or expanded to match this length when accessed from expressions.",
+                    "type": "integer"
                 }
             }
         },

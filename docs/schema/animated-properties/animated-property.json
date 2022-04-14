@@ -5,7 +5,6 @@
     "description": "An animatable property that holds an array of numbers",
     "allOf": [
         {
-
             "properties": {
                 "ix": {
                     "title": "Property Index",
