@@ -1118,17 +1118,467 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 ```
 </script_playground>
 
-## Level 7: Initializing Values
 
-## Level 8: DOM Events from Layers
+## Level 7: Writing a Small Wrapper
 
-## Level 9: Patching the Renderer
+Follows a JavaScript class that sets everything up in a self-contained object.
 
-### Abusing Font Loading
+```js
+class LottieInteractionPlayer
+{
+    constructor(container, custom_options={})
+    {
+        if ( typeof container == "string" )
+            this.container = document.getElementById(container);
+        else
+            this.container = container;
 
-### Deferring Animation Load
+        this.anim = null;
 
-### Lottie Button
+        this.custom_options = custom_options;
 
+        // needed by keyup/down
+        if ( !container.hasAttribute("tabindex") )
+            container.setAttribute("tabindex", "0");
 
-### Level 10: Small library that puts everything together
+        this.handlers = {};
+
+        this._container_event_listener = this.container_event.bind(this);
+    }
+
+    // Deep copy lottie JSON
+    lottie_clone(json)
+    {
+        return JSON.parse(JSON.stringify(json));
+    }
+
+    load(lottie, resize = true)
+    {
+        // Options
+        var options = {
+            container: this.container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            // Clone because the player modifies the passed object
+            animationData = lottie_clone(lottie);
+            ...this.custom_options,
+        };
+
+        if ( resize )
+        {
+            this.container.style.width = lottie.w + "px";
+            this.container.style.height = lottie.h + "px";
+        }
+
+        // Clean up
+        this.clear();
+
+        // Setup handlers
+        this.handlers = {};
+        if ( lottie.events )
+        {
+            for ( var [name, func] of Object.entries(lottie.events) )
+            {
+                this.handlers[name] = this.expression_to_event_handler(func);
+                this.container.addEventListener(name, this._container_event_listener);
+            }
+        }
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+    }
+
+    // Destroy the animation
+    clear()
+    {
+        if ( this.anim != null )
+        {
+            try {
+                this.anim.destroy();
+                this.anim = null;
+            } catch ( e ) {}
+        }
+
+        for ( let name of Object.keys(this.handlers) )
+            this.container.removeEventListener(name, this._container_event_listener);
+    }
+
+    // Get the expression `thisComp` global
+    get thisComp()
+    {
+        return this.anim.renderer.compInterface;
+    }
+
+    // Get the expression `time` global
+    get time()
+    {
+        return this.anim.renderer.renderedFrame / this.anim.renderer.globalData.frameRate;
+    }
+
+    // Get an expression layer
+    layer(name)
+    {
+        return this.thisComp(name);
+    }
+
+    // Handles an event from the container element
+    container_event(ev)
+    {
+        this.prepare_lottie_event(ev);
+
+        if ( this.handlers[ev.type] )
+            this.handle_lottie_event(ev, this.handlers[ev.type]);
+    }
+
+    // Adds useful attributes to an event object
+    prepare_lottie_event(ev)
+    {
+        if ( ev.clientX !== undefined )
+        {
+            var rect = this.container.getBoundingClientRect();
+            ev.lottie_x = ev.clientX - rect.left;
+            ev.lottie_y = ev.clientY - rect.top;
+        }
+    }
+
+    // Handles an event given a handler
+    handle_lottie_event(ev, handler)
+    {
+        handler(ev, this.thisComp, this.time);
+    }
+
+    // Sets up an event handler
+    expression_to_event_handler(expr)
+    {
+        return Function("event", "thisComp", "time", expr);
+    }
+}
+```
+
+## Level 8: Patching the Renderer
+
+### Why
+
+#### Initializing Values
+
+#### DOM Events from Layers
+
+### How
+
+#### Abusing Font Loading
+
+#### Deferring Animation Load
+
+### Resulting Wrapper
+
+Here's the same wrapper class as described earlier, but with patching
+code applied to support the `preload` event and layer events.
+
+<script_playground global-script="1">
+```js
+class LottieInteractionPlayer
+{
+    constructor(container, custom_options={})
+    {
+        if ( typeof container == "string" )
+            this.container = document.getElementById(container);
+        else
+            this.container = container;
+
+        this.anim = null;
+
+        this.custom_options = custom_options;
+
+        // needed by keyup/down
+        if ( !container.hasAttribute("tabindex") )
+            container.setAttribute("tabindex", "0");
+
+        this.handlers = {};
+
+        this._container_event_listener = this.container_event.bind(this);
+    }
+
+    // Deep copy lottie JSON
+    lottie_clone(json)
+    {
+        return JSON.parse(JSON.stringify(json));
+    }
+
+    load(lottie, resize = true)
+    {
+        // Options
+        var options = {
+            container: this.container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            ...this.custom_options,
+            // Note that animationData is deferred
+        };
+
+        if ( resize )
+        {
+            this.container.style.width = lottie.w + "px";
+            this.container.style.height = lottie.h + "px";
+        }
+
+        // Clean up
+        this.clear();
+
+        // Setup handlers
+        this.handlers = {};
+        if ( lottie.events )
+        {
+            for ( var [name, func] of Object.entries(lottie.events) )
+            {
+                this.handlers[name] = this.expression_to_event_handler(func);
+                this.container.addEventListener(name, this._container_event_listener);
+            }
+        }
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this._patch_renderer();
+
+        // Clone because the player modifies the passed object
+        var animation_data = lottie_clone(lottie);
+
+        // Load animation separately so we can patch the renderer
+        // not needed if there are no layer events or if there are fonts
+        // (fonts delay initialization);
+        this.anim.setupAnimation(animation_data);
+
+        this.anim.addEventListener("DOMLoaded", this._lottie_loaded_event.bind(this));
+    }
+
+    _patch_renderer()
+    {
+        var old_init = this.anim.renderer.initItems.bind(this.anim.renderer);
+        var post_init = this._lottie_pre_load_event.bind(this)
+        this.anim.renderer.initItems = function(){
+            old_init();
+            post_init();
+        };
+        var old_create = this.anim.renderer.createItem.bind(this.anim.renderer);
+        this.anim.renderer.createItem = (function(layer){
+            var v = old_create(layer);
+            this._create_item_event(layer, v);
+            return v;
+        }).bind(this);
+    }
+
+    _create_item_event(lottie, item)
+    {
+        if ( !item.layerElement || !lottie.events )
+            return;
+
+        for ( let [name, func] of Object.entries(lottie.events) )
+        {
+            let handler = this.expression_to_event_handler(func);
+            function listener(ev)
+            {
+                this.prepare_lottie_event(ev);
+                this.handle_lottie_event(ev, handler, item.layerInterface);
+            }
+            item.layerElement.addEventListener(name, listener.bind(this));
+        }
+    }
+
+    _lottie_loaded_event()
+    {
+        this.container_event({type: "load", preventDefault: function(){}});
+    }
+
+    _lottie_pre_load_event()
+    {
+        this.container_event({type: "preload", preventDefault: function(){}});
+    }
+
+    // Destroy the animation
+    clear()
+    {
+        if ( this.anim != null )
+        {
+            try {
+                this.anim.destroy();
+                this.anim = null;
+            } catch ( e ) {}
+        }
+
+        for ( let name of Object.keys(this.handlers) )
+            this.container.removeEventListener(name, this._container_event_listener);
+    }
+
+    // Get the expression `thisComp` global
+    get thisComp()
+    {
+        return this.anim.renderer.compInterface;
+    }
+
+    // Get the expression `time` global
+    get time()
+    {
+        return this.anim.renderer.renderedFrame / this.anim.renderer.globalData.frameRate;
+    }
+
+    // Get an expression layer
+    layer(name)
+    {
+        return this.thisComp(name);
+    }
+
+    // Handles an event from the container element
+    container_event(ev)
+    {
+        this.prepare_lottie_event(ev);
+
+        if ( this.handlers[ev.type] )
+            this.handle_lottie_event(ev, this.handlers[ev.type], null);
+    }
+
+    // Adds useful attributes to an event object
+    prepare_lottie_event(ev)
+    {
+        if ( ev.clientX !== undefined )
+        {
+            var rect = this.container.getBoundingClientRect();
+            ev.lottie_x = ev.clientX - rect.left;
+            ev.lottie_y = ev.clientY - rect.top;
+        }
+    }
+
+    // Handles an event given a handler
+    handle_lottie_event(ev, handler, layer)
+    {
+        handler(ev, this.thisComp, this.time, layer);
+    }
+
+    // Sets up an event handler
+    expression_to_event_handler(expr)
+    {
+        return Function("event", "thisComp", "time", "thisLayer", expr);
+    }
+}
+```
+</script_playground>
+
+### Lottie Button Example
+
+This example uses everything we discussed so far:
+
+<script_playground>
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "preload": "thisComp('button').clicks = 0;"
+    },
+    "fonts": {"list":[
+        {
+            "ascent": 72,
+            "fFamily": "Roboto",
+            "fName": "Roboto Regular",
+            "fStyle": "Regular",
+            "fPath": "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
+            "origin": 1,
+        }
+    ]},
+    "layers": [
+        {
+            "ty": 5,
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "parent": 1,
+            "cl": "no-mouse",
+            "ks": {
+                "p": {"a": 0, "k": [0, 25]},
+            },
+            "t": {
+                "a": [],
+                "d": {
+                    "x": "var $bm_rt = 'Clicks: ' + thisComp('button').clicks;",
+                    "k": [
+                        {
+                            "s": {
+                                "f": "Roboto Regular",
+                                "fc": [0, 0, 0],
+                                "s": 70,
+                                "t": "",
+                                "j": 2,
+                            },
+                            "t": 0
+                        }
+                    ]
+                },
+                "m": {
+                    "a": {"a": 0, "k": [0,0]},
+                    "g": 3
+                },
+                "p": {}
+            }
+        },
+        {
+            "ty": 4,
+            "nm": "button",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ind": 1,
+            "events": {
+                "click": "thisLayer.clicks += 1;",
+                "mouseenter": "thisLayer.highlighted = true;",
+                "mouseleave": "thisLayer.highlighted = false;"
+            },
+            "ks": {
+                "p": {"a": 0, "k": [256, 256]},
+                "s": {
+                    "a": 0,
+                    "k": [100, 100],
+                    "x": "var sz = thisLayer.highlighted ? 120 : 100; var $bm_rt = [sz, sz];"
+                }
+            },
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [350, 90]},
+                    "r": {"a": 0, "k": 3},
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 1, 0]},
+                    "w": {"a": 0, "k": 1},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 50, "x": "var $bm_rt = thisLayer.highlighted ? 70 : 30;"},
+                    "c": {"a": 0, "k": [0.4, 1, 0.4]}
+                }
+            ]
+        }
+    ]
+}
+```
+```js
+var container = document.getElementById("final_example");
+var player = new LottieInteractionPlayer(container);
+player.load(json);
+```
+```html
+<div id="final_example"></div>
+```
+```css
+.no-mouse {
+    pointer-events: none;
+}
+```
+</script_playground>

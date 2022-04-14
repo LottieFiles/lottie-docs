@@ -1026,7 +1026,7 @@ class VariableDocs(BlockProcessor):
 
 
 class ScriptPlayground(Preprocessor):
-    fence_start = "<script_playground>"
+    fence_start = "<script_playground"
     fence_end = "</script_playground>"
     tabs = {
         "json": ("javascript", "Lottie"),
@@ -1041,6 +1041,7 @@ class ScriptPlayground(Preprocessor):
         current = None
         id = 0
         found = False
+        options = {}
 
         for line in lines:
             if data is not None:
@@ -1052,24 +1053,35 @@ class ScriptPlayground(Preprocessor):
                 elif line == self.fence_end:
                     element = etree.Element("div")
 
-                    tab_nav = etree.SubElement(element, "ul", {"class": "nav nav-tabs"})
-                    tab_content = etree.SubElement(element, "div", {"class": "tab-content"})
+                    tab_content = etree.Element("div")
+
+                    if len(data) > 1:
+                        tab_nav = etree.SubElement(element, "ul", {"class": "nav nav-tabs"})
+                        tab_content.attrib = {"class": "tab-content"}
+
+                    element.append(tab_content)
 
                     for k, v in data.items():
-                        tab_id = "script_playground_%s_%s" % (id, k)
-                        etree.SubElement(etree.SubElement(tab_nav, "li"), "a", {"href": "#" + tab_id}).text = self.tabs[k][1]
-                        div = etree.SubElement(tab_content, "div", {"id": tab_id, "class": "tab-pane fade in"})
+                        div = etree.SubElement(tab_content, "div")
                         etree.SubElement(etree.SubElement(div, "pre"), "code", {"class": self.tabs[k][0]}).text = v
+
+                        if len(data) > 1:
+                            tab_id = "script_playground_%s_%s" % (id, k)
+                            etree.SubElement(etree.SubElement(tab_nav, "li"), "a", {"href": "#" + tab_id}).text = self.tabs[k][1]
+                            div.attrib = {"id": tab_id, "class": "tab-pane fade in"}
 
                     if "css" in data:
                         etree.SubElement(element, "style").text = data["css"]
 
                     if "html" in data:
-                        tab_id = "script_playground_%s_preview" % (id)
-                        li = etree.SubElement(tab_nav, "li", {"class": "active"})
-                        etree.SubElement(li, "a", {"href": "#" + tab_id}).text = "Result"
-                        div = etree.SubElement(tab_content, "div", {"id": tab_id, "class": "tab-pane fade in active"})
+                        div = etree.SubElement(tab_content, "div")
                         div.append(etree.fromstring("<div class='playground_html'>" + data["html"] + "</div>"))
+
+                        if len(data) > 1:
+                            tab_id = "script_playground_%s_preview" % (id)
+                            li = etree.SubElement(tab_nav, "li", {"class": "active"})
+                            etree.SubElement(li, "a", {"href": "#" + tab_id}).text = "Result"
+                            div.attrib = {"id": tab_id, "class": "tab-pane fade in active"}
 
                     html = etree.tostring(element, "unicode")
 
@@ -1079,7 +1091,9 @@ class ScriptPlayground(Preprocessor):
                     if "js" in data:
                         script += data["js"]
                     if script:
-                        html += "<script>(function(){%s})();</script>" % script
+                        if options.get("global-script", "") != "1":
+                            script = "(function(){%s})();" % script
+                        html += "<script>%s</script>" % script
 
                     placeholder = self.md.htmlStash.store(html)
                     new_lines.append(placeholder)
@@ -1087,10 +1101,11 @@ class ScriptPlayground(Preprocessor):
                     id += 1
                 else:
                     data[current] += line + "\n"
-            elif line == self.fence_start:
+            elif line.startswith(self.fence_start):
                 data = {}
                 current = None
                 found = True
+                options = etree.fromstring(line + self.fence_end).attrib
             else:
                 new_lines.append(line)
 
