@@ -258,11 +258,11 @@ class LottiePreviewGenerator
             generated.assets = [this.json];
             generated.layers = [{
                 "ip": 0,
-                "op": 60,
+                "op": this.lottie.op,
                 "st": 0,
                 "ks": {},
                 "ty": 2,
-                "refId": asset.id
+                "refId": this.json.id
             }];
             generated.nobutton = true;
         }
