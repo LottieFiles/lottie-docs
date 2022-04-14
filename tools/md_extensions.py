@@ -375,7 +375,7 @@ class LottiePlayground(BlockProcessor):
             enum_id = input.text
             default_value = input.attrib.get("value", "")
 
-            input = etree.Element("select")
+            input = input_wrapper = etree.Element("select")
             for value, opt_label, _ in enum_values(self.schema_data, enum_id):
                 option = etree.SubElement(input, "option", {"value": str(value)})
                 option.text = opt_label

@@ -220,6 +220,8 @@ lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
 
 ### Masked Path
 
+{schema_attribute:description:text/masked-path}
+
 {schema_object:text/masked-path}
 
 

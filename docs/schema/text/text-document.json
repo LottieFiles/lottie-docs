@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Document",
-    "description": "Note that for multi-line text, lines are separated by \\r",
+    "description": "",
     "properties": {
         "f": {
             "title": "Font Family",
@@ -10,13 +10,27 @@
             "default": ""
         },
         "fc": {
-            "title": "Font Color",
+            "title": "Fill Color",
             "$ref": "#/$defs/helpers/color",
             "default": [
                 0,
                 0,
                 0
             ]
+        },
+        "sc": {
+            "title": "Stroke Color",
+            "$ref": "#/$defs/helpers/color"
+        },
+        "sw": {
+            "title": "Stroke Width",
+            "type": "number",
+            "default": 0
+        },
+        "of": {
+            "title": "Stroke Over Fill",
+            "description": "Render stroke above the fill",
+            "type": "boolean"
         },
         "s": {
             "title": "Font Size",
@@ -25,13 +39,25 @@
         },
         "lh": {
             "title": "Line Height",
-            "description": "Line height when wrapping",
+            "description": "Distance between lines on multiline or wrapped text",
             "type": "number"
         },
         "sz": {
             "title": "Wrap Size",
             "description": "Size of the box containing the text",
             "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+                "type": "number"
+            }
+        },
+        "ps": {
+            "title": "Wrap Position",
+            "description": "Position of the box containing the text",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
             "items": {
                 "type": "number"
             }
@@ -39,6 +65,7 @@
         "t": {
             "title": "Text",
             "type": "string",
+            "description": "Text, note that newlines are encoded with \\r",
             "default": ""
         },
         "j": {
@@ -53,6 +80,10 @@
         "tr": {
             "title": "Tracking",
             "description": "Text Tracking",
+            "type": "number"
+        },
+        "ls": {
+            "title": "Baseline Shift",
             "type": "number"
         }
     },

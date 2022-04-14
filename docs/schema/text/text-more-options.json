@@ -9,10 +9,12 @@
             "properties": {
                 "a": {
                     "title": "Alignment",
+                    "description": "Group alignment",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "g": {
                     "title": "Grouping",
+                    "description": "Anchor point grouping",
                     "$ref": "#/$defs/constants/text-grouping"
                 }
             },

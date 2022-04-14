@@ -9,7 +9,8 @@
             "properties": {
                 "ascent": {
                     "title": "Ascent",
-                    "type": "number"
+                    "type": "number",
+                    "description": "Text will be moved down based on this value"
                 },
                 "fFamily": {
                     "title": "Font Family",
