@@ -167,11 +167,24 @@ param: rgb : array[3]|array[4] : RGB(A) color, with components in 0, 1
 return: array[3]|array[4] : HSL(A) color, with components in 0, 1
 
 ### hslToRgb()
+
 {function_docs}
 name: hslToRgb
 param: hsl : array[3]|array[4] : HSL(A) color, with components in 0, 1
 return: array[3]|array[4] : RGB(A) color, with components in 0, 1
 
+
+### createPath()
+
+{function_docs}
+name: createPath
+param: points : array : Array of points (each point is a list with 2 numbers)
+param: in_tangents : array : [] : Array of in tangents correponding to the point with the same index
+param: out_tangents : array : [] : Array of out tangents correponding to the point with the same index
+param: is_closed : boolean : true : Whether the path is closed
+return: Path
+
+Creates bezier path data
 
 
 ## Math functions
