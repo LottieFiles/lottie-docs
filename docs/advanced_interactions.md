@@ -1185,7 +1185,7 @@ class LottieInteractionPlayer
             loop: true,
             autoplay: true,
             // Clone because the player modifies the passed object
-            animationData = lottie_clone(lottie);
+            animationData = this.lottie_clone(lottie);
             ...this.custom_options,
         };
 
@@ -1468,11 +1468,15 @@ code in some of its methods. Luckily we can do this on the fly:
         // lottie is the JSON layer
         // item.layerElement is the DOM element for this layer
         // item.layerInterface is the expression thisLayer object
-        if ( !item.layerElement || !lottie.events )
+        if ( !lottie.events )
             return;
 
+        // Create a dummy element for Null layers and the like,
+        // it makes it easier to listen for `load` events
+        let element = item.layerElement ?? document.createElement("div");
+
         // Keep track of layer elements so they can have the `load` event too
-        this.layer_elements.push(item.layerElement);
+        this.layer_elements.push(element);
 
         for ( let [name, func] of Object.entries(lottie.events) )
         {
@@ -1482,10 +1486,9 @@ code in some of its methods. Luckily we can do this on the fly:
                 this.prepare_lottie_event(ev);
                 this.handle_lottie_event(ev, handler, item.layerInterface);
             }
-            item.layerElement.addEventListener(name, listener.bind(this));
+            element.addEventListener(name, listener.bind(this));
         }
     }
-
 ```
 
 Now that the renderer has been patched can we be assured the patching is
@@ -1553,7 +1556,7 @@ We can use this to patch the renderer before loading the animation:
         this.anim.addEventListener("DOMLoaded", this._lottie_loaded_event.bind(this));
 
         // Clone because the player modifies the passed object
-        var animation_data = lottie_clone(lottie);
+        var animation_data = this.lottie_clone(lottie);
 
         // Load animation separately so we can patch the renderer
         this.anim.setupAnimation(animation_data);
@@ -1637,7 +1640,7 @@ class LottieInteractionPlayer
         this._patch_renderer();
 
         // Clone because the player modifies the passed object
-        var animation_data = lottie_clone(lottie);
+        var animation_data = this.lottie_clone(lottie);
 
         // Load animation separately so we can patch the renderer
         this.anim.setupAnimation(animation_data);
@@ -1669,11 +1672,15 @@ class LottieInteractionPlayer
         // lottie is the JSON layer
         // item.layerElement is the DOM element for this layer
         // item.layerInterface is the expression thisLayer object
-        if ( !item.layerElement || !lottie.events )
+        if ( !lottie.events )
             return;
 
+        // Create a dummy element for Null layers and the like,
+        // it makes it easier to listen for `load` events
+        let element = item.layerElement ?? document.createElement("div");
+
         // Keep track of layer elements so they can have the `load` event too
-        this.layer_elements.push(item.layerElement);
+        this.layer_elements.push(element);
 
         for ( let [name, func] of Object.entries(lottie.events) )
         {
@@ -1683,7 +1690,7 @@ class LottieInteractionPlayer
                 this.prepare_lottie_event(ev);
                 this.handle_lottie_event(ev, handler, item.layerInterface);
             }
-            item.layerElement.addEventListener(name, listener.bind(this));
+            element.addEventListener(name, listener.bind(this));
         }
     }
 
