@@ -716,7 +716,7 @@ After this step, you're all set to hanle DOM events automatically from a lottie.
 The next couple steps add some polish to the event interface for a smoother experience.
 
 
-### Quick Aside: Initializing Values
+### Breaking Time
 
 In the previous examples, we had a condition at the start of some expressions
 initializing custom attributes when `time` is equal to 0.
@@ -738,6 +738,134 @@ properties:
 if ( thisLayer.my_property === undefined )
     thisLayer.my_property = "some value";
 ```
+
+For smooth value increments, we need to properly handle the `time`
+variable within expressions. Similarly to what we've done before the
+following example shows how to initialize and update a variable over
+time;
+
+```js
+// Initialization
+if ( thisLayer.last_time === undefined )
+{
+    thisLayer.last_time = time;
+    thisLayer.value = 0;
+    thisLayer.speed = 600;
+}
+
+// Handle looping
+if ( time < thisLayer.last_time )
+    thisLayer.last_time = time;
+
+// `dt` is the time since the last expression evaluation in seconds
+var dt = time - thisLayer.last_time;
+
+// Update the time management variable
+thisLayer.last_time = time;
+
+// Increment
+thisLayer.value = dt * thisLayer.speed;
+```
+
+This approach allows you to change values regardless of playback speed
+and framerate. I also allows you to continue the movement when the
+lottie reaches its last frame and starts looping.
+
+In the following example, the lottie is set to loop every second but
+it keeps going indefinitely because of the `time` management setup:
+
+
+<script_playground>
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.prev_time === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+
+    thisLayer.dx = 1;
+    thisLayer.dy = 1;
+    thisLayer.prev_time = 0;
+}
+
+// Time management
+if ( time < thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Animation
+thisLayer.px += thisLayer.dx * dt * 100;
+thisLayer.py += thisLayer.dy * dt * 120;
+
+var radius = thisLayer.content(1).outerRadius;
+if ( thisLayer.px < radius )
+    thisLayer.dx = 1;
+else if ( thisLayer.px > thisComp.width - radius )
+    thisLayer.dx = -1;
+if ( thisLayer.py < radius )
+    thisLayer.dy = 1;
+else if ( thisLayer.py > thisComp.height - radius )
+    thisLayer.dy = -1;
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+```html
+<div id="level6_time"></div>
+```
+```js
+var options = {
+    container: document.getElementById("level6_time"),
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+```
+</script_playground>
 
 ### Mouse Events
 
@@ -854,10 +982,10 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="level6a" tabindex="0"></div>
+<div id="level6_mouse" tabindex="0"></div>
 ```
 ```js
-var container = document.getElementById("level6a");
+var container = document.getElementById("level6_mouse");
 var options = {
     container: container,
     renderer: "svg",
@@ -898,7 +1026,7 @@ element containing the lottie is focusable.
 You can do this by setting the `tabindex` attribute in HTML or with JavaScript.
 
 ```html
-<div id="level6b" tabindex="0"></div>
+<div id="level6_keyboard" tabindex="0"></div>
 ```
 
 or
@@ -1106,10 +1234,10 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="level6b" tabindex="0"></div>
+<div id="level6_keyboard" tabindex="0"></div>
 ```
 ```js
-var container = document.getElementById("level6b");
+var container = document.getElementById("level6_keyboard");
 var options = {
     container: container,
     renderer: "svg",
