@@ -1831,6 +1831,7 @@ some CSS that gets rid of pointer events for layers we don't want to click.
             "op": 60,
             "st": 0,
             "ind": 1,
+            "cl": "lottie_level_9",
             "events": {
                 "load": "thisLayer.clicks = 0;",
                 "click": "thisLayer.clicks += 1;",
@@ -1879,6 +1880,9 @@ player.load(json);
 ```css
 .no-mouse {
     pointer-events: none;
+}
+.lottie_level_9 {
+    cursor: pointer;
 }
 ```
 </script_playground>
