@@ -715,6 +715,30 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 After this step, you're all set to hanle DOM events automatically from a lottie.
 The next couple steps add some polish to the event interface for a smoother experience.
 
+
+### Quick Aside: Initializing Values
+
+In the previous examples, we had a condition at the start of some expressions
+initializing custom attributes when `time` is equal to 0.
+
+```js
+if ( time == 0 )
+    thisLayer.my_property = "some value";
+```
+
+This works because the first frame is always at time 0 but it isn't a
+super reliable check: when the player loops, the time can go back to 0
+which would result in your properties being initialized again.
+
+If you want your interactions to carry over across loops, a better
+approach is to use a condition where you check for `undefined` layer
+properties:
+
+```js
+if ( thisLayer.my_property === undefined )
+    thisLayer.my_property = "some value";
+```
+
 ### Mouse Events
 
 
@@ -794,8 +818,7 @@ star.py = event.lottie_y;
             "st": 0,
             "ks": {
                 "p": {"a": 0, "k": [0, 0], "x": `
-// Initialization, we use === undefined instead of time == 0 because
-// when the animation loops, you might get time going back to zero
+// Initialization
 if ( thisLayer.px === undefined )
 {
     thisLayer.px = thisComp.width / 2;
@@ -928,8 +951,7 @@ We should also reset these when the lottie element loses focus:
 We need to add some logic to the layer position property:
 
 ```js
-// Initialization, we use === undefined instead of time == 0 because
-// when the animation loops, you might get time going back to zero
+// Initialization
 if ( thisLayer.px === undefined )
 {
     thisLayer.px = thisComp.width / 2;
@@ -1018,8 +1040,7 @@ event.preventDefault();
             "st": 0,
             "ks": {
                 "p": {"a": 0, "k": [0, 0], "x": `
-// Initialization, we use === undefined instead of time == 0 because
-// when the animation loops, you might get time going back to zero
+// Initialization
 if ( thisLayer.px === undefined )
 {
     thisLayer.px = thisComp.width / 2;
@@ -1261,22 +1282,292 @@ class LottieInteractionPlayer
 
 ## Level 8: Patching the Renderer
 
+So far we've used the vanilla lottie-web player without modifications.
+
+This is good for the interactions described until now but for more
+advanced stuff we need to patch the player.
+
+The code in this level assumes you have a wrapper class similar to the one
+described in Level 7.
+
 ### Why
+
+Follows a description of some use cases that don't work with the current approach.
 
 #### Initializing Values
 
+So far we've initialized custom layer attributes in the expressions using them.
+
+We started by checking if `time` is 0:
+
+```js
+// Initialize everything at the start
+if ( time == 0 )
+{
+    thisLayer.my_value = size[0] / 2;
+    thisLayer.speed = 60;
+    thisLayer.direction = 1;
+    thisLayer.prev_time = 0;
+}
+```
+
+Since that isn't always reliable, we moved on to checking if the attributes
+are undefined:
+
+```js
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+}
+```
+
+While this works, it's a bit annoying because you don't know if you can
+access another layer's custom attributes on frame 0, so it would be nice
+to have an event for this:
+
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "load": "thisComp('mylayer').value = 123;"
+    }
+}
+```
+
+We have the options of the `DOMLoaded` event from bodymovin:
+
+```js
+    load(lottie, resize = true)
+    {
+        // (omitted the part of the code that's the same as before)
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this.anim.addEventListener("DOMLoaded", this._lottie_loaded_event.bind(this));
+    }
+
+    _lottie_loaded_event()
+    {
+        // Create a dummy event object and invoke the
+        this.container.dispatchEvent(new Event("load"), {});
+    }
+```
+
+The issue with this is such event can only be fired after the first
+frame has been renderer (and expressions have been evaluated at least once).
+
+
 #### DOM Events from Layers
+
+Until now the event handling has been done on the container element.
+Since all the layers result in SVG `<g>` elements, it would be nice to
+be able to listen to events from those elements and handle them based
+on expressions defined on each layer.
+
+```json
+{
+    "ty": 4,
+    "nm": "My layer",
+    "ip": 0,
+    "op": 60,
+    "st": 0,
+    "ks": {},
+    "shapes": [],
+    "events": {
+        "click": "thisLayer.clicked = true;"
+    }
+}
+```
+
+To do this we need a way of mapping the layer in the JSON to the
+DOM element and the value for the expression `thisLayer`.
+
+All this information is within the lottie-web SVG renderer but we need
+to find a way of accessing it.
+
+The first step is to allow a layer object to be passed to the events:
+```javascript
+    // Handles an event from the container element
+    container_event(ev)
+    {
+        this.prepare_lottie_event(ev);
+
+        if ( this.handlers[ev.type] )
+            this.handle_lottie_event(ev, this.handlers[ev.type], null);
+    }
+
+    // Handles an event given a handler
+    handle_lottie_event(ev, handler, layer)
+    {
+        handler(ev, this.thisComp, this.time, layer);
+    }
+
+    // Sets up an event handler
+    expression_to_event_handler(expr)
+    {
+        return Function("event", "thisComp", "time", "thisLayer", expr);
+    }
+```
 
 ### How
 
+The gist of it is we need to path the renderer object and inject our
+code in some of its methods. Luckily we can do this on the fly:
+
+```javascript
+    load(lottie, resize = true)
+    {
+        // (omitted the part of the code that's the same as before)
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this._patch_renderer();
+    }
+
+
+    _patch_renderer()
+    {
+        // We patch initItems to trigger an event before any expression is evaluated:
+        var old_init = this.anim.renderer.initItems.bind(this.anim.renderer);
+        var post_init = this._lottie_load_event.bind(this)
+        this.anim.renderer.initItems = function(){
+            old_init();
+            post_init();
+        };
+
+        // We patch createItem to add event listener.
+        // It takes the JSON layer as input and returns the renderer later object
+        this.layer_elements = [];
+        var old_create = this.anim.renderer.createItem.bind(this.anim.renderer);
+        this.anim.renderer.createItem = (function(layer){
+            var item = old_create(layer);
+            this._create_item_event(layer, item);
+            return item;
+        }).bind(this);
+    }
+
+    _lottie_load_event()
+    {
+        let ev = new Event("load", {});
+        this.container.dispatchEvent(ev);
+        for ( let layer of this.layer_elements )
+            layer.dispatchEvent(ev);
+    }
+
+    _create_item_event(lottie, item)
+    {
+        // lottie is the JSON layer
+        // item.layerElement is the DOM element for this layer
+        // item.layerInterface is the expression thisLayer object
+        if ( !item.layerElement || !lottie.events )
+            return;
+
+        // Keep track of layer elements so they can have the `load` event too
+        this.layer_elements.push(item.layerElement);
+
+        for ( let [name, func] of Object.entries(lottie.events) )
+        {
+            let handler = this.expression_to_event_handler(func);
+            function listener(ev)
+            {
+                this.prepare_lottie_event(ev);
+                this.handle_lottie_event(ev, handler, item.layerInterface);
+            }
+            item.layerElement.addEventListener(name, listener.bind(this));
+        }
+    }
+
+```
+
+Now that the renderer has been patched can we be assured the patching is
+done before the functions we are patching have been called?
+
+The short answer is No, but we can have a look at how we can achieve this.
+
+
 #### Abusing Font Loading
 
+When a lottie has external fonts, the lottie-web player waits for every
+font to be loaded before initializing the renderer. Which means when you
+have text layers, the code above works perfectly.
+
+This is nice but not all lotties need text so we'll need something better.
+
 #### Deferring Animation Load
+
+The trick is to not pass the lottie JSON to lottie-web until after
+we've patched the renderer. This is easy enough because if you call
+`bodymovin.loadAnimation` without `path` or `animationData` everything
+will be initialized (including the renderer) and only the JSON loading
+step is missing.
+
+We can use this to patch the renderer before loading the animation:
+
+```javascript
+    load(lottie, resize = true)
+    {
+        // Options
+        var options = {
+            container: this.container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            ...this.custom_options,
+            // Note that animationData is deferred
+        };
+
+        if ( resize )
+        {
+            this.container.style.width = lottie.w + "px";
+            this.container.style.height = lottie.h + "px";
+        }
+
+        // Clean up
+        this.clear();
+
+        // Setup handlers
+        this.handlers = {};
+        if ( lottie.events )
+        {
+            for ( var [name, func] of Object.entries(lottie.events) )
+            {
+                this.handlers[name] = this.expression_to_event_handler(func);
+                this.container.addEventListener(name, this._container_event_listener);
+            }
+        }
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this._patch_renderer();
+
+        this.anim.addEventListener("DOMLoaded", this._lottie_loaded_event.bind(this));
+
+        // Clone because the player modifies the passed object
+        var animation_data = lottie_clone(lottie);
+
+        // Load animation separately so we can patch the renderer
+        this.anim.setupAnimation(animation_data);
+    }
+```
+
+Note that `anim.setupAnimation` is available from lottie-web version
+5.8.0. If you have earlier versions, you should call `anim.configAnimation`
+instead.
 
 ## Level 9: Resulting Wrapper
 
 Here's the same wrapper class as described earlier, but with patching
-code applied to support the `preload` event and layer events.
+code applied to support the `load` event and layer events.
 
 <script_playground global-script="1">
 ```js
@@ -1349,33 +1640,40 @@ class LottieInteractionPlayer
         var animation_data = lottie_clone(lottie);
 
         // Load animation separately so we can patch the renderer
-        // not needed if there are no layer events or if there are fonts
-        // (fonts delay initialization);
         this.anim.setupAnimation(animation_data);
-
-        this.anim.addEventListener("DOMLoaded", this._lottie_loaded_event.bind(this));
     }
 
     _patch_renderer()
     {
+        // We patch initItems to trigger an event before any expression is evaluated:
         var old_init = this.anim.renderer.initItems.bind(this.anim.renderer);
-        var post_init = this._lottie_pre_load_event.bind(this)
+        var post_init = this._lottie_load_event.bind(this)
         this.anim.renderer.initItems = function(){
             old_init();
             post_init();
         };
+
+        // We patch createItem to add event listener.
+        // It takes the JSON layer as input and returns the renderer later object
+        this.layer_elements = [];
         var old_create = this.anim.renderer.createItem.bind(this.anim.renderer);
         this.anim.renderer.createItem = (function(layer){
-            var v = old_create(layer);
-            this._create_item_event(layer, v);
-            return v;
+            var item = old_create(layer);
+            this._create_item_event(layer, item);
+            return item;
         }).bind(this);
     }
 
     _create_item_event(lottie, item)
     {
+        // lottie is the JSON layer
+        // item.layerElement is the DOM element for this layer
+        // item.layerInterface is the expression thisLayer object
         if ( !item.layerElement || !lottie.events )
             return;
+
+        // Keep track of layer elements so they can have the `load` event too
+        this.layer_elements.push(item.layerElement);
 
         for ( let [name, func] of Object.entries(lottie.events) )
         {
@@ -1389,14 +1687,12 @@ class LottieInteractionPlayer
         }
     }
 
-    _lottie_loaded_event()
+    _lottie_load_event()
     {
-        this.container_event({type: "load", preventDefault: function(){}});
-    }
-
-    _lottie_pre_load_event()
-    {
-        this.container_event({type: "preload", preventDefault: function(){}});
+        let ev = new Event("load", {});
+        this.container.dispatchEvent(ev);
+        for ( let layer of this.layer_elements )
+            layer.dispatchEvent(ev);
     }
 
     // Destroy the animation
@@ -1469,7 +1765,10 @@ class LottieInteractionPlayer
 
 ### Lottie Button Example
 
-This example uses everything we discussed so far:
+This example uses everything we discussed so far.
+
+A quick note: to avoid clicks going to the wrong layer we need to define
+some CSS that gets rid of pointer events for layers we don't want to click.
 
 <script_playground>
 ```json
@@ -1480,9 +1779,6 @@ This example uses everything we discussed so far:
     "fr": 60,
     "w": 512,
     "h": 512,
-    "events": {
-        "preload": "thisComp('button').clicks = 0;"
-    },
     "fonts": {"list":[
         {
             "ascent": 72,
@@ -1536,6 +1832,7 @@ This example uses everything we discussed so far:
             "st": 0,
             "ind": 1,
             "events": {
+                "load": "thisLayer.clicks = 0;",
                 "click": "thisLayer.clicks += 1;",
                 "mouseenter": "thisLayer.highlighted = true;",
                 "mouseleave": "thisLayer.highlighted = false;"
