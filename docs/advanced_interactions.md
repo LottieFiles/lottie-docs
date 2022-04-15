@@ -1261,8 +1261,8 @@ class LottieInteractionPlayer
         if ( ev.clientX !== undefined )
         {
             var rect = this.container.getBoundingClientRect();
-            ev.lottie_x = ev.clientX - rect.left;
-            ev.lottie_y = ev.clientY - rect.top;
+            ev.lottie_x = (ev.clientX - rect.left) / rect.width * this.thisComp.width;
+            ev.lottie_y = (ev.clientY - rect.top) / rect.height * this.thisComp.height;
         }
     }
 
@@ -1743,8 +1743,8 @@ class LottieInteractionPlayer
         if ( ev.clientX !== undefined )
         {
             var rect = this.container.getBoundingClientRect();
-            ev.lottie_x = ev.clientX - rect.left;
-            ev.lottie_y = ev.clientY - rect.top;
+            ev.lottie_x = (ev.clientX - rect.left) / rect.width * this.thisComp.width;
+            ev.lottie_y = (ev.clientY - rect.top) / rect.height * this.thisComp.height;
         }
     }
 
@@ -1760,6 +1760,134 @@ class LottieInteractionPlayer
         return Function("event", "thisComp", "time", "thisLayer", expr);
     }
 }
+```
+</script_playground>
+
+
+### Animation or Interaction
+
+It's possible to use the custom `load` to detect whether the lottie
+is being played in an environment that supports the custom events.
+
+The following example is similar to the click example from level 6
+but when a player doesn't have interaction support, the star moves
+around on its own.
+
+
+<script_playground>
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "click": "var star = thisComp('star'); star.px = event.lottie_x; star.py = event.lottie_y;",
+        "load": "thisComp('star').interactive = true;"
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+
+    if ( !thisLayer.interactive )
+    {
+        thisLayer.dx = 1;
+        thisLayer.dy = 1;
+        thisLayer.prev_time = 0;
+    }
+}
+
+if ( !thisLayer.interactive )
+{
+    if ( time < thisLayer.prev_time )
+        thisLayer.prev_time = time;
+    var dt = time - thisLayer.prev_time;
+    thisLayer.prev_time = time;
+
+    thisLayer.px += thisLayer.dx * dt * 100;
+    thisLayer.py += thisLayer.dy * dt * 120;
+
+    var radius = thisLayer.content(1).outerRadius;
+    if ( thisLayer.px < radius )
+        thisLayer.dx = 1;
+    else if ( thisLayer.px > thisComp.width - radius )
+        thisLayer.dx = -1;
+    if ( thisLayer.py < radius )
+        thisLayer.dy = 1;
+    else if ( thisLayer.py > thisComp.height - radius )
+        thisLayer.dy = -1;
+
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+```html
+<div id="level9_parent">
+    <div id="level9_interactive"></div>
+    <div id="level9_not_interactive"></div>
+</div>
+```
+```css
+#level9_parent {
+    display: flex;
+}
+#level9_interactive, #level9_not_interactive {
+    border: 1px solid #ccc;
+    width: 50%;
+    box-sizing: border-box;
+}
+```
+```js
+var options = {
+    container: document.getElementById("level9_not_interactive"),
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+var player = new LottieInteractionPlayer(document.getElementById("level9_interactive"));
+player.load(json, false);
 ```
 </script_playground>
 

@@ -1083,7 +1083,7 @@ class ScriptPlayground(Preprocessor):
                             etree.SubElement(li, "a", {"href": "#" + tab_id}).text = "Result"
                             div.attrib = {"id": tab_id, "class": "tab-pane fade in active"}
 
-                    html = etree.tostring(element, "unicode")
+                    html = etree.tostring(element, "unicode", method="html")
 
                     script = ""
                     if "json" in data:
