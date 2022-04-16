@@ -1271,9 +1271,264 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 </script_playground>
 
 
-## Level 7: Writing a Small Wrapper
+## Level 7: Sound Effects
 
-Follows a JavaScript class that sets everything up in a self-contained object.
+Lottie web supports playing audio layers with the help of [Howler](https://howlerjs.com/).
+
+By default the level of control you get with sound is rather limited but
+we can find a way around it.
+
+The issue is audio layers don't have a scriptable property that controls
+playback which means we can't attach an expression to audio layers.
+
+The trick is to wrap an audio layer into a precomp and to use an expression
+on its time remapping property.
+
+We can then control playback as follows:
+
+```js
+if ( thisLayer.last_time === undefined )
+{
+    thisLayer.last_time = time;
+    // This variable wil control whether the sound is played
+    thisLayer.sound_play = 0;
+    // This should be the time in seconds you want the sound to play for
+    // To get the best results, it should be just short of the duration
+    // of the audio file
+    thisLayer.sound_duration = 1;
+
+}
+// Usual time management stuff
+if ( time < thisLayer.last_time )
+    thisLayer.last_time = time;
+var dt = time - thisLayer.last_time;
+thisLayer.last_time = time;
+
+// Default to not playing
+var $bm_rt = 0;
+
+if ( thisLayer.sound_play > 0 )
+{
+    $bm_rt = thisLayer.sound_duration - thisLayer.sound_play;
+    thisLayer.sound_play -= dt;
+}
+```
+
+In the example that follows you can click on the lottie to make it play a sound.
+
+The precomp also has a green cicle that shows playback progress.
+
+<script_playground>
+```json
+{
+    "v": "5.5.2",
+    "fr": 60,
+    "ip": 0,
+    "op": 180,
+    "w": 512,
+    "h": 512,
+    "ddd": 0,
+    "events": {
+        "click": "thisComp('sound_control').sound_play = thisComp('sound_control').sound_duration"
+    },
+    "assets": [
+        {
+            "id": "sound",
+            "u": "/lottie-docs/examples/",
+            "p": "sound.mp3",
+            "e": 0
+        },
+        {
+            "id": "precomp",
+            "layers": [
+                {
+                    "nm": "a",
+                    "ty": 4,
+                    "ip": 0,
+                    "op": 180,
+                    "st": 0,
+                    "ks": {},
+                    "shapes": [
+                        {
+                            "ty": "el",
+                            "p": {"a": 1, "k": [
+                                {
+                                    "t": 0,
+                                    "s": [0, 256],
+                                    "i": {"x": 0, "y": 0},
+                                    "o": {"x": 1, "y": 1},
+                                },
+                                {
+                                    "t": 60,
+                                    "s": [512, 256],
+                                }
+                            ]},
+                            "s": {"a": 0, "k": [100, 100]},
+                        },
+                        {
+                            "ty": "fl",
+                            "c": {"a": 0, "k": [0, 1, 0]},
+                            "o": {"a": 0, "k": 100},
+                        }
+                    ]
+                },
+                {
+                    "ty": 6,
+                    "ip": 1,
+                    "op": 60,
+                    "st": 1,
+                    "refId": "sound",
+                    "au": {
+                        "lv": {"a": 0, "k": [100, 100]}
+                    }
+                }
+            ]
+        }
+    ],
+    "markers": [],
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {
+                        "a": 1,
+                        "k": [
+                            {
+                                "t": 0,
+                                "s": [0],
+                                "i": {"x": 0, "y": 0},
+                                "o": {"x": 1, "y": 1}
+                            },
+                            {
+                                "t": 180,
+                                "s": [360]
+                            }
+                        ]
+                    },
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 1],
+                        "x": `
+var amount = thisComp('sound_control').sound_play ?? 0;
+var $bm_rt = [amount, 0, 0];
+`,
+                    }
+                }
+            ]
+        },
+        {
+            "nm": "sound_control",
+            "ty": 0,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "ks": {},
+            "refId": "precomp",
+            "w": 512,
+            "h": 512,
+            "tm": {
+                "a": 1,
+                "k": [{
+                        "t": 0,
+                        "s": [0],
+                        "i": {"x": 0, "y": 0},
+                        "o": {"x": 1, "y": 1}
+                    },
+                    {
+                        "t": 180,
+                        "s": [0]
+                    }
+                ],
+                "x": `
+if ( thisLayer.last_time === undefined )
+{
+    thisLayer.last_time = time;
+    // This variable wil control whether the sound is played
+    thisLayer.sound_play = 0;
+    // This should be the time in seconds you want the sound to play for
+    thisLayer.sound_duration = 1;
+
+}
+// Usual time management stuff
+if ( time < thisLayer.last_time )
+    thisLayer.last_time = time;
+var dt = time - thisLayer.last_time;
+thisLayer.last_time = time;
+
+// Default to not playing
+var $bm_rt = 100;
+
+if ( thisLayer.sound_play > 0 )
+{
+    $bm_rt = thisLayer.sound_duration - thisLayer.sound_play;
+    thisLayer.sound_play -= dt;
+}`
+            }
+        }
+    ]
+}
+
+```
+```html
+<div id="level7"></div>
+```
+```js
+var container = document.getElementById("level7");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev => event_handler(ev, expression_function));
+}
+```
+</script_playground>
+
+
+## Interlude: Writing a Small Wrapper
+
+Follows a JavaScript class that sets everything up in a self-contained object,
+it makes the code in the following sections a bit easier to follow.
 
 ```js
 class LottieInteractionPlayer
