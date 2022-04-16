@@ -1951,8 +1951,6 @@ Note that `anim.setupAnimation` is available from lottie-web version
 5.8.0. If you have earlier versions, you should call `anim.configAnimation`
 instead.
 
-## Final Thoughts
-
 
 ### Resulting Wrapper
 
@@ -2255,16 +2253,16 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="animation_interaction_parent">
-    <div id="lottie_not_interactive"></div>
-    <div id="lottie_interactive"></div>
+<div id="level9_parent">
+    <div id="level9_not_interactive"></div>
+    <div id="level9_interactive"></div>
 </div>
 ```
 ```css
-#animation_interaction_parent {
+#level9_parent {
     display: flex;
 }
-#lottie_interactive, #lottie_not_interactive {
+#level9_interactive, #level9_not_interactive {
     border: 1px solid #ccc;
     width: 50%;
     box-sizing: border-box;
@@ -2272,7 +2270,7 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 ```
 ```js
 var options = {
-    container: document.getElementById("lottie_not_interactive"),
+    container: document.getElementById("level9_not_interactive"),
     renderer: "svg",
     loop: true,
     autoplay: true,
@@ -2280,7 +2278,7 @@ var options = {
 };
 var anim = bodymovin.loadAnimation(options);
 
-var player = new LottieInteractionPlayer(document.getElementById("lottie_interactive"));
+var player = new LottieInteractionPlayer(document.getElementById("level9_interactive"));
 player.load(json, false);
 ```
 </script_playground>
@@ -2392,12 +2390,12 @@ some CSS that gets rid of pointer events for layers we don't want to click.
 }
 ```
 ```js
-var container = document.getElementById("final_example");
+var container = document.getElementById("level9_button");
 var player = new LottieInteractionPlayer(container);
 player.load(json);
 ```
 ```html
-<div id="final_example"></div>
+<div id="level9_button"></div>
 ```
 ```css
 .no-mouse {
