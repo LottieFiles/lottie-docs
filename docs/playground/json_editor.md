@@ -1,6 +1,5 @@
 disable_toc: 1
 
-
 <div class="alpha_checkered" id="lottie_target" style="width:512px;height:512px">
 </div>
 
@@ -37,7 +36,6 @@ var lottie_player = new PlaygroundPlayer(
                 "fonts": {
                     "list": []
                 },
-                "chars": [],
                 "markers": [],
                 "layers": []
             };
@@ -48,7 +46,14 @@ var lottie_player = new PlaygroundPlayer(
         {
             try {
                 this.lottie = JSON.parse(data["json"]);
-            } catch(e) {}
+            } catch(e) {
+                console.log(e);
+                try {
+                    this.lottie = Function("return " + data["json"])();
+                } catch(e) {
+                    console.log(e);
+                }
+            }
         }
     }
 );
