@@ -969,7 +969,11 @@ class SchemaObject
                 if ( item.validation.key.show_warning )
                     formatter.warn_invalid(item.validation.key);
                 formatter.write(": ");
-                item.explain(formatter);
+
+                if ( name == "x" && typeof item.json_value == "string" && item.json_value != "" )
+                    formatter.expression(item.json_value);
+                else
+                    item.explain(formatter);
             }
             else
             {
@@ -1242,6 +1246,14 @@ class JsonFormatter
         {
             box.add("p", "This value doesn't match the schema.");
         }
+    }
+
+    expression(src)
+    {
+        var code = document.createElement("code");
+        code.setAttribute("class", "hljs explain-expression");
+        code.innerHTML = hljs.highlight("javascript", src).value;
+        this.parent.appendChild(code);
     }
 }
 

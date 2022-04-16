@@ -90,6 +90,12 @@ summary {
     flex-flow: column;
 }
 
+.explain-expression {
+    display: inline-block;
+    vertical-align: text-top;
+    border: 1px solid #ccc;
+}
+
 </style>
 <script src="../../scripts/lottie_explain.js"></script>
 <ul class="nav nav-pills">

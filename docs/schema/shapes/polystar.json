@@ -50,7 +50,11 @@
         },
         {
             "if": {
-                "properties": { "sy": 1 }
+                "properties": {
+                    "sy": {
+                        "const": 1
+                    }
+                }
             },
             "then": {
                 "properties": {
