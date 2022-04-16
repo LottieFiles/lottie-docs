@@ -834,7 +834,7 @@ class SchemaObject
     {
         if ( !this.validation )
         {
-            formatter.encode_item(this.json_value, "deletion");
+            formatter.format_unknown(this.json_value);
         }
         else if ( this.is_array )
         {
@@ -864,7 +864,7 @@ class SchemaObject
         }
         else
         {
-            formatter.encode_item(this.json_value, "deletion");
+            formatter.format_unknown(this.json_value);
             formatter.write(" ");
             formatter.warn_invalid(this.validation);
         }
@@ -899,7 +899,7 @@ class SchemaObject
             this.validation.info_box(this.json_value, formatter, false);
             container = formatter.collapser();
         }
-        else if ( this.json_value.map(x => typeof x == "object").reduce((a, b) => a || b) )
+        else if ( formatter.should_collapse(this.json_value) )
         {
             container = formatter.collapser();
         }
@@ -907,28 +907,7 @@ class SchemaObject
         if ( this.validation.show_warning )
             formatter.warn_invalid(this.validation);
 
-        var space = "\n";
-        if ( !container )
-            space = " ";
-
-        if ( space == "\n" )
-            formatter.write(space);
-
-        for ( var i = 0; i < this.items.length; i++ )
-        {
-            if ( space == "\n" )
-                formatter.write_indent();
-
-            this.items[i].explain(formatter);
-
-            if ( i != this.items.length -1 )
-                formatter.write("," + space);
-            else if ( space == "\n" )
-                formatter.write(space);
-        }
-
-        if ( space == "\n" )
-            formatter.write_indent(-1);
+        formatter.format_array_contents(this.items, !container, item => item.explain(formatter));
 
         if ( container )
             formatter.set_container(container);
@@ -984,7 +963,7 @@ class SchemaObject
                     "Unknown Property"
                 );
                 formatter.write(": ");
-                formatter.encode_item(item.json_value, "deletion");
+                formatter.format_unknown(item.json_value);
             }
 
             if ( i != this.properties.length -1 )
@@ -1136,6 +1115,91 @@ class JsonFormatter
         if ( json_object === null || json_object === true || json_object === false )
             return "literal";
         return typeof json_object;
+    }
+
+    format_unknown(json_value)
+    {
+        var span = document.createElement("span");
+        span.classList.add("hljs-deletion");
+        this.parent.appendChild(span);
+        var old = this.set_container(span);
+        this.format_value(json_value);
+        this.set_container(old);
+    }
+
+    format_value(json_value)
+    {
+        if ( Array.isArray(json_value) )
+        {
+            var container = null;
+            this.open("[");
+            if ( this.should_collapse(json_value) )
+                container = this.collapser();
+
+            this.format_array_contents(json_value, !container, this.format_value.bind(this));
+
+            if ( container )
+                this.set_container(container);
+            this.close("]");
+        }
+        else if ( typeof json_value == "object" )
+        {
+            var container = null;
+            this.open("{");
+            if ( this.should_collapse(json_value) )
+                container = this.collapser();
+
+            this.format_array_contents(Object.entries(json_value), !container, (entry => {
+                this.format_value(entry[0]);
+                this.write(": ");
+                this.format_value(entry[1]);
+            }).bind(this));
+
+            if ( container )
+                this.set_container(container);
+            this.close("}");
+        }
+        else
+        {
+            this.encode_item(json_value);
+        }
+    }
+
+    format_array_contents(array, inline, callback)
+    {
+        var space = "\n";
+        if ( inline )
+            space = " ";
+
+        if ( !inline )
+            this.write(space);
+
+        for ( var i = 0; i < array.length; i++ )
+        {
+            if ( !inline )
+                this.write_indent();
+
+            callback(array[i]);
+
+            if ( i != array.length -1 )
+                this.write("," + space);
+            else if ( !inline )
+                this.write(space);
+        }
+
+        if ( !inline )
+            this.write_indent(-1);
+    }
+
+    should_collapse(json_value)
+    {
+        if ( Array.isArray(json_value) )
+            return json_value.length > 0 && json_value.map(x => typeof x == "object").reduce((a, b) => a || b);
+
+        if ( typeof json_value == "object" )
+            return Object.keys(json_value).length > 0;
+
+        return false;
     }
 
     encode_item(json_object, hljs_type=null)
