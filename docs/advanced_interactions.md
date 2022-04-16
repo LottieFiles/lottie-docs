@@ -523,200 +523,8 @@ var anim = bodymovin.loadAnimation(options);
 ```
 </script_playground>
 
-## Level 5: Accessing Expression Objects from the Browser
 
-Remember the `anim` object we get from lottie-web?
-It's the key for more advanced interactions.
-
-Internally it stores its lottie structure and the objects being passed
-to expression as `thisComp` and `thisLayer`. Being able to access these
-objects allows us to pass data directly to the lottie expressions.
-
-The object corresponding to `thisComp` can be accessed as
-`anim.renderer.compInterface`, and from there you can get the layers
-by name or index (see the [Composition](expressions.md#composition) expression object).
-
-
-In the example below the rotation direction and color of the star change
-based on whether the mouse is over the element containing the lottie.
-
-```js
-// Time management as before
-if ( time == 0 )
-{
-    thisLayer.angle = 0;
-    thisLayer.prev_time = 0;
-}
-if ( time < thisLayer.prev_time )
-    thisLayer.prev_time = time;
-var dt = time - thisLayer.prev_time;
-thisLayer.prev_time = time;
-
-var direction = thisComp.counter_clockwise ? -1 : 1;
-thisLayer.angle += dt * direction * 60;
-var $bm_rt = thisLayer.angle;
-```
-
-<script_playground>
-```json
-{
-    "v": "5.9.1",
-    "ip": 0,
-    "op": 360,
-    "fr": 60,
-    "w": 512,
-    "h": 512,
-    "layers": [
-        {
-            "ty": 4,
-            "ip": 0,
-            "op": 360,
-            "st": 0,
-            "ks": {},
-            "shapes": [
-                {
-                    "ty": "sr",
-                    "p": {"a": 0, "k": [256, 256]},
-                    "or": {"a": 0, "k": 200},
-                    "ir": {"a": 0, "k": 100},
-                    "r": {"a": 0, "k": 0, "x": `
-// Time management as before
-if ( time == 0 )
-{
-    thisLayer.angle = 0;
-    thisLayer.prev_time = 0;
-}
-if ( time < thisLayer.prev_time )
-    thisLayer.prev_time = time;
-var dt = time - thisLayer.prev_time;
-thisLayer.prev_time = time;
-
-var direction = thisComp.mouse_is_over ? -1 : 1;
-thisLayer.angle += dt * direction * 60;
-var $bm_rt = thisLayer.angle;
-                    `},
-                    "pt": {"a": 0, "k": 5},
-                    "sy": 1,
-                    "os": {"a": 0, "k": 0},
-                    "is": {"a": 0, "k": 0}
-                },
-                {
-                    "ty": "st",
-                    "o": {"a": 0, "k": 100},
-                    "c": {
-                        "a": 0,
-                        "k": [1, 1, 0.3],
-                        "x": "var $bm_rt = thisComp.mouse_is_over ? [0.196, 0.314, 0.69] : value;"
-                    },
-                    "lc": 2,
-                    "lj": 2,
-                    "ml": 0,
-                    "w": {"a": 0, "k": 30}
-                }
-            ]
-        }
-    ]
-}
-```
-```html
-<div id="level5"></div>
-```
-```js
-var container = document.getElementById("level5");
-var options = {
-    container: container,
-    renderer: "svg",
-    loop: true,
-    autoplay: true,
-    animationData: json,
-};
-var anim = bodymovin.loadAnimation(options);
-
-container.addEventListener("mouseenter", () => {
-    anim.renderer.compInterface.mouse_is_over = true;
-});
-container.addEventListener("mouseleave", () => {
-    anim.renderer.compInterface.mouse_is_over = false;
-});
-```
-</script_playground>
-
-## Level 6: Executing Expressions on DOM Events
-
-So far the interaction logic has been done by JavaScript on the browser.
-
-In this section we'll add all the logic in the JSON itself and write a
-wrapper script that sets up the animation.
-
-This allows you to have self-contained lotties you can embed in a web
-page that will handle events on their own.
-
-### Lottie JSON Extension
-
-First thing is to write the expressions in the Lottie itself.
-
-Since Lottie is just a JSON file, it's easy to add custom values:
-
-```json
-{
-    "v": "5.9.1",
-    "ip": 0,
-    "op": 60,
-    "fr": 60,
-    "w": 512,
-    "h": 512,
-    "events": {
-        "click": "/*event handler code*/"
-    }
-}
-```
-
-Now we need to add some JavaScript so we can listen to the events
-fired by the DOM and execute expressions:
-
-```js
-for ( let [ev_type, expression] of Object.entries(json.events) )
-{
-    let expression_function = Function("event", expression);
-    container.addEventListener(ev_type, expression_function);
-}
-```
-
-### Preparing Globals
-
-While the above would work, we should expose some objects for it to be
-useful. The lottie player define a bunch of [objects](expressions.md#global-objects)
-and [functions](expressions/#misc-functions) for expressions, but we don't really
-need all of them since the even handlers only need to pass along the information
-that an event has occurred.
-
-We will define [thisComp](expressions.md#thiscomp) and [time](expressions.md#time)
-to be the same as the globals of the same name you'd expect to find an expressions,
-and pass them to the event handling function:
-
-
-```js
-
-function event_handler(ev, expression_function)
-{
-    var thisComp = anim.renderer.compInterface;
-    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
-
-    expression_function(ev, thisComp, time);
-}
-
-for ( let [ev_type, expression] of Object.entries(json.events) )
-{
-    let expression_function = Function("event", "thisComp", "time", expression);
-    container.addEventListener(ev_type, ev => event_handler(ev, expression_function));
-}
-```
-
-After this step, you're all set to hanle DOM events automatically from a lottie.
-The next couple steps add some polish to the event interface for a smoother experience.
-
-
-### Breaking Time
+## Level 5: Breaking Time
 
 In the previous examples, we had a condition at the start of some expressions
 initializing custom attributes when `time` is equal to 0.
@@ -853,11 +661,11 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="level6_time"></div>
+<div id="level5"></div>
 ```
 ```js
 var options = {
-    container: document.getElementById("level6_time"),
+    container: document.getElementById("level5"),
     renderer: "svg",
     loop: true,
     autoplay: true,
@@ -866,6 +674,199 @@ var options = {
 var anim = bodymovin.loadAnimation(options);
 ```
 </script_playground>
+
+## Level 6: Injecting Data
+
+Remember the `anim` object we get from lottie-web?
+It's the key for more advanced interactions.
+
+Internally it stores its lottie structure and the objects being passed
+to expression as `thisComp` and `thisLayer`. Being able to access these
+objects allows us to pass data directly to the lottie expressions.
+
+The object corresponding to `thisComp` can be accessed as
+`anim.renderer.compInterface`, and from there you can get the layers
+by name or index (see the [Composition](expressions.md#composition) expression object).
+
+
+In the example below the rotation direction and color of the star change
+based on whether the mouse is over the element containing the lottie.
+
+```js
+// Time management as before
+if ( time == 0 )
+{
+    thisLayer.angle = 0;
+    thisLayer.prev_time = 0;
+}
+if ( time < thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+var direction = thisComp.counter_clockwise ? -1 : 1;
+thisLayer.angle += dt * direction * 60;
+var $bm_rt = thisLayer.angle;
+```
+
+<script_playground>
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 0, "k": 0, "x": `
+// Time management as before
+if ( thisLayer.prev_time === undefined )
+{
+    thisLayer.angle = 0;
+    thisLayer.prev_time = 0;
+}
+if ( time < thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+var direction = thisComp.mouse_is_over ? -1 : 1;
+thisLayer.angle += dt * direction * 60;
+var $bm_rt = thisLayer.angle;
+                    `},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                        "x": "var $bm_rt = thisComp.mouse_is_over ? [0.196, 0.314, 0.69] : value;"
+                    },
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+```
+```html
+<div id="level6"></div>
+```
+```js
+var container = document.getElementById("level6");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+container.addEventListener("mouseenter", () => {
+    anim.renderer.compInterface.mouse_is_over = true;
+});
+container.addEventListener("mouseleave", () => {
+    anim.renderer.compInterface.mouse_is_over = false;
+});
+```
+</script_playground>
+
+## Level 7: Automatic Event Handlers
+
+So far the interaction logic has been done by JavaScript on the browser.
+
+In this section we'll add all the logic in the JSON itself and write a
+wrapper script that sets up the animation.
+
+This allows you to have self-contained lotties you can embed in a web
+page that will handle events on their own.
+
+### Lottie JSON Extension
+
+First thing is to write the expressions in the Lottie itself.
+
+Since Lottie is just a JSON file, it's easy to add custom values:
+
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "click": "/*event handler code*/"
+    }
+}
+```
+
+Now we need to add some JavaScript so we can listen to the events
+fired by the DOM and execute expressions:
+
+```js
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", expression);
+    container.addEventListener(ev_type, expression_function);
+}
+```
+
+### Preparing Globals
+
+While the above would work, we should expose some objects for it to be
+useful. The lottie player define a bunch of [objects](expressions.md#global-objects)
+and [functions](expressions/#misc-functions) for expressions, but we don't really
+need all of them since the even handlers only need to pass along the information
+that an event has occurred.
+
+We will define [thisComp](expressions.md#thiscomp) and [time](expressions.md#time)
+to be the same as the globals of the same name you'd expect to find an expressions,
+and pass them to the event handling function:
+
+
+```js
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev => event_handler(ev, expression_function));
+}
+```
+
+After this step, you're all set to hanle DOM events automatically from a lottie.
+The next couple steps add some polish to the event interface for a smoother experience.
+
 
 ### Mouse Events
 
@@ -982,10 +983,10 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="level6_mouse" tabindex="0"></div>
+<div id="level7_mouse"></div>
 ```
 ```js
-var container = document.getElementById("level6_mouse");
+var container = document.getElementById("level7_mouse");
 var options = {
     container: container,
     renderer: "svg",
@@ -1026,7 +1027,7 @@ element containing the lottie is focusable.
 You can do this by setting the `tabindex` attribute in HTML or with JavaScript.
 
 ```html
-<div id="level6_keyboard" tabindex="0"></div>
+<div id="level7_keyboard" tabindex="0"></div>
 ```
 
 or
@@ -1234,10 +1235,10 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="level6_keyboard" tabindex="0"></div>
+<div id="level7_keyboard" tabindex="0"></div>
 ```
 ```js
-var container = document.getElementById("level6_keyboard");
+var container = document.getElementById("level7_keyboard");
 var options = {
     container: container,
     renderer: "svg",
@@ -1271,7 +1272,7 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 </script_playground>
 
 
-## Level 7: Sound Effects
+## Level 8: Sound Effects
 
 Lottie web supports playing audio layers with the help of [Howler](https://howlerjs.com/).
 
@@ -1488,10 +1489,10 @@ if ( thisLayer.sound_play > 0 )
 
 ```
 ```html
-<div id="level7"></div>
+<div id="level8"></div>
 ```
 ```js
-var container = document.getElementById("level7");
+var container = document.getElementById("level8");
 var options = {
     container: container,
     renderer: "svg",
@@ -1527,8 +1528,8 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 
 ## Interlude: Writing a Small Wrapper
 
-Follows a JavaScript class that sets everything up in a self-contained object,
-it makes the code in the following sections a bit easier to follow.
+Follows a JavaScript class that sets everything we've seen until now
+in a self-contained object.
 
 ```js
 class LottieInteractionPlayer
@@ -1663,7 +1664,7 @@ class LottieInteractionPlayer
 }
 ```
 
-## Level 8: Patching the Renderer
+## Level 9: Patching the Renderer
 
 So far we've used the vanilla lottie-web player without modifications.
 
@@ -1671,7 +1672,7 @@ This is good for the interactions described until now but for more
 advanced stuff we need to patch the player.
 
 The code in this level assumes you have a wrapper class similar to the one
-described in Level 7.
+described in the interlude.
 
 ### Why
 
@@ -1950,7 +1951,10 @@ Note that `anim.setupAnimation` is available from lottie-web version
 5.8.0. If you have earlier versions, you should call `anim.configAnimation`
 instead.
 
-## Level 9: Resulting Wrapper
+## Final Thoughts
+
+
+### Resulting Wrapper
 
 Here's the same wrapper class as described earlier, but with patching
 code applied to support the `load` event and layer events.
@@ -2159,7 +2163,7 @@ class LottieInteractionPlayer
 It's possible to use the custom `load` to detect whether the lottie
 is being played in an environment that supports the custom events.
 
-The following example is similar to the click example from level 6
+The following example is similar to the click example from level 7
 but when a player doesn't have interaction support, the star moves
 around on its own.
 
@@ -2251,16 +2255,16 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 }
 ```
 ```html
-<div id="level9_parent">
-    <div id="level9_interactive"></div>
-    <div id="level9_not_interactive"></div>
+<div id="animation_interaction_parent">
+    <div id="lottie_not_interactive"></div>
+    <div id="lottie_interactive"></div>
 </div>
 ```
 ```css
-#level9_parent {
+#animation_interaction_parent {
     display: flex;
 }
-#level9_interactive, #level9_not_interactive {
+#lottie_interactive, #lottie_not_interactive {
     border: 1px solid #ccc;
     width: 50%;
     box-sizing: border-box;
@@ -2268,7 +2272,7 @@ var $bm_rt = [thisLayer.px, thisLayer.py];
 ```
 ```js
 var options = {
-    container: document.getElementById("level9_not_interactive"),
+    container: document.getElementById("lottie_not_interactive"),
     renderer: "svg",
     loop: true,
     autoplay: true,
@@ -2276,7 +2280,7 @@ var options = {
 };
 var anim = bodymovin.loadAnimation(options);
 
-var player = new LottieInteractionPlayer(document.getElementById("level9_interactive"));
+var player = new LottieInteractionPlayer(document.getElementById("lottie_interactive"));
 player.load(json, false);
 ```
 </script_playground>
@@ -2349,7 +2353,7 @@ some CSS that gets rid of pointer events for layers we don't want to click.
             "op": 60,
             "st": 0,
             "ind": 1,
-            "cl": "lottie_level_9",
+            "cl": "lottie-button",
             "events": {
                 "load": "thisLayer.clicks = 0;",
                 "click": "thisLayer.clicks += 1;",
@@ -2399,7 +2403,7 @@ player.load(json);
 .no-mouse {
     pointer-events: none;
 }
-.lottie_level_9 {
+.lottie-button {
     cursor: pointer;
 }
 ```
