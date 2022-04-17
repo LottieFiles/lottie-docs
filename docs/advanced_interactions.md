@@ -1952,6 +1952,37 @@ Note that `anim.setupAnimation` is available from lottie-web version
 instead.
 
 
+### Triggering new events
+
+We know how to make the lottie react to DOM events, but what if we want
+to make the DOM react to events triggered from the lottie?
+
+We can use the patching setup just discussed to also add events on the
+other direction, the only thing we need is adding a method to `thisComp`,
+so it's invokable from the expressions and make it trigger DOM events.
+
+The trick is to patch `thisComp` in the right place, fortunately we've
+already done the bulk of the work so we just need to add some more code
+when the animation has been loaded:
+
+```javascript
+    _lottie_load_event()
+    {
+        let ev = new Event("load", {});
+        this.container.dispatchEvent(ev);
+        for ( let layer of this.layer_elements )
+            layer.dispatchEvent(ev);
+
+        // We add a method for triggering events from the lottie
+        this.thisComp.trigger_event = (function(type, detail){
+            this.container.dispatchEvent(new CustomEvent("lottie." + type, {detail}));
+        }).bind(this);
+    }
+```
+
+Then you can add event listeners to the element containing the lottie animation.
+
+
 ### Resulting Wrapper
 
 Here's the same wrapper class as described earlier, but with patching
@@ -2085,6 +2116,11 @@ class LottieInteractionPlayer
         this.container.dispatchEvent(ev);
         for ( let layer of this.layer_elements )
             layer.dispatchEvent(ev);
+
+        // We add a method for triggering events from the lottie
+        this.thisComp.trigger_event = (function(type, detail){
+            this.container.dispatchEvent(new CustomEvent("lottie." + type, {detail}));
+        }).bind(this);
     }
 
     // Destroy the animation
@@ -2354,7 +2390,7 @@ some CSS that gets rid of pointer events for layers we don't want to click.
             "cl": "lottie-button",
             "events": {
                 "load": "thisLayer.clicks = 0;",
-                "click": "thisLayer.clicks += 1;",
+                "click": "thisLayer.clicks += 1; thisComp.trigger_event('click', {clicks: thisLayer.clicks});",
                 "mouseenter": "thisLayer.highlighted = true;",
                 "mouseleave": "thisLayer.highlighted = false;"
             },
@@ -2393,9 +2429,13 @@ some CSS that gets rid of pointer events for layers we don't want to click.
 var container = document.getElementById("level9_button");
 var player = new LottieInteractionPlayer(container);
 player.load(json);
+container.addEventListener("lottie.click", ev =>
+    document.getElementById("level9_outer").innerText = `Lottie clicked ${ev.detail.clicks} times`
+);
 ```
 ```html
 <div id="level9_button"></div>
+<div id="level9_outer">Button not clicked</div>
 ```
 ```css
 .no-mouse {
