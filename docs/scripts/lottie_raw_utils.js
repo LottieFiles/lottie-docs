@@ -11,6 +11,8 @@ class LottiePlayer
 
         this.anim = null;
 
+        this.load_ok = true;
+
         this.custom_options = custom_options;
 
         if ( auto_load )
@@ -39,7 +41,8 @@ class LottiePlayer
         if ( this.anim != null )
             this.clear();
 
-        this.anim = bodymovin.loadAnimation(options);
+        if ( this.load_ok )
+            this.anim = bodymovin.loadAnimation(options);
     }
 
     play()

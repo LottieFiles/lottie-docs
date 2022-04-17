@@ -146,3 +146,11 @@
     background: none;
 }
 
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+details {
+    margin: 0.5em 0;
+}
