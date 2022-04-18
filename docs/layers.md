@@ -21,7 +21,7 @@ There are several layer types, which is specified by the `ty` attribute:
 |`12`|Adjustment                        |                                                                                               |
 |`13`|[Camera](#camera-layer)           |3D Camera                                                                                      |
 |`14`|Light                             |                                                                                               |
-|`15`|Footage                           |                                                                                               |
+|`15`|Data                              |                                                                                               |
 
 Each layer type has its own properties but there are several common properties:
 
@@ -236,8 +236,7 @@ lottie.layers[1].ks.ry.k = data["ry"];
 lottie.layers[1].ks.rz.k = data["rz"];
 </script>
 
-
-## Camera Layer
+### Camera Layer
 
 Camera for 3D layers.
 
@@ -271,4 +270,35 @@ lottie.layers[index].ks.rx.k = data["rx"];
 lottie.layers[index].ks.ry.k = data["ry"];
 lottie.layers[index].ks.rz.k = data["rz"];
 lottie.layers[index].pe.k = data["Perspective"];
+</script>
+
+### 3D Parenting
+
+As with 2D layers, you can parent 3D layers.
+
+{lottie_playground:3d_parenting.json:512:512:{renderer: "html"}}
+Position:
+X:<input type="range" min="-512" max="512" value="0" name="px"/>
+Y:<input type="range" min="-512" max="512" value="0" name="py"/>
+Z:<input type="range" min="-512" max="512" value="-10" name="pz"/>
+Rotation:
+X:<input type="range" min="-180" max="180" value="0" name="rx"/>
+Y:<input type="range" min="-180" max="180" value="0" name="ry"/>
+Z:<input type="range" min="-180" max="180" value="0" name="rz"/>
+Orientation:
+X:<input type="range" min="-180" max="180" value="0" name="orx"/>
+Y:<input type="range" min="-180" max="180" value="0" name="ory"/>
+Z:<input type="range" min="-180" max="180" value="0" name="orz"/>
+<json>lottie.layers[1]</json>
+<script>
+var index = 1;
+lottie.layers[index].ks.p.k = [
+    data["px"], data["py"], data["pz"]
+];
+lottie.layers[index].ks.or.k = [
+    data["orx"], data["ory"], data["orz"]
+];
+lottie.layers[index].ks.rx.k = data["rx"];
+lottie.layers[index].ks.ry.k = data["ry"];
+lottie.layers[index].ks.rz.k = data["rz"];
 </script>

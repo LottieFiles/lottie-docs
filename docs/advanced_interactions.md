@@ -1752,7 +1752,7 @@ frame has been renderer (and expressions have been evaluated at least once).
 #### DOM Events from Layers
 
 Until now the event handling has been done on the container element.
-Since all the layers result in SVG `<g>` elements, it would be nice to
+Since all the layers result in DOM elements, it would be nice to
 be able to listen to events from those elements and handle them based
 on expressions defined on each layer.
 
@@ -2443,6 +2443,458 @@ container.addEventListener("lottie.click", ev =>
 }
 .lottie-button {
     cursor: pointer;
+}
+```
+</script_playground>
+
+
+### 3D
+
+Everything discussed so far was for the lottie-web `svg` renderer
+but all the patching works with the `html` renderer as well.
+
+The `html` renderer supports 3D layers so we can make an interactive
+3D scene with little effort.
+
+The main caveat is that you need to set `position: relative` on the
+container element.
+
+On the example below you can click to capture the mouse then have
+first-person controls.
+
+<script_playground>
+```json
+{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 180,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "fonts": {
+        "list": []
+    },
+    "assets": [],
+    "layers": [
+        {
+            "nm": "Camera",
+            "ty": 13,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        -10
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "pe": {
+                "a": 0,
+                "k": 256
+            },
+            "ddd": 1
+        },
+        {
+            "nm": "Move Parent",
+            "ty": 3,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "a": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "x": "var dt = thisComp.time_delta(thisLayer, time);\n\n            if ( thisComp.mouse_dx )\n            {\n                thisComp.char_angle -= dt * thisComp.mouse_dx / 8 * Math.PI;\n                thisComp.mouse_dx  = 0;\n            }\n\n            if ( thisComp.mouse_dy )\n            {\n                thisComp.look_angle += dt * thisComp.mouse_dy / 8 * Math.PI;\n                thisComp.mouse_dy  = 0;\n            }\n\n\n            var left = thisComp.keys_pressed.ArrowLeft || thisComp.keys_pressed.a;\n            var right = thisComp.keys_pressed.ArrowRight || thisComp.keys_pressed.d;\n            var dx = 0;\n            if ( left && right )\n                dx = 0;\n            else if ( left )\n                dx = -1;\n            else if ( right )\n                dx = 1;\n\n            var up = thisComp.keys_pressed.ArrowUp || thisComp.keys_pressed.w;\n            var down = thisComp.keys_pressed.ArrowDown || thisComp.keys_pressed.s;\n            var dz = 0;\n            if ( up && down )\n                dz = 0;\n            else if ( up )\n                dz = 1;\n            else if ( down )\n                dz = -1;\n\n            thisLayer.char_x += dz * dt * -200 * Math.sin(thisComp.char_angle);\n            thisLayer.char_z += dz * dt * 200 * Math.cos(thisComp.char_angle);\n\n            thisLayer.char_x += dx * dt * -200 * Math.sin(thisComp.char_angle - Math.PI / 2);\n            thisLayer.char_z += dx * dt * 200 * Math.cos(thisComp.char_angle - Math.PI / 2);\n\n            var $bm_rt = [thisLayer.char_x, thisLayer.char_y, thisLayer.char_z];\n        \n/**/"
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "x": "var $bm_rt = [thisComp.look_angle * 180 / Math.PI, thisComp.char_angle * 180 / Math.PI, 0];\n        \n/**/"
+                }
+            },
+            "ind": 1,
+            "ddd": 1,
+            "events": {
+                "load": "thisLayer.char_x = 0;\n            thisLayer.char_z = 0;\n            thisLayer.char_y = 0;\n        \n/**/"
+            }
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        200
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0.5,
+                            0.5,
+                            1
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        -200
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0.5,
+                            0.5,
+                            0
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        200,
+                        0,
+                        0
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 90
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            1,
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        -200,
+                        0,
+                        0
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 90
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        }
+    ],
+    "events": {
+        "keydown": "thisComp.keys_pressed[event.key] = true;\n\n        if ( event.key != \"F5\" )\n            event.preventDefault();\n    \n/**/",
+        "keyup": "thisComp.keys_pressed[event.key] = false;\n\n        if ( event.key != \"F5\" )\n            event.preventDefault();\n    \n/**/",
+        "load": "thisComp.keys_pressed = {};\n        thisComp.mouse_dx = 0;\n        thisComp.mouse_dy = 0;\n        thisComp.char_angle = 0;\n        thisComp.look_angle = 0;\n        thisComp.time_delta = function (thisLayer, time) {\n            if ( thisLayer.last_time === undefined || time < thisLayer.last_time )\n            {\n                thisLayer.last_time = time;\n                return 0;\n            }\n\n            var dt = time - thisLayer.last_time;\n            thisLayer.last_time = time;\n            return dt;\n        };\n    \n/**/",
+        "mouseenter": "thisComp.mouse_old_x = thisComp.mouse_x = event.lottie_x;\n        thisComp.mouse_old_y = thisComp.mouse_y = event.lottie_x;\n    \n/**/",
+        "mouseleave": "thisComp.mouse_old_x = thisComp.mouse_x = event.lottie_x;\n        thisComp.mouse_old_y = thisComp.mouse_y = event.lottie_x;\n    \n/**/",
+        "mousemove": "thisComp.mouse_dx += event.movementX;\n        thisComp.mouse_dy += event.movementY;\n    \n/**/"
+    },
+    "ddd": 1
+}
+```
+```js
+var container = document.getElementById("level9_3d");
+var player = new LottieInteractionPlayer(container, {renderer: "html"});
+player.load(json);
+```
+```html
+<div id="level9_3d" onclick="this.requestPointerLock();"></div>
+```
+```css
+#level9_3d {
+    position: relative;
 }
 ```
 </script_playground>
