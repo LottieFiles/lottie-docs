@@ -70,9 +70,9 @@ class LottiePlayer
 
 class PlaygroundPlayer extends LottiePlayer
 {
-    constructor(id, container, lottie, update_func)
+    constructor(id, container, lottie, update_func, custom_options={})
     {
-        super(container, lottie, false);
+        super(container, lottie, false, custom_options);
         this.id = id;
         this.update_func = update_func.bind(this);
         this.json_viewer_contents = undefined;

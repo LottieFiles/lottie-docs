@@ -101,22 +101,26 @@ class LottieRenderer:
         script.text = AtomicString(script_src)
 
     @staticmethod
-    def render(*, parent: etree.Element = None, url=None, json_data=None, download_file=None, width=None, height=None):
+    def render(*, parent: etree.Element = None, url=None, json_data=None, download_file=None, width=None, height=None, extra_options="{}"):
         obj = LottieRenderer(parent=parent, download_file=download_file, width=width, height=height)
         if json_data is None:
             script_src = """
                 var lottie_player_{id} = new LottiePlayer(
                     'lottie_target_{id}',
-                    '{file}'
+                    '{file}',
+                    true,
+                    {extra_options}
                 );
-            """.format(id=obj.id, file=url)
+            """.format(id=obj.id, file=url, extra_options=extra_options)
         else:
             script_src = """
                 var lottie_player_{id} = new LottiePlayer(
                     'lottie_target_{id}',
-                    {json_data}
+                    {json_data},
+                    true,
+                    {extra_options}
                 );
-            """.format(id=obj.id, json_data=json.dumps(json_data))
+            """.format(id=obj.id, json_data=json.dumps(json_data), extra_options=extra_options)
 
         obj.populate_script(script_src)
         return (obj.element, obj.id)
@@ -130,7 +134,7 @@ def get_url(md, path):
 
 class LottieInlineProcessor(InlineProcessor):
     def __init__(self, md):
-        pattern = r'{lottie:([^:]+)(?::([0-9]+):([0-9]+))}'
+        pattern = r'{lottie:([^:]+)(?::([0-9]+):([0-9]+))?(?::(\{[^}]+\}))?}'
         super().__init__(pattern, md)
 
     def handleMatch(self, m, data):
@@ -143,7 +147,8 @@ class LottieInlineProcessor(InlineProcessor):
             url=lottie_url,
             download_file=download_file,
             width=m.group(2),
-            height=m.group(3)
+            height=m.group(3),
+            extra_options=m.group(4) or "{}",
         )[0]
 
         return element, m.start(0), m.end(0)
@@ -327,7 +332,7 @@ class SchemaAttribute(InlineProcessor):
 
 
 class LottiePlayground(BlockProcessor):
-    re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?\}')
+    re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?(?::(\{[^}]+\}))?\}')
     re_row = re.compile(r'^\s*(?:(?P<label>[^:]*)\s*:)?\s*(?P<html><(?P<tag>[-a-zA-Z_]+).*>)?')
 
     def __init__(self, parser, schema_data: Schema):
@@ -507,9 +512,15 @@ class LottiePlayground(BlockProcessor):
             function (lottie, data)
             {{
                 {source}
-            }}
+            }},
+            {extra_options}
         );
-        """.format(id=anim_id, source=script, json_data=json.dumps(json_data)))
+        """.format(
+            id=anim_id,
+            source=script,
+            json_data=json.dumps(json_data),
+            extra_options=match.group(4) or "{}"
+        ))
 
 
 @dataclasses.dataclass
