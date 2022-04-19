@@ -24,8 +24,8 @@
             "$ref": "#/$defs/constants/text-based"
         },
         "rn": {
-            "title": "Range Units",
-            "$ref": "#/$defs/animated-properties/value"
+            "title": "Randomize",
+            "$ref": "#/$defs/helpers/int-boolean"
         },
         "sh": {
             "title": "Shape",
@@ -36,8 +36,8 @@
             "$ref": "#/$defs/animated-properties/value"
         },
         "r": {
-            "title": "Randomize",
-            "$ref": "#/$defs/helpers/int-boolean"
+            "title": "Range Units",
+            "$ref": "#/$defs/animated-properties/value"
         },
         "sm": {
             "title": "Expression Selector",
