@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
     "title": "BlendMode",
-    "description": "",
+    "description": "Layer and shape blend mode",
     "oneOf": [
         {
             "title": "Normal",

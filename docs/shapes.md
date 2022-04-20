@@ -255,6 +255,7 @@ Defined as a sequence of alternating dashes and gaps.
 Red:<input type="range" min="0" max="1" step="0.01" value="1"/>
 Green:<input type="range" min="0" max="1" step="0.01" value="0.98"/>
 Blue:<input type="range" min="0" max="1" step="0.01" value="0.28"/>
+Width:<input type="range" min="0" max="100" value="32"/>
 Opacity:<input type="range" min="0" max="100" value="100"/>
 Line Cap:<enum value="2">line-cap</enum>
 Line Join:<enum value="2">line-join</enum>
@@ -267,6 +268,7 @@ Dash Gap:<input type="range" min="0" max="512" value="0"/>
 var shape = lottie.layers[0].shapes[2];
 shape.c.k = [data["Red"], data["Green"], data["Blue"]];
 shape.o.k = data["Opacity"];
+shape.w.k = data["Width"];
 shape.r = Number(data["Fill Rule"]);
 shape.lc = Number(data["Line Cap"]);
 shape.lj = Number(data["Line Join"]);

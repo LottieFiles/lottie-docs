@@ -167,11 +167,24 @@ param: rgb : array[3]|array[4] : RGB(A) color, with components in 0, 1
 return: array[3]|array[4] : HSL(A) color, with components in 0, 1
 
 ### hslToRgb()
+
 {function_docs}
 name: hslToRgb
 param: hsl : array[3]|array[4] : HSL(A) color, with components in 0, 1
 return: array[3]|array[4] : RGB(A) color, with components in 0, 1
 
+
+### createPath()
+
+{function_docs}
+name: createPath
+param: points : array : Array of points (each point is a list with 2 numbers)
+param: in_tangents : array : [] : Array of in tangents correponding to the point with the same index
+param: out_tangents : array : [] : Array of out tangents correponding to the point with the same index
+param: is_closed : boolean : true : Whether the path is closed
+return: Path
+
+Creates bezier path data
 
 
 ## Math functions
@@ -512,6 +525,22 @@ Composition object
 Position Expression:<highlight>
 var $bm_rt = [256, 256]
 var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.PI;
+$bm_rt[0] += Math.cos(rotation) * 200;
+$bm_rt[1] += Math.sin(rotation) * 200;
+</highlight>
+<json>lottie.layers[0].ks.p</json>
+<script>
+lottie.layers[0].ks.p.x = data["Position Expression"];
+</script>
+
+### As a function
+
+As a function a composition object can give you access to the layers by name or index
+
+{lottie_playground:image_animated.json:512:512}
+Position Expression:<highlight>
+var $bm_rt = [256, 256]
+var rotation = thisComp("Layer").transform.rotation / 180 * Math.PI;
 $bm_rt[0] += Math.cos(rotation) * 200;
 $bm_rt[1] += Math.sin(rotation) * 200;
 </highlight>

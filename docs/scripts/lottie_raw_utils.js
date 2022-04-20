@@ -1,6 +1,6 @@
 class LottiePlayer
 {
-    constructor(container, lottie, auto_load=true)
+    constructor(container, lottie, auto_load=true, custom_options={})
     {
         if ( typeof container == "string" )
             this.container = document.getElementById(container);
@@ -11,17 +11,23 @@ class LottiePlayer
 
         this.anim = null;
 
+        this.load_ok = true;
+
+        this.custom_options = custom_options;
+
         if ( auto_load )
             this.reload();
     }
 
-    reload()
+    reload(extra_options={})
     {
         var options = {
             container: this.container,
             renderer: 'svg',
             loop: true,
             autoplay: true,
+            ...this.custom_options,
+            ...extra_options,
         };
 
         this.on_reload();
@@ -30,16 +36,13 @@ class LottiePlayer
             options.path = this.lottie;
         else
             // parse/stringify because the player modifies the passed object
-            options.animationData = JSON.parse(JSON.stringify(this.lottie));
+            options.animationData = lottie_clone(this.lottie);
 
         if ( this.anim != null )
-        {
-            try {
-                this.anim.destroy();
-            } catch ( e ) {}
-        }
+            this.clear();
 
-        this.anim = bodymovin.loadAnimation(options);
+        if ( this.load_ok )
+            this.anim = bodymovin.loadAnimation(options);
     }
 
     play()
@@ -55,13 +58,21 @@ class LottiePlayer
     on_reload()
     {
     }
+
+    clear()
+    {
+        try {
+            this.anim.destroy();
+            this.anim = null;
+        } catch ( e ) {}
+    }
 }
 
 class PlaygroundPlayer extends LottiePlayer
 {
-    constructor(id, container, lottie, update_func)
+    constructor(id, container, lottie, update_func, custom_options={})
     {
-        super(container, lottie, false);
+        super(container, lottie, false, custom_options);
         this.id = id;
         this.update_func = update_func.bind(this);
         this.json_viewer_contents = undefined;
@@ -97,6 +108,13 @@ class PlaygroundPlayer extends LottiePlayer
         }
     }
 }
+
+
+function lottie_clone(json)
+{
+    return JSON.parse(JSON.stringify(json));
+}
+
 
 function syntax_edit_update(element, text)
 {

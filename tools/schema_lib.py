@@ -58,6 +58,9 @@ class Schema:
     def __contains__(self, item):
         return isinstance(self.schema, dict) and item in self.schema
 
+    def get(self, key, default=None):
+        return self.schema.get(key, default) if isinstance(self.schema, dict) else default
+
     @property
     def value(self):
         return self.schema
@@ -78,4 +81,3 @@ class Schema:
         path = SchemaPath(path)
         obj = path.walk(self)
         return Schema(obj, path)
-

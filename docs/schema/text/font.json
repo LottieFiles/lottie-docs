@@ -2,14 +2,15 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Font",
-    "description": "",
+    "description": "Describes how a font with given settings should be loaded",
     "allOf": [
         {
             "type": "object",
             "properties": {
                 "ascent": {
                     "title": "Ascent",
-                    "type": "number"
+                    "type": "number",
+                    "description": "Text will be moved down based on this value"
                 },
                 "fFamily": {
                     "title": "Font Family",
@@ -47,7 +48,7 @@
                 }
             },
             "required": [
-                "fFamily", "origin", "fName", "fStyle"
+                "fFamily", "fName", "fStyle"
             ]
         }
     ]

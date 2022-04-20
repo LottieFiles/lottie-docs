@@ -24,8 +24,7 @@
 }
 
 .alpha_checkered {
-    width: %1px;
-    height: %2px;
+    position: relative;
     background-color: white;
     background-size: 64px 64px;
     background-image:
@@ -146,3 +145,11 @@
     background: none;
 }
 
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+details {
+    margin: 0.5em 0;
+}

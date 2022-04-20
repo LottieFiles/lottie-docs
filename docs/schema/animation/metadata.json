@@ -8,13 +8,6 @@
             "title": "Author",
             "type": "string"
         },
-        "k": {
-            "title": "Keywords",
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        },
         "d": {
             "title": "Description",
             "type": "string"
@@ -28,5 +21,26 @@
             "description": "Software used to generate the file",
             "type": "string"
         }
-    }
+    },
+    "anyOf": [
+        {
+            "properties": {
+                "k": {
+                    "title": "Keywords",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "properties": {
+                "k": {
+                    "title": "Keywords",
+                    "type": "string"
+                }
+            }
+        }
+    ]
 }

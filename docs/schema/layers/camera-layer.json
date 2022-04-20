@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Camera Layer",
+    "description": "3D Camera",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ks": {
+                    "title": "Transform",
+                    "description": "Layer transform",
+                    "$ref": "#/$defs/helpers/transform"
+                },
+                "pe": {
+                    "title": "Perspective",
+                    "description": "Distance from the Z=0 plane.\nSmall values yield a higher perspective effect.",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": [
+                "ty", "au"
+            ]
+        }
+    ]
+}
+
+

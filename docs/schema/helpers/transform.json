@@ -29,10 +29,6 @@
                     "title": "Skew Axis",
                     "description": "Direction along which skew is applied, in degrees (`0` skews along the X axis, `90` along the Y axis)",
                     "$ref": "#/$defs/animated-properties/value"
-                },
-                "or": {
-                    "title": "Orientation",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                 }
             }
         },
@@ -87,6 +83,10 @@
                                     "title": "Z Rotation",
                                     "description": "Split rotation component, equivalent to `r` when not split",
                                     "$ref": "#/$defs/animated-properties/value"
+                                },
+                                "or": {
+                                    "title": "Orientation",
+                                    "$ref": "#/$defs/animated-properties/multi-dimensional"
                                 }
                             }
                         }

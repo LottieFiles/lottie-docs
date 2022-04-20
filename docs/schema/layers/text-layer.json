@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Layer",
-    "description": "",
+    "description": "Layer with some text",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"

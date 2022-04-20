@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Stroke Dash",
-    "description": "",
+    "description": "An item used to described the dashe pattern in a stroked path",
     "allOf": [
         {
             "$ref": "#/$defs/helpers/visual-object"

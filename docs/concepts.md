@@ -115,7 +115,7 @@ If `a` is `1`, `k` will be an array of keyframes.
 |Attribute|Type|Description {schema_link:animated-properties/keyframe}|
 |---------|----|-----------|
 |`t`    |`number`|Keyframe time (in frames)|
-|`s`    |Depends on the property|Value, note that sometimes properties for scalar values have the value is wrapped in an array|
+|`s`    |Depends on the property|Value, note that scalar values have the value is wrapped in an array|
 |`i`,`o`|[Easing Handle](#easing-handles)|
 |`h`    |[0-1 `int`](#booleans)|Whether it's a hold frame|
 

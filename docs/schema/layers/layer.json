@@ -90,7 +90,8 @@
                 },
                 "ind": {
                     "title": "Index",
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Index that can be used for parenting and referenced in expressions"
                 },
                 "parent": {
                     "title": "Parent Index",

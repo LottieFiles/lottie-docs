@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
     "title": "MatteMode",
-    "description": "",
+    "description": "How a layer should mask another layer",
     "oneOf": [
         {
             "title": "Normal",

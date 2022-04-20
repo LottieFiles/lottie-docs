@@ -19,8 +19,9 @@ There are several layer types, which is specified by the `ty` attribute:
 |`10`|Image Placeholder                 |                                                                                               |
 |`11`|Guide                             |                                                                                               |
 |`12`|Adjustment                        |                                                                                               |
-|`13`|Camera                            |                                                                                               |
+|`13`|[Camera](#camera-layer)           |3D Camera                                                                                      |
 |`14`|Light                             |                                                                                               |
+|`15`|Data                              |                                                                                               |
 
 Each layer type has its own properties but there are several common properties:
 
@@ -184,6 +185,127 @@ This layer plays a [sound](assets.md#sound).
 
 {schema_object:layers/audio-layer}
 
-## Audio Settings
+### Audio Settings
 
 {schema_object:layers/audio-settings}
+
+## 3D Layers
+
+Layers can have 3D transforms as well:
+
+{lottie:3d_layers_animation.json:512:512:{renderer: "html"}}
+
+3D layers need to have the `ddd` set to `1` (and so does the top-level object).
+
+Their transform will habe `a` and `p` specified as 3D components.
+
+Rotation will be split into 3 properties: `rx`, `ry`, `rz`, and
+you have and additional orientation property `or`.
+
+
+{lottie_playground:3d_layers.json:512:512:{renderer: "html"}}
+Anchor:
+X:<input type="range" min="0" max="512" value="0" name="ax"/>
+Y:<input type="range" min="0" max="512" value="0" name="ay"/>
+Z:<input type="range" min="-100" max="100" value="0" name="az"/>
+Position:
+X:<input type="range" min="0" max="512" value="256" name="px"/>
+Y:<input type="range" min="0" max="512" value="256" name="py"/>
+Z:<input type="range" min="-100" max="100" value="0" name="pz"/>
+Rotation:
+X:<input type="range" min="0" max="360" value="0" name="rx"/>
+Y:<input type="range" min="0" max="360" value="30" name="ry"/>
+Z:<input type="range" min="0" max="360" value="0" name="rz"/>
+Orientation:
+X:<input type="range" min="0" max="360" value="0" name="orx"/>
+Y:<input type="range" min="0" max="360" value="0" name="ory"/>
+Z:<input type="range" min="0" max="360" value="0" name="orz"/>
+Scale:
+X:<input type="range" min="0" max="300" value="100" name="sx"/>
+Y:<input type="range" min="0" max="300" value="100" name="sy"/>
+Z:<input type="range" min="0" max="300" value="100" name="sz"/>
+<json>lottie.layers[1].ks</json>
+<script>
+lottie.layers[1].ks.a.k = [
+    data["ax"], data["ay"], data["az"]
+];
+lottie.layers[1].ks.p.k = [
+    data["px"], data["py"], data["pz"]
+];
+lottie.layers[1].ks.or.k = [
+    data["orx"], data["ory"], data["orz"]
+];
+lottie.layers[1].ks.s.k = [
+    data["sx"], data["sy"], data["sz"]
+];
+lottie.layers[1].ks.rx.k = data["rx"];
+lottie.layers[1].ks.ry.k = data["ry"];
+lottie.layers[1].ks.rz.k = data["rz"];
+</script>
+
+### Camera Layer
+
+Camera for 3D layers.
+
+{schema_object:layers/camera-layer}
+
+
+{lottie_playground:camera.json:512:512:{renderer: "html"}}
+Perspective: <input type="range" min="0" max="512" value="256" />
+Position:
+X:<input type="range" min="-512" max="512" value="0" name="px"/>
+Y:<input type="range" min="-512" max="512" value="0" name="py"/>
+Z:<input type="range" min="-512" max="512" value="-10" name="pz"/>
+Rotation:
+X:<input type="range" min="-180" max="180" value="0" name="rx"/>
+Y:<input type="range" min="-180" max="180" value="0" name="ry"/>
+Z:<input type="range" min="-180" max="180" value="0" name="rz"/>
+Orientation:
+X:<input type="range" min="-180" max="180" value="0" name="orx"/>
+Y:<input type="range" min="-180" max="180" value="0" name="ory"/>
+Z:<input type="range" min="-180" max="180" value="0" name="orz"/>
+<json>lottie.layers[0]</json>
+<script>
+var index = 0;
+lottie.layers[index].ks.p.k = [
+    data["px"], data["py"], data["pz"]
+];
+lottie.layers[index].ks.or.k = [
+    data["orx"], data["ory"], data["orz"]
+];
+lottie.layers[index].ks.rx.k = data["rx"];
+lottie.layers[index].ks.ry.k = data["ry"];
+lottie.layers[index].ks.rz.k = data["rz"];
+lottie.layers[index].pe.k = data["Perspective"];
+</script>
+
+### 3D Parenting
+
+As with 2D layers, you can parent 3D layers.
+
+{lottie_playground:3d_parenting.json:512:512:{renderer: "html"}}
+Position:
+X:<input type="range" min="-512" max="512" value="0" name="px"/>
+Y:<input type="range" min="-512" max="512" value="0" name="py"/>
+Z:<input type="range" min="-512" max="512" value="-10" name="pz"/>
+Rotation:
+X:<input type="range" min="-180" max="180" value="0" name="rx"/>
+Y:<input type="range" min="-180" max="180" value="0" name="ry"/>
+Z:<input type="range" min="-180" max="180" value="0" name="rz"/>
+Orientation:
+X:<input type="range" min="-180" max="180" value="0" name="orx"/>
+Y:<input type="range" min="-180" max="180" value="0" name="ory"/>
+Z:<input type="range" min="-180" max="180" value="0" name="orz"/>
+<json>lottie.layers[1]</json>
+<script>
+var index = 1;
+lottie.layers[index].ks.p.k = [
+    data["px"], data["py"], data["pz"]
+];
+lottie.layers[index].ks.or.k = [
+    data["orx"], data["ory"], data["orz"]
+];
+lottie.layers[index].ks.rx.k = data["rx"];
+lottie.layers[index].ks.ry.k = data["ry"];
+lottie.layers[index].ks.rz.k = data["rz"];
+</script>
