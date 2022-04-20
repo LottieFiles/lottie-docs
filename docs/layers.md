@@ -220,6 +220,10 @@ Orientation:
 X:<input type="range" min="0" max="360" value="0" name="orx"/>
 Y:<input type="range" min="0" max="360" value="0" name="ory"/>
 Z:<input type="range" min="0" max="360" value="0" name="orz"/>
+Scale:
+X:<input type="range" min="0" max="300" value="100" name="sx"/>
+Y:<input type="range" min="0" max="300" value="100" name="sy"/>
+Z:<input type="range" min="0" max="300" value="100" name="sz"/>
 <json>lottie.layers[1].ks</json>
 <script>
 lottie.layers[1].ks.a.k = [
@@ -230,6 +234,9 @@ lottie.layers[1].ks.p.k = [
 ];
 lottie.layers[1].ks.or.k = [
     data["orx"], data["ory"], data["orz"]
+];
+lottie.layers[1].ks.s.k = [
+    data["sx"], data["sy"], data["sz"]
 ];
 lottie.layers[1].ks.rx.k = data["rx"];
 lottie.layers[1].ks.ry.k = data["ry"];

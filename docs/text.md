@@ -196,6 +196,10 @@ Text:<input type="text" value="Hello"/>
 Color Red:<input type="range" min="0" value="0" max="1" step="0.01"/>
 Color Green:<input type="range" min="0" value="0" max="1" step="0.01"/>
 Color Blue:<input type="range" min="0" value="0" max="1" step="0.01"/>
+Stroke Width:<input type="range" min="0" value="0" max="32" />
+Stroke Red:<input type="range" min="0" value="0" max="1" step="0.01"/>
+Stroke Green:<input type="range" min="0" value="0" max="1" step="0.01"/>
+Stroke Blue:<input type="range" min="0" value="0" max="1" step="0.01"/>
 Position X:<input type="range" min="0" value="5" max="300"/>
 Position Y:<input type="range" min="0" value="80" max="100"/>
 Font Size:<input type="range" min="0" value="100" max="150"/>
@@ -206,6 +210,12 @@ lottie.layers[0].t.d.k[0].s.t = data["Text"];
 lottie.layers[0].t.d.k[0].s.fc[0] = data["Color Red"];
 lottie.layers[0].t.d.k[0].s.fc[1] = data["Color Green"];
 lottie.layers[0].t.d.k[0].s.fc[2] = data["Color Blue"];
+lottie.layers[0].t.d.k[0].s.sc = [
+    data["Stroke Red"],
+    data["Stroke Green"],
+    data["Stroke Blue"]
+];
+lottie.layers[0].t.d.k[0].s.sw = data["Stroke Width"];
 lottie.layers[0].ks.p.k[0] = data["Position X"];
 lottie.layers[0].ks.p.k[1] = data["Position Y"];
 lottie.layers[0].t.d.k[0].s.s = data["Font Size"];

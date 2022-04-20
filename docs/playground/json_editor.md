@@ -1,6 +1,6 @@
 disable_toc: 1
 
-<div class="alpha_checkered" id="lottie_target" style="width:512px;height:512px"></div>
+<div class="alpha_checkered" id="lottie_target" style="width:100%;"></div>
 
 <p id="json_error" style="white-space: pre-wrap"></p>
 
