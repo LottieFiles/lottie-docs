@@ -21,11 +21,13 @@ class ValidationResult
     static merge_props = ["title", "description", "type", "group", "cls", "def", "const"];
 
     constructor(
-        schema_definition
+        schema_definition,
+        parent
     )
     {
         this.schema_definition = schema_definition;
-        this.valid = null;
+        this.parent = parent;
+        this._valid = null;
         this.penalty = 0;
 
         this.title = null;
@@ -40,6 +42,13 @@ class ValidationResult
         this.issues = [];
         this.deprecated = false;
         this.warnings = [];
+    }
+
+    get valid()
+    {
+        if ( this._valid === null )
+            this._valid = this.penalty == 0 && (!this.parent || this.parent.valid);
+        return this._valid;
     }
 
     get show_warning()
@@ -225,7 +234,7 @@ class LottiePreviewGenerator
     {
         var generated = null;
 
-        if ( this.cls == "transform" )
+        if ( this.cls == "transform" || this.cls == "repeater-transform" )
         {
             generated = this.rect_shape_lottie(this.lottie.w, this.lottie.h);
             generated.layers[0].shapes[0].s.k = [this.lottie.w / 3, this.lottie.h / 3];
@@ -258,7 +267,11 @@ class LottiePreviewGenerator
         else if ( this.group == "layers" && this.cls != "null-layer" )
         {
             generated = lottie_clone(this.lottie);
-            generated.layers = [this.json];
+            var stand_alone_layer = lottie_clone(this.json);
+            delete stand_alone_layer.parent;
+            delete stand_alone_layer.tt;
+            delete stand_alone_layer.td;
+            generated.layers = [stand_alone_layer];
         }
         else if ( this.group == "assets" && this.cls == "precomposition" )
         {
@@ -630,7 +643,7 @@ class SchemaDefinition
 
     _sub_validate(object, validation, positive)
     {
-        var myvalid = this.validate(object, false, positive);
+        var myvalid = this.validate(object, false, positive, false, null);
         if ( positive )
             validation.merge_from(myvalid);
         return myvalid;
@@ -642,7 +655,7 @@ class SchemaDefinition
         var best_penalty = Infinity;
         for ( let base of children )
         {
-            var myvalid = base.validate(object, false, positive);
+            var myvalid = base.validate(object, false, positive, false, null);
             if ( myvalid.penalty < best_penalty )
             {
                 best_penalty = myvalid.penalty;
@@ -659,14 +672,14 @@ class SchemaDefinition
         return best;
     }
 
-    validate(object, add_validation, positive, ref_description = false)
+    validate(object, add_validation, positive, ref_description, parent_validation)
     {
         if ( this.id in object.results )
             return object.results[this.id];
 
         this.build();
 
-        var validation = new ValidationResult(this);
+        var validation = new ValidationResult(this, parent_validation);
         if ( positive && !ref_description )
             validation.merge_from(this);
 
@@ -700,7 +713,7 @@ class SchemaDefinition
                 {
                     if ( name in this.properties )
                     {
-                        var propval = this.properties[name].validate(prop, positive, positive, true);
+                        var propval = this.properties[name].validate(prop, positive, positive, true, validation);
                         propval.set_key_validation(name);
 
                         if ( !propval.valid )
@@ -721,7 +734,7 @@ class SchemaDefinition
         else if ( object.is_array && this.items )
         {
             for ( var i = 0; i < object.items.length; i++ )
-                if ( !this.items.validate(object.items[i], positive, positive).valid )
+                if ( !this.items.validate(object.items[i], positive, positive, false, validation).valid )
                     validation.fail(1, `Item ${i} doesn't match`);
         }
 
@@ -736,7 +749,7 @@ class SchemaDefinition
 
         if ( this.if )
         {
-            if ( this.if.validate(object, false, false).valid )
+            if ( this.if.validate(object, false, false, false, null).valid )
             {
                 this.then._sub_validate(object, validation, positive);
             }
@@ -748,7 +761,7 @@ class SchemaDefinition
 
         if ( this.not )
         {
-            if ( this.not.validate(object, false, false).valid )
+            if ( this.not.validate(object, false, false, false, null).valid )
                 validation.fail(50, `Matches <code>not</code> condition.`);
         }
 
@@ -772,7 +785,6 @@ class SchemaDefinition
             }
         }
 
-        validation.valid = validation.penalty == 0;
         if ( add_validation )
             object.validations.push(validation);
 
@@ -819,6 +831,12 @@ class SchemaObject
 
             for ( var val of this.validations )
             {
+                if ( val.valid )
+                {
+                    this._validation = val;
+                    break;
+                }
+
                 if ( val.penalty < best_penalty )
                 {
                     best_penalty = val.penalty;

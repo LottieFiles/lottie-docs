@@ -293,7 +293,9 @@ var icons = {
     "#/$defs/shapes/rectangle": "fas fa-rectangle",
     "#/$defs/shapes/stroke": "fas fa-paint-brush",
     "#/$defs/shapes/transform": "fas fa-arrows-alt",
+    "#/$defs/shapes/repeater-transform": "fas fa-arrows-alt",
     "#/$defs/shapes/shape-list": "fas fa-list",
+    "#/$defs/shapes/repeater": "fas fa-clone",
 
     "#/$defs/text/character-data": "fas fa-font",
     "#/$defs/text/font-list": "fas fa-list",
