@@ -24,13 +24,11 @@
                 },
                 "sh": {
                     "title": "Height",
-                    "type": "number",
-                    "default": 512
+                    "type": "number"
                 },
                 "sw": {
                     "title": "Width",
-                    "type": "number",
-                    "default": 512
+                    "type": "number"
                 }
             },
             "required": [

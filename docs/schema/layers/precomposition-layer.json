@@ -24,13 +24,11 @@
                 },
                 "w": {
                     "title": "Width",
-                    "type": "integer",
-                    "default": 512
+                    "type": "integer"
                 },
                 "h": {
                     "title": "Height",
-                    "type": "integer",
-                    "default": 512
+                    "type": "integer"
                 },
                 "tm": {
                     "title": "Time Remapping",
