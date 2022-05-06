@@ -4,8 +4,8 @@
     "title": "Text Selector Property",
     "properties": {
         "t": {
-            "title": "Start Time",
-            "type": "number"
+            "title": "Expressible",
+            "$ref": "#/$defs/helpers/int-boolean"
         },
         "xe": {
             "title": "Max Ease",
@@ -40,7 +40,7 @@
             "$ref": "#/$defs/animated-properties/value"
         },
         "sm": {
-            "title": "Expression Selector",
+            "title": "Selector Smoothness",
             "$ref": "#/$defs/animated-properties/value"
         },
         "s": {
