@@ -97,15 +97,20 @@
                     "title": "Blend Mode",
                     "$ref": "#/$defs/constants/blend-mode"
                 },
-                "cix": {
-                    "title": "Property index",
-                    "description": "Index used in expressions",
-                    "type": "integer"
-                },
                 "ix": {
                     "title": "Property index",
                     "description": "Index used in expressions",
                     "type": "integer"
+                },
+                "cl": {
+                    "title": "CSS Class",
+                    "description": "CSS class used by the SVG renderer",
+                    "type": "string"
+                },
+                "ln": {
+                    "title": "Layer XML ID",
+                    "description": "`id` attribute used by the SVG renderer",
+                    "type": "string"
                 }
             },
             "required": ["ty"]

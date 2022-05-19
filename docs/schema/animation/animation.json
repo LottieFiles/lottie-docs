@@ -69,6 +69,14 @@
                         ]
                     }
                 },
+                "comps": {
+                    "title": "Extra Compositions",
+                    "type": "array",
+                    "description": "List of Extra compositions not referenced by anything",
+                    "items": {
+                            "$ref": "#/$defs/assets/precomposition"
+                    }
+                },
                 "fonts": {
                     "title": "Fonts",
                     "$ref": "#/$defs/text/font-list"
@@ -85,6 +93,11 @@
                     "title": "Metadata",
                     "description": "Document metadata",
                     "$ref": "#/$defs/animation/metadata"
+                },
+                "metadata": {
+                    "title": "User Metadata",
+                    "type": "object",
+                    "description": "User-defined metadata"
                 },
                 "markers": {
                     "title": "Markers",

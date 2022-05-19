@@ -22,6 +22,11 @@
                 "it": {
                     "title": "Shapes",
                     "$ref": "#/$defs/shapes/shape-list"
+                },
+                "cix": {
+                    "title": "Property index",
+                    "description": "Index used in expressions",
+                    "type": "integer"
                 }
             },
             "required": [

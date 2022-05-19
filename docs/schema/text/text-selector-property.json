@@ -37,7 +37,7 @@
         },
         "r": {
             "title": "Range Units",
-            "$ref": "#/$defs/animated-properties/value"
+            "type": "integer"
         },
         "sm": {
             "title": "Selector Smoothness",
