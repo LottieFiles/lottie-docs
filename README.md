@@ -42,3 +42,25 @@ During development, you might want to use
     make docs_serve
 
 Which spins up a local server to host the docs and automatically reloads when done
+
+
+Finding Unknown Features
+------------------------
+
+You can run `./tools/unknown_features.js` and pass file names as arguments
+and it will print a summary of unknown features in the given files.
+
+Note that it requires modern versions of node and the compiled schema.
+
+
+Example with setup:
+
+    # Build the schema
+    make lottie.schema.json
+
+    # Install newer node on python virtualenv
+    pip install nodeenv
+    nodeenv -p
+
+    # Run on several files
+    ./tools/unknown_features.js /my/lotties/*.json

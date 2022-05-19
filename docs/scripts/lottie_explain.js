@@ -1492,3 +1492,7 @@ class InfoBoxContents
         return add_to;
     }
 }
+
+
+if ( typeof window == "undefined" )
+    module.exports = { SchemaData, SchemaObject };
