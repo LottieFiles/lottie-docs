@@ -21,7 +21,7 @@ There are several layer types, which is specified by the `ty` attribute:
 |`12`|Adjustment                        |                                                                                               |
 |`13`|[Camera](#camera-layer)           |3D Camera                                                                                      |
 |`14`|Light                             |                                                                                               |
-|`15`|Data                              |                                                                                               |
+|`15`|[Data](#data-layer)               |                                                                                               |
 
 Each layer type has its own properties but there are several common properties:
 
@@ -309,3 +309,10 @@ lottie.layers[index].ks.rx.k = data["rx"];
 lottie.layers[index].ks.ry.k = data["ry"];
 lottie.layers[index].ks.rz.k = data["rz"];
 </script>
+
+
+## Data Layer
+
+This layer links to a [data source](assets.md#data-source).
+
+{schema_object:layers/data-layer}

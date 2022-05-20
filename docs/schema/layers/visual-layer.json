@@ -74,6 +74,24 @@
                     "title": "Motion Blur",
                     "description": "Whether motion blur is enabled for the layer",
                     "type": "boolean"
+                },
+                "sy": {
+                    "title": "Layer style",
+                    "description": "Styling effects for this layer",
+                    "type": "array",
+                    "items": {
+                        "oneOf":  [
+                            {"$ref": "#/$defs/styles/stroke-style"},
+                            {"$ref": "#/$defs/styles/drop-shadow-style"},
+                            {"$ref": "#/$defs/styles/inner-shadow-style"},
+                            {"$ref": "#/$defs/styles/outer-glow-style"},
+                            {"$ref": "#/$defs/styles/inner-glow-style"},
+                            {"$ref": "#/$defs/styles/bevel-emboss-style"},
+                            {"$ref": "#/$defs/styles/satin-style"},
+                            {"$ref": "#/$defs/styles/color-overlay-style"},
+                            {"$ref": "#/$defs/styles/gradient-overlay-style"}
+                        ]
+                    }
                 }
             },
             "required": [

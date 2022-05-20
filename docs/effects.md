@@ -386,3 +386,70 @@ SKIP:#/$defs/effect-values/effect-value
 
 {schema_object:effect-values/layer}
 SKIP:#/$defs/effect-values/effect-value
+
+## Layer Style
+
+A layer can also have a list of styles applied to it
+
+{schema_object:styles/layer-style}
+EXPAND:#/$defs/helpers/visual-object
+
+Style types:
+
+|`ty`| Style Type |
+|----|-------------|
+|`0` |[Stroke](#stroke-style)|
+|`1` |[Drop Shadow](#drop-shadow-style)|
+|`2` |[Inner Shadow](#inner-shadow-style)|
+|`3` |[Outer Glow](#outer-glow-style)|
+|`4` |[Inner Glow](#inner-glow-style)|
+|`5` |[Bevel / Emboss](#bevel-emboss-style)|
+|`6` |[Satin](#satin-style)|
+|`7` |[Color Overlay](#color-overlay-style)|
+|`8` |[Gradient Overlay](#gradient-overlay-style)|
+
+
+### Stroke Style
+
+{schema_object:styles/stroke-style}
+SKIP:#/$defs/styles/layer-style
+
+### Drop Shadow Style
+
+{schema_object:styles/drop-shadow-style}
+SKIP:#/$defs/styles/layer-style
+
+### Inner Shadow Style
+
+{schema_object:styles/inner-shadow-style}
+SKIP:#/$defs/styles/layer-style
+
+### Outer Glow Style
+
+{schema_object:styles/outer-glow-style}
+SKIP:#/$defs/styles/layer-style
+
+### Inner Glow Style
+
+{schema_object:styles/inner-glow-style}
+SKIP:#/$defs/styles/layer-style
+
+### Bevel / Emboss Style
+
+{schema_object:styles/bevel-emboss-style}
+SKIP:#/$defs/styles/layer-style
+
+### Satin Style
+
+{schema_object:styles/satin-style}
+SKIP:#/$defs/styles/layer-style
+
+### Color Overlay Style
+
+{schema_object:styles/color-overlay-style}
+SKIP:#/$defs/styles/layer-style
+
+### Gradient Overlay Style
+
+{schema_object:styles/gradient-overlay-style}
+SKIP:#/$defs/styles/layer-style

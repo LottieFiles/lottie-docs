@@ -1,8 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Audio Layer",
-    "description": "A layer playing sounds",
+    "title": "Data Layer",
     "allOf": [
         {
             "$ref": "#/$defs/layers/layer"
@@ -14,20 +13,16 @@
                     "title": "Type",
                     "description": "Layer type",
                     "type": "integer",
-                    "const": 6
-                },
-                "au": {
-                    "title": "Audio Settings",
-                    "$ref": "#/$defs/layers/audio-settings"
+                    "const": 15
                 },
                 "refId": {
-                    "title": "Sound Id",
-                    "description": "ID of the sound as specified in the assets",
+                    "title": "Data source Id",
+                    "description": "ID of the data source in assets",
                     "type": "string"
                 }
             },
             "required": [
-                "ty", "au"
+                "ty"
             ]
         }
     ]

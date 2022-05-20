@@ -97,6 +97,11 @@
             "anchor": "effect-values"
         }
     },
+    "styles": {
+        "_defaults": {
+            "page": "effects"
+        }
+    },
     "text": {
         "font": {
             "anchor": "font-list"
@@ -110,6 +115,9 @@
     "assets": {
         "asset":{
             "anchor": "assets"
+        },
+        "file-asset": {
+            "anchor": "data-source"
         }
     },
     "animation": {

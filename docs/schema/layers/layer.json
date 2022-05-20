@@ -85,6 +85,10 @@
                         {
                             "const": 14,
                             "title": "Light layer"
+                        },
+                        {
+                            "const": 15,
+                            "title": "Data layer"
                         }
                     ]
                 },
@@ -131,6 +135,11 @@
                 "ln": {
                     "title": "Layer XML ID",
                     "description": "`id` attribute used by the SVG renderer",
+                    "type": "string"
+                },
+                "tg": {
+                    "title": "Layer XML tag name",
+                    "description": "tag name used by the SVG renderer",
                     "type": "string"
                 }
             },

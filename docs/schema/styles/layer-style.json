@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Layer Style",
+    "description": "Style applied to a layer",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Style Type",
+                    "type": "integer"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}
+

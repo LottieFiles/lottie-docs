@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Data source",
+    "description": "External data source, usually a JSON file",
+    "allOf": [
+        {
+            "$ref": "#/$defs/assets/file-asset"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "t": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 3
+                }
+            },
+            "required": ["t"]
+        }
+    ]
+}
+

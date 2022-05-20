@@ -8,6 +8,7 @@ Represents a (static) image
 
 {schema_object:assets/image}
 EXPAND:#/$defs/assets/asset
+EXPAND:#/$defs/assets/file-asset
 
 If the image is embedded, `u` is empty and `p` contains a base64-encoded data url:
 
@@ -60,6 +61,7 @@ Similar to [Image](#image) but for audio files.
 
 {schema_object:assets/sound}
 EXPAND:#/$defs/assets/asset
+EXPAND:#/$defs/assets/file-asset
 
 
 ### Precomposition
@@ -86,3 +88,12 @@ layers:An array of [layers](layers.md) (See: [Lists of layers and shapes](concep
 Follows a rather extreme example, that uses precompositions inside precompositions to generate a fractal:
 
 {lottie:fractal.json:512:512}
+
+
+### Data Source
+
+Points to a JSON file for data.
+
+{schema_object:assets/data-source}
+EXPAND:#/$defs/assets/asset
+EXPAND:#/$defs/assets/file-asset

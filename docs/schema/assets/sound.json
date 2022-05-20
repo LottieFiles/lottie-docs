@@ -5,32 +5,7 @@
     "description": "External sound",
     "allOf": [
         {
-            "$ref": "#/$defs/assets/asset"
-        },
-        {
-            "type": "object",
-            "properties": {
-                "u": {
-                    "title": "Path",
-                    "description": "Path to the directory containing a sound file",
-                    "type": "string",
-                    "default": ""
-                },
-                "p": {
-                    "title": "File name",
-                    "description": "Sound filename or data url",
-                    "type": "string",
-                    "default": ""
-                },
-                "e": {
-                    "title": "Embedded",
-                    "description": "Whether the sound is embedded",
-                    "$ref": "#/$defs/helpers/int-boolean",
-                    "default": 0
-                }
-            },
-            "required": ["p"]
+            "$ref": "#/$defs/assets/file-asset"
         }
     ]
 }
-

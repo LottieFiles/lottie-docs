@@ -5,7 +5,7 @@
     "description": "External image",
     "allOf": [
         {
-            "$ref": "#/$defs/assets/asset"
+            "$ref": "#/$defs/assets/file-asset"
         },
         {
             "type": "object",
@@ -22,23 +22,11 @@
                     "type": "number",
                     "default": 0
                 },
-                "u": {
-                    "title": "Path",
-                    "description": "Path to the directory containing an image",
+                "t": {
+                    "title": "Type",
+                    "description": "Marks as part of an image sequence if present",
                     "type": "string",
-                    "default": ""
-                },
-                "p": {
-                    "title": "File name",
-                    "description": "Image filename or data url",
-                    "type": "string",
-                    "default": ""
-                },
-                "e": {
-                    "title": "Embedded",
-                    "description": "Whether the image is embedded",
-                    "$ref": "#/$defs/helpers/int-boolean",
-                    "default": 0
+                    "const": "seq"
                 }
             },
             "required": ["p"]

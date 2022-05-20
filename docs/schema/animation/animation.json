@@ -65,6 +65,9 @@
                             },
                             {
                                 "$ref": "#/$defs/assets/sound"
+                            },
+                            {
+                                "$ref": "#/$defs/assets/data-source"
                             }
                         ]
                     }
