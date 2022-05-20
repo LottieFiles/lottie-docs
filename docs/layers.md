@@ -36,6 +36,7 @@ tt:Matte mode (see [mattes](#mattes))
 td:Matte target (see [mattes](#mattes))
 masksProperties:[Masks](#masks) for the layer
 ef:[Effects](effects.md) for the layer
+sy:Layer [styles](effects.md#layer-style)
 
 Note that layers that don't have a visual component (Audio layers for example),
 won't have a transform and similar.

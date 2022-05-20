@@ -14,7 +14,7 @@
                 },
                 "mn": {
                     "title": "Match Name",
-                    "description": "Match name, used in expression",
+                    "description": "Match name, used in expressions",
                     "type": "string"
                 }
             },
