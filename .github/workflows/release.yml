@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags:
+        - '*'
+    branches:
+        - main
+
+jobs:
+  build:
+    name: Publish Schema
+    runs-on: ubuntu-latest
+    steps:
+        -
+            uses: actions/checkout@v2
+        -
+            name: Setup
+            run: |
+                sudo apt update -q
+                sudo apt install -yy python make
+        -
+            name: Build
+            run: |
+                make lottie.schema.json
+        -
+            name: Upload Schema
+            uses: svenstaro/upload-release-action@v2
+            with:
+                repo_token: ${{ secrets.GITHUB_TOKEN }}
+                file: docs/schema/lottie.schema.json
+                asset_name: lottie.schema.json
+                tag: ${{ github.ref }}
+                overwrite: true
+
