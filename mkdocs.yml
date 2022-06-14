@@ -18,8 +18,8 @@ markdown_extensions:
 extra_css:
     - /lottie-docs/style/style.css
 nav:
-    - "<i class='fas fa-microscope'></i> Breakdown":
-        - "Intro": index.md
+    - "<i class='fas fa-microscope'></i> Topics":
+        - "Introduction": index.md
         - breakdown/bouncy_ball.md
         - breakdown/lottie_from_scratch.md
         - breakdown/bezier.md
