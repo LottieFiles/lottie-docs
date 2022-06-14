@@ -68,7 +68,7 @@ EXPAND:#/$defs/assets/file-asset
 
 You can think of precompositions as self-contained animation within the main animation file.
 
-You can reference them using [precomp layers](layers.md#precomp-layer).
+You can reference them using [precomp layers](layers.md#precomposition-layer).
 
 This has two main uses:
 

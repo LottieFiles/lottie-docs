@@ -333,7 +333,7 @@ class SchemaAttribute(InlineProcessor):
 
 class LottiePlayground(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?(?::(\{[^}]+\}))?\}')
-    re_row = re.compile(r'^\s*(?:(?P<label>[^:]*)\s*:)?\s*(?P<html><(?P<tag>[-a-zA-Z_]+).*>)?')
+    re_row = re.compile(r'^\s*(?:(?P<label>[^<:]*)\s*:)?\s*(?P<html><(?P<tag>[-a-zA-Z_]+).*>)?')
 
     def __init__(self, parser, schema_data: Schema):
         super().__init__(parser)

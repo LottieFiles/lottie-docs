@@ -23,6 +23,7 @@ nav:
         - breakdown/bouncy_ball.md
         - breakdown/lottie_from_scratch.md
         - breakdown/bezier.md
+        - breakdown/precomps.md
     - "<i class='fa fa-book'></i> Lottie":
         - concepts.md
         - animation.md
