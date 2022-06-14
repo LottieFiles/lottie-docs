@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Character Precomp",
+    "description": "Defines a character as a precomp layer",
+    "properties": {
+        "refId": {
+            "title": "Reference Id",
+            "description": "ID of the precomp as specified in the assets",
+            "type": "string"
+        },
+        "ks": {
+            "title": "Transform",
+            "description": "Layer transform",
+            "$ref": "#/$defs/helpers/transform"
+        },
+        "ip": {
+            "title": "In Point",
+            "description": "Frame when the layer becomes visible",
+            "type": "number",
+            "default": 0
+        },
+        "op": {
+            "title": "Out Point",
+            "description": "Frame when the layer becomes invisible",
+            "type": "number",
+            "default": 99999
+        },
+        "sr": {
+            "title": "Time Stretch",
+            "type": "number",
+            "default": 1
+        },
+        "st": {
+            "title": "Start Time",
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": ["refId"]
+}

@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Chars",
-    "description": "Defines character shapes to avoid loading system fonts",
+    "description": "Defines character shapes",
     "type": "object",
     "properties": {
         "ch": {
@@ -32,15 +32,10 @@
         },
         "data": {
             "title": "Data",
-            "type": "object",
-            "properties": {
-                "shapes": {
-                    "title": "Shapes",
-                    "description": "Shapes forming the character",
-                    "$ref": "#/$defs/shapes/shape-list"
-                }
-            },
-            "required": ["shapes"]
+            "oneOf": [
+                {"$ref": "#/$defs/text/character-shapes"},
+                {"$ref": "#/$defs/text/character-precomp"}
+            ]
         }
     },
     "required": ["data", "ch", "fFamily", "size", "style", "w"]

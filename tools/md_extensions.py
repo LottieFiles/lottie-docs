@@ -546,7 +546,11 @@ class SchemaObject(BlockProcessor):
     def _type(self, prop):
         if "$ref" in prop and "type" not in prop:
             return prop["$ref"]
-        return prop.get("type", "")
+        if "type" in prop:
+            return prop["type"]
+        if "oneOf" in prop:
+            return [self._type(t) for t in prop["oneOf"]]
+        return ""
 
     def _add_properties(self, schema_props, prop_dict):
         for name, prop in schema_props.items():
@@ -578,7 +582,13 @@ class SchemaObject(BlockProcessor):
         return a
 
     def _base_type(self, type, parent):
-        if type.startswith("#/$defs/"):
+        if isinstance(type, list):
+            type_text = etree.SubElement(parent, "span")
+            for t in type:
+                type_child = self._base_type(t, type_text)
+                type_child.tail = " or "
+            type_child.tail = ""
+        elif type.startswith("#/$defs/"):
             links = ref_links(type, self.schema_data)
             for link in links:
                 type_text = etree.SubElement(parent, "a")

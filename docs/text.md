@@ -157,8 +157,20 @@ You can also have font data directly into the lottie, this is done by having an
 array of character data objects in the `chars` attribute of the [animation](animation.md).
 
 {schema_object:text/character-data}
-data:Object containing a single attribute `shapes`, which is an array of [shapes](shapes.md)
+data:Defines how the character is defined
 
+
+#### Character Shapes
+
+{schema_attribute:description:text/character-shapes}
+
+{schema_object:text/character-shapes}
+
+#### Character Precomp
+
+{schema_attribute:description:text/character-precomp}
+
+{schema_object:text/character-precomp}
 
 ## Text Layer
 

@@ -19,15 +19,16 @@
                 "refId": {
                     "title": "Reference Id",
                     "description": "ID of the precomp as specified in the assets",
-                    "type": "string",
-                    "default": ""
+                    "type": "string"
                 },
                 "w": {
                     "title": "Width",
+                    "description": "Width of the clipping rect",
                     "type": "integer"
                 },
                 "h": {
                     "title": "Height",
+                    "description": "Height of the clipping rect",
                     "type": "integer"
                 },
                 "tm": {
@@ -36,7 +37,7 @@
                 }
             },
             "required": [
-                "ty", "refId"
+                "ty", "refId", "w", "h"
             ]
         }
     ]

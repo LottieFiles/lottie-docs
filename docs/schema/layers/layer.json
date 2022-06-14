@@ -109,12 +109,12 @@
                 },
                 "ip": {
                     "title": "In Point",
-                    "description": "Frame when the layers becomes visible",
+                    "description": "Frame when the layer becomes visible",
                     "type": "number"
                 },
                 "op": {
                     "title": "Out Point",
-                    "description": "Frame when the layers becomes invisible",
+                    "description": "Frame when the layer becomes invisible",
                     "type": "number"
                 },
                 "st": {
