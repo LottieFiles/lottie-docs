@@ -316,7 +316,10 @@ Promise.all(requests)
         var data = playground_get_data();
         if ( data )
         {
-            lottie_string_input(data);
+            if ( data[0] == "{" )
+                lottie_string_input(data);
+            else
+                lottie_url_input(data);
         }
     })
     .catch(critical_error);

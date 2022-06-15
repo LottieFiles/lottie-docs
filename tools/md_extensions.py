@@ -91,6 +91,26 @@ class LottieRenderer:
             download.append(download_button)
             download_button.append(etree_fontawesome("download"))
 
+            absfile = download_file
+            if "examples/" in download_file:
+                absfile = "/lottie-docs/examples/" + download_file.split("examples/")[1]
+
+            open_in_editor = etree.SubElement(element, "button")
+            open_in_editor.attrib["onclick"] = inspect.cleandoc(r"""
+                playground_set_url("{url}");
+                window.location.href = "/lottie-docs/playground/json_editor/";
+            """).format(url=absfile)
+            open_in_editor.append(etree_fontawesome("edit"))
+            open_in_editor.attrib["title"] = "Open in Editor"
+
+            explain = etree.SubElement(element, "button")
+            explain.attrib["onclick"] = inspect.cleandoc(r"""
+                playground_set_url("{url}");
+                window.location.href = "/lottie-docs/playground/explain/";
+            """).format(url=absfile)
+            explain.append(etree_fontawesome("book-open"))
+            explain.attrib["title"] = "Explain"
+
         self.element = element
         self.variable_name = "lottie_player_{id}".format(id=self.id)
         self.target_id = "lottie_target_{id}".format(id=self.id)

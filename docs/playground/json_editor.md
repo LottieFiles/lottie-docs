@@ -159,12 +159,29 @@ function pretty()
     syntax_edit_update(textarea, textarea.value);
 }
 
-var data = playground_get_data();
-if ( data )
+function lottie_string_input(data)
 {
     textarea.value = data;
     syntax_edit_update(textarea, textarea.value);
     lottie_player.reload();
+}
+
+function lottie_url_input(url)
+{
+    fetch(url)
+    .then(r => r.text())
+    .then(lottie_string_input)
+    .catch(console.warn);
+}
+
+
+var data = playground_get_data();
+if ( data )
+{
+    if ( data[0] == "{" )
+        lottie_string_input(data);
+    else
+        lottie_url_input(data);
 }
 
 </script>
