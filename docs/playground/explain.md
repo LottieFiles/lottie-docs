@@ -310,7 +310,15 @@ var requests = [fetch("/lottie-docs/schema/lottie.schema.json"), fetch("/lottie-
 Promise.all(requests)
 .then(responses => {
     Promise.all(responses.map(r => r.json()))
-    .then(jsons => { schema = new SchemaData(jsons[0], jsons[1]); })
+    .then(jsons => {
+        schema = new SchemaData(jsons[0], jsons[1]);
+
+        var data = playground_get_data();
+        if ( data )
+        {
+            lottie_string_input(data);
+        }
+    })
     .catch(critical_error);
 })
 .catch(critical_error);

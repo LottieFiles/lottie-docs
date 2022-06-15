@@ -63,7 +63,6 @@ function gather_expressions(object, path, datalist)
 
 function select_expression(path)
 {
-    console.log(path);
     try {
         var expr_target = lottie_player.lottie;
         var expr_path = path.split(".");
@@ -158,6 +157,14 @@ function pretty()
 {
     textarea.value = JSON.stringify(lottie_player.lottie, undefined, 4);
     syntax_edit_update(textarea, textarea.value);
+}
+
+var data = playground_get_data();
+if ( data )
+{
+    textarea.value = data;
+    syntax_edit_update(textarea, textarea.value);
+    lottie_player.reload();
 }
 
 </script>

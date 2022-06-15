@@ -449,6 +449,23 @@ class LottiePlayground(BlockProcessor):
 
         controls_container = etree.Element("table", {"class": "table-plain", "style": "width: 100%"})
         element.insert(0, controls_container)
+
+        open_in_editor = etree.SubElement(element, "button")
+        open_in_editor.attrib["onclick"] = inspect.cleandoc(r"""
+            playground_set_data(lottie_player_{id}.lottie);
+            window.location.href = "/lottie-docs/playground/json_editor/";
+        """).format(id=anim_id)
+        open_in_editor.append(etree_fontawesome("edit"))
+        open_in_editor.attrib["title"] = "Open in Editor"
+
+        explain = etree.SubElement(element, "button")
+        explain.attrib["onclick"] = inspect.cleandoc(r"""
+            playground_set_data(lottie_player_{id}.lottie);
+            window.location.href = "/lottie-docs/playground/explain/";
+        """).format(id=anim_id)
+        explain.append(etree_fontawesome("book-open"))
+        explain.attrib["title"] = "Explain"
+
         json_viewer_id = None
         json_viewer_path = None
         html_append_until = None
