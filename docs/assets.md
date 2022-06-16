@@ -66,18 +66,13 @@ EXPAND:#/$defs/assets/file-asset
 
 ### Precomposition
 
-You can think of precompositions as self-contained animation within the main animation file.
-
-You can reference them using [precomp layers](layers.md#precomposition-layer).
-
-This has two main uses:
-
-The first is to have multiple instances of an animated item in your animation.
-
-The second is to organize the animation into separate components, each edited separately.
+You can think of precompositions as self-contained animation within the
+main animation file that can be referenced using [precomp layers](layers.md#precomposition-layer).
 
 Within a precomposition you can have precomp layers showing other precompositions,
 as long as you don't create a dependency cycle.
+
+You can find more details in the [Precompositions](breakdown/precomps.md) page.
 
 {schema_object:assets/precomposition}
 EXPAND:#/$defs/animation/composition

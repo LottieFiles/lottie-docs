@@ -125,6 +125,8 @@ The only special property for this layer is **shapes**, an [array](concepts.md#l
 
 This layer renders a [precomposition](assets.md#precomposition).
 
+You can find more details in the [Precompositions](breakdown/precomps.md) page.
+
 {schema_object:layers/precomposition-layer}
 
 ### Time remapping
