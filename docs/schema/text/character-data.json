@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Chars",
     "description": "Defines character shapes",
-    "type": "object",
     "properties": {
         "ch": {
             "title": "Character",
