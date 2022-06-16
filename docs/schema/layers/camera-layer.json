@@ -15,6 +15,10 @@
                     "description": "Layer transform",
                     "$ref": "#/$defs/helpers/transform"
                 },
+                "au": {
+                    "title": "Audio Settings",
+                    "$ref": "#/$defs/layers/audio-settings"
+                },
                 "pe": {
                     "title": "Perspective",
                     "description": "Distance from the Z=0 plane.\nSmall values yield a higher perspective effect.",
