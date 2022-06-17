@@ -10,6 +10,12 @@
         {
             "type": "object",
             "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer type",
+                    "type": "integer",
+                    "const": 13
+                },
                 "ks": {
                     "title": "Transform",
                     "description": "Layer transform",
@@ -22,7 +28,7 @@
                 }
             },
             "required": [
-                "ty", "au"
+                "ty", "ks", "pe"
             ]
         }
     ]
