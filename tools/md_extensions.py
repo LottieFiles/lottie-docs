@@ -710,7 +710,9 @@ class SchemaObject(BlockProcessor):
             etree.SubElement(thead, "th").text = "Type"
             desc = etree.SubElement(thead, "th")
             desc.text = "Description"
-            desc.append(SchemaLink.element(object_name))
+            desc.append(SchemaLink.icon(object_name))
+            if "caniuse" in schema_data:
+                desc.append(SchemaLink.caniuse_icon(schema_data["caniuse"]))
 
             tbody = etree.SubElement(table, "tbody")
 
@@ -876,8 +878,25 @@ class SchemaLink(InlineProcessor):
         element.text = "View Schema"
         return element
 
-    def handleMatch(self, m, data):
+    @staticmethod
+    def icon(path):
+        href = "schema.md#/$defs/" + path
+        element = etree.Element("a", {"href": href, "class": "schema-link"})
+        element.attrib["title"] = "View Schema"
+        etree.SubElement(element, "i").attrib["class"] = "fas fa-file-code"
+        return element
 
+    @staticmethod
+    def caniuse_icon(feature):
+        href = "https://canilottie.com/" + feature
+        element = etree.Element("a", {"href": href, "class": "schema-link"})
+        element.attrib["title"] = "View Compatibility"
+        etree.SubElement(element, "i").attrib["class"] = "fas fa-list-check"
+        return element
+
+
+
+    def handleMatch(self, m, data):
         return SchemaLink.element(m.group(1)), m.start(0), m.end(0)
 
 
@@ -895,7 +914,8 @@ class SchemaEffect(BlockProcessor):
         effect_name = self.test(parent, blocks[0]).group(1)
         blocks.pop(0)
 
-        effect_data = self.schema_data.get_ref("$defs/" + effect_name)["allOf"][-1]["properties"]["ef"]["prefixItems"]
+        effect_schema = self.schema_data.get_ref("$defs/" + effect_name)
+        effect_data = effect_schema["allOf"][-1]["properties"]["ef"]["prefixItems"]
 
         table = etree.SubElement(parent, "table")
 
@@ -903,7 +923,9 @@ class SchemaEffect(BlockProcessor):
         etree.SubElement(thead, "th").text = "Name"
         etree.SubElement(thead, "th").text = "Type"
 
-        thead[-1].append(SchemaLink.element("effects/" + effect_name))
+        thead[-1].append(SchemaLink.icon("effects/" + effect_name))
+        if "caniuse" in effect_schema:
+            thead[-1].append(SchemaLink.caniuse_icon(effect_schema["caniuse"]))
 
         tbody = etree.SubElement(table, "tbody")
 
