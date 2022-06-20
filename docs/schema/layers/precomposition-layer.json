@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Precomposition Layer",
     "description": "Layer that renders a Precomposition asset",
+    "caniuse": "layer-precomp",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"
@@ -33,6 +34,7 @@
                 },
                 "tm": {
                     "title": "Time Remapping",
+                    "caniuse": "property-timeremap",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

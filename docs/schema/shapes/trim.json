@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Trim",
     "description": "Trims shapes into a segment",
+    "caniuse": "shape-trim-path",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/modifier"

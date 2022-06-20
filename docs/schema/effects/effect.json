@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Effect",
     "description": "Layer effect",
+    "caniuse": "effects",
     "allOf": [
         {
             "$ref": "#/$defs/helpers/visual-object"

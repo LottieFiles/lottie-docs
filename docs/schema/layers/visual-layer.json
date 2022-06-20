@@ -16,6 +16,7 @@
                 },
                 "ks": {
                     "title": "Transform",
+                    "caniuse": "transform",
                     "description": "Layer transform",
                     "$ref": "#/$defs/helpers/transform"
                 },
@@ -27,19 +28,23 @@
                 },
                 "tt": {
                     "title": "Matte Mode",
+                    "caniuse": "property-matte-mask",
                     "$ref": "#/$defs/constants/matte-mode"
                 },
                 "td": {
                     "title": "Matte Target",
+                    "caniuse": "property-matte-mask",
                     "type": "integer"
                 },
                 "hasMask": {
                     "title": "Has Masks",
+                    "caniuse": "mask",
                     "description": "Whether the layer has masks applied",
                     "type": "boolean"
                 },
                 "masksProperties": {
                     "title": "Masks",
+                    "caniuse": "mask",
                     "type": "array",
                     "items": {
                         "$ref": "#/$defs/helpers/mask"
@@ -48,6 +53,7 @@
                 "ef": {
                     "title": "Effects",
                     "description": "List of layer effects",
+                    "caniuse": "effects",
                     "type": "array",
                     "items": {
                         "oneOf":  [
@@ -77,6 +83,7 @@
                 },
                 "sy": {
                     "title": "Layer style",
+                    "caniuse": "styles",
                     "description": "Styling effects for this layer",
                     "type": "array",
                     "items": {

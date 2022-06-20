@@ -2,6 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Mask",
+    "caniuse": "mask",
     "description": "Bezier shape used to mask/clip a layer",
     "allOf": [
         {
@@ -12,6 +13,7 @@
             "properties": {
                 "inv": {
                     "title": "Inverted",
+                    "caniuse": "mask-inverted",
                     "type": "boolean",
                     "default": false
                 },
@@ -21,15 +23,18 @@
                 },
                 "o": {
                     "title": "Opacity",
+                    "caniuse": "mask-opacity",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "mode": {
                     "title": "Mode",
+                    "caniuse": "mask-modes",
                     "$ref": "#/$defs/constants/mask-mode",
                     "default": "i"
                 },
                 "x": {
                     "title": "Dilate",
+                    "caniuse": "mask-expansion",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

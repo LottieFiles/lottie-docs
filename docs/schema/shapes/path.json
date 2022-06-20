@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Path",
     "description": "Animatable Bezier curve",
+    "caniuse": "shape-path",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape"

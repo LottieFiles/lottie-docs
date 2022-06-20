@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Text Layer",
     "description": "Layer with some text",
+    "caniuse": "layer-text",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"

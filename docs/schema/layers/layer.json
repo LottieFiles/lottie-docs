@@ -104,6 +104,7 @@
                 },
                 "sr": {
                     "title": "Time Stretch",
+                    "caniuse": "property-time-stretch",
                     "type": "number",
                     "default": 1
                 },

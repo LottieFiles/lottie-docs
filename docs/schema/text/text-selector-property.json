@@ -37,7 +37,8 @@
         },
         "r": {
             "title": "Range Units",
-            "type": "integer"
+            "caniuse": "range-selectors-units",
+            "$ref": "#/$defs/constants/text-based"
         },
         "sm": {
             "title": "Selector Smoothness",

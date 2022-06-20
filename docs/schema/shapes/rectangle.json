@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Rectangle",
     "description": "A simple rectangle shape",
+    "caniuse": "shape-rectangle",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape"

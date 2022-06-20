@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Spherize Effect",
     "description": "",
+    "caniuse": "effect-cc-sphere",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

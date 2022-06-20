@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Pro Levels Effect",
     "description": "",
+    "caniuse": "effect-color-levels-individual-controls",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

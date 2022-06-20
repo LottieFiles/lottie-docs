@@ -6,8 +6,9 @@ MKDOCS ?= PYTHONPATH="$(SOURCE_DIR)/tools" mkdocs
 # Paths
 SOURCE_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 OUTPUT_DIR ?= $(CURDIR)/site
+CANIUSE_DIR ?= $(SOURCE_DIR)/../caniuse/data
 
-.PHONY: all install_dependencies docs docs_serve lottie.schema.json validate validate_links
+.PHONY: all install_dependencies docs docs_serve lottie.schema.json validate validate_links, validate_caniuse
 
 
 all: docs
@@ -43,3 +44,6 @@ validate_links:$(OUTPUT_DIR)/index.html
 $(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/tools/generate-blockly.py
 $(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/docs/schema/lottie.schema.json
 	$(SOURCE_DIR)/tools/generate-blockly.py
+
+validate_caniuse: $(SOURCE_DIR)/docs/schema/lottie.schema.json
+	$(SOURCE_DIR)/tools/caniuse.py '$(CANIUSE_DIR)'

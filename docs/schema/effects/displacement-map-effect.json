@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Displacement Map Effect",
     "description": "",
+    "caniuse": "effect-displacement-map",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

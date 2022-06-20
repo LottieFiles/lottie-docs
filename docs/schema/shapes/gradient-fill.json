@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Gradient Fill",
     "description": "Gradient fill",
+    "caniuse": "shape-fill-gradient",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape-element"

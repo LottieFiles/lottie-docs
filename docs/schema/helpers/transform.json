@@ -8,25 +8,30 @@
             "properties": {
                 "a": {
                     "title": "Anchor Point",
+                    "caniuse": "transform-anchor-point",
                     "description": "Anchor point: a position (relative to its parent) around which transformations are applied (ie: center for rotation / scale)",
                     "$ref": "#/$defs/animated-properties/position"
                 },
                 "s": {
                     "title": "Scale",
+                    "caniuse": "transform-scale",
                     "description": "Scale factor, `[100, 100]` for no scaling",
                     "$ref": "#/$defs/animated-properties/multi-dimensional"
                 },
                 "o": {
                     "title": "Opacity",
+                    "caniuse": "transform-opacity",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "sk": {
                     "title": "Skew",
+                    "caniuse": "transform-skew",
                     "description": "Skew amount as an angle in degrees",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "sa": {
                     "title": "Skew Axis",
+                    "caniuse": "transform-skew",
                     "description": "Direction along which skew is applied, in degrees (`0` skews along the X axis, `90` along the Y axis)",
                     "$ref": "#/$defs/animated-properties/value"
                 }
@@ -40,6 +45,7 @@
                             "properties":  {
                                 "p": {
                                     "title": "Position",
+                                    "caniuse": "transform-position",
                                     "description": "Position / Translation",
                                     "$ref": "#/$defs/animated-properties/position"
                                 }
@@ -62,6 +68,7 @@
                             "properties":  {
                                 "r": {
                                     "title": "Rotation",
+                                    "caniuse": "transform-rotation",
                                     "description": "Rotation in degrees, clockwise",
                                     "$ref": "#/$defs/animated-properties/value"
                                 }

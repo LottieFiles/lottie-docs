@@ -2,7 +2,8 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Tint Effect",
-    "description": "Colorizes the layer\n@note Opacity is in [0, 100]",
+    "description": "Colorizes the layer",
+    "caniuse": "effect-tint",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

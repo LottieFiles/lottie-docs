@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Drop Shadow Effect",
     "description": "Adds a shadow to the layer",
+    "caniuse": "effect-drop-shadow",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

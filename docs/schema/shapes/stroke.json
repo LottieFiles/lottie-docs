@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Stroke",
     "description": "Solid stroke",
+    "caniuse": "shape-stroke",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape-element"

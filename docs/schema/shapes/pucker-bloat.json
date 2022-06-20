@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Pucker Bloat",
     "description": "Interpolates the shape with its center point and bezier tangents with the opposite direction",
+    "caniuse": "shape-pucker-and-bloat",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape-element"

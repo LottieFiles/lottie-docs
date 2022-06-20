@@ -2,6 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Layer Stroke",
+    "caniuse": "style-stroke",
     "description": "Stroke / frame",
     "allOf": [
         {

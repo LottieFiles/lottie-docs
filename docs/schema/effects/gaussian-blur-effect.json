@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Gaussian Blur Effect",
     "description": "Gaussian blur",
+    "caniuse": "effect-gaussian-blur",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

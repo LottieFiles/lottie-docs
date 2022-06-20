@@ -3,6 +3,7 @@
     "type": "object",
     "title": "PolyStar",
     "description": "Star or regular polygon",
+    "caniuse": "shape-polystar",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape"

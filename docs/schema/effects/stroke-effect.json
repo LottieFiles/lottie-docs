@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Stroke Effect",
     "description": "",
+    "caniuse": "effect-stroke",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

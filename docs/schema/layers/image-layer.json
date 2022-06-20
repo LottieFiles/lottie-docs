@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Image Layer",
     "description": "Layer that shows an image asset",
+    "caniuse": "layer-image",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"

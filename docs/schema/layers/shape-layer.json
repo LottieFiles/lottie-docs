@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Shape Layer",
     "description": "Layer containing Shapes",
+    "caniuse": "layer-shape",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"

@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Repeater",
     "description": "Duplicates previous shapes in a group",
+    "caniuse": "shape-repeater",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/modifier"

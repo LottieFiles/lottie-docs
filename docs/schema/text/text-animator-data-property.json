@@ -10,14 +10,6 @@
         {
             "type": "object",
             "properties": {
-                "rx": {
-                    "title": "Rotate X",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
-                "ry": {
-                    "title": "Rotate Y",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
                 "sw": {
                     "title": "Stroke Width",
                     "$ref": "#/$defs/animated-properties/value"
@@ -25,6 +17,22 @@
                 "sc": {
                     "title": "Stroke Color",
                     "$ref": "#/$defs/animated-properties/color-value"
+                },
+                "sh": {
+                    "title": "Stroke Hue",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "ss": {
+                    "title": "Stroke Saturation",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sb": {
+                    "title": "Stroke Brightness",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "so": {
+                    "title": "Stroke Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
                 },
                 "fc": {
                     "title": "Fill Color",
@@ -38,6 +46,10 @@
                     "title": "Fill Saturation",
                     "$ref": "#/$defs/animated-properties/value"
                 },
+                "fo": {
+                    "title": "Fill Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
                 "fb": {
                     "title": "Fill Brightness",
                     "$ref": "#/$defs/animated-properties/value"
@@ -46,9 +58,14 @@
                     "title": "Tracking",
                     "$ref": "#/$defs/animated-properties/value"
                 },
-                "s": {
-                    "title": "Scale",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                "bl": {
+                    "title": "Blur",
+                    "caniuse": "text-animators-blur",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "ls": {
+                    "title": "Line Spacing",
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": []

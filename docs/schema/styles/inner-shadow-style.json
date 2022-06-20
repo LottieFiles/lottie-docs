@@ -2,6 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Inner Shadow",
+    "caniuse": "style-inner-shadow",
     "allOf": [
         {
             "$ref": "#/$defs/styles/layer-style"

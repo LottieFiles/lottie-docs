@@ -3,6 +3,7 @@
     "type": "object",
     "title": "Solid Color Layer",
     "description": "Layer with a solid color rectangle",
+    "caniuse": "layer-solid",
     "allOf": [
         {
             "$ref": "#/$defs/layers/visual-layer"

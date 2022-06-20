@@ -2,7 +2,8 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Merge",
-    "description": "",
+    "caniuse": "shape-merge-path",
+    "description": "Boolean operator on shapes",
     "allOf": [
         {
             "$ref": "#/$defs/shapes/shape-element"

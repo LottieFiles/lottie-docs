@@ -9,6 +9,7 @@
             "properties": {
                 "a": {
                     "title": "Properties",
+                    "caniuse": "text-animators",
                     "type": "array",
                     "items": {
                         "oneOf": [
