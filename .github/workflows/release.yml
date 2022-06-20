@@ -25,11 +25,19 @@ jobs:
                 make lottie.schema.json
         -
             name: Upload Schema
-            uses: svenstaro/upload-release-action@v2
+            if: ${{ contains(github.ref, '/tags/') }}
+            uses: softprops/action-gh-release@v1
             with:
-                repo_token: ${{ secrets.GITHUB_TOKEN }}
-                file: docs/schema/lottie.schema.json
-                asset_name: lottie.schema.json
-                tag: ${{ github.ref }}
+                token: ${{ secrets.GITHUB_TOKEN }}
+                files: docs/schema/lottie.schema.json
+                tag_name: ${{ github.ref }}
                 overwrite: true
-
+        -
+            name: Upload Schema
+            if: ${{ !contains(github.ref, '/tags/') }}
+            uses: softprops/action-gh-release@v1
+            with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                files: docs/schema/lottie.schema.json
+                tag_name: latest
+                overwrite: true
