@@ -10,6 +10,7 @@
         },
         "a": {
             "title": "Transform",
+            "type": "object",
             "properties": {
                 "s": {
                     "$ref": "#/$defs/animated-properties/position"
