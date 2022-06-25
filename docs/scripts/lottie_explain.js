@@ -66,41 +66,6 @@ class ValidationResult
             child.get_features(features);
     }
 
-    info_box_type_line(box, link_defs)
-    {
-        if ( this.type || this.def )
-        {
-            box.add("br");
-            this.format_type(box, link_defs);
-            return true;
-        }
-    }
-
-    info_box_schema_link(box)
-    {
-        if ( this.def )
-            box.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + this.def});
-    }
-
-    info_box(json, formatter, link_defs = true, show_type = true)
-    {
-        this.get_links();
-        var box = formatter.info_box(this.title, "comment", icons[this.def] ?? "fas fa-info-circle");
-        this.info_box_title(box);
-        this.info_box_schema_link(box);
-
-        if ( show_type )
-            this.info_box_type_line(box, link_defs);
-
-        if ( this.description )
-        {
-            box.add("br");
-            box.add("span", this.description, {class: "description"});
-        }
-
-        box.lottie_loader = new LottiePreviewGenerator(this.group, this.cls, json, formatter.lottie);
-    }
-
     get_links()
     {
         if ( this._links === null )
@@ -119,61 +84,6 @@ class ValidationResult
         return this._links;
     }
 
-    links_to_element(parent)
-    {
-        var links = this.get_links();
-        if ( links.length == 0 )
-        {
-            parent.appendChild(document.createTextNode(this.title ?? "??"));
-        }
-        else
-        {
-            for ( var link of links )
-            {
-                parent.appendChild(link.to_element());
-                parent.appendChild(document.createTextNode(" "));
-            }
-
-            parent.removeChild(parent.lastChild);
-        }
-    }
-
-    info_box_title(box)
-    {
-        var title = box.element.appendChild(document.createElement("strong"));
-        this.links_to_element(title);
-    }
-
-    _format_type_array(box)
-    {
-        box.add(null, "Array of ");
-
-        for ( var item of this.items_array )
-        {
-            item.build();
-            var val = new ValidationResult(item);
-            item.populate_result(val);
-            val.format_type(box);
-            box.add(null, ", ");
-        }
-
-        if ( this.items_array.length > 0 )
-            box.element.removeChild(box.element.lastChild);
-        else
-            box.add(null, "???");
-    }
-
-    format_type(box, link_defs = true)
-    {
-        if ( link_defs && this.def )
-            this.links_to_element(box.element);
-        else if ( this.type == "array" && this.items_array )
-            this._format_type_array(box);
-        else
-            box.add("code", this.type ?? "???");
-    }
-
-
     set_key_validation(name, matcher)
     {
         this.key = new ValidationResult(matcher);
@@ -183,7 +93,6 @@ class ValidationResult
         if ( !this.key.title )
             this.key.title = name;
     }
-
 }
 
 ValidationResult.matcher_keys = ["title", "description", "feature", "group", "cls", "def", "type"];
@@ -755,7 +664,7 @@ class SchemaObject
         var container = null;
         if ( this.validation.cls )
         {
-            this.validation.info_box(this.json_value, formatter, false);
+            formatter.result_info_box(this.validation, this.json_value, false);
             container = formatter.collapser();
         }
         else if ( formatter.should_collapse(this.json_value) )
@@ -778,7 +687,7 @@ class SchemaObject
     {
         formatter.open("{");
         if ( this.validation.cls )
-            this.validation.info_box(this.json_value, formatter, false, false);
+            formatter.result_info_box(this.validation, this.json_value, formatter, false, false);
 
         if ( Object.keys(this.json_value).length == 0 )
         {
@@ -838,13 +747,13 @@ class SchemaObject
 
     property_info_box(box, item)
     {
-        this.validation.info_box_title(box);
+        box.result_title(this.validation);
         item.validation.get_links();
         item.validation.key.get_links();
         box.add(null, " \u2192 ");
         box.add("strong", item.validation.key.title);
         box.add("br");
-        item.validation.format_type(box);
+        box.format_type(item.validation);
         if ( item.validation.key.description )
         {
             box.add("br");
@@ -856,10 +765,10 @@ class SchemaObject
     {
         var title_val = this.validation.def || !this.validation.key ? this.validation : this.validation.key;
 
-        title_val.info_box_title(box);
-        title_val.info_box_schema_link(box);
+        box.result_title(title_val);
+        box.schema_link(title_val);
 
-        this.validation.info_box_type_line(box, false);
+        box.type_line(this.validation, false);
 
         box.add("br");
         box.add("code", JSON.stringify(this.json_value));
@@ -1449,6 +1358,27 @@ class JsonFormatter
         code.innerHTML = hljs.highlight("javascript", src).value;
         this.parent.appendChild(code);
     }
+
+    result_info_box(result, json, link_defs = true, show_type = true)
+    {
+        result.get_links(); // updates title
+
+        var box = this.info_box(result.title, "comment", icons[result.def] ?? "fas fa-info-circle");
+        box.result_title(result);
+
+        box.schema_link(result);
+
+        if ( show_type )
+            box.type_line(result, link_defs);
+
+        if ( result.description )
+        {
+            box.add("br");
+            box.add("span", result.description, {class: "description"});
+        }
+
+        box.lottie_loader = new LottiePreviewGenerator(result.group, result.cls, json, this.lottie);
+    }
 }
 
 class InfoBox
@@ -1602,6 +1532,77 @@ class InfoBoxContents
             add_to.appendChild(document.createTextNode(text));
 
         return add_to;
+    }
+
+    type_line(result, link_defs)
+    {
+        if ( result.type || result.def )
+        {
+            this.add("br");
+            this.format_type(result, link_defs);
+            return true;
+        }
+    }
+
+    schema_link(result)
+    {
+        if ( result.def )
+            this.add("a", "View Schema", {class: "schema-link", href: "/lottie-docs/schema/" + result.def});
+    }
+
+    result_links_to_element(result, parent)
+    {
+        var links = result.get_links();
+        if ( links.length == 0 )
+        {
+            parent.appendChild(document.createTextNode(result.title ?? "??"));
+        }
+        else
+        {
+            for ( var link of links )
+            {
+                parent.appendChild(link.to_element());
+                parent.appendChild(document.createTextNode(" "));
+            }
+
+            parent.removeChild(parent.lastChild);
+        }
+    }
+
+    result_title(result)
+    {
+        var title = this.element.appendChild(document.createElement("strong"));
+        this.result_links_to_element(result, title);
+    }
+
+    _format_type_array(result)
+    {
+        this.add(null, "Array of ");
+
+        for ( var item of this.items_array )
+        {
+            item.build();
+            /// TODO could use just item?
+            var val = new ValidationResult(item);
+            item.populate_result(val);
+            this.format_type(val);
+            this.add(null, ", ");
+        }
+
+        if ( result.items_array.length > 0 )
+            this.element.removeChild(this.element.lastChild);
+        else
+            this.add(null, "???");
+    }
+
+    format_type(result, link_defs = true)
+    {
+        if ( link_defs && result.def )
+            this.result_links_to_element(result, this.element);
+        else if ( this.type == "array" && result.items_array )
+            this._format_type_array(result, this);
+        else
+            this.add("code", result.type ?? "???");
     }
 }
 
