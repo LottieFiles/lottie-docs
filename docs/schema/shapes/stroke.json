@@ -21,7 +21,7 @@
                 },
                 "c": {
                     "title": "Color",
-                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                    "$ref": "#/$defs/animated-properties/color-value"
                 }
             },
             "required": [
