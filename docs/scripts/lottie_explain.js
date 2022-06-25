@@ -481,12 +481,39 @@ class ArraySchemaMatcher
 
         let i = 0;
         for ( ; i < Math.min(object.length, this.prefix.length); i++ )
-            result.add_child(i, this.prefix[i].validate(object[i]));
+        {
+            let validation = this.prefix[i].validate(object[i]);
+            if ( validation.valid )
+            {
+                result.fitness += 1;
+                result.add_child(i, validation);
+            }
+            else
+            {
+                result.fail(1, `Item <code>${i}</code> doesn't match`);
+                if ( this.items )
+                {
+                    let generic_validation = this.items.validate(object[i]);
+                    if ( generic_validation.valid || generic_validation.fitness > result.fitness )
+                        result.add_child(i, generic_validation);
+                    else
+                        result.add_child(i, validation);
+                }
+            }
+        }
 
         if ( this.items )
         {
             for ( ; i < object.length; i++ )
-                result.add_child(i, this.items.validate(object[i]));
+            {
+                let validation = this.items.validate(object[i]);
+                result.add_child(i, validation);
+
+                if ( validation.valid )
+                    result.fitness += 1;
+                else
+                    result.fail(1, `Item <code>${i}</code> doesn't match`);
+            }
         }
     }
 }

@@ -15,7 +15,7 @@
                     "title": "Effect Values",
                     "type": "array",
                     "items": {
-                        "anyOf": [
+                        "oneOf": [
                             {"$ref": "#/$defs/effect-values/no-value"},
                             {"$ref": "#/$defs/effect-values/angle"},
                             {"$ref": "#/$defs/effect-values/checkbox"},
