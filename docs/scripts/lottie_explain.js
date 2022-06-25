@@ -157,12 +157,7 @@ class ValidationResult
         {
             item.build();
             var val = new ValidationResult(item);
-            val.merge_from(item);
-            if ( item.ref )
-            {
-                item.ref.build();
-                val.merge_from(item.ref);
-            }
+            item.populate_result(val);
             val.format_type(box);
             box.add(null, ", ");
         }
@@ -201,7 +196,13 @@ ValidationResult.simple_keys = ValidationResult.matcher_keys.concat("const", "ke
 ValidationResult.array_keys = ["definitions", "issues", "warnings"];
 
 
-class SchemaMatcher
+class BaseMatcher
+{
+    constructor(){}
+    add_array_item_types(result) {}
+}
+
+class SchemaMatcher extends BaseMatcher
 {
     constructor(
         schema,
@@ -210,6 +211,7 @@ class SchemaMatcher
         def_path = null
     )
     {
+        super();
         this.schema = schema;
         this.schema_start = schema_definition;
 
@@ -394,14 +396,24 @@ class SchemaMatcher
 
         return result;
     }
+
+    add_array_item_types(result)
+    {
+        if ( this.type || this.def )
+            result.items_array.push(this);
+
+        for ( let matcher of this.matchers )
+            matcher.add_array_item_types(result);
+    }
 }
 
 SchemaMatcher.simple_keys = ["title", "description", "deprecated", "const"];
 
-class PropertySchemaMatcher
+class PropertySchemaMatcher extends BaseMatcher
 {
     constructor(property, schema, data)
     {
+        super();
         this.property = property;
         this.matcher = new SchemaMatcher(schema, data);
     }
@@ -421,10 +433,11 @@ class PropertySchemaMatcher
     }
 }
 
-class OneOfSchemaMatcher
+class OneOfSchemaMatcher extends BaseMatcher
 {
     constructor(schema, definitions)
     {
+        super();
         this.schema = schema;
         this.matchers = definitions;
     }
@@ -449,13 +462,20 @@ class OneOfSchemaMatcher
         if ( best )
             result.merge_from(best);
     }
+
+    add_array_item_types(result)
+    {
+        for ( let matcher of this.matchers )
+            matcher.add_array_item_types(result);
+    }
 }
 
 
-class ArraySchemaMatcher
+class ArraySchemaMatcher extends BaseMatcher
 {
     constructor(schema, schema_definition)
     {
+        super();
         this.definition = schema_definition;
         this.prefix = [];
         this.items = null;
@@ -500,6 +520,8 @@ class ArraySchemaMatcher
                         result.add_child(i, validation);
                 }
             }
+
+            this.prefix[i].add_array_item_types(result);
         }
 
         if ( this.items )
@@ -514,14 +536,17 @@ class ArraySchemaMatcher
                 else
                     result.fail(1, `Item <code>${i}</code> doesn't match`);
             }
+
+            this.items.add_array_item_types(result);
         }
     }
 }
 
-class NotSchemaMatcher
+class NotSchemaMatcher extends BaseMatcher
 {
     constructor(schema, schema_data)
     {
+        super();
         this.wrapped = new SchemaMatcher(schema, schema_data);
     }
 
@@ -532,10 +557,11 @@ class NotSchemaMatcher
     }
 }
 
-class ConditionalSchemaMatcher
+class ConditionalSchemaMatcher extends BaseMatcher
 {
     constructor(schema, schema_data)
     {
+        super();
         this.if = new SchemaMatcher(schema, schema_data.if);
         this.then = schema_data.then ? new SchemaMatcher(schema, schema_data.then) : null;
         this.else = schema_data.else ? new SchemaMatcher(schema, schema_data.else) : null;
