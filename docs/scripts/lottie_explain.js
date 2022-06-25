@@ -389,7 +389,7 @@ class SchemaMatcher
             other.validate(json_value, result);
         }
 
-        if ( !post_populate )
+        if ( post_populate )
             this.populate_result(result);
 
         return result;
