@@ -1,54 +1,29 @@
-class ReferenceLink
-{
-    constructor(page, anchor, name)
-    {
-        this.page = page;
-        this.anchor = anchor;
-        this.name = name;
-    }
-
-    to_element()
-    {
-        var a = document.createElement("a");
-        a.setAttribute("href", `/lottie-docs/${this.page}/#${this.anchor}`);
-        a.appendChild(document.createTextNode(this.name));
-        return a;
-    }
-}
-
 class ValidationResult
 {
-    static merge_props = ["title", "description", "type", "group", "cls", "def", "const"];
-
-    constructor(
-        schema_definition,
-        parent
-    )
+    constructor(definition)
     {
-        this.schema_definition = schema_definition;
-        this.parent = parent;
-        this._valid = null;
-        this.penalty = 0;
-
-        this.title = null;
-        this.description = null;
-        this.group = null;
-        this.cls = null;
-        this.def = null;
-        this.type = null;
-        this.items_array = [];
-        this._links = null;
-        this.const = null;
+        this.definitions = [definition];
         this.issues = [];
-        this.deprecated = false;
         this.warnings = [];
+        this.items_array = [];
+        this.penalty = 0;
+        this.fitness = 0;
+        this.children = {};
+        this.title = undefined;
+        this.type = undefined;
+        this.description = undefined;
+        this.feature = undefined;
+        this.group = undefined;
+        this.cls = undefined;
+        this.const = undefined;
+        this.def = undefined;
+        this.key = undefined;
+        this._links = null;
     }
 
     get valid()
     {
-        if ( this._valid === null )
-            this._valid = this.penalty == 0 && (!this.parent || this.parent.valid);
-        return this._valid;
+        return this.penalty == 0;
     }
 
     get show_warning()
@@ -63,48 +38,37 @@ class ValidationResult
             this.issues.push(issue + ".");
     }
 
-    set_key_validation(name)
-    {
-        this.key = new ValidationResult(this.schema_definition);
-        this.key.merge_from(this.schema_definition);
-        if ( this.deprecated )
-            this.key.warnings.push("This property is deprecated");
-//         this.key.merge_from(this);
-        if ( !this.key.title )
-            this.key.title = name;
-    }
-
     merge_from(other)
     {
-        for ( var prop of ValidationResult.merge_props )
-            if ( !this[prop] )
-                this[prop] = other[prop];
+        this.penalty += other.penalty;
+        this.fitness += other.fitness;
 
-        if ( other.items_array && other.items_array.length )
-            this.items_array = this.items_array.concat(other.items_array);
+        for ( let key of ValidationResult.simple_keys )
+            if ( !this[key] )
+                this[key] = other[key];
 
-        if ( other.items && other.items instanceof SchemaDefinition )
-        {
-            other.items.build();
+        for ( let key of ValidationResult.array_keys )
+            this[key] = this[key].concat(other[key]);
 
-            if ( other.items.type || other.items.ref )
-                this.items_array.push(other.items);
+        for ( let [key, child] of Object.entries(other.children) )
+            this.add_child(key, child);
+    }
 
-            if ( other.items.oneOf )
-                this.items_array = this.items_array.concat(other.items.oneOf);
+    add_child(child_key, child_validation)
+    {
+        if ( !this.children[child_key] )
+            this.children[child_key] = child_validation;
+        else
+            this.children[child_key].merge_from(child_validation);
+    }
 
-            if ( other.items.anyOf )
-                this.items_array = this.items_array.concat(other.items.anyOf);
-        }
+    get_features(features)
+    {
+        if ( this.feature )
+            features.add(this.feature);
 
-        if ( other.deprecated )
-            this.deprecated = true;
-
-        if ( other.issues )
-            this.issues = this.issues.concat(other.issues);
-
-        if ( other.warnings )
-            this.warnings = this.warnings.concat(other.warnings);
+        for ( let child of Object.values(this.children) )
+            child.get_features(features);
     }
 
     info_box_type_line(box, link_defs)
@@ -148,7 +112,7 @@ class ValidationResult
         {
             if ( this.cls )
             {
-                this._links = this.schema_definition.schema.get_links(this.group, this.cls, this.title);
+                this._links = this.definitions[0].schema.get_links(this.group, this.cls, this.title);
                 if ( this._links.length )
                     this.title = this._links.map(l => l.name).join(" ");
             }
@@ -217,6 +181,663 @@ class ValidationResult
             this._format_type_array(box);
         else
             box.add("code", this.type ?? "???");
+    }
+
+
+    set_key_validation(name, matcher)
+    {
+        this.key = new ValidationResult(matcher);
+        for ( let def of this.key.definitions )
+            def.populate_result(this.key);
+
+        if ( !this.key.title )
+            this.key.title = name;
+    }
+
+}
+
+ValidationResult.matcher_keys = ["title", "description", "feature", "group", "cls", "def", "type"];
+ValidationResult.simple_keys = ValidationResult.matcher_keys.concat("const", "key");
+ValidationResult.array_keys = ["definitions", "issues", "warnings"];
+
+
+class SchemaMatcher
+{
+    constructor(
+        schema,
+        schema_definition,
+        def = null,
+        def_path = null
+    )
+    {
+        this.schema = schema;
+        this.schema_start = schema_definition;
+
+        this._built = false;
+        this.matchers = [];
+        this.bases = [];
+        this.properties = [];
+        this.title = undefined;
+        this.description = undefined;
+        this.type = undefined;
+        this.feature  = undefined;
+        this.const = undefined;
+        this.required = new Set();
+
+        this.def = def;
+        this.def_path = def_path;
+        if ( this.def_path && this.def_path.length == 3 && this.def_path[0] == "$defs" )
+        {
+            this.group = this.def_path[1];
+            this.cls = this.def_path[2];
+        }
+    }
+
+    build()
+    {
+        if ( this._built )
+            return;
+        this._built = true;
+        this._build_definition(this.schema_start);
+    }
+
+    _build_definition(schema_data)
+    {
+        for ( let key of SchemaMatcher.simple_keys )
+        {
+            if ( key in schema_data && this[key] === undefined )
+                this[key] = schema_data[key];
+        }
+
+        if ( schema_data.required )
+            this.required = new Set([...schema_data.required, ...this.required]);
+
+        if ( "$ref" in schema_data )
+            this.matchers.push(this.schema.get_ref(schema_data["$ref"]));
+
+        if ( "allOf" in schema_data )
+        {
+            for ( let sub of schema_data.allOf )
+            {
+                if ( "$ref" in sub )
+                {
+                    this.bases.push(this.schema.get_ref(sub["$ref"]));
+                }
+                else
+                {
+                    this._build_definition(sub);
+                }
+            }
+        }
+
+        if ( "anyOf" in schema_data )
+        {
+            for ( let sub of schema_data.anyOf )
+                this._build_definition(sub);
+        }
+
+        if ( "oneOf" in schema_data )
+        {
+            this.matchers.push(new OneOfSchemaMatcher(
+                this.schema,
+                schema_data.oneOf.map(d => new SchemaMatcher(this.schema, d))
+            ));
+        }
+
+        if ( "properties" in schema_data )
+        {
+            for ( let [name, data] of Object.entries(schema_data.properties) )
+            {
+                this.properties.push(new PropertySchemaMatcher(name, schema, data));
+            }
+        }
+
+        if ( "prefixItems" in schema_data || "items" in schema_data || "minItems" in schema_data || "maxItems" in schema_data )
+        {
+            this.matchers.push(new ArraySchemaMatcher(this.schema, schema_data));
+        }
+
+        if ( schema_data.type )
+        {
+            this.type = schema_data.type;
+            this.norm_type = this._norm_type(schema_data.type);
+        }
+
+        if ( schema_data.caniuse )
+            this.feature = schema_data.caniuse;
+
+        if ( schema_data.not )
+            this.matchers.push(new NotSchemaMatcher(this.schema, schema_data.not));
+
+        if ( schema_data.if )
+            this.matchers.push(new ConditionalSchemaMatcher(this.schema, schema_data));
+    }
+
+    _type_of(json_value)
+    {
+        if ( Array.isArray(json_value) )
+            return "array";
+        return typeof json_value;
+    }
+
+    _norm_type(schema_type)
+    {
+        if ( schema_type == "integer" )
+            return "number";
+        return schema_type;
+    }
+
+    populate_result(result)
+    {
+        this.build();
+
+        for ( let key of ValidationResult.matcher_keys )
+            if ( !result[key] && this[key] )
+                result[key] = this[key];
+
+        if ( this.deprecated )
+            result.warnings.push("This property is deprecated");
+    }
+
+    validate(json_value, result = null, post_populate = false)
+    {
+        this.build();
+        if ( !result )
+            result = new ValidationResult(this);
+
+        if ( !post_populate )
+            this.populate_result(result);
+
+        if ( this.type )
+        {
+            var val_type = this._type_of(json_value);
+            if ( val_type != this.norm_type )
+                result.fail(100,
+                    `Type doesn't match (should be <code>${this.type}</code> instead of <code>${val_type}</code>)`
+                );
+        }
+
+        if ( this.const !== undefined )
+        {
+            if ( json_value !== this.const )
+            {
+                result.fail(30, `Value should be <code>${JSON.stringify(this.const)}</code>`);
+            }
+            else
+            {
+                result.const = result;
+                result.fitness += 2;
+            }
+        }
+
+        for ( let matcher of this.matchers )
+            matcher.validate(json_value, result);
+
+
+        if ( typeof json_value == "object" )
+        {
+            for ( let req of this.required )
+                if ( !(req in json_value) )
+                    result.fail(10, `Missing required property <code>${req}</code>`);
+
+            for ( let matcher of this.properties )
+                matcher.validate(json_value, result);
+        }
+
+        for ( let other of this.bases )
+        {
+            other.validate(json_value, result);
+        }
+
+        if ( !post_populate )
+            this.populate_result(result);
+
+        return result;
+    }
+}
+
+SchemaMatcher.simple_keys = ["title", "description", "deprecated", "const"];
+
+class PropertySchemaMatcher
+{
+    constructor(property, schema, data)
+    {
+        this.property = property;
+        this.matcher = new SchemaMatcher(schema, data);
+    }
+
+    validate(object, result)
+    {
+        if ( typeof object != "object" || !(this.property in object) )
+            return;
+
+        let validation = this.matcher.validate(object[this.property], null, true);
+        validation.set_key_validation(this.property, this.matcher);
+        result.add_child(this.property, validation);
+        if ( !validation.valid )
+            result.fail(this.property == "ty" ? 15 : 1, `Property <code>${this.property}</code> doesn't match`);
+        else
+            result.fitness += 1;
+    }
+}
+
+class OneOfSchemaMatcher
+{
+    constructor(schema, definitions)
+    {
+        this.schema = schema;
+        this.matchers = definitions;
+    }
+
+    validate(object, result)
+    {
+        let best_fitness = 0;
+        let best = null;
+
+        for ( let match of this.matchers )
+        {
+            let validation = match.validate(object);
+            if ( validation.fitness > best_fitness )
+            {
+                best_fitness = validation.fitness;
+                best = validation;
+                if ( best.valid )
+                    break;
+            }
+        }
+
+        if ( best )
+            result.merge_from(best);
+    }
+}
+
+
+class ArraySchemaMatcher
+{
+    constructor(schema, schema_definition)
+    {
+        this.definition = schema_definition;
+        this.prefix = [];
+        this.items = null;
+
+        if ( "prefixItems" in schema_definition )
+            this.prefix = schema_definition.prefixItems.map(item => new SchemaMatcher(schema, item));
+
+        if ( "items" in schema_definition )
+            this.items = new SchemaMatcher(schema, schema_definition.items);
+    }
+
+    validate(object, result)
+    {
+        // Error should be set on `type` mismatch
+        if ( !Array.isArray(object) )
+            return;
+
+        if ( object.length < this.definition.minItems )
+            result.fail(3, `Too few items (<code>${object.length}</code>, should have <code>${this.definition.minItems}</code>)`);
+
+        if ( object.length < this.definition.maxItems )
+            result.fail(1, `Too many items (<code>${object.length}</code>, should have <code>${this.definition.maxItems}</code>)`);
+
+        let i = 0;
+        for ( ; i < Math.min(object.length, this.prefix.length); i++ )
+            result.add_child(i, this.prefix[i].validate(object[i]));
+
+        if ( this.items )
+        {
+            for ( ; i < object.length; i++ )
+                result.add_child(i, this.items.validate(object[i]));
+        }
+    }
+}
+
+class NotSchemaMatcher
+{
+    constructor(schema, schema_data)
+    {
+        this.wrapped = new SchemaMatcher(schema, schema_data);
+    }
+
+    validate(object, result)
+    {
+        if ( this.wrapped.validate(object).valid )
+            result.fail(50, `Matches <code>not</code> condition.`);
+    }
+}
+
+class ConditionalSchemaMatcher
+{
+    constructor(schema, schema_data)
+    {
+        this.if = new SchemaMatcher(schema, schema_data.if);
+        this.then = schema_data.then ? new SchemaMatcher(schema, schema_data.then) : null;
+        this.else = schema_data.else ? new SchemaMatcher(schema, schema_data.else) : null;
+    }
+
+    validate(object, result)
+    {
+        var if_result = this.if.validate(object);
+        if ( if_result.valid )
+        {
+            if ( this.then )
+                this.then.validate(object, result);
+        }
+        else if ( this.else )
+        {
+            this.else.validate(object, result);
+        }
+    }
+}
+
+class SchemaData
+{
+    constructor(schema, mapping_data)
+    {
+        this.schema = schema;
+        this.mapping_data = mapping_data;
+        this.cache = {};
+        this.root = new SchemaMatcher(this, schema);
+    }
+
+    get_ref(ref)
+    {
+        if ( this.cache[ref] )
+            return this.cache[ref];
+
+        var path = this.ref_to_path(ref);
+        var data = this.walk_schema(this.schema, path);
+        var object = new SchemaMatcher(this, data, ref, path);
+        this.cache[ref] = object;
+        return object;
+    }
+
+    ref_to_path(ref)
+    {
+        return ref.replace(/^#\//, '').split("/");
+    }
+
+    walk_schema(source, path)
+    {
+        for ( var item of path )
+            source = source[item];
+        return source;
+    }
+
+    get_links(group, cls, title)
+    {
+        var values = {
+            "extra": null,
+            "page": group,
+            "anchor": cls,
+            "name": title,
+            "name_prefix": "",
+        };
+
+        if ( group == "constants" )
+            values["anchor"] = values["anchor"].replace("-", "");
+
+        var mapping_data = this.mapping_data[group];
+        if ( mapping_data )
+            values = {
+                ...values,
+                ...(mapping_data._defaults ?? {}),
+                ...(mapping_data[cls] ?? {}),
+            }
+
+        var links = [];
+        if ( values["page"] )
+        {
+            links.push(new ReferenceLink(
+                values["page"], values["anchor"], values["name_prefix"] + values["name"]
+            ));
+        }
+
+        if ( values["extra"] )
+        {
+            var extra = values["extra"];
+            links.push(new ReferenceLink(
+                extra["page"], extra["anchor"], extra["name"],
+            ));
+        }
+        return links;
+    }
+}
+
+class SchemaObject
+{
+    constructor(
+        json_value,
+        validation,
+        parent=null
+    )
+    {
+        this.json_value = json_value;
+        this.parent = parent;
+        this.validation = validation;
+        this.results = {};
+        this.is_array = false;
+        this.is_object = false;
+
+        if ( Array.isArray(json_value) )
+        {
+            this.is_array = true;
+            if ( validation )
+                this.items = json_value.map((v, i) => new SchemaObject(v, validation.children[i], this));
+        }
+        else if ( typeof json_value == "object" )
+        {
+            this.is_object = true;
+            if ( validation )
+                this.properties = Object.entries(json_value).map(
+                    e => [e[0], new SchemaObject(e[1], validation.children[e[0]], this)]
+                );
+        }
+    }
+
+    get_features(features = new Set())
+    {
+        if ( this.validation )
+            this.validation.get_features(features);
+        return features;
+    }
+
+    explain(formatter)
+    {
+        if ( !this.validation )
+        {
+            formatter.format_unknown(this.json_value);
+        }
+        else if ( this.is_array )
+        {
+            this.explain_array(formatter);
+        }
+        else if ( this.is_object )
+        {
+            this.explain_object(formatter);
+        }
+        else if ( this.validation.valid )
+        {
+            if ( this.validation.const )
+            {
+                var box = formatter.info_box(JSON.stringify(this.json_value), formatter.hljs_type(this.json_value));
+                this.enum_info_box(box);
+            }
+            else
+            {
+                formatter.encode_item(this.json_value);
+            }
+
+            if ( this.validation.show_warning )
+            {
+                formatter.write(" ");
+                formatter.warn_invalid(this.validation);
+            }
+        }
+        else
+        {
+            formatter.format_unknown(this.json_value);
+            formatter.write(" ");
+            formatter.warn_invalid(this.validation);
+        }
+    }
+
+    explain_array(formatter)
+    {
+        if ( this.json_value.length == 0 )
+        {
+            if ( !this.validation.valid )
+            {
+                formatter.write_item("[]", "deletion");
+                formatter.warn_invalid(this.validation);
+            }
+            else
+            {
+                formatter.write("[]");
+
+                if ( this.validation.show_warning )
+                {
+                    formatter.write(" ");
+                    formatter.warn_invalid(this.validation);
+                }
+            }
+            return;
+        }
+
+        formatter.open("[");
+        var container = null;
+        if ( this.validation.cls )
+        {
+            this.validation.info_box(this.json_value, formatter, false);
+            container = formatter.collapser();
+        }
+        else if ( formatter.should_collapse(this.json_value) )
+        {
+            container = formatter.collapser();
+        }
+
+        if ( this.validation.show_warning )
+            formatter.warn_invalid(this.validation);
+
+        formatter.format_array_contents(this.items, !container, item => item.explain(formatter));
+
+        if ( container )
+            formatter.set_container(container);
+
+        formatter.close("]");
+    }
+
+    explain_object(formatter)
+    {
+        formatter.open("{");
+        if ( this.validation.cls )
+            this.validation.info_box(this.json_value, formatter, false, false);
+
+        if ( Object.keys(this.json_value).length == 0 )
+        {
+            if ( this.validation.show_warning )
+                formatter.warn_invalid(this.validation);
+            formatter.close("}");
+            return;
+        }
+
+        var container = formatter.collapser();
+
+        if ( this.validation.show_warning )
+            formatter.warn_invalid(this.validation);
+
+        formatter.write("\n");
+
+        for ( var i = 0; i < this.properties.length; i++ )
+        {
+            formatter.write_indent();
+            var [name, item] = this.properties[i];
+
+            if ( item.validation )
+            {
+                var prop_box = formatter.info_box(JSON.stringify(name), "string")
+                this.property_info_box(prop_box, item);
+                if ( item.validation.key.show_warning )
+                    formatter.warn_invalid(item.validation.key);
+                formatter.write(": ");
+
+                if ( name == "x" && typeof item.json_value == "string" && item.json_value != "" )
+                    formatter.expression(item.json_value);
+                else
+                    item.explain(formatter);
+            }
+            else
+            {
+                formatter.encode_item(name);
+                formatter.warn_invalid(
+                    {issues: [`Property not recognized`]},
+                    "fas fa-question-circle",
+                    "Unknown Property"
+                );
+                formatter.write(": ");
+                formatter.format_unknown(item.json_value);
+            }
+
+            if ( i != this.properties.length -1 )
+                formatter.write(",\n");
+            else
+                formatter.write("\n");
+        }
+
+        formatter.write_indent(-1);
+        formatter.set_container(container);
+        formatter.close("}");
+    }
+
+    property_info_box(box, item)
+    {
+        this.validation.info_box_title(box);
+        item.validation.get_links();
+        item.validation.key.get_links();
+        box.add(null, " \u2192 ");
+        box.add("strong", item.validation.key.title);
+        box.add("br");
+        item.validation.format_type(box);
+        if ( item.validation.key.description )
+        {
+            box.add("br");
+            box.add("span", item.validation.key.description, {class: "description"});
+        }
+    }
+
+    enum_info_box(box)
+    {
+        var title_val = this.validation.def || !this.validation.key ? this.validation : this.validation.key;
+
+        title_val.info_box_title(box);
+        title_val.info_box_schema_link(box);
+
+        this.validation.info_box_type_line(box, false);
+
+        box.add("br");
+        box.add("code", JSON.stringify(this.json_value));
+        box.add(null, " = ");
+        box.add("", this.validation.const.title);
+
+        box.add("br");
+        box.add("", this.validation.const.description);
+    }
+}
+
+class ReferenceLink
+{
+    constructor(page, anchor, name)
+    {
+        this.page = page;
+        this.anchor = anchor;
+        this.name = name;
+    }
+
+    to_element()
+    {
+        var a = document.createElement("a");
+        a.setAttribute("href", `/lottie-docs/${this.page}/#${this.anchor}`);
+        a.appendChild(document.createTextNode(this.name));
+        return a;
     }
 }
 
@@ -545,563 +1166,6 @@ class LottiePreviewGenerator
         }
     }
 
-}
-
-class SchemaDefinition
-{
-    static _id = 0;
-
-    constructor(
-        schema,
-        schema_definition,
-        def = null,
-        def_path = null,
-    )
-    {
-        this.id = SchemaDefinition._id;
-        SchemaDefinition._id += 1;
-        this.schema = schema;
-        this.schema_definition = schema_definition;
-        this.def = def;
-        this.def_path = def_path;
-        this.steps = []
-        this._built = false;
-        if ( this.def_path && this.def_path.length == 3 && this.def_path[0] == "$defs" )
-        {
-            this.group = this.def_path[1];
-            this.cls = this.def_path[2];
-        }
-    }
-
-    build()
-    {
-        if ( this._built )
-            return;
-        this._built = true;
-
-        this.title = this.schema_definition.title;
-        this.description = this.schema_definition.description;
-        this.type = this.schema_definition.type;
-
-        if ( this.schema_definition.type )
-            this.norm_type = this._norm_type(this.schema_definition.type);
-        else
-            this.norm_type = null;
-
-        if ( this.schema_definition.properties )
-        {
-            this.properties = {};
-            for ( var [name, prop] of Object.entries(this.schema_definition.properties) )
-            {
-                var prop = new SchemaDefinition(this.schema, prop);
-                this.properties[name] = prop;
-            }
-        }
-
-        this.ref_anchor = null;
-        this.ref = null;
-        if ( this.schema_definition.$ref )
-        {
-            this.ref = this.schema.get_ref(this.schema_definition.$ref);
-            this.ref_anchor = this.ref.def;
-        }
-
-        for ( var what of ["oneOf", "allOf", "anyOf"] )
-        {
-            if ( this.schema_definition[what] )
-                this[what] = this.schema_definition[what].map(d => new SchemaDefinition(this.schema, d));
-        }
-
-        if ( this.schema_definition.not )
-            this.not = new SchemaDefinition(this.schema, this.schema_definition.not);
-
-        if ( this.schema_definition.items )
-            this.items = new SchemaDefinition(this.schema, this.schema_definition.items);
-
-        if ( this.schema_definition.if )
-        {
-            this.if = new SchemaDefinition(this.schema, this.schema_definition.if);
-            this.then = new SchemaDefinition(this.schema, this.schema_definition.then);
-            if ( this.schema_definition.else )
-                this.else = new SchemaDefinition(this.schema, this.schema_definition.else);
-        }
-    }
-
-    _type_of(json_value)
-    {
-        if ( Array.isArray(json_value) )
-            return "array";
-        return typeof json_value;
-    }
-
-    _norm_type(schema_type)
-    {
-        if ( schema_type == "integer" )
-            return "number";
-        return schema_type;
-    }
-
-    _sub_validate(object, validation, positive)
-    {
-        var myvalid = this.validate(object, false, positive, false, null);
-        if ( positive )
-            validation.merge_from(myvalid);
-        return myvalid;
-    }
-
-    _any_of(object, validation, children, positive)
-    {
-        var best = null;
-        var best_penalty = Infinity;
-        for ( let base of children )
-        {
-            var myvalid = base.validate(object, false, positive, false, null);
-            if ( myvalid.penalty < best_penalty )
-            {
-                best_penalty = myvalid.penalty;
-                best = myvalid;
-            }
-        }
-
-        if ( best && positive )
-            validation.merge_from(best);
-
-        if ( !best || !best.valid )
-            validation.fail(10);
-
-        return best;
-    }
-
-    validate(object, add_validation, positive, ref_description, parent_validation)
-    {
-        if ( this.id in object.results )
-            return object.results[this.id];
-
-        this.build();
-
-        var validation = new ValidationResult(this, parent_validation);
-        if ( positive && !ref_description )
-            validation.merge_from(this);
-
-        if ( this.norm_type )
-        {
-            var val_type = this._type_of(object.json_value);
-            if ( val_type != this.norm_type )
-                validation.fail(100,
-                    `Type doesn't match (should be <code>${this.type}</code> instead of <code>${val_type}</code>)`
-                );
-        }
-
-        if ( positive && this.schema_definition.deprecated )
-            validation.deprecated = true;
-
-        if ( "const" in this.schema_definition )
-        {
-            if ( object.json_value !== this.schema_definition.const )
-                validation.fail(10,
-                    `Value should be <code>${JSON.stringify(this.schema_definition.const)}</code>`
-                );
-            else if ( positive )
-                validation.const = validation;
-        }
-
-        if ( object.is_object )
-        {
-            if ( this.properties )
-            {
-                for ( let [name, prop] of object.properties )
-                {
-                    if ( name in this.properties )
-                    {
-                        var propval = this.properties[name].validate(prop, positive, positive, true, validation);
-                        propval.set_key_validation(name);
-
-                        if ( !propval.valid )
-                            validation.fail(name == "ty" ? 20 : 1, `Property <code>${name}</code> doesn't match`);
-                        if ( positive && propval.deprecated )
-                            validation.warnings.push(`Property <code>${name}</code> is deprecated`);
-                    }
-                }
-            }
-
-            if ( "required" in this.schema_definition )
-            {
-                for ( let req of this.schema_definition.required )
-                    if ( !(req in object.json_value) )
-                        validation.fail(10, `Missing required property <code>${req}</code>`);
-            }
-        }
-        else if ( object.is_array && this.items )
-        {
-            for ( var i = 0; i < object.items.length; i++ )
-                if ( !this.items.validate(object.items[i], positive, positive, false, validation).valid )
-                    validation.fail(1, `Item ${i} doesn't match`);
-        }
-
-        if ( this.ref )
-        {
-            var val = this.ref._sub_validate(object, validation, positive);
-            validation.fail(val.penalty);
-        }
-
-        if ( positive && ref_description )
-            validation.merge_from(this);
-
-        if ( this.if )
-        {
-            if ( this.if.validate(object, false, false, false, null).valid )
-            {
-                this.then._sub_validate(object, validation, positive);
-            }
-            else if ( this.else )
-            {
-                this.else._sub_validate(object, validation, positive);
-            }
-        }
-
-        if ( this.not )
-        {
-            if ( this.not.validate(object, false, false, false, null).valid )
-                validation.fail(50, `Matches <code>not</code> condition.`);
-        }
-
-        if ( this.oneOf )
-        {
-            // Should succeed only if exactly 1 matches, but we can be more lax
-            this._any_of(object, validation, this.oneOf, positive);
-        }
-
-        if ( this.anyOf )
-        {
-            this._any_of(object, validation, this.anyOf, positive);
-        }
-
-        if ( this.allOf )
-        {
-            for ( let base of this.allOf )
-            {
-                var val = base._sub_validate(object, validation, positive);
-                validation.fail(val.penalty);
-            }
-        }
-
-        if ( add_validation )
-            object.validations.push(validation);
-
-        object.results[this.id] = validation;
-
-        return validation;
-    }
-}
-
-
-class SchemaObject
-{
-    constructor(
-        json_value,
-        parent=null
-    )
-    {
-        this.json_value = json_value;
-        this.parent = parent;
-        this.validations = [];
-        this.results = {};
-        this.is_array = false;
-        this.is_object = false;
-        this._validation = null;
-        if ( Array.isArray(json_value) )
-        {
-            this.is_array = true;
-            this.items = json_value.map(v => new SchemaObject(v, this));
-        }
-        else if ( typeof json_value == "object" )
-        {
-            this.is_object = true;
-            this.properties = Object.entries(json_value).map(
-                e => [e[0], new SchemaObject(e[1], this)]
-            );
-        }
-    }
-
-    get validation()
-    {
-        if ( this._validation == null && this.validations.length )
-        {
-            var best_penalty = Infinity;
-
-            for ( var val of this.validations )
-            {
-                if ( val.valid )
-                {
-                    this._validation = val;
-                    break;
-                }
-
-                if ( val.penalty < best_penalty )
-                {
-                    best_penalty = val.penalty;
-                    this._validation = val;
-                }
-            }
-        }
-
-        return this._validation;
-    }
-
-    explain(formatter)
-    {
-        if ( !this.validation )
-        {
-            formatter.format_unknown(this.json_value);
-        }
-        else if ( this.is_array )
-        {
-            this.explain_array(formatter);
-        }
-        else if ( this.is_object )
-        {
-            this.explain_object(formatter);
-        }
-        else if ( this.validation.valid )
-        {
-            if ( this.validation.const )
-            {
-                var box = formatter.info_box(JSON.stringify(this.json_value), formatter.hljs_type(this.json_value));
-                this.enum_info_box(box);
-            }
-            else
-            {
-                formatter.encode_item(this.json_value);
-            }
-
-            if ( this.validation.show_warning )
-            {
-                formatter.write(" ");
-                formatter.warn_invalid(this.validation);
-            }
-        }
-        else
-        {
-            formatter.format_unknown(this.json_value);
-            formatter.write(" ");
-            formatter.warn_invalid(this.validation);
-        }
-    }
-
-    explain_array(formatter)
-    {
-        if ( this.json_value.length == 0 )
-        {
-            if ( !this.validation.valid )
-            {
-                formatter.write_item("[]", "deletion");
-                formatter.warn_invalid(this.validation);
-            }
-            else
-            {
-                formatter.write("[]");
-
-                if ( this.validation.show_warning )
-                {
-                    formatter.write(" ");
-                    formatter.warn_invalid(this.validation);
-                }
-            }
-            return;
-        }
-
-        formatter.open("[");
-        var container = null;
-        if ( this.validation.cls )
-        {
-            this.validation.info_box(this.json_value, formatter, false);
-            container = formatter.collapser();
-        }
-        else if ( formatter.should_collapse(this.json_value) )
-        {
-            container = formatter.collapser();
-        }
-
-        if ( this.validation.show_warning )
-            formatter.warn_invalid(this.validation);
-
-        formatter.format_array_contents(this.items, !container, item => item.explain(formatter));
-
-        if ( container )
-            formatter.set_container(container);
-
-        formatter.close("]");
-    }
-
-    explain_object(formatter)
-    {
-        formatter.open("{");
-        if ( this.validation.cls )
-            this.validation.info_box(this.json_value, formatter, false, false);
-
-        if ( Object.keys(this.json_value).length == 0 )
-        {
-            if ( this.validation.show_warning )
-                formatter.warn_invalid(this.validation);
-            formatter.close("}");
-            return;
-        }
-
-        var container = formatter.collapser();
-
-        if ( this.validation.show_warning )
-            formatter.warn_invalid(this.validation);
-
-        formatter.write("\n");
-
-        for ( var i = 0; i < this.properties.length; i++ )
-        {
-            formatter.write_indent();
-            var [name, item] = this.properties[i];
-
-            if ( item.validation )
-            {
-                var prop_box = formatter.info_box(JSON.stringify(name), "string")
-                this.property_info_box(prop_box, item);
-                if ( item.validation.key.show_warning )
-                    formatter.warn_invalid(item.validation.key);
-                formatter.write(": ");
-
-                if ( name == "x" && typeof item.json_value == "string" && item.json_value != "" )
-                    formatter.expression(item.json_value);
-                else
-                    item.explain(formatter);
-            }
-            else
-            {
-                formatter.encode_item(name);
-                formatter.warn_invalid(
-                    {issues: [`Property not recognized`]},
-                    "fas fa-question-circle",
-                    "Unknown Property"
-                );
-                formatter.write(": ");
-                formatter.format_unknown(item.json_value);
-            }
-
-            if ( i != this.properties.length -1 )
-                formatter.write(",\n");
-            else
-                formatter.write("\n");
-        }
-
-        formatter.write_indent(-1);
-        formatter.set_container(container);
-        formatter.close("}");
-    }
-
-    property_info_box(box, item)
-    {
-        this.validation.info_box_title(box);
-        item.validation.get_links();
-        item.validation.key.get_links();
-        box.add(null, " \u2192 ");
-        box.add("strong", item.validation.key.title);
-        box.add("br");
-        item.validation.format_type(box);
-        if ( item.validation.key.description )
-        {
-            box.add("br");
-            box.add("span", item.validation.key.description, {class: "description"});
-        }
-    }
-
-    enum_info_box(box)
-    {
-        var title_val = this.validation.def || !this.validation.key ? this.validation : this.validation.key;
-
-        title_val.info_box_title(box);
-        title_val.info_box_schema_link(box);
-
-        this.validation.info_box_type_line(box, false);
-
-        box.add("br");
-        box.add("code", JSON.stringify(this.json_value));
-        box.add(null, " = ");
-        box.add("", this.validation.const.title);
-
-        box.add("br");
-        box.add("", this.validation.const.description);
-    }
-}
-
-class SchemaData
-{
-    constructor(schema, mapping_data)
-    {
-        this.schema = schema;
-        this.mapping_data = mapping_data;
-        this.cache = {};
-        this.root = new SchemaDefinition(this, schema);
-    }
-
-    get_ref(ref)
-    {
-        if ( this.cache[ref] )
-            return this.cache[ref];
-
-        var path = this.ref_to_path(ref);
-        var data = this.walk_schema(this.schema, path);
-        var object = new SchemaDefinition(this, data, ref, path);
-        this.cache[ref] = object;
-        return object;
-    }
-
-    ref_to_path(ref)
-    {
-        return ref.replace(/^#\//, '').split("/");
-    }
-
-    walk_schema(source, path)
-    {
-        for ( var item of path )
-            source = source[item];
-        return source;
-    }
-
-    get_links(group, cls, title)
-    {
-        var values = {
-            "extra": null,
-            "page": group,
-            "anchor": cls,
-            "name": title,
-            "name_prefix": "",
-        };
-
-        if ( group == "constants" )
-            values["anchor"] = values["anchor"].replace("-", "");
-
-        var mapping_data = this.mapping_data[group];
-        if ( mapping_data )
-            values = {
-                ...values,
-                ...(mapping_data._defaults ?? {}),
-                ...(mapping_data[cls] ?? {}),
-            }
-
-        var links = [];
-        if ( values["page"] )
-        {
-            links.push(new ReferenceLink(
-                values["page"], values["anchor"], values["name_prefix"] + values["name"]
-            ));
-        }
-
-        if ( values["extra"] )
-        {
-            var extra = values["extra"];
-            links.push(new ReferenceLink(
-                extra["page"], extra["anchor"], extra["name"],
-            ));
-        }
-        return links;
-    }
 }
 
 class JsonFormatter

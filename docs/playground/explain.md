@@ -203,9 +203,9 @@ function lottie_url_input(url)
     clear_element(parent);
     parent.appendChild(document.createTextNode("Loading..."));
 
-    fetch(url).then(
-        r => r.json().then(lottie_set_json).catch(input_error)
-    ).catch(input_error);
+    fetch(url).then(r => r.json())
+    .then(lottie_set_json)
+    .catch(input_error);
 }
 
 function lottie_string_input(string)
@@ -230,11 +230,17 @@ function lottie_set_json(json)
 
     setTimeout(function(){
         clear_element(parent);
+
+        var validation = schema.root.validate(json);
+        var object = new SchemaObject(json, validation);
+        window.validated = object;
+
+        var features = new Set();
+        object.get_features(features);
+        window.lottie_features = features;
+
         var formatter = new JsonFormatter(parent);
         formatter.lottie = json;
-        var object = new SchemaObject(json);
-        window.validated = object;
-        schema.root.validate(object, true, true);
         object.explain(formatter);
         formatter.finalize();
     });
@@ -304,7 +310,7 @@ var icons = {
     "#/$defs/text/text-data": "fas fa-running",
     "#/$defs/text/text-document": "far fa-file-alt",
     "#/$defs/text/text-data-keyframe": "fas fa-key",
-}
+};
 
 var requests = [fetch("/lottie-docs/schema/lottie.schema.json"), fetch("/lottie-docs/schema/docs_mapping.json")]
 Promise.all(requests)
