@@ -6,7 +6,7 @@ class ValidationResult
         this.issues = [];
         this.warnings = [];
         this.items_array = [];
-        this.penalty = 0;
+        this.valid = true;
         this.fitness = 0;
         this.children = {};
         this.title = undefined;
@@ -21,26 +21,21 @@ class ValidationResult
         this._links = null;
     }
 
-    get valid()
-    {
-        return this.penalty == 0;
-    }
-
     get show_warning()
     {
         return this.valid === false || this.warnings.length > 0;
     }
 
-    fail(penalty, issue = null)
+    fail(issue = null)
     {
-        this.penalty += penalty;
+        this.valid = false;
         if ( issue )
             this.issues.push(issue + ".");
     }
 
     merge_from(other)
     {
-        this.penalty += other.penalty;
+        this.valid = this.valid && other.valid;
         this.fitness += other.fitness;
 
         for ( let key of ValidationResult.simple_keys )
@@ -354,7 +349,7 @@ class SchemaMatcher extends BaseMatcher
         {
             var val_type = this._type_of(json_value);
             if ( val_type != this.norm_type )
-                result.fail(100,
+                result.fail(
                     `Type doesn't match (should be <code>${this.type}</code> instead of <code>${val_type}</code>)`
                 );
         }
@@ -363,7 +358,7 @@ class SchemaMatcher extends BaseMatcher
         {
             if ( json_value !== this.const )
             {
-                result.fail(30, `Value should be <code>${JSON.stringify(this.const)}</code>`);
+                result.fail(`Value should be <code>${JSON.stringify(this.const)}</code>`);
             }
             else
             {
@@ -380,7 +375,7 @@ class SchemaMatcher extends BaseMatcher
         {
             for ( let req of this.required )
                 if ( !(req in json_value) )
-                    result.fail(10, `Missing required property <code>${req}</code>`);
+                    result.fail(`Missing required property <code>${req}</code>`);
 
             for ( let matcher of this.properties )
                 matcher.validate(json_value, result);
@@ -494,10 +489,10 @@ class ArraySchemaMatcher extends BaseMatcher
             return;
 
         if ( object.length < this.definition.minItems )
-            result.fail(3, `Too few items (<code>${object.length}</code>, should have <code>${this.definition.minItems}</code>)`);
+            result.fail(`Too few items (<code>${object.length}</code>, should have <code>${this.definition.minItems}</code>)`);
 
         if ( object.length < this.definition.maxItems )
-            result.fail(1, `Too many items (<code>${object.length}</code>, should have <code>${this.definition.maxItems}</code>)`);
+            result.fail(`Too many items (<code>${object.length}</code>, should have <code>${this.definition.maxItems}</code>)`);
 
         let i = 0;
         for ( ; i < Math.min(object.length, this.prefix.length); i++ )
@@ -510,7 +505,7 @@ class ArraySchemaMatcher extends BaseMatcher
             }
             else
             {
-                result.fail(1, `Item <code>${i}</code> doesn't match`);
+                result.fail(`Item <code>${i}</code> doesn't match`);
                 if ( this.items )
                 {
                     let generic_validation = this.items.validate(object[i]);
@@ -534,7 +529,7 @@ class ArraySchemaMatcher extends BaseMatcher
                 if ( validation.valid )
                     result.fitness += 1;
                 else
-                    result.fail(1, `Item <code>${i}</code> doesn't match`);
+                    result.fail(`Item <code>${i}</code> doesn't match`);
             }
 
             this.items.add_array_item_types(result);
@@ -553,7 +548,7 @@ class NotSchemaMatcher extends BaseMatcher
     validate(object, result)
     {
         if ( this.wrapped.validate(object).valid )
-            result.fail(50, `Matches <code>not</code> condition.`);
+            result.fail(`Matches <code>not</code> condition.`);
     }
 }
 
