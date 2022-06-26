@@ -32,7 +32,9 @@ class LottiePlayer
 
         this.on_reload();
 
-        if ( typeof this.lottie == "string" )
+        if ( !this.lottie )
+            return;
+        else if ( typeof this.lottie == "string" )
             options.path = this.lottie;
         else
             // parse/stringify because the player modifies the passed object

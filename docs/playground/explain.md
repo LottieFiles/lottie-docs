@@ -4,62 +4,6 @@ Explain my Lottie
 =================
 
 <style>
-.info_box_trigger {
-    display: inline-block;
-    border-bottom: 1px dotted black;
-    cursor: pointer;
-}
-
-.info_box_content, .info_box_lottie {
-    display: none;
-}
-
-#info_box {
-    display: none;
-    width: 512px;
-    border: 5px solid #555;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    margin-left: 30px;
-/*     opacity: 0; */
-/*     transition: opacity 0.3s; */
-    background: white;
-    color: black;
-    font-style: normal;
-    word-break: normal;
-}
-
-
-#info_box::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-top: 5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent #555 transparent transparent;
-    margin-left: -15px;
-    height: 5px;
-}
-
-#info_box .info_box_content{
-    display: block;
-}
-
-.info_box_lottie {
-    max-width: 300px;
-    max-height: 300px;
-    margin-top: 1.2em;
-}
-
-.info_box_content .description {
-    white-space: pre-wrap;
-}
 
 .collapse-button {
     cursor: pointer;
@@ -152,7 +96,6 @@ summary {
         </label>
     </div>
 </div>
-<div>
 <script>
 function input_error(e)
 {
@@ -217,12 +160,6 @@ function lottie_string_input(string)
     }
 }
 
-function clear_element(parent)
-{
-    while ( parent.firstChild )
-        parent.removeChild(parent.firstChild);
-}
-
 function lottie_set_json(json)
 {
     clear_element(parent);
@@ -232,14 +169,14 @@ function lottie_set_json(json)
         clear_element(parent);
 
         var validation = schema.root.validate(json);
-        var object = new SchemaObject(json, validation);
+        var object = new SchemaObject(schema, json, validation);
         window.validated = object;
 
         var features = new Set();
         object.get_features(features);
         window.lottie_features = features;
 
-        var formatter = new JsonFormatter(parent);
+        var formatter = new JsonFormatter(parent, schema);
         formatter.lottie = json;
         object.explain(formatter);
         formatter.finalize();

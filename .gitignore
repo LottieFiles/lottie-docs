@@ -1,3 +1,5 @@
 site/
 docs/schema/lottie.schema.json
 docs/scripts/blockly_generated.js
+codemirror/node_modules/
+codemirror/package-lock.json

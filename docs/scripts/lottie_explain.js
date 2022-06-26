@@ -1,8 +1,7 @@
 class ValidationResult
 {
-    constructor(definition)
+    constructor()
     {
-        this.definitions = [definition];
         this.issues = [];
         this.warnings = [];
         this.items_array = [];
@@ -66,29 +65,10 @@ class ValidationResult
             child.get_features(features);
     }
 
-    get_links()
-    {
-        if ( this._links === null )
-        {
-            if ( this.cls )
-            {
-                this._links = this.definitions[0].schema.get_links(this.group, this.cls, this.title);
-                if ( this._links.length )
-                    this.title = this._links.map(l => l.name).join(" ");
-            }
-            else
-            {
-                this._links = [];
-            }
-        }
-        return this._links;
-    }
-
     set_key_validation(name, matcher)
     {
         this.key = new ValidationResult(matcher);
-        for ( let def of this.key.definitions )
-            def.populate_result(this.key);
+        matcher.populate_result(this.key);
 
         if ( !this.key.title )
             this.key.title = name;
@@ -97,7 +77,57 @@ class ValidationResult
 
 ValidationResult.matcher_keys = ["title", "description", "feature", "group", "cls", "def", "type"];
 ValidationResult.simple_keys = ValidationResult.matcher_keys.concat("const", "key");
-ValidationResult.array_keys = ["definitions", "issues", "warnings"];
+ValidationResult.array_keys = ["issues", "warnings"];
+
+
+function descend_validation_path(result, path)
+{
+    let node = result;
+    let parents = [node];
+    for ( let item of path )
+    {
+        if ( !(item in node.children) )
+            return [];
+
+        node = node.children[item];
+        parents.unshift(node);
+    }
+
+    return parents;
+}
+
+function descend_lottie_path(lottie, path)
+{
+    let node = lottie;
+    for ( let item of path )
+    {
+        if ( item in node )
+            node = node[item];
+        else
+            return null;
+    }
+
+    return node;
+}
+
+
+function get_validation_links(validation, schema)
+{
+    if ( validation._links === null )
+    {
+        if ( validation.cls )
+        {
+            validation._links = schema.get_links(validation.group, validation.cls, validation.title);
+            if ( validation._links.length )
+                validation.title = validation._links.map(l => l.name).join(" ");
+        }
+        else
+        {
+            validation._links = [];
+        }
+    }
+    return validation._links;
+}
 
 
 class BaseMatcher
@@ -400,7 +430,7 @@ class ArraySchemaMatcher extends BaseMatcher
         if ( object.length < this.definition.minItems )
             result.fail(`Too few items (<code>${object.length}</code>, should have <code>${this.definition.minItems}</code>)`);
 
-        if ( object.length < this.definition.maxItems )
+        if ( object.length > this.definition.maxItems )
             result.fail(`Too many items (<code>${object.length}</code>, should have <code>${this.definition.maxItems}</code>)`);
 
         let i = 0;
@@ -563,11 +593,13 @@ class SchemaData
 class SchemaObject
 {
     constructor(
+        schema,
         json_value,
         validation,
         parent=null
     )
     {
+        this.schema = schema;
         this.json_value = json_value;
         this.parent = parent;
         this.validation = validation;
@@ -579,14 +611,14 @@ class SchemaObject
         {
             this.is_array = true;
             if ( validation )
-                this.items = json_value.map((v, i) => new SchemaObject(v, validation.children[i], this));
+                this.items = json_value.map((v, i) => new SchemaObject(this.schema, v, validation.children[i], this));
         }
         else if ( typeof json_value == "object" )
         {
             this.is_object = true;
             if ( validation )
                 this.properties = Object.entries(json_value).map(
-                    e => [e[0], new SchemaObject(e[1], validation.children[e[0]], this)]
+                    e => [e[0], new SchemaObject(this.schema, e[1], validation.children[e[0]], this)]
                 );
         }
     }
@@ -617,7 +649,7 @@ class SchemaObject
             if ( this.validation.const )
             {
                 var box = formatter.info_box(JSON.stringify(this.json_value), formatter.hljs_type(this.json_value));
-                this.enum_info_box(box);
+                box.enum_value(this.validation, JSON.stringify(this.json_value));
             }
             else
             {
@@ -712,7 +744,7 @@ class SchemaObject
             if ( item.validation )
             {
                 var prop_box = formatter.info_box(JSON.stringify(name), "string")
-                this.property_info_box(prop_box, item);
+                prop_box.property(this.validation, item.validation);
                 if ( item.validation.key.show_warning )
                     formatter.warn_invalid(item.validation.key);
                 formatter.write(": ");
@@ -743,40 +775,6 @@ class SchemaObject
         formatter.write_indent(-1);
         formatter.set_container(container);
         formatter.close("}");
-    }
-
-    property_info_box(box, item)
-    {
-        box.result_title(this.validation);
-        item.validation.get_links();
-        item.validation.key.get_links();
-        box.add(null, " \u2192 ");
-        box.add("strong", item.validation.key.title);
-        box.add("br");
-        box.format_type(item.validation);
-        if ( item.validation.key.description )
-        {
-            box.add("br");
-            box.add("span", item.validation.key.description, {class: "description"});
-        }
-    }
-
-    enum_info_box(box)
-    {
-        var title_val = this.validation.def || !this.validation.key ? this.validation : this.validation.key;
-
-        box.result_title(title_val);
-        box.schema_link(title_val);
-
-        box.type_line(this.validation, false);
-
-        box.add("br");
-        box.add("code", JSON.stringify(this.json_value));
-        box.add(null, " = ");
-        box.add("", this.validation.const.title);
-
-        box.add("br");
-        box.add("", this.validation.const.description);
     }
 }
 
@@ -1127,7 +1125,7 @@ class LottiePreviewGenerator
 
 class JsonFormatter
 {
-    constructor(element)
+    constructor(element, schema)
     {
         this.container = element;
         this.element = document.createElement("span");
@@ -1135,6 +1133,7 @@ class JsonFormatter
         this.indent = 0;
         this.object_id = 0;
         this.invalid_id = 0;
+        this.schema = schema;
     }
 
     finalize()
@@ -1275,7 +1274,7 @@ class JsonFormatter
                 wrapper.insertBefore(document.createTextNode(" "), after);
         }
 
-        return new InfoBoxContents(wrapper);
+        return new InfoBoxContents(wrapper, this.schema);
     }
 
     write(str)
@@ -1361,23 +1360,10 @@ class JsonFormatter
 
     result_info_box(result, json, link_defs = true, show_type = true)
     {
-        result.get_links(); // updates title
+        get_validation_links(result, this.schema); // updates title
 
         var box = this.info_box(result.title, "comment", icons[result.def] ?? "fas fa-info-circle");
-        box.result_title(result);
-
-        box.schema_link(result);
-
-        if ( show_type )
-            box.type_line(result, link_defs);
-
-        if ( result.description )
-        {
-            box.add("br");
-            box.add("span", result.description, {class: "description"});
-        }
-
-        box.lottie_loader = new LottiePreviewGenerator(result.group, result.cls, json, this.lottie);
+        box.result_info_box(result, json, this.lottie, link_defs = true, show_type = true);
     }
 }
 
@@ -1396,23 +1382,23 @@ class InfoBox
         this.btn_reset_view = this.element.querySelector("#btn_reset_view");
         this.btn_reset_view.addEventListener("click", this.on_btn_reset_view.bind(this));
         this.button_container = this.element.querySelector(".info_box_buttons");
+        this.info_box_data = null;
     }
 
     clear()
     {
         if ( this.target )
-        {
             this.target.appendChild(this.contents);
 
-            clear_element(this.contents_target);
+        clear_element(this.contents_target);
 
-            this.lottie_player.clear();
+        this.lottie_player.clear();
 
-            this.lottie_target.style.display = "none";
-            this.button_container.style.display = "none";
-            this.target = null;
-            this.contents = null;
-        }
+        this.lottie_target.style.display = "none";
+        this.button_container.style.display = "none";
+        this.target = null;
+        this.contents = null;
+        this.info_box_data = null;
     }
 
     hide()
@@ -1429,15 +1415,22 @@ class InfoBox
             return;
         }
 
+        let contents = trigger.querySelector(".info_box_content");
+        this.show_with_contents(trigger, contents, contents.info_box_data);
+    }
+
+    show_with_contents(trigger, contents, data, x, y)
+    {
         this.clear();
         this.target = trigger;
-        this.contents = this.target.querySelector(".info_box_content");
+        this.contents = contents;
         this.contents_target.appendChild(this.contents);
+        this.info_box_data = data;
         this.element.style.display = "block";
-        this.element.style.top = (this.target.offsetTop - 5) + "px";
-        this.element.style.left = (this.target.offsetLeft + this.target.offsetWidth) + "px";
+        this.element.style.top = (y ?? (this.target.offsetTop - 5)) + "px";
+        this.element.style.left = (x ?? (this.target.offsetLeft + this.target.offsetWidth)) + "px";
 
-        var lottie_json = this.contents.info_box_data.lottie_json;
+        var lottie_json = this.info_box_data.lottie_json;
         if ( lottie_json )
         {
             this.lottie_target.style.display = "block";
@@ -1489,7 +1482,7 @@ class InfoBox
     on_btn_reset_view()
     {
         var svg = this.lottie_target.querySelector("svg");
-        var lottie = this.contents.info_box_data.lottie_json;
+        var lottie = this.info_box_data.lottie_json;
         var new_viewbox = [0, 0, lottie.w, lottie.h];
         svg.setAttribute("viewBox", new_viewbox.join(" "));
 
@@ -1500,14 +1493,16 @@ class InfoBox
 
 class InfoBoxContents
 {
-    constructor(parent)
+    constructor(parent, schema)
     {
         this.element = document.createElement("span");
         this.element.setAttribute("class", "info_box_content");
-        parent.appendChild(this.element);
+        if ( parent )
+            parent.appendChild(this.element);
         this.element.info_box_data = this;
         this._lottie_json = undefined;
         this.lottie_loader = null;
+        this.schema = schema;
     }
 
     get lottie_json()
@@ -1552,7 +1547,7 @@ class InfoBoxContents
 
     result_links_to_element(result, parent)
     {
-        var links = result.get_links();
+        var links = get_validation_links(result, this.schema);
         if ( links.length == 0 )
         {
             parent.appendChild(document.createTextNode(result.title ?? "??"));
@@ -1604,8 +1599,67 @@ class InfoBoxContents
         else
             this.add("code", result.type ?? "???");
     }
+
+    enum_value(validation, value_string)
+    {
+        var title_val = validation.def || !validation.key ? validation : validation.key;
+
+        this.result_title(title_val);
+        this.schema_link(title_val);
+
+        this.type_line(validation, false);
+
+        this.add("br");
+        this.add("code", value_string);
+        this.add(null, " = ");
+        this.add("", validation.const.title);
+
+        this.add("br");
+        this.add("", validation.const.description);
+    }
+
+    property(validation, prop_validation)
+    {
+        this.result_title(validation);
+        get_validation_links(prop_validation, this.schema);
+        get_validation_links(prop_validation.key, this.schema);
+        this.add(null, " \u2192 ");
+        this.add("strong", prop_validation.key.title);
+        this.add("br");
+        this.format_type(prop_validation);
+        if ( prop_validation.key.description )
+        {
+            this.add("br");
+            this.add("span", prop_validation.key.description, {class: "description"});
+        }
+    }
+
+    result_info_box(result, json, lottie_json, link_defs = true, show_type = true)
+    {
+        this.result_title(result);
+
+        this.schema_link(result);
+
+        if ( show_type )
+            this.type_line(result, link_defs);
+
+        if ( result.description )
+        {
+            this.add("br");
+            this.add("span", result.description, {class: "description"});
+        }
+
+        this.lottie_loader = new LottiePreviewGenerator(result.group, result.cls, json, lottie_json);
+    }
 }
 
 
-if ( typeof window == "undefined" )
+function clear_element(parent)
+{
+    while ( parent.firstChild )
+        parent.removeChild(parent.firstChild);
+}
+
+
+if ( typeof window == "undefined" && typeof module != "undefined" )
     module.exports = { SchemaData, SchemaObject };
