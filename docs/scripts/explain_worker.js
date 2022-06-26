@@ -17,10 +17,6 @@ Promise.all(requests)
             type: "schema_loaded",
             schema: schema,
         });
-        postMessage({
-            type: "status",
-            status: "initialized",
-        });
     })
     .catch(critical_error);
 })
@@ -31,20 +27,10 @@ function process_lottie(json)
     if ( schema === null )
         return;
 
-    postMessage({
-        type: "status",
-        status: "processing",
-    });
-
     var validation = schema.root.validate(json);
     postMessage({
         type: "result",
         result: validation,
-    });
-
-    postMessage({
-        type: "status",
-        status: "processing_complete",
     });
 }
 

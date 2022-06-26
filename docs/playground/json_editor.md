@@ -169,9 +169,6 @@ disable_toc: 1
 
         let box = new InfoBoxContents(null, schema);
         let bbox = editor_parent.getBoundingClientRect();
-        let x = ev.clientX - bbox.left + editor_parent.scrollLeft;
-        let y = ev.clientY - bbox.top - 10 + editor_parent.scrollTop;
-        info_box.show_with_contents(null, box.element, box, x, y);
 
         if ( token.name == "PropertyName" && match[0].key && match.length > 1 )
         {
@@ -189,11 +186,20 @@ disable_toc: 1
             get_validation_links(match[0], schema); // updates title
             box.result_info_box(match[0], descend_lottie_path(lottie_player.lottie, path), lottie_player.lottie, false);
         }
+
+        let x = ev.clientX - bbox.left + editor_parent.scrollLeft;
+        let y = ev.clientY - bbox.top - 10 + editor_parent.scrollTop;
+        info_box.show_with_contents(null, box.element, box, x, y);
     });
 
     let validation_result = null;
     let schema = null;
+
     let info_box = new InfoBox(document.getElementById("info_box"));
+    document.body.addEventListener("click", e => {
+        if ( !info_box.element.contains(e.target) )
+            info_box.hide()
+    });
 
     const worker = new Worker("../../scripts/explain_worker.js");
     worker.onmessage = function(ev)
@@ -202,9 +208,6 @@ disable_toc: 1
         {
             case "error":
                 console.error(ev.data.message);
-                break;
-            case "status":
-                console.log(ev.data.status);
                 break;
             case "schema_loaded":
                 schema = Object.assign(new SchemaData(), ev.data.schema);
