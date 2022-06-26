@@ -18,6 +18,8 @@ import {
 } from "@codemirror/language"
 export {ensureSyntaxTree} from "@codemirror/language"
 import {tags} from "@lezer/highlight"
+export {linter} from "@codemirror/lint";
+
 
 const myHighlightStyle = HighlightStyle.define([
     { tag: tags.propertyName, color: "#d14" },

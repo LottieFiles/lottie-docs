@@ -38,6 +38,7 @@ disable_toc: 1
         var load_ok = true;
         var lottie;
         var json_data = editor.state.doc.toString();
+        lint_errors = [];
 
         try {
             lottie = JSON.parse(json_data);
@@ -76,6 +77,7 @@ disable_toc: 1
                 }
             }
             gather_expressions(lottie, "", datalist);*/
+            lint_errors = [];
             worker.postMessage({type: "update", lottie: lottie});
         }
     }
@@ -140,20 +142,8 @@ disable_toc: 1
         return [path, starting_token];
     }
 
-    let editor_parent = document.getElementById("editor_parent");
-
-    let editor = new CodeMirrorWrapper.EditorView({
-        state: CodeMirrorWrapper.EditorState.create({
-            extensions: [
-                ...CodeMirrorWrapper.default_extensions,
-                CodeMirrorWrapper.json(),
-                CodeMirrorWrapper.on_change(update_player_from_editor)
-            ]
-        }),
-        parent: editor_parent
-    });
-
-    editor_parent.addEventListener("contextmenu", function (ev){
+    function on_show_explanation(ev)
+    {
         ev.preventDefault();
         if ( !validation_result )
             return;
@@ -190,19 +180,9 @@ disable_toc: 1
         let x = ev.clientX - bbox.left + editor_parent.scrollLeft;
         let y = ev.clientY - bbox.top - 10 + editor_parent.scrollTop;
         info_box.show_with_contents(null, box.element, box, x, y);
-    });
+    }
 
-    let validation_result = null;
-    let schema = null;
-
-    let info_box = new InfoBox(document.getElementById("info_box"));
-    document.body.addEventListener("click", e => {
-        if ( !info_box.element.contains(e.target) )
-            info_box.hide()
-    });
-
-    const worker = new Worker("../../scripts/explain_worker.js");
-    worker.onmessage = function(ev)
+    function on_worker_message(ev)
     {
         switch ( ev.data.type )
         {
@@ -222,9 +202,156 @@ disable_toc: 1
                 console.log(ev.data);
                 break;
         }
-    };
+    }
+
+    function lint_error(node, severity, message)
+    {
+        let error = {
+            from: node.from,
+            to: node.to,
+            severity: severity,
+            message: message,
+        };
+        if ( message.indexOf("<") != -1 )
+        {
+            error.renderMessage = function() {
+                let span = document.createElement("span");
+                span.innerHTML = message;
+                return span;
+            };
+        }
+        lint_errors.push(error);
+    }
+
+    function add_lint_errors(node, result)
+    {
+        if ( !node || !result )
+            return;
+
+        for ( let issue of result.issues )
+            lint_error(node, "error", issue);
+
+        for ( let issue of result.warnings )
+            lint_error(node, "warning", issue);
+    }
+
+    function recursive_lint_error(node, result)
+    {
+        if ( !node || !result )
+            return false;
+
+        if ( node.name == "JsonText" )
+        {
+            recursive_lint_error(node.firstChild, result);
+            return false;
+        }
+
+        if ( node.name == "Object" )
+        {
+            add_lint_errors(node.firstChild, result);
+            add_lint_errors(node.lastChild, result);
+
+            for ( let prop_node of node.getChildren("Property") )
+            {
+                let name_node = prop_node.getChild("PropertyName");
+                if ( !name_node )
+                    continue;
+
+                let name = editor.state.sliceDoc(name_node.from + 1, name_node.to - 1);
+                if ( name in result.children )
+                {
+                    let prop_result = result.children[name];
+                    add_lint_errors(name_node, prop_result.key);
+                    recursive_lint_error(prop_node.lastChild, prop_result);
+                }
+                else
+                {
+                    lint_errors.push({
+                        from: name_node.from,
+                        to: name_node.to,
+                        severity: "warning",
+                        message: "Unknown Property"
+                    });
+                }
+            }
+
+            return true;
+        }
+        else if ( node.name == "Array" && node.firstChild )
+        {
+            add_lint_errors(node.firstChild, result);
+            add_lint_errors(node.lastChild, result);
+
+            var index = 0;
+            var cur = node.firstChild.cursor();
+            // first child is [
+            while ( cur.nextSibling() )
+            {
+                if ( !(index in result.children) )
+                    break;
+
+                if ( recursive_lint_error(cur.node, result.children[index]) )
+                    index += 1;
+            }
+            return true;
+        }
+        else if (
+            node.name == "True" || node.name == "False" ||
+            node.name == "Null" || node.name == "Number" ||
+            node.name == "String"
+        )
+        {
+            add_lint_errors(node, result);
+            return true;
+        }
+
+        return false;
+    }
+
+    function gather_lint_errors()
+    {
+        console.log("linter called");
+        lint_errors = [];
+        if ( validation_result )
+        {
+            let tree = CodeMirrorWrapper.ensureSyntaxTree(editor.state);
+            recursive_lint_error(tree.topNode, validation_result);
+        }
+
+        console.log("linter returned", lint_errors, validation_result);
+        return lint_errors;
+    }
+
+
+    let editor_parent = document.getElementById("editor_parent");
+    editor_parent.addEventListener("contextmenu", on_show_explanation);
+    let editor = new CodeMirrorWrapper.EditorView({
+        state: CodeMirrorWrapper.EditorState.create({
+            extensions: [
+                ...CodeMirrorWrapper.default_extensions,
+                CodeMirrorWrapper.json(),
+                CodeMirrorWrapper.on_change(update_player_from_editor),
+                CodeMirrorWrapper.linter(gather_lint_errors),
+            ]
+        }),
+        parent: editor_parent
+    });
+
+    let validation_result = null;
+    let schema = null;
+
+    let info_box = new InfoBox(document.getElementById("info_box"));
+    document.body.addEventListener("click", e => {
+        if ( !info_box.element.contains(e.target) )
+            info_box.hide()
+    });
+
+    const worker = new Worker("../../scripts/explain_worker.js");
+    worker.onmessage = on_worker_message;
 
     var lottie_player = new LottiePlayer("lottie_target", undefined);
+
+    var lint_errors = [];
 
     var data = playground_get_data();
     if ( data )

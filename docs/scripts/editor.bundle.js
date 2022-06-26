@@ -21101,6 +21101,14 @@
        },
        enables: lintPlugin
    });
+   /**
+   Given a diagnostic source, this function returns an extension that
+   enables linting with that source. It will be called whenever the
+   editor is idle (after its content changed).
+   */
+   function linter(source, config = {}) {
+       return lintConfig.of({ source, config });
+   }
    function assignKeys(actions) {
        let assigned = [];
        if (actions)
@@ -23571,6 +23579,7 @@
        node_modules/.bin/rollup -c
    */
 
+
    const myHighlightStyle = HighlightStyle.define([
        { tag: tags.propertyName, color: "#d14" },
    ]);
@@ -23600,6 +23609,7 @@
    exports.ensureSyntaxTree = ensureSyntaxTree;
    exports.javascript = javascript;
    exports.json = json;
+   exports.linter = linter;
    exports.on_change = on_change;
 
    Object.defineProperty(exports, '__esModule', { value: true });
