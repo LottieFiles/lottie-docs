@@ -192,62 +192,6 @@ function critical_error(err)
 var parent = document.getElementById("explainer");
 var schema = null;
 var info_box = new InfoBox(document.getElementById("info_box"));
-var icons = {
-    "#/$defs/animated-properties/color-value": "fas fa-palette",
-    "#/$defs/animated-properties/gradient-colors": "fas fa-swatchbook",
-    //"#/$defs/animated-properties/keyframe-bezier-handle": "fas fa-bezier-curve",
-    "#/$defs/animated-properties/keyframe": "fas fa-key",
-    "#/$defs/animated-properties/multi-dimensional": "fas fa-running",
-    "#/$defs/animated-properties/position-keyframe": "fas fa-key",
-    "#/$defs/animated-properties/position": "fas fa-map-marker-alt",
-    "#/$defs/animated-properties/shape-keyframe": "fas fa-key",
-    "#/$defs/animated-properties/shape-property": "fas fa-bezier-curve",
-    "#/$defs/animated-properties/split-vector": "fas fa-map-marker-alt",
-    "#/$defs/animated-properties/position-value": "fas fa-running",
-    "#/$defs/animated-properties/value": "fas fa-running",
-
-    "#/$defs/animation/animation": "fas fa-video",
-    "#/$defs/animation/metadata": "fas fa-info-circle",
-    "#/$defs/animation/motion-blur": "fas fa-wind",
-
-    "#/$defs/assets/image": "fas fa-file-image",
-    "#/$defs/assets/sound": "fas fa-file-audio",
-    "#/$defs/assets/precomposition": "fas fa-file-video",
-
-    "#/$defs/helpers/bezier": "fas fa-bezier-curve",
-    "#/$defs/helpers/color": "fas fa-palette",
-    "#/$defs/helpers/mask": "fas fa-theater-mask",
-    "#/$defs/helpers/transform": "fas fa-arrows-alt",
-
-    "#/$defs/layers/shape-layer": "fas fa-shapes",
-    "#/$defs/layers/image-layer": "fas fa-image",
-    "#/$defs/layers/precomposition-layer": "fas fa-video",
-    "#/$defs/layers/solid-color-layer": "fas fa-square-full",
-    "#/$defs/layers/text-layer": "fas fa-font",
-    "#/$defs/layers/null-layer": "fas fa-sitemap",
-
-    "#/$defs/shapes/ellipse": "fas fa-circle",
-    "#/$defs/shapes/fill": "fas fa-fill-drip",
-    "#/$defs/shapes/gradient-fill": "fas fa-fill-drip",
-    "#/$defs/shapes/gradient-stroke": "fas fa-paint-brush",
-    "#/$defs/shapes/group": "fas fa-object-group",
-    "#/$defs/shapes/path": "fas fa-bezier-curve",
-    "#/$defs/shapes/polystar": "fas fa-star",
-    "#/$defs/shapes/rectangle": "fas fa-rectangle",
-    "#/$defs/shapes/stroke": "fas fa-paint-brush",
-    "#/$defs/shapes/transform": "fas fa-arrows-alt",
-    "#/$defs/shapes/repeater-transform": "fas fa-arrows-alt",
-    "#/$defs/shapes/shape-list": "fas fa-list",
-    "#/$defs/shapes/repeater": "fas fa-clone",
-
-    "#/$defs/text/character-data": "fas fa-font",
-    "#/$defs/text/font-list": "fas fa-list",
-    "#/$defs/text/font": "fas fa-font",
-    "#/$defs/text/text-animator-data": "fas fa-font",
-    "#/$defs/text/text-data": "fas fa-running",
-    "#/$defs/text/text-document": "far fa-file-alt",
-    "#/$defs/text/text-data-keyframe": "fas fa-key",
-};
 
 var requests = [fetch("/lottie-docs/schema/lottie.schema.json"), fetch("/lottie-docs/schema/docs_mapping.json")]
 Promise.all(requests)

@@ -2,6 +2,16 @@ disable_toc: 1
 
 <script src="../../scripts/editor.bundle.js"></script>
 <script src="../../scripts/lottie_explain.js"></script>
+<style>
+.schema-type {
+    color: #998;
+    font-style: italic;
+}
+i.schema-type {
+    margin-right: 5px;
+    font-style: normal;
+}
+</style>
 
 <div class="alpha_checkered" id="lottie_target" style="max-width:100%; width: 512px;"></div>
 
@@ -190,6 +200,7 @@ disable_toc: 1
                 break;
             case "result":
                 validation_result = ev.data.result;
+                decorations_applied = false;
                 break;
             default:
                 console.log(ev.data);
@@ -197,108 +208,147 @@ disable_toc: 1
         }
     }
 
-    function lint_error(node, severity, message)
+    class TreeResultVisitor
     {
-        let error = {
-            from: node.from,
-            to: node.to,
-            severity: severity,
-            message: message,
-        };
-        if ( message.indexOf("<") != -1 )
+        visit(node, result, path = [])
         {
-            error.renderMessage = function() {
-                let span = document.createElement("span");
-                span.innerHTML = message;
-                return span;
+            if ( !node || !result )
+                return false;
+
+            if ( node.name == "JsonText" )
+            {
+                this.visit(node.firstChild, result, path);
+                return false;
+            }
+
+            if ( node.name == "Object" )
+            {
+                this.on_object(node, result, path);
+
+                for ( let prop_node of node.getChildren("Property") )
+                {
+                    let name_node = prop_node.getChild("PropertyName");
+                    if ( !name_node )
+                        continue;
+
+                    let name = editor.state.sliceDoc(name_node.from + 1, name_node.to - 1);
+                    if ( name in result.children )
+                    {
+                        let prop_result = result.children[name];
+                        this.on_property(name_node, prop_node, prop_result, path);
+                        this.visit(prop_node.lastChild, prop_result, path.concat([name]));
+                    }
+                    else
+                    {
+                        this.on_unknown_property(name_node, prop_node, path.concat([name]));
+                    }
+                }
+
+                return true;
+            }
+            else if ( node.name == "Array" && node.firstChild )
+            {
+                this.on_array(node, result, path);
+                var index = 0;
+                var cur = node.firstChild.cursor();
+                // first child is [
+                while ( cur.nextSibling() )
+                {
+                    if ( !(index in result.children) )
+                        break;
+
+                    if ( this.visit(cur.node, result.children[index], path.concat([index])) )
+                        index += 1;
+                }
+                return true;
+            }
+            else if (
+                node.name == "True" || node.name == "False" ||
+                node.name == "Null" || node.name == "Number" ||
+                node.name == "String"
+            )
+            {
+                this.on_value(node, result, path);
+                return true;
+            }
+
+            return false;
+        }
+
+        on_object(node, result, path) {}
+        on_property(name_node, prop_node, prop_result, path) {}
+        on_unknown_property(name_node, prop_node, path) {}
+        on_value(node, result, path) {}
+        on_array(node, result, path)
+        {
+            this.on_object(node, result, path);
+        }
+    }
+
+    class LintErrorVisitor extends TreeResultVisitor
+    {
+        constructor()
+        {
+            super();
+            this.lint_errors = [];
+        }
+
+        lint_error(node, severity, message)
+        {
+            let error = {
+                from: node.from,
+                to: node.to,
+                severity: severity,
+                message: message,
             };
-        }
-        lint_errors.push(error);
-    }
-
-    function add_lint_errors(node, result)
-    {
-        if ( !node || !result )
-            return;
-
-        for ( let issue of new Set(result.issues) )
-            lint_error(node, "error", issue);
-
-        for ( let issue of new Set(result.warnings) )
-            lint_error(node, "warning", issue);
-    }
-
-    function recursive_lint_error(node, result)
-    {
-        if ( !node || !result )
-            return false;
-
-        if ( node.name == "JsonText" )
-        {
-            recursive_lint_error(node.firstChild, result);
-            return false;
-        }
-
-        if ( node.name == "Object" )
-        {
-            add_lint_errors(node.firstChild, result);
-            add_lint_errors(node.lastChild, result);
-
-            for ( let prop_node of node.getChildren("Property") )
+            if ( message.indexOf("<") != -1 )
             {
-                let name_node = prop_node.getChild("PropertyName");
-                if ( !name_node )
-                    continue;
-
-                let name = editor.state.sliceDoc(name_node.from + 1, name_node.to - 1);
-                if ( name in result.children )
-                {
-                    let prop_result = result.children[name];
-                    add_lint_errors(name_node, prop_result.key);
-                    recursive_lint_error(prop_node.lastChild, prop_result);
-                }
-                else
-                {
-                    lint_errors.push({
-                        from: name_node.from,
-                        to: name_node.to,
-                        severity: "warning",
-                        message: "Unknown Property"
-                    });
-                }
+                error.renderMessage = function() {
+                    let span = document.createElement("span");
+                    span.innerHTML = message;
+                    return span;
+                };
             }
-
-            return true;
+            this.lint_errors.push(error);
         }
-        else if ( node.name == "Array" && node.firstChild )
+
+        add_lint_errors(node, result, path)
         {
-            add_lint_errors(node.firstChild, result);
-            add_lint_errors(node.lastChild, result);
+            if ( !node || !result )
+                return;
 
-            var index = 0;
-            var cur = node.firstChild.cursor();
-            // first child is [
-            while ( cur.nextSibling() )
-            {
-                if ( !(index in result.children) )
-                    break;
+            for ( let issue of new Set(result.issues) )
+                this.lint_error(node, "error", issue);
 
-                if ( recursive_lint_error(cur.node, result.children[index]) )
-                    index += 1;
-            }
-            return true;
+            for ( let issue of new Set(result.warnings) )
+                this.lint_error(node, "warning", issue);
         }
-        else if (
-            node.name == "True" || node.name == "False" ||
-            node.name == "Null" || node.name == "Number" ||
-            node.name == "String"
-        )
+
+        on_object(node, result, path)
         {
-            add_lint_errors(node, result);
-            return true;
+            this.add_lint_errors(node.firstChild, result);
+            this.add_lint_errors(node.lastChild, result);
         }
 
-        return false;
+        on_property(name_node, prop_node, prop_result, path)
+        {
+            this.add_lint_errors(name_node, prop_result.key);
+        }
+
+        on_unknown_property(name_node, prop_node, path)
+        {
+            this.lint_errors.push({
+                from: name_node.from,
+                to: name_node.to,
+                severity: "warning",
+                message: "Unknown Property"
+            });
+        }
+
+        on_value(node, result, path)
+        {
+            this.add_lint_errors(node, result);
+        }
     }
 
     function add_syntax_error(node)
@@ -318,7 +368,11 @@ disable_toc: 1
         lint_errors = [];
         let tree = CodeMirrorWrapper.ensureSyntaxTree(editor.state);
         if ( validation_result )
-            recursive_lint_error(tree.topNode, validation_result);
+        {
+            let visitor = new LintErrorVisitor();
+            visitor.visit(tree.topNode, validation_result);
+            lint_errors = visitor.lint_errors;
+        }
 
         tree.topNode.cursor().iterate(add_syntax_error);
 
@@ -476,9 +530,124 @@ disable_toc: 1
             filter: false,
             options: matching_props
         };
-
     }
 
+    class SchemaTypeWidget extends CodeMirrorWrapper.WidgetType
+    {
+        constructor(path, result)
+        {
+            super();
+            this.result = result;
+            this.path = path;
+            this.path_str = path.join(".");
+        }
+
+        eq(other)
+        {
+            return this.path_str == other.path_str;
+        }
+
+        toDOM()
+        {
+            let span = document.createElement("span");
+            span.classList.add("schema-type");
+            span.classList.add("info_box_trigger");
+            span.lottie_data = this;
+
+            let icon_class = schema_icons[this.result.def] ?? "fas fa-info-circle";
+            let icon = document.createElement("i");
+            icon.setAttribute("class", icon_class);
+            icon.classList.add("schema-type");
+            icon.lottie_data = this;
+            span.appendChild(icon);
+
+            span.appendChild(document.createTextNode(this.result.title));
+
+            return span;
+        }
+
+        ignoreEvent() { return false; }
+    }
+
+    class DecorationVisitor extends TreeResultVisitor
+    {
+        constructor()
+        {
+            super();
+            this.decorations = [];
+        }
+
+        on_object(node, result, path)
+        {
+            if ( !result.description )
+                return;
+
+            let deco = CodeMirrorWrapper.Decoration.widget({
+                widget: new SchemaTypeWidget(path, result),
+                side: 1
+            });
+            this.decorations.push(deco.range(node.firstChild.to));
+        }
+    }
+
+    const deco_plugin = CodeMirrorWrapper.ViewPlugin.fromClass(class
+    {
+        constructor(view)
+        {
+            this.decorations = this.view_decorations(view);
+        }
+
+        update(update)
+        {
+            if ( !decorations_applied )
+                this.decorations = this.view_decorations(update.view);
+        }
+
+        view_decorations(view)
+        {
+            decorations_applied = true;
+            let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state);
+            let visitor = new DecorationVisitor();
+            visitor.visit(tree.topNode, validation_result);
+            visitor.decorations.sort((a, b) => {
+                if ( a.from < b.from )
+                    return -1;
+                if ( a.from > b.from )
+                    return 1;
+                return 0;
+            });
+            return CodeMirrorWrapper.Decoration.set(visitor.decorations);
+        }
+    }, {
+        decorations: v => v.decorations,
+
+        eventHandlers: {
+            click: (ev, view) => {
+                let target = ev.target;
+                if ( !target.classList.contains("info_box_trigger") )
+                {
+                    if ( target.tagName == "I" && target.parentNode.classList.contains("info_box_trigger") )
+                        target = target.parentNode;
+                    else
+                        return;
+                }
+                let path = target.lottie_data.path;
+                let result = target.lottie_data.result;
+
+                let box = new InfoBoxContents(null, schema);
+                get_validation_links(result, schema); // updates title
+                box.result_info_box(result, descend_lottie_path(lottie_player.lottie, path), lottie_player.lottie, false);
+                let bbox = editor_parent.getBoundingClientRect();
+                let x = target.offsetLeft + target.offsetWidth;
+                let y = target.offsetTop;
+                info_box.show_with_contents(null, box.element, box, x, y);
+            }
+        }
+    });
+
+    let validation_result = null;
+    let decorations_applied = false;
+    let schema = null;
 
     let editor_parent = document.getElementById("editor_parent");
     editor_parent.addEventListener("contextmenu", on_show_explanation);
@@ -489,18 +658,20 @@ disable_toc: 1
                 CodeMirrorWrapper.json(),
                 CodeMirrorWrapper.on_change(update_player_from_editor),
                 CodeMirrorWrapper.linter(gather_lint_errors),
-                CodeMirrorWrapper.autocompletion({override: [autocomplete]})
+                CodeMirrorWrapper.autocompletion({override: [autocomplete]}),
+                deco_plugin,
             ]
         }),
         parent: editor_parent
     });
 
-    let validation_result = null;
-    let schema = null;
-
     let info_box = new InfoBox(document.getElementById("info_box"));
     document.body.addEventListener("click", e => {
-        if ( !info_box.element.contains(e.target) )
+        if (
+            !e.target.classList.contains("schema-type") &&
+            !e.target.classList.contains("info_box_trigger") &&
+            !info_box.element.contains(e.target)
+        )
             info_box.hide()
     });
 

@@ -23604,8 +23604,11 @@
        });
    }
 
+   exports.Decoration = Decoration;
    exports.EditorState = EditorState;
    exports.EditorView = EditorView;
+   exports.ViewPlugin = ViewPlugin;
+   exports.WidgetType = WidgetType;
    exports.autocompletion = autocompletion;
    exports.default_extensions = default_extensions;
    exports.ensureSyntaxTree = ensureSyntaxTree;
