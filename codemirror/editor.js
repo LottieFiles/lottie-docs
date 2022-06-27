@@ -5,7 +5,7 @@ Generate bundle with
 import {basicSetup} from "codemirror"
 export {javascript} from "@codemirror/lang-javascript"
 export {json} from "@codemirror/lang-json"
-export {EditorState} from "@codemirror/state"
+export {EditorState, StateField, StateEffect} from "@codemirror/state"
 import {defaultKeymap, history, historyKeymap, indentWithTab} from "@codemirror/commands"
 import {keymap, EditorView, Decoration} from "@codemirror/view"
 export {EditorView, WidgetType, Decoration, ViewPlugin} from "@codemirror/view"

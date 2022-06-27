@@ -23607,6 +23607,8 @@
    exports.Decoration = Decoration;
    exports.EditorState = EditorState;
    exports.EditorView = EditorView;
+   exports.StateEffect = StateEffect;
+   exports.StateField = StateField;
    exports.ViewPlugin = ViewPlugin;
    exports.WidgetType = WidgetType;
    exports.autocompletion = autocompletion;

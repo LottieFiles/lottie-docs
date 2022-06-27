@@ -81,7 +81,7 @@ disable_toc: 1
             }
             gather_expressions(lottie, "", datalist);*/
             lint_errors = [];
-            decorations_status = -1;
+            editor.dispatch({effects: [clear_info_effect.of()]});
             worker.postMessage({type: "update", lottie: lottie});
         }
     }
@@ -201,7 +201,7 @@ disable_toc: 1
                 break;
             case "result":
                 validation_result = ev.data.result;
-                decorations_status = 0;
+                editor.dispatch({effects: [load_info_effect.of({result: validation_result})]});
                 break;
             default:
                 console.log(ev.data);
@@ -602,42 +602,45 @@ disable_toc: 1
         }
     }
 
-    const deco_plugin = CodeMirrorWrapper.ViewPlugin.fromClass(class
-    {
-        constructor(view)
+    let clear_info_effect = CodeMirrorWrapper.StateEffect.define();
+    let load_info_effect = CodeMirrorWrapper.StateEffect.define();
+    let decoration_field = CodeMirrorWrapper.StateField.define({
+        create()
         {
-            this.decorations = this.view_decorations(view);
-        }
+            return CodeMirrorWrapper.Decoration.none;
+        },
 
-        update(update)
+        update(value, transaction)
         {
-            if ( decorations_status == 0 )
-                this.decorations = this.view_decorations(update.view);
-            else if ( decorations_status == -1 )
-                return CodeMirrorWrapper.Decoration.set([]);
-        }
+            for ( let effect of transaction.effects)
+            {
+                if ( effect.is(clear_info_effect) )
+                {
+                    value = CodeMirrorWrapper.Decoration.none;
+                }
+                else if ( effect.is(load_info_effect) )
+                {
+                    let tree = CodeMirrorWrapper.ensureSyntaxTree(transaction.state);
+                    let visitor = new DecorationVisitor();
+                    visitor.visit(tree.topNode, effect.value.result);
+                    visitor.decorations.sort((a, b) => {
+                        if ( a.from < b.from )
+                            return -1;
+                        if ( a.from > b.from )
+                            return 1;
+                        return 0;
+                    });
+                    value = CodeMirrorWrapper.Decoration.set(visitor.decorations);
+                }
+            }
 
-        view_decorations(view)
-        {
-            decorations_status = 1;
-            let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state);
-            let visitor = new DecorationVisitor();
-            visitor.visit(tree.topNode, validation_result);
-            visitor.decorations.sort((a, b) => {
-                if ( a.from < b.from )
-                    return -1;
-                if ( a.from > b.from )
-                    return 1;
-                return 0;
-            });
-            return CodeMirrorWrapper.Decoration.set(visitor.decorations);
-        }
-    }, {
-        decorations: v => v.decorations,
+            return value;
+        },
+        provide: f => CodeMirrorWrapper.EditorView.decorations.from(f)
+
     });
 
     let validation_result = null;
-    let decorations_status = -1;
     let schema = null;
 
     let editor_parent = document.getElementById("editor_parent");
@@ -650,7 +653,7 @@ disable_toc: 1
                 CodeMirrorWrapper.on_change(update_player_from_editor),
                 CodeMirrorWrapper.linter(gather_lint_errors),
                 CodeMirrorWrapper.autocompletion({override: [autocomplete]}),
-                deco_plugin,
+                decoration_field,
             ]
         }),
         parent: editor_parent
