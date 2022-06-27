@@ -228,10 +228,10 @@ disable_toc: 1
         if ( !node || !result )
             return;
 
-        for ( let issue of result.issues )
+        for ( let issue of new Set(result.issues) )
             lint_error(node, "error", issue);
 
-        for ( let issue of result.warnings )
+        for ( let issue of new Set(result.warnings) )
             lint_error(node, "warning", issue);
     }
 
@@ -308,18 +308,47 @@ disable_toc: 1
         return false;
     }
 
+    function add_syntax_error(node)
+    {
+        if ( node.type.isError )
+            lint_errors.push({
+                from: node.from == node.to && node.from > 0 ? node.from -1 : node.from,
+                to: node.to,
+                severity: "error",
+                message: "Invalid JSON"
+            });
+        return true;
+    }
+
     function gather_lint_errors()
     {
-        console.log("linter called");
         lint_errors = [];
+        let tree = CodeMirrorWrapper.ensureSyntaxTree(editor.state);
         if ( validation_result )
-        {
-            let tree = CodeMirrorWrapper.ensureSyntaxTree(editor.state);
             recursive_lint_error(tree.topNode, validation_result);
+
+        tree.topNode.cursor().iterate(add_syntax_error);
+
+        return lint_errors;
+    }
+
+    function inspect_tree(node)
+    {
+        let children = [];
+        let name = node.name;
+
+        if ( node.firstChild() )
+        {
+            while ( true )
+            {
+                children.push(inspect_tree(node));
+                if ( !node.nextSibling() )
+                    break;
+            }
+            node.parent()
         }
 
-        console.log("linter returned", lint_errors, validation_result);
-        return lint_errors;
+        return { [name]: children };
     }
 
 
