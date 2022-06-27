@@ -161,6 +161,14 @@ details {
     display: inline-block;
     border-bottom: 1px dotted black;
     cursor: pointer;
+    margin-bottom: -1px;
+    position: relative;
+    top: -2px;
+}
+
+.info_box_trigger > * {
+    position: relative;
+    top: 2px;
 }
 
 .info_box_content, .info_box_lottie {

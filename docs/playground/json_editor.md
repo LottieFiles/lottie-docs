@@ -146,46 +146,6 @@ disable_toc: 1
         return [path, starting_token];
     }
 
-    function on_show_explanation(ev)
-    {
-        ev.preventDefault();
-        if ( !validation_result )
-            return;
-        let pos = editor.posAtCoords({x: ev.clientX, y: ev.clientY});
-        let [path, token] = json_path_from_pos(pos);
-        let match = descend_validation_path(validation_result, path);
-
-        while ( match.length && !match[0].description && !match[0].title )
-            match.shift();
-
-        if ( !match.length )
-            return;
-
-        let box = new InfoBoxContents(null, schema);
-        let bbox = editor_parent.getBoundingClientRect();
-
-        if ( token.name == "PropertyName" && match[0].key && match.length > 1 )
-        {
-            box.property(match[1], match[0]);
-        }
-        else if ( match[0].const )
-        {
-            var value_token = token.node.cursor();
-            if ( value_token.name == "Property" )
-                value_token.lastChild();
-            box.enum_value(match[0], editor.state.sliceDoc(value_token.from, value_token.to));
-        }
-        else
-        {
-            get_validation_links(match[0], schema); // updates title
-            box.result_info_box(match[0], descend_lottie_path(lottie_player.lottie, path), lottie_player.lottie, false);
-        }
-
-        let x = ev.clientX - bbox.left + editor_parent.scrollLeft;
-        let y = ev.clientY - bbox.top - 10 + editor_parent.scrollTop;
-        info_box.show_with_contents(null, box.element, box, x, y);
-    }
-
     function on_worker_message(ev)
     {
         switch ( ev.data.type )
@@ -236,7 +196,7 @@ disable_toc: 1
                     if ( name in result.children )
                     {
                         let prop_result = result.children[name];
-                        this.on_property(name_node, prop_node, prop_result, path);
+                        this.on_property(name_node, prop_node, prop_result, result, path);
                         this.visit(prop_node.lastChild, prop_result, path.concat([name]));
                     }
                     else
@@ -277,7 +237,7 @@ disable_toc: 1
         }
 
         on_object(node, result, path) {}
-        on_property(name_node, prop_node, prop_result, path) {}
+        on_property(name_node, prop_node, prop_result, obj_result, path) {}
         on_unknown_property(name_node, prop_node, path) {}
         on_value(node, result, path) {}
         on_array(node, result, path)
@@ -331,7 +291,7 @@ disable_toc: 1
             this.add_lint_errors(node.lastChild, result);
         }
 
-        on_property(name_node, prop_node, prop_result, path)
+        on_property(name_node, prop_node, prop_result, obj_result, path)
         {
             this.add_lint_errors(name_node, prop_result.key);
         }
@@ -600,6 +560,62 @@ disable_toc: 1
             });
             this.decorations.push(deco.range(node.firstChild.to));
         }
+
+        on_property(name_node, prop_node, prop_result, obj_result, path)
+        {
+            if ( !prop_result.key )
+                return;
+
+            let deco = CodeMirrorWrapper.Decoration.mark({
+                class: "info_box_trigger",
+                info_box: (view) => DecorationVisitor.property_info_box(view, name_node, obj_result, prop_result),
+            });
+            this.decorations.push(deco.range(name_node.from, name_node.to));
+        }
+
+        on_value(node, result, path)
+        {
+            if ( result.const )
+            {
+                let deco = CodeMirrorWrapper.Decoration.mark({
+                    class: "info_box_trigger",
+                    info_box: (view) => DecorationVisitor.enum_info_box(view, node, result),
+                });
+                this.decorations.push(deco.range(node.from, node.to));
+            }
+        }
+
+        static property_info_box(view, node, obj_result, prop_result)
+        {
+            let box = new InfoBoxContents(null, schema);
+            box.property(obj_result, prop_result);
+            DecorationVisitor.show_info_box(view, box, node);
+        }
+
+        static enum_info_box(view, node, result)
+        {
+            let box = new InfoBoxContents(null, schema);
+            box.enum_value(result, editor.state.sliceDoc(node.from, node.to));
+            DecorationVisitor.show_info_box(view, box, node);
+        }
+
+        static show_info_box(view, box, node)
+        {
+            let coords = editor.coordsAtPos(node.to);
+            let bbox = view.dom.getBoundingClientRect();
+            let x = coords.left - bbox.left;
+            let y = coords.top - bbox.top;
+            info_box.show_with_contents(null, box.element, box, x, y);
+        }
+    }
+
+    function on_click(ev, view)
+    {
+        let pos = editor.posAtCoords({x: ev.clientX, y: ev.clientY});
+        view.state.field(decoration_field).between(pos, pos, (from, to, deco) => {
+            if ( deco.spec.info_box )
+                deco.spec.info_box(view);
+        });
     }
 
     let clear_info_effect = CodeMirrorWrapper.StateEffect.define();
@@ -644,7 +660,6 @@ disable_toc: 1
     let schema = null;
 
     let editor_parent = document.getElementById("editor_parent");
-    editor_parent.addEventListener("contextmenu", on_show_explanation);
     let editor = new CodeMirrorWrapper.EditorView({
         state: CodeMirrorWrapper.EditorState.create({
             extensions: [
@@ -654,6 +669,10 @@ disable_toc: 1
                 CodeMirrorWrapper.linter(gather_lint_errors),
                 CodeMirrorWrapper.autocompletion({override: [autocomplete]}),
                 decoration_field,
+                CodeMirrorWrapper.EditorView.domEventHandlers({
+                    click: on_click
+                })
+
             ]
         }),
         parent: editor_parent
@@ -662,8 +681,7 @@ disable_toc: 1
     let info_box = new InfoBox(document.getElementById("info_box"));
     document.body.addEventListener("click", e => {
         if (
-            !e.target.classList.contains("schema-type") &&
-            !e.target.classList.contains("info_box_trigger") &&
+            !e.target.closest(".info_box_trigger") &&
             !info_box.element.contains(e.target)
         )
             info_box.hide()
