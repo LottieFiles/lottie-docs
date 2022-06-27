@@ -378,12 +378,16 @@ class OneOfSchemaMatcher extends BaseMatcher
 
     validate(object, result)
     {
-        let best_fitness = 0;
+        let best_fitness = -1;
         let best = null;
+        let constants = [];
 
         for ( let match of this.matchers )
         {
             let validation = match.validate(object);
+            if ( match.const !== undefined )
+                constants.push(match);
+
             if ( validation.fitness > best_fitness )
             {
                 best_fitness = validation.fitness;
@@ -394,7 +398,17 @@ class OneOfSchemaMatcher extends BaseMatcher
         }
 
         if ( best )
-            result.merge_from(best);
+        {
+            if ( !best.valid && constants.length == this.matchers.length && constants.length )
+            {
+                result.fail("Possible values:<br/>" +
+                    constants.map(match => `<code>${match.const}</code> = ${match.title}`)
+                    .join(",<br/>")
+                );
+            }
+            else
+                result.merge_from(best);
+        }
     }
 
     add_array_item_types(result)

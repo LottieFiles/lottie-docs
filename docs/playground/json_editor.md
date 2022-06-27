@@ -5,8 +5,6 @@ disable_toc: 1
 
 <div class="alpha_checkered" id="lottie_target" style="max-width:100%; width: 512px;"></div>
 
-<p id="json_error" style="white-space: pre-wrap"></p>
-
 <button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
 
 <div class="code-frame" style="height: 80vh;" id="editor_parent" >
@@ -34,7 +32,6 @@ disable_toc: 1
 
     function update_player_from_editor()
     {
-        var error = "";
         var load_ok = true;
         var lottie;
         var json_data = editor.state.doc.toString();
@@ -43,17 +40,13 @@ disable_toc: 1
         try {
             lottie = JSON.parse(json_data);
         } catch ( json_error ) {
-            var message = json_error.message.replace("JSON.parse: ", "");
+            // Fall back to actual JS notation, which is more forgiving
             try {
                 lottie = Function("return " + json_data)();
-                error = "Warning: Invalid JSON, using permissive mode\n" + message;
             } catch(e) {
-                error = "Error: Could not load JSON\n" + message;
                 load_ok = false;
             }
         }
-
-        document.getElementById("json_error").innerText = error;
 
 //         var datalist = document.getElementById("datalist_expression_paths");
 //         datalist.innerHTML = "";
