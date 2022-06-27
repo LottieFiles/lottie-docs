@@ -7,7 +7,7 @@ disable_toc: 1
     color: #998;
     font-style: italic;
 }
-i.schema-type {
+.schema-type i {
     margin-right: 5px;
     font-style: normal;
 }
@@ -81,6 +81,7 @@ i.schema-type {
             }
             gather_expressions(lottie, "", datalist);*/
             lint_errors = [];
+            decorations_status = -1;
             worker.postMessage({type: "update", lottie: lottie});
         }
     }
@@ -200,7 +201,7 @@ i.schema-type {
                 break;
             case "result":
                 validation_result = ev.data.result;
-                decorations_applied = false;
+                decorations_status = 0;
                 break;
             default:
                 console.log(ev.data);
@@ -547,26 +548,37 @@ i.schema-type {
             return this.path_str == other.path_str;
         }
 
+        show_info_box(target)
+        {
+            let lottie = descend_lottie_path(lottie_player.lottie, this.path);
+            let box = new InfoBoxContents(null, schema);
+            box.result_info_box(this.result, lottie, lottie_player.lottie, false);
+            let bbox = editor_parent.getBoundingClientRect();
+            let x = target.offsetLeft + target.offsetWidth;
+            let y = target.offsetTop;
+            info_box.show_with_contents(null, box.element, box, x, y);
+        }
+
         toDOM()
         {
+            get_validation_links(this.result, schema); // updates title
+
             let span = document.createElement("span");
             span.classList.add("schema-type");
             span.classList.add("info_box_trigger");
-            span.lottie_data = this;
 
             let icon_class = schema_icons[this.result.def] ?? "fas fa-info-circle";
             let icon = document.createElement("i");
             icon.setAttribute("class", icon_class);
-            icon.classList.add("schema-type");
-            icon.lottie_data = this;
             span.appendChild(icon);
 
             span.appendChild(document.createTextNode(this.result.title));
 
+            let self = this;
+            span.addEventListener("click", e => self.show_info_box(span));
+
             return span;
         }
-
-        ignoreEvent() { return false; }
     }
 
     class DecorationVisitor extends TreeResultVisitor
@@ -599,13 +611,15 @@ i.schema-type {
 
         update(update)
         {
-            if ( !decorations_applied )
+            if ( decorations_status == 0 )
                 this.decorations = this.view_decorations(update.view);
+            else if ( decorations_status == -1 )
+                return CodeMirrorWrapper.Decoration.set([]);
         }
 
         view_decorations(view)
         {
-            decorations_applied = true;
+            decorations_status = 1;
             let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state);
             let visitor = new DecorationVisitor();
             visitor.visit(tree.topNode, validation_result);
@@ -620,33 +634,10 @@ i.schema-type {
         }
     }, {
         decorations: v => v.decorations,
-
-        eventHandlers: {
-            click: (ev, view) => {
-                let target = ev.target;
-                if ( !target.classList.contains("info_box_trigger") )
-                {
-                    if ( target.tagName == "I" && target.parentNode.classList.contains("info_box_trigger") )
-                        target = target.parentNode;
-                    else
-                        return;
-                }
-                let path = target.lottie_data.path;
-                let result = target.lottie_data.result;
-
-                let box = new InfoBoxContents(null, schema);
-                get_validation_links(result, schema); // updates title
-                box.result_info_box(result, descend_lottie_path(lottie_player.lottie, path), lottie_player.lottie, false);
-                let bbox = editor_parent.getBoundingClientRect();
-                let x = target.offsetLeft + target.offsetWidth;
-                let y = target.offsetTop;
-                info_box.show_with_contents(null, box.element, box, x, y);
-            }
-        }
     });
 
     let validation_result = null;
-    let decorations_applied = false;
+    let decorations_status = -1;
     let schema = null;
 
     let editor_parent = document.getElementById("editor_parent");
