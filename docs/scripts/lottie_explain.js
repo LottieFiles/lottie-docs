@@ -361,7 +361,7 @@ class PropertySchemaMatcher extends BaseMatcher
         validation.set_key_validation(this.property, this.matcher);
         result.add_child(this.property, validation);
         if ( !validation.valid )
-            result.fail(this.property == "ty" ? 15 : 1, `Property <code>${this.property}</code> doesn't match`);
+            result.fail(`Property <code>${this.property}</code> doesn't match`);
         else
             result.fitness += 1;
     }
