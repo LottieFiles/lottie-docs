@@ -19,6 +19,8 @@ import {
 export {ensureSyntaxTree} from "@codemirror/language"
 import {tags} from "@lezer/highlight"
 export {linter} from "@codemirror/lint";
+export {autocompletion} from "@codemirror/autocomplete";
+
 
 
 const myHighlightStyle = HighlightStyle.define([

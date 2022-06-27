@@ -23580,6 +23580,7 @@
    */
 
 
+
    const myHighlightStyle = HighlightStyle.define([
        { tag: tags.propertyName, color: "#d14" },
    ]);
@@ -23605,6 +23606,7 @@
 
    exports.EditorState = EditorState;
    exports.EditorView = EditorView;
+   exports.autocompletion = autocompletion;
    exports.default_extensions = default_extensions;
    exports.ensureSyntaxTree = ensureSyntaxTree;
    exports.javascript = javascript;

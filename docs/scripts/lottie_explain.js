@@ -17,6 +17,7 @@ class ValidationResult
         this.const = undefined;
         this.def = undefined;
         this.key = undefined;
+        this.all_properties = {};
         this._links = null;
     }
 
@@ -46,6 +47,11 @@ class ValidationResult
 
         for ( let [key, child] of Object.entries(other.children) )
             this.add_child(key, child);
+
+        this.all_properties = {
+            ...this.all_properties,
+            ...other.all_properties
+        };
     }
 
     add_child(child_key, child_validation)
@@ -352,14 +358,32 @@ class PropertySchemaMatcher extends BaseMatcher
         this.matcher = new SchemaMatcher(schema, data);
     }
 
+    add_to_all(result)
+    {
+        result.all_properties[this.property] = {
+            title: this.matcher.title,
+            description: this.matcher.description,
+        };
+    }
+
     validate(object, result)
     {
-        if ( typeof object != "object" || !(this.property in object) )
+        if ( typeof object != "object" )
             return;
+
+        if ( !(this.property in object) )
+        {
+            this.matcher.build();
+            this.add_to_all(result);
+            return;
+        }
+
 
         let validation = this.matcher.validate(object[this.property], null, true);
         validation.set_key_validation(this.property, this.matcher);
         result.add_child(this.property, validation);
+        this.add_to_all(result);
+
         if ( !validation.valid )
             result.fail(`Property <code>${this.property}</code> doesn't match`);
         else

@@ -344,6 +344,141 @@ disable_toc: 1
         return { [name]: children };
     }
 
+    function autocomplete_cmp(a, b)
+    {
+        if ( a.boost != b.boost )
+        {
+            if ( a.boost < b.boost )
+                return 1;
+
+            if ( a.boost > b.boost )
+                return -1;
+        }
+
+        if ( a.label < b.label )
+            return -1;
+
+        if ( a.label > b.label )
+            return 1;
+
+        return 0;
+    }
+
+    function autocomplete(context)
+    {
+        if ( !validation_result )
+            return null;
+
+        let tree = CodeMirrorWrapper.ensureSyntaxTree(context.state);
+        let cur = tree.cursorAt(context.pos);
+        let from = context.pos;
+        let to = context.pos;
+        let in_prop = false;
+        let prop_prefix = "";
+
+        if ( cur.name == "Property" )
+        {
+            cur.firstChild();
+            if ( cur.nextSibling() )
+            {
+                if ( !cur.type.isError )
+                    return null;
+                cur.prevSibling();
+            }
+        }
+
+        if ( cur.name == "PropertyName" )
+        {
+            from = cur.from;
+            to = cur.to;
+            cur.parent()
+            cur.parent();
+            prop_prefix = context.state.sliceDoc(from + 1, to);
+            if ( prop_prefix.endsWith("\"") )
+                prop_prefix = prop_prefix.substr(0, prop_prefix.length - 1);
+
+            in_prop = true;
+        }
+        else if ( !context.explicit )
+        {
+            return null;
+        }
+
+        if ( cur.name != "Object" )
+            return null;
+
+        let before = context.state.sliceDoc(0, context.pos);
+        if ( !in_prop )
+        {
+            let obj_token = before.search(/[{,][^:{},]*$/);
+            if ( obj_token == -1 )
+                return null;
+
+            let unmatched_quote = before.substr(obj_token).indexOf('"');
+            if ( unmatched_quote != -1 )
+            {
+                from = unmatched_quote + obj_token;
+                prop_prefix = before.substr(from+1);
+            }
+        }
+        else if ( before.search(/:[^,]*$/) != -1 )
+        {
+            return null;
+        }
+
+        let path = [];
+        json_path_from_node(cur.node.cursor(), path);
+
+        let object_data = descend_validation_path(validation_result, path);
+        if ( !object_data.length )
+            return null;
+
+        let all_props = Object.keys(object_data[0].all_properties);
+        if ( !all_props.length )
+            return null;
+
+        let keys_already_present = new Set();
+        cur.firstChild();
+        while ( cur.nextSibling() )
+        {
+            if ( cur.name == "Property" )
+            {
+                cur.firstChild();
+                keys_already_present.add(context.state.sliceDoc(cur.from + 1, cur.to - 1));
+                cur.parent();
+            }
+        }
+
+        let matching_props = [];
+
+        for ( let prop of all_props )
+        {
+            let boost = prop_prefix && prop.startsWith(prop_prefix) ? 1 : 0;
+            if ( !keys_already_present.has(prop) || boost )
+                matching_props.push({
+                    label: prop,
+                    apply: '"' + prop + '"' + (in_prop ? "" : ": "),
+                    boost: boost,
+                    type: "variable",
+                    detail: object_data[0].all_properties[prop].title,
+                    info: object_data[0].all_properties[prop].description,
+                });
+        }
+
+        if ( !matching_props.length )
+            return null;
+
+        matching_props.sort(autocomplete_cmp);
+
+        return {
+            from: from,
+            to: to,
+            filter: false,
+            options: matching_props
+        };
+
+    }
+
 
     let editor_parent = document.getElementById("editor_parent");
     editor_parent.addEventListener("contextmenu", on_show_explanation);
@@ -354,6 +489,7 @@ disable_toc: 1
                 CodeMirrorWrapper.json(),
                 CodeMirrorWrapper.on_change(update_player_from_editor),
                 CodeMirrorWrapper.linter(gather_lint_errors),
+                CodeMirrorWrapper.autocompletion({override: [autocomplete]})
             ]
         }),
         parent: editor_parent
