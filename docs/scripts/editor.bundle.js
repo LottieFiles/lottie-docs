@@ -23788,6 +23788,7 @@
    exports.Decoration = Decoration;
    exports.EditorState = EditorState;
    exports.EditorView = EditorView;
+   exports.LanguageSupport = LanguageSupport;
    exports.StateEffect = StateEffect;
    exports.StateField = StateField;
    exports.ViewPlugin = ViewPlugin;

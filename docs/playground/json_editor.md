@@ -790,12 +790,19 @@ disable_toc: 1
             a.setAttribute("href", "/lottie-docs/expressions/");
             title.appendChild(document.createTextNode(" Editor"));
 
+            let lang = CodeMirrorWrapper.javascript();
             let expression_editor = new CodeMirrorWrapper.EditorView({
                 state: CodeMirrorWrapper.EditorState.create({
                     extensions: [
                         ...CodeMirrorWrapper.default_extensions,
                         CodeMirrorWrapper.on_change(this.update_code.bind(this)),
-                        CodeMirrorWrapper.javascript(),
+                        new CodeMirrorWrapper.LanguageSupport(
+                            lang.language,
+                            [
+                                ...lang.support,
+                                lang.language.data.of({autocomplete: autocomplete_expression})
+                            ],
+                        )
                     ]
                 }),
                 parent: element
@@ -831,6 +838,27 @@ disable_toc: 1
     {
         set_editor_json(JSON.parse(localStorage.getItem("editor_lottie")));
     }
+
+    function autocomplete_expression(context)
+    {
+        let word = context.matchBefore(/\w*/)
+        if ( word.from == word.to && !context.explicit )
+            return null;
+        return {
+            from: word.from,
+            options: [
+                ...expr_variables.map(v => ({label: v, type: "variable"})),
+                ...expr_funcs.map(v => ({label: v, type: "function"})),
+            ]
+        };
+    }
+
+    let expr_variables = ["$bm_rt", "time", "value", "thisProperty", "thisComp", "thisLayer"];
+    let expr_funcs = ["comp", "posterizeTime", "timeToFrames", "framesToTime", "rgbToHsl", "hslToRgb",
+        "createPath", "add", "sub", "mul", "div", "mod", "clamp", "normalize", "length", "lookAt",
+        "seedRandom", "random", "linear", "ease", "easeIn", "easeOut",
+        "degreesToRadians", "radiansToDegrees"
+    ];
 
     let tree_state = new TreeState();
     let decoration_field = CodeMirrorWrapper.StateField.define({
