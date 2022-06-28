@@ -765,8 +765,6 @@ disable_toc: 1
                 CodeMirrorWrapper.autocompletion({override: [autocomplete]}),
                 decoration_field,
                 CodeMirrorWrapper.EditorView.domEventHandlers({click: on_click}),
-                CodeMirrorWrapper.keymap.of(CodeMirrorWrapper.lintKeymap),
-
             ]
         }),
         parent: editor_parent
@@ -817,15 +815,28 @@ disable_toc: 1
     }
 
     let key_bindings_parent = document.getElementById("key_bindings");
+    let platform = "linux";
+    let mod = "Ctrl";
+    if ( navigator.platform.indexOf("Mac") != -1 )
+    {
+        platform = "mac";
+        mode = "Cmd";
+    }
+    else if ( navigator.platform.indexOf("Win") != -1 )
+    {
+        platform = "win";
+    }
+
     for ( arr of editor.state.field(CodeMirrorWrapper.keymap) )
     {
         for ( key of arr )
         {
-            if ( key.key && key.run.name )
+            let seq = key[platform] ?? key.key;
+            if ( seq && key.run.name )
             {
                 let row = key_bindings.appendChild(document.createElement("tr"));
                 row.appendChild(document.createElement("th"))
-                .appendChild(document.createTextNode(key.key));
+                .appendChild(document.createTextNode(seq.replace("Mod", mod)));
 
                 let cmd = key.run.name.replace(/[A-Z]/g, l => " " + l)
                 .replace(/^[a-z]/, l => l.toUpperCase());
@@ -835,7 +846,6 @@ disable_toc: 1
         }
     }
 </script>
-
 
 <!--
 
