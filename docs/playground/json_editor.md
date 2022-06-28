@@ -52,6 +52,8 @@ disable_toc: 1
     </div>
     <div id="tab_editor" class="tab-pane fade in active">
         <div class="alpha_checkered" id="lottie_target" style="max-width:100%; width: 512px;"></div>
+        <button onclick="save_lottie()" class="btn btn-primary">Save</button>
+        <button onclick="load_lottie()" class="btn btn-primary">Load</button>
         <button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
         <div class="code-frame" style="height: 80vh;" id="editor_parent" >
             <div id="info_box">
@@ -305,7 +307,7 @@ disable_toc: 1
                     if ( name in result.children )
                     {
                         let prop_result = result.children[name];
-                        this.on_property(name_node, prop_node, prop_result, result, path);
+                        this.on_property(name, name_node, prop_node, prop_result, result, path);
                         this.visit(prop_node.lastChild, prop_result, json[name], path.concat([name]));
                     }
                     else
@@ -384,14 +386,14 @@ disable_toc: 1
             if ( result.description )
             {
                 let deco = CodeMirrorWrapper.Decoration.widget({
-                    widget: new SchemaTypeWidget(path, result, this.schema),
+                    widget: new SchemaTypeWidget(path, result, json, this.schema),
                     side: 1
                 });
                 this.decorations.push(deco.range(node.firstChild.to));
             }
         }
 
-        on_property(name_node, prop_node, prop_result, obj_result, path)
+        on_property(name, name_node, prop_node, prop_result, obj_result, path)
         {
             this.add_lint_errors(name_node, prop_result.key);
 
@@ -403,7 +405,19 @@ disable_toc: 1
                     info_box: (view) => TreeResultVisitor.property_info_box(view, schema, name_node, obj_result, prop_result),
                 });
                 this.decorations.push(deco.range(name_node.from, name_node.to));
+
+                let value_node = prop_node.lastChild;
+                if ( name == "x" && value_node.name == "String" )
+                {
+                    let code = editor.state.sliceDoc(value_node.from, value_node.to);
+                    let deco = CodeMirrorWrapper.Decoration.widget({
+                        widget: new EditExpressionWidget(path, code, value_node),
+                        side: 1
+                    });
+                    this.decorations.push(deco.range(value_node.from));
+                }
             }
+
         }
 
         on_unknown_property(name, name_node, prop_node, path)
@@ -674,13 +688,14 @@ disable_toc: 1
 
     class SchemaTypeWidget extends CodeMirrorWrapper.WidgetType
     {
-        constructor(path, result, schema)
+        constructor(path, result, json, schema)
         {
             super();
             this.result = result;
             this.path = path;
             this.path_str = path.join(".");
             this.schema = schema;
+            this.lottie = json;
         }
 
         eq(other)
@@ -690,9 +705,8 @@ disable_toc: 1
 
         show_info_box(target)
         {
-            let lottie = descend_lottie_path(lottie_player.lottie, this.path);
             let box = new InfoBoxContents(null, this.schema);
-            box.result_info_box(this.result, lottie, lottie_player.lottie, false);
+            box.result_info_box(this.result, this.lottie, lottie_player.lottie, false);
             let bbox = editor_parent.getBoundingClientRect();
             let x = target.offsetLeft + target.offsetWidth;
             let y = target.offsetTop;
@@ -721,6 +735,84 @@ disable_toc: 1
         }
     }
 
+    class EditExpressionWidget extends CodeMirrorWrapper.WidgetType
+    {
+        constructor(path, script, node)
+        {
+            super();
+            this.path = path;
+            this.script = JSON.parse(script);
+            this.path_str = path.join(".");
+            this.from = node.from;
+            this.to = node.to;
+        }
+
+        eq(other)
+        {
+            return this.path_str == other.path_str;
+        }
+
+        toDOM()
+        {
+            let span = document.createElement("span");
+            span.classList.add("schema-type");
+            span.classList.add("info_box_trigger");
+
+            let icon = document.createElement("i");
+            icon.setAttribute("class", "fas fa-file-code");
+            span.appendChild(icon);
+
+            span.title = "Edit Expression";
+
+            let self = this;
+            span.addEventListener("click", e => self.show_info_box(span));
+
+            return span;
+        }
+
+        update_code(update)
+        {
+            let expr = JSON.stringify(update.state.doc.toString());
+
+            editor.dispatch({
+                changes: {from: this.from, to: this.to, insert: expr}
+            });
+            this.to = this.from + expr.length;
+        }
+
+        show_info_box(span)
+        {
+            let element = document.createElement("div");
+
+            let title = element.appendChild(document.createElement("strong"));
+            let a = title.appendChild(document.createElement("a"));
+            a.appendChild(document.createTextNode("Expression"));
+            a.setAttribute("href", "/lottie-docs/expressions/");
+            title.appendChild(document.createTextNode(" Editor"));
+
+            let expression_editor = new CodeMirrorWrapper.EditorView({
+                state: CodeMirrorWrapper.EditorState.create({
+                    extensions: [
+                        ...CodeMirrorWrapper.default_extensions,
+                        CodeMirrorWrapper.on_change(this.update_code.bind(this)),
+                        CodeMirrorWrapper.javascript(),
+                    ]
+                }),
+                parent: element
+            });
+            expression_editor.dispatch({
+                changes: {from: 0, to: 0, insert: this.script}
+            });
+            let line = editor.state.doc.lineAt(this.to).number + 1;
+            let coords = editor.coordsAtPos(editor.state.doc.line(line).from);
+            let bbox = editor.dom.getBoundingClientRect();
+            let x = coords.left - bbox.left;
+            let y = coords.top - bbox.top;
+            info_box.show_with_contents(null, element, expression_editor, x, y);
+        }
+
+    }
+
     function on_click(ev, view)
     {
         let pos = editor.posAtCoords({x: ev.clientX, y: ev.clientY});
@@ -728,6 +820,16 @@ disable_toc: 1
             if ( deco.spec.info_box )
                 deco.spec.info_box(view);
         });
+    }
+
+    function save_lottie()
+    {
+        localStorage.setItem("editor_lottie", JSON.stringify(lottie_player.lottie));
+    }
+
+    function load_lottie()
+    {
+        set_editor_json(JSON.parse(localStorage.getItem("editor_lottie")));
     }
 
     let tree_state = new TreeState();
@@ -846,157 +948,3 @@ disable_toc: 1
         }
     }
 </script>
-
-<!--
-
-
-<details>
-    <summary>Expression Editor</summary>
-    <div class="form-group">
-        <label for="expression_path">Expression JSON Path</label>
-        <input
-            type="text"
-            data-lottie-input="editor"
-            name="expression_path"
-            id="expression_path"
-            list="datalist_expression_paths"
-            class="form-control"
-            oninput="select_expression(this.value)"
-            autocomplete="off"
-        />
-        <datalist id="datalist_expression_paths"></datalist>
-    </div>
-    <div class="highlighted-input" style="height: 15em;">
-        <textarea
-            autocomplete="off"
-            class="code-input"
-            data-lang="js"
-            data-lottie-input="editor"
-            name="expression"
-            oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); "
-            onkeydown="syntax_edit_tab(this, event);"
-            onscroll="syntax_edit_scroll(this);"
-            spellcheck="false"
-            id="editor_expression_input"
-        ></textarea>
-        <pre aria-hidden="true"><code class="language-js hljs"></code></pre>
-    </div>
-    <button onclick="lottie_player.reload();" class="btn btn-secondary">Set Expression</button>
-</details>
-
-<div class="highlighted-input" style="height: 80vh;">
-<textarea autocomplete="off" class="code-input" data-lang="js" data-lottie-input="editor"
-name="json" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); lottie_player.reload();"
-onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);"
-rows="3" spellcheck="false" id="editor_input">
-</textarea>
-<pre aria-hidden="true"><code class="language-js hljs"></code></pre>
-</div>
-
-<script>
-
-function gather_expressions(object, path, datalist)
-{
-    for ( var [k, v] of Object.entries(object) )
-    {
-        if ( typeof v == "object" )
-            gather_expressions(v, path + k + ".", datalist);
-        else if ( k == "x" && typeof v == "string" )
-            datalist.appendChild(document.createElement("option")).setAttribute("value", path + "x");
-    }
-}
-
-function select_expression(path)
-{
-    try {
-        var expr_target = lottie_player.lottie;
-        var expr_path = path.split(".");
-        for ( var chunk of expr_path )
-            expr_target = expr_target[chunk];
-
-        if ( typeof expr_target == "string" )
-        {
-            var textarea = document.getElementById("editor_expression_input");
-            textarea.value = expr_target;
-            syntax_edit_update(textarea, expr_target);
-        }
-    } catch ( e ) {
-        console.log(e);
-    }
-}
-
-
-var textarea = document.getElementById("editor_input");
-
-var lottie_player = new PlaygroundPlayer(
-    "editor",
-    "lottie_target",
-    undefined,
-    function(json, data) {
-        if ( this.lottie === undefined )
-        {
-            this.lottie = {
-                "v": "5.5.2",
-                "fr": 60,
-                "ip": 0,
-                "op": 60,
-                "w": 512,
-                "h": 512,
-                "ddd": 0,
-                "assets": [],
-                "fonts": {
-                    "list": []
-                },
-                "markers": [],
-                "layers": []
-            };
-            textarea.value = JSON.stringify(this.lottie, undefined, 4);
-            syntax_edit_update(textarea, textarea.value);
-        }
-        else
-        {
-            var error = "";
-            this.load_ok = true;
-            try {
-                this.lottie = JSON.parse(data["json"]);
-            } catch ( json_error ) {
-                var message = json_error.message.replace("JSON.parse: ", "");
-                try {
-                    this.lottie = Function("return " + data["json"])();
-                    error = "Warning: Invalid JSON, using permissive mode\n" + message;
-                } catch(e) {
-                    error = "Error: Could not load JSON\n" + message;
-                    this.load_ok = false;
-                }
-            }
-
-            var datalist = document.getElementById("datalist_expression_paths");
-            datalist.innerHTML = "";
-            if ( this.load_ok )
-            {
-                if ( data["expression_path"].length )
-                {
-                    try {
-                        var expr_target = this.lottie;
-                        var expr_path = data["expression_path"].split(".");
-                        var last = expr_path.pop();
-                        for ( var chunk of expr_path )
-                            expr_target = expr_target[chunk];
-                        expr_target[last] = data["expression"];
-                    } catch ( e ) {
-                        if ( error.length )
-                            error += "\n\n";
-                        error += "Could not set the expression";
-                    }
-                }
-                gather_expressions(this.lottie, "", datalist);
-            }
-
-            document.getElementById("json_error").innerText = error;
-        }
-
-        worker.postMessage({type: "update", lottie: this.lottie});
-    }
-);
-</script>
--->

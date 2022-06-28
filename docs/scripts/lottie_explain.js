@@ -1442,6 +1442,8 @@ class InfoBox
         this.button_container.style.display = "none";
         this.target = null;
         this.contents = null;
+        if ( this.info_box_data && this.info_box_data.destroy )
+            this.info_box_data.destroy();
         this.info_box_data = null;
     }
 
