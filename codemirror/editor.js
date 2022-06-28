@@ -17,7 +17,7 @@ import {
 } from "@codemirror/language"
 export {ensureSyntaxTree} from "@codemirror/language"
 import {tags} from "@lezer/highlight"
-export {linter} from "@codemirror/lint";
+export {linter, lintGutter} from "@codemirror/lint";
 export {autocompletion} from "@codemirror/autocomplete";
 
 

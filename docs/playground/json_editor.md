@@ -306,7 +306,7 @@ disable_toc: 1
                     }
                     else
                     {
-                        this.on_unknown_property(name_node, prop_node, path.concat([name]));
+                        this.on_unknown_property(name, name_node, prop_node, path.concat([name]));
                     }
                 }
 
@@ -402,14 +402,9 @@ disable_toc: 1
             }
         }
 
-        on_unknown_property(name_node, prop_node, path)
+        on_unknown_property(name, name_node, prop_node, path)
         {
-            this.lint_errors.push({
-                from: name_node.from,
-                to: name_node.to,
-                severity: "warning",
-                message: "Unknown Property"
-            });
+            this.lint_error(name_node, "warning", `Unknown Property <code>${name}</code>`);
         }
 
         on_value(node, result, json, path)
@@ -758,6 +753,7 @@ disable_toc: 1
     let editor = new CodeMirrorWrapper.EditorView({
         state: CodeMirrorWrapper.EditorState.create({
             extensions: [
+                CodeMirrorWrapper.lintGutter(),
                 ...CodeMirrorWrapper.default_extensions,
                 CodeMirrorWrapper.json(),
                 CodeMirrorWrapper.on_change(update_player_from_editor),
