@@ -760,9 +760,8 @@ disable_toc: 1
                 tree_state.linter(),
                 CodeMirrorWrapper.autocompletion({override: [autocomplete]}),
                 decoration_field,
-                CodeMirrorWrapper.EditorView.domEventHandlers({
-                    click: on_click
-                })
+                CodeMirrorWrapper.EditorView.domEventHandlers({click: on_click}),
+                CodeMirrorWrapper.keymap.of(CodeMirrorWrapper.lintKeymap),
 
             ]
         }),

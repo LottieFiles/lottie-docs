@@ -8,7 +8,7 @@ export {json, jsonParseLinter} from "@codemirror/lang-json"
 export {EditorState, StateField, StateEffect} from "@codemirror/state"
 import {defaultKeymap, history, historyKeymap, indentWithTab} from "@codemirror/commands"
 import {keymap, EditorView, Decoration} from "@codemirror/view"
-export {EditorView, WidgetType, Decoration, ViewPlugin} from "@codemirror/view"
+export {EditorView, WidgetType, Decoration, ViewPlugin, keymap} from "@codemirror/view"
 import {
     syntaxHighlighting,
     defaultHighlightStyle,
@@ -17,7 +17,7 @@ import {
 } from "@codemirror/language"
 export {ensureSyntaxTree} from "@codemirror/language"
 import {tags} from "@lezer/highlight"
-export {linter, lintGutter} from "@codemirror/lint";
+export {linter, lintGutter, lintKeymap} from "@codemirror/lint";
 export {autocompletion} from "@codemirror/autocomplete";
 
 

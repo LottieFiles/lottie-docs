@@ -23798,7 +23798,9 @@
    exports.javascript = javascript;
    exports.json = json;
    exports.jsonParseLinter = jsonParseLinter;
+   exports.keymap = keymap;
    exports.lintGutter = lintGutter;
+   exports.lintKeymap = lintKeymap;
    exports.linter = linter;
    exports.on_change = on_change;
 
