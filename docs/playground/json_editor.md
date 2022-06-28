@@ -45,7 +45,8 @@ disable_toc: 1
         var load_ok = true;
         var lottie;
         var json_data = editor.state.doc.toString();
-        lint_errors = [];
+
+        tree_state.begin_load(editor);
 
         try {
             lottie = JSON.parse(json_data);
@@ -55,6 +56,7 @@ disable_toc: 1
                 lottie = Function("return " + json_data)();
             } catch(e) {
                 load_ok = false;
+                tree_state.load_error(editor);
             }
         }
 
@@ -80,8 +82,6 @@ disable_toc: 1
                 }
             }
             gather_expressions(lottie, "", datalist);*/
-            lint_errors = [];
-            editor.dispatch({effects: [clear_info_effect.of()]});
             worker.postMessage({type: "update", lottie: lottie});
         }
     }
@@ -154,14 +154,13 @@ disable_toc: 1
                 console.error(ev.data.message);
                 break;
             case "schema_loaded":
-                schema = Object.assign(new SchemaData(), ev.data.schema);
-                schema.root = null; // not needed
+                tree_state.schema = Object.assign(new SchemaData(), ev.data.schema);
+                tree_state.schema.root = null; // not needed
                 if ( lottie_player.lottie )
                     worker.postMessage({type: "update", lottie: lottie_player.lottie});
                 break;
             case "result":
-                validation_result = ev.data.result;
-                editor.dispatch({effects: [load_info_effect.of({result: validation_result})]});
+                tree_state.end_load(editor, ev.data.result);
                 break;
             default:
                 console.log(ev.data);
@@ -171,20 +170,27 @@ disable_toc: 1
 
     class TreeResultVisitor
     {
-        visit(node, result, path = [])
+        constructor(schema)
+        {
+            this.lint_errors = [];
+            this.decorations = [];
+            this.schema = schema;
+        }
+
+        visit(node, result, json, path = [])
         {
             if ( !node || !result )
                 return false;
 
             if ( node.name == "JsonText" )
             {
-                this.visit(node.firstChild, result, path);
+                this.visit(node.firstChild, result, json, path);
                 return false;
             }
 
             if ( node.name == "Object" )
             {
-                this.on_object(node, result, path);
+                this.on_object(node, result, json, path);
 
                 for ( let prop_node of node.getChildren("Property") )
                 {
@@ -197,7 +203,7 @@ disable_toc: 1
                     {
                         let prop_result = result.children[name];
                         this.on_property(name_node, prop_node, prop_result, result, path);
-                        this.visit(prop_node.lastChild, prop_result, path.concat([name]));
+                        this.visit(prop_node.lastChild, prop_result, json[name], path.concat([name]));
                     }
                     else
                     {
@@ -209,7 +215,7 @@ disable_toc: 1
             }
             else if ( node.name == "Array" && node.firstChild )
             {
-                this.on_array(node, result, path);
+                this.on_array(node, result, json, path);
                 var index = 0;
                 var cur = node.firstChild.cursor();
                 // first child is [
@@ -218,7 +224,7 @@ disable_toc: 1
                     if ( !(index in result.children) )
                         break;
 
-                    if ( this.visit(cur.node, result.children[index], path.concat([index])) )
+                    if ( this.visit(cur.node, result.children[index], json[index], path.concat([index])) )
                         index += 1;
                 }
                 return true;
@@ -229,29 +235,11 @@ disable_toc: 1
                 node.name == "String"
             )
             {
-                this.on_value(node, result, path);
+                this.on_value(node, result, json, path);
                 return true;
             }
 
             return false;
-        }
-
-        on_object(node, result, path) {}
-        on_property(name_node, prop_node, prop_result, obj_result, path) {}
-        on_unknown_property(name_node, prop_node, path) {}
-        on_value(node, result, path) {}
-        on_array(node, result, path)
-        {
-            this.on_object(node, result, path);
-        }
-    }
-
-    class LintErrorVisitor extends TreeResultVisitor
-    {
-        constructor()
-        {
-            super();
-            this.lint_errors = [];
         }
 
         lint_error(node, severity, message)
@@ -285,15 +273,34 @@ disable_toc: 1
                 this.lint_error(node, "warning", issue);
         }
 
-        on_object(node, result, path)
+        on_object(node, result, json, path)
         {
             this.add_lint_errors(node.firstChild, result);
             this.add_lint_errors(node.lastChild, result);
+
+            if ( result.description )
+            {
+                let deco = CodeMirrorWrapper.Decoration.widget({
+                    widget: new SchemaTypeWidget(path, result, this.schema),
+                    side: 1
+                });
+                this.decorations.push(deco.range(node.firstChild.to));
+            }
         }
 
         on_property(name_node, prop_node, prop_result, obj_result, path)
         {
             this.add_lint_errors(name_node, prop_result.key);
+
+            if ( prop_result.key )
+            {
+                let schema = this.schema;
+                let deco = CodeMirrorWrapper.Decoration.mark({
+                    class: "info_box_trigger",
+                    info_box: (view) => TreeResultVisitor.property_info_box(view, schema, name_node, obj_result, prop_result),
+                });
+                this.decorations.push(deco.range(name_node.from, name_node.to));
+            }
         }
 
         on_unknown_property(name_node, prop_node, path)
@@ -306,38 +313,109 @@ disable_toc: 1
             });
         }
 
-        on_value(node, result, path)
+        on_value(node, result, json, path)
         {
             this.add_lint_errors(node, result);
+            if ( result.const )
+            {
+                let schema = this.schema;
+                let deco = CodeMirrorWrapper.Decoration.mark({
+                    class: "info_box_trigger",
+                    info_box: (view) => TreeResultVisitor.enum_info_box(view, schema, node, result),
+                });
+                this.decorations.push(deco.range(node.from, node.to));
+            }
         }
-    }
 
-    function add_syntax_error(node)
-    {
-        if ( node.type.isError )
-            lint_errors.push({
-                from: node.from == node.to && node.from > 0 ? node.from -1 : node.from,
-                to: node.to,
-                severity: "error",
-                message: "Invalid JSON"
-            });
-        return true;
-    }
-
-    function gather_lint_errors()
-    {
-        lint_errors = [];
-        let tree = CodeMirrorWrapper.ensureSyntaxTree(editor.state);
-        if ( validation_result )
+        on_array(node, result, json, path)
         {
-            let visitor = new LintErrorVisitor();
-            visitor.visit(tree.topNode, validation_result);
-            lint_errors = visitor.lint_errors;
+            this.on_object(node, result, json, path);
         }
 
-        tree.topNode.cursor().iterate(add_syntax_error);
+        static property_info_box(view, schema, node, obj_result, prop_result)
+        {
+            let box = new InfoBoxContents(null, schema);
+            box.property(obj_result, prop_result);
+            TreeResultVisitor.show_info_box(view, box, node);
+        }
 
-        return lint_errors;
+        static enum_info_box(view, schema, node, result)
+        {
+            let box = new InfoBoxContents(null, schema);
+            box.enum_value(result, view.state.sliceDoc(node.from, node.to));
+            TreeResultVisitor.show_info_box(view, box, node);
+        }
+
+        static show_info_box(view, box, node)
+        {
+            let coords = view.coordsAtPos(node.to);
+            let bbox = view.dom.getBoundingClientRect();
+            let x = coords.left - bbox.left;
+            let y = coords.top - bbox.top;
+            info_box.show_with_contents(null, box.element, box, x, y);
+        }
+    }
+
+    class TreeState
+    {
+        constructor()
+        {
+            this.schema = null;
+            this.lint_errors = [];
+            this.decorations = [];
+            this.validation_result = null;
+            this.clear_info_effect = CodeMirrorWrapper.StateEffect.define();
+            this.load_info_effect = CodeMirrorWrapper.StateEffect.define();
+        }
+
+        begin_load(view)
+        {
+            this.lint_errors = [];
+            this.decorations = [];
+            view.dispatch({effects: [this.clear_info_effect.of()]});
+        }
+
+        end_load(view, result)
+        {
+            this.validation_result = result;
+
+            let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state);
+            let visitor = new TreeResultVisitor(this.schema);
+            visitor.visit(tree.topNode, result, lottie_player.lottie);
+            this.lint_errors = visitor.lint_errors;
+            this.decorations = visitor.decorations;
+
+            this.get_syntax_errors(tree);
+
+            view.dispatch({effects: [this.load_info_effect.of({result: result})]});
+        }
+
+        load_error(view)
+        {
+            this.end_load(view, this.validation_result);
+        }
+
+        get_syntax_errors(tree)
+        {
+            tree.topNode.cursor().iterate(this.add_syntax_error.bind(this));
+        }
+
+        add_syntax_error(node)
+        {
+            if ( node.type.isError )
+                this.lint_errors.push({
+                    from: node.from == node.to && node.from > 0 ? node.from -1 : node.from,
+                    to: node.to,
+                    severity: "error",
+                    message: "Invalid JSON"
+                });
+            return true;
+        }
+
+        linter()
+        {
+            return CodeMirrorWrapper.linter((() => this.lint_errors).bind(this));
+        }
     }
 
     function inspect_tree(node)
@@ -381,7 +459,7 @@ disable_toc: 1
 
     function autocomplete(context)
     {
-        if ( !validation_result )
+        if ( !tree_state.validation_result )
             return null;
 
         let tree = CodeMirrorWrapper.ensureSyntaxTree(context.state);
@@ -444,7 +522,7 @@ disable_toc: 1
         let path = [];
         json_path_from_node(cur.node.cursor(), path);
 
-        let object_data = descend_validation_path(validation_result, path);
+        let object_data = descend_validation_path(tree_state.validation_result, path);
         if ( !object_data.length )
             return null;
 
@@ -495,12 +573,13 @@ disable_toc: 1
 
     class SchemaTypeWidget extends CodeMirrorWrapper.WidgetType
     {
-        constructor(path, result)
+        constructor(path, result, schema)
         {
             super();
             this.result = result;
             this.path = path;
             this.path_str = path.join(".");
+            this.schema = schema;
         }
 
         eq(other)
@@ -511,7 +590,7 @@ disable_toc: 1
         show_info_box(target)
         {
             let lottie = descend_lottie_path(lottie_player.lottie, this.path);
-            let box = new InfoBoxContents(null, schema);
+            let box = new InfoBoxContents(null, this.schema);
             box.result_info_box(this.result, lottie, lottie_player.lottie, false);
             let bbox = editor_parent.getBoundingClientRect();
             let x = target.offsetLeft + target.offsetWidth;
@@ -521,7 +600,7 @@ disable_toc: 1
 
         toDOM()
         {
-            get_validation_links(this.result, schema); // updates title
+            get_validation_links(this.result, this.schema); // updates title
 
             let span = document.createElement("span");
             span.classList.add("schema-type");
@@ -541,74 +620,6 @@ disable_toc: 1
         }
     }
 
-    class DecorationVisitor extends TreeResultVisitor
-    {
-        constructor()
-        {
-            super();
-            this.decorations = [];
-        }
-
-        on_object(node, result, path)
-        {
-            if ( !result.description )
-                return;
-
-            let deco = CodeMirrorWrapper.Decoration.widget({
-                widget: new SchemaTypeWidget(path, result),
-                side: 1
-            });
-            this.decorations.push(deco.range(node.firstChild.to));
-        }
-
-        on_property(name_node, prop_node, prop_result, obj_result, path)
-        {
-            if ( !prop_result.key )
-                return;
-
-            let deco = CodeMirrorWrapper.Decoration.mark({
-                class: "info_box_trigger",
-                info_box: (view) => DecorationVisitor.property_info_box(view, name_node, obj_result, prop_result),
-            });
-            this.decorations.push(deco.range(name_node.from, name_node.to));
-        }
-
-        on_value(node, result, path)
-        {
-            if ( result.const )
-            {
-                let deco = CodeMirrorWrapper.Decoration.mark({
-                    class: "info_box_trigger",
-                    info_box: (view) => DecorationVisitor.enum_info_box(view, node, result),
-                });
-                this.decorations.push(deco.range(node.from, node.to));
-            }
-        }
-
-        static property_info_box(view, node, obj_result, prop_result)
-        {
-            let box = new InfoBoxContents(null, schema);
-            box.property(obj_result, prop_result);
-            DecorationVisitor.show_info_box(view, box, node);
-        }
-
-        static enum_info_box(view, node, result)
-        {
-            let box = new InfoBoxContents(null, schema);
-            box.enum_value(result, editor.state.sliceDoc(node.from, node.to));
-            DecorationVisitor.show_info_box(view, box, node);
-        }
-
-        static show_info_box(view, box, node)
-        {
-            let coords = editor.coordsAtPos(node.to);
-            let bbox = view.dom.getBoundingClientRect();
-            let x = coords.left - bbox.left;
-            let y = coords.top - bbox.top;
-            info_box.show_with_contents(null, box.element, box, x, y);
-        }
-    }
-
     function on_click(ev, view)
     {
         let pos = editor.posAtCoords({x: ev.clientX, y: ev.clientY});
@@ -618,8 +629,7 @@ disable_toc: 1
         });
     }
 
-    let clear_info_effect = CodeMirrorWrapper.StateEffect.define();
-    let load_info_effect = CodeMirrorWrapper.StateEffect.define();
+    let tree_state = new TreeState();
     let decoration_field = CodeMirrorWrapper.StateField.define({
         create()
         {
@@ -630,24 +640,10 @@ disable_toc: 1
         {
             for ( let effect of transaction.effects)
             {
-                if ( effect.is(clear_info_effect) )
-                {
+                if ( effect.is(tree_state.clear_info_effect) )
                     value = CodeMirrorWrapper.Decoration.none;
-                }
-                else if ( effect.is(load_info_effect) )
-                {
-                    let tree = CodeMirrorWrapper.ensureSyntaxTree(transaction.state);
-                    let visitor = new DecorationVisitor();
-                    visitor.visit(tree.topNode, effect.value.result);
-                    visitor.decorations.sort((a, b) => {
-                        if ( a.from < b.from )
-                            return -1;
-                        if ( a.from > b.from )
-                            return 1;
-                        return 0;
-                    });
-                    value = CodeMirrorWrapper.Decoration.set(visitor.decorations);
-                }
+                else if ( effect.is(tree_state.load_info_effect) )
+                    value = CodeMirrorWrapper.Decoration.set(tree_state.decorations, true);
             }
 
             return value;
@@ -656,9 +652,6 @@ disable_toc: 1
 
     });
 
-    let validation_result = null;
-    let schema = null;
-
     let editor_parent = document.getElementById("editor_parent");
     let editor = new CodeMirrorWrapper.EditorView({
         state: CodeMirrorWrapper.EditorState.create({
@@ -666,7 +659,7 @@ disable_toc: 1
                 ...CodeMirrorWrapper.default_extensions,
                 CodeMirrorWrapper.json(),
                 CodeMirrorWrapper.on_change(update_player_from_editor),
-                CodeMirrorWrapper.linter(gather_lint_errors),
+                tree_state.linter(),
                 CodeMirrorWrapper.autocompletion({override: [autocomplete]}),
                 decoration_field,
                 CodeMirrorWrapper.EditorView.domEventHandlers({
@@ -691,8 +684,6 @@ disable_toc: 1
     worker.onmessage = on_worker_message;
 
     var lottie_player = new LottiePlayer("lottie_target", undefined);
-
-    var lint_errors = [];
 
     var data = playground_get_data();
     if ( data )
