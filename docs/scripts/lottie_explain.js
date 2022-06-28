@@ -339,8 +339,14 @@ class SchemaMatcher extends BaseMatcher
 
     add_array_item_types(result)
     {
+        this.build();
+
         if ( this.type || this.def )
-            result.items_array.push(this);
+        {
+            var val = new ValidationResult();
+            this.populate_result(val);
+            result.items_array.push(val);
+        }
 
         for ( let matcher of this.matchers )
             matcher.add_array_item_types(result);
@@ -1612,13 +1618,9 @@ class InfoBoxContents
     {
         this.add(null, "Array of ");
 
-        for ( var item of this.items_array )
+        for ( var item of result.items_array )
         {
-            item.build();
-            /// TODO could use just item?
-            var val = new ValidationResult(item);
-            item.populate_result(val);
-            this.format_type(val);
+            this.format_type(item);
             this.add(null, ", ");
         }
 
@@ -1632,7 +1634,7 @@ class InfoBoxContents
     {
         if ( link_defs && result.def )
             this.result_links_to_element(result, this.element);
-        else if ( this.type == "array" && result.items_array )
+        else if ( result.type == "array" && result.items_array.length )
             this._format_type_array(result, this);
         else
             this.add("code", result.type ?? "???");
