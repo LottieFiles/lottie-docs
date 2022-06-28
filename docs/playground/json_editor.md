@@ -7,34 +7,137 @@ disable_toc: 1
     color: #998;
     font-style: italic;
 }
+
 .schema-type i {
     margin-right: 5px;
     font-style: normal;
 }
+
+.tab-content {
+    margin: 1em 0;
+}
+
+.drop-area {
+    border: 1px solid #ccc;
+    color: #ccc;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
 </style>
+<div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
+<div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">
+    <div class="spinner-border" role="status"></div>
+    Loading...
+</div>
 
-<div class="alpha_checkered" id="lottie_target" style="max-width:100%; width: 512px;"></div>
-
-<button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
-
-<div class="code-frame" style="height: 80vh;" id="editor_parent" >
-
-<div id="info_box">
-    <div class="info_box_details"></div>
-    <div class="info_box_lottie alpha_checkered"></div>
-    <div class="btn-group btn-group-toggle info_box_buttons" style="display: none" data-toggle="buttons">
-        <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
-            <input type="radio" name="options" autocomplete="off"> Fit in View
-        </label>
-        <label class="btn btn-primary btn-sm" id="btn_reset_view" title="Show items as they appear on the file">
-            <input type="radio" name="options" autocomplete="off"> Normal View
-        </label>
+<ul class="nav nav-pills">
+    <li><a data-toggle="pill" href="#tab_file">Upload File</a></li>
+    <li><a data-toggle="pill" href="#tab_url">From URL</a></li>
+    <li class="active"><a data-toggle="pill" href="#tab_editor" id="editor_tab">Editor</a></li>
+</ul>
+<div class="tab-content">
+    <div id="tab_file" class="tab-pane fade in ">
+        <div class="drop-area" ondrop="lottie_drop_input(event);" ondragover="event.preventDefault();">
+            <p>Drop JSON file here</p>
+            <input type="file" onchange="lottie_file_input(event);" class="form-control-file" />
+        </div>
+    </div>
+    <div id="tab_url" class="tab-pane fade in">
+        <p><input type="text" id="input_from_url" class="form-control" /></p>
+        <p><button onclick="lottie_url_input(document.getElementById('input_from_url').value)" class="btn btn-primary">Explain</button>
+    </div>
+    <div id="tab_editor" class="tab-pane fade in active">
+        <div class="alpha_checkered" id="lottie_target" style="max-width:100%; width: 512px;"></div>
+        <button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
+        <div class="code-frame" style="height: 80vh;" id="editor_parent" >
+            <div id="info_box">
+                <div class="info_box_details"></div>
+                <div class="info_box_lottie alpha_checkered"></div>
+                <div class="btn-group btn-group-toggle info_box_buttons" style="display: none" data-toggle="buttons">
+                    <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
+                        <input type="radio" name="options" autocomplete="off"> Fit in View
+                    </label>
+                    <label class="btn btn-primary btn-sm" id="btn_reset_view" title="Show items as they appear on the file">
+                        <input type="radio" name="options" autocomplete="off"> Normal View
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-</div>
-
 <script>
+    function input_error(e, safe = false)
+    {
+        error_container.style.display = "block";
+        loading_div.style.display = "none";
+        clear_element(error_container);
+        error_container.appendChild(document.createTextNode(safe ? e : "Could not load input!"));
+        console.error(e);
+    }
+
+    function input_start()
+    {
+        error_container.style.display = "none";
+        loading_div.style.display = "block";
+    }
+
+    function lottie_file_input(ev)
+    {
+        input_start();
+        lottie_receive_files(ev.target.files);
+    }
+
+    function lottie_receive_files(files)
+    {
+        for ( var i = 0; i < files.length; i++ )
+        {
+            var file = files[i];
+            if ( file.type.match("application/json") )
+            {
+                var reader = new FileReader();
+
+                reader.onload = function(e2)
+                {
+                    lottie_string_input(e2.target.result);
+                };
+
+                reader.readAsText(file);
+                return;
+            }
+        }
+
+        input_error("Not a JSON file", true);
+    }
+
+    function lottie_drop_input(ev)
+    {
+        ev.preventDefault();
+
+        if (ev.dataTransfer.items)
+        {
+            input_start();
+            lottie_receive_files(
+                Array.from(ev.dataTransfer.items)
+                .filter(i => i.kind === 'file')
+                .map(i => i.getAsFile())
+            );
+        }
+    }
+
+    function lottie_url_input(url)
+    {
+        input_start();
+        fetch(url)
+        .then(r => r.json())
+        .then(set_editor_json)
+        .catch(input_error);
+    }
+
     function set_editor_json(data)
     {
         lottie_string_input(JSON.stringify(data, undefined, 4));
@@ -96,14 +199,10 @@ disable_toc: 1
         editor.dispatch({
             changes: {from: 0, to: editor.state.doc.length, insert: data}
         });
-    }
 
-    function lottie_url_input(url)
-    {
-        fetch(url)
-        .then(r => r.text())
-        .then(lottie_string_input)
-        .catch(console.warn);
+        error_container.style.display = "none";
+        loading_div.style.display = "none";
+        document.getElementById("editor_tab").click();
     }
 
     function json_path_from_node(node, path)
@@ -379,13 +478,16 @@ disable_toc: 1
         {
             this.validation_result = result;
 
-            let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state);
-            let visitor = new TreeResultVisitor(this.schema);
-            visitor.visit(tree.topNode, result, lottie_player.lottie);
-            this.lint_errors = visitor.lint_errors;
-            this.decorations = visitor.decorations;
+            let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state, undefined, 1000);
+            if ( tree )
+            {
+                let visitor = new TreeResultVisitor(this.schema);
+                visitor.visit(tree.topNode, result, lottie_player.lottie);
+                this.lint_errors = visitor.lint_errors;
+                this.decorations = visitor.decorations;
 
-            this.get_syntax_errors(tree);
+                this.get_syntax_errors(tree);
+            }
 
             view.dispatch({effects: [this.load_info_effect.of({result: result})]});
         }
@@ -685,6 +787,9 @@ disable_toc: 1
 
     var lottie_player = new LottiePlayer("lottie_target", undefined);
 
+    let error_container = document.getElementById("error_alert");
+    let loading_div = document.getElementById("loading_alert");
+
     var data = playground_get_data();
     if ( data )
     {
@@ -695,7 +800,7 @@ disable_toc: 1
     }
     else
     {
-        set_editor_json(/*{
+        set_editor_json({
             "v": "5.5.2",
             "fr": 60,
             "ip": 0,
@@ -709,154 +814,7 @@ disable_toc: 1
             },
             "markers": [],
             "layers": []
-        }*/
-        {
-"v": "5.5.7",
-"ip": 0,
-"op": 180,
-"nm": "Animation",
-"mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}",
-"fr": 60,
-"w": 512,
-"h": 512,
-"assets": [
-],
-"layers": [
-    {
-        "ddd": 0,
-        "ty": 4,
-        "ind": 0,
-        "st": 0,
-        "ip": 0,
-        "op": 180,
-        "nm": "Layer",
-        "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}",
-        "ks": {
-            "a": {
-                "a": 0,
-                "k": [
-                    256,
-                    256
-                ]
-            },
-            "p": {
-                "a": 0,
-                "k": [
-                    256,
-                    256
-                ]
-            },
-            "s": {
-                "a": 0,
-                "k": [
-                    100,
-                    100
-                ]
-            },
-            "r": {
-                "a": 0,
-                "k": 0
-            },
-            "o": {
-                "a": 0,
-                "k": 100
-            }
-        },
-        "shapes": [
-            {
-                "ty": "gr",
-                "nm": "Group",
-                "it": [
-                    {
-                        "ty": "rc",
-                        "nm": "Rectangle",
-                        "p": {
-                            "a": 0,
-                            "k": [
-                                256,
-                                256
-                            ]
-                        },
-                        "s": {
-                            "a": 0,
-                            "k": [
-                                256,
-                                256
-                            ]
-                        },
-                        "r": {
-                            "a": 0,
-                            "k": 0
-                        }
-                    },
-                    {
-                        "ty": "st",
-                        "nm": "Stroke",
-                        "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}",
-                        "o": {
-                            "a": 0,
-                            "k": 100
-                        },
-                        "c": {
-                            "a": 0,
-                            "k": [
-                                1,
-                                0.9803921568627451,
-                                0.2823529411764706
-                            ]
-                        },
-                        "lc": 2,
-                        "lj": 2,
-                        "ml": 0,
-                        "w": {
-                            "a": 0,
-                            "k": 30
-                        }
-                    },
-                    {
-                        "ty": "tr",
-                        "a": {
-                            "a": 0,
-                            "k": [
-                                249.3134328358209,
-                                254.47164179104476
-                            ]
-                        },
-                        "p": {
-                            "a": 0,
-                            "k": [
-                                249.3134328358209,
-                                254.47164179104476
-                            ]
-                        },
-                        "s": {
-                            "a": 0,
-                            "k": [
-                                100,
-                                100
-                            ]
-                        },
-                        "r": {
-                            "a": 0,
-                            "k": 0
-                        },
-                        "o": {
-                            "a": 0,
-                            "k": 100
-                        }
-                    }
-                ]
-            }
-        ]
-    }
-],
-"meta": {
-    "g": "Glaxnimate 0.4.6-26-g7b05e75c"
-}
-}
-
-
-        );
+        });
     }
 </script>
 
