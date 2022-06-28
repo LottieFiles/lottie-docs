@@ -67,6 +67,10 @@ disable_toc: 1
                 </div>
             </div>
         </div>
+        <details>
+            <summary>Key Bindings</summary>
+            <table id="key_bindings"></table>
+        </details>
     </div>
 </div>
 
@@ -810,6 +814,25 @@ disable_toc: 1
             "markers": [],
             "layers": []
         });
+    }
+
+    let key_bindings_parent = document.getElementById("key_bindings");
+    for ( arr of editor.state.field(CodeMirrorWrapper.keymap) )
+    {
+        for ( key of arr )
+        {
+            if ( key.key && key.run.name )
+            {
+                let row = key_bindings.appendChild(document.createElement("tr"));
+                row.appendChild(document.createElement("th"))
+                .appendChild(document.createTextNode(key.key));
+
+                let cmd = key.run.name.replace(/[A-Z]/g, l => " " + l)
+                .replace(/^[a-z]/, l => l.toUpperCase());
+                row.appendChild(document.createElement("td"))
+                .appendChild(document.createTextNode(cmd));
+            }
+        }
     }
 </script>
 
