@@ -83,7 +83,7 @@
     }
 }
 
-.code-input, .highlighted-input, .code-frame {
+.code-input, .highlighted-input, .code-frame, .cm-editor {
     background-color: #fcfdff;
     border: 1px solid #ccc;
 }

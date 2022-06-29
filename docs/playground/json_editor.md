@@ -27,8 +27,14 @@ disable_toc: 1
     flex-flow: column;
 }
 
-#tab_editor > div:first-child {
+#tab_editor > div {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#tab_editor > div > div:first-child {
     margin-bottom: 1ex;
+    margin-right: 1ex;
 }
 
 .playback-controls {
@@ -38,6 +44,37 @@ disable_toc: 1
 .player-wrapper {
     max-width:100%;
     width: 512px;
+}
+
+.cm-editor:focus-within {
+    outline: 2px solid #3daee9 !important;
+}
+
+#editor_parent > .cm-editor > .cm-scroller {
+    height: 80vh;
+}
+
+#editor_parent .cm-scroller {
+    overflow: auto;
+    resize: vertical;
+}
+
+#editor_parent {
+    position: relative;
+}
+
+body.wide .editor-side {
+    width: calc(100% - 512px - 1em);
+}
+
+.editor-side {
+    width: 100%;
+}
+
+body.wide .container {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
 }
 
 </style>
@@ -64,6 +101,7 @@ disable_toc: 1
         <p><button onclick="lottie_url_input(document.getElementById('input_from_url').value)" class="btn btn-primary">Explain</button>
     </div>
     <div id="tab_editor" class="tab-pane fade in active">
+        <div>
         <div class="player-wrapper">
             <div class="alpha_checkered" id="lottie_target"></div>
             <div class="playback-controls">
@@ -77,11 +115,14 @@ disable_toc: 1
                 <input type="number" id="frame_edit" oninput="update_frame(this.value)" style="display: none"/>
             </div>
         </div>
-        <div>
+        <div class="editor-side">
             <button onclick="save_lottie()" class="btn btn-primary">Save</button>
             <button onclick="load_lottie()" class="btn btn-primary">Load</button>
             <button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
-            <div class="code-frame" style="height: 80vh;" id="editor_parent" >
+            <button onclick="document.body.classList.toggle('wide')" class="btn btn-secondary" title="Toggle Wide Layout">
+                <i class="fa-solid fa-arrows-left-right"></i>
+            </button>
+            <div id="editor_parent" >
                 <div id="info_box">
                     <div class="info_box_details"></div>
                     <div class="info_box_lottie alpha_checkered"></div>
@@ -95,6 +136,7 @@ disable_toc: 1
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <details>
             <summary>Key Bindings</summary>
@@ -1039,7 +1081,6 @@ disable_toc: 1
             "fonts": {
                 "list": []
             },
-            "markers": [],
             "layers": []
         });
     }
