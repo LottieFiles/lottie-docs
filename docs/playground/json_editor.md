@@ -27,6 +27,19 @@ disable_toc: 1
     flex-flow: column;
 }
 
+#tab_editor > div:first-child {
+    margin-bottom: 1ex;
+}
+
+.playback-controls {
+    display: flex;
+}
+
+.player-wrapper {
+    max-width:100%;
+    width: 512px;
+}
+
 </style>
 <div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
 <div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">
@@ -51,21 +64,35 @@ disable_toc: 1
         <p><button onclick="lottie_url_input(document.getElementById('input_from_url').value)" class="btn btn-primary">Explain</button>
     </div>
     <div id="tab_editor" class="tab-pane fade in active">
-        <div class="alpha_checkered" id="lottie_target" style="max-width:100%; width: 512px;"></div>
-        <button onclick="save_lottie()" class="btn btn-primary">Save</button>
-        <button onclick="load_lottie()" class="btn btn-primary">Load</button>
-        <button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
-        <div class="code-frame" style="height: 80vh;" id="editor_parent" >
-            <div id="info_box">
-                <div class="info_box_details"></div>
-                <div class="info_box_lottie alpha_checkered"></div>
-                <div class="btn-group btn-group-toggle info_box_buttons" style="display: none" data-toggle="buttons">
-                    <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
-                        <input type="radio" name="options" autocomplete="off"> Fit in View
-                    </label>
-                    <label class="btn btn-primary btn-sm" id="btn_reset_view" title="Show items as they appear on the file">
-                        <input type="radio" name="options" autocomplete="off"> Normal View
-                    </label>
+        <div class="player-wrapper">
+            <div class="alpha_checkered" id="lottie_target"></div>
+            <div class="playback-controls">
+                <button onclick="toggle_playback(this)" class="btn btn-primary btn-sm" title="Pause">
+                    <i class="fa-solid fa-pause"></i>
+                </button>
+                <button onclick="toggle_playback_controls()" class="btn btn-secondary btn-sm" title="Toggle Playback Controls">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+                <input type="range" class="form-control" id="frame_slider" oninput="update_frame(this.value)" style="display: none"/>
+                <input type="number" id="frame_edit" oninput="update_frame(this.value)" style="display: none"/>
+            </div>
+        </div>
+        <div>
+            <button onclick="save_lottie()" class="btn btn-primary">Save</button>
+            <button onclick="load_lottie()" class="btn btn-primary">Load</button>
+            <button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
+            <div class="code-frame" style="height: 80vh;" id="editor_parent" >
+                <div id="info_box">
+                    <div class="info_box_details"></div>
+                    <div class="info_box_lottie alpha_checkered"></div>
+                    <div class="btn-group btn-group-toggle info_box_buttons" style="display: none" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
+                            <input type="radio" name="options" autocomplete="off"> Fit in View
+                        </label>
+                        <label class="btn btn-primary btn-sm" id="btn_reset_view" title="Show items as they appear on the file">
+                            <input type="radio" name="options" autocomplete="off"> Normal View
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,30 +196,24 @@ disable_toc: 1
             }
         }
 
-//         var datalist = document.getElementById("datalist_expression_paths");
-//         datalist.innerHTML = "";
         if ( load_ok )
         {
             lottie_player.lottie = lottie;
+            frame_slider.min = frame_edit.min = frame_slider.value = frame_edit.value = lottie.ip;
+            frame_slider.max = frame_edit.max = lottie.op;
             lottie_player.reload();
-            /*if ( data["expression_path"].length )
-            {
-                try {
-                    var expr_target = lottie;
-                    var expr_path = data["expression_path"].split(".");
-                    var last = expr_path.pop();
-                    for ( var chunk of expr_path )
-                        expr_target = expr_target[chunk];
-                    expr_target[last] = data["expression"];
-                } catch ( e ) {
-                    if ( error.length )
-                        error += "\n\n";
-                    error += "Could not set the expression";
-                }
-            }
-            gather_expressions(lottie, "", datalist);*/
+            lottie_player.anim.addEventListener("enterFrame", (ev) => {
+                frame_slider.value = frame_edit.value = Math.round(ev.currentTime);
+            });
             worker.postMessage({type: "update", lottie: lottie});
         }
+    }
+
+    function update_frame(value)
+    {
+        value = Number(value);
+        if ( value != Math.round(lottie_player.anim.currentFrame) )
+            lottie_player.go_to_frame(value);
     }
 
     function pretty()
@@ -899,6 +920,36 @@ disable_toc: 1
         };
     }
 
+    function toggle_playback(button)
+    {
+        if ( lottie_player.autoplay )
+        {
+            lottie_player.pause();
+            button.title = "Play";
+            button.firstElementChild.setAttribute("class", "fa-solid fa-play");
+        }
+        else
+        {
+            lottie_player.play();
+            button.title = "Pause";
+            button.firstElementChild.setAttribute("class", "fa-solid fa-pause");
+        }
+    }
+
+    function toggle_playback_controls()
+    {
+        if ( frame_slider.style.display == "none" )
+        {
+            frame_slider.style.display = "block";
+            frame_edit.style.display = "block";
+        }
+        else
+        {
+            frame_slider.style.display = "none";
+            frame_edit.style.display = "none";
+        }
+    }
+
     let expr_variables = ["$bm_rt", "time", "value", "thisProperty", "thisComp", "thisLayer"];
     let expr_funcs = ["comp", "posterizeTime", "timeToFrames", "framesToTime", "rgbToHsl", "hslToRgb",
         "createPath", "add", "sub", "mul", "div", "mod", "clamp", "normalize", "length", "lookAt",
@@ -928,6 +979,9 @@ disable_toc: 1
         provide: f => CodeMirrorWrapper.EditorView.decorations.from(f)
 
     });
+
+    let frame_slider = document.getElementById("frame_slider");
+    let frame_edit = document.getElementById("frame_edit");
 
     let editor_parent = document.getElementById("editor_parent");
     let editor = new CodeMirrorWrapper.EditorView({

@@ -12,6 +12,7 @@ class LottiePlayer
         this.anim = null;
 
         this.load_ok = true;
+        this.autoplay = true;
 
         this.custom_options = custom_options;
 
@@ -25,7 +26,7 @@ class LottiePlayer
             container: this.container,
             renderer: 'svg',
             loop: true,
-            autoplay: true,
+            autoplay: this.autoplay,
             ...this.custom_options,
             ...extra_options,
         };
@@ -50,11 +51,13 @@ class LottiePlayer
     play()
     {
         this.anim.play();
+        this.autoplay = true;
     }
 
     pause()
     {
         this.anim.pause();
+        this.autoplay = false;
     }
 
     on_reload()
@@ -67,6 +70,14 @@ class LottiePlayer
             this.anim.destroy();
             this.anim = null;
         } catch ( e ) {}
+    }
+
+    go_to_frame(frame)
+    {
+        if ( this.autoplay )
+            this.anim.goToAndPlay(frame, true);
+        else
+            this.anim.goToAndStop(frame, true);
     }
 }
 
