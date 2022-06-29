@@ -40,6 +40,44 @@ summary {
     border: 1px solid #ccc;
 }
 
+#info_box {
+    display: none;
+    border: 5px solid #555;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    margin-left: 30px;
+    background: white;
+    color: black;
+    font-style: normal;
+    word-break: normal;
+}
+
+
+#info_box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+    margin-left: -15px;
+    height: 5px;
+}
+
+#info_box .info_box_content{
+    display: block;
+}
+
+.info_box_content {
+    display: none;
+}
+
 </style>
 <script src="../../scripts/lottie_explain.js"></script>
 <ul class="nav nav-pills">

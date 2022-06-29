@@ -8,7 +8,14 @@ export {json, jsonParseLinter} from "@codemirror/lang-json"
 export {EditorState, StateField, StateEffect} from "@codemirror/state"
 import {defaultKeymap, history, historyKeymap, indentWithTab} from "@codemirror/commands"
 import {keymap, EditorView, Decoration} from "@codemirror/view"
-export {EditorView, WidgetType, Decoration, ViewPlugin, keymap} from "@codemirror/view"
+export {
+    EditorView,
+    WidgetType,
+    Decoration,
+    ViewPlugin,
+    keymap,
+    showTooltip
+} from "@codemirror/view"
 import {
     syntaxHighlighting,
     defaultHighlightStyle,

@@ -23804,6 +23804,7 @@
    exports.lintKeymap = lintKeymap;
    exports.linter = linter;
    exports.on_change = on_change;
+   exports.showTooltip = showTooltip;
 
    Object.defineProperty(exports, '__esModule', { value: true });
 

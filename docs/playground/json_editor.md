@@ -77,6 +77,40 @@ body.wide .container {
     padding: 0;
 }
 
+
+#editor_parent > #info_box {
+    display: none;
+    border: 5px solid #555;
+    border-radius: 6px;
+    padding: 5px;
+    background: white;
+    color: black;
+    font-style: normal;
+    word-break: normal;
+}
+
+
+.cm-editor > .tooltip-info-box
+{
+    background: none;
+    border: none;
+}
+
+#info_box
+{
+    border: 5px solid #555;
+    border-radius: 6px;
+    padding: 5px;
+    background: white;
+    color: black;
+    font-style: normal;
+    word-break: normal;
+}
+
+.cm-editor > .tooltip-info-box > .cm-tooltip-arrow:after {
+    border-top-color: #555;
+}
+
 </style>
 <div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
 <div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">
@@ -126,7 +160,7 @@ body.wide .container {
                 <div id="info_box">
                     <div class="info_box_details"></div>
                     <div class="info_box_lottie alpha_checkered"></div>
-                    <div class="btn-group btn-group-toggle info_box_buttons" style="display: none" data-toggle="buttons">
+                    <div class="info_box_buttons" style="display: none" data-toggle="buttons">
                         <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
                             <input type="radio" name="options" autocomplete="off"> Fit in View
                         </label>
@@ -332,7 +366,7 @@ body.wide .container {
                 tree_state.end_load(editor, ev.data.result);
                 break;
             default:
-                console.log(ev.data);
+                console.warn("Unknown worker message", ev.data);
                 break;
         }
     }
@@ -449,8 +483,10 @@ body.wide .container {
 
             if ( result.description )
             {
+                let widget = new SchemaTypeWidget(path, result, json, this.schema);
                 let deco = CodeMirrorWrapper.Decoration.widget({
-                    widget: new SchemaTypeWidget(path, result, json, this.schema),
+                    widget: widget,
+                    info_box: widget.show_info_box.bind(widget),
                     side: 1
                 });
                 this.decorations.push(deco.range(node.firstChild.to));
@@ -466,7 +502,9 @@ body.wide .container {
                 let schema = this.schema;
                 let deco = CodeMirrorWrapper.Decoration.mark({
                     class: "info_box_trigger",
-                    info_box: (view) => TreeResultVisitor.property_info_box(view, schema, name_node, obj_result, prop_result),
+                    info_box: (pos) => TreeResultVisitor.property_info_box(
+                        pos, editor, schema, name_node, obj_result, prop_result
+                    ),
                 });
                 this.decorations.push(deco.range(name_node.from, name_node.to));
 
@@ -474,8 +512,10 @@ body.wide .container {
                 if ( name == "x" && value_node.name == "String" )
                 {
                     let code = editor.state.sliceDoc(value_node.from, value_node.to);
+                    let widget = new EditExpressionWidget(path, code, value_node);
                     let deco = CodeMirrorWrapper.Decoration.widget({
-                        widget: new EditExpressionWidget(path, code, value_node),
+                        widget: widget,
+                        info_box: widget.show_info_box.bind(widget),
                         side: 1
                     });
                     this.decorations.push(deco.range(value_node.from));
@@ -497,7 +537,9 @@ body.wide .container {
                 let schema = this.schema;
                 let deco = CodeMirrorWrapper.Decoration.mark({
                     class: "info_box_trigger",
-                    info_box: (view) => TreeResultVisitor.enum_info_box(view, schema, node, result),
+                    info_box: (pos) => TreeResultVisitor.enum_info_box(
+                        pos, editor, schema, node, result
+                    ),
                 });
                 this.decorations.push(deco.range(node.from, node.to));
             }
@@ -508,27 +550,24 @@ body.wide .container {
             this.on_object(node, result, json, path);
         }
 
-        static property_info_box(view, schema, node, obj_result, prop_result)
+        static property_info_box(pos, view, schema, node, obj_result, prop_result)
         {
             let box = new InfoBoxContents(null, schema);
             box.property(obj_result, prop_result);
-            TreeResultVisitor.show_info_box(view, box, node);
+            TreeResultVisitor.show_info_box(pos, view, box, node);
         }
 
-        static enum_info_box(view, schema, node, result)
+        static enum_info_box(pos, view, schema, node, result)
         {
             let box = new InfoBoxContents(null, schema);
             box.enum_value(result, view.state.sliceDoc(node.from, node.to));
-            TreeResultVisitor.show_info_box(view, box, node);
+            TreeResultVisitor.show_info_box(pos, view, box, node);
         }
 
-        static show_info_box(view, box, node)
+        static show_info_box(pos, view, box, node)
         {
-            let coords = view.coordsAtPos(node.to);
-            let bbox = view.dom.getBoundingClientRect();
-            let x = coords.left - bbox.left;
-            let y = coords.top - bbox.top;
-            info_box.show_with_contents(null, box.element, box, x, y);
+            info_box.show_with_contents(null, box.element, box, 0, 0);
+            tree_state.show_info_box_tooltip(pos);
         }
     }
 
@@ -542,7 +581,63 @@ body.wide .container {
             this.validation_result = null;
             this.clear_info_effect = CodeMirrorWrapper.StateEffect.define();
             this.load_info_effect = CodeMirrorWrapper.StateEffect.define();
-            this.expression_completions = []
+            this.update_tooltip_effect = CodeMirrorWrapper.StateEffect.define();
+            this.expression_completions = [];
+
+            let self = this;
+
+            this.decoration_field = CodeMirrorWrapper.StateField.define({
+                create()
+                {
+                    return CodeMirrorWrapper.Decoration.none;
+                },
+
+                update(value, transaction)
+                {
+                    for ( let effect of transaction.effects)
+                    {
+                        if ( effect.is(self.clear_info_effect) )
+                            value = CodeMirrorWrapper.Decoration.none;
+                        else if ( effect.is(self.load_info_effect) )
+                            value = CodeMirrorWrapper.Decoration.set(self.decorations, true);
+                    }
+
+                    return value;
+                },
+
+                provide: f => CodeMirrorWrapper.EditorView.decorations.from(f)
+
+            });
+            this.info_box_field = CodeMirrorWrapper.StateField.define({
+                create() { return []; },
+
+                update(value, transaction)
+                {
+                    for ( let effect of transaction.effects)
+                    {
+                        if ( effect.is(self.update_tooltip_effect) )
+                        {
+                            if ( effect.value )
+                                return [effect.value];
+                            else
+                                return [];
+                        }
+                    }
+
+                    return value;
+                },
+
+                provide: f => CodeMirrorWrapper.showTooltip.computeN([f], state => state.field(f))
+            });
+        }
+
+        extensions()
+        {
+            return [
+                this.decoration_field,
+                this.info_box_field,
+                CodeMirrorWrapper.linter((() => this.lint_errors).bind(this))
+            ]
         }
 
         begin_load(view)
@@ -590,11 +685,6 @@ body.wide .container {
                     message: "Invalid JSON"
                 });
             return true;
-        }
-
-        linter()
-        {
-            return CodeMirrorWrapper.linter((() => this.lint_errors).bind(this));
         }
 
         add_expr_function(name, def)
@@ -666,6 +756,30 @@ body.wide .container {
                 this.add_expr_function(n, expr_schema.functions[v]);
 
             this.add_expr_builtin("Math", Math);
+        }
+
+        hide_tooltip()
+        {
+            editor.dispatch({effects: [this.update_tooltip_effect.of(null)]});
+        }
+
+        show_info_box_tooltip(pos, options = {})
+        {
+            let tooltip = {
+                pos: pos,
+                above: true,
+                arrow: true,
+                ...options,
+                create: () => {
+                    let div = document.createElement("div");
+                    info_box.element.setAttribute("style", "");
+                    div.appendChild(info_box.element);
+                    div.classList.add("tooltip-info-box");
+                    return {dom: div};
+                }
+            }
+
+            editor.dispatch({effects: [this.update_tooltip_effect.of(tooltip)]});
         }
     }
 
@@ -839,14 +953,12 @@ body.wide .container {
             return this.path_str == other.path_str;
         }
 
-        show_info_box(target)
+        show_info_box(pos)
         {
             let box = new InfoBoxContents(null, this.schema);
             box.result_info_box(this.result, this.lottie, lottie_player.lottie, false);
-            let bbox = editor_parent.getBoundingClientRect();
-            let x = target.offsetLeft + target.offsetWidth;
-            let y = target.offsetTop;
-            info_box.show_with_contents(null, box.element, box, x, y);
+            info_box.show_with_contents(null, box.element, box, 0, 0);
+            tree_state.show_info_box_tooltip(pos);
         }
 
         toDOM()
@@ -864,11 +976,10 @@ body.wide .container {
 
             span.appendChild(document.createTextNode(this.result.title));
 
-            let self = this;
-            span.addEventListener("click", e => self.show_info_box(span));
-
             return span;
         }
+
+        ignoreEvent(ev) { return false; }
     }
 
     class EditExpressionWidget extends CodeMirrorWrapper.WidgetType
@@ -900,9 +1011,6 @@ body.wide .container {
 
             span.title = "Edit Expression";
 
-            let self = this;
-            span.addEventListener("click", e => self.show_info_box(span));
-
             return span;
         }
 
@@ -916,9 +1024,14 @@ body.wide .container {
             this.to = this.from + expr.length;
         }
 
-        show_info_box(span)
+        show_info_box(pos)
         {
             let element = document.createElement("div");
+
+            function stop_ev(ev) { ev.stopPropagation(); }
+            element.addEventListener("keydown", stop_ev);
+            element.addEventListener("keyup", stop_ev);
+            element.addEventListener("keypress", stop_ev);
 
             let title = element.appendChild(document.createElement("strong"));
             let a = title.appendChild(document.createElement("a"));
@@ -947,22 +1060,27 @@ body.wide .container {
             expression_editor.dispatch({
                 changes: {from: 0, to: 0, insert: this.script}
             });
-            let line = editor.state.doc.lineAt(this.to).number + 1;
-            let coords = editor.coordsAtPos(editor.state.doc.line(line).from);
-            let bbox = editor.dom.getBoundingClientRect();
-            let x = coords.left - bbox.left;
-            let y = coords.top - bbox.top;
-            info_box.show_with_contents(null, element, expression_editor, x, y);
+            let line = editor.state.doc.lineAt(this.from);
+            info_box.show_with_contents(null, element, expression_editor, 0, 0);
+
+            tree_state.show_info_box_tooltip(
+                line.from,
+                {
+                    arrow: false,
+                    above: false,
+                }
+            );
         }
 
+        ignoreEvent(ev) { return false; }
     }
 
     function on_click(ev, view)
     {
         let pos = editor.posAtCoords({x: ev.clientX, y: ev.clientY});
-        view.state.field(decoration_field).between(pos, pos, (from, to, deco) => {
+        view.state.field(tree_state.decoration_field).between(pos, pos, (from, to, deco) => {
             if ( deco.spec.info_box )
-                deco.spec.info_box(view);
+                deco.spec.info_box(pos)
         });
     }
 
@@ -1034,6 +1152,14 @@ body.wide .container {
         }
     }
 
+    function get_tooltip(state)
+    {
+        if ( !tree_state.tooltip )
+            return [];
+
+        return [tree_state.tooltip]
+    }
+
     let expr_variables = ["$bm_rt", "time", "value", "thisProperty", "thisComp", "thisLayer"];
     let expr_funcs = ["comp", "posterizeTime", "timeToFrames", "framesToTime", "rgbToHsl", "hslToRgb",
         "createPath", "add", "sub", "mul", "div", "mod", "clamp", "normalize", "length", "lookAt",
@@ -1042,27 +1168,6 @@ body.wide .container {
     ];
 
     let tree_state = new TreeState();
-    let decoration_field = CodeMirrorWrapper.StateField.define({
-        create()
-        {
-            return CodeMirrorWrapper.Decoration.none;
-        },
-
-        update(value, transaction)
-        {
-            for ( let effect of transaction.effects)
-            {
-                if ( effect.is(tree_state.clear_info_effect) )
-                    value = CodeMirrorWrapper.Decoration.none;
-                else if ( effect.is(tree_state.load_info_effect) )
-                    value = CodeMirrorWrapper.Decoration.set(tree_state.decorations, true);
-            }
-
-            return value;
-        },
-        provide: f => CodeMirrorWrapper.EditorView.decorations.from(f)
-
-    });
 
     let frame_slider = document.getElementById("frame_slider");
     let frame_edit = document.getElementById("frame_edit");
@@ -1075,9 +1180,8 @@ body.wide .container {
                 ...CodeMirrorWrapper.default_extensions,
                 CodeMirrorWrapper.json(),
                 CodeMirrorWrapper.on_change(update_player_from_editor),
-                tree_state.linter(),
+                tree_state.extensions(),
                 CodeMirrorWrapper.autocompletion({override: [autocomplete]}),
-                decoration_field,
                 CodeMirrorWrapper.EditorView.domEventHandlers({click: on_click}),
             ]
         }),
@@ -1090,7 +1194,10 @@ body.wide .container {
             !e.target.closest(".info_box_trigger") &&
             !info_box.element.contains(e.target)
         )
-            info_box.hide()
+        {
+            info_box.hide();
+            tree_state.hide_tooltip();
+        }
     });
 
     const worker = new Worker("../../scripts/explain_worker.js");
