@@ -7,7 +7,11 @@ function critical_error(err)
     postMessage({type: "error", message: err});
 }
 
-var requests = [fetch("/lottie-docs/schema/lottie.schema.json"), fetch("/lottie-docs/schema/docs_mapping.json")]
+var requests = [
+    fetch("/lottie-docs/schema/lottie.schema.json"),
+    fetch("/lottie-docs/schema/docs_mapping.json"),
+    fetch("/lottie-docs/schema/expressions.json")
+]
 Promise.all(requests)
 .then(responses => {
     Promise.all(responses.map(r => r.json()))
@@ -16,6 +20,7 @@ Promise.all(requests)
         postMessage({
             type: "schema_loaded",
             schema: schema,
+            expressions: jsons[2]
         });
     })
     .catch(critical_error);

@@ -28,10 +28,7 @@ More resources on AE expressions:
 ### `$bm_rt`
 
 {variable_docs}
-name: $bm_rt
-type: Depends on the property
-description: Output value for the property
-notes: Must be declared and be assigned a value in every expression
+schema: $bm_rt
 
 The special variable `$bm_rt` is used to determine the value of the expression.
 
@@ -61,10 +58,7 @@ lottie.layers[0].ks.p.x = data["Position Expression"];
 
 
 {variable_docs}
-name: time
-type: number
-description: The current time within the composition in seconds
-notes: Read only
+schema: time
 
 
 {lottie_playground:image.json:512:512}
@@ -80,10 +74,7 @@ lottie.layers[0].ks.r.x = data["Rotation Expression"];
 ### `value`
 
 {variable_docs}
-name: value
-type: Depends on the property
-description: The value the property would have without expressions
-notes: Read only
+schema: value
 
 {lottie_playground:image.json:512:512}
 Position Expression:<highlight>
@@ -100,92 +91,57 @@ lottie.layers[0].ks.p.x = data["Position Expression"];
 ### `thisProperty`
 
 {variable_docs}
-name: thisProperty
-type: Property
-description: Property the expression is operating on
-notes: Read only
+schema: thisProperty
 
 ### `thisComp`
 
 {variable_docs}
-name: thisComp
-type: Composition
-description: Composition the property is in
-notes: Read only
+schema: thisComp
 
 ### `thisLayer`
 
 {variable_docs}
-name: thisLayer
-type: Layer
-description: Layer the property is in
-notes: Read only
+schema: thisLayer
 
 ## Animation Structure functions
 
 ### comp()
 
-{function_docs}
-name: comp
-param: name : string : Composition name
-return: Composition :
 
+{function_docs}
+schema: comp
 
 ## Misc Functions
 
 ### posterizeTime()
 
 {function_docs}
-name: posterizeTime
-param: fps : number : Frames per seconds
-description: The rest of the expression will only be updated this many times per second
-
+schema: posterizeTime
 
 ### timeToFrames()
 
 {function_docs}
-name: timeToFrames
-param: time : number : Time in seconds : time + thisComp.displayStartTime
-param: fps : number : Frames per second : 1.0 / thisComp.frameDuration
-return: number : Number of frames
-description: Converts a time in seconds to a number of frames
+schema: timeToFrames
 
 ### framesToTime()
 
 {function_docs}
-name: framesToTime
-param: frames : number : Number of frames
-param: fps : number : Frames per second : 1.0 / thisComp.frameDuration
-return: number : Time in seconds
-description: Converts a number of frames to a time in seconds
+schema: framesToTime
 
 ### rgbToHsl()
 
 {function_docs}
-name: rgbToHsl
-param: rgb : array[3]|array[4] : RGB(A) color, with components in 0, 1
-return: array[3]|array[4] : HSL(A) color, with components in 0, 1
+schema: rgbToHsl
 
 ### hslToRgb()
 
 {function_docs}
-name: hslToRgb
-param: hsl : array[3]|array[4] : HSL(A) color, with components in 0, 1
-return: array[3]|array[4] : RGB(A) color, with components in 0, 1
-
+schema: hslToRgb
 
 ### createPath()
 
 {function_docs}
-name: createPath
-param: points : array : Array of points (each point is a list with 2 numbers)
-param: in_tangents : array : [] : Array of in tangents correponding to the point with the same index
-param: out_tangents : array : [] : Array of out tangents correponding to the point with the same index
-param: is_closed : boolean : true : Whether the path is closed
-return: Path
-
-Creates bezier path data
-
+schema: createPath
 
 ## Math functions
 
@@ -193,10 +149,7 @@ Creates bezier path data
 ### add()
 
 {function_docs}
-name: add
-param: a : any :
-param: b : any :
-return: any :
+schema: add
 
 If `a` and `b` are numbers, it will return their sum.
 
@@ -211,10 +164,7 @@ This function is also available as `$bm_sum` and `sum`.
 ### sub()
 
 {function_docs}
-name: sub
-param: a : any :
-param: b : any :
-return: any :
+schema: sub
 
 If `a` and `b` are numbers, or can be converted to numbers, it will return their difference.
 
@@ -226,10 +176,7 @@ This function is also avilable as `$bm_sub`.
 
 
 {function_docs}
-name: mul
-param: a : any :
-param: b : any :
-return: any :
+schema: mul
 
 If `a` and `b` are numbers, or can be converted to numbers, it will return their product.
 
@@ -242,10 +189,7 @@ This function is also avilable as `$bm_mul`.
 
 
 {function_docs}
-name: div
-param: a : any :
-param: b : any :
-return: any :
+schema: div
 
 If `a` and `b` are numbers, or can be converted to numbers, it will return their division.
 
@@ -258,174 +202,79 @@ This function is also avilable as `$bm_div`.
 
 
 {function_docs}
-name: mod
-param: a : number :
-param: b : number :
-return: number : `a % b`
+schema: mod
 
 
 ### clamp()
 
 {function_docs}
-name: clamp
-param: value : number : The value to clamp
-param: minimum : number : Minimum value
-param: maximum : number : Maximum value
-return: number :
-description: Clamps a value inside a range
+schema: clamp
 
 
 ### normalize()
 
 
 {function_docs}
-name: normalize
-param: vector : array
-return: number : same `div(vector, length(vector))`
-description: Divides a vector by its length
+schema: normalize
 
 
 ### length()
 
 {function_docs}
-name: length
-param: vector : array
-return: number : length of `vector`
-
-
-{function_docs}
-name: length
-param: a : array
-param: b : array
-return: number : Distance between `a` and `b`.
-
+schema: length
 
 ### looAt()
 
 {function_docs}
-name: length
-param: from_point : array[3]
-param: to_point : array[3]
-return: number : length of `vector`
+schema: lookAt
 
 
 ### seedRandom()
 
 {function_docs}
-name: seedRandom
-param: seed : number
-description: Sets the seed for random functions
-
+schema: seedRandom
 
 ### random()
 
 {function_docs}
-name: random
-return: number : Random number between 0 and 1
-
-{function_docs}
-name: random
-param: max : number|array
-return: number|array : Random number between 0 and `max`, element wise if the argument is an array
-
-{function_docs}
-name: random
-param: min : number|array
-param: max : number|array
-return: number|array : Random number between `min` and `max`, element wise if the arguments are arrays
+schema: random
 
 ### linear()
 
 {function_docs}
-name: linear
-param: t : number : Interpolation factor between 0 and 1
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Linear interpolation between `value1` and `value2`
-
-{function_docs}
-name: linear
-param: t : number : Interpolation factor between `t_min` and `t_max`
-param: t_min : number : Lower bound for the `t` range
-param: t_max : number : Lower bound for the `t` range
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Linear interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
+schema: linear
 
 ### ease()
 
 Works the same as `linear()` but with a smooth cubic interpolation.
 
 {function_docs}
-name: ease
-param: t : number : Interpolation factor between 0 and 1
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Interpolation between `value1` and `value2`
-
-{function_docs}
-name: ease
-param: t : number : Interpolation factor between `t_min` and `t_max`
-param: t_min : number : Lower bound for the `t` range
-param: t_max : number : Lower bound for the `t` range
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
+schema: ease
 
 ### easeIn()
 
 Interpolation, starts the same as `ease()` and ends the same as `linear()`
 
 {function_docs}
-name: easeIn
-param: t : number : Interpolation factor between 0 and 1
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Interpolation between `value1` and `value2`
-
-{function_docs}
-name: easeIn
-param: t : number : Interpolation factor between `t_min` and `t_max`
-param: t_min : number : Lower bound for the `t` range
-param: t_max : number : Lower bound for the `t` range
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
+schema: easeIn
 
 ### easeOut()
 
 Interpolation, starts the same as `linear()` and ends the same as `ease()`
 
 {function_docs}
-name: easeOut
-param: t : number : Interpolation factor between 0 and 1
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Interpolation between `value1` and `value2`
+schema: easeOut
 
-{function_docs}
-name: easeOut
-param: t : number : Interpolation factor between `t_min` and `t_max`
-param: t_min : number : Lower bound for the `t` range
-param: t_max : number : Lower bound for the `t` range
-param: value1 : number|array
-param: value2 : number|array
-return: number|array : Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`
 
 ### degreesToRadians()
 
 {function_docs}
-name: degreesToRadians
-param: degrees : number : Angle in degrees
-return: number : Angle in radians
+schema: degreesToRadians
 
 ### radiansToDegrees()
 
 {function_docs}
-name: degreesToRadians
-param: radians : number : Angle in radians
-return: number : Angle in degrees
-
+schema: radiansToDegrees
 
 <!--
 Not implemented:

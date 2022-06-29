@@ -1,0 +1,630 @@
+{
+    "variables": {
+        "$bm_rt": {
+            "type": "Depends on the property",
+            "description": "Output value for the expression",
+            "notes": "Must be declared and be assigned a value in every expression"
+        },
+        "time": {
+            "type": "number",
+            "description": "The current time within the composition in seconds",
+            "notes": "Read only"
+        },
+        "value": {
+            "type": "Depends on the property",
+            "description": "The value the property would have without expressions",
+            "notes": "Read only"
+        },
+        "thisProperty": {
+            "type": "Property",
+            "description": "Property the expression is operating on",
+            "notes": "Read only"
+        },
+        "thisComp": {
+            "type": "Composition",
+            "description": "Composition the property is in",
+            "notes": "Read only"
+        },
+        "thisLayer": {
+            "type": "Layer",
+            "description": "Layer the property is in",
+            "notes": "Read only"
+        }
+    },
+    "functions": {
+        "comp": {
+            "params": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "description": "Composition name"
+                }
+            ],
+            "return": {
+                "type": "Composition",
+                "description": "Composition object matching the given name"
+            }
+        },
+        "posterizeTime": {
+            "params": [
+                {
+                    "name": "fps",
+                    "type": "number",
+                    "description": "Frames per second"
+                }
+            ],
+            "description": "The rest of the expression will only be updated this many times per second"
+        },
+        "timeToFrames": {
+            "description": "Converts a time in seconds to a number of frames",
+            "params": [
+                {
+                    "name": "time",
+                    "type": "number",
+                    "description": "Time in seconds",
+                    "default": "time + thisComp.displayStartTime"
+                },
+                {
+                    "name": "fps",
+                    "type": "number",
+                    "description": "Frames per second",
+                    "default": "1.0 / thisComp.frameDuration"
+                }
+            ],
+            "return": {
+                "type": "number",
+                "description": "Number of frames"
+            }
+        },
+        "framesToTime": {
+            "description": "Converts a number of frames to a time in seconds",
+            "params": [
+                {
+                    "name": "frames",
+                    "type": "number",
+                    "description": "Number of frames"
+                },
+                {
+                    "name": "fps",
+                    "type": "number",
+                    "description": "Frames per second",
+                    "default": "1.0 / thisComp.frameDuration"
+                }
+            ],
+            "return": {
+                "type": "number",
+                "description": "Time in seconds"
+            }
+        },
+        "rgbToHsl": {
+            "params": [
+                {
+                    "name": "rgb",
+                    "type": "array[3]|array[4]",
+                    "description": "RGB(A) color, with components in 0, 1"
+                }
+            ],
+            "return": {
+                "type": "array[3]|array[4]",
+                "description": "HSL(A) color, with components in 0, 1"
+            }
+        },
+        "hslToRgb": {
+            "params": [
+                {
+                    "name": "hsl",
+                    "type": "array[3]|array[4]",
+                    "description": "HSL(A) color, with components in 0, 1"
+                }
+            ],
+            "return": {
+                "type": "array[3]|array[4]",
+                "description": "RGB(A) color, with components in 0, 1"
+            }
+        },
+        "createPath": {
+            "description": "Creates bezier path data",
+            "params": [
+                {
+                    "name": "points",
+                    "type": "array",
+                    "description": "Array of points (each point is a list with 2 numbers)"
+                },
+                {
+                    "name": "in_tangents",
+                    "type": "array",
+                    "description": "Array of in tangents correponding to the point with the same index",
+                    "default": "[]"
+                },
+                {
+                    "name": "out_tangents",
+                    "type": "array",
+                    "description": "Array of out tangents correponding to the point with the same index",
+                    "default": "[]"
+                },
+                {
+                    "name": "is_closed",
+                    "type": "boolean",
+                    "default": "true",
+                    "description": "Whether the path is closed"
+                }
+            ],
+            "return": {
+                "type": "Path"
+            }
+        },
+        "add": {
+            "params": [
+                {
+                    "name": "a",
+                    "type": "any",
+                    "description": ""
+                },
+                {
+                    "name": "b",
+                    "type": "any",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "type": "any",
+                "description": ""
+            }
+        },
+        "sub": {
+            "params": [
+                {
+                    "name": "a",
+                    "type": "any",
+                    "description": ""
+                },
+                {
+                    "name": "b",
+                    "type": "any",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "type": "any",
+                "description": ""
+            }
+        },
+        "mul": {
+            "params": [
+                {
+                    "name": "a",
+                    "type": "any",
+                    "description": ""
+                },
+                {
+                    "name": "b",
+                    "type": "any",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "type": "any",
+                "description": ""
+            }
+        },
+        "div": {
+            "params": [
+                {
+                    "name": "a",
+                    "type": "any",
+                    "description": ""
+                },
+                {
+                    "name": "b",
+                    "type": "any",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "type": "any",
+                "description": ""
+            }
+        },
+        "mod": {
+            "params": [
+                {
+                    "name": "a",
+                    "type": "any",
+                    "description": ""
+                },
+                {
+                    "name": "b",
+                    "type": "any",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "type": "any",
+                "description": ""
+            }
+        },
+        "clamp": {
+            "description": "Clamps a value inside a range",
+            "params": [
+                {
+                    "name": "value",
+                    "type": "number",
+                    "description": "The value to clamp"
+                },
+                {
+                    "name": "minimum",
+                    "type": "number",
+                    "description": "Minimum value"
+                },
+                {
+                    "name": "maximum",
+                    "type": "number",
+                    "description": "Maximum value"
+                }
+            ],
+            "return": {
+                "type": "number",
+                "description": ""
+            }
+        },
+        "normalize": {
+            "description": "Divides a vector by its length",
+            "params": [
+                {
+                    "name": "vector",
+                    "type": "array"
+                }
+            ],
+            "return": {
+                "type": "number",
+                "description": "same as `div(vector, length(vector))`"
+            }
+        },
+        "length": [
+            {
+                "params": [
+                    {
+                        "name": "vector",
+                        "type": "array"
+                    }
+                ],
+                "return": {
+                    "type": "number",
+                    "description": "length of `vector`"
+                }
+            },
+            {
+                "params": [
+                    {
+                        "name": "a",
+                        "type": "array"
+                    },
+                    {
+                        "name": "b",
+                        "type": "array"
+                    }
+                ],
+                "return": {
+                    "type": "number",
+                    "description": "Distance between `a` and `b`."
+                }
+            }
+        ],
+        "lookAt": {
+            "params": [
+                {
+                    "name": "from_point",
+                    "type": "array[3]"
+                },
+                {
+                    "name": "to_point",
+                    "type": "array[3]"
+                }
+            ],
+            "return": {
+                "type": "number",
+                "description": "length of `vector`"
+            }
+        },
+        "seedRandom": {
+            "description": "Sets the seed for random functions",
+            "params": [
+                {
+                    "name": "seed",
+                    "type": "number"
+                }
+            ]
+        },
+        "random": [
+            {
+                "return": {
+                    "type": "number",
+                    "description": "Random number between 0 and 1"
+                }
+            },
+            {
+                "params": [
+                    {
+                        "name": "max",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Random number between 0 and `max`, element wise if the argument is an array"
+                }
+            },
+            {
+                "params": [
+                    {
+                        "name": "min",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "max",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Random number between `min` and `max`, element wise if the arguments are arrays"
+                }
+            }
+        ],
+        "linear": [
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between 0 and 1"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Linear interpolation between `value1` and `value2`"
+                }
+            },
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between `t_min` and `t_max`"
+                    },
+                    {
+                        "name": "t_min",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "t_max",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Linear interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`"
+                }
+            }
+        ],
+        "ease": [
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between 0 and 1"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Interpolation between `value1` and `value2`"
+                }
+            },
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between `t_min` and `t_max`"
+                    },
+                    {
+                        "name": "t_min",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "t_max",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`"
+                }
+            }
+        ],
+        "easeIn": [
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between 0 and 1"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Interpolation between `value1` and `value2`"
+                }
+            },
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between `t_min` and `t_max`"
+                    },
+                    {
+                        "name": "t_min",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "t_max",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`"
+                }
+            }
+        ],
+        "easeOut": [
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between 0 and 1"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Interpolation between `value1` and `value2`"
+                }
+            },
+            {
+                "params": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "description": "Interpolation factor between `t_min` and `t_max`"
+                    },
+                    {
+                        "name": "t_min",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "t_max",
+                        "type": "number",
+                        "description": "Lower bound for the `t` range"
+                    },
+                    {
+                        "name": "value1",
+                        "type": "number|array"
+                    },
+                    {
+                        "name": "value2",
+                        "type": "number|array"
+                    }
+                ],
+                "return": {
+                    "type": "number|array",
+                    "description": "Interpolation between `value1` and `value2`, `t` is first normalized inside `t_min` and `t_max`"
+                }
+            }
+        ],
+        "degreesToRadians": {
+            "params": [
+                {
+                    "name": "degrees",
+                    "type": "number",
+                    "description": "Angle in degrees"
+                }
+            ],
+            "return": {
+                "type": "number",
+                "description": "Angle in radians"
+            }
+        },
+        "radiansToDegrees": {
+            "params": [
+                {
+                    "name": "radians",
+                    "type": "number",
+                    "description": "Angle in radians"
+                }
+            ],
+            "return": {
+                "type": "number",
+                "description": "Angle in degrees"
+            }
+        },
+        "footage": {},
+        "colorDepth": {},
+        "dot": {},
+        "cross": {},
+        "gaussRandom": {},
+        "noise": {}
+    },
+    "aliases": {
+        "sum": "add",
+        "$bm_sum": "add",
+        "$bm_sub": "sub",
+        "$bm_mul": "mul",
+        "$bm_div": "div"
+    }
+}

@@ -944,7 +944,7 @@ class SchemaEffect(BlockProcessor):
 
 
 class VariableDocInfo:
-    def __init__(self, name, type, description, default=None, notes=None):
+    def __init__(self, name, type, description="", default=None, notes=None):
         self.default = default
         self.description = description
         self.name = name
@@ -981,31 +981,14 @@ class VariableDocInfo:
 class FunctionDocs(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{function_docs}\s*(?:\n|$)')
 
-    def __init__(self, parser):
+    def __init__(self, parser, expr_schema):
         super().__init__(parser)
+        self.expr_schema = expr_schema
 
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
-    def run(self, parent, blocks):
-        block = blocks.pop(0)
-
-        description = None
-        name = None
-        params = []
-        ret = None
-
-        for line in block.strip().split("\n")[1:]:
-            chunks = [c.strip() for c in line.split(":")]
-            if chunks[0] == "name":
-                name = chunks[1]
-            elif chunks[0] == "return":
-                ret = VariableDocInfo.from_chunks("return", chunks[1:])
-            elif chunks[0] == "param":
-                params.append(VariableDocInfo.from_chunks(chunks[1], chunks[2:]))
-            elif chunks[0] == "description":
-                description = chunks[1]
-
+    def data_to_element(self, parent, name, description="", params=[], ret=None):
         etree.SubElement(etree.SubElement(parent, "p"), "strong").text = "Synopsis"
         signature = name
         if params:
@@ -1063,14 +1046,52 @@ class FunctionDocs(BlockProcessor):
                 etree.SubElement(tr, "th").text = "Description"
                 self.parser.parseBlocks(etree.SubElement(tr, "td"), [ret.description])
 
+    def from_schema(self, parent, name):
+        data = self.expr_schema["functions"][name]
+        if not isinstance(data, list):
+            data = [data]
+
+        for schema in data:
+            fdef = dict(schema)
+            if "params" in fdef:
+                fdef["params"] = [VariableDocInfo(**p) for p in fdef["params"]]
+            if "return" in fdef:
+                fdef["ret"] = VariableDocInfo("return", **fdef.pop("return"))
+            self.data_to_element(parent, name, **fdef)
+
+    def run(self, parent, blocks):
+        block = blocks.pop(0)
+
+        description = None
+        name = None
+        params = []
+        ret = None
+
+        for line in block.strip().split("\n")[1:]:
+            chunks = [c.strip() for c in line.split(":")]
+            if chunks[0] == "name":
+                name = chunks[1]
+            elif chunks[0] == "return":
+                ret = VariableDocInfo.from_chunks("return", chunks[1:])
+            elif chunks[0] == "param":
+                params.append(VariableDocInfo.from_chunks(chunks[1], chunks[2:]))
+            elif chunks[0] == "description":
+                description = chunks[1]
+            elif chunks[0] == "schema":
+                self.from_schema(parent, chunks[1])
+                return True
+
+        self.data_to_element(parent, name, description, params, ret)
+
         return True
 
 
 class VariableDocs(BlockProcessor):
     re_fence_start = re.compile(r'^\s*\{variable_docs}\s*(?:\n|$)')
 
-    def __init__(self, parser):
+    def __init__(self, parser, expr_schema):
         super().__init__(parser)
+        self.expr_schema = expr_schema
 
     def test(self, parent, block):
         return self.re_fence_start.match(block)
@@ -1082,6 +1103,9 @@ class VariableDocs(BlockProcessor):
         for line in block.strip().split("\n")[1:]:
             chunks = [c.strip() for c in line.split(":")]
             setattr(var, chunks[0], chunks[1])
+            if chunks[0] == "schema":
+                var = VariableDocInfo(chunks[1], **self.expr_schema["variables"][chunks[1]])
+                break
 
         table = etree.SubElement(parent, "table")
 
@@ -1205,6 +1229,8 @@ class LottieExtension(Extension):
     def extendMarkdown(self, md):
         with open(docs_path / "schema" / "lottie.schema.json") as file:
             schema_data = Schema(json.load(file))
+        with open(docs_path / "schema" / "expressions.json") as file:
+            expr_schema = json.load(file)
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 1), 'lottie_color', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color_255:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 255), 'lottie_color_255', 175)
@@ -1216,8 +1242,8 @@ class LottieExtension(Extension):
         md.inlinePatterns.register(JsonFile(md), 'json_file', 175)
         md.inlinePatterns.register(SchemaLink(md), 'schema_link', 175)
         md.parser.blockprocessors.register(SchemaEffect(md.parser, schema_data), 'schema_effect', 175)
-        md.parser.blockprocessors.register(FunctionDocs(md.parser), 'function_docs', 175)
-        md.parser.blockprocessors.register(VariableDocs(md.parser), 'variable_docs', 175)
+        md.parser.blockprocessors.register(FunctionDocs(md.parser, expr_schema), 'function_docs', 175)
+        md.parser.blockprocessors.register(VariableDocs(md.parser, expr_schema), 'variable_docs', 175)
         md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
 
 

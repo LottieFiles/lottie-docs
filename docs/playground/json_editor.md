@@ -261,6 +261,7 @@ disable_toc: 1
             case "schema_loaded":
                 tree_state.schema = Object.assign(new SchemaData(), ev.data.schema);
                 tree_state.schema.root = null; // not needed
+                tree_state.load_expressions(ev.data.expressions)
                 if ( lottie_player.lottie )
                     worker.postMessage({type: "update", lottie: lottie_player.lottie});
                 break;
@@ -478,6 +479,7 @@ disable_toc: 1
             this.validation_result = null;
             this.clear_info_effect = CodeMirrorWrapper.StateEffect.define();
             this.load_info_effect = CodeMirrorWrapper.StateEffect.define();
+            this.expression_completions = []
         }
 
         begin_load(view)
@@ -530,6 +532,52 @@ disable_toc: 1
         linter()
         {
             return CodeMirrorWrapper.linter((() => this.lint_errors).bind(this));
+        }
+
+        add_expr_function(name, def)
+        {
+            if ( !Array.isArray(def) )
+                def = [def];
+
+            for ( let d of def )
+            {
+                let syn = "";
+                if ( d.params )
+                    syn = d.params.map(p => p.name).join(", ");
+
+                let data = {
+                    label: name,
+                    type: "function",
+                    detail: "(" + syn + ")"
+                };
+
+                if ( d.description )
+                    data.info = d.description;
+                else if ( d.return && d.return.description )
+                    data.info = d.return.description;
+
+                this.expression_completions.push(data);
+            }
+        }
+
+        load_expressions(expr_schema)
+        {
+            for ( let [n, v] of Object.entries(expr_schema.variables) )
+            {
+                let data = {
+                    label: n,
+                    type: "variable"
+                };
+                if ( v.description )
+                    data.info = v.description;
+                this.expression_completions.push(data);
+            }
+
+            for ( let [n, v] of Object.entries(expr_schema.functions) )
+                this.add_expr_function(n, v);
+
+            for ( let [n, v] of Object.entries(expr_schema.aliases) )
+                this.add_expr_function(n, expr_schema.functions[v]);
         }
     }
 
@@ -796,6 +844,7 @@ disable_toc: 1
                     extensions: [
                         ...CodeMirrorWrapper.default_extensions,
                         CodeMirrorWrapper.on_change(this.update_code.bind(this)),
+                        // Use this instead of override to keep default completions
                         new CodeMirrorWrapper.LanguageSupport(
                             lang.language,
                             [
@@ -846,10 +895,7 @@ disable_toc: 1
             return null;
         return {
             from: word.from,
-            options: [
-                ...expr_variables.map(v => ({label: v, type: "variable"})),
-                ...expr_funcs.map(v => ({label: v, type: "function"})),
-            ]
+            options: tree_state.expression_completions
         };
     }
 
@@ -857,7 +903,7 @@ disable_toc: 1
     let expr_funcs = ["comp", "posterizeTime", "timeToFrames", "framesToTime", "rgbToHsl", "hslToRgb",
         "createPath", "add", "sub", "mul", "div", "mod", "clamp", "normalize", "length", "lookAt",
         "seedRandom", "random", "linear", "ease", "easeIn", "easeOut",
-        "degreesToRadians", "radiansToDegrees"
+        "degreesToRadians", "radiansToDegrees", "$bm_sum", "sum", "$bm_sub", "$bm_div"
     ];
 
     let tree_state = new TreeState();
