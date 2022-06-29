@@ -25,7 +25,7 @@ import {
 export {ensureSyntaxTree, LanguageSupport} from "@codemirror/language"
 import {tags} from "@lezer/highlight"
 export {linter, lintGutter, lintKeymap} from "@codemirror/lint";
-export {autocompletion} from "@codemirror/autocomplete";
+export {autocompletion, insertCompletionText} from "@codemirror/autocomplete";
 
 
 

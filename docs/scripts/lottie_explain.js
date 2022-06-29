@@ -582,6 +582,11 @@ class SchemaData
         return object;
     }
 
+    get_ref_data(ref)
+    {
+        return this.walk_schema(this.schema, this.ref_to_path(ref));
+    }
+
     ref_to_path(ref)
     {
         return ref.replace(/^#\//, '').split("/");

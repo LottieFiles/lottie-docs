@@ -23796,6 +23796,7 @@
    exports.autocompletion = autocompletion;
    exports.default_extensions = default_extensions;
    exports.ensureSyntaxTree = ensureSyntaxTree;
+   exports.insertCompletionText = insertCompletionText;
    exports.javascript = javascript;
    exports.json = json;
    exports.jsonParseLinter = jsonParseLinter;
