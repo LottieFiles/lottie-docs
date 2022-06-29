@@ -623,6 +623,29 @@ body.wide .container {
             }
         }
 
+        add_expr_builtin(name, value)
+        {
+            this.expression_completions.push({
+                label: name,
+                type: "namespace",
+            });
+
+            for ( let [n, d] of Object.entries(Object.getOwnPropertyDescriptors(value)) )
+            {
+                if ( n.indexOf("(") != -1 )
+                    continue;
+
+                let is_func = typeof d.value == "function";
+
+                this.expression_completions.push({
+                    label: "Math." + n,
+                    type: is_func ? "function" : "constant",
+                    detail: is_func ? "()" : "",
+                });
+
+            }
+        }
+
         load_expressions(expr_schema)
         {
             for ( let [n, v] of Object.entries(expr_schema.variables) )
@@ -641,6 +664,8 @@ body.wide .container {
 
             for ( let [n, v] of Object.entries(expr_schema.aliases) )
                 this.add_expr_function(n, expr_schema.functions[v]);
+
+            this.add_expr_builtin("Math", Math);
         }
     }
 
@@ -953,11 +978,28 @@ body.wide .container {
 
     function autocomplete_expression(context)
     {
-        let word = context.matchBefore(/\w*/)
-        if ( word.from == word.to && !context.explicit )
+        let line = context.state.doc.lineAt(context.pos);
+        let before = line.text.slice(line.from, context.pos - line.from);
+        let after = line.text.slice(context.pos - line.from);
+
+        let start = before.search(/(\w|\.|\$)*$/);
+        if ( start == -1 )
+            start = context.pos;
+        else
+            start += line.from;
+
+        let end = after.search(/(\W|$)/);
+        if ( end == -1 )
+            end = context.pos;
+        else
+            end += context.pos;
+
+        if ( start == end && !context.explicit )
             return null;
+
         return {
-            from: word.from,
+            from: start,
+            to: end,
             options: tree_state.expression_completions
         };
     }
