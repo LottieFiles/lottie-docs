@@ -1681,7 +1681,7 @@ class InfoBoxContents
         }
     }
 
-    result_info_box(result, json, lottie_json, link_defs = true, show_type = true)
+    result_info_box(result, json, lottie_json, link_defs = true, show_type = true, show_preview = true)
     {
         this.result_title(result);
 
@@ -1696,7 +1696,8 @@ class InfoBoxContents
             this.add("span", result.description, {class: "description"});
         }
 
-        this.lottie_loader = new LottiePreviewGenerator(result.group, result.cls, json, lottie_json);
+        if ( show_preview )
+            this.lottie_loader = new LottiePreviewGenerator(result.group, result.cls, json, lottie_json);
     }
 }
 

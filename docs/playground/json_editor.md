@@ -111,6 +111,15 @@ body.wide .container {
     border-top-color: #555;
 }
 
+#info_box input[type="color"]
+{
+    display: block;
+    padding: 0;
+    width: 96px;
+    height: 48px;
+    margin-top: 1ex;
+}
+
 </style>
 <div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
 <div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">
@@ -482,7 +491,11 @@ body.wide .container {
 
             if ( result.description )
             {
-                let widget = new SchemaTypeWidget(path, result, json, this.schema);
+                let widget;
+                if ( result.group == "helpers" && result.cls == "color" )
+                    widget = new ColorSchemaWidget(path, result, json, this.schema, node);
+                else
+                    widget = new SchemaTypeWidget(path, result, json, this.schema);
                 let deco = CodeMirrorWrapper.Decoration.widget({
                     widget: widget,
                     info_box: widget.show_info_box.bind(widget),
@@ -865,12 +878,16 @@ body.wide .container {
         }
     }
 
+    function indent_at(state, pos)
+    {
+        let line = state.doc.lineAt(pos);
+        return "\n" + line.text.match(/^\s*/)[0];
+    }
+
     function apply_long_completion(view, completion, from, to)
     {
         let lines = completion.lines;
-        let line = view.state.doc.lineAt(from);
-        let indent = line.text.match(/^\s*/)[0];
-        let text = lines.join("\n" + indent);
+        let text = lines.join(indent_at(view.state));
 
         view.dispatch(CodeMirrorWrapper.insertCompletionText(view.state, text, from, to));
     }
@@ -1260,6 +1277,56 @@ body.wide .container {
         }
 
         ignoreEvent(ev) { return false; }
+    }
+
+    class ColorSchemaWidget extends SchemaTypeWidget
+    {
+        constructor(path, result, json, schema, node)
+        {
+            super(path, result, json, schema, );
+            this.from = node.from;
+            this.to = node.to;
+        }
+
+        lottie_to_hex(lottie)
+        {
+            return "#" + lottie.slice(0, 3)
+                .map(i => Math.round(Math.min(Math.max(i, 0), 1) * 0xff)
+                .toString(16).padStart(2, "0")).join("")
+            ;
+        }
+
+        hex_to_lottie_lines(hex)
+        {
+            return ["[", ...[1, 3, 5].map(i =>
+                "    " +
+                (parseInt(hex.slice(i, i+2), 16) / 255).toFixed(3) +
+                (i != 5 ? "," : "")
+            ), "]"];
+        }
+
+        on_input(ev)
+        {
+            let lines = this.hex_to_lottie_lines(ev.target.value);
+            let text = lines.join(indent_at(editor.state, this.from));
+
+            editor.dispatch({
+                changes: {from: this.from, to: this.to, insert: text}
+            });
+            this.to = this.from + text.length;
+        }
+
+        show_info_box(pos)
+        {
+            let box = new InfoBoxContents(null, this.schema);
+            box.result_info_box(this.result, this.lottie, lottie_player.lottie, false, true, false);
+            var input = box.add("input", null, {type: "color", value: this.lottie_to_hex(this.lottie)});
+            input.addEventListener("input", this.on_input.bind(this));
+
+
+            info_box.show_with_contents(null, box.element, box, 0, 0);
+            tree_state.show_info_box_tooltip(pos);
+        }
     }
 
     class EditExpressionWidget extends CodeMirrorWrapper.WidgetType
