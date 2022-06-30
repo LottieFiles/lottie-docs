@@ -120,6 +120,18 @@ body.wide .container {
     margin-top: 1ex;
 }
 
+.action-menu {
+    display: flex;
+    gap: 10px;
+}
+.action-menu .dropdown-menu > li > a {
+    cursor: pointer;
+    user-select: none;
+}
+.dropdown-divider {
+    border-bottom: 1px solid #ccc;
+}
+
 </style>
 <div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
 <div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">
@@ -142,23 +154,58 @@ body.wide .container {
         </div>
     </div>
     <div class="editor-side">
-        <button onclick="action_new()" class="btn btn-primary btn-sm" title="New"><i class="fa-solid fa-file"></i></button>
-        <button onclick="action_load()" class="btn btn-primary btn-sm" title="Load"><i class="fa-solid fa-cloud-arrow-down"></i></button>
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_url" title="Load from URL">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </button>
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_file" title="Upload file">
-            <i class="fa-solid fa-upload"></i>
-        </button>
-        <button onclick="action_save()" class="btn btn-primary btn-sm" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
-        <button onclick="action_download()" class="btn btn-primary btn-sm" title="Download"><i class="fa-solid fa-download"></i></button>
-        <button onclick="CodeMirrorWrapper.undo(editor)" class="btn btn-warning btn-sm" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
-        <button onclick="CodeMirrorWrapper.redo(editor)" class="btn btn-success btn-sm" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
-        <button onclick="pretty()" class="btn btn-info btn-sm" title="Prettify JSON"><i class="fa-solid fa-indent"></i></button>
-        <button onclick="document.body.classList.toggle('wide')" class="btn btn-secondary btn-sm" title="Toggle Wide Layout">
-            <i class="fa-solid fa-arrows-left-right"></i>
-        </button>
-        <div id="editor_parent" >
+        <div class="action-menu">
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_file" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    File
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_file">
+                    <li><a class="dropdown-item" onclick="action_new()"><i class="fa-solid fa-file"></i> New</a></li>
+                    <li><a class="dropdown-item" onclick="action_load()"><i class="fa-solid fa-cloud-arrow-down"></i> Load Saved</a></li>
+                    <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_url">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Load from URL
+                    </a></li>
+                    <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_file">
+                        <i class="fa-solid fa-upload"></i> Upload File
+                    </a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" onclick="action_save()"><i class="fa-solid fa-floppy-disk"></i> Save</a></li>
+                    <li><a class="dropdown-item" onclick="action_download()"><i class="fa-solid fa-download"></i> Download</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Edit
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_edit">
+                    <li><a class="dropdown-item" onclick="CodeMirrorWrapper.undo(editor)"><i class="fa-solid fa-rotate-left"></i> Undo</a></li>
+                    <li><a class="dropdown-item" onclick="CodeMirrorWrapper.redo(editor)"><i class="fa-solid fa-rotate-right"></i> Redo</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" onclick="pretty()"><i class="fa-solid fa-indent"></i> Prettify JSON</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_edit">
+                    <li><a class="dropdown-item" onclick="document.body.classList.toggle('wide')">
+                        <i class="fa-solid fa-arrows-left-right"></i> Toggle Wide Layout
+                    </a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Help
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_edit">
+                    <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_key_bindings">
+                        <i class="fa-solid fa-keyboard"></i> View Keyboard Shortcuts
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="editor_parent">
             <div id="info_box">
                 <div class="info_box_details"></div>
                 <div class="info_box_lottie alpha_checkered"></div>
@@ -174,10 +221,6 @@ body.wide .container {
         </div>
     </div>
 </div>
-<details>
-    <summary>Key Bindings</summary>
-    <table id="key_bindings"></table>
-</details>
 <div class="modal fade" id="modal_file" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -219,6 +262,27 @@ body.wide .container {
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                     onclick="lottie_url_input(document.getElementById('input_from_url').value)">Load</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_key_bindings" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Key bindings
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <table id="key_bindings"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
