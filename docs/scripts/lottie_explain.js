@@ -397,7 +397,7 @@ class PropertySchemaMatcher extends BaseMatcher
         if ( !validation.valid )
             result.fail(`Property <code>${this.property}</code> doesn't match`);
         else
-            result.fitness += 1;
+            result.fitness += this.property == "ty" ? 4 : 2;
     }
 }
 
