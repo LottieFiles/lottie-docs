@@ -708,7 +708,6 @@ body.wide .container {
             return [
                 this.decoration_field,
                 this.info_box_field,
-                CodeMirrorWrapper.linter((() => this.lint_errors).bind(this))
             ]
         }
 
@@ -733,6 +732,12 @@ body.wide .container {
 
                 this.get_syntax_errors(tree);
             }
+            else
+            {
+                this.lint_errors = [];
+            }
+
+            view.dispatch(CodeMirrorWrapper.setDiagnostics(view.state, this.lint_errors));
 
             view.dispatch({effects: [this.load_info_effect.of({result: result})]});
         }

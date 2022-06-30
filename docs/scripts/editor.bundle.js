@@ -23770,7 +23770,7 @@
    const default_extensions = [
        basicSetup,
        history(),
-       keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab]),
+       keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab, {linux: "Mod-Shift-z", run: redo, preventDefault: true}]),
        syntaxHighlighting(defaultHighlightStyle),
        syntaxHighlighting(myHighlightStyle),
        indentUnit.of("    ")
@@ -23806,6 +23806,7 @@
    exports.linter = linter;
    exports.on_change = on_change;
    exports.redo = redo;
+   exports.setDiagnostics = setDiagnostics;
    exports.showTooltip = showTooltip;
    exports.undo = undo;
 
