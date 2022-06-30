@@ -32,7 +32,7 @@
                     "title": "Size",
                     "$ref": "#/$defs/animated-properties/value"
                 },
-                "so": {
+                "sf": {
                     "title": "Soften",
                     "$ref": "#/$defs/animated-properties/value"
                 },
