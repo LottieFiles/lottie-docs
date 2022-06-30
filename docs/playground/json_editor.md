@@ -418,7 +418,10 @@ body.wide .container {
                     {
                         let prop_result = result.children[name];
                         this.on_property(name, name_node, prop_node, prop_result, result, path);
-                        this.visit(prop_node.lastChild, prop_result, json[name], path.concat([name]));
+                        if ( name == "ty" && prop_result.const )
+                            this.on_ty_value(prop_node.lastChild, prop_result, result)
+                        else
+                            this.visit(prop_node.lastChild, prop_result, json[name], path.concat([name]));
                     }
                     else
                     {
@@ -455,6 +458,19 @@ body.wide .container {
             }
 
             return false;
+        }
+
+        on_ty_value(node, prop_result, object_result)
+        {
+            this.add_lint_errors(node, prop_result);
+            let schema = this.schema;
+            let deco = CodeMirrorWrapper.Decoration.mark({
+                class: "info_box_trigger",
+                info_box: () => TreeResultVisitor.ty_info_box(
+                    editor, schema, node, prop_result, object_result
+                ),
+            });
+            this.decorations.push(deco.range(node.from, node.to));
         }
 
         lint_error(node, severity, message)
@@ -571,6 +587,13 @@ body.wide .container {
             let box = new InfoBoxContents(null, schema);
             box.property(obj_result, prop_result);
             TreeResultVisitor.show_info_box(pos, view, box, node);
+        }
+
+        static ty_info_box(view, schema, node, prop_result, object_result)
+        {
+            let box = new InfoBoxContents(null, schema);
+            box.ty_value(object_result, prop_result, view.state.sliceDoc(node.from, node.to));
+            TreeResultVisitor.show_info_box(node.from, view, box, node);
         }
 
         static enum_info_box(pos, view, schema, node, result)

@@ -1665,6 +1665,22 @@ class InfoBoxContents
         this.add("", validation.const.description);
     }
 
+
+    ty_value(object_validation, prop_validation, value_string)
+    {
+        this.result_title(prop_validation.key);
+
+        this.type_line(prop_validation, false);
+
+        this.add("br");
+        this.add("code", value_string);
+        this.add(null, " = ");
+        this.result_links_to_element(object_validation, this.add("span"));
+
+        this.add("br");
+        this.add("", object_validation.description);
+    }
+
     property(validation, prop_validation)
     {
         this.result_title(validation);
