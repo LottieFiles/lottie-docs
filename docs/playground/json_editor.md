@@ -879,8 +879,10 @@ body.wide .container {
             for ( let name of Object.keys(schema.schema.$defs.shapes) )
             {
                 if ( ! avoid.has(name) )
-                    this.add_schema_completion(template_builder, name, "#/$defs/shapes/" + name);
+                    this.add_schema_completion(template_builder, name == "transform" ? "transform_shape" : name, "#/$defs/shapes/" + name);
             }
+
+            this.add_schema_completion(template_builder, "transform", "#/$defs/helpers/transform");
 
             this.add_property_macro(template_builder, "value", 0);
             this.add_property_macro(template_builder, "vector", [0, 0]);
@@ -985,6 +987,13 @@ body.wide .container {
                 case "#/$defs/animated-properties/position-keyframe":
                 case "#/$defs/animated-properties/keyframe":
                     data = this.keyframe_schema([0, 0]);
+                    break;
+                case "#/$defs/helpers/transform":
+                    this.item_data(this.schema.get_ref_data(ref), data);
+                    data.properties.o = this.prop_schema(100);
+                    data.properties.r = this.prop_schema(0);
+                    data.properties.p = this.prop_schema([0, 0]);
+                    data.required = ["a", "p", "s", "r", "o"];
                     break;
                 default:
                     this.item_data(this.schema.get_ref_data(ref), data);
