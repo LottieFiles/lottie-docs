@@ -496,16 +496,16 @@ body.wide .container {
             if ( result.description )
             {
                 let widget;
+                let pos = node.firstChild.to;
                 if ( result.group == "helpers" && result.cls == "color" )
-                    widget = new ColorSchemaWidget(path, result, json, this.schema, node);
+                    widget = new ColorSchemaWidget(path, result, json, this.schema, pos, node);
                 else
-                    widget = new SchemaTypeWidget(path, result, json, this.schema);
+                    widget = new SchemaTypeWidget(path, result, json, this.schema, pos);
                 let deco = CodeMirrorWrapper.Decoration.widget({
                     widget: widget,
-                    info_box: widget.show_info_box.bind(widget),
                     side: 1
                 });
-                this.decorations.push(deco.range(node.firstChild.to));
+                this.decorations.push(deco.range(pos));
             }
         }
 
@@ -891,7 +891,7 @@ body.wide .container {
     function apply_long_completion(view, completion, from, to)
     {
         let lines = completion.lines;
-        let text = lines.join(indent_at(view.state));
+        let text = lines.join(indent_at(view.state, from));
 
         view.dispatch(CodeMirrorWrapper.insertCompletionText(view.state, text, from, to));
     }
@@ -1239,7 +1239,7 @@ body.wide .container {
 
     class SchemaTypeWidget extends CodeMirrorWrapper.WidgetType
     {
-        constructor(path, result, json, schema)
+        constructor(path, result, json, schema, pos)
         {
             super();
             this.result = result;
@@ -1247,6 +1247,7 @@ body.wide .container {
             this.path_str = path.join(".");
             this.schema = schema;
             this.lottie = json;
+            this.pos = pos;
         }
 
         eq(other)
@@ -1276,18 +1277,24 @@ body.wide .container {
             span.appendChild(icon);
 
             span.appendChild(document.createTextNode(this.result.title));
+            span.addEventListener("click", this.on_click.bind(this));
 
             return span;
         }
 
-        ignoreEvent(ev) { return false; }
+        on_click()
+        {
+            this.show_info_box(this.pos);
+        }
+
+        ignoreEvent(ev) { return true; }
     }
 
     class ColorSchemaWidget extends SchemaTypeWidget
     {
-        constructor(path, result, json, schema, node)
+        constructor(path, result, json, schema, pos, node)
         {
-            super(path, result, json, schema, );
+            super(path, result, json, schema, pos);
             this.from = node.from;
             this.to = node.to;
         }
