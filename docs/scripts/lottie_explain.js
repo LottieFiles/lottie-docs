@@ -319,8 +319,12 @@ class SchemaMatcher extends BaseMatcher
         if ( typeof json_value == "object" )
         {
             for ( let req of this.required )
+            {
                 if ( !(req in json_value) )
                     result.fail(`Missing required property <code>${req}</code>`);
+                else
+                    result.fitness += 1;
+            }
 
             for ( let matcher of this.properties )
                 matcher.validate(json_value, result);

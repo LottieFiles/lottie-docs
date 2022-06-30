@@ -27,12 +27,12 @@ disable_toc: 1
     flex-flow: column;
 }
 
-#tab_editor > div {
+#editor_area {
     display: flex;
     flex-flow: row wrap;
 }
 
-#tab_editor > div > div:first-child {
+#editor_area > div:first-child {
     margin-bottom: 1ex;
     margin-right: 1ex;
 }
@@ -127,68 +127,100 @@ body.wide .container {
     Loading...
 </div>
 
-<ul class="nav nav-pills">
-    <li><a data-toggle="pill" href="#tab_file">Upload File</a></li>
-    <li><a data-toggle="pill" href="#tab_url">From URL</a></li>
-    <li class="active"><a data-toggle="pill" href="#tab_editor" id="editor_tab">Editor</a></li>
-</ul>
-<div class="tab-content">
-    <div id="tab_file" class="tab-pane fade in ">
-        <div class="drop-area" ondrop="lottie_drop_input(event);" ondragover="event.preventDefault();">
-            <p>Drop JSON file here</p>
-            <input type="file" onchange="lottie_file_input(event);" class="form-control-file" />
-        </div>
-    </div>
-    <div id="tab_url" class="tab-pane fade in">
-        <p><input type="text" id="input_from_url" class="form-control" /></p>
-        <p><button onclick="lottie_url_input(document.getElementById('input_from_url').value)" class="btn btn-primary">Explain</button>
-    </div>
-    <div id="tab_editor" class="tab-pane fade in active">
-        <div>
-        <div class="player-wrapper">
-            <div class="alpha_checkered" id="lottie_target"></div>
-            <div class="playback-controls">
-                <button onclick="toggle_playback(this)" class="btn btn-primary btn-sm" title="Pause">
-                    <i class="fa-solid fa-pause"></i>
-                </button>
-                <button onclick="toggle_playback_controls()" class="btn btn-secondary btn-sm" title="Toggle Playback Controls">
-                    <i class="fa-solid fa-sliders"></i>
-                </button>
-                <input type="range" class="form-control" id="frame_slider" oninput="update_frame(this.value)" style="display: none"/>
-                <input type="number" id="frame_edit" oninput="update_frame(this.value)" style="display: none"/>
-            </div>
-        </div>
-        <div class="editor-side">
-            <button onclick="action_new()" class="btn btn-primary btn-sm" title="New"><i class="fa-solid fa-file"></i></button>
-            <button onclick="action_save()" class="btn btn-primary btn-sm" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
-            <button onclick="action_load()" class="btn btn-primary btn-sm" title="Load"><i class="fa-solid fa-cloud-arrow-down"></i></button>
-            <button onclick="action_download()" class="btn btn-primary btn-sm" title="Download"><i class="fa-solid fa-download"></i></button>
-            <button onclick="CodeMirrorWrapper.undo(editor)" class="btn btn-warning btn-sm" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
-            <button onclick="CodeMirrorWrapper.redo(editor)" class="btn btn-success btn-sm" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
-            <button onclick="pretty()" class="btn btn-secondary btn-sm">Prettify JSON</button>
-            <button onclick="document.body.classList.toggle('wide')" class="btn btn-secondary btn-sm" title="Toggle Wide Layout">
-                <i class="fa-solid fa-arrows-left-right"></i>
+<div id="editor_area">
+    <div class="player-wrapper">
+        <div class="alpha_checkered" id="lottie_target"></div>
+        <div class="playback-controls">
+            <button onclick="toggle_playback(this)" class="btn btn-primary btn-sm" title="Pause">
+                <i class="fa-solid fa-pause"></i>
             </button>
-            <div id="editor_parent" >
-                <div id="info_box">
-                    <div class="info_box_details"></div>
-                    <div class="info_box_lottie alpha_checkered"></div>
-                    <div class="info_box_buttons" style="display: none" data-toggle="buttons">
-                        <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
-                            <input type="radio" name="options" autocomplete="off"> Fit in View
-                        </label>
-                        <label class="btn btn-primary btn-sm" id="btn_reset_view" title="Show items as they appear on the file">
-                            <input type="radio" name="options" autocomplete="off"> Normal View
-                        </label>
-                    </div>
+            <button onclick="toggle_playback_controls()" class="btn btn-secondary btn-sm" title="Toggle Playback Controls">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+            <input type="range" class="form-control" id="frame_slider" oninput="update_frame(this.value)" style="display: none"/>
+            <input type="number" id="frame_edit" oninput="update_frame(this.value)" style="display: none"/>
+        </div>
+    </div>
+    <div class="editor-side">
+        <button onclick="action_new()" class="btn btn-primary btn-sm" title="New"><i class="fa-solid fa-file"></i></button>
+        <button onclick="action_load()" class="btn btn-primary btn-sm" title="Load"><i class="fa-solid fa-cloud-arrow-down"></i></button>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_url" title="Load from URL">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_file" title="Upload file">
+            <i class="fa-solid fa-upload"></i>
+        </button>
+        <button onclick="action_save()" class="btn btn-primary btn-sm" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
+        <button onclick="action_download()" class="btn btn-primary btn-sm" title="Download"><i class="fa-solid fa-download"></i></button>
+        <button onclick="CodeMirrorWrapper.undo(editor)" class="btn btn-warning btn-sm" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+        <button onclick="CodeMirrorWrapper.redo(editor)" class="btn btn-success btn-sm" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
+        <button onclick="pretty()" class="btn btn-info btn-sm" title="Prettify JSON"><i class="fa-solid fa-indent"></i></button>
+        <button onclick="document.body.classList.toggle('wide')" class="btn btn-secondary btn-sm" title="Toggle Wide Layout">
+            <i class="fa-solid fa-arrows-left-right"></i>
+        </button>
+        <div id="editor_parent" >
+            <div id="info_box">
+                <div class="info_box_details"></div>
+                <div class="info_box_lottie alpha_checkered"></div>
+                <div class="info_box_buttons" style="display: none" data-toggle="buttons">
+                    <label class="btn btn-primary btn-sm" id="btn_center_lottie" title="Show items centered in the preview">
+                        <input type="radio" name="options" autocomplete="off"> Fit in View
+                    </label>
+                    <label class="btn btn-primary btn-sm" id="btn_reset_view" title="Show items as they appear on the file">
+                        <input type="radio" name="options" autocomplete="off"> Normal View
+                    </label>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<details>
+    <summary>Key Bindings</summary>
+    <table id="key_bindings"></table>
+</details>
+<div class="modal fade" id="modal_file" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Upload File
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="drop-area" ondrop="lottie_drop_input(event);" ondragover="event.preventDefault();">
+                    <p>Drop JSON file here</p>
+                    <input type="file" onchange="lottie_file_input(event);" class="form-control-file" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="dismiss_file_modal">Cancel</button>
+            </div>
         </div>
-        <details>
-            <summary>Key Bindings</summary>
-            <table id="key_bindings"></table>
-        </details>
+    </div>
+</div>
+<div class="modal fade" id="modal_url" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Load from URL
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="input_from_url" class="form-control" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    onclick="lottie_url_input(document.getElementById('input_from_url').value)">Load</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -226,6 +258,7 @@ body.wide .container {
                 reader.onload = function(e2)
                 {
                     lottie_string_input(e2.target.result);
+                    document.getElementById("dismiss_file_modal").click();
                 };
 
                 reader.readAsText(file);
@@ -318,7 +351,6 @@ body.wide .container {
 
         error_container.style.display = "none";
         loading_div.style.display = "none";
-        document.getElementById("editor_tab").click();
     }
 
     function json_path_from_node(node, path)
@@ -691,7 +723,7 @@ body.wide .container {
         {
             this.validation_result = result;
 
-            let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state, undefined, 1000);
+            let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state, undefined, 2000);
             if ( tree )
             {
                 let visitor = new TreeResultVisitor(this.schema);
