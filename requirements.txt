@@ -1,4 +1,5 @@
 mkdocs
 mkdocs-cinder
+mkdocs-redirects
 git+https://github.com/bmcorser/fontawesome-markdown.git@master
 lxml

@@ -103,14 +103,6 @@ class LottieRenderer:
             open_in_editor.append(etree_fontawesome("edit"))
             open_in_editor.attrib["title"] = "Open in Editor"
 
-            explain = etree.SubElement(element, "button")
-            explain.attrib["onclick"] = inspect.cleandoc(r"""
-                playground_set_url("{url}");
-                window.location.href = "/lottie-docs/playground/explain/";
-            """).format(url=absfile)
-            explain.append(etree_fontawesome("book-open"))
-            explain.attrib["title"] = "Explain"
-
         self.element = element
         self.variable_name = "lottie_player_{id}".format(id=self.id)
         self.target_id = "lottie_target_{id}".format(id=self.id)
@@ -477,14 +469,6 @@ class LottiePlayground(BlockProcessor):
         """).format(id=anim_id)
         open_in_editor.append(etree_fontawesome("edit"))
         open_in_editor.attrib["title"] = "Open in Editor"
-
-        explain = etree.SubElement(element, "button")
-        explain.attrib["onclick"] = inspect.cleandoc(r"""
-            playground_set_data(lottie_player_{id}.lottie);
-            window.location.href = "/lottie-docs/playground/explain/";
-        """).format(id=anim_id)
-        explain.append(etree_fontawesome("book-open"))
-        explain.attrib["title"] = "Explain"
 
         json_viewer_id = None
         json_viewer_path = None

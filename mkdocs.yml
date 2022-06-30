@@ -17,6 +17,11 @@ markdown_extensions:
     - md_extensions
 extra_css:
     - /lottie-docs/style/style.css
+plugins:
+    - redirects:
+        redirect_maps:
+            "playground/explain.md": "playground/json_editor.md"
+
 nav:
     - "<i class='fas fa-microscope'></i> Topics":
         - "Introduction": index.md
@@ -37,7 +42,6 @@ nav:
     - "<i class='fa fa-puzzle-piece'></i> Playground":
         - "Builder": playground/builder.md
         - "JSON Editor": playground/json_editor.md
-        - playground/explain.md
     - "<i class='fa fa-wrench'></i> Advanced":
         - rendering.md
         - schema.md
