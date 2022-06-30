@@ -493,7 +493,7 @@ body.wide .container {
             this.add_lint_errors(node.firstChild, result);
             this.add_lint_errors(node.lastChild, result);
 
-            if ( result.description )
+            if ( result.description && result.title.length > 1 )
             {
                 let widget;
                 let pos = node.firstChild.to;

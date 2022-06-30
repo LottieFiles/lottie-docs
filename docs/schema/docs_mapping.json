@@ -1,14 +1,15 @@
 {
     "animated-properties": {
         "_defaults": {
-            "name_prefix": "Animated ",
             "page": "concepts",
             "anchor": "animated-property"
         },
         "value": {
+            "name_prefix": "Animated ",
             "name": "number"
         },
         "multi-dimensional": {
+            "name_prefix": "Animated ",
             "name": "Vector"
         },
         "color-value": {
@@ -30,6 +31,7 @@
             }
         },
         "position": {
+            "name_prefix": "Animated ",
             "anchor": "animated-position",
             "name": "Position"
         }
