@@ -321,9 +321,10 @@ body.wide .container {
         if ( load_ok )
         {
             lottie_player.lottie = lottie;
-            frame_slider.min = frame_edit.min = frame_slider.value = frame_edit.value = lottie.ip;
+            frame_slider.min = frame_edit.min = lottie.ip;
             frame_slider.max = frame_edit.max = lottie.op;
             lottie_player.reload();
+            frame_slider.value = frame_edit.value = Math.round(lottie_player.anim.currentFrame);
             lottie_player.anim.addEventListener("enterFrame", (ev) => {
                 frame_slider.value = frame_edit.value = Math.round(ev.currentTime);
             });

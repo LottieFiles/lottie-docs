@@ -41,11 +41,20 @@ class LottiePlayer
             // parse/stringify because the player modifies the passed object
             options.animationData = lottie_clone(this.lottie);
 
+        let frame;
+
         if ( this.anim != null )
+        {
+            frame = this.anim.currentFrame;
             this.clear();
+        }
 
         if ( this.load_ok )
+        {
             this.anim = bodymovin.loadAnimation(options);
+            if ( frame != undefined )
+                this.go_to_frame(frame);
+        }
     }
 
     play()
