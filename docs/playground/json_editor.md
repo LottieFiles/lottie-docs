@@ -159,10 +159,14 @@ body.wide .container {
             </div>
         </div>
         <div class="editor-side">
-            <button onclick="save_lottie()" class="btn btn-primary">Save</button>
-            <button onclick="load_lottie()" class="btn btn-primary">Load</button>
-            <button onclick="pretty()" class="btn btn-secondary">Prettify JSON</button>
-            <button onclick="document.body.classList.toggle('wide')" class="btn btn-secondary" title="Toggle Wide Layout">
+            <button onclick="action_new()" class="btn btn-primary btn-sm" title="New"><i class="fa-solid fa-file"></i></button>
+            <button onclick="action_save()" class="btn btn-primary btn-sm" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
+            <button onclick="action_load()" class="btn btn-primary btn-sm" title="Load"><i class="fa-solid fa-cloud-arrow-down"></i></button>
+            <button onclick="action_download()" class="btn btn-primary btn-sm" title="Download"><i class="fa-solid fa-download"></i></button>
+            <button onclick="CodeMirrorWrapper.undo(editor)" class="btn btn-warning btn-sm" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+            <button onclick="CodeMirrorWrapper.redo(editor)" class="btn btn-success btn-sm" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
+            <button onclick="pretty()" class="btn btn-secondary btn-sm">Prettify JSON</button>
+            <button onclick="document.body.classList.toggle('wide')" class="btn btn-secondary btn-sm" title="Toggle Wide Layout">
                 <i class="fa-solid fa-arrows-left-right"></i>
             </button>
             <div id="editor_parent" >
@@ -1431,14 +1435,37 @@ body.wide .container {
         });
     }
 
-    function save_lottie()
+    function action_save()
     {
         localStorage.setItem("editor_lottie", JSON.stringify(lottie_player.lottie));
     }
 
-    function load_lottie()
+    function action_load()
     {
         set_editor_json(JSON.parse(localStorage.getItem("editor_lottie")));
+    }
+
+    function action_new()
+    {
+        set_editor_json({
+            "v": "5.5.2",
+            "fr": 60,
+            "ip": 0,
+            "op": 60,
+            "w": 512,
+            "h": 512,
+            "ddd": 0,
+            "assets": [],
+            "fonts": {
+                "list": []
+            },
+            "layers": []
+        });
+    }
+
+    function action_download()
+    {
+        download_json(lottie_player.lottie, "lottie.json");
     }
 
     function autocomplete_expression(context)
@@ -1565,20 +1592,7 @@ body.wide .container {
     }
     else
     {
-        set_editor_json({
-            "v": "5.5.2",
-            "fr": 60,
-            "ip": 0,
-            "op": 60,
-            "w": 512,
-            "h": 512,
-            "ddd": 0,
-            "assets": [],
-            "fonts": {
-                "list": []
-            },
-            "layers": []
-        });
+        action_new();
     }
 
     let key_bindings_parent = document.getElementById("key_bindings");

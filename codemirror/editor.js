@@ -6,7 +6,8 @@ import {basicSetup} from "codemirror"
 export {javascript} from "@codemirror/lang-javascript"
 export {json, jsonParseLinter} from "@codemirror/lang-json"
 export {EditorState, StateField, StateEffect} from "@codemirror/state"
-import {defaultKeymap, history, historyKeymap, indentWithTab} from "@codemirror/commands"
+export {undo, redo} from "@codemirror/commands"
+import {defaultKeymap, history, historyKeymap, indentWithTab, redo} from "@codemirror/commands"
 import {keymap, EditorView, Decoration} from "@codemirror/view"
 export {
     EditorView,
@@ -37,7 +38,7 @@ const myHighlightStyle = HighlightStyle.define([
 export const default_extensions = [
     basicSetup,
     history(),
-    keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab]),
+    keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab, {linux: "Mod-Shift-z" run: redo, preventDefault: true},]),
     syntaxHighlighting(defaultHighlightStyle),
     syntaxHighlighting(myHighlightStyle),
     indentUnit.of("    ")

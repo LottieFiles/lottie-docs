@@ -23805,7 +23805,9 @@
    exports.lintKeymap = lintKeymap;
    exports.linter = linter;
    exports.on_change = on_change;
+   exports.redo = redo;
    exports.showTooltip = showTooltip;
+   exports.undo = undo;
 
    Object.defineProperty(exports, '__esModule', { value: true });
 

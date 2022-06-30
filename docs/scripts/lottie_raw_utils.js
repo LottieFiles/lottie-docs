@@ -160,3 +160,10 @@ function syntax_edit_tab(element, event)
     }
 }
 
+function download_json(data, filename, indent=0)
+{
+    var element = document.createElement("a");
+    element.setAttribute("href", "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, indent)));
+    element.setAttribute("download", filename);
+    element.click();
+}
