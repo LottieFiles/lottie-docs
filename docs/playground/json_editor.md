@@ -932,8 +932,13 @@ body.wide .container {
             let template_builder = new TemplateFromSchemaBuilder(schema);
             for ( let name of Object.keys(schema.schema.$defs.layers) )
             {
-                if ( name.endsWith("-layer") )
-                    this.add_schema_completion(template_builder, name, "#/$defs/layers/" + name);
+                if ( !name.endsWith("-layer") )
+                    continue;
+
+                this.add_schema_completion(template_builder, name, "#/$defs/layers/" + name, {
+                    op: () => lottie_player.lottie.op ?? 0,
+                    ip: () => lottie_player.lottie.ip ?? 0,
+                });
             }
 
             let avoid = new Set([
@@ -976,24 +981,24 @@ body.wide .container {
             this.add_macro_completion(name, template_builder.keyframe_value(value), undefined, "keyframe");
         }
 
-        add_schema_completion(template_builder, name, ref)
+        add_schema_completion(template_builder, name, ref, dynamic=undefined)
         {
             let data = template_builder.ref_data(ref);
             let template = template_builder.data_to_template(data);
-            this.add_macro_completion(name.replace("-", "_"), template, data.description);
+            this.add_macro_completion(name.replace("-", "_"), template, data.description, undefined, dynamic);
         }
 
-        add_macro_completion(name, template, description, detail)
+        add_macro_completion(name, template, description, detail, dynamic=undefined)
         {
-            let lines = JSON.stringify(template, undefined, 4).split("\n");
             this.macro_completions.push({
                 label: name,
                 type: "type",
                 detail: detail,
                 info: description,
-                lines: lines,
+                template: template,
+                dynamic: dynamic,
                 apply: apply_long_completion
-            })
+            });
         }
 
         macro_autocomplete(context)
@@ -1015,9 +1020,24 @@ body.wide .container {
         return "\n" + line.text.match(/^\s*/)[0];
     }
 
+    function process_long_completion(completion, dynamic)
+    {
+        if ( !dynamic )
+            return completion;
+
+        if ( typeof dynamic == "function" )
+            return dynamic();
+
+        let ret = {};
+        for ( let [k, v] of Object.entries(completion) )
+            ret[k] = process_long_completion(v, dynamic[k]);
+        return ret;
+    }
+
     function apply_long_completion(view, completion, from, to)
     {
-        let lines = completion.lines;
+        let template = process_long_completion(completion.template, completion.dynamic);
+        let lines = JSON.stringify(template, undefined, 4).split("\n");
         let text = lines.join(indent_at(view.state, from));
 
         view.dispatch(CodeMirrorWrapper.insertCompletionText(view.state, text, from, to));
@@ -1054,11 +1074,16 @@ body.wide .container {
                     data = this.keyframe_schema([0, 0]);
                     break;
                 case "#/$defs/helpers/transform":
-                    this.item_data(this.schema.get_ref_data(ref), data);
-                    data.properties.o = this.prop_schema(100);
-                    data.properties.r = this.prop_schema(0);
-                    data.properties.p = this.prop_schema([0, 0]);
-                    data.required = ["a", "p", "s", "r", "o"];
+                    data = {
+                        properties: {
+                            a: this.prop_schema([0, 0]),
+                            p: this.prop_schema([0, 0]),
+                            s: this.prop_schema([100, 100]),
+                            o: this.prop_schema(100),
+                            r: this.prop_schema(0),
+                        },
+                        required: ["a", "p", "s", "r", "o"]
+                    }
                     break;
                 default:
                     this.item_data(this.schema.get_ref_data(ref), data);
@@ -1111,8 +1136,12 @@ body.wide .container {
             }
 
             if ( obj.$ref )
-                this.merge_data(out, this.ref_data(obj.$ref));
-
+            {
+                if ( obj.title === "Opacity" && obj.$ref == "#/$defs/animated-properties/value" )
+                    this.merge_data(out, this.prop_schema(100));
+                else
+                    this.merge_data(out, this.ref_data(obj.$ref));
+            }
 
             if ( obj.description )
                 out.description = obj.description;
