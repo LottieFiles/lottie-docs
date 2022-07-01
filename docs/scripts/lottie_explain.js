@@ -1790,5 +1790,210 @@ const schema_icons = {
 };
 
 
+class TemplateFromSchemaBuilder
+{
+    constructor(schema)
+    {
+        this.schema = schema;
+        this.data_cache = {};
+    }
+
+    ref_data(ref)
+    {
+        if ( ref in this.data_cache )
+            return this.data_cache[ref];
+
+        let data = {};
+        switch ( ref )
+        {
+            case "#/$defs/animated-properties/position":
+            case "#/$defs/animated-properties/multi-dimensional":
+                data = this.prop_schema([0, 0]);
+                break;
+            case "#/$defs/animated-properties/color-value":
+                data = this.prop_schema([0, 0, 0]);
+                break;
+            case "#/$defs/animated-properties/value":
+                data = this.prop_schema(0);
+                break;
+            case "#/$defs/animated-properties/position-keyframe":
+            case "#/$defs/animated-properties/keyframe":
+                data = this.keyframe_schema([0, 0]);
+                break;
+            case "#/$defs/helpers/transform":
+                data = {
+                    properties: {
+                        a: this.prop_schema([0, 0]),
+                        p: this.prop_schema([0, 0]),
+                        s: this.prop_schema([100, 100]),
+                        o: this.prop_schema(100),
+                        r: this.prop_schema(0),
+                    },
+                    required: ["a", "p", "s", "r", "o"]
+                }
+                break;
+            default:
+                this.item_data(this.schema.get_ref_data(ref), data);
+                break;
+        }
+        this.data_cache[ref] = data;
+        return data;
+    }
+
+    prop_schema(value)
+    {
+        return {
+            "const": {
+                a: 0,
+                k: value,
+            }
+        }
+    }
+
+    keyframe_value(value)
+    {
+        return {
+            t: 0,
+            s: Array.isArray(value) ? value : [value],
+            o: {x: [0], y: [0]},
+            i: {x: [1], y: [1]},
+        }
+    }
+
+    item_data(obj, out)
+    {
+        if ( obj.const !== undefined )
+        {
+            out.const = obj.const;
+
+            if ( obj.description )
+                out.description = obj.description;
+
+            return;
+        }
+
+        if ( obj.allOf )
+            for ( let s of obj.allOf )
+                this.item_data(s, out)
+
+        if ( obj.if )
+        {
+            this.item_data(obj.if, out);
+            this.item_data(obj.then, out);
+        }
+
+        if ( obj.$ref )
+        {
+            if ( obj.title === "Opacity" && obj.$ref == "#/$defs/animated-properties/value" )
+                this.merge_data(out, this.prop_schema(100));
+            else
+                this.merge_data(out, this.ref_data(obj.$ref));
+        }
+
+        if ( obj.description )
+            out.description = obj.description;
+
+        if ( obj.properties )
+        {
+            if ( !out.properties )
+                out.properties = {};
+
+            for ( let [name, prop] of Object.entries(obj.properties) )
+            {
+                if ( !(name in out) )
+                    out.properties[name] = {};
+                this.item_data(prop, out.properties[name]);
+            }
+        }
+
+        switch ( obj.type )
+        {
+            case "number":
+            case "integer":
+                out.default = 0;
+                break;
+            case "string":
+                out.default = {};
+                break;
+            case "boolean":
+                out.default = false;
+                break;
+            case "array":
+                obj.default = [];
+                break;
+        }
+
+        if ( obj.default !== undefined )
+            out.default = obj.default;
+
+        if ( obj.required )
+        {
+            if ( !out.required )
+                out.required = [];
+            out.required = out.required.concat([...obj.required]);
+        }
+    }
+
+    merge_data(dest, other)
+    {
+        if ( dest.description === undefined )
+            dest.description = other.description;
+
+        if ( dest.const === undefined && other.const !== undefined )
+        {
+            dest.const = other.const;
+            return;
+        }
+
+        if ( dest.default === undefined )
+            dest.default = other.default;
+
+        if ( other.properties )
+        {
+            if ( !dest.properties )
+                dest.properties = {};
+
+            for ( let [name, prop] of Object.entries(other.properties) )
+            {
+                if ( !(name in dest.properties) )
+                    dest.properties[name] = {};
+
+                this.merge_data(dest.properties[name], prop);
+            }
+        }
+
+
+        if ( other.required )
+        {
+            if ( !dest.required )
+                dest.required = [];
+            dest.required = dest.required.concat([...other.required]);
+        }
+    }
+
+    data_to_template(data)
+    {
+        if ( data.template )
+            return data.template;
+
+        if ( data.const !== undefined )
+            return data.template = data.const;
+
+        if ( data.default !== undefined )
+            return data.template = data.default;
+
+        data.template = {};
+
+        if ( data.required )
+        {
+            for ( let name of new Set(data.required) )
+                data.template[name] = this.data_to_template(data.properties[name]);
+        }
+
+        return data.template;
+    }
+}
+
+
 if ( typeof window == "undefined" && typeof module != "undefined" )
     module.exports = { SchemaData, SchemaObject };
