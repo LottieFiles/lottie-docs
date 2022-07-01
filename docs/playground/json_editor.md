@@ -132,6 +132,10 @@ body.wide .container {
     border-bottom: 1px solid #ccc;
 }
 
+#editor_parent .color-preview {
+    vertical-align: top;
+}
+
 </style>
 <div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
 <div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">
@@ -1400,22 +1404,29 @@ body.wide .container {
         };
     }
 
-    class SchemaTypeWidget extends CodeMirrorWrapper.WidgetType
+    class PathBasedWidget  extends CodeMirrorWrapper.WidgetType
     {
-        constructor(path, result, json, schema, pos)
+        constructor(path)
         {
             super();
-            this.result = result;
-            this.path = path;
             this.path_str = path.join(".");
-            this.schema = schema;
-            this.lottie = json;
-            this.pos = pos;
         }
 
         eq(other)
         {
             return this.path_str == other.path_str;
+        }
+    }
+
+    class SchemaTypeWidget extends PathBasedWidget
+    {
+        constructor(path, result, json, schema, pos)
+        {
+            super(path);
+            this.result = result;
+            this.schema = schema;
+            this.lottie = json;
+            this.pos = pos;
         }
 
         show_info_box(pos)
@@ -1426,7 +1437,7 @@ body.wide .container {
             tree_state.show_info_box_tooltip(pos);
         }
 
-        toDOM()
+        toDOM(show_icon=true)
         {
             get_validation_links(this.result, this.schema); // updates title
 
@@ -1434,10 +1445,13 @@ body.wide .container {
             span.classList.add("schema-type");
             span.classList.add("info_box_trigger");
 
-            let icon_class = schema_icons[this.result.def] ?? "fas fa-info-circle";
-            let icon = document.createElement("i");
-            icon.setAttribute("class", icon_class);
-            span.appendChild(icon);
+            if ( show_icon )
+            {
+                let icon_class = schema_icons[this.result.def] ?? "fas fa-info-circle";
+                let icon = document.createElement("i");
+                icon.setAttribute("class", icon_class);
+                span.appendChild(icon);
+            }
 
             span.appendChild(document.createTextNode(this.result.title));
             span.addEventListener("click", this.on_click.bind(this));
@@ -1460,6 +1474,7 @@ body.wide .container {
             super(path, result, json, schema, pos);
             this.from = node.from;
             this.to = node.to;
+            this.initial_value = null;
         }
 
         lottie_to_hex(lottie)
@@ -1494,30 +1509,33 @@ body.wide .container {
         {
             let box = new InfoBoxContents(null, this.schema);
             box.result_info_box(this.result, this.lottie, lottie_player.lottie, false, true, false);
-            var input = box.add("input", null, {type: "color", value: this.lottie_to_hex(this.lottie)});
+            var input = box.add("input", null, {type: "color", value: this.initial_value});
             input.addEventListener("input", this.on_input.bind(this));
 
 
             info_box.show_with_contents(null, box.element, box, 0, 0);
             tree_state.show_info_box_tooltip(pos);
         }
+
+        toDOM()
+        {
+            let span = super.toDOM(false);
+            let color = span.insertBefore(document.createElement("span"), span.firstChild);
+            color.classList.add("color-preview");
+            this.initial_value = this.lottie_to_hex(this.lottie);
+            color.style.background = this.initial_value;
+            return span;
+        }
     }
 
-    class EditExpressionWidget extends CodeMirrorWrapper.WidgetType
+    class EditExpressionWidget extends PathBasedWidget
     {
         constructor(path, script, node)
         {
-            super();
-            this.path = path;
+            super(path);
             this.script = JSON.parse(script);
-            this.path_str = path.join(".");
             this.from = node.from;
             this.to = node.to;
-        }
-
-        eq(other)
-        {
-            return this.path_str == other.path_str;
         }
 
         toDOM()

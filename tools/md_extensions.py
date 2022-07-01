@@ -179,15 +179,8 @@ class LottieColor(InlineProcessor):
 
         hex = "#" + "".join("%02x" % round(x * 255) for x in comp)
         color = etree.SubElement(span, "span")
-        color.attrib["style"] = css_style(
-            width="24px",
-            height="24px",
-            background_color=hex,
-            border="1px solid black",
-            display="inline-block",
-            vertical_align="middle",
-            margin_right="0.5ex"
-        )
+        color.attrib["style"] = css_style(background_color=hex)
+        color.attrib["class"] = "color-preview"
 
         etree.SubElement(span, "code").text = "[%s]" % ", ".join("%.3g" % x for x in comp)
 
