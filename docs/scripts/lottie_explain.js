@@ -422,12 +422,16 @@ class OneOfSchemaMatcher extends BaseMatcher
             if ( match.const !== undefined )
                 constants.push(match);
 
+            if ( validation.valid )
+            {
+                best = validation;
+                break;
+            }
+
             if ( validation.fitness > best_fitness )
             {
                 best_fitness = validation.fitness;
                 best = validation;
-                if ( best.valid )
-                    break;
             }
         }
 
