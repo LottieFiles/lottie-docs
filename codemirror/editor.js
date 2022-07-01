@@ -27,6 +27,8 @@ export {ensureSyntaxTree, LanguageSupport} from "@codemirror/language"
 import {tags} from "@lezer/highlight"
 export {linter, lintGutter, lintKeymap, setDiagnostics} from "@codemirror/lint";
 export {autocompletion, insertCompletionText} from "@codemirror/autocomplete";
+import {gotoLine} from "@codemirror/search";
+export {openSearchPanel, gotoLine} from "@codemirror/search";
 
 
 
@@ -36,9 +38,15 @@ const myHighlightStyle = HighlightStyle.define([
 
 
 export const default_extensions = [
-    basicSetup,
     history(),
-    keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab, {linux: "Mod-Shift-z", run: redo, preventDefault: true}]),
+    keymap.of([
+        {key: "Mod-g", scope: "editor", run: gotoLine, preventDefault: true},
+        ...defaultKeymap,
+        ...historyKeymap,
+        indentWithTab,
+        {linux: "Mod-Shift-z", run: redo, preventDefault: true},
+    ]),
+    basicSetup,
     syntaxHighlighting(defaultHighlightStyle),
     syntaxHighlighting(myHighlightStyle),
     indentUnit.of("    ")

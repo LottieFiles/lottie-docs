@@ -23768,9 +23768,15 @@
 
 
    const default_extensions = [
-       basicSetup,
        history(),
-       keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab, {linux: "Mod-Shift-z", run: redo, preventDefault: true}]),
+       keymap.of([
+           {key: "Mod-g", scope: "editor", run: gotoLine, preventDefault: true},
+           ...defaultKeymap,
+           ...historyKeymap,
+           indentWithTab,
+           {linux: "Mod-Shift-z", run: redo, preventDefault: true},
+       ]),
+       basicSetup,
        syntaxHighlighting(defaultHighlightStyle),
        syntaxHighlighting(myHighlightStyle),
        indentUnit.of("    ")
@@ -23796,6 +23802,7 @@
    exports.autocompletion = autocompletion;
    exports.default_extensions = default_extensions;
    exports.ensureSyntaxTree = ensureSyntaxTree;
+   exports.gotoLine = gotoLine;
    exports.insertCompletionText = insertCompletionText;
    exports.javascript = javascript;
    exports.json = json;
@@ -23805,6 +23812,7 @@
    exports.lintKeymap = lintKeymap;
    exports.linter = linter;
    exports.on_change = on_change;
+   exports.openSearchPanel = openSearchPanel;
    exports.redo = redo;
    exports.setDiagnostics = setDiagnostics;
    exports.showTooltip = showTooltip;

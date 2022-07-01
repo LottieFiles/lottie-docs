@@ -186,6 +186,15 @@ body.wide .container {
                     <li><a class="dropdown-item" onclick="editor.undo()"><i class="fa-solid fa-rotate-left"></i> Undo</a></li>
                     <li><a class="dropdown-item" onclick="editor.redo()"><i class="fa-solid fa-rotate-right"></i> Redo</a></li>
                     <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" onclick="CodeMirrorWrapper.openSearchPanel(editor.view)">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Find/Replace...
+                    </a></li>
+                    <li><a class="dropdown-item" onclick="CodeMirrorWrapper.gotoLine(editor.view)">
+                        <i class="fa-solid fa-arrow-down-short-wide"></i>
+                        Go to Line...
+                    </a></li>
+                    <li class="dropdown-divider"></li>
                     <li><a class="dropdown-item" onclick="pretty()"><i class="fa-solid fa-indent"></i> Prettify JSON</a></li>
                 </ul>
             </div>
