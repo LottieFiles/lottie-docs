@@ -186,6 +186,10 @@ body.wide .container {
                     <li><a class="dropdown-item" onclick="editor.undo()"><i class="fa-solid fa-rotate-left"></i> Undo</a></li>
                     <li><a class="dropdown-item" onclick="editor.redo()"><i class="fa-solid fa-rotate-right"></i> Redo</a></li>
                     <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" onclick="search_by_json_cmd(editor.view)">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Search by JSON...
+                    </a></li>
                     <li><a class="dropdown-item" onclick="CodeMirrorWrapper.openSearchPanel(editor.view)">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         Find/Replace...
@@ -505,6 +509,8 @@ body.wide .container {
         document.getElementById("info_box"),
         on_lottie_update
     );
+
+    const search_by_json_cmd = search_by_json_factory();
 
     let worker = new LottieJsonWorker();
     worker.on("schema_loaded", (data) => {

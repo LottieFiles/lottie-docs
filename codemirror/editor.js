@@ -15,7 +15,9 @@ export {
     Decoration,
     ViewPlugin,
     keymap,
-    showTooltip
+    showTooltip,
+    getPanel,
+    showPanel
 } from "@codemirror/view"
 import {
     syntaxHighlighting,

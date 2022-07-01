@@ -1117,3 +1117,215 @@ class EditExpressionWidget extends PathBasedWidget
 
     ignoreEvent(ev) { return false; }
 }
+
+function search_by_json_factory()
+{
+    function json_search_match(state, cur, value_search)
+    {
+        return JSON.stringify(JSON.parse(state.sliceDoc(cur.from, cur.to))) === value_search;
+    }
+
+    function recursive_json_search(state, cur, path_search, value_search, out, curpath)
+    {
+        switch ( cur.name )
+        {
+            case "JsonText":
+                if ( cur.firstChild() )
+                    recursive_json_search(state, cur, path_search, value_search, out, curpath);
+                break;
+            case "Object":
+                if ( cur.firstChild() )
+                {
+                    while ( cur.nextSibling() )
+                        recursive_json_search(state, cur, path_search, value_search, out, curpath);
+                    cur.parent();
+                }
+                break;
+            case "Array":
+                if ( cur.firstChild() )
+                {
+                    let index = 0;
+                    while ( cur.nextSibling() && cur.name != "]" )
+                    {
+                        let path = curpath + "." + index;
+                        if ( path.endsWith(path_search) && (value_search === undefined || json_search_match(state, cur, value_search)) )
+                            out.push(cur.node);
+                        recursive_json_search(state, cur, path_search, value_search, out, path);
+                        index++;
+                    }
+                    cur.parent();
+                }
+                break;
+            case "Property":
+                if ( cur.firstChild() )
+                {
+                    if ( cur.name == "PropertyName" )
+                    {
+                        let name = JSON.parse(state.sliceDoc(cur.from, cur.to));
+                        let path = curpath + "." + name;
+                        let matches = path.endsWith(path_search);
+                        if ( matches && value_search === undefined )
+                            out.push(cur.node);
+                        cur.parent();
+                        cur.lastChild();
+                        if ( matches && value_search !== undefined && json_search_match(state, cur, value_search) )
+                            out.push(cur.node);
+                        recursive_json_search(state, cur, path_search, value_search, out, path);
+                    }
+                    cur.parent();
+                }
+                break;
+        }
+    }
+
+    function json_search(view, path, value, search_up)
+    {
+        let tree = CodeMirrorWrapper.ensureSyntaxTree(view.state);
+        let norm_path = "." + path.replace("[", ".").replace("]", "");
+        let search = value.length ? JSON.stringify(JSON.parse(value)) : undefined;
+        let results = [];
+
+        recursive_json_search(view.state, tree.cursor(), norm_path, search, results, "");
+
+        if ( results.length == 0 )
+            return;
+
+        let curpos = view.state.selection.ranges[0].head;
+        let node;
+
+        if ( search_up )
+        {
+            results.sort((a, b) => b.to - a.to);
+
+            node = results[0];
+            for ( let result of results )
+            {
+                if ( result.to < curpos )
+                {
+                    node = result;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            results.sort((a, b) => a.from - b.from);
+
+            node = results[0];
+            for ( let result of results )
+            {
+                if ( result.from > curpos )
+                {
+                    node = result;
+                    break;
+                }
+            }
+        }
+
+        view.dispatch({
+            selection: {
+                anchor: node.from,
+                head: node.to,
+            },
+            scrollIntoView: true
+        });
+        view.focus();
+    }
+
+    function create_panel(view)
+    {
+        let path_input = document.createElement("input");
+
+        let value_input = document.createElement("input");
+
+        let dom = document.createElement("form");
+        dom.classList.add("json-search-panel");
+        dom.addEventListener("keydown", (ev) => {
+            // Escape
+            if (ev.keyCode == 27)
+            {
+                ev.preventDefault();
+                view.dispatch({effects: dialogEffect.of(false)});
+                view.focus();
+            }
+            // Enter
+            else if ( ev.keyCode == 13 )
+            {
+                ev.preventDefault();
+                json_search(view, path_input.value, value_input.value);
+            }
+        });
+        dom.addEventListener("submit", (ev) => {
+            ev.preventDefault();
+            json_search(view, path_input.value, value_input.value);
+        });
+
+        let lab = dom.appendChild(document.createElement("label"));
+        lab.appendChild(document.createTextNode("Search by JSON "));
+        lab.appendChild(path_input);
+        dom.appendChild(document.createTextNode(" "));
+
+        lab = dom.appendChild(document.createElement("label"));
+        lab.appendChild(document.createTextNode("Value "));
+        lab.appendChild(value_input);
+        dom.appendChild(document.createTextNode(" "));
+
+        let btn = dom.appendChild(document.createElement("button"));
+        btn.setAttribute("class", "btn btn-secondary btn-sm");
+        btn.type = "submit";
+        btn.title = "Find Next";
+        btn.appendChild(document.createElement("i")).setAttribute("class", "fa-solid fa-arrow-down");
+
+        btn = dom.appendChild(document.createElement("button"));
+        btn.setAttribute("class", "btn btn-secondary btn-sm");
+        btn.title = "Find Previus";
+        btn.appendChild(document.createElement("i")).setAttribute("class", "fa-solid fa-arrow-up");
+        btn.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            json_search(view, path_input.value, value_input.value, true);
+        });
+
+        return {dom: dom};
+    }
+
+    const dialogEffect = CodeMirrorWrapper.StateEffect.define();
+
+    const dialogField = CodeMirrorWrapper.StateField.define({
+        create() { return true },
+        update(value, tr) {
+            for ( let e of tr.effects )
+            {
+                if ( e.is(dialogEffect) )
+                    value = e.value;
+            }
+            return value
+        },
+        provide: f => CodeMirrorWrapper.showPanel.from(f, val => val ? create_panel : null)
+    });
+
+    function command(view)
+    {
+        let panel = CodeMirrorWrapper.getPanel(view, create_panel);
+        if ( !panel )
+        {
+            let effects = [dialogEffect.of(true)];
+            if ( view.state.field(dialogField, false) == null )
+                effects.push(CodeMirrorWrapper.StateEffect.appendConfig.of([dialogField, baseTheme]));
+            view.dispatch({effects});
+            panel = CodeMirrorWrapper.getPanel(view, create_panel);
+        }
+
+        if ( panel )
+            panel.dom.querySelector("input").focus();
+
+        return true;
+    }
+
+    const baseTheme = CodeMirrorWrapper.EditorView.baseTheme({
+        ".cm-panel.json-search-panel": {
+            padding: "10px 6px 6px",
+        }
+    });
+
+    return command;
+}

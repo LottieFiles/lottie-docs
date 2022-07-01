@@ -23802,6 +23802,7 @@
    exports.autocompletion = autocompletion;
    exports.default_extensions = default_extensions;
    exports.ensureSyntaxTree = ensureSyntaxTree;
+   exports.getPanel = getPanel;
    exports.gotoLine = gotoLine;
    exports.insertCompletionText = insertCompletionText;
    exports.javascript = javascript;
@@ -23815,6 +23816,7 @@
    exports.openSearchPanel = openSearchPanel;
    exports.redo = redo;
    exports.setDiagnostics = setDiagnostics;
+   exports.showPanel = showPanel;
    exports.showTooltip = showTooltip;
    exports.undo = undo;
 
