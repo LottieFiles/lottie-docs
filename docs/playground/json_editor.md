@@ -137,6 +137,30 @@ body.wide .container {
     vertical-align: top;
 }
 
+.keyframe-preview-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.keyframe-preview-container canvas {
+    border: 1px solid #ccc;
+}
+
+.keyframe-preview {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    position: relative;
+    background-color: black;
+    animation: keyframe-preview 3s infinite;
+}
+
+@keyframes keyframe-preview {
+    0% {left: 0px;}
+    50% {left: 176px;}
+    100% {left: 0px;}
+}
+
 </style>
 <div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
 <div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">

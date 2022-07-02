@@ -364,10 +364,14 @@ class TreeResultVisitor
         {
             let widget;
             let pos = node.firstChild.to;
+
             if ( result.group == "helpers" && result.cls == "color" )
                 widget = new ColorSchemaWidget(this.editor, path, result, json, pos, node);
+            else if ( result.cls && result.cls.indexOf("keyframe") != -1 )
+                widget = new KeyframeSchemaWidget(this.editor, path, result, json, pos, node);
             else
                 widget = new SchemaTypeWidget(this.editor, path, result, json, pos);
+
             let deco = CodeMirrorWrapper.Decoration.widget({
                 widget: widget,
                 side: 1
@@ -967,7 +971,7 @@ class SchemaTypeWidget extends PathBasedWidget
         this.editor.show_info_box_with_contents(pos, box.element, box);
     }
 
-    toDOM(show_icon=true)
+    build_dom(show_icon)
     {
         get_validation_links(this.result, this.editor.schema); // updates title
 
@@ -987,6 +991,11 @@ class SchemaTypeWidget extends PathBasedWidget
         span.addEventListener("click", this.on_click.bind(this));
 
         return span;
+    }
+
+    toDOM()
+    {
+        return this.build_dom(true);
     }
 
     on_click()
@@ -1048,12 +1057,265 @@ class ColorSchemaWidget extends SchemaTypeWidget
 
     toDOM()
     {
-        let span = super.toDOM(false);
+        let span = this.build_dom(false);
         let color = span.insertBefore(document.createElement("span"), span.firstChild);
         color.classList.add("color-preview");
         this.initial_value = this.lottie_to_hex(this.lottie);
         color.style.background = this.initial_value;
         return span;
+    }
+}
+
+class KeyframeEditorPreview
+{
+    constructor(parent, initial, on_change)
+    {
+        let container = parent.appendChild(document.createElement("div"));
+
+        container.classList.add("keyframe-preview-container");
+        container.appendChild(document.createElement("strong"))
+        .appendChild(document.createTextNode("Transition"));
+
+        let label = container.appendChild(document.createElement("label"));
+        this.checkbox = label.appendChild(document.createElement("input"));
+        this.checkbox.type = "checkbox";
+        label.appendChild(document.createTextNode(" Hold"));
+        this.canvas = container.appendChild(document.createElement("canvas"));
+        this.canvas.width = 200;
+        this.canvas.height = 200;
+        this.canvas.style.width = "200px";
+        this.canvas.style.height = "200px";
+        this.context = this.canvas.getContext("2d");
+
+        this.preview = container.appendChild(document.createElement("div"));
+        this.preview.classList.add("keyframe-preview");
+
+        this.hold = !!initial.h;
+        this.in_tan = {
+            x: this._get_component(initial, "i", "x", 1),
+            y: this._get_component(initial, "i", "y", 1),
+        };
+        this.out_tan = {
+            x: this._get_component(initial, "o", "x", 0),
+            y: this._get_component(initial, "o", "y", 0),
+        };
+        this.drag = null;
+
+        this._update_preview();
+
+        this.checkbox.checked = this.hold;
+        this.checkbox.addEventListener("change", ((ev) => {
+            this.hold = this.checkbox.checked;
+            this._on_change();
+        }).bind(this));
+
+        this.canvas.addEventListener("mousedown", this._on_mouse_down.bind(this));
+        this.canvas.addEventListener("mousemove", this._on_mouse_move.bind(this));
+        this.canvas.addEventListener("mouseup", this._on_mouse_up.bind(this));
+
+        this.radius = 5;
+        this.pad = this.radius + 1;
+        this._draw_frame();
+
+        this.on_change = on_change;
+
+    }
+
+    _update_preview()
+    {
+        this.preview.setAttribute("style", "animation-timing-function:" + this.to_css());
+    }
+
+    _draw_frame()
+    {
+        this.context.fillStyle = "white";
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        let w = this.canvas.width - this.pad * 2;
+        let h = this.canvas.height - this.pad * 2;
+        let p0 = [this.pad, this.pad + h];
+        let p1 = [this.pad + w * this.out_tan.x, this.pad + h * (1 - this.out_tan.y)];
+        let p2 = [this.pad + w * this.in_tan.x, this.pad + h * (1 - this.in_tan.y)]
+        let p3 = [this.pad + w, this.pad];
+
+
+        this.context.beginPath();
+        this.context.lineWidth = 3;
+        this.context.strokeStyle = "#000";
+        this.context.moveTo(...p0);
+        this.context.bezierCurveTo(...p1, ...p2, ...p3);
+        this.context.stroke();
+
+        this.context.beginPath();
+        this.context.lineWidth = 1;
+        this.context.strokeStyle = "#ccc";
+        this.context.moveTo(...p0);
+        this.context.lineTo(...p1);
+        this.context.moveTo(...p2);
+        this.context.lineTo(...p3);
+        this.context.stroke();
+
+        this.context.lineWidth = 1;
+        this.context.strokeStyle = "#444";
+        this.context.fillStyle = "#eee";
+
+        this.context.beginPath();
+        this.context.arc(...p1, this.radius, 0, Math.PI * 2);
+        this.context.fill();
+        this.context.stroke();
+
+        this.context.beginPath();
+        this.context.arc(...p2, this.radius, 0, Math.PI * 2);
+        this.context.fill();
+        this.context.stroke();
+
+    }
+
+    _on_change()
+    {
+        this._update_preview();
+        this.on_change(this.to_lottie());
+    }
+
+    _get_component(initial, tan, comp, defval)
+    {
+        if ( !initial[tan] || !initial[tan][comp] )
+            return defval;
+
+        if ( !Array.isArray(initial[tan][comp] ) )
+            return initial[tan][comp];
+
+        if ( initial[tan][comp].length == 0 )
+            return defval;
+
+        return initial[tan][comp][0];
+    }
+
+    _on_mouse_down(ev)
+    {
+        if ( this.drag )
+            return;
+
+        let dist = this.pad / (this.canvas.width - 2 * this.pad);
+        let p = this._mouse_event_pos(ev);
+
+        if ( Math.hypot(p.x - this.in_tan.x, p.y - this.in_tan.y) < dist )
+            this.drag = this.in_tan;
+        else if ( Math.hypot(p.x - this.out_tan.x, p.y - this.out_tan.y) < dist )
+            this.drag = this.out_tan;
+
+        if ( this.drag )
+            this.canvas.style.cursor = "crosshair";
+    }
+
+    _mouse_event_pos(ev)
+    {
+        let rect = this.canvas.getBoundingClientRect();
+        return {
+            x: Math.min(1, Math.max(0, (ev.clientX - rect.left - this.pad) / (this.canvas.width - 2 * this.pad))),
+            y: Math.min(1, Math.max(0, 1 - (ev.clientY - rect.top - this.pad) / (this.canvas.width - 2 * this.pad)))
+        };
+    }
+
+    _on_mouse_move(ev)
+    {
+        let p = this._mouse_event_pos(ev);
+
+        if ( this.drag )
+        {
+            this.drag.x = p.x;
+            this.drag.y = p.y;
+            this._draw_frame();
+        }
+        else
+        {
+            let dist = this.pad / (this.canvas.width - 2 * this.pad);
+
+            if ( Math.hypot(p.x - this.in_tan.x, p.y - this.in_tan.y) < dist ||
+                Math.hypot(p.x - this.out_tan.x, p.y - this.out_tan.y) < dist )
+            {
+                this.canvas.style.cursor = "pointer";
+            }
+            else
+            {
+                this.canvas.style.cursor = "initial";
+            }
+        }
+    }
+
+    _on_mouse_up(ev)
+    {
+        if ( this.drag )
+        {
+            this.canvas.style.cursor = "pointer";
+            this.drag = null;
+            this._on_change()
+        }
+    }
+
+    to_css()
+    {
+        if ( this.hold )
+            return "step-end";
+
+        return `cubic-bezier(${this.out_tan.x},${this.out_tan.y},${this.in_tan.x},${this.in_tan.y})`;
+    }
+
+    _truncate(v)
+    {
+        return Math.round(v*1000) / 1000;
+    }
+
+    to_lottie()
+    {
+        return {
+            h: this.hold ? 1 : 0,
+            o: {
+                x: [this._truncate(this.out_tan.x)],
+                y: [this._truncate(this.out_tan.y)],
+            },
+            i: {
+                x: [this._truncate(this.in_tan.x)],
+                y: [this._truncate(this.in_tan.y)],
+            }
+        };
+    }
+}
+
+
+class KeyframeSchemaWidget extends SchemaTypeWidget
+{
+    constructor(editor, path, result, json, pos, node)
+    {
+        super(editor, path, result, json, pos);
+        this.from = node.from;
+        this.to = node.to;
+        this.in_tan = null;
+        this.out_tan = null;
+        this.hold = null;
+    }
+
+    _on_change(lottie)
+    {
+        let complete_kf = {
+            ...this.lottie,
+            ...lottie
+        }
+        let lines = JSON.stringify(complete_kf, undefined, 4).split("\n");
+        let text = lines.join(indent_at(this.editor.view.state, this.from));
+
+        this.editor.view.dispatch({
+            changes: {from: this.from, to: this.to, insert: text}
+        });
+        this.to = this.from + text.length;
+    }
+
+    show_info_box(pos)
+    {
+        let box = new InfoBoxContents(null, this.editor.schema);
+        box.result_info_box(this.result, this.lottie, this.editor.lottie, false);
+        box.kf_preview = new KeyframeEditorPreview(box.element, this.lottie, this._on_change.bind(this));
+        this.editor.show_info_box_with_contents(pos, box.element, box);
     }
 }
 
