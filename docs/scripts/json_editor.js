@@ -910,7 +910,10 @@ class LottieJsonEditor
         }
 
         if ( load_ok )
+        {
+            this.lottie = lottie;
             this.on_lottie_loaded(lottie);
+        }
     }
 
     undo()

@@ -23812,7 +23812,9 @@
    exports.lintGutter = lintGutter;
    exports.lintKeymap = lintKeymap;
    exports.linter = linter;
+   exports.nextDiagnostic = nextDiagnostic;
    exports.on_change = on_change;
+   exports.openLintPanel = openLintPanel;
    exports.openSearchPanel = openSearchPanel;
    exports.redo = redo;
    exports.setDiagnostics = setDiagnostics;

@@ -177,11 +177,6 @@ body.wide .container {
                     <li class="dropdown-divider"></li>
                     <li><a class="dropdown-item" onclick="action_save()"><i class="fa-solid fa-floppy-disk"></i> Save</a></li>
                     <li><a class="dropdown-item" onclick="action_download()"><i class="fa-solid fa-download"></i> Download</a></li>
-                    <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_features" onclick="refresh_features()">
-                        <i class="fa-solid fa-list-check"></i>
-                        View Lottie Features...
-                    </a></li>
                 </ul>
             </div>
             <div class="dropdown">
@@ -209,20 +204,40 @@ body.wide .container {
                 </ul>
             </div>
             <div class="dropdown">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_lottie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Lottie
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_lottie">
+                    <li><a class="dropdown-item" onclick="CodeMirrorWrapper.openLintPanel(editor.view)">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        View Issues...
+                    </a></li>
+                    <li><a class="dropdown-item" onclick="CodeMirrorWrapper.nextDiagnostic(editor.view)">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        Go to Next Issue
+                    </a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_features" onclick="refresh_features()">
+                        <i class="fa-solid fa-list-check"></i>
+                        View Lottie Features...
+                    </a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_view" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     View
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="btn_menu_edit">
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_view">
                     <li><a class="dropdown-item" onclick="document.body.classList.toggle('wide')">
                         <i class="fa-solid fa-arrows-left-right"></i> Toggle Wide Layout
                     </a></li>
                 </ul>
             </div>
             <div class="dropdown">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_help" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Help
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="btn_menu_edit">
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_help">
                     <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_key_bindings">
                         <i class="fa-solid fa-keyboard"></i> View Keyboard Shortcuts
                     </a></li>
@@ -544,7 +559,6 @@ body.wide .container {
                 }
             }
         }
-
 
         if ( features.features.size )
         {

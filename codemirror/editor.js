@@ -27,7 +27,14 @@ import {
 } from "@codemirror/language"
 export {ensureSyntaxTree, LanguageSupport} from "@codemirror/language"
 import {tags} from "@lezer/highlight"
-export {linter, lintGutter, lintKeymap, setDiagnostics} from "@codemirror/lint";
+export {
+    linter,
+    lintGutter,
+    lintKeymap,
+    setDiagnostics,
+    openLintPanel,
+    nextDiagnostic,
+} from "@codemirror/lint";
 export {autocompletion, insertCompletionText} from "@codemirror/autocomplete";
 import {gotoLine} from "@codemirror/search";
 export {openSearchPanel, gotoLine} from "@codemirror/search";
