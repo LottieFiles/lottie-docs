@@ -849,7 +849,7 @@ class LottieJsonEditor
 
     show_info_box_with_contents(pos, element, data, options = {})
     {
-        this.info_box.show_with_contents(null, element, data, 0, 0);
+        this.info_box.show(element, data);
         this.show_info_box_tooltip(pos, options);
     }
 

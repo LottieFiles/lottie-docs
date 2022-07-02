@@ -997,7 +997,6 @@ class InfoBox
     constructor(element)
     {
         this.element = element;
-        this.target = null;
         this.contents = null;
         this.lottie_target = this.element.querySelector(".info_box_lottie");
         this.contents_target = this.element.querySelector(".info_box_details");
@@ -1012,9 +1011,6 @@ class InfoBox
 
     clear()
     {
-        if ( this.target )
-            this.target.appendChild(this.contents);
-
         clear_element(this.contents_target);
 
         this.lottie_player.clear();
@@ -1034,28 +1030,13 @@ class InfoBox
         this.element.style.display = "none";
     }
 
-    show(trigger)
-    {
-        if ( trigger === this.target )
-        {
-            this.hide();
-            return;
-        }
-
-        let contents = trigger.querySelector(".info_box_content");
-        this.show_with_contents(trigger, contents, contents.info_box_data);
-    }
-
-    show_with_contents(trigger, contents, data, x, y)
+    show(contents, data)
     {
         this.clear();
-        this.target = trigger;
         this.contents = contents;
         this.contents_target.appendChild(this.contents);
         this.info_box_data = data;
         this.element.style.display = "block";
-        this.element.style.top = (y ?? (this.target.offsetTop - 5)) + "px";
-        this.element.style.left = (x ?? (this.target.offsetLeft + this.target.offsetWidth)) + "px";
 
         var lottie_json = this.info_box_data.lottie_json;
         if ( lottie_json )
