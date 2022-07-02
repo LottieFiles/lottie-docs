@@ -62,15 +62,6 @@ class ValidationResult
             this.children[child_key].merge_from(child_validation);
     }
 
-    get_features(features)
-    {
-        if ( this.feature )
-            features.add(this.feature);
-
-        for ( let child of Object.values(this.children) )
-            child.get_features(features);
-    }
-
     set_key_validation(name, matcher)
     {
         this.key = new ValidationResult(matcher);
@@ -117,6 +108,42 @@ function descend_lottie_path(lottie, path)
 }
 
 
+function get_features_recursive(validation, output, add_layers, add_shapes)
+{
+    if ( validation.feature )
+        output.features.add(validation.feature);
+
+    for ( let [name, child] of Object.entries(validation.children) )
+    {
+        if ( add_layers && child.def && !output.layers_ref.has(child.def) )
+        {
+            output.layers_ref.add(child.def);
+            output.layers.push(child);
+        }
+        else if ( add_shapes && child.def && !output.shapes_ref.has(child.def) )
+        {
+            output.shapes_ref.add(child.def);
+            output.shapes.push(child);
+        }
+
+        get_features_recursive(child, output, name == "layers", name == "it" || name == "shapes");
+    }
+}
+
+function get_features(validation)
+{
+    let output = {
+        features: new Set(),
+        layers: [],
+        layers_ref: new Set(),
+        shapes: [],
+        shapes_ref: new Set(),
+    };
+
+    get_features_recursive(validation, output, false, false);
+    return output;
+}
+
 function get_validation_links(validation, schema)
 {
     if ( validation._links === null )
@@ -132,6 +159,7 @@ function get_validation_links(validation, schema)
             validation._links = [];
         }
     }
+
     return validation._links;
 }
 

@@ -168,14 +168,20 @@ body.wide .container {
                     <li><a class="dropdown-item" onclick="action_new()"><i class="fa-solid fa-file"></i> New</a></li>
                     <li><a class="dropdown-item" onclick="action_load()"><i class="fa-solid fa-cloud-arrow-down"></i> Load Saved</a></li>
                     <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_url">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Load from URL
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Load from URL...
                     </a></li>
                     <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_file">
-                        <i class="fa-solid fa-upload"></i> Upload File
+                        <i class="fa-solid fa-folder-open"></i>
+                        Open File...
                     </a></li>
                     <li class="dropdown-divider"></li>
                     <li><a class="dropdown-item" onclick="action_save()"><i class="fa-solid fa-floppy-disk"></i> Save</a></li>
                     <li><a class="dropdown-item" onclick="action_download()"><i class="fa-solid fa-download"></i> Download</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_features" onclick="refresh_features()">
+                        <i class="fa-solid fa-list-check"></i>
+                        View Lottie Features...
+                    </a></li>
                 </ul>
             </div>
             <div class="dropdown">
@@ -284,7 +290,6 @@ body.wide .container {
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="modal_key_bindings" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -299,6 +304,23 @@ body.wide .container {
             <div class="modal-body">
                 <table id="key_bindings"></table>
             </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_features" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Lottie Features
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" />
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body" id="features_container"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -492,6 +514,58 @@ body.wide .container {
             frame_slider.style.display = "none";
             frame_edit.style.display = "none";
         }
+    }
+
+    function refresh_features()
+    {
+        let parent = document.getElementById("features_container");
+        clear_element(parent);
+
+        let features = get_features(editor.completions.validation_result);
+        let has_something = false;
+
+        for ( let what of ["Layers", "Shapes"] )
+        {
+            let attr = what.toLowerCase();
+
+            if ( features[attr].length )
+            {
+                has_something = true;
+                parent.appendChild(document.createElement("h6")).appendChild(document.createTextNode(what));
+                let list = parent.appendChild(document.createElement("ul"));
+                for ( let lay of features[attr] )
+                {
+                    let li = list.appendChild(document.createElement("li"));
+                    for ( link of get_validation_links(lay, editor.schema) )
+                    {
+                        li.appendChild(link.to_element());
+                        li.appendChild(document.createTextNode(" "));
+                    }
+                }
+            }
+        }
+
+
+        if ( features.features.size )
+        {
+            has_something = true;
+            parent.appendChild(document.createElement("h6")).appendChild(document.createTextNode("Features"));
+            let list = parent.appendChild(document.createElement("ul"));
+            for ( let feature of features.features )
+            {
+                let link = list.appendChild(document.createElement("li")).appendChild(document.createElement("a"));
+                link.setAttribute("href", "https://canilottie.com/" + feature);
+                link.appendChild(document.createTextNode(
+                    feature.split("-").map(f => f[0].toUpperCase() + f.slice(1)).join(" ")
+                ));
+            }
+        }
+
+        if ( !has_something )
+        {
+            parent.appendChild(document.createElement("p")).appendChild(document.createTextNode("None Found"));
+        }
+
     }
 
     let expr_variables = ["$bm_rt", "time", "value", "thisProperty", "thisComp", "thisLayer"];
