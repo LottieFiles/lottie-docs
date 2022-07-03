@@ -362,7 +362,16 @@ class TreeResultVisitor
         this.add_lint_errors(node.firstChild, result);
         this.add_lint_errors(node.lastChild, result);
 
-        if ( result.description && result.title.length > 1 )
+        if ( context.gradient && Array.isArray(json) && (context.prop == "k" || context.prop == "s" || context.prop == "e") )
+        {
+            let pos = node.firstChild.to;
+            let deco = CodeMirrorWrapper.Decoration.widget({
+                widget: new GradientSchemaWidget(this.editor, path, result, json, pos, node, context.color_count),
+                side: 1
+            });
+            this.decorations.push(deco.range(pos));
+        }
+        else if ( result.description && result.title.length > 1 )
         {
             let widget;
             let pos = node.firstChild.to;
@@ -378,15 +387,6 @@ class TreeResultVisitor
 
             let deco = CodeMirrorWrapper.Decoration.widget({
                 widget: widget,
-                side: 1
-            });
-            this.decorations.push(deco.range(pos));
-        }
-        else if ( context.gradient && context.prop == "k" && Array.isArray(json) )
-        {
-            let pos = node.firstChild.to;
-            let deco = CodeMirrorWrapper.Decoration.widget({
-                widget: new GradientSchemaWidget(this.editor, path, result, json, pos, node, context.color_count),
                 side: 1
             });
             this.decorations.push(deco.range(pos));
