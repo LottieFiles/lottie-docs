@@ -112,9 +112,14 @@ body.wide .container {
     border-top-color: #555;
 }
 
+.gradient-editor input
+{
+    vertical-align: middle;
+    margin: 1ex;
+    height: 48px;
+}
 #info_box input[type="color"]
 {
-    display: block;
     padding: 0;
     width: 96px;
     height: 48px;
@@ -163,6 +168,10 @@ body.wide .container {
     0% {left: 0px;}
     50% {left: 176px;}
     100% {left: 0px;}
+}
+
+#lottie_target {
+    max-height: 512px;
 }
 
 </style>

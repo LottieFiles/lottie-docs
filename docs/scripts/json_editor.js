@@ -243,20 +243,22 @@ class TreeResultVisitor
         this.editor = editor;
     }
 
-    visit(node, result, json, path = [])
+    visit(node, result, json, path = [], context={})
     {
         if ( !node || !result )
             return false;
 
         if ( node.name == "JsonText" )
         {
-            this.visit(node.firstChild, result, json, path);
+            this.visit(node.firstChild, result, json, path, context);
             return false;
         }
 
         if ( node.name == "Object" )
         {
-            this.on_object(node, result, json, path);
+            this.on_object(node, result, json, path, context);
+            if ( result.cls == "gradient-colors" )
+                context = {...context, gradient: true, color_count: json.p ?? 0};
 
             for ( let prop_node of node.getChildren("Property") )
             {
@@ -272,7 +274,7 @@ class TreeResultVisitor
                     if ( name == "ty" && prop_result.const )
                         this.on_ty_value(prop_node.lastChild, prop_result, result)
                     else
-                        this.visit(prop_node.lastChild, prop_result, json[name], path.concat([name]));
+                        this.visit(prop_node.lastChild, prop_result, json[name], path.concat([name]), {...context, prop: name});
                 }
                 else
                 {
@@ -284,7 +286,7 @@ class TreeResultVisitor
         }
         else if ( node.name == "Array" && node.firstChild )
         {
-            this.on_array(node, result, json, path);
+            this.on_array(node, result, json, path, context);
             var index = 0;
             var cur = node.firstChild.cursor();
             // first child is [
@@ -293,7 +295,7 @@ class TreeResultVisitor
                 if ( !(index in result.children) )
                     break;
 
-                if ( this.visit(cur.node, result.children[index], json[index], path.concat([index])) )
+                if ( this.visit(cur.node, result.children[index], json[index], path.concat([index]), context) )
                     index += 1;
             }
             return true;
@@ -355,7 +357,7 @@ class TreeResultVisitor
             this.lint_error(node, "warning", issue);
     }
 
-    on_object(node, result, json, path)
+    on_object(node, result, json, path, context)
     {
         this.add_lint_errors(node.firstChild, result);
         this.add_lint_errors(node.lastChild, result);
@@ -376,6 +378,15 @@ class TreeResultVisitor
 
             let deco = CodeMirrorWrapper.Decoration.widget({
                 widget: widget,
+                side: 1
+            });
+            this.decorations.push(deco.range(pos));
+        }
+        else if ( context.gradient && context.prop == "k" && Array.isArray(json) )
+        {
+            let pos = node.firstChild.to;
+            let deco = CodeMirrorWrapper.Decoration.widget({
+                widget: new GradientSchemaWidget(this.editor, path, result, json, pos, node, context.color_count),
                 side: 1
             });
             this.decorations.push(deco.range(pos));
@@ -433,9 +444,9 @@ class TreeResultVisitor
         }
     }
 
-    on_array(node, result, json, path)
+    on_array(node, result, json, path, context)
     {
-        this.on_object(node, result, json, path);
+        this.on_object(node, result, json, path, context);
     }
 
     static property_info_box(pos, editor, node, obj_result, prop_result)
@@ -1008,36 +1019,18 @@ class SchemaTypeWidget extends PathBasedWidget
     ignoreEvent(ev) { return true; }
 }
 
-class ColorSchemaWidget extends SchemaTypeWidget
+
+class EditorSchemaWidget extends SchemaTypeWidget
 {
     constructor(editor, path, result, json, pos, node)
     {
         super(editor, path, result, json, pos);
         this.from = node.from;
         this.to = node.to;
-        this.initial_value = null;
     }
 
-    lottie_to_hex(lottie)
+    update_lines(lines)
     {
-        return "#" + lottie.slice(0, 3)
-            .map(i => Math.round(Math.min(Math.max(i, 0), 1) * 0xff)
-            .toString(16).padStart(2, "0")).join("")
-        ;
-    }
-
-    hex_to_lottie_lines(hex)
-    {
-        return ["[", ...[1, 3, 5].map(i =>
-            "    " +
-            (parseInt(hex.slice(i, i+2), 16) / 255).toFixed(3) +
-            (i != 5 ? "," : "")
-        ), "]"];
-    }
-
-    on_input(ev)
-    {
-        let lines = this.hex_to_lottie_lines(ev.target.value);
         let text = lines.join(indent_at(this.editor.view.state, this.from));
 
         this.editor.view.dispatch({
@@ -1046,11 +1039,44 @@ class ColorSchemaWidget extends SchemaTypeWidget
         this.to = this.from + text.length;
     }
 
+    update_lottie(lottie)
+    {
+        this.update_lines(JSON.stringify(lottie, undefined, 4).split("\n"));
+    }
+}
+
+function color_lottie_to_hex(lottie)
+{
+    return "#" + lottie.slice(0, 3)
+        .map(i => Math.round(Math.min(Math.max(i, 0), 1) * 0xff)
+        .toString(16).padStart(2, "0")).join("")
+    ;
+}
+
+function color_hex_to_lottie(hex)
+{
+    return [1, 3, 5].map(i => truncate_float(parseInt(hex.slice(i, i+2), 16) / 255));
+}
+
+
+class ColorSchemaWidget extends EditorSchemaWidget
+{
+    constructor(editor, path, result, json, pos, node)
+    {
+        super(editor, path, result, json, pos, node);
+        this.initial_value = null;
+    }
+
+    on_input(ev)
+    {
+        this.update_lottie(color_hex_to_lottie(ev.target.value));
+    }
+
     show_info_box(pos)
     {
         let box = new InfoBoxContents(null, this.schema);
         box.result_info_box(this.result, this.lottie, lottie_player.lottie, false, true, false);
-        var input = box.add("input", null, {type: "color", value: this.initial_value});
+        var input = box.add("input", null, {type: "color", value: this.initial_value, style: "display: block"});
 
         input.addEventListener("input", this.on_input.bind(this));
 
@@ -1062,7 +1088,7 @@ class ColorSchemaWidget extends SchemaTypeWidget
         let span = this.build_dom(false);
         let color = span.insertBefore(document.createElement("span"), span.firstChild);
         color.classList.add("color-preview");
-        this.initial_value = this.lottie_to_hex(this.lottie);
+        this.initial_value = color_lottie_to_hex(this.lottie);
         color.style.background = this.initial_value;
         return span;
     }
@@ -1502,28 +1528,14 @@ function truncate_float(v)
     return Math.round(v*1000) / 1000;
 }
 
-class KeyframeSchemaWidget extends SchemaTypeWidget
+class KeyframeSchemaWidget extends EditorSchemaWidget
 {
-    constructor(editor, path, result, json, pos, node)
-    {
-        super(editor, path, result, json, pos);
-        this.from = node.from;
-        this.to = node.to;
-    }
-
     _on_change(lottie)
     {
-        let complete_kf = {
+        this.update_lottie({
             ...this.lottie,
             ...lottie
-        }
-        let lines = JSON.stringify(complete_kf, undefined, 4).split("\n");
-        let text = lines.join(indent_at(this.editor.view.state, this.from));
-
-        this.editor.view.dispatch({
-            changes: {from: this.from, to: this.to, insert: text}
         });
-        this.to = this.from + text.length;
     }
 
     show_info_box(pos)
@@ -1707,32 +1719,14 @@ class BezierEditorPreview
     }
 }
 
-class BezierSchemaWidget extends SchemaTypeWidget
+class BezierSchemaWidget extends EditorSchemaWidget
 {
-    constructor(editor, path, result, json, pos, node)
-    {
-        super(editor, path, result, json, pos);
-        this.from = node.from;
-        this.to = node.to;
-    }
-
-    _on_change(lottie)
-    {
-        let lines = JSON.stringify(lottie, undefined, 4).split("\n");
-        let text = lines.join(indent_at(this.editor.view.state, this.from));
-
-        this.editor.view.dispatch({
-            changes: {from: this.from, to: this.to, insert: text}
-        });
-        this.to = this.from + text.length;
-    }
-
     show_info_box(pos)
     {
         let box = new InfoBoxContents(null, this.editor.schema);
         box.result_info_box(this.result, null, null, false, true, false);
         try {
-            box.bez_preview = new BezierEditorPreview(box.element, this.lottie, this._on_change.bind(this));
+            box.bez_preview = new BezierEditorPreview(box.element, this.lottie, this.update_lottie.bind(this));
         } catch(e) {}
         this.editor.show_info_box_with_contents(pos, box.element, box);
     }
@@ -1948,4 +1942,121 @@ function search_by_json_factory()
     });
 
     return command;
+}
+
+class GradientEditorPreview
+{
+    constructor(parent, lottie, color_count, on_change)
+    {
+        this.on_change = on_change;
+        this.with_alpha = lottie.length >= color_count * 6;
+        if ( lottie.length < color_count * 4 )
+            color_count = Math.floor(lottie.length / 4);
+
+        let self = this;
+        this.colors = [];
+
+        let label = parent.appendChild(document.createElement("p"))
+            .appendChild(document.createElement("label"));
+        let check_apha = label.appendChild(document.createElement("input"));
+        check_apha.type = "checkbox";
+        check_apha.checked = this.with_alpha;
+        check_apha.addEventListener("input", () => {
+            self.with_alpha = check_apha.checked;
+            for ( let color of self.colors )
+            {
+                color.alpha_input.style.display = self.with_alpha ? "inline-block" : "none";
+            }
+            self._on_change();
+        });
+        label.appendChild(document.createTextNode(" Enable Alpha"));
+
+
+        for ( let i = 0; i < color_count; i++ )
+        {
+            let color = {
+                offset: lottie[i * 4],
+                color: color_lottie_to_hex(lottie.slice(i * 4 + 1, i * 4 + 4)),
+                alpha: this.with_alpha ? lottie[4 * color_count + i * 2 + 1] : 1,
+            };
+            this.colors.push(color);
+
+            let p = parent.appendChild(document.createElement("p"));
+            p.classList.add("gradient-editor");
+            let in_off = p.appendChild(document.createElement("input"));
+            in_off.title = "Offset";
+            in_off.type = "number";
+            in_off.min = 0;
+            in_off.max = 1;
+            in_off.step = 0.01;
+            in_off.value = color.offset;
+            in_off.addEventListener("input", () => {
+                color.offset = Number(in_off.value);
+                self._on_change();
+            });
+
+            let in_col = p.appendChild(document.createElement("input"));
+            in_col.type = "color";
+            in_col.value = color.color;
+            in_col.addEventListener("input", () => {
+                color.color = in_col.value;
+                self._on_change();
+            });
+
+            let in_alpha = p.appendChild(document.createElement("input"));
+            in_alpha.title = "Alpha";
+            in_alpha.type = "number";
+            in_alpha.min = 0;
+            in_alpha.max = 1;
+            in_alpha.step = 0.01;
+            in_alpha.value = color.alpha;
+            in_alpha.style.display = this.with_alpha ? "inline-block" : "none";
+            in_alpha.addEventListener("input", () => {
+                color.alpha = Number(in_alpha.value);
+                self._on_change();
+            });
+            color.alpha_input = in_alpha;
+        }
+    }
+
+    _on_change()
+    {
+        let lottie = [];
+        let alpha = [];
+        for ( let color of this.colors )
+        {
+            lottie.push(color.offset, ...color_hex_to_lottie(color.color));
+            if ( this.with_alpha )
+                alpha.push(color.offset, color.alpha);
+        }
+
+        this.on_change(lottie.concat(alpha));
+    }
+}
+
+class GradientSchemaWidget extends EditorSchemaWidget
+{
+    constructor(editor, path, result, json, pos, node, color_count)
+    {
+        result = {
+            ...result,
+            title: "Gradient Value",
+            cls: "gradient-colors",
+            group: "animated-properties",
+            description: editor.schema.get_ref_data("#/$defs/animated-properties/gradient-colors").description,
+            def: "#/$defs/animated-properties/gradient-colors"
+        }
+        super(editor, path, result, json, pos, node);
+        this.color_count = color_count;
+    }
+
+    show_info_box(pos)
+    {
+        let box = new InfoBoxContents(null, this.editor.schema);
+        box.result_info_box(this.result, null, null, false, true, false);
+        try {
+            box.preview = new GradientEditorPreview(box.element, this.lottie, this.color_count, this.update_lottie.bind(this));
+        } catch(e) {}
+        this.editor.show_info_box_with_contents(pos, box.element, box);
+    }
 }
