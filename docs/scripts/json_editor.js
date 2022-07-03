@@ -1066,6 +1066,194 @@ class ColorSchemaWidget extends SchemaTypeWidget
     }
 }
 
+class BezierEditor
+{
+    constructor(on_change, width = 200, height = 200)
+    {
+        this.canvas = document.createElement("canvas");
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.canvas.style.width = width + "px";
+        this.canvas.style.height = height + "px";
+        this.context = this.canvas.getContext("2d");
+        this.handles = [];
+        this.closed = false;
+        this.drag = null;
+        this.on_change = on_change;
+
+        this.canvas.addEventListener("mousedown", this._on_mouse_down.bind(this));
+        this.canvas.addEventListener("mousemove", this._on_mouse_move.bind(this));
+        this.canvas.addEventListener("mouseup", this._on_mouse_up.bind(this));
+
+        this.radius = 5;
+        this.scale_x = 1;
+        this.scale_y = 1;
+        this.offset_x = 0;
+        this.offset_y = 0;
+        this.pad = 0;
+    }
+
+    get width()
+    {
+        return this.canvas.width;
+    }
+
+    get height()
+    {
+        return this.canvas.height;
+    }
+
+    add_handle(x, y, editable = true)
+    {
+        this.handles.push({
+            x: this._tr(x, this.scale_x, this.offset_x),
+            y: this._tr(y, this.scale_y, this.offset_y),
+            editable: editable
+        });
+    }
+
+    _tr(v, scale, offset)
+    {
+        if ( scale < 0 )
+            return offset - scale * (1 - v);
+        else
+            return offset + scale * v;
+    }
+
+    _tr_inv(v, scale, offset)
+    {
+        if ( scale < 0 )
+            return 1 - (v - offset) / -scale;
+        else
+            return (v - offset) / scale;
+    }
+
+    p(index)
+    {
+        let handle = this.handles[index];
+        return {
+            x: this._tr_inv(handle.x, this.scale_x, this.offset_x),
+            y: this._tr_inv(handle.y, this.scale_y, this.offset_y),
+        };
+    }
+
+    draw_frame()
+    {
+        this.context.fillStyle = "white";
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        if ( !this.handles.length )
+            return;
+
+        this.context.beginPath();
+        this.context.lineWidth = 3;
+        this.context.strokeStyle = "#000";
+        this.context.moveTo(this.handles[0].x, this.handles[0].y);
+        for ( let i = 0; i + 3 < this.handles.length; i += 3 )
+        {
+            this.context.bezierCurveTo(
+                this.handles[i+1].x, this.handles[i+1].y,
+                this.handles[i+2].x, this.handles[i+2].y,
+                this.handles[i+3].x, this.handles[i+3].y,
+            );
+        }
+        this.context.stroke();
+
+        this.context.lineWidth = 1;
+        this.context.fillStyle = "#eee";
+        for ( let i = 0; i < this.handles.length; i += 1 )
+        {
+            if ( this.handles[i].editable )
+            {
+                if ( i % 4 == 1 || i % 4 == 2 )
+                {
+                    let oth = i % 4 == 1 ? i - 1 : i + 1;
+                    this.context.beginPath();
+                    this.context.strokeStyle = "#ccc";
+                    this.context.moveTo(this.handles[oth].x, this.handles[oth].y);
+                    this.context.lineTo(this.handles[i].x, this.handles[i].y);
+                    this.context.stroke();
+                }
+
+                this.context.strokeStyle = "#444";
+                this.context.beginPath();
+                this.context.arc(this.handles[i].x, this.handles[i].y, this.radius, 0, Math.PI * 2);
+                this.context.fill();
+                this.context.stroke();
+            }
+        }
+    }
+
+    _get_mouse_handle(ev)
+    {
+        let p = this._mouse_event_pos(ev);
+
+
+        for ( let handle of this.handles )
+        {
+            if ( handle.editable )
+            {
+                if ( Math.hypot(p.x - handle.x, p.y - handle.y) < this.radius )
+                    return handle;
+            }
+        }
+
+        return null;
+    }
+
+    _on_mouse_down(ev)
+    {
+        if ( this.drag )
+            return;
+
+        this.drag = this._get_mouse_handle(ev);
+        if ( this.drag )
+            this.canvas.style.cursor = "crosshair";
+    }
+
+    _mouse_event_pos(ev)
+    {
+        let rect = this.canvas.getBoundingClientRect();
+
+        return {
+            x: Math.max(this.pad, Math.min(this.width - this.pad, ev.clientX - rect.left)),
+            y: Math.max(this.pad, Math.min(this.height - this.pad, ev.clientY - rect.top)),
+        };
+    }
+
+    _on_mouse_move(ev)
+    {
+        if ( this.drag )
+        {
+            let p = this._mouse_event_pos(ev);
+            this.drag.x = p.x;
+            this.drag.y = p.y;
+            this.draw_frame();
+        }
+        else
+        {
+            if ( this._get_mouse_handle(ev) )
+            {
+                this.canvas.style.cursor = "pointer";
+            }
+            else
+            {
+                this.canvas.style.cursor = "initial";
+            }
+        }
+    }
+
+    _on_mouse_up(ev)
+    {
+        if ( this.drag )
+        {
+            this.canvas.style.cursor = "pointer";
+            this.drag = null;
+            this.on_change();
+        }
+    }
+}
+
 class KeyframeEditorPreview
 {
     constructor(parent, initial, on_change)
@@ -1080,26 +1268,33 @@ class KeyframeEditorPreview
         this.checkbox = label.appendChild(document.createElement("input"));
         this.checkbox.type = "checkbox";
         label.appendChild(document.createTextNode(" Hold"));
-        this.canvas = container.appendChild(document.createElement("canvas"));
-        this.canvas.width = 200;
-        this.canvas.height = 200;
-        this.canvas.style.width = "200px";
-        this.canvas.style.height = "200px";
-        this.context = this.canvas.getContext("2d");
+
+        this.bezier_editor = new BezierEditor(this._on_change.bind(this));
+        container.appendChild(this.bezier_editor.canvas);
+        this.bezier_editor.pad = this.bezier_editor.radius + 1;
+        this.bezier_editor.offset_x = this.bezier_editor.pad;
+        this.bezier_editor.offset_y = this.bezier_editor.pad;
+        this.bezier_editor.scale_x = this.bezier_editor.width - this.bezier_editor.pad * 2;
+        this.bezier_editor.scale_y = -this.bezier_editor.height + this.bezier_editor.pad * 2;
+        this.bezier_editor.add_handle(0, 0, false);
+        this.bezier_editor.add_handle(
+            this._get_component(initial, "o", "x", 0),
+            this._get_component(initial, "o", "y", 0),
+            true
+        );
+        this.bezier_editor.add_handle(
+            this._get_component(initial, "i", "x", 1),
+            this._get_component(initial, "i", "y", 1),
+            true
+        );
+        this.bezier_editor.add_handle(1, 1, false);
+        this.bezier_editor.draw_frame();
+
 
         this.preview = container.appendChild(document.createElement("div"));
         this.preview.classList.add("keyframe-preview");
 
         this.hold = !!initial.h;
-        this.in_tan = {
-            x: this._get_component(initial, "i", "x", 1),
-            y: this._get_component(initial, "i", "y", 1),
-        };
-        this.out_tan = {
-            x: this._get_component(initial, "o", "x", 0),
-            y: this._get_component(initial, "o", "y", 0),
-        };
-        this.drag = null;
 
         this._update_preview();
 
@@ -1109,66 +1304,12 @@ class KeyframeEditorPreview
             this._on_change();
         }).bind(this));
 
-        this.canvas.addEventListener("mousedown", this._on_mouse_down.bind(this));
-        this.canvas.addEventListener("mousemove", this._on_mouse_move.bind(this));
-        this.canvas.addEventListener("mouseup", this._on_mouse_up.bind(this));
-
-        this.radius = 5;
-        this.pad = this.radius + 1;
-        this._draw_frame();
-
         this.on_change = on_change;
-
     }
 
     _update_preview()
     {
         this.preview.setAttribute("style", "animation-timing-function:" + this.to_css());
-    }
-
-    _draw_frame()
-    {
-        this.context.fillStyle = "white";
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        let w = this.canvas.width - this.pad * 2;
-        let h = this.canvas.height - this.pad * 2;
-        let p0 = [this.pad, this.pad + h];
-        let p1 = [this.pad + w * this.out_tan.x, this.pad + h * (1 - this.out_tan.y)];
-        let p2 = [this.pad + w * this.in_tan.x, this.pad + h * (1 - this.in_tan.y)]
-        let p3 = [this.pad + w, this.pad];
-
-
-        this.context.beginPath();
-        this.context.lineWidth = 3;
-        this.context.strokeStyle = "#000";
-        this.context.moveTo(...p0);
-        this.context.bezierCurveTo(...p1, ...p2, ...p3);
-        this.context.stroke();
-
-        this.context.beginPath();
-        this.context.lineWidth = 1;
-        this.context.strokeStyle = "#ccc";
-        this.context.moveTo(...p0);
-        this.context.lineTo(...p1);
-        this.context.moveTo(...p2);
-        this.context.lineTo(...p3);
-        this.context.stroke();
-
-        this.context.lineWidth = 1;
-        this.context.strokeStyle = "#444";
-        this.context.fillStyle = "#eee";
-
-        this.context.beginPath();
-        this.context.arc(...p1, this.radius, 0, Math.PI * 2);
-        this.context.fill();
-        this.context.stroke();
-
-        this.context.beginPath();
-        this.context.arc(...p2, this.radius, 0, Math.PI * 2);
-        this.context.fill();
-        this.context.stroke();
-
     }
 
     _on_change()
@@ -1191,74 +1332,14 @@ class KeyframeEditorPreview
         return initial[tan][comp][0];
     }
 
-    _on_mouse_down(ev)
-    {
-        if ( this.drag )
-            return;
-
-        let dist = this.pad / (this.canvas.width - 2 * this.pad);
-        let p = this._mouse_event_pos(ev);
-
-        if ( Math.hypot(p.x - this.in_tan.x, p.y - this.in_tan.y) < dist )
-            this.drag = this.in_tan;
-        else if ( Math.hypot(p.x - this.out_tan.x, p.y - this.out_tan.y) < dist )
-            this.drag = this.out_tan;
-
-        if ( this.drag )
-            this.canvas.style.cursor = "crosshair";
-    }
-
-    _mouse_event_pos(ev)
-    {
-        let rect = this.canvas.getBoundingClientRect();
-        return {
-            x: Math.min(1, Math.max(0, (ev.clientX - rect.left - this.pad) / (this.canvas.width - 2 * this.pad))),
-            y: Math.min(1, Math.max(0, 1 - (ev.clientY - rect.top - this.pad) / (this.canvas.width - 2 * this.pad)))
-        };
-    }
-
-    _on_mouse_move(ev)
-    {
-        let p = this._mouse_event_pos(ev);
-
-        if ( this.drag )
-        {
-            this.drag.x = p.x;
-            this.drag.y = p.y;
-            this._draw_frame();
-        }
-        else
-        {
-            let dist = this.pad / (this.canvas.width - 2 * this.pad);
-
-            if ( Math.hypot(p.x - this.in_tan.x, p.y - this.in_tan.y) < dist ||
-                Math.hypot(p.x - this.out_tan.x, p.y - this.out_tan.y) < dist )
-            {
-                this.canvas.style.cursor = "pointer";
-            }
-            else
-            {
-                this.canvas.style.cursor = "initial";
-            }
-        }
-    }
-
-    _on_mouse_up(ev)
-    {
-        if ( this.drag )
-        {
-            this.canvas.style.cursor = "pointer";
-            this.drag = null;
-            this._on_change()
-        }
-    }
-
     to_css()
     {
         if ( this.hold )
             return "step-end";
 
-        return `cubic-bezier(${this.out_tan.x},${this.out_tan.y},${this.in_tan.x},${this.in_tan.y})`;
+        let p1 = this.bezier_editor.p(1);
+        let p2 = this.bezier_editor.p(2);
+        return `cubic-bezier(${p1.x},${p1.y},${p2.x},${p2.y})`;
     }
 
     _truncate(v)
@@ -1268,15 +1349,18 @@ class KeyframeEditorPreview
 
     to_lottie()
     {
+        let p1 = this.bezier_editor.p(1);
+        let p2 = this.bezier_editor.p(2);
+
         return {
             h: this.hold ? 1 : 0,
             o: {
-                x: [this._truncate(this.out_tan.x)],
-                y: [this._truncate(this.out_tan.y)],
+                x: [this._truncate(p1.x)],
+                y: [this._truncate(p1.y)],
             },
             i: {
-                x: [this._truncate(this.in_tan.x)],
-                y: [this._truncate(this.in_tan.y)],
+                x: [this._truncate(p2.x)],
+                y: [this._truncate(p2.y)],
             }
         };
     }
