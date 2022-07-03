@@ -367,6 +367,8 @@ class TreeResultVisitor
 
             if ( result.group == "helpers" && result.cls == "color" )
                 widget = new ColorSchemaWidget(this.editor, path, result, json, pos, node);
+            else if ( result.group == "helpers" && result.cls == "bezier" )
+                widget = new BezierSchemaWidget(this.editor, path, result, json, pos, node);
             else if ( result.cls && result.cls.indexOf("keyframe") != -1 )
                 widget = new KeyframeSchemaWidget(this.editor, path, result, json, pos, node);
             else
@@ -1066,6 +1068,89 @@ class ColorSchemaWidget extends SchemaTypeWidget
     }
 }
 
+class BezierEditorHandle
+{
+    constructor(editor, x, y, editable, parent)
+    {
+        this.editor = editor;
+        this.x = editor._tr(x, editor.scale_x, editor.offset_x);
+        this.y = editor._tr(y, editor.scale_y, editor.offset_y);
+        if ( parent )
+        {
+            this.x -= parent.x;
+            this.y -= parent.y;
+        }
+        this.editable = editable;
+        this.parent = parent;
+        editor.handles.push(this);
+    }
+
+    canvas_coords()
+    {
+        return [this.x, this.y];
+    }
+
+    absolute_canvas_coords()
+    {
+        if ( this.parent )
+            return [this.x + this.parent.x, this.y + this.parent.y];
+        return this.canvas_coords();
+    }
+
+    logical_coords(lpx = 0, lpy = 0)
+    {
+        return {
+            x: this.editor._tr_inv(this.x + (this.parent?.x ?? 0), this.editor.scale_x, this.editor.offset_x) - lpx,
+            y: this.editor._tr_inv(this.y + (this.parent?.y ?? 0), this.editor.scale_y, this.editor.offset_y) - lpy
+        };
+    }
+
+    distance(x, y)
+    {
+        let [tx, ty] = this.absolute_canvas_coords();
+        return Math.hypot(tx - x, ty - y);
+    }
+}
+
+
+class BezierEditorPoint
+{
+    constructor(editor, x, y, editable = true)
+    {
+        this.pos = new BezierEditorHandle(editor, x, y, editable);
+        this.in_tan = null;
+        this.out_tan = null;
+    }
+
+    add_in_tan(x, y, editable = true)
+    {
+        this.in_tan = new BezierEditorHandle(this.pos.editor, x, y, editable, this.pos);
+        return this;
+    }
+
+    add_out_tan(x, y, editable = true)
+    {
+        this.out_tan = new BezierEditorHandle(this.pos.editor, x, y, editable, this.pos);
+        return this;
+    }
+
+    canvas_in_tan()
+    {
+        if ( this.in_tan )
+            return this.in_tan.absolute_canvas_coords();
+        else
+            return this.pos.canvas_coords();
+    }
+
+    canvas_out_tan()
+    {
+        if ( this.out_tan )
+            return this.out_tan.absolute_canvas_coords();
+        else
+            return this.pos.canvas_coords();
+    }
+}
+
 class BezierEditor
 {
     constructor(on_change, width = 200, height = 200)
@@ -1076,8 +1161,9 @@ class BezierEditor
         this.canvas.style.width = width + "px";
         this.canvas.style.height = height + "px";
         this.context = this.canvas.getContext("2d");
+        this.points = [];
         this.handles = [];
-        this.closed = false;
+        this._closed = false;
         this.drag = null;
         this.on_change = on_change;
 
@@ -1103,99 +1189,106 @@ class BezierEditor
         return this.canvas.height;
     }
 
-    add_handle(x, y, editable = true)
+    get open_points()
     {
-        this.handles.push({
-            x: this._tr(x, this.scale_x, this.offset_x),
-            y: this._tr(y, this.scale_y, this.offset_y),
-            editable: editable
-        });
+        if ( this._closed )
+            return this.points.slice(0, this.points.length - 1);
+        return this.points;
+    }
+
+    add_point(...args)
+    {
+        let point = new BezierEditorPoint(this, ...args);
+        this.points.push(point);
+        return point;
+    }
+
+    close()
+    {
+        if ( !this._closed && this.points.length )
+            this.points.push(this.points[0]);
+
+        this._closed = true;
+    }
+
+    get closed()
+    {
+        return this._closed;
     }
 
     _tr(v, scale, offset)
     {
         if ( scale < 0 )
-            return offset - scale * (1 - v);
+            return this.pad - scale * (1 - (v - offset));
         else
-            return offset + scale * v;
+            return this.pad + scale * (v - offset);
     }
 
     _tr_inv(v, scale, offset)
     {
         if ( scale < 0 )
-            return 1 - (v - offset) / -scale;
+            return 1 - (v - this.pad) / -scale + offset;
         else
-            return (v - offset) / scale;
-    }
-
-    p(index)
-    {
-        let handle = this.handles[index];
-        return {
-            x: this._tr_inv(handle.x, this.scale_x, this.offset_x),
-            y: this._tr_inv(handle.y, this.scale_y, this.offset_y),
-        };
+            return (v - this.pad) / scale + offset;
     }
 
     draw_frame()
     {
-        this.context.fillStyle = "white";
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        if ( !this.handles.length )
+        if ( !this.points.length )
             return;
 
         this.context.beginPath();
         this.context.lineWidth = 3;
         this.context.strokeStyle = "#000";
-        this.context.moveTo(this.handles[0].x, this.handles[0].y);
-        for ( let i = 0; i + 3 < this.handles.length; i += 3 )
+        this.context.moveTo(this.points[0].pos.x, this.points[0].pos.y);
+        for ( let i = 0; i < this.points.length - 1; i += 1 )
         {
             this.context.bezierCurveTo(
-                this.handles[i+1].x, this.handles[i+1].y,
-                this.handles[i+2].x, this.handles[i+2].y,
-                this.handles[i+3].x, this.handles[i+3].y,
+                ...this.points[i].canvas_out_tan(),
+                ...this.points[i+1].canvas_in_tan(),
+                ...this.points[i+1].pos.canvas_coords(),
             );
         }
         this.context.stroke();
 
         this.context.lineWidth = 1;
-        this.context.fillStyle = "#eee";
-        for ( let i = 0; i < this.handles.length; i += 1 )
+        this.context.beginPath();
+        this.context.strokeStyle = "#ccc";
+        for ( let h of this.handles )
         {
-            if ( this.handles[i].editable )
+            if ( h.editable && h.parent )
             {
-                if ( i % 4 == 1 || i % 4 == 2 )
-                {
-                    let oth = i % 4 == 1 ? i - 1 : i + 1;
-                    this.context.beginPath();
-                    this.context.strokeStyle = "#ccc";
-                    this.context.moveTo(this.handles[oth].x, this.handles[oth].y);
-                    this.context.lineTo(this.handles[i].x, this.handles[i].y);
-                    this.context.stroke();
-                }
-
-                this.context.strokeStyle = "#444";
-                this.context.beginPath();
-                this.context.arc(this.handles[i].x, this.handles[i].y, this.radius, 0, Math.PI * 2);
-                this.context.fill();
-                this.context.stroke();
+                this.context.moveTo(...h.parent.canvas_coords());
+                this.context.lineTo(...h.absolute_canvas_coords());
             }
+        }
+        this.context.stroke();
+
+
+        this.context.fillStyle = "#eee";
+        this.context.strokeStyle = "#444";
+        for ( let h of this.handles )
+        {
+            if ( !h.editable )
+                continue;
+
+            this.context.beginPath();
+            this.context.arc(...h.absolute_canvas_coords(), this.radius, 0, Math.PI * 2);
+            this.context.fill();
+            this.context.stroke();
         }
     }
 
-    _get_mouse_handle(ev)
+    _get_mouse_handle(ev, only_tan = false)
     {
         let p = this._mouse_event_pos(ev);
 
-
-        for ( let handle of this.handles )
+        for ( let h of this.handles )
         {
-            if ( handle.editable )
-            {
-                if ( Math.hypot(p.x - handle.x, p.y - handle.y) < this.radius )
-                    return handle;
-            }
+            if ( h.editable && (h.parent || !only_tan) && h.distance(p.x, p.y) < this.radius )
+                return h;
         }
 
         return null;
@@ -1206,7 +1299,7 @@ class BezierEditor
         if ( this.drag )
             return;
 
-        this.drag = this._get_mouse_handle(ev);
+        this.drag = this._get_mouse_handle(ev, ev.button == 1);
         if ( this.drag )
             this.canvas.style.cursor = "crosshair";
     }
@@ -1228,6 +1321,11 @@ class BezierEditor
             let p = this._mouse_event_pos(ev);
             this.drag.x = p.x;
             this.drag.y = p.y;
+            if ( this.drag.parent )
+            {
+                this.drag.x -= this.drag.parent.x;
+                this.drag.y -= this.drag.parent.y;
+            }
             this.draw_frame();
         }
         else
@@ -1272,22 +1370,18 @@ class KeyframeEditorPreview
         this.bezier_editor = new BezierEditor(this._on_change.bind(this));
         container.appendChild(this.bezier_editor.canvas);
         this.bezier_editor.pad = this.bezier_editor.radius + 1;
-        this.bezier_editor.offset_x = this.bezier_editor.pad;
-        this.bezier_editor.offset_y = this.bezier_editor.pad;
         this.bezier_editor.scale_x = this.bezier_editor.width - this.bezier_editor.pad * 2;
         this.bezier_editor.scale_y = -this.bezier_editor.height + this.bezier_editor.pad * 2;
-        this.bezier_editor.add_handle(0, 0, false);
-        this.bezier_editor.add_handle(
+        this.bezier_editor.add_point(0, 0, false).add_out_tan(
             this._get_component(initial, "o", "x", 0),
             this._get_component(initial, "o", "y", 0),
-            true
+            true, false
         );
-        this.bezier_editor.add_handle(
+        this.bezier_editor.add_point(1, 1, false).add_in_tan(
             this._get_component(initial, "i", "x", 1),
             this._get_component(initial, "i", "y", 1),
-            true
+            true, false
         );
-        this.bezier_editor.add_handle(1, 1, false);
         this.bezier_editor.draw_frame();
 
 
@@ -1337,35 +1431,34 @@ class KeyframeEditorPreview
         if ( this.hold )
             return "step-end";
 
-        let p1 = this.bezier_editor.p(1);
-        let p2 = this.bezier_editor.p(2);
+        let p1 = this.bezier_editor.points[0].out_tan.logical_coords();
+        let p2 = this.bezier_editor.points[1].in_tan.logical_coords();
         return `cubic-bezier(${p1.x},${p1.y},${p2.x},${p2.y})`;
-    }
-
-    _truncate(v)
-    {
-        return Math.round(v*1000) / 1000;
     }
 
     to_lottie()
     {
-        let p1 = this.bezier_editor.p(1);
-        let p2 = this.bezier_editor.p(2);
+        let p1 = this.bezier_editor.points[0].out_tan.logical_coords();
+        let p2 = this.bezier_editor.points[1].in_tan.logical_coords();
 
         return {
             h: this.hold ? 1 : 0,
             o: {
-                x: [this._truncate(p1.x)],
-                y: [this._truncate(p1.y)],
+                x: [truncate_float(p1.x)],
+                y: [truncate_float(p1.y)],
             },
             i: {
-                x: [this._truncate(p2.x)],
-                y: [this._truncate(p2.y)],
+                x: [truncate_float(p2.x)],
+                y: [truncate_float(p2.y)],
             }
         };
     }
 }
 
+function truncate_float(v)
+{
+    return Math.round(v*1000) / 1000;
+}
 
 class KeyframeSchemaWidget extends SchemaTypeWidget
 {
@@ -1374,9 +1467,6 @@ class KeyframeSchemaWidget extends SchemaTypeWidget
         super(editor, path, result, json, pos);
         this.from = node.from;
         this.to = node.to;
-        this.in_tan = null;
-        this.out_tan = null;
-        this.hold = null;
     }
 
     _on_change(lottie)
@@ -1465,6 +1555,131 @@ class EditExpressionWidget extends PathBasedWidget
     }
 
     ignoreEvent(ev) { return false; }
+}
+
+class BezierEditorPreview
+{
+    constructor(parent, initial, on_change)
+    {
+        this.on_change = on_change;
+        this.bezier_editor = new BezierEditor(this._on_change.bind(this), 512, 512)
+        this.bezier_editor.canvas.classList.add("alpha_checkered");
+        parent.appendChild(this.bezier_editor.canvas);
+
+        let v = initial.v ?? [];
+        let i = initial.i ?? [];
+        let o = initial.o ?? [];
+        let count = Math.min(v.length, i.length, o.length);
+        if ( count > 0 )
+        {
+            v = v.slice(0, count);
+            o = o.slice(0, count);
+            i = i.slice(0, count);
+
+            let minx = Infinity, maxx = -Infinity, miny = Infinity, maxy = -Infinity;
+            for ( let [arr, is_tan] of [[v, 0], [o, 1], [i, 1]] )
+            {
+                for ( let j = 0; j < count; j++ )
+                {
+                    let x = arr[j][0];
+                    let y = arr[j][1];
+                    if ( is_tan )
+                    {
+                        x += v[j][0];
+                        y += v[j][1];
+                    }
+
+                    if ( x < minx ) minx = x;
+                    if ( x > maxx ) maxx = x;
+                    if ( y < miny ) miny = y;
+                    if ( y > maxy ) maxy = y;
+                }
+            }
+
+            let pad = 20;
+            minx -= pad;
+            maxx += pad;
+            miny -= pad;
+            maxy += pad;
+            this.bezier_editor.offset_x = minx;
+            this.bezier_editor.offset_y = miny;
+            this.bezier_editor.scale_x = this.bezier_editor.width / (maxx - minx);
+            this.bezier_editor.scale_y = this.bezier_editor.height / (maxy - miny);
+
+            console.log(minx, miny, maxx, maxy);
+
+            for ( let j = 0; j < count; j++ )
+            {
+                this.bezier_editor.add_point(...v[j])
+                    .add_in_tan(i[j][0] + v[j][0], i[j][1] + v[j][1])
+                    .add_out_tan(o[j][0] + v[j][0], o[j][1] + v[j][1]);
+            }
+        }
+
+
+        if ( initial.c )
+            this.bezier_editor.close();
+
+        this.bezier_editor.draw_frame();
+    }
+
+    to_lottie()
+    {
+        let out = {
+            c: this.bezier_editor.closed,
+            v: [],
+            i: [],
+            o: [],
+        };
+
+        for ( let p of this.bezier_editor.open_points )
+        {
+            let v = p.pos.logical_coords();
+            out.v.push([truncate_float(v.x), truncate_float(v.y)]);
+            let i = p.in_tan.logical_coords(v.x, v.y);
+            out.i.push([truncate_float(i.x), truncate_float(i.y)]);
+            let o = p.out_tan.logical_coords(v.x, v.y);
+            out.o.push([truncate_float(o.x), truncate_float(o.y)]);
+        }
+
+        return out;
+    }
+
+    _on_change()
+    {
+        this.on_change(this.to_lottie());
+    }
+}
+
+class BezierSchemaWidget extends SchemaTypeWidget
+{
+    constructor(editor, path, result, json, pos, node)
+    {
+        super(editor, path, result, json, pos);
+        this.from = node.from;
+        this.to = node.to;
+    }
+
+    _on_change(lottie)
+    {
+        let lines = JSON.stringify(lottie, undefined, 4).split("\n");
+        let text = lines.join(indent_at(this.editor.view.state, this.from));
+
+        this.editor.view.dispatch({
+            changes: {from: this.from, to: this.to, insert: text}
+        });
+        this.to = this.from + text.length;
+    }
+
+    show_info_box(pos)
+    {
+        let box = new InfoBoxContents(null, this.editor.schema);
+        box.result_info_box(this.result, null, null, false, true, false);
+        try {
+            box.bez_preview = new BezierEditorPreview(box.element, this.lottie, this._on_change.bind(this));
+        } catch(e) {}
+        this.editor.show_info_box_with_contents(pos, box.element, box);
+    }
 }
 
 function search_by_json_factory()

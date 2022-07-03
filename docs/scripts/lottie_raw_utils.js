@@ -76,8 +76,11 @@ class LottiePlayer
     clear()
     {
         try {
-            this.anim.destroy();
-            this.anim = null;
+            if ( this.anim )
+            {
+                this.anim.destroy();
+                this.anim = null;
+            }
         } catch ( e ) {}
     }
 

@@ -137,6 +137,10 @@ body.wide .container {
     vertical-align: top;
 }
 
+#info_box canvas {
+    display: block;
+}
+
 .keyframe-preview-container {
     display: flex;
     flex-flow: column;
@@ -190,13 +194,16 @@ body.wide .container {
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="btn_menu_file">
                     <li><a class="dropdown-item" onclick="action_new()"><i class="fa-solid fa-file"></i> New</a></li>
-                    <li><a class="dropdown-item" onclick="action_load()"><i class="fa-solid fa-cloud-arrow-down"></i> Load Saved</a></li>
                     <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_url">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i> Load from URL...
                     </a></li>
                     <li><a class="dropdown-item" data-toggle="modal" data-target="#modal_file">
                         <i class="fa-solid fa-folder-open"></i>
                         Open File...
+                    </a></li>
+                    <li><a class="dropdown-item" onclick="action_load()">
+                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                        Load Saved
                     </a></li>
                     <li class="dropdown-divider"></li>
                     <li><a class="dropdown-item" onclick="action_save()"><i class="fa-solid fa-floppy-disk"></i> Save</a></li>
