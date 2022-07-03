@@ -1070,12 +1070,12 @@ class ColorSchemaWidget extends SchemaTypeWidget
 
 class BezierEditorHandle
 {
-    constructor(editor, x, y, editable, parent)
+    constructor(editor, x, y, editable, parent, global_pos = false)
     {
         this.editor = editor;
-        this.x = editor._tr(x, editor.scale_x, editor.offset_x);
-        this.y = editor._tr(y, editor.scale_y, editor.offset_y);
-        if ( parent )
+        this.x = global_pos ? x : editor._tr(x, editor.scale_x, editor.offset_x);
+        this.y = global_pos ? y : editor._tr(y, editor.scale_y, editor.offset_y);
+        if ( parent && !global_pos )
         {
             this.x -= parent.x;
             this.y -= parent.y;
@@ -1115,22 +1115,22 @@ class BezierEditorHandle
 
 class BezierEditorPoint
 {
-    constructor(editor, x, y, editable = true)
+    constructor(editor, x, y, editable = true, global_pos = false)
     {
-        this.pos = new BezierEditorHandle(editor, x, y, editable);
+        this.pos = new BezierEditorHandle(editor, x, y, editable, null, global_pos);
         this.in_tan = null;
         this.out_tan = null;
     }
 
-    add_in_tan(x, y, editable = true)
+    add_in_tan(x, y, editable = true, global_pos = false)
     {
-        this.in_tan = new BezierEditorHandle(this.pos.editor, x, y, editable, this.pos);
+        this.in_tan = new BezierEditorHandle(this.pos.editor, x, y, editable, this.pos, global_pos);
         return this;
     }
 
-    add_out_tan(x, y, editable = true)
+    add_out_tan(x, y, editable = true, global_pos = false)
     {
-        this.out_tan = new BezierEditorHandle(this.pos.editor, x, y, editable, this.pos);
+        this.out_tan = new BezierEditorHandle(this.pos.editor, x, y, editable, this.pos, global_pos);
         return this;
     }
 
@@ -1171,7 +1171,7 @@ class BezierEditor
         this.canvas.addEventListener("mousemove", this._on_mouse_move.bind(this));
         this.canvas.addEventListener("mouseup", this._on_mouse_up.bind(this));
 
-        this.radius = 5;
+        this.radius = 6;
         this.scale_x = 1;
         this.scale_y = 1;
         this.offset_x = 0;
@@ -1216,6 +1216,24 @@ class BezierEditor
         return this._closed;
     }
 
+    set closed(closed)
+    {
+        if ( closed )
+            this.close();
+        else
+            this.open();
+
+        this.on_change();
+        this.draw_frame();
+    }
+
+    open()
+    {
+        if ( this._closed && this.points.length > 1 )
+            this.points.pop();
+        this._closed = false;
+    }
+
     _tr(v, scale, offset)
     {
         if ( scale < 0 )
@@ -1230,6 +1248,30 @@ class BezierEditor
             return 1 - (v - this.pad) / -scale + offset;
         else
             return (v - this.pad) / scale + offset;
+    }
+
+    interactive_add()
+    {
+        let x = 0;
+        let y = 0;
+        if ( this.points[0] )
+        {
+            x = this.points[0].pos.x;
+            y = this.points[0].pos.y;
+        }
+
+        let point = new BezierEditorPoint(this, x, y, true, null, true);
+        point.add_in_tan(0, 0, true, true);
+        point.add_out_tan(0, 0, true, true);
+
+        this.drag = point.pos;
+        if ( this.drag )
+            this.canvas.style.cursor = "crosshair";
+
+        if ( this._closed )
+            this.points.splice(this.points.length - 1, 0, point);
+        else
+            this.points.push(point);
     }
 
     draw_frame()
@@ -1562,9 +1604,25 @@ class BezierEditorPreview
     constructor(parent, initial, on_change)
     {
         this.on_change = on_change;
-        this.bezier_editor = new BezierEditor(this._on_change.bind(this), 512, 512)
+        this.bezier_editor = new BezierEditor(this._on_change.bind(this), 512, 512);
         this.bezier_editor.canvas.classList.add("alpha_checkered");
         parent.appendChild(this.bezier_editor.canvas);
+
+        let p = parent.appendChild(document.createElement("p"));
+
+        let btn_add = p.appendChild(document.createElement("button"));
+        btn_add.setAttribute("class", "btn btn-primary btn-sm");
+        btn_add.addEventListener("click", this.bezier_editor.interactive_add.bind(this.bezier_editor));
+        btn_add.appendChild(document.createElement("i")).setAttribute("class", "fa-solid fa-plus");
+        btn_add.title = "Add vertex";
+
+        let lab = p.appendChild(document.createElement("label"));
+        let check_closed = lab.appendChild(document.createElement("input"));
+        check_closed.type = "checkbox";
+        check_closed.checked = !!initial.c;
+        let ed = this.bezier_editor;
+        check_closed.addEventListener("input", (ev) => ed.closed = ev.target.checked);
+        lab.appendChild(document.createTextNode(" Closed"));
 
         let v = initial.v ?? [];
         let i = initial.i ?? [];
@@ -1603,10 +1661,9 @@ class BezierEditorPreview
             maxy += pad;
             this.bezier_editor.offset_x = minx;
             this.bezier_editor.offset_y = miny;
-            this.bezier_editor.scale_x = this.bezier_editor.width / (maxx - minx);
-            this.bezier_editor.scale_y = this.bezier_editor.height / (maxy - miny);
-
-            console.log(minx, miny, maxx, maxy);
+            let scale_factor = Math.max(maxx - minx, maxy - miny);
+            this.bezier_editor.scale_x = this.bezier_editor.width / scale_factor;
+            this.bezier_editor.scale_y = this.bezier_editor.height / scale_factor;
 
             for ( let j = 0; j < count; j++ )
             {
@@ -1615,7 +1672,6 @@ class BezierEditorPreview
                     .add_out_tan(o[j][0] + v[j][0], o[j][1] + v[j][1]);
             }
         }
-
 
         if ( initial.c )
             this.bezier_editor.close();
