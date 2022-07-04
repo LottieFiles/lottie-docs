@@ -41,9 +41,15 @@ def css_style(**args):
 class LottieRenderer:
     _id = 0
 
-    def __init__(self, *, parent: etree.Element = None, download_file=None, width=None, height=None):
-        self.id = LottieRenderer._id
+    @staticmethod
+    def get_id():
+        id = LottieRenderer._id
         LottieRenderer._id += 1
+        return id
+
+
+    def __init__(self, *, parent: etree.Element = None, download_file=None, width=None, height=None):
+        self.id = LottieRenderer.get_id()
 
         element = etree.Element("div")
 
@@ -1202,6 +1208,53 @@ class ScriptPlayground(Preprocessor):
         return new_lines
 
 
+
+class EditorExample(InlineProcessor):
+    def __init__(self, md):
+        super().__init__(r"\{editor_example:(?P<which>[^:}]+)\}", md)
+
+    def handleMatch(self, match, data):
+        id_base = str(LottieRenderer.get_id())
+        element = etree.Element("div")
+
+        editor = etree.SubElement(element, "div", {"id": "editor_" + id_base})
+
+        json_viewer = "json_viewer_%s" % id_base
+        json_viewer_parent = json_viewer + "_parent"
+
+        toggle_json = etree.SubElement(element, "button")
+        toggle_json.attrib["onclick"] = inspect.cleandoc(r"""
+            var element = document.getElementById('{json_viewer_parent}');
+            element.hidden = !element.hidden;
+        """).format(json_viewer_parent=json_viewer_parent)
+        icon = etree_fontawesome("file-code")
+        icon.tail = " Show JSON"
+        toggle_json.append(icon)
+        toggle_json.attrib["title"] = "Toggle JSON"
+
+        pre = etree.SubElement(element, "pre", {"id": json_viewer_parent, "hidden": "hidden"})
+        etree.SubElement(pre, "code", {"id": json_viewer, "class": "language-json hljs"}).text = ""
+
+        if match.group("which") == "bezier":
+            preview_class = "BezierPreviewEditor"
+        elif match.group("which") == "easing":
+            preview_class = "KeyframePreviewEditor"
+        elif match.group("which") == "gradient":
+            preview_class = "GradientPreviewEditor"
+
+        script = etree.SubElement(element, "script")
+        script.text = """
+        {preview_class}.stand_alone(document.getElementById("editor_{id}"), (lottie) =>
+        {{
+            var raw_json = JSON.stringify(lottie, undefined, 4);
+            var pretty_json = hljs.highlight("json", raw_json).value;
+            document.getElementById("json_viewer_{id}").innerHTML = pretty_json;
+        }});
+        """.format(id=id_base, preview_class=preview_class)
+        return element, match.start(0), match.end(0)
+
+
+
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
         with open(docs_path / "schema" / "lottie.schema.json") as file:
@@ -1222,6 +1275,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(FunctionDocs(md.parser, expr_schema), 'function_docs', 175)
         md.parser.blockprocessors.register(VariableDocs(md.parser, expr_schema), 'variable_docs', 175)
         md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
+        md.inlinePatterns.register(EditorExample(md), "editor_example", 175)
 
 
 def makeExtension(**kwargs):

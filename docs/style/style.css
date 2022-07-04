@@ -1,3 +1,4 @@
+/* navbar */
 .navbar-nav > li > a
 {
     padding-top: 16px;
@@ -22,6 +23,8 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+/* misc */
 
 .alpha_checkered {
     position: relative;
@@ -48,13 +51,38 @@
 .playground {
     padding: 1em;
 }
-
 .schema-link {
     font-size:small;
     float: right;
     margin-left: 5px;
 }
 
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+details {
+    margin: 0.5em 0;
+}
+
+input[type="color"]
+{
+    padding: 0;
+    width: 96px;
+    height: 48px;
+    margin-top: 1ex;
+}
+
+.color-preview {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5ex;
+    border-radius: 3px;
+    height: 1.2em;
+    width: 1.2em;
+}
 
 @media (max-width: 1000px) {
     .navbar-header {
@@ -82,6 +110,8 @@
         padding-bottom: 10px;
     }
 }
+
+/* syntax highlight */
 
 .code-input, .highlighted-input, .code-frame, .cm-editor {
     background-color: #fcfdff;
@@ -146,25 +176,6 @@
     background: none;
 }
 
-summary {
-    display: list-item;
-    cursor: pointer;
-}
-
-details {
-    margin: 0.5em 0;
-}
-
-.color-preview {
-    border: 1px solid black;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 0.5ex;
-    border-radius: 3px;
-    height: 1.2em;
-    width: 1.2em;
-}
-
 /* info box */
 
 .info_box_trigger {
@@ -193,4 +204,41 @@ details {
 
 .info_box_content .description {
     white-space: pre-wrap;
+}
+
+/* embedded editors */
+
+.keyframe-preview-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.keyframe-preview-container canvas {
+    border: 1px solid #ccc;
+}
+
+.keyframe-preview {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    position: relative;
+    background-color: black;
+    animation: keyframe-preview 3s infinite;
+}
+
+@keyframes keyframe-preview {
+    0% {left: 0px;}
+    50% {left: 176px;}
+    100% {left: 0px;}
+}
+
+.gradient-preview {
+    height: 32px;
+}
+
+.gradient-editor input
+{
+    vertical-align: middle;
+    margin: 1ex;
+    height: 48px;
 }

@@ -112,17 +112,8 @@ body.wide .container {
     border-top-color: #555;
 }
 
-.gradient-editor input
-{
-    vertical-align: middle;
-    margin: 1ex;
-    height: 48px;
-}
 #info_box input[type="color"]
 {
-    padding: 0;
-    width: 96px;
-    height: 48px;
     margin-top: 1ex;
 }
 
@@ -144,30 +135,6 @@ body.wide .container {
 
 #info_box canvas {
     display: block;
-}
-
-.keyframe-preview-container {
-    display: flex;
-    flex-flow: column;
-}
-
-.keyframe-preview-container canvas {
-    border: 1px solid #ccc;
-}
-
-.keyframe-preview {
-    width: 24px;
-    height: 24px;
-    border-radius: 12px;
-    position: relative;
-    background-color: black;
-    animation: keyframe-preview 3s infinite;
-}
-
-@keyframes keyframe-preview {
-    0% {left: 0px;}
-    50% {left: 176px;}
-    100% {left: 0px;}
 }
 
 #lottie_target {
