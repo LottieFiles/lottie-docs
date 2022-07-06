@@ -150,7 +150,8 @@ Basically it makes the precomp play in the first half second, then rewind
 to half way for the next half second, and plays back to the end for the remaining
 2 seconds.
 
-{lottie:remapping.json:512:512}
+{lottie_playground:remapping.json:512:512}
+<json>{...lottie.layers[1], ks:{}}</json>
 
 
 ## Null Layer
