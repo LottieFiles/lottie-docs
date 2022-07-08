@@ -38,7 +38,6 @@ class LottiePlayer
         else if ( typeof this.lottie == "string" )
             options.path = this.lottie;
         else
-            // parse/stringify because the player modifies the passed object
             options.animationData = lottie_clone(this.lottie);
 
         let frame;
@@ -95,12 +94,13 @@ class LottiePlayer
 
 class PlaygroundPlayer extends LottiePlayer
 {
-    constructor(id, container, lottie, update_func, custom_options={})
+    constructor(id, json_viewer_id, container, lottie, update_func, custom_options={})
     {
         super(container, lottie, false, custom_options);
         this.id = id;
         this.update_func = update_func.bind(this);
         this.json_viewer_contents = undefined;
+        this.json_viewer_id = json_viewer_id;
         this.reload();
         // need to defer to wait for hljs to load
 //         window.addEventListener("load", this.show_json.bind(this));
@@ -129,12 +129,13 @@ class PlaygroundPlayer extends LottiePlayer
         {
             var raw_json = JSON.stringify(this.json_viewer_contents, undefined, 4);
             var pretty_json = hljs.highlight("json", raw_json).value;
-            document.getElementById(`json_viewer_${this.id}`).innerHTML = pretty_json;
+            document.getElementById(this.json_viewer_id).innerHTML = pretty_json;
         }
     }
 }
 
 
+// parse/stringify because the player modifies the passed object
 function lottie_clone(json)
 {
     return JSON.parse(JSON.stringify(json));

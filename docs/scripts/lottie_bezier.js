@@ -38,7 +38,7 @@ class Bezier
     to_lottie()
     {
         let lot = {
-            c: this.closed;
+            c: this.closed,
             v: [],
             i: [],
             o: []

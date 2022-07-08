@@ -1,5 +1,7 @@
 # Tips for rendering
 
+<script src="../scripts/lottie_bezier.js"></script>
+
 ## Introduction
 
 This page will give tips and pseudocode on how to render certain objects within lottie.
@@ -66,14 +68,14 @@ function rect(
     let top = p.y - s.height / 2
     let bottom = p.y + s.height / 2
 
-    let result = Bezier()
+    let bezier = Bezier()
 
     bezier.add_vertex(Point(right, top))
     bezier.add_vertex(Point(right, bottom))
     bezier.add_vertex(Point(left, bottom))
     bezier.add_vertex(Point(left, top))
 
-    return result
+    return bezier
 }
 
 function rounded_rect(
@@ -139,7 +141,7 @@ Width:<input type="range" min="0" max="512" value="256"/>
 Height:<input type="range" min="0" max="512" value="256"/>
 Roundness:<input type="range" min="0" max="512" value="0"/>
 <json>lottie.layers[0].shapes[0].it[0]</json>
-<script func="true">
+<script func="rect">
 function rect(shape)
 {
     let position = shape.p.k;
@@ -148,16 +150,16 @@ function rect(shape)
     let left = position[0] - size[0] / 2;
     let right = position[0] + size[0] / 2;
     let top = position[1] - size[1] / 2;
-    let bottom = position[1] + size[[1] / 2;
+    let bottom = position[1] + size[1] / 2;
 
-    let result = new Bezier();
+    let bezier = new Bezier();
 
     bezier.add_vertex(right, top);
     bezier.add_vertex(right, bottom);
     bezier.add_vertex(left, bottom);
     bezier.add_vertex(left, top);
 
-    return result
+    return bezier
 }
 </script>
 <script>
@@ -168,8 +170,6 @@ lottie.layers[0].shapes[0].it[0].s.k = [
     data["Width"], data["Height"]
 ];
 lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
-
-lottie_bezier.layers[0].shapes[0].it[0].ks.k = rect(lottie.layers[0].shapes[0].it[0]).to_lottie();
 </script>
 
 
