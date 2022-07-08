@@ -353,11 +353,11 @@ class LottiePlayground(BlockProcessor):
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
-    def _json_viewer(self, element, anim_id):
+    def _json_viewer(self, element, controls_parent, anim_id):
         json_viewer = "json_viewer_%s" % anim_id
         json_viewer_parent = json_viewer + "_parent"
 
-        toggle_json = etree.SubElement(element, "button")
+        toggle_json = etree.SubElement(controls_parent, "button")
         toggle_json.attrib["onclick"] = inspect.cleandoc(r"""
             var element = document.getElementById('{json_viewer_parent}');
             element.hidden = !element.hidden;
@@ -461,7 +461,9 @@ class LottiePlayground(BlockProcessor):
         controls_container = etree.Element("table", {"class": "table-plain", "style": "width: 100%"})
         element.insert(0, controls_container)
 
-        open_in_editor = etree.SubElement(element, "button")
+        controls_parent = etree.SubElement("div")
+
+        open_in_editor = etree.SubElement(controls_parent, "button")
         open_in_editor.attrib["onclick"] = inspect.cleandoc(r"""
             playground_set_data(lottie_player_{id}.lottie);
             window.location.href = "/lottie-docs/playground/json_editor/";
@@ -503,23 +505,13 @@ class LottiePlayground(BlockProcessor):
 
             html = etree.fromstring(html_string)
             if html.tag == "json":
-                json_viewer_id = self._json_viewer(element, anim_id)
+                json_viewer_id = self._json_viewer(element, controls_parent, anim_id)
                 json_viewer_path = html.text
             else:
                 self.add_control(anim_id, id_base, controls_container, label, html)
 
         # <script> are gobbled up by a preprocessor
-        script = ""
-        script_match = HTML_PLACEHOLDER_RE.match(blocks[0])
-        if script_match:
-            blocks.pop(0)
-            index = int(script_match.group(1))
-            raw_string = self.parser.md.htmlStash.rawHtmlBlocks[index]
-            if "<script>" in raw_string:
-                script_element = etree.fromstring(raw_string)
-                script = script_element.text
-                self.parser.md.htmlStash.rawHtmlBlocks.pop(index)
-                self.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
+        script = self.get_script(blocks, anim_id, element, controls_parent)
 
         if json_viewer_id:
             script += "this.json_viewer_contents = %s;" % json_viewer_path
@@ -541,6 +533,48 @@ class LottiePlayground(BlockProcessor):
             json_data=json.dumps(json_data),
             extra_options=match.group(4) or "{}"
         ))
+
+    def pop_script_block(self, blocks):
+        script_match = HTML_PLACEHOLDER_RE.match(blocks[0])
+        if script_match:
+            blocks.pop(0)
+            index = int(script_match.group(1))
+            raw_string = self.parser.md.htmlStash.rawHtmlBlocks[index]
+            if "<script" in raw_string:
+                script_element = etree.fromstring(raw_string)
+                self.parser.md.htmlStash.rawHtmlBlocks.pop(index)
+                self.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
+                return script_element
+
+    def get_script(self, blocks, anim_id, element, controls_parent):
+        script_element = self.pop_script_block(blocks)
+        if script_element:
+            return script_element.text
+        return ""
+
+
+class ShapeBezierScript(LottiePlayground):
+    re_fence_start = re.compile(r'^\s*\{shape_bezier_script:([^:]+)(?::([0-9]+):([0-9]+))?(?::(\{[^}]+\}))?\}')
+
+    def add_script_viewer(self, anim_id, element, source):
+        script_viewer = "script_viewer_%s" % anim_id
+        script_viewer_parent = script_viewer + "_parent"
+
+        pre = etree.SubElement(element, "pre", {"id": script_viewer_parent, "hidden": "hidden"})
+        etree.SubElement(pre, "code", {"id": script_viewer, "class": "language-js hljs"}).text = ""
+        return json_viewer
+
+    def get_script(self, blocks, anim_id, element, controls_parent):
+        func_script = ""
+        non_func_script = ""
+        script_element = self.pop_script_block(blocks)
+        if script_element:
+            if script_element.attrib["func"]:
+                func_script = script_element.text
+                self.add_script_viewer(anim_id, element, func_script)
+            else:
+                non_func_script = script_element.text
+        return func_script + non_func_script
 
 
 @dataclasses.dataclass
@@ -1276,6 +1310,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(VariableDocs(md.parser, expr_schema), 'variable_docs', 175)
         md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
         md.inlinePatterns.register(EditorExample(md), "editor_example", 175)
+        md.parser.blockprocessors.register(ShapeBezierScript(md.parser, schema_data), "shape_bezier_script", 175)
 
 
 def makeExtension(**kwargs):

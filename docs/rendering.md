@@ -88,7 +88,7 @@ function rounded_rect(
     let top = p.y - s.height / 2
     let bottom = p.y + s.height / 2
 
-    let rounded = min(s.width / 2, size.height / 2, rounded)
+    let rounded = min(s.width / 2, size.height / 2, r)
 
     let horizontal_handle = Point(rounded/2, 0)
     let vertical_handle = Point(0, rounded/2)
@@ -131,6 +131,47 @@ function rounded_rect(
     return result
 }
 ```
+
+{shape_bezier_script:rectangle.json:512:512}
+Position x:<input type="range" min="0" max="512" value="256"/>
+Position y:<input type="range" min="0" max="512" value="256"/>
+Width:<input type="range" min="0" max="512" value="256"/>
+Height:<input type="range" min="0" max="512" value="256"/>
+Roundness:<input type="range" min="0" max="512" value="0"/>
+<json>lottie.layers[0].shapes[0].it[0]</json>
+<script func="true">
+function rect(shape)
+{
+    let position = shape.p.k;
+    let size = shape.s.k;
+
+    let left = position[0] - size[0] / 2;
+    let right = position[0] + size[0] / 2;
+    let top = position[1] - size[1] / 2;
+    let bottom = position[1] + size[[1] / 2;
+
+    let result = new Bezier();
+
+    bezier.add_vertex(right, top);
+    bezier.add_vertex(right, bottom);
+    bezier.add_vertex(left, bottom);
+    bezier.add_vertex(left, top);
+
+    return result
+}
+</script>
+<script>
+lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
+
+lottie_bezier.layers[0].shapes[0].it[0].ks.k = rect(lottie.layers[0].shapes[0].it[0]).to_lottie();
+</script>
+
 
 ## Ellipse
 
