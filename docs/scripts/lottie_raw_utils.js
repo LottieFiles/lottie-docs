@@ -120,17 +120,15 @@ class PlaygroundPlayer extends LottiePlayer
             })
         );
         this.update_func(this.lottie, data);
-        this.show_json();
+        if ( this.json_viewer_contents !== undefined )
+            this.set_json(this.json_viewer_id, this.json_viewer_contents);
     }
 
-    show_json()
+    set_json(element_id, contents)
     {
-        if ( this.json_viewer_contents !== undefined ) //&& typeof hljs !== "undefined" )
-        {
-            var raw_json = JSON.stringify(this.json_viewer_contents, undefined, 4);
-            var pretty_json = hljs.highlight("json", raw_json).value;
-            document.getElementById(this.json_viewer_id).innerHTML = pretty_json;
-        }
+        var raw_json = JSON.stringify(contents, undefined, 4);
+        var pretty_json = hljs.highlight("json", raw_json).value;
+        document.getElementById(element_id).innerHTML = pretty_json;
     }
 }
 

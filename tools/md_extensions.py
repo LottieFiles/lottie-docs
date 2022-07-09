@@ -56,6 +56,7 @@ class LottieRenderer:
             parent.append(element)
 
         self.animation_container = etree.SubElement(element, "div")
+        self.animation_container.attrib["class"] = "animation-container"
 
         self.animation = etree.SubElement(self.animation_container, "div")
         self.animation.attrib["class"] = "alpha_checkered"
@@ -147,11 +148,17 @@ class LottieRenderer:
         obj.populate_script(script_src)
         return (obj.element, obj.id)
 
-    def add_button(self, *, icon=None, **attrib):
+    def add_button(self, *, text=None, icon=None, **attrib):
         button = etree.SubElement(self.button_container, "button")
         button.attrib = attrib
         if icon:
-            button.append(etree_fontawesome(icon))
+            icon_element = etree_fontawesome(icon)
+            if text:
+                icon_element.tail = text
+            button.append(icon_element)
+        elif text:
+            button.text = text
+
         return button
 
 
@@ -450,21 +457,23 @@ class LottiePlaygroundBuilder:
             input.attrib["class"] = "code-input"
             input.attrib["style"] = "width: 100%"
 
-    def code_viewer(self, title, icon, language, source):
+    def code_viewer(self, title, icon, language, source, start_hidden=True):
         code_viewer_id = self.control_id()
         code_viewer_parent_id = code_viewer_id + "_parent"
 
-        toggle_code = etree.SubElement(self.renderer.button_container, "button")
-        toggle_code.attrib["onclick"] = inspect.cleandoc(r"""
-            var element = document.getElementById('{code_viewer_parent_id}');
-            element.hidden = !element.hidden;
-        """).format(code_viewer_parent_id=code_viewer_parent_id)
-        icon_element = etree_fontawesome(icon)
-        icon_element.tail = " Show " + title
-        toggle_code.append(icon_element)
-        toggle_code.attrib["title"] = "Toggle " + title
+        toggle_code = self.renderer.add_button(
+            onclick=inspect.cleandoc(r"""
+                var element = document.getElementById('{code_viewer_parent_id}');
+                element.hidden = !element.hidden;
+            """).format(code_viewer_parent_id=code_viewer_parent_id),
+            icon=icon,
+            text=" Show " + title,
+            title="Toggle " + title
+        )
 
-        pre = etree.SubElement(self.element, "pre", {"id": code_viewer_parent_id, "hidden": "hidden"})
+        pre = etree.SubElement(self.element, "pre", {"id": code_viewer_parent_id})
+        if start_hidden:
+            pre.attrib["hidden"] = "hidden"
         code = etree.SubElement(pre, "code", {"id": code_viewer_id, "class": "language-%s hljs" % language})
         code.text = source
         return code_viewer_id
@@ -478,7 +487,7 @@ class LottiePlayground(BlockProcessor):
         super().__init__(parser)
         self.schema_data = schema_data
 
-    def test(self, parent, block):
+    def test(self, parent, block) -> re.Match:
         return self.re_fence_start.match(block)
 
     def run(self, parent, blocks):
@@ -524,7 +533,9 @@ class LottiePlayground(BlockProcessor):
 
             html = etree.fromstring(html_string)
             if html.tag == "json":
-                json_viewer_id = builder.code_viewer("JSON", "file-code", "json", "")
+                json_parent = etree.SubElement(builder.element, "div")
+                json_parent.attrib["class"] = "json-parent"
+                json_viewer_id = self.add_json_viewer(builder, json_parent)
                 json_viewer_path = html.text
             else:
                 builder.add_control(label, html)
@@ -581,6 +592,26 @@ class LottiePlayground(BlockProcessor):
                 self.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
                 return script_element
 
+    def add_json_viewer(self, builder, parent):
+        code_viewer_id = builder.control_id()
+        parent.attrib["id"] = code_viewer_id + "_parent"
+        parent.attrib["hidden"] = "hidden"
+
+        builder.add_button(
+            onclick=inspect.cleandoc(r"""
+                var element = document.getElementById('{code_viewer_parent_id}');
+                element.hidden = !element.hidden;
+            """).format(code_viewer_parent_id=parent.attrib["id"]),
+            icon="file-code",
+            text=" Show JSON",
+            title="Toggle JSON"
+        )
+
+        pre = etree.SubElement(parent, "pre")
+        code = etree.SubElement(pre, "code", {"id": code_viewer_id, "class": "language-json hljs"})
+        code.text = ""
+        return code_viewer_id
+
 
 class ShapeBezierScript(LottiePlayground):
     re_fence_start = re.compile(r'^\s*\{shape_bezier_script:([^:]+)(?::([0-9]+):([0-9]+))?(?::(\{[^}]+\}))?\}')
@@ -589,11 +620,12 @@ class ShapeBezierScript(LottiePlayground):
         bezier_view = etree.SubElement(builder.renderer.animation_container, "div")
         bezier_view.attrib["class"] = "alpha_checkered"
         bezier_view.attrib["id"] = "lottie_target_%s_bezier" % builder.anim_id
-        # bezier_view.attrib["style"] = builder.animation.attrib["style"]
+        bezier_view.attrib["style"] = builder.renderer.animation.attrib["style"]
 
         func_script = ""
         non_func_script = ""
         func = ""
+        varname = ""
         while True:
             if blocks[0] == '':
                 blocks = blocks[1:]
@@ -601,8 +633,12 @@ class ShapeBezierScript(LottiePlayground):
             if script_element is not None:
                 if "func" in script_element.attrib:
                     func = script_element.attrib["func"]
+                    varname = script_element.attrib.get("varname", "shape")
                     func_script = script_element.text
-                    builder.code_viewer("Script", "code", "js", func_script)
+
+                    pre = etree.SubElement(builder.element, "pre")
+                    code = etree.SubElement(pre, "code", {"class": "language-js hljs"})
+                    code.text = func_script + "\n\n// Example invocation\n" + func + ";"
                 else:
                     non_func_script = script_element.text
             else:
@@ -622,8 +658,11 @@ class ShapeBezierScript(LottiePlayground):
             {{
                 {on_load}
                 this.json_viewer_contents = {shape_path};
-                lottie_player_{id}_bezier.lottie.layers[0].shapes[0].it[0].ks.k = {func}({shape_path}).to_lottie();
+                let {varname} = {shape_path};
+                let bez_target = lottie_player_{id}_bezier.lottie.layers[0].shapes[0].it[0].ks; 
+                bez_target.k = {func}.to_lottie();
                 lottie_player_{id}_bezier.reload();
+                this.set_json('{json_viewer_id}_bezier', bez_target.k);
             }},
             {extra_options}
         );
@@ -635,8 +674,17 @@ class ShapeBezierScript(LottiePlayground):
                 bezier_json=self.example_json("bezier.json"),
                 shape_path=json_viewer_path,
                 extra_options=extra_options,
-                func=func
+                func=func,
+                varname=varname
             ))
+
+    def add_json_viewer(self, builder, parent):
+        id = super().add_json_viewer(builder, parent)
+        pre = etree.SubElement(parent, "pre")
+        code = etree.SubElement(pre, "code", {"id": id + "_bezier", "class": "language-json hljs"})
+        code.text = ""
+        return id
+
 
 @dataclasses.dataclass
 class SchemaProperty:

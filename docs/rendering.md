@@ -1,6 +1,18 @@
 # Tips for rendering
 
 <script src="../scripts/lottie_bezier.js"></script>
+<style>
+.animation-container, .json-parent:not([hidden]) {
+    display: flex;    
+}
+
+.json-parent > pre {
+    width: 50%;
+}
+.json-parent > pre > code {
+    height: 100%;
+}
+</style>
 
 ## Introduction
 
@@ -56,97 +68,17 @@ Note that unlike other shapes, on lottie web when the `d` attribute is missing,
 the rectangle defaults as being reversed.
 
 
-```typescript
-function rect(
-    // Properties from lottie:
-    p: Point,
-    s: Size
-)
-{
-    let left = p.x - s.width / 2
-    let right = p.x + s.width / 2
-    let top = p.y - s.height / 2
-    let bottom = p.y + s.height / 2
-
-    let bezier = Bezier()
-
-    bezier.add_vertex(Point(right, top))
-    bezier.add_vertex(Point(right, bottom))
-    bezier.add_vertex(Point(left, bottom))
-    bezier.add_vertex(Point(left, top))
-
-    return bezier
-}
-
-function rounded_rect(
-    // Properties from lottie:
-    p: Point,
-    s: Size,
-    r: number
-)
-{
-    let left = p.x - s.width / 2
-    let right = p.x + s.width / 2
-    let top = p.y - s.height / 2
-    let bottom = p.y + s.height / 2
-
-    let rounded = min(s.width / 2, size.height / 2, r)
-
-    let horizontal_handle = Point(rounded/2, 0)
-    let vertical_handle = Point(0, rounded/2)
-    let horizontal_delta = Point(rounded, 0)
-    let vertical_delta = Point(rounded, 0)
-
-    let result = Bezier()
-
-    // top right, going down
-    bezier.add_vertex(Point(right, top) + vertical_delta)
-    bezier.add_out_tangent(-vertical_handle)
-
-    // bottom right
-    bezier.add_vertex(Point(right, bottom) - vertical_delta)
-    bezier.add_out_tangent(vertical_handle)
-
-    bezier.add_vertex(Point(right, bottom) - horizontal_delta)
-    bezier.add_out_tangent(horizontal_handle)
-
-    // bottom left
-    bezier.add_vertex(Point(left, bottom) + horizontal_delta)
-    bezier.add_out_tangent(-horizontal_handle)
-
-    bezier.add_vertex(Point(left, bottom) - vertical_delta)
-    bezier.add_out_tangent(vertical_handle)
-
-    // top left
-    bezier.add_vertex(Point(left, top) + horizontal_delta)
-    bezier.add_out_tangent(-horizontal_handle)
-
-    bezier.add_vertex(Point(left, top) + vertical_delta)
-    bezier.add_out_tangent(-vertical_handle)
-
-
-    // back to top right
-    bezier.add_vertex(Point(right, top) - horizontal_delta)
-    bezier.add_in_tangent(horizontal_handle)
-
-
-    return result
-}
-```
+Rectangle without rounded corners:
 
 {shape_bezier_script:rectangle.json:512:512}
 Position x:<input type="range" min="0" max="512" value="256"/>
 Position y:<input type="range" min="0" max="512" value="256"/>
 Width:<input type="range" min="0" max="512" value="256"/>
 Height:<input type="range" min="0" max="512" value="256"/>
-Roundness:<input type="range" min="0" max="512" value="0"/>
 <json>lottie.layers[0].shapes[0].it[0]</json>
-<script func="rect">
-function rect(shape)
+<script func="rect(shape.p.k, shape.s.k)" varname="shape">
+function rect(position, size)
 {
-    let position = shape.p.k;
-    let size = shape.s.k;
-
     let left = position[0] - size[0] / 2;
     let right = position[0] + size[0] / 2;
     let top = position[1] - size[1] / 2;
@@ -159,7 +91,70 @@ function rect(shape)
     bezier.add_vertex(left, bottom);
     bezier.add_vertex(left, top);
 
-    return bezier
+    return bezier;
+}
+</script>
+<script>
+lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+</script>
+
+With rounded corners:
+
+{shape_bezier_script:rectangle.json:512:512}
+Position x:<input type="range" min="0" max="512" value="256"/>
+Position y:<input type="range" min="0" max="512" value="256"/>
+Width:<input type="range" min="0" max="512" value="256"/>
+Height:<input type="range" min="0" max="512" value="256"/>
+Roundness:<input type="range" min="0" max="512" value="50"/>
+<json>lottie.layers[0].shapes[0].it[0]</json>
+<script func="rect(shape.p.k, shape.s.k, shape.r.k)" varname="shape">
+function rect(position, size, roundness)
+{
+    let left = position[0] - size[0] / 2;
+    let right = position[0] + size[0] / 2;
+    let top = position[1] - size[1] / 2;
+    let bottom = position[1] + size[1] / 2;
+
+    let rounded = Math.min(size[0] / 2, size[1] / 2, roundness);
+
+    let bezier = new Bezier();
+
+    // top right, going down
+    bezier.add_vertex(right, top + rounded)
+        .set_in_tangent(0, -rounded/2);
+
+    // bottom right
+    bezier.add_vertex(right, bottom - rounded)
+        .set_out_tangent(0, rounded/2);
+
+    bezier.add_vertex(right - rounded, bottom)
+        .set_in_tangent(rounded/2, 0);
+
+    // bottom left
+    bezier.add_vertex(left + rounded, bottom)
+        .set_out_tangent(-rounded/2, 0);
+
+    bezier.add_vertex(left, bottom - rounded)
+        .set_in_tangent(0, rounded/2);
+
+    // top left
+    bezier.add_vertex(left, top + rounded)
+        .set_out_tangent(0, -rounded/2);
+
+    bezier.add_vertex(left + rounded, top)
+        .set_in_tangent(-rounded/2, 0);
+
+
+    // back to top right
+    bezier.add_vertex(right - rounded, top)
+        .set_out_tangent(rounded/2, 0);
+
+    return bezier;
 }
 </script>
 <script>
