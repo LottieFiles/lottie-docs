@@ -13,10 +13,19 @@
     height: 100%;
 }
 </style>
+<script>
+let converter_map = {};
+
+function convert_shape(shape)
+{
+    return converter_map[shape.ty](shape);
+}
+
+</script>
 
 ## Introduction
 
-This page will give tips and pseudocode on how to render certain objects within lottie.
+This page will give tips and example code on how to render certain objects within lottie.
 
 Lottie has several implementations and some things might vary from player to player,
 this guide tries to follow the behaviour of [lottie web](https://github.com/airbnb/lottie-web/)
@@ -35,30 +44,18 @@ The pseudocode takes some shortcuts for readablility:
 All animated properties are shown as static, of course you'd need to get the
 correct values to render shapes at a given frame.
 
-It uses some utility types liek `Point`, `Bezier`, etc. They should be fairly self-explanatory.
+It uses some utility types like `Bezier`, `lerp`, etc. They should be fairly self-explanatory.
 
 When adding points to a bezier, there are calls to `bezier.add_vertex()`.
 Assume the in/out tangents are `[0, 0]` if not specified.
-When they are specified they show as `add_out_tangent` immediately following
+When they are specified they show as `set_out_tangent` immediately following
 the corresponding `add_vertex`.
 
-Bezier tangents are assumed to be relative to their vertex since that's how lottie works.
-But it might be useful to keep them as absolute points when rendering.
+Bezier tangents are assumed to be relative to their vertex since that's how lottie works
+but it might be useful to keep them as absolute points when rendering.
 
-Numeric for loops show the first and last values, inclusive so if you see
 
-```typescript
-for i = 0 ... n-1
-```
-
-it's the same as
-
-```typescript
-for ( let i = 0; i < n; i++ )
-```
-
-in real code.
-
+All the examples show the original on the left and the bezier on the right.
 
 ## Rectangle
 
@@ -105,15 +102,15 @@ lottie.layers[0].shapes[0].it[0].s.k = [
 
 With rounded corners:
 
-{shape_bezier_script:rectangle.json:512:512}
+{shape_bezier_script:rectangle.json:rc:512:512}
 Position x:<input type="range" min="0" max="512" value="256"/>
 Position y:<input type="range" min="0" max="512" value="256"/>
 Width:<input type="range" min="0" max="512" value="256"/>
 Height:<input type="range" min="0" max="512" value="256"/>
 Roundness:<input type="range" min="0" max="512" value="50"/>
 <json>lottie.layers[0].shapes[0].it[0]</json>
-<script func="rect(shape.p.k, shape.s.k, shape.r.k)" varname="shape">
-function rect(position, size, roundness)
+<script func="rounded_rect(shape.p.k, shape.s.k, shape.r.k)" varname="shape">
+function rounded_rect(position, size, roundness)
 {
     let left = position[0] - size[0] / 2;
     let right = position[0] + size[0] / 2;
@@ -172,125 +169,248 @@ lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
 
 See [Ellipse](shapes.md#ellipse).
 
-Rendering an ellipse using bezier curves is outside the scope of this document.
-
 The stroke direction should start at the top.
 If you think of the ellipse as a clock, start at 12 go clockwise.
+
+
+The magic number `0.5519` is what lottie uses for this, based on [this article](https://spencermortensen.com/articles/bezier-circle/).
+
+{shape_bezier_script:ellipse.json:el:512:512}
+Position x:<input type="range" min="0" max="512" value="256"/>
+Position y:<input type="range" min="0" max="512" value="256"/>
+Width:<input type="range" min="0" max="512" value="256"/>
+Height:<input type="range" min="0" max="512" value="256"/>
+<json>lottie.layers[0].shapes[0].it[0]</json>
+<script func="ellipse(shape.p.k, shape.s.k)" varname="shape">
+function ellipse(position, size)
+{
+    const ellipse_constant = 0.5519;
+
+    let x = position[0];
+    let y = position[1];
+    let radius_x = size[0] / 2;
+    let radius_y = size[1] / 2;
+    let tangent_x = radius_x * ellipse_constant;
+    let tangent_y = radius_y * ellipse_constant;
+
+    let bezier = new Bezier();
+
+    bezier.add_vertex(x, y - radius_y)
+        .set_in_tangent(-tangent_x, 0)
+        .set_out_tangent(tangent_x, 0);
+
+    bezier.add_vertex(x + radius_x, y)
+        .set_in_tangent(0, -tangent_y)
+        .set_out_tangent(0, tangent_y);
+
+    bezier.add_vertex(x, y + radius_y)
+        .set_in_tangent(tangent_x, 0)
+        .set_out_tangent(-tangent_x, 0);
+
+    bezier.add_vertex(x - radius_x, y)
+        .set_in_tangent(0, tangent_y)
+        .set_out_tangent(0, -tangent_y);
+
+    return bezier;
+}
+</script>
+<script>
+lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+</script>
 
 
 ## PolyStar
 
 Pseudocode for rendering a [PolyStar](shapes.md#polystar).
 
-```typescript
+
+{shape_bezier_script:star.json:sr:512:512}
+Points:<input type="range" min="3" max="10" value="5"/>
+Rotation:<input type="range" min="0" max="360" value="0"/>
+Outer Radius:<input type="range" min="0" max="300" value="200"/>
+Inner Radius:<input type="range" min="0" max="300" value="100"/>
+Outer Roundness:<input type="range" min="0" max="100" value="0"/>
+Inner Roundness:<input type="range" min="0" max="100" value="0"/>
+Type:<select><option value="1">Star</option><option value="2">Polygon</option></select>
+<json>lottie.layers[0].shapes[0].it[0]</json>
+<script func="polystar(new Point(shape.p.k), shape.sy, shape.pt.k, shape.r.k, shape.or.k, shape.os.k, shape.ir?.k, shape.is?.k)">
 function polystar(
-    // Properties from lottie:
-    p: Point,
-    sy: number,
-    pt: number,
-    r: number,
-    or: number,
-    ir: number,
-    os: number,
-    is: number,
+    position,
+    type,
+    points,
+    rotation,
+    outer_radius,
+    outer_roundness,
+    inner_radius,
+    inner_roundness
 )
 {
-    let result = Bezier()
-    result.close()
+    let result = new Bezier();
 
-    let half_angle = PI / pt
-    let angle_radians = r / 180 * PI
+    let half_angle = Math.PI / points;
+    let angle_radians = rotation / 180 * Math.PI
 
     // Tangents for rounded courners
-    let tangent_len_outer = os * ir * 2 * PI / (pt * 4 * 100)
-    let tangent_len_inner = is * ir * 2 * PI / (pt * 4 * 100)
+    let tangent_len_outer = outer_roundness * outer_radius * 2 * Math.PI / (points * 4 * 100);
+    let tangent_len_inner = inner_roundness * inner_radius * 2 * Math.PI / (points * 4 * 100);
 
-    for i in 0 ... pt-1
-        let main_angle = -PI / 2 + angle_radians + i * half_angle * 2
+    for ( let i = 0; i < points; i++ )
+    {
+        let main_angle = -Math.PI / 2 + angle_radians + i * half_angle * 2;
 
-        let outer_vertex = Point(
-            or * cos(main_angle),
-            or * sin(main_angle)
-        )
+        let outer_vertex = new Point(
+            outer_radius * Math.cos(main_angle),
+            outer_radius * Math.sin(main_angle)
+        );
 
-        // You should check for division by 0
-        let outer_tangent = Point(
-            outer_vertex.y / or,
-            -outer_vertex.x / or
-        )
+        let outer_tangent = new Point(0, 0);
+        if ( outer_radius != 0 )
+            outer_tangent = new Point(
+                outer_vertex.y / outer_radius * tangent_len_outer,
+                -outer_vertex.x / outer_radius * tangent_len_outer
+            );
 
-        result.add_vertex(p + outer_vertex)
-        result.add_in_tangent(tangent_len_outer * outer_tangent)
-        result.add_out_tangent(-tangent_len_outer * outer_tangent)
+        result.add_vertex(position.add(outer_vertex))
+            .set_in_tangent(outer_tangent)
+            .set_out_tangent(outer_tangent.neg());
 
         // Star inner radius
-        if sy == 1
-            let inner_vertex = Point(
-                ir * cos(main_angle + half_angle),
-                ir * sin(main_angle + half_angle)
-            )
-            // You should check for division by 0
-            let inner_tangent = Point(
-                inner_vertex.y / ir,
-                -inner_vertex.x / ir
-            )
+        if ( type == 1 )
+        {
+            let inner_vertex = new Point(
+                inner_radius * Math.cos(main_angle + half_angle),
+                inner_radius * Math.sin(main_angle + half_angle)
+            );
 
-            result.add_vertex(p + inner_vertex)
-            result.add_in_tangent(tangent_len_inner * inner_tangent)
-            result.add_out_tangent(-tangent_len_inner * inner_tangent)
+            let inner_tangent = new Point(0, 0);
+            if ( inner_radius != 0 )
+                inner_tangent = new Point(
+                    inner_vertex.y / inner_radius * tangent_len_inner,
+                    -inner_vertex.x / inner_radius * tangent_len_inner
+                );
 
-    return result
+            result.add_vertex(position.add(inner_vertex))
+                .set_in_tangent(inner_tangent)
+                .set_out_tangent(inner_tangent.neg());
+        }
+    }
+
+    return result;
 }
+</script>
+<script>
+var star = {
+    "ty": "sr",
+    "nm": "PolyStar",
+    "sy": Number(data["Type"]),
+    "p": {
+        "a": 0,
+        "k": [
+            256,
+            256
+        ]
+    },
+    "r": {
+        "a": 0,
+        "k": data["Rotation"]
+    },
+    "pt": {
+        "a": 0,
+        "k": data["Points"]
+    },
+    "or": {
+        "a": 0,
+        "k": data["Outer Radius"]
+    },
+    "os": {
+        "a": 0,
+        "k": data["Outer Roundness"]
+    },
+};
+if ( data["Type"] == "1" )
+{
+    star.ir = {
+        "a": 0,
+        "k": data["Inner Radius"]
+    };
+    star.is = {
+        "a": 0,
+        "k": data["Inner Roundness"]
+    };
+}
+lottie.layers[0].shapes[0].it[0] = star;
+</script>
 
-```
 
 ## Pucker Bloat
 
 See [Pucker / Bloat](shapes.md#pucker-bloat).
 
 
-```typescript
+{shape_bezier_script:pucker_bloat.json:512:512}
+Amount:<input type="range" min="-100" value="50" max="100"/>
+<json>lottie.layers[0].shapes[0].it[1]</json>
+<script>
+lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+let star = lottie.layers[0].shapes[0].it[0];
+</script>
+<script func="pucker_bloat([convert_shape(star)], modifier.a.k)" varname="modifier" suffix="[0].to_lottie()">
 function pucker_bloat(
     // Beziers as collected from the other shapes
-    collected_shapes: array[Bezier],
-    // `a` property from the Pucker/Bloat modifier
-    a: number
+    collected_shapes,
+    // "a" property from the Pucker/Bloat modifier
+    amount
 )
 {
     // Normalize to [0, 1]
-    let amount = a / 100
+    amount /= 100;
 
     // Find the mean of the bezier vertices
-    let center = Point()
-    let number_of_vertices = 0
-    for input_bezier in collected_shapes
-        for vertex in input_bezier
-            center += vertex
-            number_of_vertices += 1
-    center /= number_of_vertices
+    let center = new Point(0, 0);
+    let number_of_vertices = 0;
+    for ( let input_bezier of collected_shapes )
+    {
+        for ( let point of input_bezier.points )
+        {
+            center.x += point.pos.x;
+            center.y += point.pos.y;
+            number_of_vertices += 1;
+        }
+    }
 
-    let result = array[Bezier]
+    center.x /= number_of_vertices;
+    center.y /= number_of_vertices;
 
-    for input_bezier in collected_shapes
-        let output_bezier = Bezier()
-        // Assumes `in_tangent` and `out_tangent` are relative to `vertex`
-        // (this is the case in Lottie)
-        for in_tangent, out_tangent, vertex in Bezier
-            let output_vertex = lerp(vertex, center, amount)
-            let output_in_tangent = lerp(in_tangent + vertex, center, -amount) - output_vertex
-            let output_out_tangent = lerp(out_tangent + vertex, center, -amount) - output_vertex
-            output_bezier.add_vertex(output_vertex)
-            output_bezier.add_in_tangent(output_in_tangent)
-            output_bezier.add_out_tangent(output_out_tangent)
+    let result = [];
 
-        if input_bezier.is_closed
-            output_bezier.close()
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+        for ( let point of input_bezier.points )
+        {
+            // Here we convert tangents to global coordinates
+            let vertex = lerp(point.pos, center, amount);
+            let in_tangent = lerp(point.in_tangent.add(point.pos), center, -amount).sub(vertex);
 
-        result.add(output_bezier)
+            let out_tangent = lerp(point.out_tangent.add(point.pos), center, -amount).sub(vertex);
+            output_bezier.add_vertex(vertex)
+                .set_in_tangent(in_tangent)
+                .set_out_tangent(out_tangent);
+        }
 
-    return result
+        output_bezier.closed = input_bezier.closed;
+
+        result.push(output_bezier);
+    }
+
+    return result;
 }
-```
+</script>
 
 
 ## Rounded Corners
@@ -302,80 +422,95 @@ It approximates rounding using circular arcs.
 
 The magic number `0.5519` is what lottie uses for this, based on [this article](https://spencermortensen.com/articles/bezier-circle/).
 
-```typescript
+{shape_bezier_script:rounded_corners.json:512:512}
+Radius:<input type="range" min="0" value="50" max="100"/>
+<json>lottie.layers[0].shapes[0].it[1]</json>
+<script>
+lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
+let star = lottie.layers[0].shapes[0].it[0];
+</script>
+<script func="round_corners([convert_shape(star)], modifier.r.k)" varname="modifier" suffix="[0].to_lottie()">
 // Helper function to perform rounding on a single vertex
 function get_vertex_tangent(
     // Bezier to round
-    bezier: Bezier,
+    bezier,
     // Vertex in the bezier we are rounding
-    current_vertex: Point
+    current_vertex,
     // Index of the next point along the curve
-    closest_index: integer,
+    closest_index,
     // Rounding radius
-    round_distance:number
+    round_distance
 )
 {
-    const tangent_length = 0.5519
+    const tangent_length = 0.5519;
 
     // closest_index module bezier.length
-    closest_index = closest_index % bezier.length
-    if closest_index < 0
-        closest_index += bezier.length
+    closest_index = closest_index % bezier.points.length;
+    if ( closest_index < 0 )
+        closest_index += bezier.points.length;
 
 
-    let closest_vertex = bezier.vertex[closest_index]
-    let distance = length(current_vertex - closest_vertex)
-    let new_pos_perc = distance != 0 ? min(distance/2, round_distance) / distance : 0
-    auto vertex = current_vertex + (closest_vertex - current_vertex) * new_pos_perc
-    auto tangent = - (vertex - current_vertex) * tangent_length
-    return vertex, tangent
+    let closest_vertex = bezier.points[closest_index].pos;
+    let distance = current_vertex.distance(closest_vertex);
+    let new_pos_perc = distance != 0 ? Math.min(distance/2, round_distance) / distance : 0;
+    let vertex = closest_vertex.sub(current_vertex).mul(new_pos_perc).add(current_vertex);
+    let tangent = vertex.sub(current_vertex).neg().mul(tangent_length);
+    return [vertex, tangent];
 }
 
 // Rounding for a single continuos curve
 function round_bezier_corners(
     // Bezier to round
-    original: Bezier,
+    original,
     // Rounding radius
-    round_distance: number
+    round_distance
 )
 {
-    let result = Bezier
-    result.closed = original.closed
+    let result = new Bezier()
+    result.closed = original.closed;
 
-    for i = 0 ... original.length - 1
+    for ( let i = 0; i < original.points.length; i++ )
+    {
+        let point = original.points[i];
+
         // Start and end of a non-closed path don't get rounded
-        if !original.closed && (i == 0 || i == original.size() - 1)
-            result.add_vertex(original.vertex[i])
-            result.add_in_tangent(original.in_tangent[i])
-            result.add_out_tangent(original.out_tangent[i])
+        if ( !original.closed && (i == 0 || i == original.points.length - 1) )
+        {
+            result.add_vertex(point.pos)
+                .set_in_tangent(point.in_tangent)
+                .set_out_tangent(point.out_tangent);
+        }
         else
-            let (vert1, out_t) = get_vert_tan(original, original.vertex[i], i - 1, round_distance)
+        {
+            let [vert1, out_t] = get_vertex_tangent(original, point.pos, i - 1, round_distance);
             result.add_vertex(vert1)
-            result.add_out_tangent(out_t)
+                .set_out_tangent(out_t);
 
-            let (vert2, in_t) = get_vert_tan(original, original.vertex[i], i + 1, round_distance)
+            let [vert2, in_t] = get_vertex_tangent(original, point.pos, i + 1, round_distance);
             result.add_vertex(vert2)
-            result.add_in_tangent(in_t)
+                .set_in_tangent(in_t);
+        }
+    }
 
-    return result
+    return result;
 }
 
 // Rounding on multiple bezier
 function round_corners(
     // Beziers as collected from the other shapes
-    collected_shapes: array[Bezier],
-    // `r` property from lottie
-    r: number
+    collected_shapes,
+    // "r" property from lottie
+    r
 )
 {
-    let result = array[Bezier]
+    let result = []
 
-    for input_bezier in collected_shapes
-        result.add(round_bezier_corners(input_bezier, r))
+    for ( let input_bezier of collected_shapes )
+        result.push(round_bezier_corners(input_bezier, r));
 
-    return result
+    return result;
 }
-```
+</script>
 
 ## Transform
 

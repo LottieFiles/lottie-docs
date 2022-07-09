@@ -480,7 +480,7 @@ class LottiePlaygroundBuilder:
 
 
 class LottiePlayground(BlockProcessor):
-    re_fence_start = re.compile(r'^\s*\{lottie_playground:([^:]+)(?::([0-9]+):([0-9]+))?(?::(\{[^}]+\}))?\}')
+    re_fence_start = re.compile(r'^\s*\{lottie_playground:(?P<example>[^:]+)(?::(?P<w>[0-9]+):(?P<h>[0-9]+))?(?::(?P<extra>\{[^}]+\}))?\}')
     re_row = re.compile(r'^\s*(?:(?P<label>[^<:]*)\s*:)?\s*(?P<html><(?P<tag>[-a-zA-Z_]+).*>)?')
 
     def __init__(self, parser, schema_data: Schema):
@@ -494,7 +494,7 @@ class LottiePlayground(BlockProcessor):
         block = blocks.pop(0)
         match = self.test(parent, block)
 
-        builder = LottiePlaygroundBuilder(parent, self.schema_data, width=match.group(2), height=match.group(3))
+        builder = LottiePlaygroundBuilder(parent, self.schema_data, width=match.group("w"), height=match.group("h"))
         builder.add_button(
             onclick=inspect.cleandoc(r"""
                 playground_set_data(lottie_player_{id}.lottie);
@@ -540,8 +540,8 @@ class LottiePlayground(BlockProcessor):
             else:
                 builder.add_control(label, html)
 
-        json_data = self.example_json(match.group(1))
-        self.populate_script(blocks, builder, json_data, match.group(4) or "{}", json_viewer_id, json_viewer_path)
+        json_data = self.example_json(match.group("example"))
+        self.populate_script(blocks, match, builder, json_data, match.group("extra") or "{}", json_viewer_id, json_viewer_path)
 
     def example_json(self, filename):
         """
@@ -550,7 +550,7 @@ class LottiePlayground(BlockProcessor):
         with open(docs_path / "examples" / filename) as file:
             return json.dumps(json.load(file))
 
-    def populate_script(self, blocks, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
+    def populate_script(self, blocks, match, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
         # <script> are gobbled up by a preprocessor
         script = ""
         script_element = self.pop_script_block(blocks)
@@ -587,7 +587,13 @@ class LottiePlayground(BlockProcessor):
             raw_string = self.parser.md.htmlStash.rawHtmlBlocks[index]
             if "<script" in raw_string:
                 blocks.pop(0)
-                script_element = etree.fromstring(raw_string)
+
+                # Escape <>& inside the block, avoiding escaping them in <script></script>
+                lines = raw_string.strip().split("\n")
+                source = "\n".join(lines[1:-1]);
+
+                script_element = etree.fromstring(lines[0] + lines[-1])
+                script_element.text = source
                 self.parser.md.htmlStash.rawHtmlBlocks.pop(index)
                 self.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
                 return script_element
@@ -614,9 +620,9 @@ class LottiePlayground(BlockProcessor):
 
 
 class ShapeBezierScript(LottiePlayground):
-    re_fence_start = re.compile(r'^\s*\{shape_bezier_script:([^:]+)(?::([0-9]+):([0-9]+))?(?::(\{[^}]+\}))?\}')
+    re_fence_start = re.compile(r'^\s*\{shape_bezier_script:(?P<example>[^:]+)(?::(?P<ty>[a-z]+))?(?::(?P<w>[0-9]+):(?P<h>[0-9]+))?(?::(?P<extra>\{[^}]+\}))?\}')
 
-    def populate_script(self, blocks, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
+    def populate_script(self, blocks, match, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
         bezier_view = etree.SubElement(builder.renderer.animation_container, "div")
         bezier_view.attrib["class"] = "alpha_checkered"
         bezier_view.attrib["id"] = "lottie_target_%s_bezier" % builder.anim_id
@@ -626,6 +632,7 @@ class ShapeBezierScript(LottiePlayground):
         non_func_script = ""
         func = ""
         varname = ""
+        func_suffix = ""
         while True:
             if blocks[0] == '':
                 blocks = blocks[1:]
@@ -635,47 +642,57 @@ class ShapeBezierScript(LottiePlayground):
                     func = script_element.attrib["func"]
                     varname = script_element.attrib.get("varname", "shape")
                     func_script = script_element.text
+                    func_suffix = script_element.attrib.get("suffix", ".to_lottie()")
 
                     pre = etree.SubElement(builder.element, "pre")
-                    code = etree.SubElement(pre, "code", {"class": "language-js hljs"})
+                    # We don't use `js` highlighting because it's a bit bugged
+                    code = etree.SubElement(pre, "code", {"class": "language-typescript hljs"})
                     code.text = func_script + "\n\n// Example invocation\n" + func + ";"
                 else:
                     non_func_script = script_element.text
             else:
                 break
 
-        script = func_script + non_func_script
+        ty = match.group("ty")
+        set_conv = ""
+        if ty:
+            set_conv = "converter_map[%r] = %s => %s;" % (ty, varname, func)
 
         if json_viewer_path:
             builder.renderer.populate_script("""
-        var lottie_player_{id}_bezier = new LottiePlayer('lottie_target_{id}_bezier', {bezier_json});
-        var lottie_player_{id} = new PlaygroundPlayer(
-            {id},
-            '{json_viewer_id}',
-            'lottie_target_{id}',
-            {json_data},
-            function (lottie, data)
-            {{
-                {on_load}
-                this.json_viewer_contents = {shape_path};
-                let {varname} = {shape_path};
-                let bez_target = lottie_player_{id}_bezier.lottie.layers[0].shapes[0].it[0].ks; 
-                bez_target.k = {func}.to_lottie();
-                lottie_player_{id}_bezier.reload();
-                this.set_json('{json_viewer_id}_bezier', bez_target.k);
-            }},
-            {extra_options}
-        );
-        """.format(
+                {func_script}
+                {set_conv}
+                var lottie_player_{id}_bezier = new LottiePlayer('lottie_target_{id}_bezier', {bezier_json});
+                var lottie_player_{id} = new PlaygroundPlayer(
+                    {id},
+                    '{json_viewer_id}',
+                    'lottie_target_{id}',
+                    {json_data},
+                    function (lottie, data)
+                    {{
+                        {non_func_script}
+                        this.json_viewer_contents = {shape_path};
+                        let {varname} = {shape_path};
+                        let bez_target = lottie_player_{id}_bezier.lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = {func}{func_suffix};
+                        lottie_player_{id}_bezier.reload();
+                        this.set_json('{json_viewer_id}_bezier', bez_target.k);
+                    }},
+                    {extra_options}
+                );
+            """.format(
                 id=builder.anim_id,
+                set_conv=set_conv,
                 json_viewer_id=json_viewer_id,
-                on_load=script,
+                non_func_script=non_func_script,
+                func_script=func_script,
                 json_data=json_data,
                 bezier_json=self.example_json("bezier.json"),
                 shape_path=json_viewer_path,
                 extra_options=extra_options,
                 func=func,
-                varname=varname
+                varname=varname,
+                func_suffix=func_suffix,
             ))
 
     def add_json_viewer(self, builder, parent):
