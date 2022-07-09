@@ -56,10 +56,9 @@ class LottieRenderer:
             parent.append(element)
 
         self.animation_container = etree.SubElement(element, "div")
-        self.animation_container.attrib["class"] = "animation-container"
+        self.animation_container.attrib["class"] = "animation-container alpha_checkered"
 
         self.animation = etree.SubElement(self.animation_container, "div")
-        self.animation.attrib["class"] = "alpha_checkered"
         self.animation.attrib["id"] = "lottie_target_%s" % self.id
 
         if width:
@@ -624,7 +623,6 @@ class ShapeBezierScript(LottiePlayground):
 
     def populate_script(self, blocks, match, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
         bezier_view = etree.SubElement(builder.renderer.animation_container, "div")
-        bezier_view.attrib["class"] = "alpha_checkered"
         bezier_view.attrib["id"] = "lottie_target_%s_bezier" % builder.anim_id
         bezier_view.attrib["style"] = builder.renderer.animation.attrib["style"]
 

@@ -2,7 +2,7 @@
 
 <script src="../scripts/lottie_bezier.js"></script>
 <style>
-.animation-container, .json-parent:not([hidden]) {
+.json-parent:not([hidden]) {
     display: flex;    
 }
 
@@ -67,7 +67,7 @@ the rectangle defaults as being reversed.
 
 Rectangle without rounded corners:
 
-{shape_bezier_script:rectangle.json:512:512}
+{shape_bezier_script:rectangle.json:394:394}
 Position x:<input type="range" min="0" max="512" value="256"/>
 Position y:<input type="range" min="0" max="512" value="256"/>
 Width:<input type="range" min="0" max="512" value="256"/>
@@ -102,7 +102,7 @@ lottie.layers[0].shapes[0].it[0].s.k = [
 
 With rounded corners:
 
-{shape_bezier_script:rectangle.json:rc:512:512}
+{shape_bezier_script:rectangle.json:rc:394:394}
 Position x:<input type="range" min="0" max="512" value="256"/>
 Position y:<input type="range" min="0" max="512" value="256"/>
 Width:<input type="range" min="0" max="512" value="256"/>
@@ -175,7 +175,7 @@ If you think of the ellipse as a clock, start at 12 go clockwise.
 
 The magic number `0.5519` is what lottie uses for this, based on [this article](https://spencermortensen.com/articles/bezier-circle/).
 
-{shape_bezier_script:ellipse.json:el:512:512}
+{shape_bezier_script:ellipse.json:el:394:394}
 Position x:<input type="range" min="0" max="512" value="256"/>
 Position y:<input type="range" min="0" max="512" value="256"/>
 Width:<input type="range" min="0" max="512" value="256"/>
@@ -229,7 +229,7 @@ lottie.layers[0].shapes[0].it[0].s.k = [
 Pseudocode for rendering a [PolyStar](shapes.md#polystar).
 
 
-{shape_bezier_script:star.json:sr:512:512}
+{shape_bezier_script:star.json:sr:394:394}
 Points:<input type="range" min="3" max="10" value="5"/>
 Rotation:<input type="range" min="0" max="360" value="0"/>
 Outer Radius:<input type="range" min="0" max="300" value="200"/>
@@ -352,7 +352,7 @@ lottie.layers[0].shapes[0].it[0] = star;
 See [Pucker / Bloat](shapes.md#pucker-bloat).
 
 
-{shape_bezier_script:pucker_bloat.json:512:512}
+{shape_bezier_script:pucker_bloat.json:394:394}
 Amount:<input type="range" min="-100" value="50" max="100"/>
 <json>lottie.layers[0].shapes[0].it[1]</json>
 <script>
@@ -422,7 +422,7 @@ It approximates rounding using circular arcs.
 
 The magic number `0.5519` is what lottie uses for this, based on [this article](https://spencermortensen.com/articles/bezier-circle/).
 
-{shape_bezier_script:rounded_corners.json:512:512}
+{shape_bezier_script:rounded_corners.json:394:394}
 Radius:<input type="range" min="0" value="50" max="100"/>
 <json>lottie.layers[0].shapes[0].it[1]</json>
 <script>
