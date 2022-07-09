@@ -21,7 +21,8 @@
             {"$ref": "#/$defs/shapes/twist"},
             {"$ref": "#/$defs/shapes/merge"},
             {"$ref": "#/$defs/shapes/offset-path"},
-            {"$ref": "#/$defs/shapes/zig-zag"}
+            {"$ref": "#/$defs/shapes/zig-zag"},
+            {"$ref": "#/$defs/shapes/no-style"}
         ]
     }
 }

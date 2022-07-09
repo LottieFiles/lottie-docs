@@ -52,6 +52,10 @@
                             "title": "Gradient stroke"
                         },
                         {
+                            "const": "no",
+                            "title": "No Style"
+                        },
+                        {
                             "const": "gr",
                             "title": "Group"
                         },

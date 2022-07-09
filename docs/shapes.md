@@ -28,6 +28,7 @@ ty:Shape type (see values below)
 |`st`|[Stroke](#stroke)                         |
 |`gf`|[Gradient Fill](#gradients)               |
 |`gs`|[Gradient Stroke](#gradients)             |
+|`no`|[No Style](#no-style)                     |
 |`gr`|[Group](#group)                           |
 |`tr`|[Transform](transform-shape)              |
 |`rp`|[Repeater](#repeater)                     |
@@ -334,6 +335,15 @@ gradient.t = Number(data["Type"]);
 gradient.h.k = data["Highlight"];
 gradient.a.k = data["Highlight Angle"];
 </script>
+
+
+### No Style
+
+Represents a style for shapes without fill or stroke.
+
+
+{schema_object:shapes/no-style}
+SKIP:#/$defs/shapes/shape-element
 
 
 ## Group
