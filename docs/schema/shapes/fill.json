@@ -18,6 +18,7 @@
                 },
                 "o": {
                     "title": "Opacity",
+                    "description": "Opacity, 100 means fully opaque",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "c": {

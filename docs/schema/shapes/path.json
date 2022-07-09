@@ -18,11 +18,8 @@
                 },
                 "ks": {
                     "title": "Shape",
+                    "description": "Bezier path",
                     "$ref": "#/$defs/animated-properties/shape-property"
-                },
-                "ind": {
-                    "title": "Index",
-                    "type": "integer"
                 }
             },
             "required": [

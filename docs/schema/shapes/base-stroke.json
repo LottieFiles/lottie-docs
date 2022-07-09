@@ -29,14 +29,17 @@
                 },
                 "o": {
                     "title": "Opacity",
+                    "description": "Opacity, 100 means fully opaque",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "w": {
                     "title": "Width",
+                    "description": "Stroke width",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "d": {
                     "title": "Dashes",
+                    "description": "Dashed line definition",
                     "type": "array",
                     "items": {
                         "$ref": "#/$defs/shapes/stroke-dash"

@@ -11,12 +11,13 @@
             "type": "object",
             "properties": {
                 "n": {
-                    "title": "Shape Type",
+                    "title": "Dash Type",
                     "$ref": "#/$defs/constants/stroke-dash-type",
                     "default": "d"
                 },
                 "v": {
                     "title": "Length",
+                    "description": "Length of the dash",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

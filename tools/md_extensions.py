@@ -589,7 +589,7 @@ class LottiePlayground(BlockProcessor):
 
                 # Escape <>& inside the block, avoiding escaping them in <script></script>
                 lines = raw_string.strip().split("\n")
-                source = "\n".join(lines[1:-1]);
+                source = "\n".join(lines[1:-1])
 
                 script_element = etree.fromstring(lines[0] + lines[-1])
                 script_element.text = source
@@ -796,6 +796,7 @@ class SchemaObject(BlockProcessor):
 
         prop_dict = {}
         base_list = []
+        order = []
         self._object_properties(schema_data, prop_dict, base_list)
 
         # Override descriptions if specified from markdown
@@ -812,6 +813,7 @@ class SchemaObject(BlockProcessor):
                         base_list.remove(base)
                     except ValueError:
                         pass
+                    order += list(prop_dict_base.keys())
                     prop_dict_base.update(prop_dict)
                     prop_dict = prop_dict_base
                 elif name == "SKIP":
@@ -822,7 +824,9 @@ class SchemaObject(BlockProcessor):
                     except ValueError:
                         pass
                 else:
-                    prop_dict[name].description = match.group(2)
+                    if match.group(2):
+                        prop_dict[name].description = match.group(2)
+                    order.append(name)
 
         div = etree.SubElement(parent, "div")
 
@@ -857,25 +861,32 @@ class SchemaObject(BlockProcessor):
 
             tbody = etree.SubElement(table, "tbody")
 
+            for name in order:
+                if name in prop_dict:
+                    self.prop_row(name, prop_dict.pop(name), tbody)
+
             for name, prop in prop_dict.items():
-                tr = etree.SubElement(tbody, "tr")
-                etree.SubElement(etree.SubElement(tr, "td"), "code").text = name
-
-                type_cell = etree.SubElement(tr, "td")
-
-                type_text = self._base_type(prop.type, type_cell)
-                if prop.type == "array" and prop.item_type:
-                    type_text.tail = " of "
-                    type_text = self._base_type(prop.item_type, type_cell)
-
-                if prop.const is not None:
-                    type_text.tail = " = "
-                    etree.SubElement(type_cell, "code").text = repr(prop.const)
-
-                description = etree.SubElement(tr, "td")
-                self.parser.parseBlocks(description, [prop.description])
+                self.prop_row(name, prop, tbody)
 
         return True
+
+    def prop_row(self, name, prop, tbody):
+        tr = etree.SubElement(tbody, "tr")
+        etree.SubElement(etree.SubElement(tr, "td"), "code").text = name
+
+        type_cell = etree.SubElement(tr, "td")
+
+        type_text = self._base_type(prop.type, type_cell)
+        if prop.type == "array" and prop.item_type:
+            type_text.tail = " of "
+            type_text = self._base_type(prop.item_type, type_cell)
+
+        if prop.const is not None:
+            type_text.tail = " = "
+            etree.SubElement(type_cell, "code").text = repr(prop.const)
+
+        description = etree.SubElement(tr, "td")
+        self.parser.parseBlocks(description, [prop.description])
 
 
 class JsonHtmlSerializer:

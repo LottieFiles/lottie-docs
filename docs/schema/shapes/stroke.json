@@ -21,6 +21,7 @@
                 },
                 "c": {
                     "title": "Color",
+                    "description": "Stroke color",
                     "$ref": "#/$defs/animated-properties/color-value"
                 }
             },

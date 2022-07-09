@@ -57,11 +57,9 @@ SKIP:#/$defs/shapes/shape-element
 
 A rectangle, defined by its center point and size.
 
-|Attribute|Type                                          |Description {schema_link:shapes/rectangle}|
-|----|---------------------------------------------------|----------------------|
-|`p` |[Animated](concepts.md#animated-property) 2D Vector|Position              |
-|`s` |[Animated](concepts.md#animated-property) 2D Vector|Size                  |
-|`r` |[Animated](concepts.md#animated-property) `number` |Rounded corners radius|
+
+{schema_object:shapes/rectangle}
+SKIP:#/$defs/shapes/shape
 
 
 
@@ -84,10 +82,9 @@ lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
 
 ### Ellipse
 
-|Attribute|Type                                          |Description {schema_link:shapes/ellipse}|
-|----|---------------------------------------------------|----------------------|
-|`p` |[Animated](concepts.md#animated-property) 2D Vector|Position              |
-|`s` |[Animated](concepts.md#animated-property) 2D Vector|Size                  |
+
+{schema_object:shapes/ellipse}
+SKIP:#/$defs/shapes/shape
 
 
 {lottie_playground:ellipse.json:512:512}
@@ -183,9 +180,10 @@ lottie.layers[0].shapes[0].it[0] = star;
 Bezier path, note that it's a continuous shape, to have multiple shapes like
 when you need holes or gaps you need to create multiple Path shapes and group them together.
 
-|Attribute|Type                                       |Description {schema_link:shapes/path}|
-|----|------------------------------------------------|-----------|
-|`ks`|[Animated](concepts.md#animated-property) [Bezier](concepts.md#bezier)|Bezier Path|
+
+{schema_object:shapes/path}
+SKIP:#/$defs/shapes/shape
+
 
 ## Style
 
@@ -201,14 +199,10 @@ or a gradient fading into a solid color.
 
 ### Fill
 
-Defines a single color fill.
+Solid fill color.
 
-|Attribute|Type                                                                                 |Description {schema_link:shapes/fill}|
-|----|------------------------------------------------------------------------------------------|-------------------------------|
-|`o` |[Animated](concepts.md#animated-property) `number`                                        |Opacity, 100 means fully opaque|
-|`c` |[Animated](concepts.md#animated-property) [Color](concepts.md#color)                      |Color                          |
-|`r` |[Fill Rule](constants.md#FillRule)                                                        |                               |
-
+{schema_object:shapes/fill}
+SKIP:#/$defs/shapes/shape-element
 
 {lottie_playground:fill.json:512:512}
 Red:<input type="range" min="0" max="1" step="0.01" value="1"/>
@@ -227,29 +221,21 @@ shape.r = Number(data["Fill Rule"]);
 
 ### Stroke
 
-Define a stroke.
+Defines a stroke.
 
+{schema_object:shapes/stroke}
+ty:
+SKIP:#/$defs/shapes/shape-element
+EXPAND:#/$defs/shapes/base-stroke
 
-|Attribute|Type                                                     |Description {schema_link:shapes/stroke}|
-|----|--------------------------------------------------------------|-------------------------------|
-|`lc`|[Line Cap](constants.md#linecap)                              |                               |
-|`lj`|[Line Join](constants.md#linejoin)                            |                               |
-|`ml`|`number`                                                      |Miter Limit                    |
-|`o` |[Animated](concepts.md#animated-property) `number`            |Opacity, 100 means fully opaque|
-|`w` |[Animated](concepts.md#animated-property) `number`            |Width                          |
-|`d` |Array of [Dashes](#stroke-dashes)                             |Dashed line definition         |
-|`c` |[Animated](concepts.md#animated-property) [Color](#color)     |Color                          |
 
 
 #### Stroke Dashes
 
 Defined as a sequence of alternating dashes and gaps.
 
-|Attribute|Type                                             |Description {schema_link:shapes/stroke-dash}|
-|----|------------------------------------------------------|-------------------------------|
-|`n` |[Dash Type](constants.md#strokedashtype)              |Dash type                      |
-|`v` |[Animated](concepts.md#animated-property) `number`    |Length of the dash             |
-
+{schema_object:shapes/stroke-dash}
+SKIP:#/$defs/helpers/visual-object
 
 
 {lottie_playground:stroke.json:512:512}
@@ -285,12 +271,9 @@ shape.d[2].v.k = data["Dash Gap"];
 Gradient fill and gradient stroke have the same attributes as [fill](#fill) and [stroke](#stroke)
 but remove color (`c`) and add the following:
 
-|Attribute|Type                                          |Description {schema_link:shapes/gradient}|
-|----|---------------------------------------------------|-----------------------------------|
-|`s` |[Animated](concepts.md#animated-property) 2D Vector|Starting point for the gradient    |
-|`e` |[Animated](concepts.md#animated-property) 2D Vector|End point for the gradient         |
-|`t` |[Gradient Type](constants.md#gradienttype)         |Type of gradient (linear or radial)|
-|`g` |[Gradient Colors](#gradient-colors)                |                                   |
+{schema_object:shapes/gradient}
+SKIP:a
+SKIP:h
 
 If it's a radial gradient, `s` refers to the center of the gradient,
 and the style object may have these additional properties:
@@ -387,12 +370,8 @@ account style as well.
 
 The effect of a Repeater is to duplicate the other shapes a number of times applying a transform for each copy.
 
-|Attribute|Type                                             |Description {schema_link:shapes/repeater}|
-|----|------------------------------------------------------|-------------------------------|
-|`c` |[Animated](concepts.md#animated-property) `integer`   |Number of copies               |
-|`o` |[Animated](concepts.md#animated-property) `number`    |Offset (see below)             |
-|`m` |`integer`                                             |[Composite](constants.md#Composite) (How to stack copies)|
-|`tr`|[Repeater Transform](#repeater-transform)             |Transform applied to each copy |
+{schema_object:shapes/repeater}
+SKIP:#/$defs/shapes/shape-element
 
 
 The transform is multiplied by `o + 1` (where `o` is the Offset property above).<br/>
@@ -440,13 +419,9 @@ This is mostly useful for shapes with a stroke and not a fill.
 
 It takes the path defined by [shapes](#shapes) and only shows a segment of the resulting bezier data.
 
-|Attribute|Type                                         |Description {schema_link:shapes/trim}|
-|----|--------------------------------------------------|-----------------------|
-|`s` |[Animated](concepts.md#animated-property) `number`|Segment start          |
-|`e` |[Animated](concepts.md#animated-property) `number`|Segment end            |
-|`o` |[Animated](concepts.md#animated-property) `number`|Offset                 |
-|`m` |`integer`                                         |[How to treat multiple shapes](constants.md#TrimMultipleShapes)
 
+{schema_object:shapes/trim}
+SKIP:#/$defs/shapes/shape-element
 
 `s` and `e` go from `0` to `100`, `0` being at the beginning of the path and `100` at the end.
 The displayed segment is what lays between the two.
@@ -478,7 +453,7 @@ lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
 Self explanatory
 
 {schema_object:shapes/rounded-corners}
-SKIP:#/$defs/shapes/shape
+SKIP:#/$defs/shapes/shape-element
 
 {lottie_playground:rounded_corners.json:512:512}
 Radius:<input type="range" min="0" value="50" max="100"/>
@@ -490,10 +465,10 @@ lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
 
 ### Pucker / Bloat
 
-{schema_object:shapes/pucker-bloat}
-SKIP:#/$defs/shapes/shape
-
 Interpolates bezier vertices towards the center of the shape, and tangent handles away from it (or vice-versa).
+
+{schema_object:shapes/pucker-bloat}
+SKIP:#/$defs/shapes/shape-element
 
 When `a` is `0`, nothing changes.<br/>
 When `a` is positive, the vertices are pulled towards the center, with `100` being at the center. And the tangents are pushed away.<br/>
@@ -510,19 +485,25 @@ lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
 
 ### Twist
 
+{schema_attribute:description:shapes/twist}
+
 {schema_object:shapes/twist}
-SKIP:#/$defs/shapes/twist
+SKIP:#/$defs/shapes/shape-element
 
 ### Merge
 
+{schema_attribute:description:shapes/merge}
+
 {schema_object:shapes/merge}
-SKIP:#/$defs/shapes/merge
+SKIP:#/$defs/shapes/shape-element
 
 
 ### Offset Path
 
+{schema_attribute:description:shapes/offset-path}
+
 {schema_object:shapes/offset-path}
-SKIP:#/$defs/shapes/offset-path
+SKIP:#/$defs/shapes/shape-element
 
 
 ### Zig Zag
@@ -530,4 +511,4 @@ SKIP:#/$defs/shapes/offset-path
 {schema_attribute:description:shapes/zig-zag}
 
 {schema_object:shapes/zig-zag}
-SKIP:#/$defs/shapes/shape
+SKIP:#/$defs/shapes/shape-element

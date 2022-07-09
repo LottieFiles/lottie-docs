@@ -18,10 +18,12 @@
                 },
                 "s": {
                     "title": "Start",
+                    "description": "Segment start",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "e": {
                     "title": "End",
+                    "description": "Segment end",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "o": {
@@ -30,6 +32,7 @@
                 },
                 "m": {
                     "title": "Multiple",
+                    "description": "How to treat multiple copies",
                     "$ref": "#/$defs/constants/trim-multiple-shapes"
                 }
             },

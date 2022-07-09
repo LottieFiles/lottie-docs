@@ -27,6 +27,7 @@
                 },
                 "r": {
                     "title": "Rounded",
+                    "description": "Rounded corners radius",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

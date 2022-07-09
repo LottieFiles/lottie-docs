@@ -18,6 +18,7 @@
                 },
                 "c": {
                     "title": "Copies",
+                    "description": "Number of copies",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "o": {
@@ -26,11 +27,13 @@
                 },
                 "m": {
                     "title": "Composite",
+                    "description": "Stacking order",
                     "$ref": "#/$defs/constants/composite",
                     "default": 1
                 },
                 "tr": {
                     "title": "Transform",
+                    "description": "Transform applied to each copy",
                     "$ref": "#/$defs/shapes/repeater-transform"
                 }
             },
