@@ -597,13 +597,16 @@ Line Join:<enum value="2">line-join</enum>
 lottie.layers[0].shapes[0].it[0].is.k = data["Star Roundness"];
 lottie.layers[0].shapes[0].it[0].os.k = data["Star Roundness"];
 lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
-lottie.layers[0].shapes[0].it[1].lj = data["Line Join"];
+lottie.layers[0].shapes[0].it[1].lj = Number(data["Line Join"]);
 lottie.layers[0].shapes[0].it[1].ml.k = data["Miter Limit"];
 
 let star = lottie.layers[0].shapes[0].it[0];
 bezier_lottie.layers[0].shapes[0].it[1].w.k = 3;
 </script>
 <script func="offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)" varname="modifier" suffix="[0].to_lottie()">
+/*
+    Simple offset of a linear segment
+*/
 function linear_offset(p1, p2, amount)
 {
     let angle = Math.atan2(p2.x - p1.x, p2.y - p1.y);
@@ -613,7 +616,11 @@ function linear_offset(p1, p2, amount)
     ];
 }
 
-function offset_segment(output_bezier, segment, amount, last_point)
+/*
+    Offset a bezier segment
+    only works well if the segment is flat enough
+*/
+function offset_segment(output_bezier, segment, amount)
 {
     let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
     let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
@@ -621,21 +628,55 @@ function offset_segment(output_bezier, segment, amount, last_point)
     let p1 = line_intersection(p0, p1a, p1b, p2b) ?? p1a;
     let p2 = line_intersection(p2a, p3, p1b, p2b) ?? p2a;
 
-    if ( p0.is_equal(last_point) )
+    return new BezierSegment(p0, p1, p2, p3);
+}
+
+/*
+    Join two segments
+*/
+function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
+{
+    let p0 = seg1.points[3];
+    let p1 = seg2.points[0];
+
+    // Bevel
+    if ( line_join == 3 )
+        return p0;
+
+
+    // Connected, they don't need a joint
+    if ( p0.is_equal(p1) )
+        return p0;
+
+    let last_point = output_bezier.points[output_bezier.points.length - 1];
+
+    // Round
+    if ( line_join == 2 )
     {
-        output_bezier.points[output_bezier.points.length - 1]
-            .set_out_tangent(p1.sub(p0));
-    }
-    else
-    {
-        output_bezier.add_vertex(p0)
-            .set_out_tangent(p1.sub(p0));
+        const ellipse_constant = 0.5519;
+        let angle_out = seg1.tangent_angle(1);
+        let angle_in = seg2.tangent_angle(0) + Math.PI;
+        let center = line_intersection(p0, p0.add_polar(angle_out + Math.PI / 2, 100), p1, p1.add_polar(angle_out + Math.PI / 2, 100));
+        let radius = center ? center.distance(p0) : p0.distance(p1) / 2;
+        last_point.set_out_tangent(Point.polar(angle_out, 2 * radius * ellipse_constant));
+
+        output_bezier.add_vertex(p1)
+            .set_in_tangent(Point.polar(angle_in, 2 * radius * ellipse_constant));
+
+        return p1;
     }
 
-    output_bezier.add_vertex(p3)
-        .set_in_tangent(p2.sub(p3));
+    // Miter
+    let t0 = p0.is_equal(seg1.points[2]) ? seg1.points[0] : seg1.points[2];
+    let t1 = p1.is_equal(seg2.points[1]) ? seg2.points[3] : seg2.points[1];
+    let intersection = line_intersection(t0, p0, p1, t1);
+    if ( intersection && intersection.distance(p0) < miter_limit )
+    {
+        output_bezier.add_vertex(intersection);
+        return intersection;
+    }
 
-    return p3;
+    return p0;
 }
 
 function offset_path(
@@ -654,22 +695,34 @@ function offset_path(
 
         output_bezier.closed = input_bezier.closed;
         let count = input_bezier.segment_count();
-        let last_point = null;
+
+        let multi_segments = [];
+
         for ( let i = 0; i < count; i++ )
         {
             let segment = input_bezier.segment(i);
+            /*
+                We split each bezier segment into smaller pieces based
+                on inflection points, this ensures the control point
+                polygon is convex.
+
+                (A cubic bezier can have none, one, or two inflection points)
+            */
             let flex = segment.inflection_points();
+            console.log(flex.length);
 
             if ( flex.length == 0 )
             {
-                last_point = offset_segment(output_bezier, segment, amount, last_point);
+                multi_segments.push([offset_segment(output_bezier, segment, amount)]);
             }
             else if ( flex.length == 1 || flex[1] == 1 )
             {
                 let [left, right] = segment.split(flex[0]);
 
-                last_point = offset_segment(output_bezier, left, amount, last_point);
-                last_point = offset_segment(output_bezier, right, amount, last_point);
+                multi_segments.push([
+                    offset_segment(output_bezier, left, amount),
+                    offset_segment(output_bezier, right, amount)
+                ]);
             }
             else
             {
@@ -677,11 +730,49 @@ function offset_path(
                 let t = (flex[1] - flex[0]) / (1 - flex[0]);
                 let [mid, right] = mid_right.split(t);
 
-                last_point = offset_segment(output_bezier, left, amount, last_point);
-                last_point = offset_segment(output_bezier, mid, amount, last_point);
-                last_point = offset_segment(output_bezier, right, amount, last_point);
+                multi_segments.push([
+                    offset_segment(output_bezier, left, amount),
+                    offset_segment(output_bezier, mid, amount),
+                    offset_segment(output_bezier, right, amount)
+                ]);
             }
         }
+
+
+        // Add bezier segments to the output and apply line joints
+        let last_point = null;
+        let last_seg = null;
+
+        for ( let multi_segment of multi_segments )
+        {
+            if ( last_seg )
+                last_point = join_lines(output_bezier, last_seg, multi_segment[0], line_join, miter_limit);
+
+            last_seg = multi_segment[multi_segment.length - 1];
+
+            for ( let segment of multi_segment )
+            {
+                if ( segment.points[0].is_equal(last_point) )
+                {
+                    output_bezier.points[output_bezier.points.length - 1]
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+                else
+                {
+                    output_bezier.add_vertex(segment.points[0])
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+
+
+                output_bezier.add_vertex(segment.points[3])
+                    .set_in_tangent(segment.points[2].sub(segment.points[3]));
+
+                last_point = segment.points[3];
+            }
+        }
+
+        if ( input_bezier.closed && multi_segments.length )
+            join_lines(output_bezier, last_seg, multi_segments[0][0], line_join, miter_limit);
 
         result.push(output_bezier);
     }

@@ -300,8 +300,8 @@ class BezierSegment
     _intersect_data(t1, t2)
     {
         return {
+            ...this.bounding_box(),
             bez: this,
-            box: this.bounding_box(),
             t1: t1,
             t2: t2,
             t: (t1 + t2) / 2
@@ -336,7 +336,7 @@ class BezierSegment
 
     static _intersects_impl(d1, d2, tolerance, intersections)
     {
-        if ( !BezierSegment._box_intersect(d1.box, d2.box) )
+        if ( !BezierSegment._box_intersect(d1, d2) )
             return;
 
         if ( d1.width <= tolerance && d1.height <= tolerance && d2.width <= tolerance && d2.height <= tolerance )
@@ -382,6 +382,11 @@ class Point
             this.x = x;
             this.y = y;
         }
+    }
+
+    static polar(angle, length)
+    {
+        return new Point(Math.cos(angle) * length, Math.sin(angle) * length);
     }
 
     add(...args)
