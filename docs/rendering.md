@@ -656,7 +656,10 @@ function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
         const ellipse_constant = 0.5519;
         let angle_out = seg1.tangent_angle(1);
         let angle_in = seg2.tangent_angle(0) + Math.PI;
-        let center = line_intersection(p0, p0.add_polar(angle_out + Math.PI / 2, 100), p1, p1.add_polar(angle_out + Math.PI / 2, 100));
+        let center = line_intersection(
+            p0, p0.add_polar(angle_out + Math.PI / 2, 100),
+            p1, p1.add_polar(angle_out + Math.PI / 2, 100)
+        );
         let radius = center ? center.distance(p0) : p0.distance(p1) / 2;
         last_point.set_out_tangent(Point.polar(angle_out, 2 * radius * ellipse_constant));
 

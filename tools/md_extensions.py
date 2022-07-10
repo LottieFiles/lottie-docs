@@ -427,7 +427,7 @@ class LottiePlaygroundBuilder:
             input.text = contents
             pre = etree.SubElement(input_wrapper, "pre", {"aria-hidden": "true"})
             code = etree.SubElement(pre, "code", {"class": "language-js hljs"})
-            code.text = contents
+            code.text = AtomicString(contents)
 
         input.attrib.setdefault("oninput", "")
         input.attrib["oninput"] += "lottie_player_{id}.reload();".format(id=self.anim_id)
@@ -474,7 +474,7 @@ class LottiePlaygroundBuilder:
         if start_hidden:
             pre.attrib["hidden"] = "hidden"
         code = etree.SubElement(pre, "code", {"id": code_viewer_id, "class": "language-%s hljs" % language})
-        code.text = source
+        code.text = AtomicString(source)
         return code_viewer_id
 
 
@@ -645,7 +645,9 @@ class ShapeBezierScript(LottiePlayground):
                     pre = etree.SubElement(builder.element, "pre")
                     # We don't use `js` highlighting because it's a bit bugged
                     code = etree.SubElement(pre, "code", {"class": "language-typescript hljs"})
-                    code.text = func_script + "\n\n// Example invocation\n" + func + ";"
+                    code.text = AtomicString(
+                        func_script + "\n\n// Example invocation\n" + func + ";"
+                    )
                 else:
                     non_func_script = script_element.text
             else:
