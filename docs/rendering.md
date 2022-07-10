@@ -682,6 +682,63 @@ function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
     return p0;
 }
 
+
+function get_intersection(a, b)
+{
+    let intersect = a.intersections(b);
+
+    if ( intersect.length && fuzzy_compare(intersect[0], 1) )
+        intersect.shift();
+
+    if ( intersect.length )
+        return intersect[0];
+
+    return null;
+}
+
+function prune_segment_intersection(a, b)
+{
+    let out_a = [...a];
+    let out_b = [...b];
+
+    let intersect = get_intersection(a[a.length-1], b[0]);
+
+    if ( intersect )
+    {
+        out_a[a.length-1] = a[a.length-1].split(intersect[0])[0];
+        out_b[0] = b[0].split(intersect[1])[1];
+    }
+
+    if ( a.length > 1 && b.length > 1 )
+    {
+        intersect = get_intersection(a[0], b[b.length - 1]);
+
+        if ( intersect )
+        {
+            return [
+                [a[0].split(intersect[0])[0]],
+                [b[b.length-1].split(intersect[1])[1]],
+            ];
+        }
+    }
+
+    return [out_a, out_b];
+}
+
+function prune_intersections(segments)
+{
+    let cur;
+    for ( let i = 1; i < segments.length; i++ )
+    {
+        [segments[i-1], segments[i]] = prune_segment_intersection(segments[i - 1], segments[i]);
+    }
+
+    if ( segments.length > 1 )
+        [segments[segments.length - 1], segments[0]] = prune_segment_intersection(segments[segments.length - 1], segments[0]);
+
+    return segments;
+}
+
 function offset_path(
     // Beziers as collected from the other shapes
     collected_shapes,
@@ -712,7 +769,6 @@ function offset_path(
                 (A cubic bezier can have none, one, or two inflection points)
             */
             let flex = segment.inflection_points();
-            console.log(flex.length);
 
             if ( flex.length == 0 )
             {
@@ -741,6 +797,7 @@ function offset_path(
             }
         }
 
+        multi_segments = prune_intersections(multi_segments);
 
         // Add bezier segments to the output and apply line joints
         let last_point = null;
