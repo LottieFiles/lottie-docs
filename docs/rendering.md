@@ -512,6 +512,75 @@ function round_corners(
 }
 </script>
 
+
+## Zig Zag
+
+See [Zig Zag](shapes.md#zig-zag).
+
+
+{shape_bezier_script:zig-zag.json:394:394}
+Amplitude:<input type="range" min="-100" value="10" max="100"/>
+Frequency:<input type="range" min="1" value="10" max="30"/>
+Stroke Width:<input type="range" min="1" value="3" max="30"/>
+<json>lottie.layers[0].shapes[0].it[1]</json>
+<script>
+lottie.layers[0].shapes[0].it[1].s.k = data["Amplitude"];
+lottie.layers[0].shapes[0].it[1].pt.k = data["Frequency"];
+lottie.layers[0].shapes[0].it[2].w.k = data["Stroke Width"];
+
+let star = lottie.layers[0].shapes[0].it[0];
+bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
+</script>
+<script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.pt.k)" varname="modifier" suffix="[0].to_lottie()">
+function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction)
+{
+    output_bezier.add_vertex(segment.start.pos);
+
+    for ( let i = 0; i < frequency; i++ )
+    {
+        let t = (i+0.5) / frequency;
+        let angle = segment.tangent_angle(t);
+        let point = segment.point(t);
+        point.x += Math.cos(angle) * direction * amplitude;
+        point.y -= Math.sin(angle) * direction * amplitude;
+        output_bezier.add_vertex(point);
+
+        direction *= -1;
+    }
+
+    output_bezier.add_vertex(segment.end.pos);
+    return direction;
+}
+
+function zig_zag(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    amplitude,
+    frequency
+)
+{
+    // Ensure we have an integer number of segments
+    frequency = Math.max(1, Math.round(frequency));
+
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+        let direction = 1;
+        output_bezier.closed = input_bezier.closed;
+        let count = input_bezier.segment_count();
+        for ( let i = 0; i < count; i++ )
+            direction = -zig_zag_segment(output_bezier, input_bezier.segment(i), amplitude, frequency, direction);
+
+        result.push(output_bezier);
+    }
+
+    return result;
+}
+</script>
+
+
 ## Transform
 
 This is how to convert a [transform](concepts.md#transform) object into a matrix.

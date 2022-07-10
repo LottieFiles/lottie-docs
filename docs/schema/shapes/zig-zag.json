@@ -21,12 +21,12 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "s": {
-                    "title": "Size",
+                    "title": "Amplitude",
                     "description": "Distance between peaks and troughs",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "pt": {
-                    "title": "Points",
+                    "title": "Frequency",
                     "description": "Number of ridges",
                     "$ref": "#/$defs/animated-properties/value"
                 }

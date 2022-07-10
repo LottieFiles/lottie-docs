@@ -53,8 +53,82 @@ class Bezier
 
         return lot;
     }
+
+    segment(index)
+    {
+        let p1 = this.points[index];
+        let p2 = this.points[(index + 1) % this.points.length];
+        return new BezierSegment(p1, p2);
+    }
+
+    segment_count()
+    {
+        return this.closed ? this.points.length : this.points.length - 1;
+    }
 }
 
+class BezierSegment
+{
+    constructor(start, end)
+    {
+        let k0 = start.pos;
+        let k1;
+        let k2;
+        let k3 = end.pos;
+        if ( start.out_tangent.is_origin() && end.in_tangent.is_origin() )
+        {
+            k1 = lerp(start.pos, end.pos, 1/3);
+            k2 = lerp(start.pos, end.pos, 2/3);
+        }
+        else
+        {
+            k1 = start.pos.add(start.out_tangent);
+            k2 = end.pos.add(end.in_tangent);
+        }
+        this.a = this._a(k0, k1, k2, k3);
+        this.b = this._b(k0, k1, k2);
+        this.c = this._c(k0, k1);
+        this.d = this._d(k0);
+        this.start = start;
+        this.end = end;
+    }
+
+    point(t)
+    {
+        return this.a.mul(t).add(this.b).mul(t).add(this.c).mul(t).add(this.d);
+    }
+
+    derivative(t)
+    {
+        return this.a.mul(3 * t).add(this.b.mul(2)).mul(t).add(this.c);
+    }
+
+    tangent_angle(t)
+    {
+        let p = this.derivative(t);
+        return Math.atan2(p.x, p.y);
+    }
+
+    _a(k0, k1, k2, k3)
+    {
+        return k0.neg().add(k1.mul(3)).add(k2.mul(-3)).add(k3);
+    }
+
+    _b(k0, k1, k2)
+    {
+        return k0.mul(3).add(k1.mul(-6)).add(k2.mul(3));
+    }
+
+    _c(k0, k1)
+    {
+        return k0.mul(-3).add(k1.mul(3));
+    }
+
+    _d(k0)
+    {
+        return k0;
+    }
+}
 
 function lerp(p0, p1, amount)
 {
@@ -134,5 +208,10 @@ class Point
     neg()
     {
         return new Point(-this.x, -this.y);
+    }
+
+    is_origin()
+    {
+        return this.x == 0 && this.y == 0;
     }
 }

@@ -668,10 +668,11 @@ class ShapeBezierScript(LottiePlayground):
                     {json_data},
                     function (lottie, data)
                     {{
+                        let bezier_lottie = lottie_player_{id}_bezier.lottie;
                         {non_func_script}
                         this.json_viewer_contents = {shape_path};
                         let {varname} = {shape_path};
-                        let bez_target = lottie_player_{id}_bezier.lottie.layers[0].shapes[0].it[0].ks;
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
                         bez_target.k = {func}{func_suffix};
                         lottie_player_{id}_bezier.reload();
                         this.set_json('{json_viewer_id}_bezier', bez_target.k);
