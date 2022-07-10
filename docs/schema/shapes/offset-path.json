@@ -27,7 +27,6 @@
                 },
                 "ml": {
                     "title": "Miter Limit",
-                    "type": "number",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

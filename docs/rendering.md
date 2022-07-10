@@ -534,12 +534,12 @@ bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
 <script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.pt.k)" varname="modifier" suffix="[0].to_lottie()">
 function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction)
 {
-    output_bezier.add_vertex(segment.start.pos);
+    output_bezier.add_vertex(segment.start);
 
     for ( let i = 0; i < frequency; i++ )
     {
         let t = (i+0.5) / frequency;
-        let angle = segment.tangent_angle(t);
+        let angle = segment.normal_angle(t);
         let point = segment.point(t);
         point.x += Math.cos(angle) * direction * amplitude;
         point.y -= Math.sin(angle) * direction * amplitude;
@@ -548,7 +548,7 @@ function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction
         direction *= -1;
     }
 
-    output_bezier.add_vertex(segment.end.pos);
+    output_bezier.add_vertex(segment.end);
     return direction;
 }
 
@@ -567,6 +567,7 @@ function zig_zag(
     for ( let input_bezier of collected_shapes )
     {
         let output_bezier = new Bezier();
+
         let direction = 1;
         output_bezier.closed = input_bezier.closed;
         let count = input_bezier.segment_count();
@@ -580,6 +581,114 @@ function zig_zag(
 }
 </script>
 
+
+## Offset Path
+
+See [Offset Path](shapes.md#offset-path).
+
+
+{shape_bezier_script:offset-path.json:394:394}
+Star Roundness:<input type="range" min="0" value="0" max="100"/>
+Amount:<input type="range" min="-100" value="10" max="100"/>
+Miter Limit:<input type="range" min="0" value="100" max="100"/>
+Line Join:<enum value="2">line-join</enum>
+<json>lottie.layers[0].shapes[0].it[1]</json>
+<script>
+lottie.layers[0].shapes[0].it[0].is.k = data["Star Roundness"];
+lottie.layers[0].shapes[0].it[0].os.k = data["Star Roundness"];
+lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+lottie.layers[0].shapes[0].it[1].lj = data["Line Join"];
+lottie.layers[0].shapes[0].it[1].ml.k = data["Miter Limit"];
+
+let star = lottie.layers[0].shapes[0].it[0];
+bezier_lottie.layers[0].shapes[0].it[1].w.k = 3;
+</script>
+<script func="offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)" varname="modifier" suffix="[0].to_lottie()">
+function linear_offset(p1, p2, amount)
+{
+    let angle = Math.atan2(p2.x - p1.x, p2.y - p1.y);
+    return [
+        p1.add_polar(angle, amount),
+        p2.add_polar(angle, amount)
+    ];
+}
+
+function offset_segment(output_bezier, segment, amount, last_point)
+{
+    let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
+    let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
+    let [p2a, p3] = linear_offset(segment.points[2], segment.points[3], amount);
+    let p1 = line_intersection(p0, p1a, p1b, p2b) ?? p1a;
+    let p2 = line_intersection(p2a, p3, p1b, p2b) ?? p2a;
+
+    if ( p0.is_equal(last_point) )
+    {
+        output_bezier.points[output_bezier.points.length - 1]
+            .set_out_tangent(p1.sub(p0));
+    }
+    else
+    {
+        output_bezier.add_vertex(p0)
+            .set_out_tangent(p1.sub(p0));
+    }
+
+    output_bezier.add_vertex(p3)
+        .set_in_tangent(p2.sub(p3));
+
+    return p3;
+}
+
+function offset_path(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    amount,
+    line_join,
+    miter_limit,
+)
+{
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+
+        output_bezier.closed = input_bezier.closed;
+        let count = input_bezier.segment_count();
+        let last_point = null;
+        for ( let i = 0; i < count; i++ )
+        {
+            let segment = input_bezier.segment(i);
+            let flex = segment.inflection_points();
+
+            if ( flex.length == 0 )
+            {
+                last_point = offset_segment(output_bezier, segment, amount, last_point);
+            }
+            else if ( flex.length == 1 || flex[1] == 1 )
+            {
+                let [left, right] = segment.split(flex[0]);
+
+                last_point = offset_segment(output_bezier, left, amount, last_point);
+                last_point = offset_segment(output_bezier, right, amount, last_point);
+            }
+            else
+            {
+                let [left, mid_right] = segment.split(flex[0]);
+                let t = (flex[1] - flex[0]) / (1 - flex[0]);
+                let [mid, right] = mid_right.split(t);
+
+                last_point = offset_segment(output_bezier, left, amount, last_point);
+                last_point = offset_segment(output_bezier, mid, amount, last_point);
+                last_point = offset_segment(output_bezier, right, amount, last_point);
+            }
+        }
+
+        result.push(output_bezier);
+    }
+
+    return result;
+}
+</script>
 
 ## Transform
 
