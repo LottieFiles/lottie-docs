@@ -37,14 +37,11 @@ for [Trim Path](shapes.md#trim-path) to work correctly.
 All shapes have the `d` attribute that if has the value `3` the path should be reversed.
 
 
-### Pseudocode
+### Code
 
-The pseudocode takes some shortcuts for readablility:
-
-All animated properties are shown as static, of course you'd need to get the
+The code examples take some shortcuts for readablility:
+all animated properties are shown as static, of course you'd need to get the
 correct values to render shapes at a given frame.
-
-It uses some utility types like `Bezier`, `lerp`, etc. They should be fairly self-explanatory.
 
 When adding points to a bezier, there are calls to `bezier.add_vertex()`.
 Assume the in/out tangents are `[0, 0]` if not specified.
@@ -54,8 +51,13 @@ the corresponding `add_vertex`.
 Bezier tangents are assumed to be relative to their vertex since that's how lottie works
 but it might be useful to keep them as absolute points when rendering.
 
-
 All the examples show the original on the left and the bezier on the right.
+
+Explanation for bezier operations is outside the scope of this guide,
+the code below use a simple bezier library for some operations,
+you can [check its sources](/lottie-docs/scripts/lottie_bezier.js)
+for some context on what the various functions do.
+
 
 ## Rectangle
 
