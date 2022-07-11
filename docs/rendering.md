@@ -620,7 +620,7 @@ function linear_offset(p1, p2, amount)
     Offset a bezier segment
     only works well if the segment is flat enough
 */
-function offset_segment(output_bezier, segment, amount)
+function offset_segment(segment, amount)
 {
     let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
     let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
@@ -772,15 +772,15 @@ function offset_path(
 
             if ( flex.length == 0 )
             {
-                multi_segments.push([offset_segment(output_bezier, segment, amount)]);
+                multi_segments.push([offset_segment(segment, amount)]);
             }
             else if ( flex.length == 1 || flex[1] == 1 )
             {
                 let [left, right] = segment.split(flex[0]);
 
                 multi_segments.push([
-                    offset_segment(output_bezier, left, amount),
-                    offset_segment(output_bezier, right, amount)
+                    offset_segment(left, amount),
+                    offset_segment(right, amount)
                 ]);
             }
             else
@@ -790,9 +790,9 @@ function offset_path(
                 let [mid, right] = mid_right.split(t);
 
                 multi_segments.push([
-                    offset_segment(output_bezier, left, amount),
-                    offset_segment(output_bezier, mid, amount),
-                    offset_segment(output_bezier, right, amount)
+                    offset_segment(left, amount),
+                    offset_segment(mid, amount),
+                    offset_segment(right, amount)
                 ]);
             }
         }
