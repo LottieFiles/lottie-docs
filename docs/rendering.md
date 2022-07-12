@@ -729,7 +729,6 @@ function prune_segment_intersection(a, b)
 
 function prune_intersections(segments)
 {
-    let cur;
     for ( let i = 1; i < segments.length; i++ )
     {
         [segments[i-1], segments[i]] = prune_segment_intersection(segments[i - 1], segments[i]);

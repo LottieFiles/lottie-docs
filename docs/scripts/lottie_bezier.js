@@ -317,7 +317,7 @@ class BezierSegment
         ];
     }
 
-    intersections(other, tolerance = 2, max_recursion = 5)
+    intersections(other, tolerance = 2, max_recursion = 10)
     {
         let intersections = [];
 
@@ -349,10 +349,10 @@ class BezierSegment
         let d1s = BezierSegment._split_data(d1);
         let d2s = BezierSegment._split_data(d2);
 
-        BezierSegment._intersects_impl(d1s[0], d2s[0], tolerance, intersections, depth + 1);
-        BezierSegment._intersects_impl(d1s[0], d2s[1], tolerance, intersections, depth + 1);
-        BezierSegment._intersects_impl(d1s[1], d2s[0], tolerance, intersections, depth + 1);
-        BezierSegment._intersects_impl(d1s[1], d2s[1], tolerance, intersections, depth + 1);
+        BezierSegment._intersects_impl(d1s[0], d2s[0], tolerance, intersections, depth + 1, max_recursion);
+        BezierSegment._intersects_impl(d1s[0], d2s[1], tolerance, intersections, depth + 1, max_recursion);
+        BezierSegment._intersects_impl(d1s[1], d2s[0], tolerance, intersections, depth + 1, max_recursion);
+        BezierSegment._intersects_impl(d1s[1], d2s[1], tolerance, intersections, depth + 1, max_recursion);
     }
 }
 
