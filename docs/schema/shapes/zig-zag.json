@@ -16,8 +16,8 @@
                     "const": "zz"
                 },
                 "r": {
-                    "title": "Roundness",
-                    "description": "Radius to maked it a smoother curve",
+                    "title": "Frequency",
+                    "description": "Number of ridges per segment",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "s": {
@@ -26,8 +26,8 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "pt": {
-                    "title": "Frequency",
-                    "description": "Number of ridges",
+                    "title": "Points",
+                    "description": "Type of points",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

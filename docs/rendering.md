@@ -521,37 +521,110 @@ See [Zig Zag](shapes.md#zig-zag).
 
 
 {shape_bezier_script:zig-zag.json:394:394}
+Zig Zag:
 Amplitude:<input type="range" min="-100" value="10" max="100"/>
-Frequency:<input type="range" min="1" value="10" max="30"/>
+Frequency:<input type="range" min="0" value="10" max="30"/>
+Star:
+Roundness:<input type="range" min="0" value="0" max="100"/>
+Rotation:<input type="range" min="0" value="0" max="360"/>
+Points:<input type="range" min="3" value="5" max="10"/>
 Stroke Width:<input type="range" min="1" value="3" max="30"/>
 <json>lottie.layers[0].shapes[0].it[1]</json>
 <script>
 lottie.layers[0].shapes[0].it[1].s.k = data["Amplitude"];
-lottie.layers[0].shapes[0].it[1].pt.k = data["Frequency"];
+lottie.layers[0].shapes[0].it[1].r.k = data["Frequency"];
+
+lottie.layers[0].shapes[0].it[0].pt.k = data["Points"];
+lottie.layers[0].shapes[0].it[0].r.k = data["Rotation"];
+lottie.layers[0].shapes[0].it[0].is.k = data["Roundness"];
+lottie.layers[0].shapes[0].it[0].os.k = data["Roundness"];
 lottie.layers[0].shapes[0].it[2].w.k = data["Stroke Width"];
 
 let star = lottie.layers[0].shapes[0].it[0];
 bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
 </script>
-<script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.pt.k)" varname="modifier" suffix="[0].to_lottie()">
+<script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.r.k)" varname="modifier" suffix="[0].to_lottie()">
+
+function angle_mean(a, b)
+{
+    if ( Math.abs(a-b) > Math.PI )
+        return (a + b) / 2 + Math.PI;
+
+    return (a + b) / 2;
+}
+
+function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude, direction)
+{
+    let point;
+    let angle;
+
+    if ( !segment_before )
+    {
+        point = segment_after.points[0];
+        angle = segment_after.normal_angle(0);
+    }
+    else if ( !segment_after )
+    {
+        point = segment_before.points[3];
+        angle = segment_before.normal_angle(1);
+    }
+    else
+    {
+        point = segment_after.points[0];
+        angle = angle_mean(segment_after.normal_angle(0), segment_before.normal_angle(1));
+    }
+
+    output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+}
+
 function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction)
 {
-    output_bezier.add_vertex(segment.start);
-
     for ( let i = 0; i < frequency; i++ )
     {
-        let t = (i+0.5) / frequency;
+        let t = (i + 1) / (frequency + 1);
         let angle = segment.normal_angle(t);
         let point = segment.point(t);
         point.x += Math.cos(angle) * direction * amplitude;
         point.y -= Math.sin(angle) * direction * amplitude;
         output_bezier.add_vertex(point);
 
-        direction *= -1;
+        direction = -direction;
     }
 
-    output_bezier.add_vertex(segment.end);
     return direction;
+}
+
+function zig_zag_bezier(input_bezier, amplitude, frequency)
+{
+    let output_bezier = new Bezier();
+
+    output_bezier.closed = input_bezier.closed;
+    let count = input_bezier.segment_count();
+
+    if ( count == 0 )
+        return output_bezier;
+
+    let direction = -1;
+    let segment = input_bezier.closed ? input_bezier.segment(count - 1) : null;
+    let next_segment = input_bezier.segment(0);
+
+    zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1);
+
+    for ( let i = 0; i < count; i++ )
+    {
+        segment = next_segment;
+
+        direction = zig_zag_segment(output_bezier, segment, amplitude, frequency, -direction);
+
+        if ( i == count - 1 && !input_bezier.closed )
+            next_segment = null;
+        else
+            next_segment = input_bezier.segment((i + 1) % count);
+
+        zig_zag_corner(output_bezier, segment, next_segment, amplitude, direction);
+    }
+
+    return output_bezier;
 }
 
 function zig_zag(
@@ -562,22 +635,12 @@ function zig_zag(
 )
 {
     // Ensure we have an integer number of segments
-    frequency = Math.max(1, Math.round(frequency));
+    frequency = Math.max(0, Math.round(frequency));
 
     let result = [];
 
     for ( let input_bezier of collected_shapes )
-    {
-        let output_bezier = new Bezier();
-
-        let direction = 1;
-        output_bezier.closed = input_bezier.closed;
-        let count = input_bezier.segment_count();
-        for ( let i = 0; i < count; i++ )
-            direction = -zig_zag_segment(output_bezier, input_bezier.segment(i), amplitude, frequency, direction);
-
-        result.push(output_bezier);
-    }
+        result.push(zig_zag_bezier(input_bezier, amplitude, frequency));
 
     return result;
 }
@@ -590,10 +653,12 @@ See [Offset Path](shapes.md#offset-path).
 
 
 {shape_bezier_script:offset-path.json:394:394}
-Star Roundness:<input type="range" min="0" value="0" max="100"/>
+Offset Path:
 Amount:<input type="range" min="-100" value="10" max="100"/>
 Miter Limit:<input type="range" min="0" value="100" max="100"/>
 Line Join:<enum value="2">line-join</enum>
+Star:
+Star Roundness:<input type="range" min="0" value="0" max="100"/>
 <json>lottie.layers[0].shapes[0].it[1]</json>
 <script>
 lottie.layers[0].shapes[0].it[0].is.k = data["Star Roundness"];
