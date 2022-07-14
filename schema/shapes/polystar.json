@@ -1,0 +1,76 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "PolyStar",
+    "description": "Star or regular polygon",
+    "caniuse": "shape-polystar",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "sr"
+                },
+                "p": {
+                    "title": "Position",
+                    "$ref": "#/$defs/animated-properties/position"
+                },
+                "or": {
+                    "title": "Outer Radius",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "os": {
+                    "title": "Outer Roundness",
+                    "description": "Outer Roundness as a percentage",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "r": {
+                    "title": "Rotation",
+                    "description": "Rotation, clockwise in degrees",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "pt": {
+                    "title": "Points",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sy": {
+                    "title": "Star Type",
+                    "description": "Star type, `1` for Star, `2` for Polygon",
+                    "$ref": "#/$defs/constants/star-type",
+                    "default": 1
+                }
+            },
+            "required": [
+                "ty", "or", "os", "pt", "p", "r"
+            ]
+        },
+        {
+            "if": {
+                "properties": {
+                    "sy": {
+                        "const": 1
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "ir": {
+                        "title": "Inner Radius",
+                        "$ref": "#/$defs/animated-properties/value"
+                    },
+                    "is": {
+                        "title": "Inner Roundness",
+                        "description": "Inner Roundness as a percentage",
+                        "$ref": "#/$defs/animated-properties/value"
+                    }
+                },
+                "required": ["ir", "is"]
+            }
+        }
+    ]
+}

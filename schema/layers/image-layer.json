@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Image Layer",
+    "description": "Layer that shows an image asset",
+    "caniuse": "layer-image",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/visual-layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer type",
+                    "type": "integer",
+                    "const": 2
+                },
+                "refId": {
+                    "title": "Image Id",
+                    "description": "ID of the image as specified in the assets",
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "ty", "refId"
+            ]
+        }
+    ]
+}

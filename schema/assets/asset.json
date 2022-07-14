@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Asset",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "description": "Unique identifier used by layers when referencing this asset",
+                    "type": "string",
+                    "default": ""
+                },
+                "nm": {
+                    "title": "Name",
+                    "description": "Human readable name",
+                    "type": "string"
+                }
+            },
+            "required": ["id"]
+        }
+    ]
+}

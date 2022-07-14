@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Solid Color Layer",
+    "description": "Layer with a solid color rectangle",
+    "caniuse": "layer-solid",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/visual-layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer type",
+                    "type": "integer",
+                    "const": 1
+                },
+                "sc": {
+                    "title": "Color",
+                    "description": "Color of the layer, unlike most other places, the color is a `#rrggbb` hex string",
+                    "type": "string",
+                    "default": ""
+                },
+                "sh": {
+                    "title": "Height",
+                    "type": "number"
+                },
+                "sw": {
+                    "title": "Width",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "ty", "sc", "sw", "sh"
+            ]
+        }
+    ]
+}

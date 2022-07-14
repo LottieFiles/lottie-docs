@@ -1,0 +1,47 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Mesh Warp Effect",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 31
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Rows",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Columns",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Quality",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "03",
+                            "$ref": "#/$defs/effect-values/no-value"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty",
+                "ef"
+            ]
+        }
+    ]
+}

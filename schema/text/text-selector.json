@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Selector",
+    "caniuse": "animators-range-selectors",
+    "properties": {
+        "nm": {
+            "title": "Name",
+            "type": "string"
+        },
+        "a": {
+            "title": "Transform",
+            "type": "object",
+            "properties": {
+                "s": {
+                    "$ref": "#/$defs/animated-properties/position"
+                }
+            }
+        },
+        "s": {
+            "title": "Selector",
+            "$ref": "#/$defs/text/text-selector-property"
+        }
+    }
+}

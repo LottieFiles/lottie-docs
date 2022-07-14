@@ -1,0 +1,34 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Effect Value",
+    "description": "Value for an effect",
+    "caniuse": "effects",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ix": {
+                    "title": "Effect Index",
+                    "type": "integer"
+                },
+                "mn": {
+                    "title": "Match Name",
+                    "type": "string"
+                },
+                "nm": {
+                    "title": "Name",
+                    "type": "string"
+                },
+                "ty": {
+                    "title": "Type",
+                    "type": "integer"
+                }
+            },
+            "required": []
+        }
+    ]
+}

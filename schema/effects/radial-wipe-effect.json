@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Radial Wipe",
+    "caniuse": "effect-radial-wipe",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 26
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Completion",
+                            "description": "Between 0 and 100",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Start Angle",
+                            "$ref": "#/$defs/effect-values/angle"
+                        },
+                        {
+                            "title": "Wipe Center",
+                            "$ref": "#/$defs/effect-values/point"
+                        },
+                        {
+                            "title": "Wipe",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Feather",
+                            "$ref": "#/$defs/effect-values/slider"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}
+

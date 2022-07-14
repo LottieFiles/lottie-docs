@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Layer Stroke",
+    "caniuse": "style-stroke",
+    "description": "Stroke / frame",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 0
+                },
+                "s": {
+                    "title": "Size",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/$defs/animated-properties/color-value"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

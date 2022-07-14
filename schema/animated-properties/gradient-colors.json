@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient Colors",
+    "description": "Represents colors and offsets in a gradient\n\nColors are represented as a flat list interleaving offsets and color components in weird ways\nThere are two possible layouts:\n\nWithout alpha, the colors are a sequence of offset, r, g, b\n\nWith alpha, same as above but at the end of the list there is a sequence of offset, alpha",
+
+    "properties": {
+        "k": {
+            "title": "Colors",
+            "$ref": "#/$defs/animated-properties/multi-dimensional"
+        },
+        "p": {
+            "title": "Count",
+            "description": "Number of colors in `k`",
+            "type": "integer",
+            "default": 0
+        }
+    },
+    "required": ["p", "k"]
+}

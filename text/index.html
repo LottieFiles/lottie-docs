@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/text/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Text - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.1/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="..">Lottie Docs</a>
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fas fa-microscope'></i> Topics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="..">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fa fa-book'></i> Lottie <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/">General concepts</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../animation/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fa fa-puzzle-piece'></i> Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fa fa-wrench'></i> Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <a rel="prev" href="../constants/">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../expressions/">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/text.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#text">Text</a></li>
+            <li class="second-level"><a href="#font-list">Font List</a></li>
+                
+                <li class="third-level"><a href="#using-a-system-font">Using a system font</a></li>
+                <li class="third-level"><a href="#font-from-css-url">Font from CSS URL</a></li>
+                <li class="third-level"><a href="#font-from-url">Font from URL</a></li>
+                <li class="third-level"><a href="#character-data">Character Data</a></li>
+            <li class="second-level"><a href="#text-layer">Text Layer</a></li>
+                
+                <li class="third-level"><a href="#text-animator-data">Text Animator Data</a></li>
+                <li class="third-level"><a href="#text-data">Text Data</a></li>
+                <li class="third-level"><a href="#text-data-keyframe">Text Data Keyframe</a></li>
+                <li class="third-level"><a href="#text-document">Text Document</a></li>
+                <li class="third-level"><a href="#text-more-options">Text More Options</a></li>
+                <li class="third-level"><a href="#masked-path">Masked Path</a></li>
+                <li class="third-level"><a href="#text-selector">Text Selector</a></li>
+                <li class="third-level"><a href="#text-selector-property">Text Selector Property</a></li>
+                <li class="third-level"><a href="#text-animator-data-property">Text Animator Data Property</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="text">Text</h1>
+<h2 id="font-list">Font List</h2>
+<p>Fonts are defined in the animation object, under <code>fonts</code>.</p>
+<p>When <code>fonts</code> is present in the <a href="../animation/">Animation</a> object,
+it has a single attribute called <code>list</code>, which is an array of font objects:</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/font" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ascent</code></td>
+<td><code>number</code></td>
+<td>
+<p>Text will be moved down based on this value</p>
+</td>
+</tr>
+<tr>
+<td><code>fFamily</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Family</p>
+</td>
+</tr>
+<tr>
+<td><code>fName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name used by text documents to reference this font, usually it's <code>fFamily</code> followed by <code>fStyle</code></p>
+</td>
+</tr>
+<tr>
+<td><code>fStyle</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Style</p>
+</td>
+</tr>
+<tr>
+<td><code>fPath</code></td>
+<td><code>string</code></td>
+<td>
+<p>Path</p>
+</td>
+</tr>
+<tr>
+<td><code>fWeight</code></td>
+<td><code>string</code></td>
+<td>
+<p>Weight</p>
+</td>
+</tr>
+<tr>
+<td><code>origin</code></td>
+<td><a href="../constants/#fontpathorigin">FontPathOrigin</a> </td>
+<td>
+<p>Origin</p>
+</td>
+</tr>
+<tr>
+<td><code>fClass</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class applied to text objects using this font</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To understand how to load fonts it's better to look at some examples so here
+follow various ways of adding a font into lottie. The tables show the JSON,
+its resulting output, then an equivalent font definition using CSS.</p>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf) format('truetype');
+}
+</style>
+
+<h3 id="using-a-system-font">Using a system font</h3>
+<p>Here we use <code>origin</code> 0 (and we can omit it).</p>
+<p><code>fFamily</code> needs to be an available font family.</p>
+<table>
+<tr><th>JSON</th><th>Lottie Output</th></tr>
+<tr>
+<td>
+<pre><code class="language-json">{
+    &quot;fFamily&quot;: &quot;monospace&quot;,
+    &quot;fName&quot;: &quot;MyFont&quot;,
+    &quot;fStyle&quot;: &quot;Regular&quot;
+}
+</code></pre>
+<p></td><td markdown="block"></p>
+<p>
+<div>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_49" style="width:300px;height:100px"></div>
+</div>
+<div><button id="lottie_play_49" onclick="lottie_player_49.play(); document.getElementById('lottie_pause_49').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_49" onclick="lottie_player_49.pause(); document.getElementById('lottie_play_49').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../examples/font-local.json" title="Download"><button><i class="fas fa-download"></i></button></a><button onclick="playground_set_url(&quot;/lottie-docs/examples/font-local.json&quot;);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button></div>
+<script>
+                var lottie_player_49 = new LottiePlayer(
+                    'lottie_target_49',
+                    '../examples/font-local.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</p>
+</td>
+</tr>
+<tr><th>CSS</th><th>Output</th></tr>
+<tr><td>
+
+
+<pre><code class="language-css">{
+    font-family: monospace;
+}
+</code></pre>
+
+
+</td><td>
+<div style="font-family: monospace; font-size:100px; color: black; background: white;">Hello</div>
+</td></tr>
+</table>
+<h3 id="font-from-css-url">Font from CSS URL</h3>
+<p>Here we use <code>origin</code> 1.</p>
+<table>
+<tr><th>JSON</th><th>Lottie Output</th></tr>
+<tr>
+<td>
+<pre><code class="language-json">{
+    &quot;fPath&quot;: &quot;https://fonts.googleapis.com/css2?family=Montserrat:wght@800&amp;display=swap&quot;,
+    &quot;fFamily&quot;: &quot;Poppins&quot;,
+    &quot;fStyle&quot;: &quot;Bold&quot;,
+    &quot;fName&quot;: &quot;Poppins Bold&quot;,
+    &quot;origin&quot;: 1
+}
+</code></pre>
+<p></td><td markdown="block"></p>
+<p>
+<div>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_48" style="width:300px;height:100px"></div>
+</div>
+<div><button id="lottie_play_48" onclick="lottie_player_48.play(); document.getElementById('lottie_pause_48').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_48" onclick="lottie_player_48.pause(); document.getElementById('lottie_play_48').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../examples/font-css.json" title="Download"><button><i class="fas fa-download"></i></button></a><button onclick="playground_set_url(&quot;/lottie-docs/examples/font-css.json&quot;);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button></div>
+<script>
+                var lottie_player_48 = new LottiePlayer(
+                    'lottie_target_48',
+                    '../examples/font-css.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</p>
+</td>
+</tr>
+<tr><th>CSS</th><th>Output</th></tr>
+<tr><td>
+
+
+<pre><code class="language-css"> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&amp;display=swap');
+</code></pre>
+
+
+or
+
+
+<pre><code class="language-html">&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+</code></pre>
+
+
+</td><td>
+<div style="font-family: Poppins; font-size:100px; color: black; background: white;">Hello</div>
+</td></tr>
+</table>
+<h3 id="font-from-url">Font from URL</h3>
+<p>Here we use <code>origin</code> 3.</p>
+<table>
+<tr><th>JSON</th><th>Lottie Output</th></tr>
+<tr>
+<td>
+<pre><code class="language-json">{
+    &quot;fPath&quot;: &quot;https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf&quot;,
+    &quot;fFamily&quot;: &quot;Ubuntu&quot;,
+    &quot;fStyle&quot;: &quot;Light Italic&quot;,
+    &quot;fName&quot;: &quot;Ubuntu Light Italic&quot;,
+    &quot;origin&quot;: 3
+}
+</code></pre>
+<p></td><td markdown="block"></p>
+<p>
+<div>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_47" style="width:300px;height:100px"></div>
+</div>
+<div><button id="lottie_play_47" onclick="lottie_player_47.play(); document.getElementById('lottie_pause_47').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_47" onclick="lottie_player_47.pause(); document.getElementById('lottie_play_47').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../examples/font-url.json" title="Download"><button><i class="fas fa-download"></i></button></a><button onclick="playground_set_url(&quot;/lottie-docs/examples/font-url.json&quot;);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button></div>
+<script>
+                var lottie_player_47 = new LottiePlayer(
+                    'lottie_target_47',
+                    '../examples/font-url.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</p>
+</td>
+</tr>
+<tr><th>CSS</th><th>Output</th></tr>
+<tr><td>
+
+
+<pre><code class="language-css">@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf) format('truetype');
+}
+</code></pre>
+
+
+</td><td>
+<div style="font-family: ubuntu; font-weight: 300; font-style: italic; font-size:100px; color: black; background: white;">Hello</div>
+</td></tr>
+</table>
+<h3 id="character-data">Character Data</h3>
+<p>You can also have font data directly into the lottie, this is done by having an
+array of character data objects in the <code>chars</code> attribute of the <a href="../animation/">animation</a>.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/character-data" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><span><a href="./#character-shapes">Character Shape</a> or <a href="./#character-precomp">Character Precomp</a></span></td>
+<td>
+<p>Defines how the character is defined</p>
+</td>
+</tr>
+<tr>
+<td><code>ch</code></td>
+<td><code>string</code></td>
+<td>
+<p>Character</p>
+</td>
+</tr>
+<tr>
+<td><code>fFamily</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Family</p>
+</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>number</code></td>
+<td>
+<p>Font Size</p>
+</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Style</p>
+</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td><code>number</code></td>
+<td>
+<p>Width</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="character-shapes">Character Shapes</h4>
+<p><span>Defines a character as shapes</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/character-shapes" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shapes</code></td>
+<td><a href="../concepts/#lists-of-layers-and-shapes">Shape List</a> </td>
+<td>
+<p>Shapes forming the character</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="character-precomp">Character Precomp</h4>
+<p><span>Defines a character as a precomp layer</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/character-precomp" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>refId</code></td>
+<td><code>string</code></td>
+<td>
+<p>ID of the precomp as specified in the assets</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../concepts/#transform">Transform</a> </td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="text-layer">Text Layer</h2>
+<p>The <a href="../layers/#text-layer">text layer</a> has an attribute called <code>t</code> containing a <a href="#text-animator-data">Text Animator Data</a> object.</p>
+<h3 id="text-animator-data">Text Animator Data</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-animator-data" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td><code>array</code> of <span><a href="./#text-animator-data-property">Text Animator Data Property</a> or <a href="./#text-selector">Text Selector</a></span></td>
+<td>
+<p>Properties</p>
+</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td><a href="./#text-data">Text Data</a> </td>
+<td>
+<p>Data</p>
+</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td><a href="./#text-more-options">Text More Options</a> </td>
+<td>
+<p>More Options</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="./#masked-path">Masked Path</a> </td>
+<td>
+<p>Masked Path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-data">Text Data</h3>
+<p>This object is similar to an <a href="../concepts/#animated-property">animated property</a> for text.</p>
+<p>The main difference is that it's always treated as animated (ie: you <em>must</em> use keyframes).</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-data" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>k</code></td>
+<td><code>array</code> of <a href="./#text-data-keyframe">Text Data Keyframe</a> </td>
+<td>
+<p>Array of <a href="#text-data-keyframe">keyframes</a></p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-data-keyframe">Text Data Keyframe</h3>
+<p>This is similar to the <a href="../concepts/#keyframe">keyframe</a> object used by animated properties,
+but it doesn't have any attribute specifying interpolation as text is always animated in discrete steps.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-data-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>s</code></td>
+<td><a href="./#text-document">Text Document</a> </td>
+<td>
+<p>Start</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-document">Text Document</h3>
+<p>This is where the actual text data is stored.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-document" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Family</p>
+</td>
+</tr>
+<tr>
+<td><code>fc</code></td>
+<td><a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Fill Color</p>
+</td>
+</tr>
+<tr>
+<td><code>sc</code></td>
+<td><a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Stroke Color</p>
+</td>
+</tr>
+<tr>
+<td><code>sw</code></td>
+<td><code>number</code></td>
+<td>
+<p>Stroke Width</p>
+</td>
+</tr>
+<tr>
+<td><code>of</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Render stroke above the fill</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><code>number</code></td>
+<td>
+<p>Font Size</p>
+</td>
+</tr>
+<tr>
+<td><code>lh</code></td>
+<td><code>number</code></td>
+<td>
+<p>Distance between lines on multiline or wrapped text</p>
+</td>
+</tr>
+<tr>
+<td><code>sz</code></td>
+<td><code>array</code> of <code>number</code></td>
+<td>
+<p>Size of the box containing the text</p>
+</td>
+</tr>
+<tr>
+<td><code>ps</code></td>
+<td><code>array</code> of <code>number</code></td>
+<td>
+<p>Position of the box containing the text</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>string</code></td>
+<td>
+<p>Text, note that newlines are encoded with \r</p>
+</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td><a href="../constants/#textjustify">TextJustify</a> </td>
+<td>
+<p>Justify</p>
+</td>
+</tr>
+<tr>
+<td><code>ca</code></td>
+<td><a href="../constants/#textcaps">TextCaps</a> </td>
+<td>
+<p>Text Caps</p>
+</td>
+</tr>
+<tr>
+<td><code>tr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Text Tracking</p>
+</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td><code>number</code></td>
+<td>
+<p>Baseline Shift</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Text</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" name="Text" oninput="lottie_player_46.reload();" type="text" value="Hello" /></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Color Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="1" min="0" name="Color Red" oninput="lottie_player_46.reload();document.getElementById('playground_46_2_span').innerText = event.target.value;" step="0.01" type="range" value="0" /><span id="playground_46_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Color Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="1" min="0" name="Color Green" oninput="lottie_player_46.reload();document.getElementById('playground_46_3_span').innerText = event.target.value;" step="0.01" type="range" value="0" /><span id="playground_46_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Color Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="1" min="0" name="Color Blue" oninput="lottie_player_46.reload();document.getElementById('playground_46_4_span').innerText = event.target.value;" step="0.01" type="range" value="0" /><span id="playground_46_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="32" min="0" name="Stroke Width" oninput="lottie_player_46.reload();document.getElementById('playground_46_5_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_46_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="1" min="0" name="Stroke Red" oninput="lottie_player_46.reload();document.getElementById('playground_46_6_span').innerText = event.target.value;" step="0.01" type="range" value="0" /><span id="playground_46_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="1" min="0" name="Stroke Green" oninput="lottie_player_46.reload();document.getElementById('playground_46_7_span').innerText = event.target.value;" step="0.01" type="range" value="0" /><span id="playground_46_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="1" min="0" name="Stroke Blue" oninput="lottie_player_46.reload();document.getElementById('playground_46_8_span').innerText = event.target.value;" step="0.01" type="range" value="0" /><span id="playground_46_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="300" min="0" name="Position X" oninput="lottie_player_46.reload();document.getElementById('playground_46_9_span').innerText = event.target.value;" type="range" value="5" /><span id="playground_46_9_span">5</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="100" min="0" name="Position Y" oninput="lottie_player_46.reload();document.getElementById('playground_46_10_span').innerText = event.target.value;" type="range" value="80" /><span id="playground_46_10_span">80</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Font Size</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="46" max="150" min="0" name="Font Size" oninput="lottie_player_46.reload();document.getElementById('playground_46_11_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_46_11_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Justify</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="46" name="Justify" oninput="lottie_player_46.reload();"><option value="0">Left</option><option value="1">Right</option><option value="2">Center</option><option value="3">Justify with Last Line Left</option><option value="4">Justify with Last Line Right</option><option value="5">Justify with Last Line Center</option><option value="6">Justify with Last Line Full</option></select></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_46" style="width:300px;height:100px"></div>
+</div>
+<div><button id="lottie_play_46" onclick="lottie_player_46.play(); document.getElementById('lottie_pause_46').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_46" onclick="lottie_player_46.pause(); document.getElementById('lottie_play_46').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_46.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_46_13_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_46_13_parent">
+<pre><code class="language-json hljs" id="playground_46_13">
+</code></pre>
+</div>
+<script>
+        var lottie_player_46 = new PlaygroundPlayer(
+            46,
+            'playground_46_13',
+            'lottie_target_46',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 120, "w": 300, "h": 100, "ddd": 0, "assets": [], "fonts": {"list": [{"fPath": "https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf", "fFamily": "Ubuntu", "fStyle": "Light Italic", "fName": "Ubuntu Light Italic", "origin": 3}]}, "layers": [{"nm": "Text Layer", "ty": 5, "sr": 1, "ks": {"p": {"k": [5, 80], "a": 0}}, "ip": 0, "op": 120, "st": 0, "t": {"a": [], "d": {"k": [{"s": {"f": "Ubuntu Light Italic", "fc": [0, 0, 0], "s": 100, "t": "Hello", "j": 0}, "t": 0}]}, "m": {"a": {"k": [0, 0], "a": 0}}, "p": {}}}]},
+            function (lottie, data)
+            {
+                lottie.layers[0].t.d.k[0].s.t = data["Text"];
+lottie.layers[0].t.d.k[0].s.fc[0] = data["Color Red"];
+lottie.layers[0].t.d.k[0].s.fc[1] = data["Color Green"];
+lottie.layers[0].t.d.k[0].s.fc[2] = data["Color Blue"];
+lottie.layers[0].t.d.k[0].s.sc = [
+    data["Stroke Red"],
+    data["Stroke Green"],
+    data["Stroke Blue"]
+];
+lottie.layers[0].t.d.k[0].s.sw = data["Stroke Width"];
+lottie.layers[0].ks.p.k[0] = data["Position X"];
+lottie.layers[0].ks.p.k[1] = data["Position Y"];
+lottie.layers[0].t.d.k[0].s.s = data["Font Size"];
+lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);this.json_viewer_contents = lottie.layers[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="text-more-options">Text More Options</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-more-options" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> Vector</td>
+<td>
+<p>Group alignment</p>
+</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td><a href="../constants/#textgrouping">TextGrouping</a> </td>
+<td>
+<p>Anchor point grouping</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="masked-path">Masked Path</h3>
+<p><span>Uses the path described by a layer mask to put the text on said path.</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/masked-path" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/text-path" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>m</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index of the mask to use</p>
+</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>First Margin</p>
+</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Last Margin</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Reverse Path</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Force Alignment</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Perpendicular To Path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-selector">Text Selector</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-selector" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/animators-range-selectors" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><code>object</code></td>
+<td>
+<p>Transform</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="./#text-selector-property">Text Selector Property</a> </td>
+<td>
+<p>Selector</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-selector-property">Text Selector Property</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-selector-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Expressible</p>
+</td>
+</tr>
+<tr>
+<td><code>xe</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Max Ease</p>
+</td>
+</tr>
+<tr>
+<td><code>ne</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Min Ease</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Max Amount</p>
+</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><a href="../constants/#textbased">TextBased</a> </td>
+<td>
+<p>Based On</p>
+</td>
+</tr>
+<tr>
+<td><code>rn</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Randomize</p>
+</td>
+</tr>
+<tr>
+<td><code>sh</code></td>
+<td><a href="../constants/#textshape">TextShape</a> </td>
+<td>
+<p>Shape</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Offset</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../constants/#textbased">TextBased</a> </td>
+<td>
+<p>Range Units</p>
+</td>
+</tr>
+<tr>
+<td><code>sm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Selector Smoothness</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Start</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>End</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-animator-data-property">Text Animator Data Property</h3>
+<div>
+<p>Also has the attributes from <a href="../concepts/#transform">Transform</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/text/text-animator-data-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sw</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Stroke Width</p>
+</td>
+</tr>
+<tr>
+<td><code>sc</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Stroke Color</p>
+</td>
+</tr>
+<tr>
+<td><code>sh</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Stroke Hue</p>
+</td>
+</tr>
+<tr>
+<td><code>ss</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Stroke Saturation</p>
+</td>
+</tr>
+<tr>
+<td><code>sb</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Stroke Brightness</p>
+</td>
+</tr>
+<tr>
+<td><code>so</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Stroke Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>fc</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Fill Color</p>
+</td>
+</tr>
+<tr>
+<td><code>fh</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Fill Hue</p>
+</td>
+</tr>
+<tr>
+<td><code>fs</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Fill Saturation</p>
+</td>
+</tr>
+<tr>
+<td><code>fo</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Fill Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>fb</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Fill Brightness</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Tracking</p>
+</td>
+</tr>
+<tr>
+<td><code>bl</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blur</p>
+</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Line Spacing</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+<hr>
+            <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/text.md"><i class="fab fa-github"></i> Edit this page on GitHub</a>
+        
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

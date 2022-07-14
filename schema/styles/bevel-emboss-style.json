@@ -1,0 +1,82 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Bevel Emboss",
+    "caniuse": "style-bevel-and-emboss",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 5
+                },
+                "bs": {
+                    "title": "Bevel Style",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "bt": {
+                    "title": "Technique",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sr": {
+                    "title": "Strength",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "s": {
+                    "title": "Size",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sf": {
+                    "title": "Soften",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "ga": {
+                    "title": "Global Angle",
+                    "description": "Use global light",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "a": {
+                    "title": "Angle",
+                    "description": "Local lighting angle",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "ll": {
+                    "title": "Altitude",
+                    "description": "Local lighting altitude",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "hm": {
+                    "title": "Highlight Mode",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "hc": {
+                    "title": "Highlight Color",
+                    "$ref": "#/$defs/animated-properties/color-value"
+                },
+                "ho": {
+                    "title": "Highlight Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sm": {
+                    "title": "Shadow Mode",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sc": {
+                    "title": "Shadow Color",
+                    "$ref": "#/$defs/animated-properties/color-value"
+                },
+                "so": {
+                    "title": "Shadow Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

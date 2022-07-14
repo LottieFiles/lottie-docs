@@ -1,0 +1,105 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Transform",
+    "description": "Layer transform",
+    "allOf": [
+        {
+            "properties": {
+                "a": {
+                    "title": "Anchor Point",
+                    "caniuse": "transform-anchor-point",
+                    "description": "Anchor point: a position (relative to its parent) around which transformations are applied (ie: center for rotation / scale)",
+                    "$ref": "#/$defs/animated-properties/position"
+                },
+                "s": {
+                    "title": "Scale",
+                    "caniuse": "transform-scale",
+                    "description": "Scale factor, `[100, 100]` for no scaling",
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "caniuse": "transform-opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sk": {
+                    "title": "Skew",
+                    "caniuse": "transform-skew",
+                    "description": "Skew amount as an angle in degrees",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sa": {
+                    "title": "Skew Axis",
+                    "caniuse": "transform-skew",
+                    "description": "Direction along which skew is applied, in degrees (`0` skews along the X axis, `90` along the Y axis)",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            }
+        },
+        {
+            "anyOf": [
+                {
+                    "oneOf": [
+                        {
+                            "properties":  {
+                                "p": {
+                                    "title": "Position",
+                                    "caniuse": "transform-position",
+                                    "description": "Position / Translation",
+                                    "$ref": "#/$defs/animated-properties/position"
+                                }
+                            }
+                        },
+                        {
+                            "properties":  {
+                                "p": {
+                                    "title": "Position",
+                                    "description": "Position / Translation with split components",
+                                    "$ref": "#/$defs/animated-properties/split-vector"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "oneOf": [
+                        {
+                            "properties":  {
+                                "r": {
+                                    "title": "Rotation",
+                                    "caniuse": "transform-rotation",
+                                    "description": "Rotation in degrees, clockwise",
+                                    "$ref": "#/$defs/animated-properties/value"
+                                }
+                            }
+                        },
+                        {
+                            "properties":  {
+                                "rx": {
+                                    "title": "X Rotation",
+                                    "description": "Split rotation component",
+                                    "$ref": "#/$defs/animated-properties/value"
+                                },
+                                "ry": {
+                                    "title": "Y Rotation",
+                                    "description": "Split rotation component",
+                                    "$ref": "#/$defs/animated-properties/value"
+                                },
+                                "rz": {
+                                    "title": "Z Rotation",
+                                    "description": "Split rotation component, equivalent to `r` when not split",
+                                    "$ref": "#/$defs/animated-properties/value"
+                                },
+                                "or": {
+                                    "title": "Orientation",
+                                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

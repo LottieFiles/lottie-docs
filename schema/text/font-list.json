@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Font List",
+    "description": "List of fonts",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "title": "List",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/text/font"
+                    }
+                }
+            },
+            "required": []
+        }
+    ]
+}

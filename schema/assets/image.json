@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Image",
+    "description": "External image",
+    "allOf": [
+        {
+            "$ref": "#/$defs/assets/file-asset"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "w": {
+                    "title": "Width",
+                    "description": "Width of the image",
+                    "type": "number",
+                    "default": 0
+                },
+                "h": {
+                    "title": "Height",
+                    "description": "Height of the image",
+                    "type": "number",
+                    "default": 0
+                },
+                "t": {
+                    "title": "Type",
+                    "description": "Marks as part of an image sequence if present",
+                    "type": "string",
+                    "const": "seq"
+                }
+            },
+            "required": ["p"]
+        }
+    ]
+}

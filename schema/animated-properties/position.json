@@ -1,0 +1,63 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Position Property",
+    "description": "An animatable property to represent a position in space",
+    "allOf": [
+        {
+            "properties": {
+                "ix": {
+                    "title": "Property Index",
+                    "type": "integer"
+                },
+                "a": {
+                    "title": "Animated",
+                    "description": "Whether the property is animated",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 0
+                },
+                "x": {
+                    "title": "Expression",
+                    "type": "string"
+                },
+                "l": {
+                    "title": "Length",
+                    "description": "Number of components in the value arrays.\nIf present values will be truncated or expanded to match this length when accessed from expressions.",
+                    "type": "integer"
+                }
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "a": { "const": 1  }
+                }
+            },
+            "then": {
+                "properties": {
+                    "k": {
+                        "type": "array",
+                        "title": "Animated Value",
+                        "description": "Array of keyframes",
+                        "items": {
+                            "$ref": "#/$defs/animated-properties/position-keyframe"
+                        }
+                    }
+                }
+            },
+            "else": {
+                "properties": {
+                    "k": {
+                        "title": "Static Value",
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "required": ["k"]
+}
+

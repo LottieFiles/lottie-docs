@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/rendering/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Tips for rendering - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.1/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="..">Lottie Docs</a>
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fas fa-microscope'></i> Topics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="..">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fa fa-book'></i> Lottie <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/">General concepts</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../animation/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fa fa-puzzle-piece'></i> Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fa fa-wrench'></i> Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <a rel="prev" href="../playground/json_editor/">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../schema/">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/rendering.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#tips-for-rendering">Tips for rendering</a></li>
+            <li class="second-level"><a href="#introduction">Introduction</a></li>
+                
+                <li class="third-level"><a href="#code">Code</a></li>
+            <li class="second-level"><a href="#rectangle">Rectangle</a></li>
+                
+            <li class="second-level"><a href="#ellipse">Ellipse</a></li>
+                
+            <li class="second-level"><a href="#polystar">PolyStar</a></li>
+                
+            <li class="second-level"><a href="#pucker-bloat">Pucker Bloat</a></li>
+                
+            <li class="second-level"><a href="#rounded-corners">Rounded Corners</a></li>
+                
+            <li class="second-level"><a href="#zig-zag">Zig Zag</a></li>
+                
+            <li class="second-level"><a href="#offset-path">Offset Path</a></li>
+                
+            <li class="second-level"><a href="#transform">Transform</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="tips-for-rendering">Tips for rendering</h1>
+<script src="../scripts/lottie_bezier.js"></script>
+<style>
+.json-parent:not([hidden]) {
+    display: flex;    
+}
+
+.json-parent > pre {
+    width: 50%;
+}
+.json-parent > pre > code {
+    height: 100%;
+}
+</style>
+<script>
+let converter_map = {};
+
+function convert_shape(shape)
+{
+    return converter_map[shape.ty](shape);
+}
+
+</script>
+
+<h2 id="introduction">Introduction</h2>
+<p>This page will give tips and example code on how to render certain objects within lottie.</p>
+<p>Lottie has several implementations and some things might vary from player to player,
+this guide tries to follow the behaviour of <a href="https://github.com/airbnb/lottie-web/">lottie web</a>
+which is the reference implementation.</p>
+<p>For shapes, it ensures the stroke order is the same as in lottie web, which is crucial
+for <a href="../shapes/#trim-path">Trim Path</a> to work correctly.</p>
+<p>All shapes have the <code>d</code> attribute that if has the value <code>3</code> the path should be reversed.</p>
+<h3 id="code">Code</h3>
+<p>The code examples take some shortcuts for readablility:
+all animated properties are shown as static, of course you'd need to get the
+correct values to render shapes at a given frame.</p>
+<p>When adding points to a bezier, there are calls to <code>bezier.add_vertex()</code>.
+Assume the in/out tangents are <code>[0, 0]</code> if not specified.
+When they are specified they show as <code>set_out_tangent</code> immediately following
+the corresponding <code>add_vertex</code>.</p>
+<p>Bezier tangents are assumed to be relative to their vertex since that's how lottie works
+but it might be useful to keep them as absolute points when rendering.</p>
+<p>All the examples show the original on the left and the bezier on the right.</p>
+<p>Explanation for bezier operations is outside the scope of this guide,
+the code below use a simple bezier library for some operations,
+you can <a href="/lottie-docs/scripts/lottie_bezier.js">check its sources</a>
+for some context on what the various functions do.</p>
+<h2 id="rectangle">Rectangle</h2>
+<p>See <a href="../shapes/#rectangle">Rectangle</a>.</p>
+<p>Note that unlike other shapes, on lottie web when the <code>d</code> attribute is missing,
+the rectangle defaults as being reversed.</p>
+<p>Rectangle without rounded corners:</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Position x</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="28" max="512" min="0" name="Position x" oninput="lottie_player_28.reload();document.getElementById('playground_28_1_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_28_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="28" max="512" min="0" name="Position y" oninput="lottie_player_28.reload();document.getElementById('playground_28_2_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_28_2_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="28" max="512" min="0" name="Width" oninput="lottie_player_28.reload();document.getElementById('playground_28_3_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_28_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Height</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="28" max="512" min="0" name="Height" oninput="lottie_player_28.reload();document.getElementById('playground_28_4_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_28_4_span">256</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_28" style="width:394px;height:394px"></div>
+<div id="lottie_target_28_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_28" onclick="lottie_player_28.play(); document.getElementById('lottie_pause_28').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_28" onclick="lottie_player_28.pause(); document.getElementById('lottie_play_28').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_28.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_28_5_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_28_5_parent">
+<pre><code class="language-json hljs" id="playground_28_5">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_28_5_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">function rect(position, size)
+{
+    let left = position[0] - size[0] / 2;
+    let right = position[0] + size[0] / 2;
+    let top = position[1] - size[1] / 2;
+    let bottom = position[1] + size[1] / 2;
+
+    let bezier = new Bezier();
+
+    bezier.add_vertex(right, top);
+    bezier.add_vertex(right, bottom);
+    bezier.add_vertex(left, bottom);
+    bezier.add_vertex(left, top);
+
+    return bezier;
+}
+
+// Example invocation
+rect(shape.p.k, shape.s.k);
+</code></pre>
+<script>
+                function rect(position, size)
+{
+    let left = position[0] - size[0] / 2;
+    let right = position[0] + size[0] / 2;
+    let top = position[1] - size[1] / 2;
+    let bottom = position[1] + size[1] / 2;
+
+    let bezier = new Bezier();
+
+    bezier.add_vertex(right, top);
+    bezier.add_vertex(right, bottom);
+    bezier.add_vertex(left, bottom);
+    bezier.add_vertex(left, top);
+
+    return bezier;
+}
+                
+                var lottie_player_28_bezier = new LottiePlayer('lottie_target_28_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_28 = new PlaygroundPlayer(
+                    28,
+                    'playground_28_5',
+                    'lottie_target_28',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "rc", "nm": "Rectangle", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_28_bezier.lottie;
+                        lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+                        let shape = lottie.layers[0].shapes[0].it[0];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = rect(shape.p.k, shape.s.k).to_lottie();
+                        lottie_player_28_bezier.reload();
+                        this.set_json('playground_28_5_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<p>With rounded corners:</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Position x</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" max="512" min="0" name="Position x" oninput="lottie_player_29.reload();document.getElementById('playground_29_1_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_29_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" max="512" min="0" name="Position y" oninput="lottie_player_29.reload();document.getElementById('playground_29_2_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_29_2_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" max="512" min="0" name="Width" oninput="lottie_player_29.reload();document.getElementById('playground_29_3_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_29_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Height</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" max="512" min="0" name="Height" oninput="lottie_player_29.reload();document.getElementById('playground_29_4_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_29_4_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" max="512" min="0" name="Roundness" oninput="lottie_player_29.reload();document.getElementById('playground_29_5_span').innerText = event.target.value;" type="range" value="50" /><span id="playground_29_5_span">50</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_29" style="width:394px;height:394px"></div>
+<div id="lottie_target_29_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_29" onclick="lottie_player_29.play(); document.getElementById('lottie_pause_29').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_29" onclick="lottie_player_29.pause(); document.getElementById('lottie_play_29').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_29.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_29_6_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_29_6_parent">
+<pre><code class="language-json hljs" id="playground_29_6">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_29_6_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">function rounded_rect(position, size, roundness)
+{
+    let left = position[0] - size[0] / 2;
+    let right = position[0] + size[0] / 2;
+    let top = position[1] - size[1] / 2;
+    let bottom = position[1] + size[1] / 2;
+
+    let rounded = Math.min(size[0] / 2, size[1] / 2, roundness);
+
+    let bezier = new Bezier();
+
+    // top right, going down
+    bezier.add_vertex(right, top + rounded)
+        .set_in_tangent(0, -rounded/2);
+
+    // bottom right
+    bezier.add_vertex(right, bottom - rounded)
+        .set_out_tangent(0, rounded/2);
+
+    bezier.add_vertex(right - rounded, bottom)
+        .set_in_tangent(rounded/2, 0);
+
+    // bottom left
+    bezier.add_vertex(left + rounded, bottom)
+        .set_out_tangent(-rounded/2, 0);
+
+    bezier.add_vertex(left, bottom - rounded)
+        .set_in_tangent(0, rounded/2);
+
+    // top left
+    bezier.add_vertex(left, top + rounded)
+        .set_out_tangent(0, -rounded/2);
+
+    bezier.add_vertex(left + rounded, top)
+        .set_in_tangent(-rounded/2, 0);
+
+
+    // back to top right
+    bezier.add_vertex(right - rounded, top)
+        .set_out_tangent(rounded/2, 0);
+
+    return bezier;
+}
+
+// Example invocation
+rounded_rect(shape.p.k, shape.s.k, shape.r.k);
+</code></pre>
+<script>
+                function rounded_rect(position, size, roundness)
+{
+    let left = position[0] - size[0] / 2;
+    let right = position[0] + size[0] / 2;
+    let top = position[1] - size[1] / 2;
+    let bottom = position[1] + size[1] / 2;
+
+    let rounded = Math.min(size[0] / 2, size[1] / 2, roundness);
+
+    let bezier = new Bezier();
+
+    // top right, going down
+    bezier.add_vertex(right, top + rounded)
+        .set_in_tangent(0, -rounded/2);
+
+    // bottom right
+    bezier.add_vertex(right, bottom - rounded)
+        .set_out_tangent(0, rounded/2);
+
+    bezier.add_vertex(right - rounded, bottom)
+        .set_in_tangent(rounded/2, 0);
+
+    // bottom left
+    bezier.add_vertex(left + rounded, bottom)
+        .set_out_tangent(-rounded/2, 0);
+
+    bezier.add_vertex(left, bottom - rounded)
+        .set_in_tangent(0, rounded/2);
+
+    // top left
+    bezier.add_vertex(left, top + rounded)
+        .set_out_tangent(0, -rounded/2);
+
+    bezier.add_vertex(left + rounded, top)
+        .set_in_tangent(-rounded/2, 0);
+
+
+    // back to top right
+    bezier.add_vertex(right - rounded, top)
+        .set_out_tangent(rounded/2, 0);
+
+    return bezier;
+}
+                converter_map['rc'] = shape => rounded_rect(shape.p.k, shape.s.k, shape.r.k);
+                var lottie_player_29_bezier = new LottiePlayer('lottie_target_29_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_29 = new PlaygroundPlayer(
+                    29,
+                    'playground_29_6',
+                    'lottie_target_29',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "rc", "nm": "Rectangle", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_29_bezier.lottie;
+                        lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+                        let shape = lottie.layers[0].shapes[0].it[0];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = rounded_rect(shape.p.k, shape.s.k, shape.r.k).to_lottie();
+                        lottie_player_29_bezier.reload();
+                        this.set_json('playground_29_6_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<h2 id="ellipse">Ellipse</h2>
+<p>See <a href="../shapes/#ellipse">Ellipse</a>.</p>
+<p>The stroke direction should start at the top.
+If you think of the ellipse as a clock, start at 12 go clockwise.</p>
+<p>The magic number <code>0.5519</code> is what lottie uses for this, based on <a href="https://spencermortensen.com/articles/bezier-circle/">this article</a>.</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Position x</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="30" max="512" min="0" name="Position x" oninput="lottie_player_30.reload();document.getElementById('playground_30_1_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_30_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="30" max="512" min="0" name="Position y" oninput="lottie_player_30.reload();document.getElementById('playground_30_2_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_30_2_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="30" max="512" min="0" name="Width" oninput="lottie_player_30.reload();document.getElementById('playground_30_3_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_30_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Height</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="30" max="512" min="0" name="Height" oninput="lottie_player_30.reload();document.getElementById('playground_30_4_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_30_4_span">256</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_30" style="width:394px;height:394px"></div>
+<div id="lottie_target_30_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_30" onclick="lottie_player_30.play(); document.getElementById('lottie_pause_30').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_30" onclick="lottie_player_30.pause(); document.getElementById('lottie_play_30').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_30.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_30_5_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_30_5_parent">
+<pre><code class="language-json hljs" id="playground_30_5">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_30_5_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">function ellipse(position, size)
+{
+    const ellipse_constant = 0.5519;
+
+    let x = position[0];
+    let y = position[1];
+    let radius_x = size[0] / 2;
+    let radius_y = size[1] / 2;
+    let tangent_x = radius_x * ellipse_constant;
+    let tangent_y = radius_y * ellipse_constant;
+
+    let bezier = new Bezier();
+
+    bezier.add_vertex(x, y - radius_y)
+        .set_in_tangent(-tangent_x, 0)
+        .set_out_tangent(tangent_x, 0);
+
+    bezier.add_vertex(x + radius_x, y)
+        .set_in_tangent(0, -tangent_y)
+        .set_out_tangent(0, tangent_y);
+
+    bezier.add_vertex(x, y + radius_y)
+        .set_in_tangent(tangent_x, 0)
+        .set_out_tangent(-tangent_x, 0);
+
+    bezier.add_vertex(x - radius_x, y)
+        .set_in_tangent(0, tangent_y)
+        .set_out_tangent(0, -tangent_y);
+
+    return bezier;
+}
+
+// Example invocation
+ellipse(shape.p.k, shape.s.k);
+</code></pre>
+<script>
+                function ellipse(position, size)
+{
+    const ellipse_constant = 0.5519;
+
+    let x = position[0];
+    let y = position[1];
+    let radius_x = size[0] / 2;
+    let radius_y = size[1] / 2;
+    let tangent_x = radius_x * ellipse_constant;
+    let tangent_y = radius_y * ellipse_constant;
+
+    let bezier = new Bezier();
+
+    bezier.add_vertex(x, y - radius_y)
+        .set_in_tangent(-tangent_x, 0)
+        .set_out_tangent(tangent_x, 0);
+
+    bezier.add_vertex(x + radius_x, y)
+        .set_in_tangent(0, -tangent_y)
+        .set_out_tangent(0, tangent_y);
+
+    bezier.add_vertex(x, y + radius_y)
+        .set_in_tangent(tangent_x, 0)
+        .set_out_tangent(-tangent_x, 0);
+
+    bezier.add_vertex(x - radius_x, y)
+        .set_in_tangent(0, tangent_y)
+        .set_out_tangent(0, -tangent_y);
+
+    return bezier;
+}
+                converter_map['el'] = shape => ellipse(shape.p.k, shape.s.k);
+                var lottie_player_30_bezier = new LottiePlayer('lottie_target_30_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_30 = new PlaygroundPlayer(
+                    30,
+                    'playground_30_5',
+                    'lottie_target_30',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "el", "nm": "Ellipse", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [256, 256]}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_30_bezier.lottie;
+                        lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+                        let shape = lottie.layers[0].shapes[0].it[0];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = ellipse(shape.p.k, shape.s.k).to_lottie();
+                        lottie_player_30_bezier.reload();
+                        this.set_json('playground_30_5_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<h2 id="polystar">PolyStar</h2>
+<p>Pseudocode for rendering a <a href="../shapes/#polystar">PolyStar</a>.</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Points</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="31" max="10" min="3" name="Points" oninput="lottie_player_31.reload();document.getElementById('playground_31_1_span').innerText = event.target.value;" type="range" value="5" /><span id="playground_31_1_span">5</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="31" max="360" min="0" name="Rotation" oninput="lottie_player_31.reload();document.getElementById('playground_31_2_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_31_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Outer Radius</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="31" max="300" min="0" name="Outer Radius" oninput="lottie_player_31.reload();document.getElementById('playground_31_3_span').innerText = event.target.value;" type="range" value="200" /><span id="playground_31_3_span">200</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Inner Radius</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="31" max="300" min="0" name="Inner Radius" oninput="lottie_player_31.reload();document.getElementById('playground_31_4_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_31_4_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Outer Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="31" max="100" min="0" name="Outer Roundness" oninput="lottie_player_31.reload();document.getElementById('playground_31_5_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_31_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Inner Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="31" max="100" min="0" name="Inner Roundness" oninput="lottie_player_31.reload();document.getElementById('playground_31_6_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_31_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Type</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="31" name="Type" oninput="lottie_player_31.reload();"><option value="1">Star</option><option value="2">Polygon</option></select></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_31" style="width:394px;height:394px"></div>
+<div id="lottie_target_31_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_31" onclick="lottie_player_31.play(); document.getElementById('lottie_pause_31').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_31" onclick="lottie_player_31.pause(); document.getElementById('lottie_play_31').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_31.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_31_8_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_31_8_parent">
+<pre><code class="language-json hljs" id="playground_31_8">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_31_8_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">function polystar(
+    position,
+    type,
+    points,
+    rotation,
+    outer_radius,
+    outer_roundness,
+    inner_radius,
+    inner_roundness
+)
+{
+    let result = new Bezier();
+
+    let half_angle = Math.PI / points;
+    let angle_radians = rotation / 180 * Math.PI
+
+    // Tangents for rounded courners
+    let tangent_len_outer = outer_roundness * outer_radius * 2 * Math.PI / (points * 4 * 100);
+    let tangent_len_inner = inner_roundness * inner_radius * 2 * Math.PI / (points * 4 * 100);
+
+    for ( let i = 0; i &lt; points; i++ )
+    {
+        let main_angle = -Math.PI / 2 + angle_radians + i * half_angle * 2;
+
+        let outer_vertex = new Point(
+            outer_radius * Math.cos(main_angle),
+            outer_radius * Math.sin(main_angle)
+        );
+
+        let outer_tangent = new Point(0, 0);
+        if ( outer_radius != 0 )
+            outer_tangent = new Point(
+                outer_vertex.y / outer_radius * tangent_len_outer,
+                -outer_vertex.x / outer_radius * tangent_len_outer
+            );
+
+        result.add_vertex(position.add(outer_vertex))
+            .set_in_tangent(outer_tangent)
+            .set_out_tangent(outer_tangent.neg());
+
+        // Star inner radius
+        if ( type == 1 )
+        {
+            let inner_vertex = new Point(
+                inner_radius * Math.cos(main_angle + half_angle),
+                inner_radius * Math.sin(main_angle + half_angle)
+            );
+
+            let inner_tangent = new Point(0, 0);
+            if ( inner_radius != 0 )
+                inner_tangent = new Point(
+                    inner_vertex.y / inner_radius * tangent_len_inner,
+                    -inner_vertex.x / inner_radius * tangent_len_inner
+                );
+
+            result.add_vertex(position.add(inner_vertex))
+                .set_in_tangent(inner_tangent)
+                .set_out_tangent(inner_tangent.neg());
+        }
+    }
+
+    return result;
+}
+
+// Example invocation
+polystar(new Point(shape.p.k), shape.sy, shape.pt.k, shape.r.k, shape.or.k, shape.os.k, shape.ir?.k, shape.is?.k);
+</code></pre>
+<script>
+                function polystar(
+    position,
+    type,
+    points,
+    rotation,
+    outer_radius,
+    outer_roundness,
+    inner_radius,
+    inner_roundness
+)
+{
+    let result = new Bezier();
+
+    let half_angle = Math.PI / points;
+    let angle_radians = rotation / 180 * Math.PI
+
+    // Tangents for rounded courners
+    let tangent_len_outer = outer_roundness * outer_radius * 2 * Math.PI / (points * 4 * 100);
+    let tangent_len_inner = inner_roundness * inner_radius * 2 * Math.PI / (points * 4 * 100);
+
+    for ( let i = 0; i < points; i++ )
+    {
+        let main_angle = -Math.PI / 2 + angle_radians + i * half_angle * 2;
+
+        let outer_vertex = new Point(
+            outer_radius * Math.cos(main_angle),
+            outer_radius * Math.sin(main_angle)
+        );
+
+        let outer_tangent = new Point(0, 0);
+        if ( outer_radius != 0 )
+            outer_tangent = new Point(
+                outer_vertex.y / outer_radius * tangent_len_outer,
+                -outer_vertex.x / outer_radius * tangent_len_outer
+            );
+
+        result.add_vertex(position.add(outer_vertex))
+            .set_in_tangent(outer_tangent)
+            .set_out_tangent(outer_tangent.neg());
+
+        // Star inner radius
+        if ( type == 1 )
+        {
+            let inner_vertex = new Point(
+                inner_radius * Math.cos(main_angle + half_angle),
+                inner_radius * Math.sin(main_angle + half_angle)
+            );
+
+            let inner_tangent = new Point(0, 0);
+            if ( inner_radius != 0 )
+                inner_tangent = new Point(
+                    inner_vertex.y / inner_radius * tangent_len_inner,
+                    -inner_vertex.x / inner_radius * tangent_len_inner
+                );
+
+            result.add_vertex(position.add(inner_vertex))
+                .set_in_tangent(inner_tangent)
+                .set_out_tangent(inner_tangent.neg());
+        }
+    }
+
+    return result;
+}
+                converter_map['sr'] = shape => polystar(new Point(shape.p.k), shape.sy, shape.pt.k, shape.r.k, shape.or.k, shape.os.k, shape.ir?.k, shape.is?.k);
+                var lottie_player_31_bezier = new LottiePlayer('lottie_target_31_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_31 = new PlaygroundPlayer(
+                    31,
+                    'playground_31_8',
+                    'lottie_target_31',
+                    {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "layers": [{"ty": 4, "ddd": 0, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ip": 0, "op": 180, "ind": 0, "st": 0, "sr": 1, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 200}, "ir": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.979995422293431, 0.28000305180437934]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_31_bezier.lottie;
+                        var star = {
+    "ty": "sr",
+    "nm": "PolyStar",
+    "sy": Number(data["Type"]),
+    "p": {
+        "a": 0,
+        "k": [
+            256,
+            256
+        ]
+    },
+    "r": {
+        "a": 0,
+        "k": data["Rotation"]
+    },
+    "pt": {
+        "a": 0,
+        "k": data["Points"]
+    },
+    "or": {
+        "a": 0,
+        "k": data["Outer Radius"]
+    },
+    "os": {
+        "a": 0,
+        "k": data["Outer Roundness"]
+    },
+};
+if ( data["Type"] == "1" )
+{
+    star.ir = {
+        "a": 0,
+        "k": data["Inner Radius"]
+    };
+    star.is = {
+        "a": 0,
+        "k": data["Inner Roundness"]
+    };
+}
+lottie.layers[0].shapes[0].it[0] = star;
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+                        let shape = lottie.layers[0].shapes[0].it[0];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = polystar(new Point(shape.p.k), shape.sy, shape.pt.k, shape.r.k, shape.or.k, shape.os.k, shape.ir?.k, shape.is?.k).to_lottie();
+                        lottie_player_31_bezier.reload();
+                        this.set_json('playground_31_8_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<h2 id="pucker-bloat">Pucker Bloat</h2>
+<p>See <a href="../shapes/#pucker-bloat">Pucker / Bloat</a>.</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Amount</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="32" max="100" min="-100" name="Amount" oninput="lottie_player_32.reload();document.getElementById('playground_32_1_span').innerText = event.target.value;" type="range" value="50" /><span id="playground_32_1_span">50</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_32" style="width:394px;height:394px"></div>
+<div id="lottie_target_32_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_32" onclick="lottie_player_32.play(); document.getElementById('lottie_pause_32').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_32" onclick="lottie_player_32.pause(); document.getElementById('lottie_play_32').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_32.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_32_2_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_32_2_parent">
+<pre><code class="language-json hljs" id="playground_32_2">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_32_2_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">function pucker_bloat(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    // "a" property from the Pucker/Bloat modifier
+    amount
+)
+{
+    // Normalize to [0, 1]
+    amount /= 100;
+
+    // Find the mean of the bezier vertices
+    let center = new Point(0, 0);
+    let number_of_vertices = 0;
+    for ( let input_bezier of collected_shapes )
+    {
+        for ( let point of input_bezier.points )
+        {
+            center.x += point.pos.x;
+            center.y += point.pos.y;
+            number_of_vertices += 1;
+        }
+    }
+
+    center.x /= number_of_vertices;
+    center.y /= number_of_vertices;
+
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+        for ( let point of input_bezier.points )
+        {
+            // Here we convert tangents to global coordinates
+            let vertex = lerp(point.pos, center, amount);
+            let in_tangent = lerp(point.in_tangent.add(point.pos), center, -amount).sub(vertex);
+
+            let out_tangent = lerp(point.out_tangent.add(point.pos), center, -amount).sub(vertex);
+            output_bezier.add_vertex(vertex)
+                .set_in_tangent(in_tangent)
+                .set_out_tangent(out_tangent);
+        }
+
+        output_bezier.closed = input_bezier.closed;
+
+        result.push(output_bezier);
+    }
+
+    return result;
+}
+
+// Example invocation
+pucker_bloat([convert_shape(star)], modifier.a.k);
+</code></pre>
+<script>
+                function pucker_bloat(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    // "a" property from the Pucker/Bloat modifier
+    amount
+)
+{
+    // Normalize to [0, 1]
+    amount /= 100;
+
+    // Find the mean of the bezier vertices
+    let center = new Point(0, 0);
+    let number_of_vertices = 0;
+    for ( let input_bezier of collected_shapes )
+    {
+        for ( let point of input_bezier.points )
+        {
+            center.x += point.pos.x;
+            center.y += point.pos.y;
+            number_of_vertices += 1;
+        }
+    }
+
+    center.x /= number_of_vertices;
+    center.y /= number_of_vertices;
+
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+        for ( let point of input_bezier.points )
+        {
+            // Here we convert tangents to global coordinates
+            let vertex = lerp(point.pos, center, amount);
+            let in_tangent = lerp(point.in_tangent.add(point.pos), center, -amount).sub(vertex);
+
+            let out_tangent = lerp(point.out_tangent.add(point.pos), center, -amount).sub(vertex);
+            output_bezier.add_vertex(vertex)
+                .set_in_tangent(in_tangent)
+                .set_out_tangent(out_tangent);
+        }
+
+        output_bezier.closed = input_bezier.closed;
+
+        result.push(output_bezier);
+    }
+
+    return result;
+}
+                
+                var lottie_player_32_bezier = new LottiePlayer('lottie_target_32_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_32 = new PlaygroundPlayer(
+                    32,
+                    'playground_32_2',
+                    'lottie_target_32',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 160}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 2, "os": {"a": 0, "k": 0}}, {"ty": "pb", "nm": "Inflate and Deflate", "mn": "{b4af429a-546e-4728-a869-711a404c55ae}", "a": {"a": 0, "k": 50}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "hd": true, "nm": "Fill", "mn": "{a1bcc159-6916-4718-841d-a99140c0e74b}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_32_bezier.lottie;
+                        lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+let star = lottie.layers[0].shapes[0].it[0];
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let modifier = lottie.layers[0].shapes[0].it[1];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = pucker_bloat([convert_shape(star)], modifier.a.k)[0].to_lottie();
+                        lottie_player_32_bezier.reload();
+                        this.set_json('playground_32_2_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<h2 id="rounded-corners">Rounded Corners</h2>
+<p>See <a href="../shapes/#rounded-corners">Rounded Corners</a>.</p>
+<p>It approximates rounding using circular arcs.</p>
+<p>The magic number <code>0.5519</code> is what lottie uses for this, based on <a href="https://spencermortensen.com/articles/bezier-circle/">this article</a>.</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Radius</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="33" max="100" min="0" name="Radius" oninput="lottie_player_33.reload();document.getElementById('playground_33_1_span').innerText = event.target.value;" type="range" value="50" /><span id="playground_33_1_span">50</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_33" style="width:394px;height:394px"></div>
+<div id="lottie_target_33_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_33" onclick="lottie_player_33.play(); document.getElementById('lottie_pause_33').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_33" onclick="lottie_player_33.pause(); document.getElementById('lottie_play_33').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_33.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_33_2_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_33_2_parent">
+<pre><code class="language-json hljs" id="playground_33_2">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_33_2_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">// Helper function to perform rounding on a single vertex
+function get_vertex_tangent(
+    // Bezier to round
+    bezier,
+    // Vertex in the bezier we are rounding
+    current_vertex,
+    // Index of the next point along the curve
+    closest_index,
+    // Rounding radius
+    round_distance
+)
+{
+    const tangent_length = 0.5519;
+
+    // closest_index module bezier.length
+    closest_index = closest_index % bezier.points.length;
+    if ( closest_index &lt; 0 )
+        closest_index += bezier.points.length;
+
+
+    let closest_vertex = bezier.points[closest_index].pos;
+    let distance = current_vertex.distance(closest_vertex);
+    let new_pos_perc = distance != 0 ? Math.min(distance/2, round_distance) / distance : 0;
+    let vertex = closest_vertex.sub(current_vertex).mul(new_pos_perc).add(current_vertex);
+    let tangent = vertex.sub(current_vertex).neg().mul(tangent_length);
+    return [vertex, tangent];
+}
+
+// Rounding for a single continuos curve
+function round_bezier_corners(
+    // Bezier to round
+    original,
+    // Rounding radius
+    round_distance
+)
+{
+    let result = new Bezier()
+    result.closed = original.closed;
+
+    for ( let i = 0; i &lt; original.points.length; i++ )
+    {
+        let point = original.points[i];
+
+        // Start and end of a non-closed path don't get rounded
+        if ( !original.closed &amp;&amp; (i == 0 || i == original.points.length - 1) )
+        {
+            result.add_vertex(point.pos)
+                .set_in_tangent(point.in_tangent)
+                .set_out_tangent(point.out_tangent);
+        }
+        else
+        {
+            let [vert1, out_t] = get_vertex_tangent(original, point.pos, i - 1, round_distance);
+            result.add_vertex(vert1)
+                .set_out_tangent(out_t);
+
+            let [vert2, in_t] = get_vertex_tangent(original, point.pos, i + 1, round_distance);
+            result.add_vertex(vert2)
+                .set_in_tangent(in_t);
+        }
+    }
+
+    return result;
+}
+
+// Rounding on multiple bezier
+function round_corners(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    // "r" property from lottie
+    r
+)
+{
+    let result = []
+
+    for ( let input_bezier of collected_shapes )
+        result.push(round_bezier_corners(input_bezier, r));
+
+    return result;
+}
+
+// Example invocation
+round_corners([convert_shape(star)], modifier.r.k);
+</code></pre>
+<script>
+                // Helper function to perform rounding on a single vertex
+function get_vertex_tangent(
+    // Bezier to round
+    bezier,
+    // Vertex in the bezier we are rounding
+    current_vertex,
+    // Index of the next point along the curve
+    closest_index,
+    // Rounding radius
+    round_distance
+)
+{
+    const tangent_length = 0.5519;
+
+    // closest_index module bezier.length
+    closest_index = closest_index % bezier.points.length;
+    if ( closest_index < 0 )
+        closest_index += bezier.points.length;
+
+
+    let closest_vertex = bezier.points[closest_index].pos;
+    let distance = current_vertex.distance(closest_vertex);
+    let new_pos_perc = distance != 0 ? Math.min(distance/2, round_distance) / distance : 0;
+    let vertex = closest_vertex.sub(current_vertex).mul(new_pos_perc).add(current_vertex);
+    let tangent = vertex.sub(current_vertex).neg().mul(tangent_length);
+    return [vertex, tangent];
+}
+
+// Rounding for a single continuos curve
+function round_bezier_corners(
+    // Bezier to round
+    original,
+    // Rounding radius
+    round_distance
+)
+{
+    let result = new Bezier()
+    result.closed = original.closed;
+
+    for ( let i = 0; i < original.points.length; i++ )
+    {
+        let point = original.points[i];
+
+        // Start and end of a non-closed path don't get rounded
+        if ( !original.closed && (i == 0 || i == original.points.length - 1) )
+        {
+            result.add_vertex(point.pos)
+                .set_in_tangent(point.in_tangent)
+                .set_out_tangent(point.out_tangent);
+        }
+        else
+        {
+            let [vert1, out_t] = get_vertex_tangent(original, point.pos, i - 1, round_distance);
+            result.add_vertex(vert1)
+                .set_out_tangent(out_t);
+
+            let [vert2, in_t] = get_vertex_tangent(original, point.pos, i + 1, round_distance);
+            result.add_vertex(vert2)
+                .set_in_tangent(in_t);
+        }
+    }
+
+    return result;
+}
+
+// Rounding on multiple bezier
+function round_corners(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    // "r" property from lottie
+    r
+)
+{
+    let result = []
+
+    for ( let input_bezier of collected_shapes )
+        result.push(round_bezier_corners(input_bezier, r));
+
+    return result;
+}
+                
+                var lottie_player_33_bezier = new LottiePlayer('lottie_target_33_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_33 = new PlaygroundPlayer(
+                    33,
+                    'playground_33_2',
+                    'lottie_target_33',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 222.72242736816406}, "ir": {"a": 0, "k": 111.36121368408203}, "r": {"a": 0, "k": 358.67291259765625}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "rd", "nm": "Rounded Corners", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "r": {"a": 0, "k": 50}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "hd": true, "nm": "Fill", "mn": "{a1bcc159-6916-4718-841d-a99140c0e74b}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_33_bezier.lottie;
+                        lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
+let star = lottie.layers[0].shapes[0].it[0];
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let modifier = lottie.layers[0].shapes[0].it[1];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = round_corners([convert_shape(star)], modifier.r.k)[0].to_lottie();
+                        lottie_player_33_bezier.reload();
+                        this.set_json('playground_33_2_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<h2 id="zig-zag">Zig Zag</h2>
+<p>See <a href="../shapes/#zig-zag">Zig Zag</a>.</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<th colspan="2" style="white-space: pre"><span>Zig Zag</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Amplitude</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="100" min="-100" name="Amplitude" oninput="lottie_player_34.reload();document.getElementById('playground_34_1_span').innerText = event.target.value;" type="range" value="10" /><span id="playground_34_1_span">10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Frequency</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="30" min="0" name="Frequency" oninput="lottie_player_34.reload();document.getElementById('playground_34_2_span').innerText = event.target.value;" type="range" value="10" /><span id="playground_34_2_span">10</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Star</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="100" min="0" name="Roundness" oninput="lottie_player_34.reload();document.getElementById('playground_34_3_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_34_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="360" min="0" name="Rotation" oninput="lottie_player_34.reload();document.getElementById('playground_34_4_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_34_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Points</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="10" min="3" name="Points" oninput="lottie_player_34.reload();document.getElementById('playground_34_5_span').innerText = event.target.value;" type="range" value="5" /><span id="playground_34_5_span">5</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="30" min="1" name="Stroke Width" oninput="lottie_player_34.reload();document.getElementById('playground_34_6_span').innerText = event.target.value;" type="range" value="3" /><span id="playground_34_6_span">3</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_34" style="width:394px;height:394px"></div>
+<div id="lottie_target_34_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_34" onclick="lottie_player_34.play(); document.getElementById('lottie_pause_34').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_34" onclick="lottie_player_34.pause(); document.getElementById('lottie_play_34').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_34.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_34_7_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_34_7_parent">
+<pre><code class="language-json hljs" id="playground_34_7">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_34_7_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">
+function angle_mean(a, b)
+{
+    if ( Math.abs(a-b) &gt; Math.PI )
+        return (a + b) / 2 + Math.PI;
+
+    return (a + b) / 2;
+}
+
+function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude, direction)
+{
+    let point;
+    let angle;
+
+    if ( !segment_before )
+    {
+        point = segment_after.points[0];
+        angle = segment_after.normal_angle(0);
+    }
+    else if ( !segment_after )
+    {
+        point = segment_before.points[3];
+        angle = segment_before.normal_angle(1);
+    }
+    else
+    {
+        point = segment_after.points[0];
+        angle = angle_mean(segment_after.normal_angle(0), segment_before.normal_angle(1));
+    }
+
+    output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+}
+
+function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction)
+{
+    for ( let i = 0; i &lt; frequency; i++ )
+    {
+        let t = (i + 1) / (frequency + 1);
+        let angle = segment.normal_angle(t);
+        let point = segment.point(t);
+        point.x += Math.cos(angle) * direction * amplitude;
+        point.y -= Math.sin(angle) * direction * amplitude;
+        output_bezier.add_vertex(point);
+
+        direction = -direction;
+    }
+
+    return direction;
+}
+
+function zig_zag_bezier(input_bezier, amplitude, frequency)
+{
+    let output_bezier = new Bezier();
+
+    output_bezier.closed = input_bezier.closed;
+    let count = input_bezier.segment_count();
+
+    if ( count == 0 )
+        return output_bezier;
+
+    let direction = -1;
+    let segment = input_bezier.closed ? input_bezier.segment(count - 1) : null;
+    let next_segment = input_bezier.segment(0);
+
+    zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1);
+
+    for ( let i = 0; i &lt; count; i++ )
+    {
+        segment = next_segment;
+
+        direction = zig_zag_segment(output_bezier, segment, amplitude, frequency, -direction);
+
+        if ( i == count - 1 &amp;&amp; !input_bezier.closed )
+            next_segment = null;
+        else
+            next_segment = input_bezier.segment((i + 1) % count);
+
+        zig_zag_corner(output_bezier, segment, next_segment, amplitude, direction);
+    }
+
+    return output_bezier;
+}
+
+function zig_zag(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    amplitude,
+    frequency
+)
+{
+    // Ensure we have an integer number of segments
+    frequency = Math.max(0, Math.round(frequency));
+
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+        result.push(zig_zag_bezier(input_bezier, amplitude, frequency));
+
+    return result;
+}
+
+// Example invocation
+zig_zag([convert_shape(star)], modifier.s.k, modifier.r.k);
+</code></pre>
+<script>
+                
+function angle_mean(a, b)
+{
+    if ( Math.abs(a-b) > Math.PI )
+        return (a + b) / 2 + Math.PI;
+
+    return (a + b) / 2;
+}
+
+function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude, direction)
+{
+    let point;
+    let angle;
+
+    if ( !segment_before )
+    {
+        point = segment_after.points[0];
+        angle = segment_after.normal_angle(0);
+    }
+    else if ( !segment_after )
+    {
+        point = segment_before.points[3];
+        angle = segment_before.normal_angle(1);
+    }
+    else
+    {
+        point = segment_after.points[0];
+        angle = angle_mean(segment_after.normal_angle(0), segment_before.normal_angle(1));
+    }
+
+    output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+}
+
+function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction)
+{
+    for ( let i = 0; i < frequency; i++ )
+    {
+        let t = (i + 1) / (frequency + 1);
+        let angle = segment.normal_angle(t);
+        let point = segment.point(t);
+        point.x += Math.cos(angle) * direction * amplitude;
+        point.y -= Math.sin(angle) * direction * amplitude;
+        output_bezier.add_vertex(point);
+
+        direction = -direction;
+    }
+
+    return direction;
+}
+
+function zig_zag_bezier(input_bezier, amplitude, frequency)
+{
+    let output_bezier = new Bezier();
+
+    output_bezier.closed = input_bezier.closed;
+    let count = input_bezier.segment_count();
+
+    if ( count == 0 )
+        return output_bezier;
+
+    let direction = -1;
+    let segment = input_bezier.closed ? input_bezier.segment(count - 1) : null;
+    let next_segment = input_bezier.segment(0);
+
+    zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1);
+
+    for ( let i = 0; i < count; i++ )
+    {
+        segment = next_segment;
+
+        direction = zig_zag_segment(output_bezier, segment, amplitude, frequency, -direction);
+
+        if ( i == count - 1 && !input_bezier.closed )
+            next_segment = null;
+        else
+            next_segment = input_bezier.segment((i + 1) % count);
+
+        zig_zag_corner(output_bezier, segment, next_segment, amplitude, direction);
+    }
+
+    return output_bezier;
+}
+
+function zig_zag(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    amplitude,
+    frequency
+)
+{
+    // Ensure we have an integer number of segments
+    frequency = Math.max(0, Math.round(frequency));
+
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+        result.push(zig_zag_bezier(input_bezier, amplitude, frequency));
+
+    return result;
+}
+                
+                var lottie_player_34_bezier = new LottiePlayer('lottie_target_34_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_34 = new PlaygroundPlayer(
+                    34,
+                    'playground_34_7',
+                    'lottie_target_34',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 222.72242736816406}, "ir": {"a": 0, "k": 111.36121368408203}, "r": {"a": 0, "k": 358.67291259765625}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "zz", "nm": "Zig Zag", "mn": "{b4af429a-546e-4728-a869-711a404c55ae}", "r": {"a": 0, "k": 0}, "s": {"a": 0, "k": 10}, "pt": {"a": 0, "k": 2}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 3}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_34_bezier.lottie;
+                        lottie.layers[0].shapes[0].it[1].s.k = data["Amplitude"];
+lottie.layers[0].shapes[0].it[1].r.k = data["Frequency"];
+
+lottie.layers[0].shapes[0].it[0].pt.k = data["Points"];
+lottie.layers[0].shapes[0].it[0].r.k = data["Rotation"];
+lottie.layers[0].shapes[0].it[0].is.k = data["Roundness"];
+lottie.layers[0].shapes[0].it[0].os.k = data["Roundness"];
+lottie.layers[0].shapes[0].it[2].w.k = data["Stroke Width"];
+
+let star = lottie.layers[0].shapes[0].it[0];
+bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let modifier = lottie.layers[0].shapes[0].it[1];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = zig_zag([convert_shape(star)], modifier.s.k, modifier.r.k)[0].to_lottie();
+                        lottie_player_34_bezier.reload();
+                        this.set_json('playground_34_7_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<h2 id="offset-path">Offset Path</h2>
+<p>See <a href="../shapes/#offset-path">Offset Path</a>.</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<th colspan="2" style="white-space: pre"><span>Offset Path</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Amount</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="100" min="-100" name="Amount" oninput="lottie_player_35.reload();document.getElementById('playground_35_1_span').innerText = event.target.value;" type="range" value="10" /><span id="playground_35_1_span">10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Miter Limit</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="100" min="0" name="Miter Limit" oninput="lottie_player_35.reload();document.getElementById('playground_35_2_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_35_2_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Line Join</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="35" name="Line Join" oninput="lottie_player_35.reload();"><option value="1">Miter</option><option selected="selected" value="2">Round</option><option value="3">Bevel</option></select></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Star</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Star Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="100" min="0" name="Star Roundness" oninput="lottie_player_35.reload();document.getElementById('playground_35_4_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_35_4_span">0</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_35" style="width:394px;height:394px"></div>
+<div id="lottie_target_35_bezier" style="width:394px;height:394px"></div>
+</div>
+<div><button id="lottie_play_35" onclick="lottie_player_35.play(); document.getElementById('lottie_pause_35').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_35" onclick="lottie_player_35.pause(); document.getElementById('lottie_play_35').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_35.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_35_5_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_35_5_parent">
+<pre><code class="language-json hljs" id="playground_35_5">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_35_5_bezier">
+</code></pre>
+</div>
+<pre><code class="language-typescript hljs">/*
+    Simple offset of a linear segment
+*/
+function linear_offset(p1, p2, amount)
+{
+    let angle = Math.atan2(p2.x - p1.x, p2.y - p1.y);
+    return [
+        p1.add_polar(angle, amount),
+        p2.add_polar(angle, amount)
+    ];
+}
+
+/*
+    Offset a bezier segment
+    only works well if the segment is flat enough
+*/
+function offset_segment(segment, amount)
+{
+    let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
+    let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
+    let [p2a, p3] = linear_offset(segment.points[2], segment.points[3], amount);
+    let p1 = line_intersection(p0, p1a, p1b, p2b) ?? p1a;
+    let p2 = line_intersection(p2a, p3, p1b, p2b) ?? p2a;
+
+    return new BezierSegment(p0, p1, p2, p3);
+}
+
+/*
+    Join two segments
+*/
+function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
+{
+    let p0 = seg1.points[3];
+    let p1 = seg2.points[0];
+
+    // Bevel
+    if ( line_join == 3 )
+        return p0;
+
+
+    // Connected, they don't need a joint
+    if ( p0.is_equal(p1) )
+        return p0;
+
+    let last_point = output_bezier.points[output_bezier.points.length - 1];
+
+    // Round
+    if ( line_join == 2 )
+    {
+        const ellipse_constant = 0.5519;
+        let angle_out = seg1.tangent_angle(1);
+        let angle_in = seg2.tangent_angle(0) + Math.PI;
+        let center = line_intersection(
+            p0, p0.add_polar(angle_out + Math.PI / 2, 100),
+            p1, p1.add_polar(angle_out + Math.PI / 2, 100)
+        );
+        let radius = center ? center.distance(p0) : p0.distance(p1) / 2;
+        last_point.set_out_tangent(Point.polar(angle_out, 2 * radius * ellipse_constant));
+
+        output_bezier.add_vertex(p1)
+            .set_in_tangent(Point.polar(angle_in, 2 * radius * ellipse_constant));
+
+        return p1;
+    }
+
+    // Miter
+    let t0 = p0.is_equal(seg1.points[2]) ? seg1.points[0] : seg1.points[2];
+    let t1 = p1.is_equal(seg2.points[1]) ? seg2.points[3] : seg2.points[1];
+    let intersection = line_intersection(t0, p0, p1, t1);
+    if ( intersection &amp;&amp; intersection.distance(p0) &lt; miter_limit )
+    {
+        output_bezier.add_vertex(intersection);
+        return intersection;
+    }
+
+    return p0;
+}
+
+
+function get_intersection(a, b)
+{
+    let intersect = a.intersections(b);
+
+    if ( intersect.length &amp;&amp; fuzzy_compare(intersect[0], 1) )
+        intersect.shift();
+
+    if ( intersect.length )
+        return intersect[0];
+
+    return null;
+}
+
+function prune_segment_intersection(a, b)
+{
+    let out_a = [...a];
+    let out_b = [...b];
+
+    let intersect = get_intersection(a[a.length-1], b[0]);
+
+    if ( intersect )
+    {
+        out_a[a.length-1] = a[a.length-1].split(intersect[0])[0];
+        out_b[0] = b[0].split(intersect[1])[1];
+    }
+
+    if ( a.length &gt; 1 &amp;&amp; b.length &gt; 1 )
+    {
+        intersect = get_intersection(a[0], b[b.length - 1]);
+
+        if ( intersect )
+        {
+            return [
+                [a[0].split(intersect[0])[0]],
+                [b[b.length-1].split(intersect[1])[1]],
+            ];
+        }
+    }
+
+    return [out_a, out_b];
+}
+
+function prune_intersections(segments)
+{
+    for ( let i = 1; i &lt; segments.length; i++ )
+    {
+        [segments[i-1], segments[i]] = prune_segment_intersection(segments[i - 1], segments[i]);
+    }
+
+    if ( segments.length &gt; 1 )
+        [segments[segments.length - 1], segments[0]] = prune_segment_intersection(segments[segments.length - 1], segments[0]);
+
+    return segments;
+}
+
+function offset_path(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    amount,
+    line_join,
+    miter_limit,
+)
+{
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+
+        output_bezier.closed = input_bezier.closed;
+        let count = input_bezier.segment_count();
+
+        let multi_segments = [];
+
+        for ( let i = 0; i &lt; count; i++ )
+        {
+            let segment = input_bezier.segment(i);
+            /*
+                We split each bezier segment into smaller pieces based
+                on inflection points, this ensures the control point
+                polygon is convex.
+
+                (A cubic bezier can have none, one, or two inflection points)
+            */
+            let flex = segment.inflection_points();
+
+            if ( flex.length == 0 )
+            {
+                multi_segments.push([offset_segment(segment, amount)]);
+            }
+            else if ( flex.length == 1 || flex[1] == 1 )
+            {
+                let [left, right] = segment.split(flex[0]);
+
+                multi_segments.push([
+                    offset_segment(left, amount),
+                    offset_segment(right, amount)
+                ]);
+            }
+            else
+            {
+                let [left, mid_right] = segment.split(flex[0]);
+                let t = (flex[1] - flex[0]) / (1 - flex[0]);
+                let [mid, right] = mid_right.split(t);
+
+                multi_segments.push([
+                    offset_segment(left, amount),
+                    offset_segment(mid, amount),
+                    offset_segment(right, amount)
+                ]);
+            }
+        }
+
+        multi_segments = prune_intersections(multi_segments);
+
+        // Add bezier segments to the output and apply line joints
+        let last_point = null;
+        let last_seg = null;
+
+        for ( let multi_segment of multi_segments )
+        {
+            if ( last_seg )
+                last_point = join_lines(output_bezier, last_seg, multi_segment[0], line_join, miter_limit);
+
+            last_seg = multi_segment[multi_segment.length - 1];
+
+            for ( let segment of multi_segment )
+            {
+                if ( segment.points[0].is_equal(last_point) )
+                {
+                    output_bezier.points[output_bezier.points.length - 1]
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+                else
+                {
+                    output_bezier.add_vertex(segment.points[0])
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+
+
+                output_bezier.add_vertex(segment.points[3])
+                    .set_in_tangent(segment.points[2].sub(segment.points[3]));
+
+                last_point = segment.points[3];
+            }
+        }
+
+        if ( input_bezier.closed &amp;&amp; multi_segments.length )
+            join_lines(output_bezier, last_seg, multi_segments[0][0], line_join, miter_limit);
+
+        result.push(output_bezier);
+    }
+
+    return result;
+}
+
+// Example invocation
+offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k);
+</code></pre>
+<script>
+                /*
+    Simple offset of a linear segment
+*/
+function linear_offset(p1, p2, amount)
+{
+    let angle = Math.atan2(p2.x - p1.x, p2.y - p1.y);
+    return [
+        p1.add_polar(angle, amount),
+        p2.add_polar(angle, amount)
+    ];
+}
+
+/*
+    Offset a bezier segment
+    only works well if the segment is flat enough
+*/
+function offset_segment(segment, amount)
+{
+    let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
+    let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
+    let [p2a, p3] = linear_offset(segment.points[2], segment.points[3], amount);
+    let p1 = line_intersection(p0, p1a, p1b, p2b) ?? p1a;
+    let p2 = line_intersection(p2a, p3, p1b, p2b) ?? p2a;
+
+    return new BezierSegment(p0, p1, p2, p3);
+}
+
+/*
+    Join two segments
+*/
+function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
+{
+    let p0 = seg1.points[3];
+    let p1 = seg2.points[0];
+
+    // Bevel
+    if ( line_join == 3 )
+        return p0;
+
+
+    // Connected, they don't need a joint
+    if ( p0.is_equal(p1) )
+        return p0;
+
+    let last_point = output_bezier.points[output_bezier.points.length - 1];
+
+    // Round
+    if ( line_join == 2 )
+    {
+        const ellipse_constant = 0.5519;
+        let angle_out = seg1.tangent_angle(1);
+        let angle_in = seg2.tangent_angle(0) + Math.PI;
+        let center = line_intersection(
+            p0, p0.add_polar(angle_out + Math.PI / 2, 100),
+            p1, p1.add_polar(angle_out + Math.PI / 2, 100)
+        );
+        let radius = center ? center.distance(p0) : p0.distance(p1) / 2;
+        last_point.set_out_tangent(Point.polar(angle_out, 2 * radius * ellipse_constant));
+
+        output_bezier.add_vertex(p1)
+            .set_in_tangent(Point.polar(angle_in, 2 * radius * ellipse_constant));
+
+        return p1;
+    }
+
+    // Miter
+    let t0 = p0.is_equal(seg1.points[2]) ? seg1.points[0] : seg1.points[2];
+    let t1 = p1.is_equal(seg2.points[1]) ? seg2.points[3] : seg2.points[1];
+    let intersection = line_intersection(t0, p0, p1, t1);
+    if ( intersection && intersection.distance(p0) < miter_limit )
+    {
+        output_bezier.add_vertex(intersection);
+        return intersection;
+    }
+
+    return p0;
+}
+
+
+function get_intersection(a, b)
+{
+    let intersect = a.intersections(b);
+
+    if ( intersect.length && fuzzy_compare(intersect[0], 1) )
+        intersect.shift();
+
+    if ( intersect.length )
+        return intersect[0];
+
+    return null;
+}
+
+function prune_segment_intersection(a, b)
+{
+    let out_a = [...a];
+    let out_b = [...b];
+
+    let intersect = get_intersection(a[a.length-1], b[0]);
+
+    if ( intersect )
+    {
+        out_a[a.length-1] = a[a.length-1].split(intersect[0])[0];
+        out_b[0] = b[0].split(intersect[1])[1];
+    }
+
+    if ( a.length > 1 && b.length > 1 )
+    {
+        intersect = get_intersection(a[0], b[b.length - 1]);
+
+        if ( intersect )
+        {
+            return [
+                [a[0].split(intersect[0])[0]],
+                [b[b.length-1].split(intersect[1])[1]],
+            ];
+        }
+    }
+
+    return [out_a, out_b];
+}
+
+function prune_intersections(segments)
+{
+    for ( let i = 1; i < segments.length; i++ )
+    {
+        [segments[i-1], segments[i]] = prune_segment_intersection(segments[i - 1], segments[i]);
+    }
+
+    if ( segments.length > 1 )
+        [segments[segments.length - 1], segments[0]] = prune_segment_intersection(segments[segments.length - 1], segments[0]);
+
+    return segments;
+}
+
+function offset_path(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    amount,
+    line_join,
+    miter_limit,
+)
+{
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+
+        output_bezier.closed = input_bezier.closed;
+        let count = input_bezier.segment_count();
+
+        let multi_segments = [];
+
+        for ( let i = 0; i < count; i++ )
+        {
+            let segment = input_bezier.segment(i);
+            /*
+                We split each bezier segment into smaller pieces based
+                on inflection points, this ensures the control point
+                polygon is convex.
+
+                (A cubic bezier can have none, one, or two inflection points)
+            */
+            let flex = segment.inflection_points();
+
+            if ( flex.length == 0 )
+            {
+                multi_segments.push([offset_segment(segment, amount)]);
+            }
+            else if ( flex.length == 1 || flex[1] == 1 )
+            {
+                let [left, right] = segment.split(flex[0]);
+
+                multi_segments.push([
+                    offset_segment(left, amount),
+                    offset_segment(right, amount)
+                ]);
+            }
+            else
+            {
+                let [left, mid_right] = segment.split(flex[0]);
+                let t = (flex[1] - flex[0]) / (1 - flex[0]);
+                let [mid, right] = mid_right.split(t);
+
+                multi_segments.push([
+                    offset_segment(left, amount),
+                    offset_segment(mid, amount),
+                    offset_segment(right, amount)
+                ]);
+            }
+        }
+
+        multi_segments = prune_intersections(multi_segments);
+
+        // Add bezier segments to the output and apply line joints
+        let last_point = null;
+        let last_seg = null;
+
+        for ( let multi_segment of multi_segments )
+        {
+            if ( last_seg )
+                last_point = join_lines(output_bezier, last_seg, multi_segment[0], line_join, miter_limit);
+
+            last_seg = multi_segment[multi_segment.length - 1];
+
+            for ( let segment of multi_segment )
+            {
+                if ( segment.points[0].is_equal(last_point) )
+                {
+                    output_bezier.points[output_bezier.points.length - 1]
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+                else
+                {
+                    output_bezier.add_vertex(segment.points[0])
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+
+
+                output_bezier.add_vertex(segment.points[3])
+                    .set_in_tangent(segment.points[2].sub(segment.points[3]));
+
+                last_point = segment.points[3];
+            }
+        }
+
+        if ( input_bezier.closed && multi_segments.length )
+            join_lines(output_bezier, last_seg, multi_segments[0][0], line_join, miter_limit);
+
+        result.push(output_bezier);
+    }
+
+    return result;
+}
+                
+                var lottie_player_35_bezier = new LottiePlayer('lottie_target_35_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_35 = new PlaygroundPlayer(
+                    35,
+                    'playground_35_5',
+                    'lottie_target_35',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 222.72242736816406}, "ir": {"a": 0, "k": 111.36121368408203}, "r": {"a": 0, "k": 358.67291259765625}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "op", "nm": "Offset Path", "mn": "{b4af429a-546e-4728-a869-711a404c55ae}", "a": {"a": 0, "k": 10}, "lj": 2, "ml": {"a": 0, "k": 100}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 3}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_35_bezier.lottie;
+                        lottie.layers[0].shapes[0].it[0].is.k = data["Star Roundness"];
+lottie.layers[0].shapes[0].it[0].os.k = data["Star Roundness"];
+lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+lottie.layers[0].shapes[0].it[1].lj = Number(data["Line Join"]);
+lottie.layers[0].shapes[0].it[1].ml.k = data["Miter Limit"];
+
+let star = lottie.layers[0].shapes[0].it[0];
+bezier_lottie.layers[0].shapes[0].it[1].w.k = 3;
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let modifier = lottie.layers[0].shapes[0].it[1];
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
+                        bez_target.k = offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)[0].to_lottie();
+                        lottie_player_35_bezier.reload();
+                        this.set_json('playground_35_5_bezier', bez_target.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+<p></p>
+<h2 id="transform">Transform</h2>
+<p>This is how to convert a <a href="../concepts/#transform">transform</a> object into a matrix.</p>
+<p>Assuming the matrix</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">a</td>
+<td style="width: 25%;">c</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">b</td>
+<td style="width: 25%;">d</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">tx</td>
+<td style="width: 25%;">ty</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>The names <code>a</code>, <code>b</code>, etc are the ones commonly used for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix()">CSS transforms</a>.</p>
+<p>4D matrix to allow for 3D transforms, even though currently lottie only supports 2D graphics.</p>
+<p>Multiplications are right multiplications (<code>Next = Previous * StepOperation</code>).</p>
+<p>If your transform is transposed (<code>tx</code>, <code>ty</code> are on the last column), perform left multiplication instead.</p>
+<p>Perform the following operations on a matrix starting from the identity matrix (or the parent object's transform matrix):</p>
+<p>Translate by <code>-a</code>:</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-a[0]</td>
+<td style="width: 25%;">-a[1]</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Scale by <code>s/100</code>:</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">s[0]/100</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">s[1]/100</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>sa</code> (can be skipped if not skewing)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(sa)</td>
+<td style="width: 25%;">sin(sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(sa)</td>
+<td style="width: 25%;">cos(sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Skew by <code>sk</code> (can be skipped if not skewing)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">tan(sk)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>-sa</code> (can be skipped if not skewing)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(-sa)</td>
+<td style="width: 25%;">sin(-sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(-sa)</td>
+<td style="width: 25%;">cos(-sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>-r</code></p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">sin(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(-r)</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>If you are handling an <a href="../layers/#auto-orient">auto orient</a> layer, evaluate and apply auto-orient rotation</p>
+<p>Translate by <code>p</code></p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">p[0]</td>
+<td style="width: 25%;">p[1]</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+<hr>
+            <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/rendering.md"><i class="fab fa-github"></i> Edit this page on GitHub</a>
+        
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Ignored Value",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effect-values/effect-value"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 6
+                },
+                "v": {
+                    "title": "Value",
+                    "type": "number",
+                    "default": 0
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

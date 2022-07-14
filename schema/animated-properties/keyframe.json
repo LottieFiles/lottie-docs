@@ -1,0 +1,61 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Keyframe",
+    "description": "A Keyframes specifies the value at a specific time and the interpolation function to reach the next keyframe.",
+    "allOf": [
+        {
+            "$ref": "#/$defs/animated-properties/keyframe-base"
+        },
+        {
+            "properties": {
+                "s": {
+                    "title": "Value",
+                    "description": "Value at this keyframe. Note the if the property is a scalar, keyframe values are still represented as arrays",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "e": {
+                    "title": "End value",
+                    "description": "Value at the end of the keyframe, note that this is deprecated and you should use `s` from the next keyframe to get this value",
+                    "deprecated": true,
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        {
+            "if": {
+                "oneOf": [
+                    {
+                        "properties": {
+                            "h": { "const": 0  }
+                        }
+                    },
+                    {
+                        "not": {"required": ["h"]}
+                    }
+                ]
+            },
+            "then": {
+                "properties": {
+                    "i": {
+                        "title": "In Tangent",
+                        "description": "Easing tangent going into the next keyframe",
+                        "$ref": "#/$defs/animated-properties/keyframe-bezier-handle"
+                    },
+                    "o": {
+                        "title": "Out Tangent",
+                        "description": "Easing tangent leaving the current keyframe",
+                        "$ref": "#/$defs/animated-properties/keyframe-bezier-handle"
+                    }
+                }
+            }
+        }
+    ],
+    "required": ["t", "s"]
+}

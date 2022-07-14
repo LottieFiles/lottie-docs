@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Rectangle",
+    "description": "A simple rectangle shape",
+    "caniuse": "shape-rectangle",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "rc"
+                },
+                "p": {
+                    "title": "Position",
+                    "description": "Center of the rectangle",
+                    "$ref": "#/$defs/animated-properties/position"
+                },
+                "s": {
+                    "title": "Size",
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                },
+                "r": {
+                    "title": "Rounded",
+                    "description": "Rounded corners radius",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": [
+                "ty", "s", "p", "r"
+            ]
+        }
+    ]
+}
