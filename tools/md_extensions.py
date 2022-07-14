@@ -506,29 +506,33 @@ class LottiePlayground(BlockProcessor):
         json_viewer_path = None
         json_viewer_id = None
         html_append_until = None
+        html_close = False
 
         for index, line in enumerate(block.strip().split("\n")[1:]):
             if html_append_until:
                 html_string += line + "\n"
                 if html_append_until in line:
                     html_append_until = None
-                    html = etree.fromstring(html_string)
-                    builder.add_control(label, html)
-                continue
+                    html_close = True
+                else:
+                    continue
 
-            row_match = self.re_row.match(line)
-            if not row_match:
-                raise Exception("Unexpected playground line %r" % line)
+            if not html_close:
+                row_match = self.re_row.match(line)
+                if not row_match:
+                    raise Exception("Unexpected playground line %r" % line)
 
-            label = row_match.group("label")
-            html_string = row_match.group("html")
-            tag = row_match.group("tag")
-            if not html_string:
-                builder.add_control(label, None)
-                continue
-            if "/>" not in html_string and "</" + tag not in html_string:
-                html_append_until = "</" + tag + ">"
-                continue
+                label = row_match.group("label")
+                html_string = row_match.group("html")
+                tag = row_match.group("tag")
+                if not html_string:
+                    builder.add_control(label, None)
+                    continue
+                if "/>" not in html_string and "</" + tag not in html_string:
+                    html_append_until = "</" + tag + ">"
+                    continue
+            else:
+                html_close = False
 
             html = etree.fromstring(html_string)
             if html.tag == "json":

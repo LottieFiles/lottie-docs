@@ -95,8 +95,19 @@ In this example there's a layer with a rectangle and a star being masked by an e
 
 {lottie_playground:matte.json:512:512}
 Matte Mode:<enum value="1">matte-mode</enum>
+<json>
+[{
+    ...lottie.layers[0],
+    ks: "...",
+    shapes: "..."
+}, {
+    ...lottie.layers[1],
+    ks: "...",
+    shapes: "..."
+}]
+</json>
 <script>
-lottie.layers[2].tt = Number(data["Matte Mode"]);
+lottie.layers[1].tt = Number(data["Matte Mode"]);
 </script>
 
 
