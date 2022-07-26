@@ -26,7 +26,7 @@
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "pt": {
-                    "title": "Points",
+                    "title": "Point Type",
                     "description": "Point type (1 = corner, 2 = smooth)",
                     "$ref": "#/$defs/animated-properties/value"
                 }
