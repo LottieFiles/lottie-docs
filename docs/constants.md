@@ -79,6 +79,12 @@ lottie.layers[2].tt = Number(data["Matte Mode"]);
 </script>
 
 
+## {schema_attribute:title:constants/merge-mode}
+
+{schema_attribute:description:constants/merge-mode}
+
+{schema_enum:merge-mode}
+
 
 ## {schema_attribute:title:constants/shape-direction}
 

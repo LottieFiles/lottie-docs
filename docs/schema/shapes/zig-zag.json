@@ -27,7 +27,7 @@
                 },
                 "pt": {
                     "title": "Points",
-                    "description": "Type of points",
+                    "description": "Point type (1 = corner, 2 = smooth)",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

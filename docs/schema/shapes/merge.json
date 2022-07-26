@@ -18,7 +18,7 @@
                 },
                 "mm": {
                     "title": "Merge Mode",
-                    "type": "number",
+                    "$ref": "#/$defs/constants/merge-mode",
                     "default": 1
                 }
             },
