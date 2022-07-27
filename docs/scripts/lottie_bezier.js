@@ -58,7 +58,14 @@ class Bezier
     {
         let p1 = this.points[index];
         let p2 = this.points[(index + 1) % this.points.length];
-        return BezierSegment.from_bezier_points(p1, p2);
+        return BezierSegment.from_bezier_points(p1, p1.out_tangent, p2.in_tangent, p2);
+    }
+
+    inverted_segment(index)
+    {
+        let p1 = this.points[index];
+        let p2 = this.points[(index + 1) % this.points.length];
+        return BezierSegment.from_bezier_points(p2, p2.in_tangent, p1.out_tangent, p1);
     }
 
     segment_count()
@@ -115,21 +122,21 @@ class BezierSegment
         return this.points[3];
     }
 
-    static from_bezier_points(start, end)
+    static from_bezier_points(start, tan1, tan2, end)
     {
         let k0 = start.pos;
         let k1;
         let k2;
         let k3 = end.pos;
-        if ( start.out_tangent.is_origin() && end.in_tangent.is_origin() )
+        if ( tan1.is_origin() && tan2.is_origin() )
         {
             k1 = lerp(start.pos, end.pos, 1/3);
             k2 = lerp(start.pos, end.pos, 2/3);
         }
         else
         {
-            k1 = start.pos.add(start.out_tangent);
-            k2 = end.pos.add(end.in_tangent);
+            k1 = start.pos.add(tan1);
+            k2 = end.pos.add(tan2);
         }
 
         return new BezierSegment(k0, k1, k2, k3);

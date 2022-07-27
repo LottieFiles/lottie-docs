@@ -805,6 +805,45 @@ function prune_intersections(segments)
     return segments;
 }
 
+function offset_segment_split(segment, amount)
+{
+    /*
+        We split each bezier segment into smaller pieces based
+        on inflection points, this ensures the control point
+        polygon is convex.
+
+        (A cubic bezier can have none, one, or two inflection points)
+    */
+    let flex = segment.inflection_points();
+
+    if ( flex.length == 0 )
+    {
+        return [offset_segment(segment, amount)];
+    }
+    else if ( flex.length == 1 || flex[1] == 1 )
+    {
+        let [left, right] = segment.split(flex[0]);
+
+        return [
+            offset_segment(left, amount),
+            offset_segment(right, amount)
+        ];
+    }
+    else
+    {
+        let [left, mid_right] = segment.split(flex[0]);
+        let t = (flex[1] - flex[0]) / (1 - flex[0]);
+        let [mid, right] = mid_right.split(t);
+
+        return [
+            offset_segment(left, amount),
+            offset_segment(mid, amount),
+            offset_segment(right, amount)
+        ];
+    }
+
+}
+
 function offset_path(
     // Beziers as collected from the other shapes
     collected_shapes,
@@ -825,42 +864,13 @@ function offset_path(
         let multi_segments = [];
 
         for ( let i = 0; i < count; i++ )
+            multi_segments.push(offset_segment_split(input_bezier.segment(i), amount));
+
+        // Open paths are stroked rather than being simply offset
+        if ( !input_bezier.closed )
         {
-            let segment = input_bezier.segment(i);
-            /*
-                We split each bezier segment into smaller pieces based
-                on inflection points, this ensures the control point
-                polygon is convex.
-
-                (A cubic bezier can have none, one, or two inflection points)
-            */
-            let flex = segment.inflection_points();
-
-            if ( flex.length == 0 )
-            {
-                multi_segments.push([offset_segment(segment, amount)]);
-            }
-            else if ( flex.length == 1 || flex[1] == 1 )
-            {
-                let [left, right] = segment.split(flex[0]);
-
-                multi_segments.push([
-                    offset_segment(left, amount),
-                    offset_segment(right, amount)
-                ]);
-            }
-            else
-            {
-                let [left, mid_right] = segment.split(flex[0]);
-                let t = (flex[1] - flex[0]) / (1 - flex[0]);
-                let [mid, right] = mid_right.split(t);
-
-                multi_segments.push([
-                    offset_segment(left, amount),
-                    offset_segment(mid, amount),
-                    offset_segment(right, amount)
-                ]);
-            }
+            for ( let i = count - 1; i >= 0; i-- )
+                multi_segments.push(offset_segment_split(input_bezier.inverted_segment(i), amount));
         }
 
         multi_segments = prune_intersections(multi_segments);
@@ -897,7 +907,7 @@ function offset_path(
             }
         }
 
-        if ( input_bezier.closed && multi_segments.length )
+        if ( multi_segments.length )
             join_lines(output_bezier, last_seg, multi_segments[0][0], line_join, miter_limit);
 
         result.push(output_bezier);
