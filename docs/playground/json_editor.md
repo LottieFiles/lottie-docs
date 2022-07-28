@@ -383,7 +383,7 @@ body.wide .container {
 
                 reader.onload = function(e2)
                 {
-                    lottie_string_input(e2.target.result);
+                    lottie_string_input(e2.target.result, true);
                     document.getElementById("dismiss_file_modal").click();
                 };
 
@@ -449,8 +449,16 @@ body.wide .container {
         set_editor_json(lottie_player.lottie);
     }
 
-    function lottie_string_input(data)
+    function lottie_string_input(data, auto_prettify = false)
     {
+        if ( auto_prettify && data.split("\n").length < 3 )
+        {
+            try {
+                data = JSON.parse(data);
+                data = JSON.stringify(data, undefined, 4);
+            } catch (e) {}
+        }
+
         editor.set_content(data);
         error_container.style.display = "none";
         loading_div.style.display = "none";
@@ -635,7 +643,7 @@ body.wide .container {
     if ( data )
     {
         if ( data[0] == "{" )
-            lottie_string_input(data);
+            lottie_string_input(data, true);
         else
             lottie_url_input(data);
     }
