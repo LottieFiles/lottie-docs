@@ -19,7 +19,13 @@ ddd: Whether the animation has 3D layers. Lottie doesn't actually support 3D stu
 Some (but not all) lottie files will have a metadata object describing the
 program used to create the file and other useful information:
 
+### Document Metadata
+
 {schema_object:animation/metadata}
+
+### User Metadata
+
+{schema_object:animation/user-metadata}
 
 ## Motion Blur
 

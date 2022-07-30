@@ -561,17 +561,19 @@ function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude,
     if ( !segment_before )
     {
         point = segment_after.points[0];
-        angle = segment_after.normal_angle(0);
+        angle = segment_after.normal_angle(0.01);
     }
     else if ( !segment_after )
     {
         point = segment_before.points[3];
-        angle = segment_before.normal_angle(1);
+        angle = segment_before.normal_angle(0.99);
     }
     else
     {
         point = segment_after.points[0];
-        angle = angle_mean(segment_after.normal_angle(0), segment_before.normal_angle(1));
+        let a1 = segment_after.normal_angle(0.01);
+        let a2 = segment_before.normal_angle(0.99);
+        angle = angle_mean(a1, a2);
     }
 
     output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
@@ -581,12 +583,11 @@ function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction
 {
     for ( let i = 0; i < frequency; i++ )
     {
-        let t = (i + 1) / (frequency + 1);
+        let f = (i + 1) / (frequency + 1);
+        let t = segment.t_at_length_percent(f);
         let angle = segment.normal_angle(t);
         let point = segment.point(t);
-        point.x += Math.cos(angle) * direction * amplitude;
-        point.y -= Math.sin(angle) * direction * amplitude;
-        output_bezier.add_vertex(point);
+        output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
 
         direction = -direction;
     }

@@ -28,6 +28,19 @@ class Bezier
         this.closed = true;
     }
 
+    static from_lottie(data)
+    {
+        let bez = new Bezier();
+        bez.closed = !!data.c;
+        for ( let i = 0; i < data.v.length; i++ )
+        {
+            bez.add_vertex(...data.v[i])
+                .set_in_tangent(...data.i[i])
+                .set_out_tangent(...data.o[i]);
+        }
+        return bez;
+    }
+
     add_vertex(x, y)
     {
         let point = new BezierPoint(x, y);
@@ -110,6 +123,8 @@ class BezierSegment
         this.c = this._c(k0, k1);
         this.d = this._d(k0);
         this.points = [k0, k1, k2, k3];
+        this.length_data = [];
+        this.length = -1;
     }
 
     get start()
@@ -128,12 +143,12 @@ class BezierSegment
         let k1;
         let k2;
         let k3 = end.pos;
-        if ( tan1.is_origin() && tan2.is_origin() )
-        {
-            k1 = lerp(start.pos, end.pos, 1/3);
-            k2 = lerp(start.pos, end.pos, 2/3);
-        }
-        else
+//         if ( tan1.is_origin() && tan2.is_origin() )
+//         {
+//             k1 = lerp(start.pos, end.pos, 1/3);
+//             k2 = lerp(start.pos, end.pos, 2/3);
+//         }
+//         else
         {
             k1 = start.pos.add(tan1);
             k2 = end.pos.add(tan2);
@@ -145,6 +160,11 @@ class BezierSegment
     point(t)
     {
         return this.a.mul(t).add(this.b).mul(t).add(this.c).mul(t).add(this.d);
+    }
+
+    value(t)
+    {
+        return this.point(t);
     }
 
     derivative(t)
@@ -360,6 +380,61 @@ class BezierSegment
         BezierSegment._intersects_impl(d1s[0], d2s[1], tolerance, intersections, depth + 1, max_recursion);
         BezierSegment._intersects_impl(d1s[1], d2s[0], tolerance, intersections, depth + 1, max_recursion);
         BezierSegment._intersects_impl(d1s[1], d2s[1], tolerance, intersections, depth + 1, max_recursion);
+    }
+
+    calculate_length_data(chunks = 22)
+    {
+        if ( this.length_data.length >= chunks )
+            return this.length_data;
+
+        let last_point = this.points[0];
+        this.length = 0;
+        this.length_data = [];
+        for ( let i = 1; i <= chunks; i++ )
+        {
+            let t = i / chunks;
+            let point = this.point(t);
+            this.length += point.distance(last_point);
+            this.length_data.push([t, this.length]);
+            last_point = point;
+        }
+
+        return this.length_data;
+    }
+
+    t_at_length(length, chunks)
+    {
+        this.calculate_length_data(chunks);
+
+        if ( length <= 0 )
+            return 0;
+
+        let prev_t = 0;
+        let prev_len = 0;
+
+        for ( let [t, len] of this.length_data )
+        {
+            if ( len > length )
+            {
+                let f = (length - prev_len) / (len - prev_len);
+                return prev_t * (1 - f) + t * f;
+            }
+
+            prev_t = t;
+            prev_len = len;
+        }
+
+        return 1;
+    }
+
+    t_at_length_percent(percent, chunks)
+    {
+        this.calculate_length_data(chunks);
+
+        if ( this.length_data.length == 0 && chunks <= 0 )
+            return percent;
+
+        return this.t_at_length(this.length * percent, chunks);
     }
 }
 

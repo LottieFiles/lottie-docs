@@ -116,6 +116,7 @@ class BezierEditor
         this._closed = false;
         this.drag = null;
         this.on_change = on_change;
+        this.continuous_update = false;
 
         this.canvas.addEventListener("mousedown", this._on_mouse_down.bind(this));
         this.canvas.addEventListener("mousemove", this._on_mouse_move.bind(this));
@@ -184,6 +185,14 @@ class BezierEditor
         this._closed = false;
     }
 
+    logical_to_canvas(x, y)
+    {
+        return [
+            this._tr(x, this.scale_x, this.offset_x),
+            this._tr(y, this.scale_y, this.offset_y)
+        ];
+    }
+
     _tr(v, scale, offset)
     {
         if ( scale < 0 )
@@ -224,12 +233,17 @@ class BezierEditor
             this.points.push(point);
     }
 
+    draw_background() {}
+    draw_foreground() {}
+
     draw_frame()
     {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         if ( !this.points.length )
             return;
+
+        this.draw_background();
 
         this.context.beginPath();
         this.context.lineWidth = 3;
@@ -271,6 +285,8 @@ class BezierEditor
             this.context.fill();
             this.context.stroke();
         }
+
+        this.draw_foreground();
     }
 
     _get_mouse_handle(ev, only_tan = false)
@@ -318,6 +334,8 @@ class BezierEditor
                 this.drag.x -= this.drag.parent.x;
                 this.drag.y -= this.drag.parent.y;
             }
+            if ( this.continuous_update )
+                this.on_change();
             this.draw_frame();
         }
         else
@@ -451,14 +469,15 @@ class BezierPreviewEditor
         this.on_change(this.to_lottie());
     }
 
-    static stand_alone(parent, on_change)
+    static stand_alone(parent, on_change, initial)
     {
-        let initial = {
-            "c": false,
-            "v": [[53, 325], [429, 147], [215, 430]],
-            "i": [[0, 0], [-147, 186], [114, 36]],
-            "o": [[89, -189], [40, 189], [0, 0]]
-        };
+        if ( !initial )
+            initial = {
+                "c": false,
+                "v": [[53, 325], [429, 147], [215, 430]],
+                "i": [[0, 0], [-147, 186], [114, 36]],
+                "o": [[89, -189], [40, 189], [0, 0]]
+            };
         on_change(initial);
         return new BezierPreviewEditor(parent, initial, on_change);
     }

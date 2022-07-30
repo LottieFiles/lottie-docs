@@ -99,8 +99,7 @@
                 },
                 "metadata": {
                     "title": "User Metadata",
-                    "type": "object",
-                    "description": "User-defined metadata"
+                    "$ref": "#/$defs/animation/user-metadata"
                 },
                 "markers": {
                     "title": "Markers",

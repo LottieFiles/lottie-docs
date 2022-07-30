@@ -1,0 +1,132 @@
+<DOCTYPE html>
+<html>
+<head>
+    <script src="../docs/scripts/lottie_bezier.js"></script>
+    <script src="../docs/scripts/value_editors.js"></script>
+    <link rel="stylesheet" href="../docs/style/style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css" />
+</head>
+<body>
+
+<div id="editor_area">
+    <div id="bezier-editor">
+    </div>
+</div>
+
+<input type="number" onchange="draw.draw_frame()" value="16"  id="chunks_input"/>
+
+<div id="displays"></div>
+
+<script>
+    let bezier = new Bezier();
+    let seg = null;
+    let displays_container = document.getElementById("displays");
+
+
+    let segments_input = document.getElementById("segments_input");
+    let chunks_input = document.getElementById("chunks_input");
+
+    function on_input()
+    {
+        draw.draw_frame();
+    }
+
+    function add_display(segments, color, radius, checked)
+    {
+        let parent = displays_container.appendChild(document.createElement("div"));
+
+        let check = parent.appendChild(document.createElement("input"));
+        check.type = "checkbox";
+        check.classList.add("checkbox");
+        check.checked = checked;
+        check.addEventListener("change", on_input);
+
+        let isegments = parent.appendChild(document.createElement("input"));
+        isegments.type = "number";
+        isegments.classList.add("segments");
+        isegments.value = segments;
+        isegments.addEventListener("change", on_input);
+
+        let icolor = parent.appendChild(document.createElement("input"));
+        icolor.type = "color";
+        icolor.classList.add("color");
+        icolor.value = color;
+        icolor.addEventListener("change", on_input);
+
+        let iradius = parent.appendChild(document.createElement("input"));
+        iradius.type = "number";
+        iradius.classList.add("radius");
+        iradius.value = radius;
+        iradius.addEventListener("change", on_input);
+    }
+
+    function bezier_update(data)
+    {
+        bezier = Bezier.from_lottie(data);
+
+        seg = bezier.segment(0);
+    }
+
+    function print_stuff()
+    {
+        let n = Number(chunks_input.value);
+        seg.calculate_length_data(Number(chunks_input.value));
+        for ( let i = 1; i < n; i++ )
+        {
+            let t = seg.t_at_length(i * seg.length / n);
+            console.log(i / n, t);
+        }
+    }
+
+    let draw;
+    let bezier_editor = BezierPreviewEditor.stand_alone(
+        document.getElementById("bezier-editor"),
+        bezier_update,
+        {
+            c: false,
+            v: [[0, 0], [300, 400]],
+            i: [[0, 0], [0, 0]],
+            o: [[0, 0], [0, 0]],
+        }
+    );
+
+    add_display(0, "#ff0000", 9, true);
+    add_display(7, "#ffff00", 7, true);
+    add_display(20, "#00ff00", 5, false);
+    add_display(100, "#0000ff", 3, true);
+
+    draw = bezier_editor.bezier_editor;
+    draw.continuous_update = true;
+    draw.draw_foreground = (function() {
+        if ( bezier.points.length )
+        {
+            let n = Number(chunks_input.value);
+            for ( let parent of displays_container.children )
+            {
+                if ( !parent.querySelector(".checkbox").checked )
+                    continue;
+
+                this.context.lineWidth = 1;
+                let prec = Number(parent.querySelector(".segments").value);
+                this.context.strokeStyle = parent.querySelector(".color").value;
+                seg.calculate_length_data(prec);
+                let radius = Number(parent.querySelector(".radius").value);
+
+                for ( let i = 0; i <= n; i++ )
+                {
+                    let t = seg.t_at_length_percent(i / n, prec);
+                    let p = seg.value(t);
+                    this.context.beginPath();
+                    this.context.arc(...draw.logical_to_canvas(p.x, p.y), radius, 0, Math.PI * 2);
+                    this.context.stroke();
+                }
+
+                seg.length_data = [];
+            }
+        }
+    }).bind(draw);
+    draw.draw_frame();
+</script>
+
+</body>
+</html>
