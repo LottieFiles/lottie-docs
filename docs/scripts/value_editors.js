@@ -364,10 +364,10 @@ class BezierEditor
 
 class BezierPreviewEditor
 {
-    constructor(parent, initial, on_change)
+    constructor(parent, initial, on_change, width = 512, height = 512)
     {
         this.on_change = on_change;
-        this.bezier_editor = new BezierEditor(this._on_change.bind(this), 512, 512);
+        this.bezier_editor = new BezierEditor(this._on_change.bind(this), width, height);
         this.bezier_editor.canvas.classList.add("alpha_checkered");
         parent.appendChild(this.bezier_editor.canvas);
 
@@ -469,7 +469,7 @@ class BezierPreviewEditor
         this.on_change(this.to_lottie());
     }
 
-    static stand_alone(parent, on_change, initial)
+    static stand_alone(parent, on_change, initial, width, height)
     {
         if ( !initial )
             initial = {
@@ -479,7 +479,7 @@ class BezierPreviewEditor
                 "o": [[89, -189], [40, 189], [0, 0]]
             };
         on_change(initial);
-        return new BezierPreviewEditor(parent, initial, on_change);
+        return new BezierPreviewEditor(parent, initial, on_change, width, height);
     }
 }
 

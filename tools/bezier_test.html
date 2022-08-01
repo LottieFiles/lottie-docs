@@ -17,6 +17,9 @@
 
 <div id="displays"></div>
 
+<button onclick="add_display(Number(document.getElementById('displays').lastChild?.querySelector('.segments').value ?? -1) + 1, '#ffffff', 6, true); draw.draw_frame();"><i class="fa-solid fa-plus"></i></button>
+<button onclick="sort_displays()"><i class="fa-solid fa-arrow-up-1-9"></i></button>
+
 <script>
     let bezier = new Bezier();
     let seg = null;
@@ -87,7 +90,9 @@
             v: [[0, 0], [300, 400]],
             i: [[0, 0], [0, 0]],
             o: [[0, 0], [0, 0]],
-        }
+        },
+        1024,
+        1024
     );
 
     add_display(0, "#ff0000", 9, true);

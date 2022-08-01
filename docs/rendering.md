@@ -524,6 +524,7 @@ See [Zig Zag](shapes.md#zig-zag).
 Zig Zag:
 Amplitude:<input type="range" min="-100" value="10" max="100"/>
 Frequency:<input type="range" min="0" value="10" max="30"/>
+Point Type:<select><option value="1">Point</option><option value="2">Smooth</option></select>
 Star:
 Roundness:<input type="range" min="0" value="0" max="100"/>
 Rotation:<input type="range" min="0" value="0" max="360"/>
@@ -533,6 +534,7 @@ Stroke Width:<input type="range" min="1" value="3" max="30"/>
 <script>
 lottie.layers[0].shapes[0].it[1].s.k = data["Amplitude"];
 lottie.layers[0].shapes[0].it[1].r.k = data["Frequency"];
+lottie.layers[0].shapes[0].it[1].pt.k = Number(data["Point Type"]);
 
 lottie.layers[0].shapes[0].it[0].pt.k = data["Points"];
 lottie.layers[0].shapes[0].it[0].r.k = data["Rotation"];
@@ -543,7 +545,7 @@ lottie.layers[0].shapes[0].it[2].w.k = data["Stroke Width"];
 let star = lottie.layers[0].shapes[0].it[0];
 bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
 </script>
-<script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.r.k)" varname="modifier" suffix="[0].to_lottie()">
+<script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.r.k, modifier.pt.k)" varname="modifier" suffix="[0].to_lottie()">
 
 function angle_mean(a, b)
 {
@@ -553,33 +555,41 @@ function angle_mean(a, b)
     return (a + b) / 2;
 }
 
-function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude, direction)
+function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude, direction, tangent_length)
 {
     let point;
     let angle;
+    let tan_angle;
 
+    // We use 0.01 and 0.99 instead of 0 and 1 because they yield better results
     if ( !segment_before )
     {
         point = segment_after.points[0];
         angle = segment_after.normal_angle(0.01);
+        tan_angle = segment_after.tangent_angle(0.01);
     }
     else if ( !segment_after )
     {
         point = segment_before.points[3];
         angle = segment_before.normal_angle(0.99);
+        tan_angle = segment_before.tangent_angle(0.99);
     }
     else
     {
         point = segment_after.points[0];
-        let a1 = segment_after.normal_angle(0.01);
-        let a2 = segment_before.normal_angle(0.99);
-        angle = angle_mean(a1, a2);
+        angle = angle_mean(segment_after.normal_angle(0.01), segment_before.normal_angle(0.99));
+        tan_angle = angle_mean(segment_after.tangent_angle(0.01), segment_before.tangent_angle(0.99));
     }
 
-    output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+    let vertex = output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+    if ( tangent_length !== 0 )
+    {
+        vertex.set_in_tangent(Point.polar(tan_angle, -tangent_length));
+        vertex.set_out_tangent(Point.polar(tan_angle, tangent_length));
+    }
 }
 
-function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction)
+function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction, tangent_length)
 {
     for ( let i = 0; i < frequency; i++ )
     {
@@ -587,7 +597,14 @@ function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction
         let t = segment.t_at_length_percent(f);
         let angle = segment.normal_angle(t);
         let point = segment.point(t);
-        output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+
+        let vertex = output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+        if ( tangent_length !== 0 )
+        {
+            let tan_angle = segment.tangent_angle(t);
+            vertex.set_in_tangent(Point.polar(tan_angle, -tangent_length));
+            vertex.set_out_tangent(Point.polar(tan_angle, tangent_length));
+        }
 
         direction = -direction;
     }
@@ -595,7 +612,7 @@ function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction
     return direction;
 }
 
-function zig_zag_bezier(input_bezier, amplitude, frequency)
+function zig_zag_bezier(input_bezier, amplitude, frequency, smooth)
 {
     let output_bezier = new Bezier();
 
@@ -609,20 +626,23 @@ function zig_zag_bezier(input_bezier, amplitude, frequency)
     let segment = input_bezier.closed ? input_bezier.segment(count - 1) : null;
     let next_segment = input_bezier.segment(0);
 
-    zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1);
+    segment.calculate_length_data();
+    let tangent_length = smooth ? segment.length / (frequency + 1) / 2 : 0;
+
+    zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1, tangent_length);
 
     for ( let i = 0; i < count; i++ )
     {
         segment = next_segment;
 
-        direction = zig_zag_segment(output_bezier, segment, amplitude, frequency, -direction);
+        direction = zig_zag_segment(output_bezier, segment, amplitude, frequency, -direction, tangent_length);
 
         if ( i == count - 1 && !input_bezier.closed )
             next_segment = null;
         else
             next_segment = input_bezier.segment((i + 1) % count);
 
-        zig_zag_corner(output_bezier, segment, next_segment, amplitude, direction);
+        zig_zag_corner(output_bezier, segment, next_segment, amplitude, direction, tangent_length);
     }
 
     return output_bezier;
@@ -632,7 +652,8 @@ function zig_zag(
     // Beziers as collected from the other shapes
     collected_shapes,
     amplitude,
-    frequency
+    frequency,
+    point_type
 )
 {
     // Ensure we have an integer number of segments
@@ -641,7 +662,7 @@ function zig_zag(
     let result = [];
 
     for ( let input_bezier of collected_shapes )
-        result.push(zig_zag_bezier(input_bezier, amplitude, frequency));
+        result.push(zig_zag_bezier(input_bezier, amplitude, frequency, point_type === 2));
 
     return result;
 }
