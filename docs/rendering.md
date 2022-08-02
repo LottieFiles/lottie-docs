@@ -1128,3 +1128,69 @@ void main()
 }
 </script>
 
+### Drop Shadow Effect
+
+{effect_shader_script:effects-shadow.json:394:394}
+Red:<input type="range" min="0" value="0" max="1" step="0.1"/>
+Green:<input type="range" min="0" value="0" max="1" step="0.1"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1"/>
+Opacity:<input type="range" min="0" value="128" max="256"/>
+Angle:<input type="range" min="0" value="135" max="360"/>
+Distance:<input type="range" min="0" value="10" max="512"/>
+Blur:<input type="range" min="0" value="7" max="512"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["Blue"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Angle"];
+lottie.layers[0].ef[0].ef[3].v.k = data["Distance"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Blur"];
+
+shader.set_uniform("color", "4fv", [data["Red"], data["Green"], data["Blue"], data["Opacity"]]);
+shader.set_uniform("angle", "1f", data["Angle"]);
+// 0.77 is just to take into account the canvas is 394 instead of 512
+shader.set_uniform("distance", "1f", data["Distance"] * 0.77);
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+#define PI 3.1415926538
+
+uniform highp vec4 color;
+uniform mediump float angle;
+uniform mediump float distance;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+void main()
+{
+    // Base pixel value
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    // Pixel value at the given offset
+    mediump float radians = -angle * PI / 180.0 + PI / 2.0;
+    highp vec2 shadow_uv = vec2(
+        (gl_FragCoord.x - distance * cos(radians)) / canvas_size.x,
+        1.0 - (gl_FragCoord.y - distance * sin(radians)) / canvas_size.y
+    );
+    highp vec4 shadow_pixel = texture2D(texture_sampler, shadow_uv);
+
+    // Colorize shadow
+    highp vec4 shadow_color;
+
+    if ( shadow_uv.x >= 0.0 && shadow_uv.x <= 1.0 && shadow_uv.y >= 0.0 && shadow_uv.y <= 1.0 )
+    {
+        shadow_color = color;
+        shadow_color.a = 1.0;
+        shadow_color *= shadow_pixel.a * color.a / 255.0;
+    }
+
+    // TODO Blur
+
+    // Apply shadow below the base pixel
+    gl_FragColor = pixel * pixel.a + shadow_color * (1.0 - pixel.a);
+}
+</script>
