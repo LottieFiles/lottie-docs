@@ -1019,3 +1019,75 @@ Translate by `p`
 0       1       0   0
 0       0       1   0
 p[0]    p[1]    0   1
+
+
+## Effects
+
+<script src="/lottie-docs/scripts/shader_example.js"></script>
+
+### Tritone
+{effect_shader_script:effects-tritone.json:394:394}
+Bright:
+Red:<input type="range" min="0" value="1" max="1" step="0.1" name="r1"/>
+Green:<input type="range" min="0" value="1" max="1" step="0.1" name="g1"/>
+Blue:<input type="range" min="0" value="1" max="1" step="0.1" name="b1"/>
+Mid:
+Red:<input type="range" min="0" value="0.3" max="1" step="0.1" name="r2"/>
+Green:<input type="range" min="0" value="0.8" max="1" step="0.1" name="g2"/>
+Blue:<input type="range" min="0" value="0.3" max="1" step="0.1" name="b2"/>
+Dark:
+Red:<input type="range" min="0" value="0" max="1" step="0.1" name="r3"/>
+Green:<input type="range" min="0" value="0" max="1" step="0.1" name="g3"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1" name="b3"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k[0] = data["r1"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["g1"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["b1"];
+lottie.layers[0].ef[0].ef[1].v.k[0] = data["r2"];
+lottie.layers[0].ef[0].ef[1].v.k[1] = data["g2"];
+lottie.layers[0].ef[0].ef[1].v.k[2] = data["b2"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["r3"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["g3"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["b3"];
+
+shader.set_uniform("bright", "4fv", [data["r1"], data["g1"], data["b1"], 1]);
+shader.set_uniform("mid", "4fv", [data["r2"], data["g2"], data["b2"], 1]);
+shader.set_uniform("dark", "4fv", [data["r3"], data["g3"], data["b3"], 1]);
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+uniform highp vec4 bright;
+uniform highp vec4 mid;
+uniform highp vec4 dark;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    highp float lightness = sqrt(pixel.r * pixel.r * 0.299 + pixel.g * pixel.g * 0.587 + pixel.b * pixel.b * 0.114);
+    // If you want results more similar to lottie-web use the lightness below
+    // (this shader has a more accurate lightness calculation)
+    // lightness = sqrt((pixel.r * pixel.r + pixel.g * pixel.g + pixel.b * pixel.b) / 3.0);
+
+    if ( lightness < 0.5 )
+    {
+        lightness *= 2.0;
+        gl_FragColor = dark * (1.0 - lightness) + mid * lightness;
+    }
+    else
+    {
+        lightness = (lightness - 0.5) * 2.0;
+        gl_FragColor = mid * (1.0 - lightness) + bright * lightness;
+    }
+
+    gl_FragColor *= pixel.a;
+}
+</script>
+

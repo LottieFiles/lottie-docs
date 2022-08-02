@@ -61,6 +61,9 @@ class LottieRenderer:
         self.animation = etree.SubElement(self.animation_container, "div")
         self.animation.attrib["id"] = "lottie_target_%s" % self.id
 
+        self.width = width
+        self.height = height
+
         if width:
             self.animation.attrib["style"] = "width:%spx;height:%spx" % (width, height)
 
@@ -706,6 +709,68 @@ class ShapeBezierScript(LottiePlayground):
         code = etree.SubElement(pre, "code", {"id": id + "_bezier", "class": "language-json hljs"})
         code.text = ""
         return id
+
+
+class EffectShaderScript(LottiePlayground):
+    re_fence_start = re.compile(r'^\s*\{effect_shader_script:(?P<example>[^:]+)(?::(?P<ty>[a-z]+))?(?::(?P<w>[0-9]+):(?P<h>[0-9]+))?(?::(?P<extra>\{[^}]+\}))?\}')
+
+    def populate_script(self, blocks, match, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
+        shader_view = etree.SubElement(builder.renderer.animation_container, "canvas")
+        shader_view.attrib["id"] = "lottie_target_%s_canvas" % builder.anim_id
+        shader_view.attrib["style"] = builder.renderer.animation.attrib["style"]
+        shader_view.attrib["width"] = builder.renderer.width
+        shader_view.attrib["height"] = builder.renderer.height
+
+        uniforms = {}
+        script = ""
+        shader_source = ""
+        while True:
+            if blocks[0] == '':
+                blocks = blocks[1:]
+            script_element = self.pop_script_block(blocks)
+            if script_element is not None:
+                if script_element.attrib.get("type", "") == "x-shader/x-fragment":
+                    shader_source = script_element.text
+
+                    pre = etree.SubElement(builder.element, "pre")
+                    # No glsl ;_;
+                    code = etree.SubElement(pre, "code", {"class": "language-c hljs"})
+                    code.text = AtomicString(shader_source)
+                else:
+                    script = script_element.text
+            else:
+                break
+
+
+        if json_viewer_path:
+            script += "this.json_viewer_contents = %s;" % json_viewer_path
+
+        builder.renderer.populate_script("""
+        var lottie_shader_{id} = new FragmentShaderExample(document.getElementById('{shader_view_id}'));
+        lottie_shader_{id}.set_shader({shader_source});
+        var lottie_player_{id} = new PlaygroundPlayer(
+            {id},
+            '{json_viewer_id}',
+            'lottie_target_{id}',
+            {json_data},
+            function (lottie, data)
+            {{
+                let shader = lottie_shader_{id};
+                {on_load}
+                shader.render();
+            }},
+            {extra_options}
+        );
+        """.format(
+            id=builder.anim_id,
+            json_viewer_id=json_viewer_id,
+            on_load=script,
+            json_data=json_data,
+            extra_options=extra_options,
+            shader_view_id=shader_view.attrib["id"],
+            uniforms=json.dumps(uniforms),
+            shader_source=repr(shader_source),
+        ))
 
 
 @dataclasses.dataclass
@@ -1453,6 +1518,7 @@ class LottieExtension(Extension):
         md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
         md.inlinePatterns.register(EditorExample(md), "editor_example", 175)
         md.parser.blockprocessors.register(ShapeBezierScript(md.parser, schema_data), "shape_bezier_script", 175)
+        md.parser.blockprocessors.register(EffectShaderScript(md.parser, schema_data), "effect_shader_script", 175)
 
 
 def makeExtension(**kwargs):

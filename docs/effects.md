@@ -15,7 +15,7 @@ Effect types:
 
 |`ty`| Effect Type |
 |----|-------------|
-|`5` |[Old-style Effect](#misc-effect)|
+|`5` |[Misc Effect](#misc-effect)|
 |`7` |[Paint Over Transparent](#paint-over-transparent-effect)|
 |`20`|[Tint](#tint-effect)|
 |`21`|[Fill](#fill-effect)|
