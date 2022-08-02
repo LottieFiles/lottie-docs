@@ -1025,7 +1025,44 @@ p[0]    p[1]    0   1
 
 <script src="/lottie-docs/scripts/shader_example.js"></script>
 
-### Tritone
+### Fill Effect
+
+{effect_shader_script:effects-fill.json:394:394}
+Opacity:<input type="range" min="0" value="1" max="1" step="0.1"/>
+Color:
+Red:<input type="range" min="0" value="1" max="1" step="0.1"/>
+Green:<input type="range" min="0" value="0.9" max="1" step="0.1"/>
+Blue:<input type="range" min="0" value="0" max="1" step="0.1"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[6].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["Blue"];
+
+shader.set_uniform("color", "4fv", [data["Red"], data["Green"], data["Blue"], data["Opacity"]]);
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+uniform highp vec4 color;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    gl_FragColor = color;
+    gl_FragColor.a = 1.0;
+    gl_FragColor *= pixel.a * color.a;
+}
+</script>
+
+
+### Tritone Effect
 {effect_shader_script:effects-tritone.json:394:394}
 Bright:
 Red:<input type="range" min="0" value="1" max="1" step="0.1" name="r1"/>
