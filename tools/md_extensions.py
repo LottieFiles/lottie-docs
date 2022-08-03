@@ -730,7 +730,7 @@ class EffectShaderScript(LottiePlayground):
             script_element = self.pop_script_block(blocks)
             if script_element is not None:
                 if script_element.attrib.get("type", "") == "x-shader/x-fragment":
-                    shader_source = script_element.text
+                    shader_source = script_element.text.strip();
 
                     pre = etree.SubElement(builder.element, "pre")
                     # No glsl ;_;

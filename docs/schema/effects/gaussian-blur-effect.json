@@ -25,7 +25,7 @@
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {
-                            "title": "dimensions",
+                            "title": "direction",
                             "$ref": "#/$defs/effect-values/slider"
                         },
                         {

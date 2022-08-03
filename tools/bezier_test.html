@@ -61,6 +61,15 @@
         iradius.classList.add("radius");
         iradius.value = radius;
         iradius.addEventListener("change", on_input);
+
+        let size = parent.appendChild(document.createElement("span"));
+        size.classList.add("length");
+        if ( seg )
+        {
+            seg.calculate_length_data(segments);
+            size.innerText = seg.length;
+            seg.length_data = [];
+        }
     }
 
     function bezier_update(data)
@@ -116,6 +125,8 @@
                 this.context.strokeStyle = parent.querySelector(".color").value;
                 seg.calculate_length_data(prec);
                 let radius = Number(parent.querySelector(".radius").value);
+
+                parent.querySelector(".length").innerText = seg.length;
 
                 for ( let i = 0; i <= n; i++ )
                 {

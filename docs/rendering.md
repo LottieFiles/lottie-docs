@@ -1128,6 +1128,110 @@ void main()
 }
 </script>
 
+
+### Gaussian Blur
+
+Note that for `Direction == 0 or 1` you should combine two passes of
+this shader, one with `horizontal = 1` and one with `horizontal = 0`.
+
+{effect_shader_script:effects-blur.json:394:394}
+Sigma:<input type="range" min="0" value="25" max="100"/>
+Direction:<input type="range" min="0" value="0" max="3"/>
+Wrap:<input type="range" min="0" value="0" max="1"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = data["Sigma"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Direction"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Wrap"];
+
+
+shader.set_uniform("sigma", "1f", data["Sigma"]);
+shader.set_uniform("horizontal", "1i", data["Direction"] == 2 ? 1 : 0);
+shader.set_uniform("wrap", "1i", data["Wrap"]);
+
+</script>
+<script type="x-shader/x-fragment">
+#version 300 es
+
+#define PI 3.1415926538
+precision highp float;
+
+uniform float sigma;
+uniform int horizontal;
+uniform int kernel_size;
+uniform int wrap;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+out vec4 FragColor;
+
+vec4 texture_value(vec2 uv)
+{
+    if ( wrap == 1 )
+    {
+        if ( uv.x < 0. ) uv.x = 1. - uv.x;
+        if ( uv.x > 1. ) uv.x = uv.x - 1.;
+        if ( uv.y < 0. ) uv.y = 1. - uv.y;
+        if ( uv.y > 1. ) uv.y = uv.y - 1.;
+    }
+    else if ( uv.x < 0. || uv.x > 1. || uv.y < 0. || uv.y > 1. )
+    {
+        return vec4(0.0);
+    }
+
+    return texture(texture_sampler, uv);
+}
+
+vec4 blur_pass(vec2 uv, float sigma, int kernel_size, bool horizontal)
+{
+    float side = float(kernel_size / 2);
+
+    vec2 direction_vector = horizontal ? vec2(1.0, 0.0) / canvas_size.x : vec2(0.0, 1.0) / canvas_size.y;
+
+    // Incremental Gaussian Coefficent Calculation (See GPU Gems 3 pp. 877 - 889)
+    vec3 delta_gauss;
+    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);
+    delta_gauss.y = exp(-0.5 / (sigma * sigma));
+    delta_gauss.z = delta_gauss.y * delta_gauss.y;
+
+    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
+    float sum = 0.0;
+
+    // Take the central sample first...
+    avg += texture_value(uv) * delta_gauss.x;
+    sum += delta_gauss.x;
+    delta_gauss.xy *= delta_gauss.yz;
+
+    // Go through the remaining 8 vertical samples (4 on each side of the center)
+    for ( float i = 1.0; i <= side; i++)
+    {
+        avg += texture_value(uv - i * direction_vector) * delta_gauss.x;
+        avg += texture_value(uv + i * direction_vector) * delta_gauss.x;
+        sum += 2.0 * delta_gauss.x;
+        delta_gauss.xy *= delta_gauss.yz;
+    }
+
+  return avg / sum;
+
+}
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+
+    int actual_kernel_size = kernel_size == 0 ? int(0.5 + 6.0 * sigma) : kernel_size;
+
+    if ( sigma == 0.0 )
+        FragColor = texture(texture_sampler, uv);
+    else if ( horizontal == 1 )
+        FragColor = blur_pass(uv, sigma * 0.3, actual_kernel_size, true);
+    else
+        FragColor = blur_pass(uv, sigma * 0.3, actual_kernel_size, false);
+}
+</script>
+
+
 ### Drop Shadow Effect
 
 {effect_shader_script:effects-shadow.json:394:394}

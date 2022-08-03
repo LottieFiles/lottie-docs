@@ -3,7 +3,7 @@ class FragmentShaderExample
     constructor(canvas)
     {
         this.canvas = canvas;
-        this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        this.gl = canvas.getContext("webgl2") || canvas.getContext("experimental-webgl");
         if ( !this.gl )
             throw new Error("Your browser doesn't support WebGL");
 
@@ -27,24 +27,54 @@ class FragmentShaderExample
 
     }
 
+    compile_shader(source, type)
+    {
+        const gl = this.gl;
+        const shader = gl.createShader(gl[type]);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        const compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+        if ( !compiled )
+        {
+            const errors = gl.getShaderInfoLog(shader).split("\n");
+            const lines = source.split("\n");
+            gl.deleteShader(shader);
+            throw new Error(`Couldn't compile ${type}:\n` + errors.map(e => {
+                let match = e.match(/([0-9]+):([0-9]+):/);
+                if ( match )
+                    return lines[Number(match[2]) - 1] + "\n" + e;
+                return e;
+            }).join("\n"));
+        }
+
+        return shader;
+    }
+
     set_shader(fragment_source)
     {
-        let vertex_source = `
-            #version 100
+        let vertex_source;
 
-            attribute vec2 position;
+        if ( fragment_source.indexOf("#version 300 es") != -1 )
+            vertex_source =
+            `   #version 300 es
+                in vec2 position;
 
-            void main() {
-                gl_Position = vec4(position, 0, 1.0);
-            }
-        `;
+                void main() {
+                    gl_Position = vec4(position, 0, 1.0);
+                }
+            `;
+        else
+            vertex_source =
+            `   #version 100
+                attribute vec2 position;
+
+                void main() {
+                    gl_Position = vec4(position, 0, 1.0);
+                }
+            `;
         const gl = this.gl;
-        const vertex_shader = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(vertex_shader, vertex_source);
-        gl.compileShader(vertex_shader);
-        const fragment_shader = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(fragment_shader, fragment_source);
-        gl.compileShader(fragment_shader);
+        const vertex_shader = this.compile_shader(vertex_source, "VERTEX_SHADER");
+        const fragment_shader = this.compile_shader(fragment_source, "FRAGMENT_SHADER");
         this.program = gl.createProgram();
         gl.attachShader(this.program, vertex_shader);
         gl.attachShader(this.program, fragment_shader);
@@ -63,10 +93,13 @@ class FragmentShaderExample
         this.initialize_attributes();
     }
 
-    render()
+    render(clear = true)
     {
-        this.gl.clearColor(0, 0, 0, 0);
-        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        if ( clear )
+        {
+            this.gl.clearColor(0, 0, 0, 0);
+            this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        }
 
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
     }
