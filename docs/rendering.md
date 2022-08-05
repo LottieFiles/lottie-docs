@@ -1146,7 +1146,7 @@ lottie.layers[0].ef[0].ef[2].v.k = data["Wrap"];
 
 
 shader.set_uniform("sigma", "1f", data["Sigma"]);
-shader.set_uniform("horizontal", "1i", data["Direction"] == 2 ? 1 : 0);
+shader.set_uniform("direction", "1i", data["Direction"]);
 shader.set_uniform("wrap", "1i", data["Wrap"]);
 
 </script>
@@ -1157,7 +1157,7 @@ shader.set_uniform("wrap", "1i", data["Wrap"]);
 precision highp float;
 
 uniform float sigma;
-uniform int horizontal;
+uniform int direction;
 uniform int kernel_size;
 uniform int wrap;
 
@@ -1165,6 +1165,7 @@ uniform mediump vec2 canvas_size;
 uniform sampler2D texture_sampler;
 
 out vec4 FragColor;
+
 
 vec4 texture_value(vec2 uv)
 {
@@ -1183,37 +1184,56 @@ vec4 texture_value(vec2 uv)
     return texture(texture_sampler, uv);
 }
 
-vec4 blur_pass(vec2 uv, float sigma, int kernel_size, bool horizontal)
+// Macro to because we can't define recursive functions in GLSL
+#define blur_pass_template(sigma, kernel_size, uv, horizontal, get_pixel) \
+{                                                                         \
+    float side = float(kernel_size / 2);                                  \
+                                                                          \
+    vec2 direction_vector = horizontal ?                                  \
+        vec2(1.0, 0.0) / canvas_size.x :                                  \
+        vec2(0.0, 1.0) / canvas_size.y;                                   \
+                                                                          \
+    vec3 delta_gauss;                                                     \
+    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);                       \
+    delta_gauss.y = exp(-0.5 / (sigma * sigma));                          \
+    delta_gauss.z = delta_gauss.y * delta_gauss.y;                        \
+                                                                          \
+    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);                                  \
+    float sum = 0.0;                                                      \
+                                                                          \
+    vec2 pos = uv;                                                        \
+    vec4 pixel = get_pixel;                                               \
+    avg += pixel * delta_gauss.x;                                         \
+    sum += delta_gauss.x;                                                 \
+    delta_gauss.xy *= delta_gauss.yz;                                     \
+                                                                          \
+    for ( float i = 1.0; i <= side; i++)                                  \
+    {                                                                     \
+        for ( float s = -1.0; s <= 1.0; s += 2.0 )                        \
+        {                                                                 \
+            vec2 pos = uv + s * i * direction_vector;                     \
+            pixel = get_pixel;                                            \
+            avg += pixel * delta_gauss.x;                                 \
+        }                                                                 \
+        sum += 2.0 * delta_gauss.x;                                       \
+        delta_gauss.xy *= delta_gauss.yz;                                 \
+    }                                                                     \
+                                                                          \
+    return avg / sum;                                                     \
+}
+
+
+vec4 blur_pass(float sigma, int kernel_size, vec2 uv, bool horizontal)
 {
-    float side = float(kernel_size / 2);
+    blur_pass_template(sigma, kernel_size, uv, horizontal, texture_value(pos));
+}
 
-    vec2 direction_vector = horizontal ? vec2(1.0, 0.0) / canvas_size.x : vec2(0.0, 1.0) / canvas_size.y;
-
-    // Incremental Gaussian Coefficent Calculation (See GPU Gems 3 pp. 877 - 889)
-    vec3 delta_gauss;
-    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);
-    delta_gauss.y = exp(-0.5 / (sigma * sigma));
-    delta_gauss.z = delta_gauss.y * delta_gauss.y;
-
-    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
-    float sum = 0.0;
-
-    // Take the central sample first...
-    avg += texture_value(uv) * delta_gauss.x;
-    sum += delta_gauss.x;
-    delta_gauss.xy *= delta_gauss.yz;
-
-    // Go through the remaining 8 vertical samples (4 on each side of the center)
-    for ( float i = 1.0; i <= side; i++)
-    {
-        avg += texture_value(uv - i * direction_vector) * delta_gauss.x;
-        avg += texture_value(uv + i * direction_vector) * delta_gauss.x;
-        sum += 2.0 * delta_gauss.x;
-        delta_gauss.xy *= delta_gauss.yz;
-    }
-
-  return avg / sum;
-
+// Note doing it like this is very infefficient, you're better off running
+// The shader twice (one horizontal and one vertical) using the output of a shader
+// as input for the next shader
+vec4 blur_multipass(float sigma, int kernel_size, vec2 uv, bool horizontal)
+{
+    blur_pass_template(sigma, kernel_size, uv, horizontal, blur_pass(sigma, kernel_size, pos, !horizontal));
 }
 
 void main()
@@ -1222,12 +1242,14 @@ void main()
 
     int actual_kernel_size = kernel_size == 0 ? int(0.5 + 6.0 * sigma) : kernel_size;
 
-    if ( sigma == 0.0 )
-        FragColor = texture(texture_sampler, uv);
-    else if ( horizontal == 1 )
-        FragColor = blur_pass(uv, sigma * 0.3, actual_kernel_size, true);
+    const float multiplier = 0.25;
+
+    if ( direction == 2 )
+        FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, true);
+    else if ( direction == 3 )
+        FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, false);
     else
-        FragColor = blur_pass(uv, sigma * 0.3, actual_kernel_size, false);
+        FragColor = blur_multipass(sigma * multiplier, actual_kernel_size, uv, true);
 }
 </script>
 
@@ -1296,5 +1318,157 @@ void main()
 
     // Apply shadow below the base pixel
     gl_FragColor = pixel * pixel.a + shadow_color * (1.0 - pixel.a);
+}
+</script>
+
+
+
+### Pro Levels Effect
+
+{effect_shader_script:effects-prolevels.json:394:394}
+Composite:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Composite In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Composite In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Composite Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Composite Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Composite Out White"/>
+Red:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Red In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Red In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Red Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Red Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Red Out White"/>
+Green:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Green In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Green In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Green Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Green Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Green Out White"/>
+Blue:
+In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Blue In Black"/>
+In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Blue In White"/>
+Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Blue Gamma"/>
+Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Blue Out Black"/>
+Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Blue Out White"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[3].v.k = data["Composite In Black"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Composite In White"];
+lottie.layers[0].ef[0].ef[5].v.k = data["Composite Gamma"];
+lottie.layers[0].ef[0].ef[6].v.k = data["Composite Out Black"];
+lottie.layers[0].ef[0].ef[7].v.k = data["Composite Out White"];
+lottie.layers[0].ef[0].ef[10].v.k = data["Red In Black"];
+lottie.layers[0].ef[0].ef[11].v.k = data["Red In White"];
+lottie.layers[0].ef[0].ef[12].v.k = data["Red Gamma"];
+lottie.layers[0].ef[0].ef[13].v.k = data["Red Out Black"];
+lottie.layers[0].ef[0].ef[14].v.k = data["Red Out White"];
+lottie.layers[0].ef[0].ef[17].v.k = data["Green In Black"];
+lottie.layers[0].ef[0].ef[18].v.k = data["Green In White"];
+lottie.layers[0].ef[0].ef[19].v.k = data["Green Gamma"];
+lottie.layers[0].ef[0].ef[20].v.k = data["Green Out Black"];
+lottie.layers[0].ef[0].ef[21].v.k = data["Green Out White"];
+lottie.layers[0].ef[0].ef[24].v.k = data["Blue In Black"];
+lottie.layers[0].ef[0].ef[25].v.k = data["Blue In White"];
+lottie.layers[0].ef[0].ef[26].v.k = data["Blue Gamma"];
+lottie.layers[0].ef[0].ef[27].v.k = data["Blue Out Black"];
+lottie.layers[0].ef[0].ef[28].v.k = data["Blue Out White"];
+
+shader.set_uniform("composite_in_black",  "1f", data["Composite In Black"]);
+shader.set_uniform("composite_in_white",  "1f", data["Composite In White"]);
+shader.set_uniform("composite_gamma",     "1f", data["Composite Gamma"]);
+shader.set_uniform("composite_out_black", "1f", data["Composite Out Black"]);
+shader.set_uniform("composite_out_white", "1f", data["Composite Out White"]);
+
+shader.set_uniform("red_in_black",  "1f", data["Red In Black"]);
+shader.set_uniform("red_in_white",  "1f", data["Red In White"]);
+shader.set_uniform("red_gamma",     "1f", data["Red Gamma"]);
+shader.set_uniform("red_out_black", "1f", data["Red Out Black"]);
+shader.set_uniform("red_out_white", "1f", data["Red Out White"]);
+
+shader.set_uniform("green_in_black",  "1f", data["Green In Black"]);
+shader.set_uniform("green_in_white",  "1f", data["Green In White"]);
+shader.set_uniform("green_gamma",     "1f", data["Green Gamma"]);
+shader.set_uniform("green_out_black", "1f", data["Green Out Black"]);
+shader.set_uniform("green_out_white", "1f", data["Green Out White"]);
+
+shader.set_uniform("blue_in_black",  "1f", data["Blue In Black"]);
+shader.set_uniform("blue_in_white",  "1f", data["Blue In White"]);
+shader.set_uniform("blue_gamma",     "1f", data["Blue Gamma"]);
+shader.set_uniform("blue_out_black", "1f", data["Blue Out Black"]);
+shader.set_uniform("blue_out_white", "1f", data["Blue Out White"]);
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+precision highp float;
+
+uniform highp float composite_in_black;
+uniform highp float composite_in_white;
+uniform highp float composite_gamma;
+uniform highp float composite_out_black;
+uniform highp float composite_out_white;
+
+uniform highp float red_in_black;
+uniform highp float red_in_white;
+uniform highp float red_gamma;
+uniform highp float red_out_black;
+uniform highp float red_out_white;
+
+uniform highp float green_in_black;
+uniform highp float green_in_white;
+uniform highp float green_gamma;
+uniform highp float green_out_black;
+uniform highp float green_out_white;
+
+uniform highp float blue_in_black;
+uniform highp float blue_in_white;
+uniform highp float blue_gamma;
+uniform highp float blue_out_black;
+uniform highp float blue_out_white;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+
+float adjust_channel(float value, float in_black, float in_white, float gamma, float out_black, float out_white)
+{
+    float in_delta = in_white - in_black;
+    float out_delta = out_white - out_black;
+    if ( in_delta == 0.0 )
+        return out_black;
+
+    // Clamp to input range
+    if ( value <= in_black && value <= in_white )
+        return out_black;
+
+    if ( value >= in_black && value >= in_white )
+        return out_white;
+
+    // Apply adjustment
+    return out_black + out_delta * pow((value - in_black) / in_delta, 1.0 / gamma);
+}
+
+
+void main()
+{
+    // Base pixel value
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    // First Pass: composite
+    pixel.rgb = vec3(
+        adjust_channel(pixel.r, composite_in_black, composite_in_white, composite_gamma, composite_out_black, composite_out_white),
+        adjust_channel(pixel.g, composite_in_black, composite_in_white, composite_gamma, composite_out_black, composite_out_white),
+        adjust_channel(pixel.b, composite_in_black, composite_in_white, composite_gamma, composite_out_black, composite_out_white)
+    );
+
+    // Second Pass: individual Channels
+    pixel.rgb = vec3(
+        adjust_channel(pixel.r, red_in_black, red_in_white, red_gamma, red_out_black, red_out_white),
+        adjust_channel(pixel.g, green_in_black, green_in_white, green_gamma, green_out_black, green_out_white),
+        adjust_channel(pixel.b, blue_in_black, blue_in_white, blue_gamma, blue_out_black, blue_out_white)
+    );
+
+    gl_FragColor.rgb = pixel.rgb * pixel.a;
+    gl_FragColor.a = pixel.a;
 }
 </script>
