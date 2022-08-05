@@ -203,10 +203,40 @@ lottie.layers[0].ef[0].ef[2].v.k = data["Effect Intensity"];
 
 ### Matte3 Effect
 
+{schema_attribute:description:effects/matte3}
+
 {schema_object:effects/matte3-effect}
 SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/matte3-effect}
+
+{lottie_playground:effects-matte3.json:512:512}
+Layer: <select><option value="2">Circle</option><option value="3">Rectangle</option></select>
+Channel:<select>
+    <option value="1">Red</option>
+    <option value="2">Green</option>
+    <option value="3">Blue</option>
+    <option value="4" selected="selected">Alpha</option>
+    <option value="5">Luma</option>
+    <option value="6">Hue</option>
+    <option value="7">Lightness</option>
+    <option value="8">Saturation</option>
+    <option value="9">Full</option>
+    <option value="10">Off</option>
+</select>
+Invert:<input type="checkbox" />
+Stretch To Fit:<input type="checkbox" checked="checked"/>
+Composite with Original:<input type="checkbox" checked="checked"/>
+Premultiply Mask:<input type="checkbox" checked="checked"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = Number(data["Layer"]);
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Channel"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Invert"]);
+lottie.layers[0].ef[0].ef[3].v.k = Number(data["Stretch To Fit"]);
+lottie.layers[0].ef[0].ef[4].v.k = Number(data["Composite with Original"]);
+lottie.layers[0].ef[0].ef[5].v.k = Number(data["Premultiply Mask"]);
+</script>
 
 ### Gaussian Blur Effect
 
