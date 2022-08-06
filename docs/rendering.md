@@ -1023,7 +1023,7 @@ p[0]    p[1]    0   1
 
 ## Effects
 
-<script src="/lottie-docs/scripts/shader_example.js"></script>
+<script src="/lottie-docs/scripts/simple_shader.js"></script>
 
 ### Fill Effect
 
@@ -1470,5 +1470,135 @@ void main()
 
     gl_FragColor.rgb = pixel.rgb * pixel.a;
     gl_FragColor.a = pixel.a;
+}
+</script>
+
+
+### Matte3
+{effect_shader_script:effects-matte3-image.json:394:394}
+Channel:<select>
+    <option value="1">Red</option>
+    <option value="2">Green</option>
+    <option value="3">Blue</option>
+    <option value="4" selected="selected">Alpha</option>
+    <option value="5">Luma</option>
+    <option value="6">Hue</option>
+    <option value="7">Lightness</option>
+    <option value="8">Saturation</option>
+    <option value="9">Full</option>
+    <option value="10">Off</option>
+</select>
+Invert:<input type="checkbox" />
+Stretch To Fit:<input type="checkbox" checked="checked"/>
+Show Mask:<input type="checkbox"/>
+Premultiply Mask:<input type="checkbox" checked="checked"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Channel"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Invert"]);
+lottie.layers[0].ef[0].ef[3].v.k = Number(data["Stretch To Fit"]);
+lottie.layers[0].ef[0].ef[4].v.k = Number(data["Show Mask"]);
+lottie.layers[0].ef[0].ef[5].v.k = Number(data["Premultiply Mask"]);
+
+shader.set_uniform("channel", "1i", Number(data["Channel"]));
+shader.set_uniform("invert", "1i", Number(data["Invert"]));
+shader.set_uniform("show_mask", "1i", Number(data["Show Mask"]));
+shader.set_uniform("premultiply_mask", "1i", Number(data["Premultiply Mask"]));
+shader.texture("/lottie-docs/examples/thumbs-up.png").bind("mask_layer");
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+precision highp float;
+
+uniform int channel;
+uniform int invert;
+uniform int premultiply_mask;
+uniform int show_mask;
+uniform sampler2D mask_layer;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+highp vec3 hsl(vec4 c)
+{
+    float maxc = max(c.r, max(c.g, c.b));
+    float minc = min(c.r, min(c.g, c.b));
+    float h = 0.0;
+    float s = 0.0;
+    float l = (maxc + minc) / 2.0;
+
+    if ( maxc != minc)
+    {
+        float d = maxc - minc;
+        s = l > 0.5 ? d / (2.0 - d) : d / (maxc + minc);
+        if ( maxc == c.r )
+            h = (c.g - c.b) / d + (c.g < c.b ? 6.0 : 0.0);
+        else if ( maxc == c.g )
+            h = (c.b - c.r) / d + 2.0;
+        else if ( maxc == c.b )
+            h = (c.r - c.g) / d + 4.0;
+
+        h /= 6.0;
+    }
+
+    return vec3(h, s, l);
+}
+
+highp float opacity(vec4 pixel, int channel, int invert, int premultiply)
+{
+    if ( premultiply == 1 )
+        pixel *= pixel.a;
+
+    highp float opacity;
+
+    if ( channel == 1 )
+        opacity = pixel.r;
+    else if ( channel == 2 )
+        opacity = pixel.g;
+    else if ( channel == 3 )
+        opacity = pixel.b;
+    else if ( channel == 4 )
+        opacity = pixel.a;
+    else if ( channel == 5 )
+        opacity = sqrt(pixel.r * pixel.r * 0.299 + pixel.g * pixel.g * 0.587 + pixel.b * pixel.b * 0.114);
+    else if ( channel == 6 )
+        opacity = hsl(pixel).x;
+    else if ( channel == 7 )
+        opacity = hsl(pixel).z;
+    else if ( channel == 8 )
+        opacity = hsl(pixel).y;
+    else if ( channel == 9 )
+        opacity = 1.0;
+    else if ( channel == 10 )
+        opacity = 0.0;
+
+
+    return invert == 1 ? 1.0 - opacity : opacity;
+}
+
+vec4 alpha_blend(vec4 top, vec4 bottom)
+{
+    float comp_alpha = bottom.a * (1.0 - top.a);
+    vec4 result;
+    result.a = top.a + comp_alpha;
+    result.rgb = (top.rgb * top.a + bottom.rgb * comp_alpha) / result.a;
+    return result;
+}
+
+void main()
+{
+    // Base pixel value
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    highp vec4 mask = texture2D(mask_layer, uv);
+
+
+    gl_FragColor.a = pixel.a * opacity(mask, channel, invert, premultiply_mask);
+    gl_FragColor.rgb = pixel.rgb * gl_FragColor.a;
+
+    if ( show_mask == 1 )
+        gl_FragColor = alpha_blend(gl_FragColor, mask);
 }
 </script>

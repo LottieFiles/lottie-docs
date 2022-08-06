@@ -226,7 +226,7 @@ Channel:<select>
 </select>
 Invert:<input type="checkbox" />
 Stretch To Fit:<input type="checkbox" checked="checked"/>
-Composite with Original:<input type="checkbox" checked="checked"/>
+Show Mask:<input type="checkbox" checked="checked"/>
 Premultiply Mask:<input type="checkbox" checked="checked"/>
 <json>lottie.layers[0].ef[0]</json>
 <script>
@@ -234,7 +234,7 @@ lottie.layers[0].ef[0].ef[0].v.k = Number(data["Layer"]);
 lottie.layers[0].ef[0].ef[1].v.k = Number(data["Channel"]);
 lottie.layers[0].ef[0].ef[2].v.k = Number(data["Invert"]);
 lottie.layers[0].ef[0].ef[3].v.k = Number(data["Stretch To Fit"]);
-lottie.layers[0].ef[0].ef[4].v.k = Number(data["Composite with Original"]);
+lottie.layers[0].ef[0].ef[4].v.k = Number(data["Show Mask"]);
 lottie.layers[0].ef[0].ef[5].v.k = Number(data["Premultiply Mask"]);
 </script>
 

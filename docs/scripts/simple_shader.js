@@ -1,17 +1,18 @@
-class FragmentShaderExample
+class SimpleShader
 {
     constructor(canvas)
     {
         this.canvas = canvas;
-        this.gl = canvas.getContext("webgl2") || canvas.getContext("experimental-webgl");
+        this.gl = canvas.getContext("webgl2") || canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
         if ( !this.gl )
             throw new Error("Your browser doesn't support WebGL");
 
         this.gl.viewport(0, 0, this.gl.drawingBufferWidth, this.gl.drawingBufferHeight);
-        this.load_texture();
 
         this.buffer = null;
         this.program = null;
+        this.textures = {};
+        this.max_texture = 0;
     }
 
     destroy()
@@ -129,8 +130,7 @@ class FragmentShaderExample
         const canvas_size = this.gl.getUniformLocation(this.program, "canvas_size");
         this.gl.uniform2fv(canvas_size, [this.canvas.width, this.canvas.height]);
 
-        const texture_sampler = this.gl.getUniformLocation(this.program, "texture_sampler");
-        this.gl.uniform1i(texture_sampler, this.texture);
+        this.texture(SimpleShader.image_url).bind("texture_sampler");
 
         this.uniforms = {};
     }
@@ -149,13 +149,57 @@ class FragmentShaderExample
         uniform.setter(uniform.location, value);
     }
 
-    load_texture()
+    texture(url)
     {
-        const gl = this.gl;
+        if ( !(url in this.textures) )
+            this.textures[url] = SimpleShader.texture_factory.loader(url).texture(this);
+        return this.textures[url];
+    }
+}
+
+class TextureLoader
+{
+    constructor(image_url)
+    {
+        this.image_loaded = false;
+        this.waiting = [];
+        this.image_url = image_url;
+
+        this.image = new Image();
+        this.image.addEventListener("load", this.on_image_loaded.bind(this));
+        this.image.src = image_url;
+    }
+
+    on_image_loaded()
+    {
+        this.image_loaded = true;
+        for ( let texture of this.waiting )
+        {
+            texture.apply_image(this.image);
+            texture.shader.render();
+        }
+        this.waiting = [];
+    }
+
+    texture(shader)
+    {
+        return new Texture(shader, this);
+    }
+}
+
+class Texture
+{
+    constructor(shader, loader)
+    {
+        this.shader = shader;
+        this.index = shader.max_texture++;
+
+        const gl = this.shader.gl;
+        gl.activeTexture(gl.TEXTURE0 + this.index);
         this.texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
 
-        if ( !FragmentShaderExample.image_loaded )
+        if ( !loader.image_loaded )
         {
             // Placeholder until image is loaded
             const width = 1;
@@ -163,46 +207,48 @@ class FragmentShaderExample
             const pixel = new Uint8Array([0, 0, 255, 255]);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
 
-            FragmentShaderExample.waiting.push(this);
-
-            if ( !FragmentShaderExample.image )
-            {
-                FragmentShaderExample.image = new Image();
-                FragmentShaderExample.image.onload = FragmentShaderExample.on_image_loaded;
-                FragmentShaderExample.image.src = FragmentShaderExample.image_url;
-            }
+            loader.waiting.push(this);
         }
         else
         {
-            this.apply_image();
+            this.apply_image(loader.image);
         }
     }
 
-    static on_image_loaded()
+    apply_image(image)
     {
-        FragmentShaderExample.image_loaded = true;
-        for ( let obj of FragmentShaderExample.waiting )
-        {
-            obj.apply_image();
-            obj.render();
-        }
-        FragmentShaderExample.waiting = [];
-    }
-
-    apply_image()
-    {
-        const gl = this.gl;
+        const gl = this.shader.gl;
+        gl.activeTexture(gl.TEXTURE0 + this.index);
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, FragmentShaderExample.image);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
         // gl.generateMipmap(gl.TEXTURE_2D);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     }
 
+    bind(uniform_name)
+    {
+        const uniform_location = this.shader.gl.getUniformLocation(this.shader.program, uniform_name);
+        this.shader.gl.uniform1i(uniform_location, this.index);
+    }
 }
 
-FragmentShaderExample.image_url = "/lottie-docs/examples/blep.png";
-FragmentShaderExample.image = null;
-FragmentShaderExample.image_loaded = false;
-FragmentShaderExample.waiting = [];
+class TextureFactory
+{
+    constructor()
+    {
+        this.loaders = {};
+    }
+
+    loader(url)
+    {
+        if ( !(url in this.loaders) )
+            this.loaders[url] = new TextureLoader(url);
+
+        return this.loaders[url];
+    }
+}
+
+SimpleShader.texture_factory = new TextureFactory();
+SimpleShader.image_url = "/lottie-docs/examples/blep.png";

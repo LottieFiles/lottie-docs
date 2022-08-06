@@ -39,8 +39,8 @@
                             "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {
-                            "title": "Composite with Original",
-                            "description": "If false, the original layer won't be shown",
+                            "title": "Show Mask",
+                            "description": "If false, the mask layer won't be shown",
                             "$ref": "#/$defs/effect-values/drop-down"
                         },
                         {

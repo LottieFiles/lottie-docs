@@ -746,7 +746,7 @@ class EffectShaderScript(LottiePlayground):
             script += "this.json_viewer_contents = %s;" % json_viewer_path
 
         builder.renderer.populate_script("""
-        var lottie_shader_{id} = new FragmentShaderExample(document.getElementById('{shader_view_id}'));
+        var lottie_shader_{id} = new SimpleShader(document.getElementById('{shader_view_id}'));
         lottie_shader_{id}.set_shader({shader_source});
         var lottie_player_{id} = new PlaygroundPlayer(
             {id},
