@@ -11,6 +11,27 @@ class ShaderWrapper
 
         this.textures = {};
         this.max_texture = 0;
+
+        this.shape_buffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.shape_buffer);
+        this.gl.bufferData(
+            this.gl.ARRAY_BUFFER,
+            new Float32Array([
+                -1.0, -1.0,
+                1.0, -1.0,
+                -1.0,  1.0,
+                -1.0,  1.0,
+                1.0, -1.0,
+                1.0,  1.0
+            ]),
+            this.gl.STATIC_DRAW
+        );
+    }
+
+    destroy()
+    {
+        if ( this.buffer )
+            this.gl.deleteBuffer(this.buffer);
     }
 
     render() {}
@@ -30,19 +51,24 @@ class MultiPassShader extends ShaderWrapper
     {
         super(canvas);
         this.passes = [];
+        this.buffers = [
+            new OutputTexture(this),
+            new OutputTexture(this)
+        ];
     }
 
     destroy()
     {
         for ( let program of this.passes )
             program.destroy();
+
+        super.destroy();
     }
 
     add_pass(program, uniforms = {})
     {
         this.passes.push({
             program: program,
-            texture: new OutputTexture(this),
             uniforms: uniforms,
         });
     }
@@ -70,8 +96,9 @@ class MultiPassShader extends ShaderWrapper
 
         for ( let i = 0; i < this.passes.length - 1; i++ )
         {
-            this.render_pass(texture, this.passes[i], this.passes[i].texture);
-            texture = this.passes[i].texture;
+            let buffer = this.buffers[i % 2];
+            this.render_pass(texture, this.passes[i], buffer);
+            texture = buffer;
         }
 
         this.render_pass(texture, this.passes[this.passes.length - 1], null);
@@ -101,6 +128,7 @@ class SinglePassShader extends ShaderWrapper
     destroy()
     {
         this.program.destroy();
+        super.destroy();
     }
 
     render()
@@ -125,17 +153,14 @@ class ShaderProgram
     constructor(gl)
     {
         this.gl = gl;
-        this.buffer = null;
         this.uniforms = {};
+        this.position = null;
     }
 
     destroy()
     {
         this.uniforms = {};
         this.gl.useProgram(null);
-
-        if ( this.buffer )
-            this.gl.deleteBuffer(this.buffer);
 
         if ( this.program )
             this.gl.deleteProgram(this.program);
@@ -216,30 +241,20 @@ class ShaderProgram
         }
 
         this.gl.useProgram(this.program);
+
+        if ( !this.position )
+        {
+            this.position = this.gl.getAttribLocation(this.program, "position");
+            this.gl.enableVertexAttribArray(this.position);
+            this.gl.vertexAttribPointer(this.position, 2, this.gl.FLOAT, false, 0, 0);
+        }
+
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
     }
 
     initialize_attributes()
     {
-        this.buffer = this.gl.createBuffer();
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
-        this.gl.bufferData(
-            this.gl.ARRAY_BUFFER,
-            new Float32Array([
-                -1.0, -1.0,
-                1.0, -1.0,
-                -1.0,  1.0,
-                -1.0,  1.0,
-                1.0, -1.0,
-                1.0,  1.0
-            ]),
-            this.gl.STATIC_DRAW
-        );
-
         this.gl.useProgram(this.program);
-        var position = this.gl.getAttribLocation(this.program, "position");
-        this.gl.enableVertexAttribArray(this.position);
-        this.gl.vertexAttribPointer(this.position, 2, this.gl.FLOAT, false, 0, 0);
 
         const canvas_size = this.gl.getUniformLocation(this.program, "canvas_size");
         this.gl.uniform2fv(canvas_size, [this.gl.drawingBufferWidth, this.gl.drawingBufferHeight]);
