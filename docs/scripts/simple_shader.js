@@ -1,4 +1,4 @@
-class SimpleShader
+class ShaderWrapper
 {
     constructor(canvas)
     {
@@ -9,10 +9,124 @@ class SimpleShader
 
         this.gl.viewport(0, 0, this.gl.drawingBufferWidth, this.gl.drawingBufferHeight);
 
-        this.buffer = null;
-        this.program = null;
         this.textures = {};
         this.max_texture = 0;
+    }
+
+    render() {}
+
+    texture(url)
+    {
+        if ( !(url in this.textures) )
+            this.textures[url] = ShaderProgram.texture_factory.loader(url).texture(this);
+
+        return this.textures[url];
+    }
+}
+
+class MultiPassShader extends ShaderWrapper
+{
+    constructor(canvas)
+    {
+        super(canvas);
+        this.passes = [];
+    }
+
+    destroy()
+    {
+        for ( let program of this.passes )
+            program.destroy();
+    }
+
+    add_pass(program, uniforms = {})
+    {
+        this.passes.push({
+            program: program,
+            texture: new OutputTexture(this),
+            uniforms: uniforms,
+        });
+    }
+
+    render_pass(texture, pass, render_target)
+    {
+        if ( render_target )
+            render_target.bind_buffer();
+
+        this.gl.useProgram(pass.program.program);
+
+        texture.set_uniform(pass.program, "texture_sampler");
+        for ( let [name, [type, value]] of Object.entries(pass.uniforms) )
+            pass.program.set_uniform(name, type, value);
+
+        pass.program.render();
+
+        if ( render_target )
+            render_target.unbind_buffer();
+    }
+
+    render()
+    {
+        let texture = this.texture(ShaderProgram.image_url);
+
+        for ( let i = 0; i < this.passes.length - 1; i++ )
+        {
+            this.render_pass(texture, this.passes[i], this.passes[i].texture);
+            texture = this.passes[i].texture;
+        }
+
+        this.render_pass(texture, this.passes[this.passes.length - 1], null);
+    }
+
+    set_uniform(pass, name, type, value)
+    {
+        this.passes[pass].uniforms[name] = [type, value];
+    }
+
+    add_pass_source(source, uniforms = {})
+    {
+        let program = new ShaderProgram(this.gl);
+        program.set_fragment(source);
+        this.add_pass(program, uniforms);
+    }
+}
+
+class SinglePassShader extends ShaderWrapper
+{
+    constructor(canvas)
+    {
+        super(canvas);
+        this.program = new ShaderProgram(this.gl);
+    }
+
+    destroy()
+    {
+        this.program.destroy();
+    }
+
+    render()
+    {
+        this.texture(ShaderProgram.image_url).set_uniform(this.program, "texture_sampler");
+        this.program.render();
+    }
+
+    set_uniform(name, type, value)
+    {
+        this.program.set_uniform(name, type, value);
+    }
+
+    set_fragment(fragment_source)
+    {
+        this.program.set_fragment(fragment_source);
+    }
+}
+
+class ShaderProgram
+{
+    constructor(gl)
+    {
+        this.gl = gl;
+        this.buffer = null;
+        this.uniforms = {};
     }
 
     destroy()
@@ -25,7 +139,6 @@ class SimpleShader
 
         if ( this.program )
             this.gl.deleteProgram(this.program);
-
     }
 
     compile_shader(source, type)
@@ -51,7 +164,7 @@ class SimpleShader
         return shader;
     }
 
-    set_shader(fragment_source)
+    set_fragment(fragment_source)
     {
         let vertex_source;
 
@@ -102,6 +215,7 @@ class SimpleShader
             this.gl.clear(this.gl.COLOR_BUFFER_BIT);
         }
 
+        this.gl.useProgram(this.program);
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
     }
 
@@ -128,13 +242,10 @@ class SimpleShader
         this.gl.vertexAttribPointer(this.position, 2, this.gl.FLOAT, false, 0, 0);
 
         const canvas_size = this.gl.getUniformLocation(this.program, "canvas_size");
-        this.gl.uniform2fv(canvas_size, [this.canvas.width, this.canvas.height]);
-
-        this.texture(SimpleShader.image_url).bind("texture_sampler");
+        this.gl.uniform2fv(canvas_size, [this.gl.drawingBufferWidth, this.gl.drawingBufferHeight]);
 
         this.uniforms = {};
     }
-
 
     set_uniform(name, type, value)
     {
@@ -147,13 +258,6 @@ class SimpleShader
 
         let uniform = this.uniforms[name];
         uniform.setter(uniform.location, value);
-    }
-
-    texture(url)
-    {
-        if ( !(url in this.textures) )
-            this.textures[url] = SimpleShader.texture_factory.loader(url).texture(this);
-        return this.textures[url];
     }
 }
 
@@ -187,9 +291,9 @@ class TextureLoader
     }
 }
 
-class Texture
+class BaseTexture
 {
-    constructor(shader, loader)
+    constructor(shader)
     {
         this.shader = shader;
         this.index = shader.max_texture++;
@@ -198,15 +302,59 @@ class Texture
         gl.activeTexture(gl.TEXTURE0 + this.index);
         this.texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
+    }
+
+    get gl()
+    {
+        return this.shader.gl;
+    }
+
+    create(width, height, data)
+    {
+        const gl = this.shader.gl;
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, data);
+    }
+
+    set_parameters()
+    {
+        const gl = this.shader.gl;
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    }
+
+    set_uniform(program, uniform_name)
+    {
+        this.bind_texture();
+        const uniform_location = this.gl.getUniformLocation(program.program, uniform_name);
+        this.gl.uniform1i(uniform_location, this.index);
+    }
+
+    bind_texture()
+    {
+        const gl = this.shader.gl;
+        gl.activeTexture(gl.TEXTURE0 + this.index);
+        gl.bindTexture(gl.TEXTURE_2D, this.texture);
+    }
+
+    unbind_texture()
+    {
+        const gl = this.shader.gl;
+        gl.activeTexture(gl.TEXTURE0 + this.index);
+        gl.bindTexture(gl.TEXTURE_2D, null);
+    }
+}
+
+class Texture extends BaseTexture
+{
+    constructor(shader, loader)
+    {
+        super(shader);
 
         if ( !loader.image_loaded )
         {
             // Placeholder until image is loaded
-            const width = 1;
-            const height = 1;
-            const pixel = new Uint8Array([0, 0, 255, 255]);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
-
+            this.create(1, 1, new Uint8Array([0, 0, 255, 255]));
             loader.waiting.push(this);
         }
         else
@@ -222,16 +370,39 @@ class Texture
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
         // gl.generateMipmap(gl.TEXTURE_2D);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        this.set_parameters();
+    }
+}
+
+
+class OutputTexture extends BaseTexture
+{
+    constructor(shader)
+    {
+        super(shader);
+
+        const gl = this.shader.gl;
+        this.create(gl.drawingBufferWidth, gl.drawingBufferHeight, null);
+        this.set_parameters();
+
+        this.buffer = gl.createFramebuffer();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.buffer);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.texture, 0);
+        this.unbind_buffer();
     }
 
-    bind(uniform_name)
+    bind_buffer()
     {
-        const uniform_location = this.shader.gl.getUniformLocation(this.shader.program, uniform_name);
-        this.shader.gl.uniform1i(uniform_location, this.index);
+        const gl = this.shader.gl;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.buffer);
     }
+
+    unbind_buffer()
+    {
+        const gl = this.shader.gl;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    }
+
 }
 
 class TextureFactory
@@ -250,5 +421,5 @@ class TextureFactory
     }
 }
 
-SimpleShader.texture_factory = new TextureFactory();
-SimpleShader.image_url = "/lottie-docs/examples/blep.png";
+ShaderProgram.texture_factory = new TextureFactory();
+ShaderProgram.image_url = "/lottie-docs/examples/blep.png";

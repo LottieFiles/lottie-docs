@@ -248,13 +248,17 @@ SKIP:#/$defs/effects/effect
 
 {lottie_playground:effects-blur.json:512:512}
 Sigma:<input type="range" min="0" value="25" max="100"/>
-Direction:<input type="range" min="0" value="0" max="3"/>
-Wrap:<input type="range" min="0" value="0" max="1"/>
+Direction:<select>
+    <option value="1">Both</option>
+    <option value="2">Horizontal</option>
+    <option value="3">Vertical</option>
+</select>
+Wrap:<input type="checkbox" />
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k = data["Sigma"];
-lottie.layers[0].ef[0].ef[1].v.k = data["Direction"];
-lottie.layers[0].ef[0].ef[2].v.k = data["Wrap"];
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Direction"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Wrap"]);
 </script>
 
 

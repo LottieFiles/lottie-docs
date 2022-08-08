@@ -716,6 +716,7 @@ class EffectShaderScript(LottiePlayground):
 
     def populate_script(self, blocks, match, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
         shader_view = etree.SubElement(builder.renderer.animation_container, "canvas")
+        shader_view.attrib["class"] = "webgl-shader"
         shader_view.attrib["id"] = "lottie_target_%s_canvas" % builder.anim_id
         shader_view.attrib["style"] = builder.renderer.animation.attrib["style"]
         shader_view.attrib["width"] = builder.renderer.width
@@ -723,7 +724,7 @@ class EffectShaderScript(LottiePlayground):
 
         uniforms = {}
         script = ""
-        shader_source = ""
+        shader_sources = []
         while True:
             if blocks[0] == '':
                 blocks = blocks[1:]
@@ -736,6 +737,7 @@ class EffectShaderScript(LottiePlayground):
                     # No glsl ;_;
                     code = etree.SubElement(pre, "code", {"class": "language-c hljs"})
                     code.text = AtomicString(shader_source)
+                    shader_sources.append((shader_source, int(script_element.attrib.get("passes", "1"))))
                 else:
                     script = script_element.text
             else:
@@ -745,9 +747,54 @@ class EffectShaderScript(LottiePlayground):
         if json_viewer_path:
             script += "this.json_viewer_contents = %s;" % json_viewer_path
 
+        shader_class = "";
+        shader_load = "";
+
+        if len(shader_sources) == 1 and shader_sources[0][1] == 1:
+            shader_class = "SinglePassShader";
+            shader_load = "lottie_shader_{id}.set_fragment({shader_source})".format(
+                id=builder.anim_id,
+                shader_source=repr(shader_sources[0][0])
+            );
+        else:
+            shader_class = "MultiPassShader";
+            pass_index = 0
+            for shader_source, pass_count in shader_sources:
+                if pass_count == 1:
+                    shader_load += """
+                        lottie_shader_{id}.add_pass_source({shader_source}, {{"pass": ["1i", {pass_index}]}})
+                    """.format(
+                        id=builder.anim_id,
+                        shader_source=repr(shader_source),
+                        pass_index=pass_index,
+                    )
+                    pass_index += 1
+                else:
+                    program = "program_{id}_{pass_index}".format(
+                        id=builder.anim_id,
+                        pass_index=pass_index,
+                    )
+                    shader_load += """
+                    var {program} = new ShaderProgram(lottie_shader_{id}.gl);
+                        {program}.set_fragment({shader_source})
+                    """.format(
+                        id=builder.anim_id,
+                        shader_source=repr(shader_source),
+                        program=program,
+                    );
+                    for i in range(pass_count):
+                        shader_load += """
+                            lottie_shader_{id}.add_pass({program}, {{"pass": ["1i", {pass_index}]}})
+                        """.format(
+                            id=builder.anim_id,
+                            program=program,
+                            pass_index=pass_index,
+                        )
+                        pass_index += 1
+
         builder.renderer.populate_script("""
-        var lottie_shader_{id} = new SimpleShader(document.getElementById('{shader_view_id}'));
-        lottie_shader_{id}.set_shader({shader_source});
+        var lottie_shader_{id} = new {shader_class}(document.getElementById('{shader_view_id}'));
+        {shader_load}
         var lottie_player_{id} = new PlaygroundPlayer(
             {id},
             '{json_viewer_id}',
@@ -769,7 +816,8 @@ class EffectShaderScript(LottiePlayground):
             extra_options=extra_options,
             shader_view_id=shader_view.attrib["id"],
             uniforms=json.dumps(uniforms),
-            shader_source=repr(shader_source),
+            shader_class=shader_class,
+            shader_load=shader_load,
         ))
 
 

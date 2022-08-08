@@ -1024,6 +1024,11 @@ p[0]    p[1]    0   1
 ## Effects
 
 <script src="/lottie-docs/scripts/simple_shader.js"></script>
+<style>
+.webgl-shader {
+    transform: scaleY(-1);
+}
+</style>
 
 ### Fill Effect
 
@@ -1052,7 +1057,7 @@ uniform sampler2D texture_sampler;
 
 void main()
 {
-    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
     highp vec4 pixel = texture2D(texture_sampler, uv);
 
     gl_FragColor = color;
@@ -1105,7 +1110,7 @@ uniform sampler2D texture_sampler;
 
 void main()
 {
-    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
     highp vec4 pixel = texture2D(texture_sampler, uv);
 
     highp float lightness = sqrt(pixel.r * pixel.r * 0.299 + pixel.g * pixel.g * 0.587 + pixel.b * pixel.b * 0.114);
@@ -1131,26 +1136,33 @@ void main()
 
 ### Gaussian Blur
 
-Note that for `Direction == 0 or 1` you should combine two passes of
-this shader, one with `horizontal = 1` and one with `horizontal = 0`.
+This is a two-pass shader, the uniform `pass` is has value `0`
+on the first pass and value `1` on the second pass.
 
 {effect_shader_script:effects-blur.json:394:394}
 Sigma:<input type="range" min="0" value="25" max="100"/>
-Direction:<input type="range" min="0" value="0" max="3"/>
-Wrap:<input type="range" min="0" value="0" max="1"/>
+Direction:<select>
+    <option value="1">Both</option>
+    <option value="2">Horizontal</option>
+    <option value="3">Vertical</option>
+</select>
+Wrap:<input type="checkbox" />
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k = data["Sigma"];
-lottie.layers[0].ef[0].ef[1].v.k = data["Direction"];
-lottie.layers[0].ef[0].ef[2].v.k = data["Wrap"];
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Direction"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Wrap"]);
 
 
-shader.set_uniform("sigma", "1f", data["Sigma"]);
-shader.set_uniform("direction", "1i", data["Direction"]);
-shader.set_uniform("wrap", "1i", data["Wrap"]);
+for ( let pass of [0, 1] )
+{
+    shader.set_uniform(pass, "sigma", "1f", data["Sigma"]);
+    shader.set_uniform(pass, "direction", "1i", data["Direction"]);
+    shader.set_uniform(pass, "wrap", "1i", data["Wrap"]);
+}
 
 </script>
-<script type="x-shader/x-fragment">
+<script type="x-shader/x-fragment" passes="2">
 #version 300 es
 
 #define PI 3.1415926538
@@ -1159,17 +1171,18 @@ precision highp float;
 uniform float sigma;
 uniform int direction;
 uniform int kernel_size;
-uniform int wrap;
+uniform bool wrap;
 
 uniform mediump vec2 canvas_size;
 uniform sampler2D texture_sampler;
+uniform int pass;
 
 out vec4 FragColor;
 
 
 vec4 texture_value(vec2 uv)
 {
-    if ( wrap == 1 )
+    if ( wrap )
     {
         if ( uv.x < 0. ) uv.x = 1. - uv.x;
         if ( uv.x > 1. ) uv.x = uv.x - 1.;
@@ -1184,77 +1197,83 @@ vec4 texture_value(vec2 uv)
     return texture(texture_sampler, uv);
 }
 
-// Macro to because we can't define recursive functions in GLSL
-#define blur_pass_template(sigma, kernel_size, uv, horizontal, get_pixel) \
-{                                                                         \
-    float side = float(kernel_size / 2);                                  \
-                                                                          \
-    vec2 direction_vector = horizontal ?                                  \
-        vec2(1.0, 0.0) / canvas_size.x :                                  \
-        vec2(0.0, 1.0) / canvas_size.y;                                   \
-                                                                          \
-    vec3 delta_gauss;                                                     \
-    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);                       \
-    delta_gauss.y = exp(-0.5 / (sigma * sigma));                          \
-    delta_gauss.z = delta_gauss.y * delta_gauss.y;                        \
-                                                                          \
-    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);                                  \
-    float sum = 0.0;                                                      \
-                                                                          \
-    vec2 pos = uv;                                                        \
-    vec4 pixel = get_pixel;                                               \
-    avg += pixel * delta_gauss.x;                                         \
-    sum += delta_gauss.x;                                                 \
-    delta_gauss.xy *= delta_gauss.yz;                                     \
-                                                                          \
-    for ( float i = 1.0; i <= side; i++)                                  \
-    {                                                                     \
-        for ( float s = -1.0; s <= 1.0; s += 2.0 )                        \
-        {                                                                 \
-            vec2 pos = uv + s * i * direction_vector;                     \
-            pixel = get_pixel;                                            \
-            avg += pixel * delta_gauss.x;                                 \
-        }                                                                 \
-        sum += 2.0 * delta_gauss.x;                                       \
-        delta_gauss.xy *= delta_gauss.yz;                                 \
-    }                                                                     \
-                                                                          \
-    return avg / sum;                                                     \
-}
-
 
 vec4 blur_pass(float sigma, int kernel_size, vec2 uv, bool horizontal)
 {
-    blur_pass_template(sigma, kernel_size, uv, horizontal, texture_value(pos));
+    float side = float(kernel_size / 2);
+
+    vec2 direction_vector = horizontal ?
+        vec2(1.0, 0.0) / canvas_size.x :
+        vec2(0.0, 1.0) / canvas_size.y;
+
+    vec3 delta_gauss;
+    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);
+    delta_gauss.y = exp(-0.5 / (sigma * sigma));
+    delta_gauss.z = delta_gauss.y * delta_gauss.y;
+
+    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
+    float sum = 0.0;
+
+    vec4 pixel = texture_value(uv);
+    avg += pixel * delta_gauss.x;
+    sum += delta_gauss.x;
+    delta_gauss.xy *= delta_gauss.yz;
+
+    for ( float i = 1.0; i <= side; i++)
+    {
+        for ( float s = -1.0; s <= 1.0; s += 2.0 )
+        {
+            vec2 pos = uv + s * i * direction_vector;
+            pixel = texture_value(pos);
+            avg += pixel * delta_gauss.x;
+        }
+        sum += 2.0 * delta_gauss.x;
+        delta_gauss.xy *= delta_gauss.yz;
+    }
+
+    avg /= sum;
+
+    return avg;
 }
 
-// Note doing it like this is very infefficient, you're better off running
-// The shader twice (one horizontal and one vertical) using the output of a shader
-// as input for the next shader
-vec4 blur_multipass(float sigma, int kernel_size, vec2 uv, bool horizontal)
-{
-    blur_pass_template(sigma, kernel_size, uv, horizontal, blur_pass(sigma, kernel_size, pos, !horizontal));
-}
 
 void main()
 {
-    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
 
     int actual_kernel_size = kernel_size == 0 ? int(0.5 + 6.0 * sigma) : kernel_size;
 
     const float multiplier = 0.25;
 
-    if ( direction == 2 )
-        FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, true);
-    else if ( direction == 3 )
-        FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, false);
-    else
-        FragColor = blur_multipass(sigma * multiplier, actual_kernel_size, uv, true);
+    if ( sigma == 0.0 )
+    {
+        FragColor = texture(texture_sampler, uv);
+    }
+    else if ( pass == 0 )
+    {
+        if ( direction != 3 )
+            FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, true);
+        else
+            FragColor = texture(texture_sampler, uv);
+    }
+    else if ( pass == 1 )
+    {
+        if ( direction != 2 )
+            FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, false);
+        else
+            FragColor = texture(texture_sampler, uv);
+    }
 }
 </script>
 
 
 ### Drop Shadow Effect
+
+The effect below is split into multiple shaders:
+
+* First it generates the shadow
+* Then it has a 2 pass gaussian blur (simplified from the example above)
+* Finally, it composites the original image on top of the blurred shadow
 
 {effect_shader_script:effects-shadow.json:394:394}
 Red:<input type="range" min="0" value="0" max="1" step="0.1"/>
@@ -1274,13 +1293,18 @@ lottie.layers[0].ef[0].ef[2].v.k = data["Angle"];
 lottie.layers[0].ef[0].ef[3].v.k = data["Distance"];
 lottie.layers[0].ef[0].ef[4].v.k = data["Blur"];
 
-shader.set_uniform("color", "4fv", [data["Red"], data["Green"], data["Blue"], data["Opacity"]]);
-shader.set_uniform("angle", "1f", data["Angle"]);
+shader.set_uniform(0, "color", "4fv", [data["Red"], data["Green"], data["Blue"], data["Opacity"]]);
+shader.set_uniform(0, "angle", "1f", data["Angle"]);
 // 0.77 is just to take into account the canvas is 394 instead of 512
-shader.set_uniform("distance", "1f", data["Distance"] * 0.77);
+shader.set_uniform(0, "distance", "1f", data["Distance"] * 0.77);
+
+shader.set_uniform(1, "sigma", "1f", data["Blur"]);
+shader.set_uniform(2, "sigma", "1f", data["Blur"]);
+
+shader.texture("/lottie-docs/examples/blep.png").set_uniform(shader.passes[3].program, "original");
 </script>
 <script type="x-shader/x-fragment">
-#version 100
+#version 300 es
 #define PI 3.1415926538
 
 uniform highp vec4 color;
@@ -1290,11 +1314,13 @@ uniform mediump float distance;
 uniform mediump vec2 canvas_size;
 uniform sampler2D texture_sampler;
 
+out highp vec4 FragColor;
+
 void main()
 {
     // Base pixel value
-    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
-    highp vec4 pixel = texture2D(texture_sampler, uv);
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture(texture_sampler, uv);
 
     // Pixel value at the given offset
     mediump float radians = -angle * PI / 180.0 + PI / 2.0;
@@ -1302,7 +1328,7 @@ void main()
         (gl_FragCoord.x - distance * cos(radians)) / canvas_size.x,
         1.0 - (gl_FragCoord.y - distance * sin(radians)) / canvas_size.y
     );
-    highp vec4 shadow_pixel = texture2D(texture_sampler, shadow_uv);
+    highp vec4 shadow_pixel = texture(texture_sampler, shadow_uv);
 
     // Colorize shadow
     highp vec4 shadow_color;
@@ -1314,13 +1340,110 @@ void main()
         shadow_color *= shadow_pixel.a * color.a / 255.0;
     }
 
-    // TODO Blur
-
     // Apply shadow below the base pixel
-    gl_FragColor = pixel * pixel.a + shadow_color * (1.0 - pixel.a);
+    FragColor = shadow_color; //pixel * pixel.a + shadow_color * (1.0 - pixel.a);
 }
 </script>
+<script type="x-shader/x-fragment" passes="2">
+#version 300 es
 
+#define PI 3.1415926538
+precision highp float;
+
+uniform float sigma;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+uniform int pass;
+
+out vec4 FragColor;
+
+vec4 blur_pass(float sigma, int kernel_size, vec2 uv, bool horizontal)
+{
+    float side = float(kernel_size / 2);
+
+    vec2 direction_vector = horizontal ?
+        vec2(1.0, 0.0) / canvas_size.x :
+        vec2(0.0, 1.0) / canvas_size.y;
+
+    vec3 delta_gauss;
+    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);
+    delta_gauss.y = exp(-0.5 / (sigma * sigma));
+    delta_gauss.z = delta_gauss.y * delta_gauss.y;
+
+    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
+    float sum = 0.0;
+
+    vec4 pixel = texture(texture_sampler, uv);
+    avg += pixel * delta_gauss.x;
+    sum += delta_gauss.x;
+    delta_gauss.xy *= delta_gauss.yz;
+
+    for ( float i = 1.0; i <= side; i++)
+    {
+        for ( float s = -1.0; s <= 1.0; s += 2.0 )
+        {
+            vec2 pos = uv + s * i * direction_vector;
+            pixel = texture(texture_sampler, pos);
+            avg += pixel * delta_gauss.x;
+        }
+        sum += 2.0 * delta_gauss.x;
+        delta_gauss.xy *= delta_gauss.yz;
+    }
+
+    avg /= sum;
+
+    return avg;
+}
+
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+
+    int kernel_size = int(0.5 + 6.0 * sigma);
+
+    const float multiplier = 0.25;
+
+    if ( sigma == 0.0 )
+        FragColor = texture(texture_sampler, uv);
+    else if ( pass == 1 )
+        FragColor = blur_pass(sigma * multiplier, kernel_size, uv, true);
+    else if ( pass == 2 )
+        FragColor = blur_pass(sigma * multiplier, kernel_size, uv, false);
+}
+</script>
+<script type="x-shader/x-fragment">
+#version 300 es
+
+precision highp float;
+
+uniform sampler2D original;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+out vec4 FragColor;
+
+vec4 alpha_blend(vec4 top, vec4 bottom)
+{
+    float comp_alpha = bottom.a * (1.0 - top.a);
+    vec4 result;
+    result.a = top.a + comp_alpha;
+    result.rgb = (top.rgb * top.a + bottom.rgb * comp_alpha) / result.a;
+    return result;
+}
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+
+    FragColor = alpha_blend(
+        texture(original, uv),
+        texture(texture_sampler, vec2(uv.x, 1.0 - uv.y))
+    );
+}
+</script>
 
 
 ### Pro Levels Effect
@@ -1451,7 +1574,7 @@ float adjust_channel(float value, float in_black, float in_white, float gamma, f
 void main()
 {
     // Base pixel value
-    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
     highp vec4 pixel = texture2D(texture_sampler, uv);
 
     // First Pass: composite
@@ -1504,7 +1627,7 @@ shader.set_uniform("channel", "1i", Number(data["Channel"]));
 shader.set_uniform("invert", "1i", Number(data["Invert"]));
 shader.set_uniform("show_mask", "1i", Number(data["Show Mask"]));
 shader.set_uniform("premultiply_mask", "1i", Number(data["Premultiply Mask"]));
-shader.texture("/lottie-docs/examples/thumbs-up.png").bind("mask_layer");
+shader.texture("/lottie-docs/examples/thumbs-up.png").set_uniform(shader.program, "mask_layer");
 
 </script>
 <script type="x-shader/x-fragment">
@@ -1589,7 +1712,7 @@ vec4 alpha_blend(vec4 top, vec4 bottom)
 void main()
 {
     // Base pixel value
-    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, 1.0 - gl_FragCoord.y / canvas_size.y);
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
     highp vec4 pixel = texture2D(texture_sampler, uv);
 
     highp vec4 mask = texture2D(mask_layer, uv);
