@@ -1736,7 +1736,7 @@ Center X:<input type="range" min="0" max="512" value="286"/>
 Center Y:<input type="range" min="0" max="512" value="277"/>
 Radius X:<input type="range" min="0" max="512" value="197"/>
 Radius Y:<input type="range" min="0" max="512" value="179"/>
-Height:<input type="range" min="-10" max="10" step="0.1" value="1.9"/>
+Height:<input type="range" min="-4" max="4" step="0.1" value="1.9"/>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k = data["Radius X"];
@@ -1789,8 +1789,11 @@ vec2 displace(vec2 owo)
         return owo;
 
     float magnitude = abs(height);
-    // We apply a cubic to more closely match AE
-    magnitude = (-0.5 * magnitude * magnitude * magnitude + 32.0 * magnitude) / 100.0;
+    // We modify the magniture to more closely match AE
+    magnitude = (2.0/(1.0+exp(-3.0*magnitude))-1.0) * (0.23 * magnitude + 0.14);
+    // If the above is too expensive, you can use this instead:
+    // magnitude = magnitude * 0.275;
+    // Both of the above were derived by interpolating sample points
 
     float sign = height > 0.0 ? 1.0 : -1.0;
     vec2 displacement =
