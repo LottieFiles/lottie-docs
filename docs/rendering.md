@@ -1598,6 +1598,7 @@ void main()
 
 
 ### Matte3
+
 {effect_shader_script:effects-matte3-image.json:394:394}
 Channel:<select>
     <option value="1">Red</option>
@@ -1723,5 +1724,96 @@ void main()
 
     if ( show_mask == 1 )
         gl_FragColor = alpha_blend(gl_FragColor, mask);
+}
+</script>
+
+
+
+### Bulge
+
+{effect_shader_script:effects-bulge.json:394:394}
+Center X:<input type="range" min="0" max="512" value="286"/>
+Center Y:<input type="range" min="0" max="512" value="277"/>
+Radius X:<input type="range" min="0" max="512" value="197"/>
+Radius Y:<input type="range" min="0" max="512" value="179"/>
+Height:<input type="range" min="-10" max="10" step="0.1" value="1.9"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = data["Radius X"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Radius Y"];
+lottie.layers[0].ef[0].ef[2].v.k = [data["Center X"], data["Center Y"]];
+lottie.layers[0].ef[0].ef[3].v.k = data["Height"];
+
+
+shader.set_uniform("center", "2fv", [data["Center X"] * 0.77, data["Center Y"] * 0.77]);
+shader.set_uniform("radius", "2fv", [data["Radius X"] * 0.77, data["Radius Y"] * 0.77]);
+shader.set_uniform("height", "1f", data["Height"]);
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+precision highp float;
+
+uniform vec2 center;
+uniform vec2 radius;
+uniform float height;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+vec2 normalize_uv(vec2 coord)
+{
+    return vec2(coord.x / canvas_size.x, coord.y / canvas_size.y);
+}
+
+vec2 exponential_displacement(vec2 uv, float magnitude)
+{
+    return uv * pow(dot(uv, uv), magnitude) - uv;
+}
+
+
+vec2 spherical_displacement(vec2 uv, float magnitude)
+{
+    float radius = (1.0 + magnitude) / (2.0 * sqrt(magnitude));
+
+
+    float arc_ratio = asin(length(uv) / radius) / asin(1.0 / radius);
+    return normalize(uv) * arc_ratio - uv;
+}
+
+vec2 displace(vec2 owo)
+{
+    float t = dot(owo, owo);
+    if (t >= 1.0)
+        return owo;
+
+    float magnitude = abs(height);
+    // We apply a cubic to more closely match AE
+    magnitude = (-0.5 * magnitude * magnitude * magnitude + 32.0 * magnitude) / 100.0;
+
+    float sign = height > 0.0 ? 1.0 : -1.0;
+    vec2 displacement =
+        exponential_displacement(owo, magnitude) +
+        spherical_displacement(owo, magnitude)
+    ;
+    return owo + displacement * magnitude * sign;
+
+}
+
+void main()
+{
+    highp vec2 uv = normalize_uv(gl_FragCoord.xy);
+    vec2 norm_center = normalize_uv(center);
+    vec2 norm_radius = normalize_uv(radius);
+
+    // forward transform
+    uv = (uv - norm_center) / norm_radius;
+    //displace
+    uv = displace(uv);
+    // backward transform
+    uv = uv * norm_radius + norm_center;
+
+    gl_FragColor = texture2D(texture_sampler, uv);
 }
 </script>
