@@ -1728,7 +1728,6 @@ void main()
 </script>
 
 
-
 ### Bulge
 
 {effect_shader_script:effects-bulge.json:394:394}
@@ -1818,5 +1817,153 @@ void main()
     uv = uv * norm_radius + norm_center;
 
     gl_FragColor = texture2D(texture_sampler, uv);
+}
+</script>
+
+
+### Wave Warp
+
+This effect is animated by default, so it has a "time" slider (in seconds).
+
+{effect_shader_script:effects-wave.json:394:394}
+Shape:<select>
+    <option value="1">Sine</option>
+    <option value="2">Square</option>
+    <option value="3">Triangle</option>
+    <option value="4">Sawtooth</option>
+    <option value="5">Circle</option>
+    <option value="6">Semicircle</option>
+    <option value="7">Uncircle</option>
+    <option value="8">Noise</option>
+    <option value="9">Smooth noise</option>
+</select>
+Amplitude:<input type="range" min="-100" max="100" value="10"/>
+Wavelength:<input type="range" min="-100" max="100" value="40"/>
+Direction:<input type="range" min="0" max="360" value="90"/>
+Phase:<input type="range" min="0" max="360" value="0"/>
+Speed:<input type="range" min="0" max="10" value="1" step="0.1"/>
+Time:<input type="range" min="0" max="2" value="0" step="0.1"/>
+<json>lottie.layers[0].ef[0]</json>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = Number(data["Shape"]);
+lottie.layers[0].ef[0].ef[1].v.k = data["Amplitude"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Wavelength"];
+lottie.layers[0].ef[0].ef[3].v.k = data["Direction"];
+lottie.layers[0].ef[0].ef[5].v.k = data["Speed"];
+// 5 "pinning" not implemented
+lottie.layers[0].ef[0].ef[6].v.k = data["Phase"];
+// & "antialiasing" unused
+
+
+shader.set_uniform("shape", "1i", Number(data["Shape"]));
+shader.set_uniform("amplitude", "1f", data["Amplitude"]);
+shader.set_uniform("wavelength", "1f", data["Wavelength"]);
+shader.set_uniform("angle", "1f", data["Direction"]);
+shader.set_uniform("phase", "1f", data["Phase"]);
+shader.set_uniform("speed", "1f", data["Speed"]);
+shader.set_uniform("time", "1f", data["Time"]);
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+#define PI 3.1415926538
+#define TAU 6.283185307
+
+precision highp float;
+
+uniform int shape;
+uniform float amplitude;
+uniform float wavelength;
+uniform float angle;
+uniform float speed;
+uniform float phase;
+uniform float time;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+
+vec2 normalize_uv(vec2 coord)
+{
+    return vec2(coord.x / canvas_size.x, coord.y / canvas_size.y);
+}
+
+float clamp_angle(float angle)
+{
+    return mod(angle, TAU);
+}
+
+vec2 project(vec2 a , vec2 b)
+{
+    return dot(a, b) / dot(b, b) * b;
+}
+
+float semicircle(float x)
+{
+    return sqrt(1.0 - pow(clamp_angle(x) / PI - 1.0, 2.0));
+}
+
+// Adapted from http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+highp float noise(float x)
+{
+    highp float a = 12.9898;
+    highp float b = 78.233;
+    highp float c = 43758.5453;
+    highp float dt = x * a;
+    highp float sn = mod(dt, PI);
+    return fract(sin(sn) * c) * 2.0 - 1.0;
+}
+
+// Interpolate between two random points
+float smooth_noise(float x)
+{
+    float x_fract = fract(x);
+    float x_int = x - x_fract;
+    float n1 = noise(x_int);
+    float n2 = noise(x_int + 1.0);
+    return (n1 * (1.0 - x_fract) + n2 * x_fract);
+}
+
+vec2 displace(vec2 uv)
+{
+    float rad = angle / 180.0 * PI;
+    vec2 normal = vec2(cos(rad), sin(rad));
+    rad -= PI /2.0;
+    vec2 direction = vec2(cos(rad), sin(rad));
+    float x = length(project(uv, direction));
+
+    x = x / wavelength * PI - time * speed * TAU + phase / 180.0 * PI;
+
+
+    float y;
+
+    if ( shape == 1 ) // sine
+        y = sin(x);
+    else if ( shape == 2 ) // square
+        y = clamp_angle(x) < PI ? 1.0 : -1.0;
+    else if ( shape == 3 ) // triangle
+        y = 1.0 - abs(clamp_angle(x) - PI) / PI * 2.0;
+    else if ( shape == 4 ) // sawtooth
+        y = 1.0 - clamp_angle(x) / PI;
+    else if ( shape == 5 ) // circle
+        y = sign(clamp_angle(x) -  PI) * semicircle(2.0 * x);
+    else if ( shape == 6 ) // semi circle
+        y = 2.0 * semicircle(x) - 1.0;
+    else if ( shape == 7 ) // uncircle
+        y = sign(clamp_angle(-x) -  PI) * (semicircle(2.0 * x) - 1.0);
+    else if ( shape == 8 ) // noise
+        y = noise(x);
+    else if ( shape == 9 ) // smooth noise
+        y = smooth_noise(x * 4.0) ;
+
+    return uv + y * normal * amplitude;
+
+}
+
+void main()
+{
+    vec2 uv = displace(gl_FragCoord.xy);
+    gl_FragColor = texture2D(texture_sampler, normalize_uv(uv));
 }
 </script>
