@@ -81,3 +81,9 @@ class Schema:
         path = SchemaPath(path)
         obj = path.walk(self)
         return Schema(obj, path)
+
+    def items(self):
+        if isinstance(self.schema, dict):
+            for k, v in self.schema.items():
+                yield k, Schema(v, self.path / k)
+        return None
