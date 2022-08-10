@@ -50,10 +50,10 @@ class Schema:
         self.path = SchemaPath(path)
 
     def __getitem__(self, key):
-        return Schema(SchemaPath.step(self.schema, key), self.path / key).value
+        return self.child(key).value
 
     def __truediv__(self, key):
-        return Schema(SchemaPath.step(self.schema, key), self.path / key)
+        return self.child(key)
 
     def __contains__(self, item):
         return isinstance(self.schema, dict) and item in self.schema
@@ -87,3 +87,6 @@ class Schema:
             for k, v in self.schema.items():
                 yield k, Schema(v, self.path / k)
         return None
+
+    def child(self, key):
+        return Schema(SchemaPath.step(self.schema, key), self.path / key)

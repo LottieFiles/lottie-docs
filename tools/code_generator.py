@@ -1,3 +1,4 @@
+import re
 import sys
 import json
 from pathlib import Path
@@ -23,7 +24,7 @@ class TypeReference:
         split = ref.split("/")
         return TypeReference(split[-2], split[-1], ref)
 
-class SchemaItemHelper:
+class SchemaItem:
     def __init__(self, schema: Schema):
         self.schema = schema
 
@@ -36,14 +37,14 @@ class SchemaItemHelper:
         return self.schema.get("description", "")
 
 
-class TypeHelper(SchemaItemHelper):
+class Type(SchemaItem):
     def __init__(self, reference: TypeReference, schema: Schema):
         super().__init__(schema)
         self.reference = reference
 
 
-class ClassHelper(TypeHelper):
-    class Property(SchemaItemHelper):
+class Class(Type):
+    class Property(SchemaItem):
         def __init__(self, key: str, schema: Schema):
             super().__init__(schema)
             self.key = key
@@ -55,30 +56,33 @@ class ClassHelper(TypeHelper):
         super().__init__(reference, schema)
         self.bases = []
         self.properties = []
+        self.property_dict = {}
         required = set()
         if "allOf" in schema:
-            for base in schema["allOf"]:
+            for base in schema.child("allOf"):
                 if "$ref" in base:
                     self.bases.append(TypeReference.from_ref(base["$ref"]))
                 elif "properties" in base:
-                    self._gather_props(base, self.properties, required)
+                    self._gather_props(base, required)
 
         if "properties" in schema:
-            self._gather_props(schema, self.properties, required)
+            self._gather_props(schema, required)
 
         for prop in self.properties:
             prop.required = prop.key in required
 
-    def _gather_props(self, schema, props, required):
-        for k, v in schema["properties"].items():
-            props.append(self.Property(k, v))
+    def _gather_props(self, schema, required):
+        for k, v in schema.child("properties").items():
+            prop = self.Property(k, v)
+            self.properties.append(prop)
+            self.property_dict[k] = prop
 
         for req in schema.get("required", []):
             required.add(req)
 
 
-class EnumHelper(TypeHelper):
-    class Value(SchemaItemHelper):
+class Enum(Type):
+    class Value(SchemaItem):
         def __init__(self, schema):
             super().__init__(schema)
             self.name = self.title
@@ -93,8 +97,21 @@ class EnumHelper(TypeHelper):
         self.values = values
 
 
+class Effect(Class):
+    def __init__(self, reference: TypeReference, schema: Schema):
+        super().__init__(reference, schema)
+        self.effect_controls = []
+        if "ef" in self.property_dict:
+            for item in self.property_dict["ef"].schema / "prefixItems":
+                self.effect_controls.append(self.Property(item.get("title"), item))
+
+
 
 class LottieCodeGenerator:
+    camel_re = re.compile(r"[\s_]+([^\s_])");
+    snake_re = re.compile(r"\s+");
+    anti_camel_re = re.compile(r"([a-z])([A-Z])");
+
     def __init__(self, schema: Schema):
         self.schema = schema
 
@@ -107,7 +124,7 @@ class LottieCodeGenerator:
         """
         Visits all the definitions in the schema
         """
-        for module_name, module_schema in self.schema["$defs"].items():
+        for module_name, module_schema in self.schema.child("$defs").items():
             self.on_module(module_name, module_schema)
 
     def on_module(self, module_name, module_schema):
@@ -137,19 +154,21 @@ class LottieCodeGenerator:
         Invoked on a definition
         """
         if "oneOf" in schema:
-            values = list(map(EnumHelper.Value, schema["oneOf"]))
+            values = list(map(Enum.Value, schema["oneOf"]))
             if all(v.valid for v in values):
-                return self.on_enum(EnumHelper(ref, schema, values))
+                return self.on_enum(Enum(ref, schema, values))
 
         type = schema.get("type", "object")
         if type == "array":
-            return self.on_array(TypeHelper(ref, schema))
+            return self.on_array(Type(ref, schema))
         elif type != "object":
-            return self.on_unknown(TypeHelper(ref, schema))
+            return self.on_unknown(Type(ref, schema))
 
-        helper_type = ClassHelper
+        item_type = Class
+        if ref.module == "effects" and ref.name != "effect":
+            item_type = Effect
 
-        self.on_class(helper_type(ref, schema))
+        self.on_class(item_type(ref, schema))
 
     def on_module_start(self, name: str, schema: Schema):
         """
@@ -163,65 +182,103 @@ class LottieCodeGenerator:
         """
         pass
 
-    def on_enum(self, helper: EnumHelper):
+    def on_enum(self, item: Enum):
         """
         Invoken when an enumeration has been found
         """
         pass
 
-    def on_class(self, helper: ClassHelper):
+    def on_class(self, item: Class):
         """
         Invoken when a class has been found
         """
         pass
 
-    def on_array(self, helper: TypeHelper):
+    def on_array(self, item: Type):
         """
         Invoked on array type definitions
         """
         pass
 
-    def on_unknown(self, helper: TypeHelper):
+    def on_unknown(self, item: Type):
         """
         Invoked on unknown definitions, which should never happen
         """
         pass
+
+    @classmethod
+    def title_to_camel(cls, title, upper=True):
+        "Converts a title to CamelCase"
+        title = cls.camel_re.sub(lambda m: m.group(1).upper(), title)
+        pre = title[0]
+        return (pre.upper() if upper else pre.lower()) + title[1:]
+
+    @classmethod
+    def title_to_snake(cls, title):
+        "Converts a title to snake_case"
+        return cls.anti_camel_re.sub(
+            lambda m: m.group(1) + "_" + m.group(2),
+            cls.snake_re.sub("_", title)
+        ).lower()
+
 
 
 class ExampleGenerator(LottieCodeGenerator):
     """
     Very basic example that prints definitions on stdout
     """
-    def on_class(self, helper: ClassHelper):
-        sys.stdout.write("%s %s" % (helper.reference, helper.title))
+    def on_type(self, ref: TypeReference, schema: Schema):
+        super().on_type(ref, schema)
+        sys.stdout.write("\n")
 
-        if helper.bases:
+    def on_class(self, item: Class):
+        sys.stdout.write("%s.%s" % (item.reference.module, self.title_to_camel(item.title)))
+
+        if item.bases:
             sys.stdout.write(" (")
-            sys.stdout.write(", ".join(b.key for b in helper.bases))
+            sys.stdout.write(", ".join(b.key for b in item.bases))
             sys.stdout.write(")")
 
         sys.stdout.write(":\n")
 
-        if helper.properties:
-            for prop in helper.properties:
+        if isinstance(item, Effect):
+            for prop in item.effect_controls:
+                sys.stdout.write("    %s: %s\n" % (
+                    self.title_to_snake(prop.title),
+                    prop.type
+                ))
+        elif item.properties:
+            for prop in item.properties:
                 sys.stdout.write("    %s %s: %s\n" % (
                     prop.key,
-                    prop.title,
+                    self.title_to_snake(prop.title),
                     prop.type
                 ))
         else:
             sys.stdout.write("    (empty)\n")
 
 
-    def on_enum(self, helper: EnumHelper):
-        sys.stdout.write("%s %s:\n" % (helper.reference, helper.title))
-        for value in helper.values:
-            sys.stdout.write("    %s = %s\n" % (value.name, value.value))
+    def on_enum(self, item: Enum):
+        sys.stdout.write("%s.%s:\n" % (item.reference.module, self.title_to_camel(item.title)))
+        for value in item.values:
+            sys.stdout.write("    %s = %s\n" % (self.title_to_camel(value.name), value.value))
 
-    def on_unknown(self, helper: TypeHelper):
-        raise Exception(ref.ref)
+    def on_unknown(self, item: Type):
+        raise Exception(item.ref)
 
 
-    def on_array(self, helper: TypeHelper):
-        sys.stdout.write("%s %s:\n" % (helper.reference, helper.title))
+    def on_array(self, item: Type):
+        sys.stdout.write("%s.%s:\n" % (item.reference.module, self.title_to_camel(item.title)))
         sys.stdout.write("    (array)\n")
+
+
+if __name__ == "__main__":
+    what = sys.argv[1] if len(sys.argv) > 1 else ""
+    generator = ExampleGenerator.default()
+    if not what:
+        generator.run()
+    else:
+        if what.strip("#/").replace("$defs/", "").count("/"):
+            generator.run_item(what)
+        else:
+            generator.run_module(what)
