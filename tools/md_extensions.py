@@ -12,7 +12,7 @@ from markdown.blockprocessors import BlockProcessor
 from markdown.preprocessors import Preprocessor
 from markdown.extensions import Extension
 from markdown.util import HTML_PLACEHOLDER_RE, AtomicString
-from schema_lib import Schema
+from lottie_docs.schema import Schema
 
 
 docs_path = Path(__file__).parent.parent / "docs"

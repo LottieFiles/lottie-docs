@@ -5,7 +5,7 @@ import json
 import pathlib
 import argparse
 
-from schema_lib import SchemaPath, Schema
+from lottie_docs.schema import SchemaPath, Schema
 
 
 class Validator:

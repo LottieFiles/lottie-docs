@@ -3,7 +3,8 @@ import sys
 import json
 from pathlib import Path
 
-from .schema_lib import Schema, SchemaPath
+from .schema import Schema, SchemaPath
+from .default import default_schema
 
 
 class TypeReference:
@@ -117,8 +118,7 @@ class LottieCodeGenerator:
 
     @classmethod
     def default(cls):
-        with open(Path(__file__).parent.parent / "docs" / "schema" / "lottie.schema.json", "r") as f:
-            return cls(Schema(json.load(f)))
+        return cls(default_schema())
 
     def run(self):
         """

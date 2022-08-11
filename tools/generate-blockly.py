@@ -10,7 +10,7 @@ from xml.etree import ElementTree
 
 
 import md_extensions
-from schema_lib import Schema
+from lottie_docs.schema import Schema
 
 
 class BlockDef:
