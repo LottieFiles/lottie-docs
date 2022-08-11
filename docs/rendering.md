@@ -692,7 +692,7 @@ lottie.layers[0].shapes[0].it[1].ml.k = data["Miter Limit"];
 let star = lottie.layers[0].shapes[0].it[0];
 bezier_lottie.layers[0].shapes[0].it[1].w.k = 3;
 </script>
-<script func="offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)" varname="modifier" suffix="[0].to_lottie()">
+<script func="offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)" varname="modifier">
 /*
     Simple offset of a linear segment
 */
@@ -938,6 +938,192 @@ function offset_path(
     return result;
 }
 </script>
+
+
+## Trim Path
+
+{shape_bezier_script:trim_path.json:394:394}
+Start:<input type="range" min="0" value="0" max="100"/>
+End:<input type="range" min="0" value="50" max="100"/>
+Offset:<input type="range" min="0" value="0" max="360"/>
+Multiple Shapes:<enum>trim-multiple-shapes</enum>
+<json>lottie.layers[0].shapes[4]</json>
+<script>
+lottie.layers[0].shapes[4].s.k = data["Start"];
+lottie.layers[0].shapes[4].e.k = data["End"];
+lottie.layers[0].shapes[4].o.k = data["Offset"];
+lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
+
+let siblings = bezier_lottie.layers[0].shapes[0].it;
+siblings[siblings.length-2].w.k = 20;
+
+let shapes = [];
+for ( let i = 0; i < 4; i++ )
+    shapes.push(convert_shape(lottie.layers[0].shapes[i]));
+</script>
+<script func="trim_path(shapes, modifier.s.k, modifier.e.k, modifier.o.k, modifier.m)" varname="modifier">
+
+function trim_path_gather_chunks(collected_shapes, multiple)
+{
+    let chunks = [];
+
+    // Shapes are handled as a single unit
+    if ( multiple === 2 )
+        chunks.push({segments: [], length: 0});
+
+    for ( let input_bezier of collected_shapes )
+    {
+        // Shapes are all affected separately
+        if ( multiple === 1 )
+            chunks.push({segments: [], length: 0});
+
+        let chunk = chunks[chunks.length-1];
+
+        for ( let i = 0; i < input_bezier.segment_count(); i++ )
+        {
+            let segment = input_bezier.segment(i);
+            let length = segment.get_length();
+            chunk.segments.push(segment);
+            chunk.length += length;
+        }
+
+        // Use null as a marker to start a new bezier
+        if ( multiple == 2 )
+            chunk.segments.push(null);
+    }
+
+    return chunks;
+}
+
+function trim_path_chunk(chunk, start, end, output_shapes)
+{
+    // Note: start and end have been normalized and have the offset applied
+    // The offset itself was normalized into [0, 1] so this is always true:
+    // 0 <= start < end <= 2
+
+    // Some offsets require us to handle different "splits"
+    // We want each split to be a pair [s, e] such that
+    // 0 <= s < e <= 1
+    var splits = [];
+
+    if ( end <= 1 )
+    {
+        // Simplest case, the segment is in [0, 1]
+        splits.push([start, end]);
+    }
+    else if ( start > 1 )
+    {
+        // The whole segment is outside [0, 1]
+        splits.push([start-1, end-1]);
+    }
+    else
+    {
+        // The segment goes over the end point, so we need two splits
+        splits.push([start, 1]);
+        splits.push([0, end-1]);
+    }
+
+    // Each split is a separate bezier, all left to do is finding the
+    // bezier segment to add to the output
+    for ( let [s, e] of splits )
+    {
+        let start_length = s * chunk.length;
+        let start_t;
+        let end_length = e * chunk.length;
+        let prev_length = 0;
+
+        let output_bezier = new Bezier(false);
+        output_shapes.push(output_bezier);
+
+        for ( let i = 0; i < chunk.segments.length; i++ )
+        {
+            let segment = chunk.segments[i];
+
+            // New bezier marker found
+            if ( segment === null )
+            {
+                output_bezier = new Bezier(false);
+                output_shapes.push(output_bezier);
+                continue;
+            }
+
+            if ( segment.length >= end_length )
+            {
+                let end_t = segment.t_at_length(end_length);
+
+                if ( segment.length >= start_length )
+                {
+                    start_t = segment.t_at_length(start_length);
+                    segment = segment.split(start_t)[1];
+                    end_t = (end_t - start_t) / (1 - start_t);
+                }
+
+                output_bezier.add_segment(segment.split(end_t)[0], false);
+                break;
+            }
+
+            if ( start_t === undefined )
+            {
+                if ( segment.length >= start_length )
+                {
+                    start_t = segment.t_at_length(start_length);
+                    output_bezier.add_segment(segment.split(start_t)[1], false);
+                }
+            }
+            else
+            {
+                output_bezier.add_segment(segment, true);
+            }
+
+            start_length -= segment.length;
+            end_length -= segment.length;
+        }
+    }
+}
+
+function trim_path(
+    collected_shapes,
+    start,
+    end,
+    offset,
+    multiple
+)
+{
+    // Normalize Inputs
+    offset = offset / 360 % 1;
+    if ( offset < 0 )
+        offset += 1;
+
+    start = Math.min(1, Math.max(0, start / 100));
+    end = Math.min(1, Math.max(0, end / 100));
+
+    if ( end < start )
+        [start, end] = [end, start];
+
+    // Apply offset
+    start += offset;
+    end += offset;
+
+    // Handle the degenerate cases
+    if ( fuzzy_compare(start, end) )
+        return [new Bezier(false)];
+
+    if ( fuzzy_zero(start) && fuzzy_compare(end, 1) )
+        return collected_shapes;
+
+    // Gather up the segments to trim
+    let chunks = trim_path_gather_chunks(collected_shapes, multiple);
+
+    let output_shapes = [];
+
+    for ( let chunk of chunks )
+        trim_path_chunk(chunk, start, end, output_shapes);
+
+    return output_shapes;
+
+}
+</script>
+
 
 ## Transform
 

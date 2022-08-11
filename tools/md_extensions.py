@@ -637,7 +637,6 @@ class ShapeBezierScript(LottiePlayground):
         non_func_script = ""
         func = ""
         varname = ""
-        func_suffix = ""
         while True:
             if blocks[0] == '':
                 blocks = blocks[1:]
@@ -647,7 +646,6 @@ class ShapeBezierScript(LottiePlayground):
                     func = script_element.attrib["func"]
                     varname = script_element.attrib.get("varname", "shape")
                     func_script = script_element.text
-                    func_suffix = script_element.attrib.get("suffix", ".to_lottie()")
 
                     pre = etree.SubElement(builder.element, "pre")
                     # We don't use `js` highlighting because it's a bit bugged
@@ -681,10 +679,16 @@ class ShapeBezierScript(LottiePlayground):
                         {non_func_script}
                         this.json_viewer_contents = {shape_path};
                         let {varname} = {shape_path};
-                        let bez_target = bezier_lottie.layers[0].shapes[0].it[0].ks;
-                        bez_target.k = {func}{func_suffix};
+                        let bez_result = {func};
+                        if ( !Array.isArray(bez_result) )
+                            bez_result = [bez_result];
+                        let out_shapes = bez_result.map(b => ({{
+                            ty: "sh", "ks": {{a: 0, k: b.to_lottie()}}
+                        }}));
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it;
+                        bez_target.splice(0, bez_target.length - 2, ...out_shapes);
                         lottie_player_{id}_bezier.reload();
-                        this.set_json('{json_viewer_id}_bezier', bez_target.k);
+                        this.set_json('{json_viewer_id}_bezier', out_shapes[0].ks.k);
                     }},
                     {extra_options}
                 );
@@ -700,7 +704,6 @@ class ShapeBezierScript(LottiePlayground):
                 extra_options=extra_options,
                 func=func,
                 varname=varname,
-                func_suffix=func_suffix,
             ))
 
     def add_json_viewer(self, builder, parent):

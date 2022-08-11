@@ -22,10 +22,10 @@ class BezierPoint
 
 class Bezier
 {
-    constructor()
+    constructor(closed=true)
     {
         this.points = [];
-        this.closed = true;
+        this.closed = closed;
     }
 
     static from_lottie(data)
@@ -102,6 +102,19 @@ class Bezier
 
         return [i, (t - (i/n)) * n];
     }
+
+    add_segment(segment, merge_start)
+    {
+        let v = merge_start  && this.points.length ?
+            this.points[this.points.length - 1] :
+            this.add_vertex(segment.points[0])
+        ;
+
+        v.set_out_tangent(segment.points[1].sub(segment.points[0]));
+
+        this.add_vertex(segment.points[3])
+            .set_in_tangent(segment.points[2].sub(segment.points[3]));
+    }
 }
 
 function fuzzy_compare(a, b)
@@ -143,12 +156,12 @@ class BezierSegment
         let k1;
         let k2;
         let k3 = end.pos;
-//         if ( tan1.is_origin() && tan2.is_origin() )
-//         {
-//             k1 = lerp(start.pos, end.pos, 1/3);
-//             k2 = lerp(start.pos, end.pos, 2/3);
-//         }
-//         else
+        if ( tan1.is_origin() && tan2.is_origin() )
+        {
+            k1 = lerp(start.pos, end.pos, 1/3);
+            k2 = lerp(start.pos, end.pos, 2/3);
+        }
+        else
         {
             k1 = start.pos.add(tan1);
             k2 = end.pos.add(tan2);
@@ -400,6 +413,12 @@ class BezierSegment
         }
 
         return this.length_data;
+    }
+
+    get_length(chunks)
+    {
+        this.calculate_length_data(chunks);
+        return this.length;
     }
 
     t_at_length(length, chunks)
