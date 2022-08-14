@@ -233,7 +233,7 @@ class BezierSegment
         let root = Math.sqrt(square);
         if ( fuzzy_zero(root) )
         {
-            if ( root > 0 && root < 1 )
+            if ( t_cusp > 0 && t_cusp < 1 )
                 return [t_cusp];
             return [];
         }

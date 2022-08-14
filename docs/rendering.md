@@ -1127,6 +1127,9 @@ function trim_path(
 
 ## Transform
 
+
+<script src="/lottie-docs/scripts/lottie_matrix.js"></script>
+
 This is how to convert a [transform](concepts.md#transform) object into a matrix.
 
 Assuming the matrix
@@ -1163,6 +1166,21 @@ s[0]/100    0           0   0
 0           0           1   0
 0           0           0   1
 
+Rotate by `-sa` (can be skipped if not skewing)
+
+{matrix}
+cos(-sa)   sin(-sa) 0 0
+-sin(-sa)  cos(-sa) 0 0
+0          0        1 0
+0          0        0 1
+
+Skew by `sk` (can be skipped if not skewing)
+
+{matrix}
+1   tan(-sk) 0   0
+0   1        0   0
+0   0        1   0
+0   0        0   1
 
 Rotate by `sa` (can be skipped if not skewing)
 
@@ -1171,22 +1189,6 @@ cos(sa)     sin(sa) 0 0
 -sin(sa)    cos(sa) 0 0
 0           0       1 0
 0           0       0 1
-
-Skew by `sk` (can be skipped if not skewing)
-
-{matrix}
-1   tan(sk) 0   0
-0   1       0   0
-0   0       1   0
-0   0       0   1
-
-Rotate by `-sa` (can be skipped if not skewing)
-
-{matrix}
-cos(-sa)   sin(-sa) 0 0
--sin(-sa)  cos(-sa) 0 0
-0          0        1 0
-0          0        0 1
 
 Rotate by `-r`
 
@@ -1205,6 +1207,107 @@ Translate by `p`
 0       1       0   0
 0       0       1   0
 p[0]    p[1]    0   1
+
+
+{lottie_playground:transform.json:512:512}
+Anchor X:<input type="range" min="0" value="256" max="512"/>
+Anchor Y:<input type="range" min="0" value="256" max="512"/>
+Position X:<input type="range" min="0" value="256" max="512"/>
+Position Y:<input type="range" min="0" value="256" max="512"/>
+Scale X:<input type="range" min="0" value="100" max="200"/>
+Scale Y:<input type="range" min="0" value="100" max="200"/>
+Rotation:<input type="range" min="0" value="0" max="360"/>
+Skew:<input type="range" min="0" value="0" max="360"/>
+Skew Angle:<input type="range" min="0" value="0" max="360"/>
+Opacity:<input type="range" min="0" value="100" max="100"/>
+<json>
+[
+    transform.elements.slice(0, 4),
+    transform.elements.slice(4, 8),
+    transform.elements.slice(8, 12),
+    transform.elements.slice(12, 16)
+].map(x => Array.from(x))
+</json>
+<script>
+
+if ( lottie.layers.length == 3 )
+{
+    lottie.layers.splice(1, 0, {
+        "ty": 4,
+        "st": 0,
+        "ip": 0,
+        "op": 180,
+        "ks": {},
+        "shapes": [
+            {
+                "ty": "sh",
+                "ks": {
+                    "k": {
+                        "c": true,
+                        "v": [],
+                        "i": [[0, 0], [0, 0], [0, 0], [0, 0]],
+                        "o": [[0, 0], [0, 0], [0, 0], [0, 0]],
+                    },
+                    "a": 0
+                }
+            },
+            {
+                "ty": "st",
+                "o": {
+                    "a": 0,
+                    "k": 100
+                },
+                "w": {
+                    "a": 0,
+                    "k": 2
+                },
+                "c": {
+                    "a": 0,
+                    "k": [
+                        0.078,
+                        0.741,
+                        0.431
+                    ]
+                }
+            }
+        ]
+    });
+}
+
+lottie.layers[0].ks.p.k[0] = data["Anchor X"];
+lottie.layers[2].ks.a.k[0] = data["Anchor X"];
+lottie.layers[0].ks.p.k[1] = data["Anchor Y"];
+lottie.layers[2].ks.a.k[1] = data["Anchor Y"];
+lottie.layers[2].ks.p.k[0] = data["Position X"];
+lottie.layers[2].ks.p.k[1] = data["Position Y"];
+lottie.layers[2].ks.s.k[0] = data["Scale X"];
+lottie.layers[2].ks.s.k[1] = data["Scale Y"];
+lottie.layers[2].ks.r.k = data["Rotation"];
+lottie.layers[2].ks.sk.k = data["Skew"];
+lottie.layers[2].ks.sa.k = data["Skew Angle"];
+lottie.layers[2].ks.o.k = data["Opacity"];
+
+
+var transform = new LottieMatrix();
+transform.translate(-data["Anchor X"], -data["Anchor Y"]);
+transform.scale(data["Scale X"] / 100, data["Scale Y"] / 100);
+transform.skew(data["Skew"] * Math.PI / 180, data["Skew Angle"] * Math.PI / 180);
+transform.rotate(-data["Rotation"] * Math.PI / 180);
+transform.translate(data["Position X"], data["Position Y"]);
+
+var cx = lottie.layers[2].shapes[0].p.k[0];
+var cy = lottie.layers[2].shapes[0].p.k[1];
+var rx = lottie.layers[2].shapes[0].s.k[0] / 2;
+var ry = lottie.layers[2].shapes[0].s.k[1] / 2;
+
+lottie.layers[1].shapes[0].ks.k.v = [
+    transform.map(cx - rx, cy - ry).slice(0, 2),
+    transform.map(cx + rx, cy - ry).slice(0, 2),
+    transform.map(cx + rx, cy + ry).slice(0, 2),
+    transform.map(cx - rx, cy + ry).slice(0, 2)
+];
+
+</script>
 
 
 ## Effects
