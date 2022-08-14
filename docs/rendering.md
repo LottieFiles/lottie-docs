@@ -1198,7 +1198,8 @@ cos(-r)    sin(-r)  0 0
 0          0        1 0
 0          0        0 1
 
-If you are handling an [auto orient](layers.md#auto-orient) layer, evaluate and apply auto-orient rotation
+If you are handling an [auto orient](layers.md#auto-orient) layer,
+evaluate and apply auto-orient rotation.
 
 Translate by `p`
 
@@ -1308,6 +1309,66 @@ lottie.layers[1].shapes[0].ks.k.v = [
 ];
 
 </script>
+
+If you have a 3D transform, the process is similar, with `a`, `p`, `s`,
+using their 3D matrices.
+
+The rotation step is a bit more complicated, with the 2D rotation being
+equivalent to a Z rotation.
+
+The rotation step above is replaced with the following set of steps:
+
+Rotate by `-rz`
+
+{matrix}
+cos(-r)    sin(-r)  0 0
+-sin(-r)   cos(-r)  0 0
+0          0        1 0
+0          0        0 1
+
+Rotate by `ry`
+
+{matrix}
+cos(r)   0  sin(r)  0
+0        1  0       0
+-sin(r)  0  cos(-r) 0
+0        0          1
+
+Rotate by `rx`
+
+{matrix}
+1  0        0       0
+0  cos(r)  -sin(r)  0
+0 -sin(r)   cos(-r) 0
+0 0         0       1
+
+
+Then repeat the steps for `or`:
+
+
+Rotate by `-or[2]` (Z axis)
+
+{matrix}
+cos(-r)    sin(-r)  0 0
+-sin(-r)   cos(-r)  0 0
+0          0        1 0
+0          0        0 1
+
+Rotate by `or[1]` (Y axis)
+
+{matrix}
+cos(r)   0  sin(r)  0
+0        1  0       0
+-sin(r)  0  cos(-r) 0
+0        0          1
+
+Rotate by `or[0]` (X axis)
+
+{matrix}
+1  0        0       0
+0  cos(r)  -sin(r)  0
+0 -sin(r)   cos(-r) 0
+0 0         0       1
 
 
 ## Effects
