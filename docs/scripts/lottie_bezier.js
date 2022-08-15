@@ -295,7 +295,7 @@ class BezierSegment
             [min, max] = [max, min];
 
         // Derivative roots to find min/max
-        for ( let t of this._quad_roots(3 * this.a[comp], 2 * this.b[comp], this.c[comp]) )
+        for ( let t of quadratic_roots(3 * this.a[comp], 2 * this.b[comp], this.c[comp]) )
         {
             if ( t > 0 && t < 1 )
             {
@@ -311,30 +311,6 @@ class BezierSegment
             min: min,
             max: max
         };
-    }
-
-    _quad_roots(a, b, c)
-    {
-        // no root
-        if ( a == 0 )
-            return [];
-
-        let s = b * b - 4 * a * c;
-
-        // Complex roots
-        if ( s < 0 )
-            return [];
-
-        let single_root = -b / (2 * a);
-
-        // 1 root
-        if ( s === 0 )
-            return [single_root];
-
-        let delta = Math.sqrt(s) / (2 * a);
-
-        // 2 roots
-        return [single_root - delta, single_root + delta];
     }
 
     _intersect_data(t1, t2)
@@ -454,6 +430,16 @@ class BezierSegment
             return percent;
 
         return this.t_at_length(this.length * percent, chunks);
+    }
+
+    t_at_x(x)
+    {
+        return cubic_roots(this.a.x, this.b.x, this.c.x, this.d.x - x)[0];
+    }
+
+    y_at_x(x)
+    {
+        return this.value(this.t_at_x(x)).y;
     }
 }
 
@@ -584,4 +570,109 @@ function line_intersection(start1, end1, start2, end2)
         return null;
 
     return new Point(x / z, y / z);
+}
+
+
+// Checks if t is in [0, 1]
+function is_01(t)
+{
+    return 0 <= t && t <= 1;
+}
+
+// Returns the real cube root of a value
+function cuberoot(v)
+{
+  if ( v < 0 )
+      return -Math.pow(-v, 1/3);
+  return Math.pow(v, 1/3);
+}
+
+/*
+ * Solves
+ *      a x^3 + b x^2 + c x + d = 0
+ * Returns only solutions in [0, 1]
+ */
+function cubic_roots(a, b, c, d)
+{
+    // If a is 0, it's a quadratic
+    if ( fuzzy_zero(a) )
+        return quadratic_roots(b, c, d).filter(is_01);
+
+    // Cardano's algorithm.
+    b /= a;
+    c /= a;
+    d /= a;
+
+    let p = (3*c - b * b) / 3;
+    let p3 = p / 3;
+    let q = (2 * b*b*b - 9 * b * c + 27 * d) / 27;
+    let q2 = q / 2;
+    let discriminant = q2 * q2 + p3 * p3 * p3;
+
+    // and some variables we're going to use later on:
+
+    // 3 real roots:
+    if ( discriminant < 0)
+    {
+        let mp3  = -p / 3;
+        let r = Math.sqrt(mp3*mp3*mp3);
+        let t = -q / (2*r);
+        let cosphi = t < -1 ? -1 : t > 1 ? 1 : t;
+        let phi  = Math.acos(cosphi);
+        let crtr = cuberoot(r);
+        let t1   = 2 * crtr;
+        let root1 = t1 * Math.cos(phi / 3) - b / 3;
+        let root2 = t1 * Math.cos((phi + 2 * Math.PI) / 3) - b / 3;
+        let root3 = t1 * Math.cos((phi + 4 * Math.PI) / 3) - b / 3;
+        return [root1, root2, root3].filter(is_01);
+    }
+
+    // 2 real roots
+    if ( fuzzy_zero(discriminant) )
+    {
+        let u1 = q2 < 0 ? cuberoot(-q2) : -cuberoot(q2);
+        let root1 = 2*u1 - b / 3;
+        let root2 = -u1 - b / 3;
+        return [root1, root2].filter(is_01);
+    }
+
+    // 1 real root, 2 complex roots
+    let sd = Math.sqrt(discriminant);
+    let u1 = cuberoot(sd - q2);
+    let v1 = cuberoot(sd + q2);
+    return [u1 - v1 - b / 3].filter(is_01);
+}
+
+
+/*
+ * Solves
+ *      a x^2 + b x + c = 0
+ */
+function quadratic_roots(a, b, c)
+{
+    // linear
+    if ( fuzzy_zero(a) )
+    {
+        if ( fuzzy_zero(b) )
+            return [];
+
+        return [-c / b];
+    }
+
+    let s = b * b - 4 * a * c;
+
+    // Complex roots
+    if ( s < 0 )
+        return [];
+
+    let single_root = -b / (2 * a);
+
+    // 1 root
+    if ( s === 0 )
+        return [single_root];
+
+    let delta = Math.sqrt(s) / (2 * a);
+
+    // 2 roots
+    return [single_root - delta, single_root + delta];
 }

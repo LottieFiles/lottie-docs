@@ -13,6 +13,8 @@
     </div>
 </div>
 
+<div><input type="range" oninput="draw.draw_frame()" value="0" id="x_input" min="-20" max="420" style="width:1024px"/></div>
+
 <input type="number" onchange="draw.draw_frame()" value="16"  id="chunks_input"/>
 
 <div id="displays"></div>
@@ -140,6 +142,22 @@
                 seg.length_data = [];
             }
         }
+
+        let x = Number(document.getElementById("x_input").value);
+        this.context.lineWidth = 1;
+        this.context.strokeStyle = "red";
+        this.context.beginPath();
+        this.context.moveTo(...draw.logical_to_canvas(x, 0));
+        this.context.lineTo(...draw.logical_to_canvas(x, 420));
+
+        if ( x >= seg.points[0].x && x <= seg.points[3].x )
+        {
+            let y = seg.y_at_x(x);
+            this.context.moveTo(...draw.logical_to_canvas(-20, y));
+            this.context.lineTo(...draw.logical_to_canvas(420, y));
+        }
+        this.context.stroke();
+
     }).bind(draw);
     draw.draw_frame();
 </script>
