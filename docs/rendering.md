@@ -1388,6 +1388,58 @@ cos(-r)    sin(-r)  0 0
 0          0        0 1
 
 
+## Animated Properties
+
+Assuming a 1D property, a keyframe looks something like this:
+
+```js
+{
+    "t": start_time,
+    "s": [
+        start_value
+    ],
+    "o": {
+        "x": [
+            ox
+        ],
+        "y": [
+            oy
+        ]
+    },
+    "i": {
+        "x": [
+            ix
+        ],
+        "y": [
+            iy
+        ]
+    }
+}
+```
+
+Where:
+
+* `t` is the time at the start of the keyframe (in frames),
+* `s` is the value at that time
+* `i` and `o` are the in/out bezier tangents
+
+The transition between keyframes is defined by two keyframes,
+for simplicity we'll refer to the named values above plus `end_time` and
+`end_value` corresponding to `t` and `s` on the keyframe after the one listed.
+
+The transition is given as a cubic bezier curve whose x axis is time and
+the y axis is the interpolating factor between `start_value` and `end_value`.
+
+The four points of this bezier curve are: (0, 0), (ox, oy), (iy, iy), (1, 1).
+
+`x` is given by `x = (current_time - start_time) / (end_time - start_time)`.
+
+`y` is evaluated based on the bezier curve, yoiu might need to find the
+`t` at `x` and then evaluate the bezier at that `t`.
+
+The final value is as follows: `lerp(y, start_value, end_value)`.
+
+
 ## Effects
 
 <script src="/lottie-docs/scripts/simple_shader.js"></script>
