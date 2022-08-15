@@ -1310,8 +1310,10 @@ lottie.layers[1].shapes[0].ks.k.v = [
 
 </script>
 
+### 3D Transform
+
 If you have a 3D transform, the process is similar, with `a`, `p`, `s`,
-using their 3D matrices.
+using their 3D matrices, not that for `p` and `a` the Z axis is inverted.
 
 The rotation step is a bit more complicated, with the 2D rotation being
 equivalent to a Z rotation.
@@ -1369,6 +1371,21 @@ Rotate by `or[0]` (X axis)
 0  cos(r)  -sin(r)  0
 0 -sin(r)   cos(-r) 0
 0 0         0       1
+
+
+### Auto Orient
+
+Auto-orient is only relevant for layers that have `ao` set to `1` an animated position.
+
+You get the derivative of the position property at the current time as a
+pair (`dx`, `dy`), and find the angle with `atan2(dy, dx)`, then rotate
+by that angle clockwise:
+
+{matrix}
+cos(-r)    sin(-r)  0 0
+-sin(-r)   cos(-r)  0 0
+0          0        1 0
+0          0        0 1
 
 
 ## Effects
