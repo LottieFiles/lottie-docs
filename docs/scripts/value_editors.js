@@ -193,6 +193,14 @@ class BezierEditor
         ];
     }
 
+    canvas_to_logical(x, y)
+    {
+        return [
+            this._tr_inv(x, this.scale_x, this.offset_x),
+            this._tr_inv(y, this.scale_y, this.offset_y)
+        ];
+    }
+
     _tr(v, scale, offset)
     {
         if ( scale < 0 )
@@ -485,7 +493,7 @@ class BezierPreviewEditor
 
 class KeyframePreviewEditor
 {
-    constructor(parent, initial, on_change, size = 200)
+    constructor(parent, initial, on_change, size = 200, extra = {})
     {
         let container = parent.appendChild(document.createElement("div"));
 
@@ -511,6 +519,10 @@ class KeyframePreviewEditor
             this._get_component(initial, "i", "y", 1),
             true, false
         );
+
+        if ( extra.foreground )
+            this.bezier_editor.draw_foreground = extra.foreground.bind(this.bezier_editor);
+
         this.bezier_editor.draw_frame();
 
 
@@ -528,6 +540,9 @@ class KeyframePreviewEditor
         }).bind(this));
 
         this.on_change = on_change;
+
+        if ( extra.init )
+            extra.init(this, container);
     }
 
     _update_preview()
@@ -583,7 +598,7 @@ class KeyframePreviewEditor
         };
     }
 
-    static stand_alone(parent, on_change)
+    static stand_alone(parent, on_change, extra = {})
     {
         let initial = {
             h: 0,
@@ -591,7 +606,7 @@ class KeyframePreviewEditor
             i: {x: [0.667], y:[1]}
         };
         on_change(initial);
-        return new KeyframePreviewEditor(parent, initial, on_change);
+        return new KeyframePreviewEditor(parent, initial, on_change, 200, extra);
     }
 }
 

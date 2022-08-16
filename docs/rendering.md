@@ -1434,10 +1434,77 @@ The four points of this bezier curve are: (0, 0), (ox, oy), (iy, iy), (1, 1).
 
 `x` is given by `x = (current_time - start_time) / (end_time - start_time)`.
 
-`y` is evaluated based on the bezier curve, yoiu might need to find the
-`t` at `x` and then evaluate the bezier at that `t`.
+If the bezier is defined as
+
+<em>a</em> t<sup>3</sup> + <em>b</em> t<sup>2</sup> + <em>c</em> t + <em>d</em> = 0
+
+
+then you need to find the cubic roots of
+
+<em>a</em> t<sup>3</sup> + <em>b</em> t<sup>2</sup> + <em>c</em> t + <em>d</em> - `x` = 0
+
+
+to find the `t` corresponding to that `x`, (You only need to consider real roots in \[0, 1\]).
+
+Then you can find the `y` by evaluating the bezier at `t`.
 
 The final value is as follows: `lerp(y, start_value, end_value)`.
+
+{editor_example:easing}
+<script extra="foreground">
+    if ( !this.x_input )
+        return;
+
+    var t1 = this.points[0].out_tan.logical_coords();
+    var t2 = this.points[1].in_tan.logical_coords();
+    var seg = new BezierSegment(
+        new Point(0, 0), new Point(t1.x, t1.y), new Point(t2.x, t2.y), new Point(1, 1)
+    );
+
+    let x = Number(this.x_input.value);
+    this.context.lineWidth = 1;
+    this.context.strokeStyle = "red";
+    this.context.beginPath();
+    this.context.moveTo(...this.logical_to_canvas(x, 0));
+    this.context.lineTo(...this.logical_to_canvas(x, 1));
+
+    let t = seg.t_at_x(x);
+
+    let y = seg.value(t).y;
+    this.context.moveTo(...this.logical_to_canvas(0, y));
+    this.context.lineTo(...this.logical_to_canvas(1, y));
+
+    this.table_x.innerText = x;
+    this.table_t.innerText = t;
+    this.table_y.innerText = y;
+
+    this.context.stroke();
+</script>
+<script extra="init" args="editor, container">
+    var inp = container.appendChild(document.createElement("input"));
+    var style = "width: " + editor.bezier_editor.canvas.width + "px";
+    editor.bezier_editor.x_input = inp;
+    inp.setAttribute("type", "range");
+    inp.setAttribute("min", "0");
+    inp.setAttribute("max", "1");
+    inp.setAttribute("value", "0");
+    inp.setAttribute("step", "0.01");
+    inp.setAttribute("style", style);
+    inp.addEventListener("input", () => editor.bezier_editor.draw_frame());
+
+    var table = container.appendChild(document.createElement("table"));
+    table.setAttribute("style", style);
+    for ( let v of "xty" )
+    {
+        var tr = table.appendChild(document.createElement("tr"));
+        tr.appendChild(document.createElement("th")).appendChild(document.createTextNode(v));
+        var td = tr.appendChild(document.createElement("td"));
+        td.setAttribute("style", "text-align: left; width: 90%;");
+        editor.bezier_editor["table_" + v] = td;
+    }
+
+    editor.bezier_editor.draw_frame();
+</script>
 
 
 ## Effects

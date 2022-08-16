@@ -434,7 +434,7 @@ class BezierSegment
 
     t_at_x(x)
     {
-        return cubic_roots(this.a.x, this.b.x, this.c.x, this.d.x - x)[0];
+        return filter_roots(cubic_roots(this.a.x, this.b.x, this.c.x, this.d.x - x))[0];
     }
 
     y_at_x(x)
@@ -573,10 +573,18 @@ function line_intersection(start1, end1, start2, end2)
 }
 
 
-// Checks if t is in [0, 1]
-function is_01(t)
+// Filters roots so they are in [0, 1]
+function filter_roots(roots)
 {
-    return 0 <= t && t <= 1;
+    return roots.map(r => {
+        if ( fuzzy_zero(r) )
+            return 0;
+        if ( fuzzy_compare(r, 1) )
+            return 1;
+        if ( 0 <= r && r <= 1 )
+            return r;
+        return null;
+    }).filter(r => r !== null);
 }
 
 // Returns the real cube root of a value
@@ -596,7 +604,7 @@ function cubic_roots(a, b, c, d)
 {
     // If a is 0, it's a quadratic
     if ( fuzzy_zero(a) )
-        return quadratic_roots(b, c, d).filter(is_01);
+        return quadratic_roots(b, c, d);
 
     // Cardano's algorithm.
     b /= a;
@@ -624,7 +632,7 @@ function cubic_roots(a, b, c, d)
         let root1 = t1 * Math.cos(phi / 3) - b / 3;
         let root2 = t1 * Math.cos((phi + 2 * Math.PI) / 3) - b / 3;
         let root3 = t1 * Math.cos((phi + 4 * Math.PI) / 3) - b / 3;
-        return [root1, root2, root3].filter(is_01);
+        return [root1, root2, root3];
     }
 
     // 2 real roots
@@ -633,14 +641,14 @@ function cubic_roots(a, b, c, d)
         let u1 = q2 < 0 ? cuberoot(-q2) : -cuberoot(q2);
         let root1 = 2*u1 - b / 3;
         let root2 = -u1 - b / 3;
-        return [root1, root2].filter(is_01);
+        return [root1, root2];
     }
 
     // 1 real root, 2 complex roots
     let sd = Math.sqrt(discriminant);
     let u1 = cuberoot(sd - q2);
     let v1 = cuberoot(sd + q2);
-    return [u1 - v1 - b / 3].filter(is_01);
+    return [u1 - v1 - b / 3];
 }
 
 

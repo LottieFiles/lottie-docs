@@ -587,22 +587,7 @@ class LottiePlayground(BlockProcessor):
         ))
 
     def pop_script_block(self, blocks):
-        script_match = HTML_PLACEHOLDER_RE.match(blocks[0])
-        if script_match:
-            index = int(script_match.group(1))
-            raw_string = self.parser.md.htmlStash.rawHtmlBlocks[index]
-            if "<script" in raw_string:
-                blocks.pop(0)
-
-                # Escape <>& inside the block, avoiding escaping them in <script></script>
-                lines = raw_string.strip().split("\n")
-                source = "\n".join(lines[1:-1])
-
-                script_element = etree.fromstring(lines[0] + lines[-1])
-                script_element.text = source
-                self.parser.md.htmlStash.rawHtmlBlocks.pop(index)
-                self.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
-                return script_element
+        return pop_script_block(self, blocks)
 
     def add_json_viewer(self, builder, parent):
         code_viewer_id = builder.control_id()
@@ -623,6 +608,25 @@ class LottiePlayground(BlockProcessor):
         code = etree.SubElement(pre, "code", {"id": code_viewer_id, "class": "language-json hljs"})
         code.text = ""
         return code_viewer_id
+
+
+def pop_script_block(block_processor, blocks):
+    script_match = HTML_PLACEHOLDER_RE.match(blocks[0])
+    if script_match:
+        index = int(script_match.group(1))
+        raw_string = block_processor.parser.md.htmlStash.rawHtmlBlocks[index]
+        if "<script" in raw_string:
+            blocks.pop(0)
+
+            # Escape <>& inside the block, avoiding escaping them in <script></script>
+            lines = raw_string.strip().split("\n")
+            source = "\n".join(lines[1:-1])
+
+            script_element = etree.fromstring(lines[0] + lines[-1])
+            script_element.text = source
+            block_processor.parser.md.htmlStash.rawHtmlBlocks.pop(index)
+            block_processor.parser.md.htmlStash.rawHtmlBlocks.insert(index, '')
+            return script_element
 
 
 class ShapeBezierScript(LottiePlayground):
@@ -1501,13 +1505,37 @@ class ScriptPlayground(Preprocessor):
 
 
 
-class EditorExample(InlineProcessor):
-    def __init__(self, md):
-        super().__init__(r"\{editor_example:(?P<which>[^:}]+)\}", md)
+class EditorExample(BlockProcessor):
+    re_fence_start = re.compile(r"\{editor_example:(?P<which>[^:}]+)\}")
 
-    def handleMatch(self, match, data):
+    def test(self, parent, block):
+        return self.re_fence_start.match(block)
+
+
+    def run(self, parent, blocks):
+        match = self.test(parent, blocks.pop(0))
         id_base = str(LottieRenderer.get_id())
-        element = etree.Element("div")
+
+        extra = ""
+
+        while True:
+            if len(blocks) > 1 and blocks[0] == '' and HTML_PLACEHOLDER_RE.match(blocks[1]):
+                blocks.pop(0)
+
+            script_element = pop_script_block(self, blocks)
+            if script_element is None:
+                break
+
+            extra += "%s: function (%s) {\n%s\n},\n" % (
+                script_element.attrib["extra"],
+                script_element.attrib.get("args", ""),
+                script_element.text
+            )
+
+        if extra:
+            extra = "{" + extra + "}"
+
+        element = etree.SubElement(parent, "div", {"class": "playground"})
 
         editor = etree.SubElement(element, "div", {"id": "editor_" + id_base})
 
@@ -1541,10 +1569,14 @@ class EditorExample(InlineProcessor):
             var raw_json = JSON.stringify(lottie, undefined, 4);
             var pretty_json = hljs.highlight("json", raw_json).value;
             document.getElementById("json_viewer_{id}").innerHTML = pretty_json;
-        }});
-        """.format(id=id_base, preview_class=preview_class)
-        return element, match.start(0), match.end(0)
+        }}, {extra});
+        """.format(
+            id=id_base,
+            preview_class=preview_class,
+            extra=extra,
+        )
 
+        return True
 
 
 class LottieExtension(Extension):
@@ -1567,7 +1599,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(FunctionDocs(md.parser, expr_schema), 'function_docs', 175)
         md.parser.blockprocessors.register(VariableDocs(md.parser, expr_schema), 'variable_docs', 175)
         md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
-        md.inlinePatterns.register(EditorExample(md), "editor_example", 175)
+        md.parser.blockprocessors.register(EditorExample(md.parser), "editor_example", 175)
         md.parser.blockprocessors.register(ShapeBezierScript(md.parser, schema_data), "shape_bezier_script", 175)
         md.parser.blockprocessors.register(EffectShaderScript(md.parser, schema_data), "effect_shader_script", 175)
 
