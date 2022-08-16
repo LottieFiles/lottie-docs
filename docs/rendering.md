@@ -1313,7 +1313,7 @@ lottie.layers[1].shapes[0].ks.k.v = [
 ### 3D Transform
 
 If you have a 3D transform, the process is similar, with `a`, `p`, `s`,
-using their 3D matrices, not that for `p` and `a` the Z axis is inverted.
+using their 3D matrices, note that for `p` and `a` the Z axis is inverted.
 
 The rotation step is a bit more complicated, with the 2D rotation being
 equivalent to a Z rotation.
