@@ -296,7 +296,7 @@ disable_toc: 1
         lottie_player.reload();
         frame_slider.value = frame_edit.value = Math.round(lottie_player.anim.currentFrame);
         lottie_player.anim.addEventListener("enterFrame", (ev) => {
-            frame_slider.value = frame_edit.value = Math.round(ev.currentTime);
+            frame_slider.value = frame_edit.value = Math.round(lottie_player.anim.currentFrame);
         });
     }
 
