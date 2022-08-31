@@ -626,8 +626,8 @@ function zig_zag_bezier(input_bezier, amplitude, frequency, smooth)
     let segment = input_bezier.closed ? input_bezier.segment(count - 1) : null;
     let next_segment = input_bezier.segment(0);
 
-    segment.calculate_length_data();
-    let tangent_length = smooth ? segment.length / (frequency + 1) / 2 : 0;
+    next_segment.calculate_length_data();
+    let tangent_length = smooth ? next_segment.length / (frequency + 1) / 2 : 0;
 
     zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1, tangent_length);
 

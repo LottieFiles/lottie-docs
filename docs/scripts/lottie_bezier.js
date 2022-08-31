@@ -590,9 +590,9 @@ function filter_roots(roots)
 // Returns the real cube root of a value
 function cuberoot(v)
 {
-  if ( v < 0 )
-      return -Math.pow(-v, 1/3);
-  return Math.pow(v, 1/3);
+    if ( v < 0 )
+        return -Math.pow(-v, 1/3);
+    return Math.pow(v, 1/3);
 }
 
 /*
@@ -676,7 +676,7 @@ function quadratic_roots(a, b, c)
     let single_root = -b / (2 * a);
 
     // 1 root
-    if ( s === 0 )
+    if ( fuzzy_zero(s) )
         return [single_root];
 
     let delta = Math.sqrt(s) / (2 * a);
