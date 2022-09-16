@@ -67,6 +67,14 @@
         {
             "title": "Luminosity",
             "const": 15
+        },
+        {
+            "title": "Add",
+            "const": 16
+        },
+        {
+            "title": "Hard Mix",
+            "const": 17
         }
     ]
 }
