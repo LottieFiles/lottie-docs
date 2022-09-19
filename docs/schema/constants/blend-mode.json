@@ -3,6 +3,7 @@
     "type": "integer",
     "title": "BlendMode",
     "description": "Layer and shape blend mode",
+    "caniuse": "blend-mode",
     "oneOf": [
         {
             "title": "Normal",
