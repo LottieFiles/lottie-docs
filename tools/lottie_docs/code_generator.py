@@ -52,17 +52,18 @@ class Class(Type):
             self.type = TypeReference.from_ref(schema["$ref"]) if "$ref" in schema else schema.get("type")
             self.required = False
 
-
     def __init__(self, reference: TypeReference, schema: Schema):
         super().__init__(reference, schema)
         self.bases = []
         self.properties = []
         self.property_dict = {}
+        self.dependencies = set()
         required = set()
         if "allOf" in schema:
             for base in schema.child("allOf"):
                 if "$ref" in base:
                     self.bases.append(TypeReference.from_ref(base["$ref"]))
+                    self.dependencies.add(base["$ref"])
                 elif "properties" in base:
                     self._gather_props(base, required)
 
@@ -77,6 +78,8 @@ class Class(Type):
             prop = self.Property(k, v)
             self.properties.append(prop)
             self.property_dict[k] = prop
+            if "$ref" in v:
+                self.dependencies.add(v["$ref"])
 
         for req in schema.get("required", []):
             required.add(req)
@@ -124,15 +127,61 @@ class LottieCodeGenerator:
         """
         Visits all the definitions in the schema
         """
+        self.on_start()
+
         for module_name, module_schema in self.schema.child("$defs").items():
             self.on_module(module_name, module_schema)
+
+        self.on_end()
+
+    def on_start(self):
+        """
+        Invoked at the start of run()
+        """
+        pass
+
+    def on_end(self):
+        """
+        Invoked at the end of run()
+        """
+        pass
 
     def on_module(self, module_name, module_schema):
         self.on_module_start(module_name, module_schema)
         ref_base = "#/$defs/" + module_name + "/"
+
+        classes = []
+        to_define = set()
+
         for class_name, class_schema in module_schema.items():
-            self.on_type(TypeReference(module_name, class_name, ref_base + class_name), class_schema)
-        self.on_module_start(module_name, module_schema)
+            cls = self.on_type(TypeReference(module_name, class_name, ref_base + class_name), class_schema)
+            if cls:
+                classes.append(cls)
+                to_define.add(cls.reference.ref)
+
+        # Sort dependencies
+        while len(classes):
+            next_classes = []
+            next_to_define = set()
+            for cls in classes:
+                for dep in cls.dependencies:
+                    if dep in to_define:
+                        next_classes.append(cls)
+                        next_to_define.add(cls.reference.ref)
+                        break
+                else:
+                    self.on_class(cls)
+
+            # Circular deps, just output as is
+            if len(next_classes) == len(classes):
+                for cls in classes:
+                    self.on_class(cls)
+                break
+
+            classes = next_classes
+            to_define = next_to_define
+
+        self.on_module_end(module_name, module_schema)
 
     def run_item(self, ref):
         """
@@ -144,10 +193,13 @@ class LottieCodeGenerator:
         """
         Visits a single modulem by its $ref
         """
+        self.on_start()
         path = SchemaPath(ref)
         module_name = path.chunks[-1]
         module_schema = self.schema.get_ref(path)
-        return self.on_module(module_name, module_schema)
+        module = self.on_module(module_name, module_schema)
+        self.on_end()
+        return module
 
     def on_type(self, ref: TypeReference, schema: Schema):
         """
@@ -168,7 +220,7 @@ class LottieCodeGenerator:
         if ref.module == "effects" and ref.name != "effect":
             item_type = Effect
 
-        self.on_class(item_type(ref, schema))
+        return item_type(ref, schema)
 
     def on_module_start(self, name: str, schema: Schema):
         """

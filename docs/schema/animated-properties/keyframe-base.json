@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Keyframe",
+    "title": "Base Keyframe",
     "description": "A Keyframes specifies the value at a specific time and the interpolation function to reach the next keyframe.",
     "allOf": [
         {

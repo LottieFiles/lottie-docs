@@ -22,6 +22,6 @@ def default_schema():
         return found
 
     return (
-        try_path(package_root.parent / "docs" / "schema" / "lottie.schema.json") or
+        try_path(package_root.parent.parent / "docs" / "schema" / "lottie.schema.json") or
         try_path(package_root.parent / "lottie.schema.json")
     )
