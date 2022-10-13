@@ -28,6 +28,11 @@
                         ]
                     }
                 },
+                "np": {
+                    "title": "Property Count",
+                    "description": "Number of values in `ef`",
+                    "type": "integer"
+                },
                 "ix": {
                     "title": "Effect Index",
                     "type": "integer"
