@@ -85,7 +85,7 @@
                     "$ref": "#/$defs/text/font-list"
                 },
                 "chars": {
-                    "title": "Chars",
+                    "title": "Characters",
                     "description": "Data defining text characters as lottie shapes. If present a player might only render characters defined here and nothing else.",
                     "type": "array",
                     "items": {

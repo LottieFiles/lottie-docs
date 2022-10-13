@@ -33,7 +33,8 @@
                     "type": "integer"
                 },
                 "ty": {
-                    "title": "Effect type",
+                    "title": "Type",
+                    "description": "Effect type",
                     "type": "integer"
                 },
                 "en": {

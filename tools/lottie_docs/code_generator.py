@@ -80,6 +80,8 @@ class Class(Type):
             self.property_dict[k] = prop
             if "$ref" in v:
                 self.dependencies.add(v["$ref"])
+            elif v.get("type") == "array" and "items" in v and "$ref" in v["items"]:
+                self.dependencies.add(v["items"]["$ref"])
 
         for req in schema.get("required", []):
             required.add(req)
@@ -120,8 +122,8 @@ class LottieCodeGenerator:
         self.schema = schema
 
     @classmethod
-    def default(cls):
-        return cls(default_schema())
+    def default(cls, join=False):
+        return cls(default_schema(join))
 
     def run(self):
         """

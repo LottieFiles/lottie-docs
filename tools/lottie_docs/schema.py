@@ -1,3 +1,6 @@
+import json
+import pathlib
+
 class SchemaPath:
     """
     Path inside a Schema object
@@ -90,3 +93,39 @@ class Schema:
 
     def child(self, key):
         return Schema(SchemaPath.step(self.schema, key), self.path / key)
+
+
+def join_parts(
+    path: pathlib.Path,
+    root_ref="#/$defs/animation/animation",
+    id="https://lottiefiles.github.io/lottie-docs/schema/lottie.schema.json",
+    schema="https://json-schema.org/draft/2020-12/schema"
+):
+    json_data = {
+        "$schema": schema,
+        "$id": id,
+        "type": "object",
+        "allOf": [{
+            "$ref": root_ref
+        }]
+    }
+
+    defs = {}
+    for subdir in sorted(path.iterdir()):
+        dir_schema = {}
+        if subdir.is_dir():
+            for file_item in subdir.iterdir():
+                if file_item.is_file() and file_item.suffix == ".json":
+                    with open(file_item, "r") as file:
+                        try:
+                            file_schema = json.load(file)
+                        except Exception:
+                            print(file_item)
+                            raise
+                    file_schema.pop("$schema", None)
+                    dir_schema[file_item.stem] = file_schema
+            defs[subdir.name] = dir_schema
+
+    json_data["$defs"] = defs
+
+    return json_data
