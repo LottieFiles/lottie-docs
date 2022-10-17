@@ -510,6 +510,12 @@ disable_toc: 1
         else
             lottie_url_input(data);
     }
+    else if (window.location.search != '' )
+    {
+        let url = (new URL(window.location)).searchParams.get("url");
+        if ( url )
+            lottie_url_input(url);
+    }
     else
     {
         action_new();

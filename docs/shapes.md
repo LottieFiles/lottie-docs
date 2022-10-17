@@ -80,8 +80,8 @@ lottie.layers[0].shapes[0].it[0].s.k = [
 lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
 </script>
 
-### Ellipse
 
+### Ellipse
 
 {schema_object:shapes/ellipse}
 SKIP:#/$defs/shapes/shape
