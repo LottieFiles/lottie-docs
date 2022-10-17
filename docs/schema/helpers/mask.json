@@ -33,7 +33,7 @@
                     "default": "i"
                 },
                 "x": {
-                    "title": "Dilate",
+                    "title": "Expand",
                     "caniuse": "mask-expansion",
                     "$ref": "#/$defs/animated-properties/value"
                 }

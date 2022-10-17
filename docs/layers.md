@@ -124,6 +124,21 @@ you use an [animated](concepts.md#animated-property) [bezier curve](concepts.md#
 EXPAND:#/$defs/helpers/visual-object
 
 
+{lottie_playground:mask.json:512:512}
+Mode: <enum value="a">mask-mode</enum>
+Opacity: <input type="range" min="0" max="100" value="100"/>
+Invert: <input type="checkbox"/>
+Expand: <input type="range" min="-100" max="100" value="0"/>
+<json>lottie.layers[0].masksProperties[0]</json>
+<script>
+let mask = lottie.layers[0].masksProperties[0];
+mask.o.k = Number(data["Opacity"]);
+mask.inv = data["Invert"];
+mask.x.k = Number(data["Expand"]);
+mask.mode = data["Mode"];
+</script>
+
+
 ## Shape Layer
 
 Renders vector data.
@@ -192,7 +207,21 @@ This layer represents a rectangle with a single color.
 Anything you can do with solid layers, you can do better with a shape layer
 and a rectangle shape since none of this layer's own properties can be animated.
 
+Note that the color is represented as a string, unlike most other places.
+
 {schema_object:layers/solid-color-layer}
+
+{lottie_playground:layers-solid.json:512:512}
+Color: <input type="color" value="#ff0000" />
+Width: <input type="range" min="0" max="512" value="512"/>
+Height: <input type="range" min="0" max="512" value="512"/>
+<json>lottie.layers[0]</json>
+<script>
+lottie.layers[0].sc = data["Color"];
+lottie.layers[0].sw = Number(data["Width"]);
+lottie.layers[0].sh = Number(data["Height"]);
+</script>
+
 
 ## Audio Layer
 
