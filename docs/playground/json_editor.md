@@ -101,6 +101,19 @@ disable_toc: 1
                     <li><a class="dropdown-item" onclick="document.body.classList.toggle('wide')">
                         <i class="fa-solid fa-arrows-left-right"></i> Toggle Wide Layout
                     </a></li>
+                    <li>
+                        <a class="dropdown-item" onclick="document.getElementById('background_color_input').click()">
+                            <i class="fa-solid fa-palette"></i>
+                            <input
+                                id="background_color_input"
+                                type="color"
+                                class="dropdown-item"
+                                style="margin:0;width:0;height:0;padding:0;visibility:hidden;"
+                                oninput="document.getElementById('lottie_target').style.background = this.value;"
+                                />
+                            Preview Background...
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="dropdown">
