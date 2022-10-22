@@ -190,7 +190,7 @@ you can see a representation of its easing function.
 
 Position properties have additional attributes in their keyframes to represent bezier tangents in the path followed by the animation
 
-{schema-object:animated-properties/position-keyframe}
+{schema_object:animated-properties/position-keyframe}
 
 
 ## Transform
