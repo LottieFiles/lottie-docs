@@ -66,6 +66,10 @@
                 "ls": {
                     "title": "Line Spacing",
                     "$ref": "#/$defs/animated-properties/value"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
                 }
             },
             "required": []
