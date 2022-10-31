@@ -251,12 +251,49 @@ lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
 
 {schema_object:text/text-selector}
 
-### Text Selector Property
+#### Text Selector Property
+
+Defines the range of characters to apply a property value only to
+a specific subset of the text document.
+
+`r` Defines whether the values are defined as a percentage or indices.
+
+The range is defined by `s`, `e`, and `o`.
+
+`ne` and `xe` define what happes to text that is only partly inside the selected range.
+
+`b` changes whether selection is done on per character basis, per word, etc.
+It also changes the meaning of an index when `r` is set to Indices.
+
 
 {schema_object:text/text-selector-property}
 
+{lottie_playground:text-selector.json:512:350}
+Start:<input type="range" min="0" value="40" max="100" step="1"/>
+End:<input type="range" min="0" value="55" max="100" step="1"/>
+Offset:<input type="range" min="-100" value="20" max="100" step="1"/>
+Min Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
+Max Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
+Randomize:<input type="checkbox" />
+Range Units:<enum>text-range-units</enum>
+Based On:<enum>text-based</enum>
+Shape:<enum>text-shape</enum>
+<json>lottie.layers[0].t.a[0].s</json>
+<script>
+var selector = lottie.layers[0].t.a[0].s;
+selector.s.k = data["Start"];
+selector.e.k = data["End"];
+selector.o.k = data["Offset"];
+selector.ne.k = data["Min Ease"];
+selector.xe.k = data["Max Ease"];
+selector.rn = Number(data["Randomize"]);
+selector.b = Number(data["Based On"]);
+selector.sh = Number(data["Shape"]);
+selector.r = Number(data["Range Units"]);
+</script>
 
-### Text Animator Data Property
+
+#### Text Animator Data Property
 
 {schema_object:text/text-animator-data-property}
 

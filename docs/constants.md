@@ -146,3 +146,9 @@ lottie.layers[2].tt = Number(data["Matte Mode"]);
 {schema_attribute:description:constants/text-caps}
 
 {schema_enum:text-caps}
+
+## {schema_attribute:title:constants/text-range-units}
+
+{schema_attribute:description:constants/text-range-units}
+
+{schema_enum:text-range-units}

@@ -38,7 +38,7 @@
         "r": {
             "title": "Range Units",
             "caniuse": "range-selectors-units",
-            "$ref": "#/$defs/constants/text-based"
+            "$ref": "#/$defs/constants/text-range-units"
         },
         "sm": {
             "title": "Selector Smoothness",
@@ -53,5 +53,5 @@
             "$ref": "#/$defs/animated-properties/value"
         }
     },
-    "required": ["t", "xe", "ne", "a", "b", "rn", "sh", "o"]
+    "required": ["t", "xe", "ne", "a", "b", "rn", "sh"]
 }
