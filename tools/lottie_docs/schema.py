@@ -83,6 +83,8 @@ class Schema:
     def get_ref(self, path):
         path = SchemaPath(path)
         obj = path.walk(self)
+        if obj is None:
+            raise Exception("Schema object %s not found" % path)
         return Schema(obj, path)
 
     def items(self):

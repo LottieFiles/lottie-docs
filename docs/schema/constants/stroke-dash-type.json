@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "string",
-    "title": "StrokeDashType",
+    "title": "Stroke Dash Type",
     "description": "Type of a dash item in a stroked line",
     "oneOf": [
         {

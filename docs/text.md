@@ -176,26 +176,28 @@ data:Defines how the character is defined
 
 The [text layer](layers.md#text-layer) has an attribute called `t` containing a [Text Animator Data](#text-animator-data) object.
 
-### Text Animator Data
-
-{schema_object:text/text-animator-data}
-
 ### Text Data
+
+{schema_attribute:description:text/text-data}
+
+{schema_object:text/text-data}
+
+### Animated Text Document
 
 This object is similar to an [animated property](concepts.md#animated-property) for text.
 
 The main difference is that it's always treated as animated (ie: you _must_ use keyframes).
 
-{schema_object:text/text-data}
-k: Array of [keyframes](#text-data-keyframe)
+{schema_object:text/animated-text-document}
+k: Array of [keyframes](#text-document-keyframe)
 
 
-### Text Data Keyframe
+### Text Document Keyframe
 
 This is similar to the [keyframe](concepts.md#keyframe) object used by animated properties,
 but it doesn't have any attribute specifying interpolation as text is always animated in discrete steps.
 
-{schema_object:text/text-data-keyframe}
+{schema_object:text/text-document-keyframe}
 
 ### Text Document
 
@@ -235,23 +237,74 @@ lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
 </script>
 
 
-### Text More Options
+### Text Alignment Options
 
-{schema_object:text/text-more-options}
-
-
-### Masked Path
-
-{schema_attribute:description:text/masked-path}
-
-{schema_object:text/masked-path}
+{schema_object:text/text-alignment-options}
 
 
-### Text Selector
+### Text Follow Path
 
-{schema_object:text/text-selector}
+{schema_attribute:description:text/text-follow-path}
 
-#### Text Selector Property
+{schema_object:text/text-follow-path}
+
+
+### Text Range
+
+{schema_attribute:description:text/text-range}
+
+{schema_object:text/text-range}
+
+{lottie_playground:text-selector.json:512:350}
+Selector:
+Start:<input type="range" min="0" value="60" max="100" step="1"/>
+End:<input type="range" min="0" value="75" max="100" step="1"/>
+Offset:<input type="range" min="-100" value="0" max="100" step="1"/>
+Min Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
+Max Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
+Randomize:<input type="checkbox" />
+Range Units:<enum>text-range-units</enum>
+Based On:<enum>text-based</enum>
+Shape:<enum>text-shape</enum>
+Transform:
+Position X:<input type="range" min="-100" value="0" max="100" step="1"/>
+Position Y:<input type="range" min="-100" value="0" max="100" step="1"/>
+Rotation:<input type="range" min="0" value="0" max="360" step="1"/>
+Opacity:<input type="range" min="0" value="100" max="100" step="1"/>
+Style:
+Fill:<input type="color" lottie-color="1" value="#3250b0" />
+Fill Hue:<input type="range" min="-360" value="0" max="360" step="1"/>
+Fill Saturation:<input type="range" min="-100" value="0" max="100" step="1"/>
+Fill Brightness:<input type="range" min="-100" value="0" max="100" step="1"/>
+Stroke:<input type="color" lottie-color="1" value="#000000" />
+Stroke Width:<input type="range" min="0" value="0" max="20" step="1"/>
+Letter Spacing:<input type="range" min="-100" value="0" max="100" step="1"/>
+<json>lottie.layers[0].t.a[0]</json>
+<script>
+var range = lottie.layers[0].t.a[0];
+range.s.s.k = data["Start"];
+range.s.e.k = data["End"];
+range.s.o.k = data["Offset"];
+range.s.ne.k = data["Min Ease"];
+range.s.xe.k = data["Max Ease"];
+range.s.rn = Number(data["Randomize"]);
+range.s.b = Number(data["Based On"]);
+range.s.sh = Number(data["Shape"]);
+range.s.r = Number(data["Range Units"]);
+range.a.p.k = [data["Position X"], data["Position Y"]];
+range.a.o.k = data["Opacity"];
+range.a.r.k = data["Rotation"];
+range.a.fc.k = data["Fill"];
+range.a.sc.k = data["Stroke"];
+range.a.sw.k = data["Stroke Width"];
+range.a.t.k = data["Letter Spacing"];
+range.a.fh.k = data["Fill Hue"];
+range.a.fs.k = data["Fill Saturation"];
+range.a.fb.k = data["Fill Brightness"];
+</script>
+
+
+#### Text Range Selector
 
 Defines the range of characters to apply a property value only to
 a specific subset of the text document.
@@ -266,12 +319,12 @@ The range is defined by `s`, `e`, and `o`.
 It also changes the meaning of an index when `r` is set to Indices.
 
 
-{schema_object:text/text-selector-property}
+{schema_object:text/text-range-selector}
 
 {lottie_playground:text-selector.json:512:350}
-Start:<input type="range" min="0" value="40" max="100" step="1"/>
-End:<input type="range" min="0" value="55" max="100" step="1"/>
-Offset:<input type="range" min="-100" value="20" max="100" step="1"/>
+Start:<input type="range" min="0" value="60" max="100" step="1"/>
+End:<input type="range" min="0" value="75" max="100" step="1"/>
+Offset:<input type="range" min="-100" value="0" max="100" step="1"/>
 Min Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
 Max Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
 Randomize:<input type="checkbox" />
@@ -292,8 +345,41 @@ selector.sh = Number(data["Shape"]);
 selector.r = Number(data["Range Units"]);
 </script>
 
+#### Text Style
 
-#### Text Animator Data Property
+Has the properties of a transform and the style options of a text document.
 
-{schema_object:text/text-animator-data-property}
+It applies such transform and style to the part of the text defined
+by the text selector property
 
+{schema_object:text/text-style}
+
+
+{lottie_playground:text-selector.json:512:350}
+Transform:
+Position X:<input type="range" min="-100" value="0" max="100" step="1"/>
+Position Y:<input type="range" min="-100" value="0" max="100" step="1"/>
+Rotation:<input type="range" min="0" value="0" max="360" step="1"/>
+Opacity:<input type="range" min="0" value="100" max="100" step="1"/>
+Style:
+Fill:<input type="color" lottie-color="1" value="#3250b0" />
+Fill Hue:<input type="range" min="-360" value="0" max="360" step="1"/>
+Fill Saturation:<input type="range" min="-100" value="0" max="100" step="1"/>
+Fill Brightness:<input type="range" min="-100" value="0" max="100" step="1"/>
+Stroke:<input type="color" lottie-color="1" value="#000000" />
+Stroke Width:<input type="range" min="0" value="0" max="20" step="1"/>
+Letter Spacing:<input type="range" min="-100" value="0" max="100" step="1"/>
+<json>lottie.layers[0].t.a[0].a</json>
+<script>
+var range = lottie.layers[0].t.a[0];
+range.a.p.k = [data["Position X"], data["Position Y"]];
+range.a.o.k = data["Opacity"];
+range.a.r.k = data["Rotation"];
+range.a.fc.k = data["Fill"];
+range.a.sc.k = data["Stroke"];
+range.a.sw.k = data["Stroke Width"];
+range.a.t.k = data["Letter Spacing"];
+range.a.fh.k = data["Fill Hue"];
+range.a.fs.k = data["Fill Saturation"];
+range.a.fb.k = data["Fill Brightness"];
+</script>

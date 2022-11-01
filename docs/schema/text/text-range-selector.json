@@ -1,7 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Text Selector Property",
+    "title": "Text Range Selector",
+    "caniuse": "animators-range-selectors",
     "properties": {
         "t": {
             "title": "Expressible",

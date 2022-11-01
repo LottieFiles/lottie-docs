@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "StarType",
+    "title": "Star Type",
     "description": "Star or Polygon",
     "oneOf": [
         {

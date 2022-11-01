@@ -19,7 +19,7 @@
                 },
                 "t": {
                     "title": "Data",
-                    "$ref": "#/$defs/text/text-animator-data"
+                    "$ref": "#/$defs/text/text-data"
                 }
             },
             "required": [

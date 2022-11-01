@@ -278,9 +278,6 @@ def ref_links(ref: str, data: Schema):
         "name_prefix": "",
     }
 
-    if group == "constants":
-        values["anchor"] = values["anchor"].replace("-", "")
-
     mapping_data = ReferenceLink.mapping_data().get(group, None)
     if mapping_data:
         values.update(mapping_data.get("_defaults", {}))
@@ -952,6 +949,8 @@ class SchemaObject(BlockProcessor):
                         pass
                 else:
                     if match.group(2):
+                        if name not in prop_dict:
+                            raise Exception("Property %s not in %s" % (name, schema_data.path))
                         prop_dict[name].description = match.group(2)
                     order.append(name)
 

@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "FillRule",
+    "title": "Fill Rule",
     "description": "Rule used to handle multiple shapes rendered with the same fill object",
     "oneOf": [
         {

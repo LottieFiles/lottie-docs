@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
-    "title": "BlendMode",
+    "title": "Blend Mode",
     "description": "Layer and shape blend mode",
     "caniuse": "blend-mode",
     "oneOf": [

@@ -203,7 +203,7 @@ lottie.layers[0].ef[0].ef[2].v.k = data["Effect Intensity"];
 
 ### Matte3 Effect
 
-{schema_attribute:description:effects/matte3}
+{schema_attribute:description:effects/matte3-effect}
 
 {schema_object:effects/matte3-effect}
 SKIP:#/$defs/effects/effect

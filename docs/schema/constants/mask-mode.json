@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "string",
-    "title": "MaskMode",
+    "title": "Mask Mode",
     "description": "How masks interact with each other. See https://helpx.adobe.com/after-effects/using/alpha-channels-masks-mattes.html",
     "oneOf": [
         {

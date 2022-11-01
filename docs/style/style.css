@@ -80,6 +80,11 @@ input[type="color"]
     margin-top: 1ex;
 }
 
+.playground input[type="color"] {
+    height: 32px;
+    margin: 0;
+}
+
 .color-preview {
     border: 1px solid black;
     display: inline-block;

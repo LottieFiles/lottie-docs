@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Text Animator Data Property",
+    "title": "Text Style",
     "description": "",
     "allOf": [
         {
@@ -46,16 +46,16 @@
                     "title": "Fill Saturation",
                     "$ref": "#/$defs/animated-properties/value"
                 },
-                "fo": {
-                    "title": "Fill Opacity",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
                 "fb": {
                     "title": "Fill Brightness",
                     "$ref": "#/$defs/animated-properties/value"
                 },
+                "fo": {
+                    "title": "Fill Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
                 "t": {
-                    "title": "Tracking",
+                    "title": "Letter Spacing",
                     "$ref": "#/$defs/animated-properties/value"
                 },
                 "bl": {
@@ -65,10 +65,6 @@
                 },
                 "ls": {
                     "title": "Line Spacing",
-                    "$ref": "#/$defs/animated-properties/value"
-                },
-                "o": {
-                    "title": "Opacity",
                     "$ref": "#/$defs/animated-properties/value"
                 }
             },

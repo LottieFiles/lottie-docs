@@ -116,6 +116,8 @@ class PlaygroundPlayer extends LottiePlayer
                     value = Number(a.value);
                 else if ( a.type == "checkbox" )
                     value = a.checked;
+                else if ( a.type == "color" && a.hasAttribute("lottie-color") )
+                    value = a.value.match(/[0-9a-f]{2}/gi).map(d => Math.round(Number("0x"+d) / 255 * 1000) / 1000)
                 return [a.name, value];
             })
         );
