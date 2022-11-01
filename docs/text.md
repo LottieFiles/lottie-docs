@@ -256,6 +256,12 @@ lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
 {schema_object:text/text-range}
 
 {lottie_playground:text-selector.json:512:350}
+Text:<textarea>
+Hello World
+the quick brown
+fox jumps over
+the lazy dog
+</textarea>
 Selector:
 Start:<input type="range" min="0" value="60" max="100" step="1"/>
 End:<input type="range" min="0" value="75" max="100" step="1"/>
@@ -282,6 +288,8 @@ Letter Spacing:<input type="range" min="-100" value="0" max="100" step="1"/>
 <json>lottie.layers[0].t.a[0]</json>
 <script>
 var range = lottie.layers[0].t.a[0];
+lottie.fonts.list[0].fFamily = "monospace";
+lottie.layers[0].t.d.k[0].s.t = data["Text"].replace(/\n\r?/g, "\r")
 range.s.s.k = data["Start"];
 range.s.e.k = data["End"];
 range.s.o.k = data["Offset"];

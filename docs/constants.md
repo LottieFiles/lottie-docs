@@ -75,7 +75,7 @@ lottie.layers[0].ks.o.k = data["Opacity"];
 {lottie_playground:matte.json:512:512}
 Matte Mode:<enum value="1">matte-mode</enum>
 <script>
-lottie.layers[2].tt = Number(data["Matte Mode"]);
+lottie.layers[1].tt = Number(data["Matte Mode"]);
 </script>
 
 
@@ -133,6 +133,12 @@ lottie.layers[2].tt = Number(data["Matte Mode"]);
 {schema_attribute:description:constants/text-shape}
 
 {schema_enum:text-shape}
+
+To better illustrate what the value mean, the graphics below shows an
+example for each value, including the function itself, based on the
+range start and end character.
+
+![Text Shapes](/lottie-docs/examples/text_shape.png)
 
 
 ## {schema_attribute:title:constants/trim-multiple-shapes}

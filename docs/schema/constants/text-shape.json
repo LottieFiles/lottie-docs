@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "integer",
     "title": "Text Shape",
-    "description": "",
+    "description": "Defines the function used to determine the interpolating factor on a text range selector.",
     "oneOf": [
         {
             "title": "Square",
