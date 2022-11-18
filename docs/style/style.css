@@ -1,20 +1,20 @@
 @font-face {
     font-family: Arboria;
-    src: url("fonts/Type-Ø-Tones-Arboria-Black.otf") ;
+    src: url("/lottie-docs/fonts/Type-Ø-Tones-Arboria-Black.otf") ;
     font-weight: bolder;
     font-style: normal;
 }
 
 @font-face {
     font-family: Arboria;
-    src: url("fonts/Type-Ø-Tones-Arboria-Bold.otf") ;
+    src: url("/lottie-docs/fonts/Type-Ø-Tones-Arboria-Bold.otf") ;
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: Karla;
-    src: url("fonts/Karla-Italic-VariableFont_wght.ttf") format("truetype");
+    src: url("/lottie-docs/fonts/Karla-Italic-VariableFont_wght.ttf") format("truetype");
     font-weight: normal;
     font-style: italic;
 }
@@ -22,7 +22,7 @@
 
 @font-face {
     font-family: Karla;
-    src: url("fonts/Karla-VariableFont_wght.ttff") format("truetype");
+    src: url("/lottie-docs/fonts/Karla-VariableFont_wght.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
