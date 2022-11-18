@@ -36,6 +36,8 @@ body {
     /* or 24px */
 
     letter-spacing: -0.02em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5 {
@@ -361,7 +363,7 @@ a {
     background: none !important;
 }
 
-.matrix, .playground {
+.matrix, .playground { 
     background-color: #fcfdff; border: 1px solid #ccc;
 }
 .playground {
