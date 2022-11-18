@@ -1,3 +1,4 @@
+full_page: 1
 disable_toc: 1
 
 <script src="https://unpkg.com/blockly/blockly.min.js"></script>

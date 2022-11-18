@@ -65,17 +65,30 @@
     {% block extrahead %} {% endblock %}
 </head>
 
-<body{% if page and page.is_homepage %} class="homepage" {% endif %}>
+<body {% if page and page.is_homepage %} class="homepage" {% endif %}>
 
     {% include "nav.html" %}
 
-    <div class="container">
+    <div class="container" style="width: 100%">
         {% block content %}
-        {% if page.meta.disable_toc %}
-        <div class="col-md-12" role="main">{% include "content.html" %}</div>
+        {% if page.meta.full_page %}
+            <div class="col-md-12" role="main">{% include "content.html" %}</div>
+        {% elif page.meta.disable_toc %}
+        <div style="margin: 0 auto; max-width: 1024px;">
+            <div class="col-md-12" role="main">{% include "content.html" %}</div>
+        </div>
         {% else %}
-        <div class="col-md-3">{% include "toc.html" %}</div>
-        <div class="col-md-9" role="main">{% include "content.html" %}</div>
+        <div class="col-md-12 base-container" >
+            <div class="nav-container">{% include "toc.html" %}</div>
+            <div style="margin: auto; max-width: 1024px; margin-bottom: 128px;">
+                <div class="row" style="padding: 0 24px;">
+                    <div class="col-md-12" role="main">{% include "content.html" %}</div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
         {% endif %}
         {% endblock %}
     </div>
