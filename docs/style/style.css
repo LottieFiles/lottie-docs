@@ -202,6 +202,15 @@ a {
 ;
 }
 
+ul.nav.navbar-nav.navbar-right > li > a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+ul.nav.navbar-nav.navbar-right > li > a > img {
+   height: 12px;
+}
 
 .navbar-header {
     /* Auto layout */
