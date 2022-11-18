@@ -22,13 +22,13 @@ plugins:
             "playground/explain.md": "playground/json_editor.md"
 
 nav:
-    - "<i class='fas fa-microscope'></i> Topics":
+    - "Topics":
         - "Introduction": index.md
         - breakdown/bouncy_ball.md
         - breakdown/lottie_from_scratch.md
         - breakdown/bezier.md
         - breakdown/precomps.md
-    - "<i class='fa fa-book'></i> Lottie":
+    - "Lottie":
         - concepts.md
         - animation.md
         - layers.md
@@ -38,10 +38,10 @@ nav:
         - constants.md
         - text.md
         - expressions.md
-    - "<i class='fa fa-puzzle-piece'></i> Playground":
+    - "Playground":
         - "Builder": playground/builder.md
         - "JSON Editor": playground/json_editor.md
-    - "<i class='fa fa-wrench'></i> Advanced":
+    - "Advanced":
         - rendering.md
         - schema.md
         - advanced_interactions.md
