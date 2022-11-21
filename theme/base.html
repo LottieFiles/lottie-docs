@@ -69,7 +69,7 @@
 
     {% include "nav.html" %}
 
-    <div class="container" style="width: 100%">
+    <div class="container" style="width: 100%; padding: 0">
         {% block content %}
         {% if page.meta.full_page %}
             <div class="col-md-12" role="main">{% include "content.html" %}</div>
@@ -80,8 +80,8 @@
         {% else %}
         <div class="col-md-12 base-container" >
             <div class="nav-container">{% include "toc.html" %}</div>
-            <div style="margin: auto; max-width: 1024px; margin-bottom: 128px;">
-                <div class="row" style="padding: 0 24px;">
+            <div class="content-container">
+                <div class="row content-container-row" >
                     <div class="col-md-12" role="main">{% include "content.html" %}</div>
                 </div>
             </div>

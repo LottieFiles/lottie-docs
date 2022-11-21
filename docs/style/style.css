@@ -1,19 +1,19 @@
 @font-face {
-    font-family: Arboria;
+    font-family: Arboria, sans-serif;
     src: url("/lottie-docs/fonts/Type-Ø-Tones-Arboria-Black.otf") ;
     font-weight: bolder;
     font-style: normal;
 }
 
 @font-face {
-    font-family: Arboria;
+    font-family: Arboria, sans-serif;
     src: url("/lottie-docs/fonts/Type-Ø-Tones-Arboria-Bold.otf") ;
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
-    font-family: Karla;
+    font-family: Karla, sans-serif;
     src: url("/lottie-docs/fonts/Karla-Italic-VariableFont_wght.ttf") format("truetype");
     font-weight: normal;
     font-style: italic;
@@ -21,14 +21,17 @@
 
 
 @font-face {
-    font-family: Karla;
+    font-family: Karla, sans-serif;
     src: url("/lottie-docs/fonts/Karla-VariableFont_wght.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 body {
-    padding-top: 115px;
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 0;
     font-family: Karla;
     font-weight: 400;
     font-size: 16px;
@@ -38,6 +41,19 @@ body {
     letter-spacing: -0.02em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.content-container{
+    width: 100%; 
+    margin-bottom: 128px;
+    height: calc(100vh - 116px);
+    overflow-y: auto;
+}
+
+.content-container-row {
+    padding: 0 24px;
+    max-width: 1024px;
+    margin: 0 auto;
 }
 
 h1, h2, h3, h4, h5 {
@@ -65,6 +81,7 @@ a {
 
 .base-container{
     display: flex;
+    height: calc( 100vh - 136px);
     padding: 0;
 }
 
@@ -166,23 +183,6 @@ a {
     font-style: normal;
     font-size: 14px;
 }
-@media  (max-width: 992px) {
-    .base-container{
-        display: flex;
-        flex-direction: column;
-        padding-right: 0;
-        padding-left: 0;
-    }
-
-    .nav-container 
-    {
-        max-width: none;
-        width: 100%;
-    }
-
-   
-
-}
 
 @media (min-width: 992px) {
     .bs-sidebar.affix {
@@ -229,6 +229,12 @@ ul.nav.navbar-nav.navbar-right > li > a > img {
     margin-left: auto;
 }
 
+.navbar-fixed-top, .navbar-fixed-bottom
+{
+    margin: 0;
+    position : static;
+
+}
 .navbar-header.active > a
 {
     color: #fff;
@@ -459,16 +465,16 @@ input[type="color"]
      .navbar-nav.navbar-right {
         display: none;
      }
-}
 
-@media (max-width: 767px) {
-    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
-        color: #4C5863;
-    }
-    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle {
+     .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle {
         margin-left: 12px;
         order: 1
     }
+
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+        color: #4C5863;
+    }
+   
     .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
         color: #4C5863;
         background-color: #F3F6F8;
@@ -490,6 +496,32 @@ input[type="color"]
     .logo-brand {
         margin-left : 24px
     }
+
+     .base-container{
+        display: flex;
+        flex-direction: row;
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .nav-container 
+    {
+        display: none;
+    }
+
+    .content-container{
+        margin-bottom: 0;
+        height: calc(100vh - 70px);
+    }
+
+    .content-container-row{
+        padding: 0 8px;
+    }
+
+}
+
+@media (max-width: 767px) {
+   
 }
 
 /* syntax highlight */
