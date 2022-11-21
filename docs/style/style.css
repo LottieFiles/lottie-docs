@@ -1,19 +1,19 @@
 @font-face {
-    font-family: Arboria, sans-serif;
+    font-family: Arboria;
     src: url("/lottie-docs/fonts/Type-Ø-Tones-Arboria-Black.otf") ;
     font-weight: bolder;
     font-style: normal;
 }
 
 @font-face {
-    font-family: Arboria, sans-serif;
+    font-family: Arboria;
     src: url("/lottie-docs/fonts/Type-Ø-Tones-Arboria-Bold.otf") ;
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
-    font-family: Karla, sans-serif;
+    font-family: Karla;
     src: url("/lottie-docs/fonts/Karla-Italic-VariableFont_wght.ttf") format("truetype");
     font-weight: normal;
     font-style: italic;
@@ -21,7 +21,7 @@
 
 
 @font-face {
-    font-family: Karla, sans-serif;
+    font-family: Karla;
     src: url("/lottie-docs/fonts/Karla-VariableFont_wght.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
@@ -520,9 +520,6 @@ input[type="color"]
 
 }
 
-@media (max-width: 767px) {
-   
-}
 
 /* syntax highlight */
 
