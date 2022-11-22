@@ -2,7 +2,7 @@ name: Test
 on: pull_request
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       -
         name: Checkout
