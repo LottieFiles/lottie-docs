@@ -16,7 +16,9 @@ markdown_extensions:
     - md_extensions
 extra_css:
     - /lottie-docs/style/style.css
+    - /lottie-docs/style/lottie-theme.css
 plugins:
+    - search
     - redirects:
         redirect_maps:
             "playground/explain.md": "playground/json_editor.md"
