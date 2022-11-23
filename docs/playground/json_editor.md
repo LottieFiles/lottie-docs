@@ -1,3 +1,4 @@
+full_page: 1
 disable_toc: 1
 
 <script src="../../scripts/editor.bundle.js"></script>

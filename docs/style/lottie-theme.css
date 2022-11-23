@@ -248,8 +248,8 @@ ul.nav.navbar-nav.navbar-right > li > a > img {
 .bs-sidebar .nav>.active>a, .bs-sidebar .nav>.active:hover>a, .bs-sidebar .nav>.active:focus>a {
     font-weight: normal;
     background-color: transparent;
-    border-right: 1px solid #00DDB3;
-    color: #00DDB3;
+    border-right: 1px solid #00C1A2;
+    color: #00C1A2;
 }
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus

@@ -28,6 +28,7 @@ div[role='main'], body > .container, #playground_layout
     display: flex;
     flex-flow: row;
     align-items: stretch;
+    padding: 24px
 }
 #blockly_div
 {
@@ -61,6 +62,12 @@ div[role='main'], body > .container, #playground_layout
     padding: 0;
     list-style: none;
     display: flex;
+    margin-bottom: 0px;
+}
+#playground_output_buttons > li > button
+{
+   border: 1px solid #D9E0E6;
+   padding: 8px;
 }
 </style>
 
@@ -75,7 +82,7 @@ div[role='main'], body > .container, #playground_layout
             <li><button onclick="load_url_prompt()">Load from URL</button></li>
         </ul>
         <div class="alpha_checkered" id="lottie_player"></div>
-        <div class="highlighted-input" style="height: 100%">
+        <div class="highlighted-input" style="flex-grow: 1">
             <textarea
                 autocomplete="off"
                 class="code-input"

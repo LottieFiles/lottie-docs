@@ -27,10 +27,6 @@
     flex-flow: row wrap;
 }
 
-#editor_area > div:first-child {
-    margin-bottom: 1ex;
-    margin-right: 1ex;
-}
 
 .playback-controls {
     display: flex;
@@ -39,6 +35,7 @@
 .player-wrapper {
     max-width:100%;
     width: 512px;
+    margin: 24px 0 0 24px;
 }
 
 .cm-editor:focus-within {
@@ -59,11 +56,12 @@
 }
 
 body.wide .editor-side {
-    width: calc(100% - 512px - 1em);
+    width: calc(100% - 512px - 72px);
 }
 
 .editor-side {
     width: 100%;
+    margin: 24px 24px 0 24px;
 }
 
 body.wide .container {
