@@ -65,16 +65,23 @@
     {% block extrahead %} {% endblock %}
 </head>
 
-<body {% if page and page.is_homepage %} class="homepage" {% endif %}>
 
-    {% include "nav.html" %}
-
+    {% block content %}
+<body {% if page.meta.full_page %} class="wide" {% endif %}>
+    {% if page.meta.full_page%}
+        {%set isfull = true%}
+    {% else %}
+        {%set isfull = false%}
+    {% endif %}
+    {% with full=isfull %}
+        {% include "nav.html" %}
+    {% endwith %}
     <div class="container" style="width: 100%; padding: 0">
-        {% block content %}
+        
         {% if page.meta.full_page %}
             <div class="col-md-12" style="padding: 0 0;" role="main">{% include "content.html" %}</div>
         {% elif page.meta.disable_toc %}
-        <div style="margin: 0 auto; max-width: 1024px;">
+        <div class="main">
             <div class="col-md-12" role="main">{% include "content.html" %}</div>
         </div>
         {% else %}
@@ -90,9 +97,9 @@
         </div>
         
         {% endif %}
-        {% endblock %}
+        
     </div>
-
+    {% endblock %}
     {% if not config.theme.disable_footer %}
       <footer class="col-md-12 text-center">
           {% block footer %}

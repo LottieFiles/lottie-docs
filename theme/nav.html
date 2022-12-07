@@ -2,7 +2,11 @@
     <div class="container top-header-container">
 
         <!-- Collapsed navigation -->
-        <div class="navbar-header-top navbar-header " ;">
+        {% if full %}
+        <div class="navbar-header-top navbar-header-top-full navbar-header ">
+        {% else %}
+        <div class="navbar-header-top navbar-header ">
+        {% endif %}
             {%- if nav|length>1 or (page and (page.next_page or page.previous_page)) or config.repo_url %}
             <!-- Expander button -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,13 +20,10 @@
             <!-- Main title -->
 
             {% if not config.theme.disable_nav_site_name %}
-            
+
             <div class="logo-brand">
                 <div class="top-right-header">
-                    <img src="/lottie-docs/img/lf-logo-mini.svg"/>
-                    <div>
-                        <a class="navbar-brand" href="{{ nav.homepage.url|url }}" >{{ config.site_name }}</a>
-                    </div>
+                    <a class="navbar-brand" href="{{ nav.homepage.url|url }}" ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
                 </div>
                 
                 <div class="top-left-header">
@@ -36,7 +37,11 @@
         </div>
 
         <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
+        {% if full %}
+        <div class=" navbar-collapse collapse navbar-header-bottom navbar-header-bottom-full">
+        {% else %}
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        {% endif %}
             {%- block site_nav %}
             {%- if nav|length>1 %}
                 <!-- Main navigation -->
