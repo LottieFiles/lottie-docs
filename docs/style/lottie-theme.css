@@ -121,6 +121,7 @@ a {
 .main {
     margin: 0 auto; 
     max-width: 1200px;
+    padding: 0 24px;
 }
 
 .base-container{
@@ -398,6 +399,10 @@ ul.nav.navbar-nav.navbar-right > li > a > img {
         min-width: 0;
     }
 
+    .main {
+        padding: 0 16px;
+    }
+
 }
 
 @media (max-width: 1000px) {
@@ -426,7 +431,8 @@ ul.nav.navbar-nav.navbar-right > li > a > img {
 
      .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle {
         margin-left: 12px;
-        order: 1
+        order: 1;
+        margin-right: 0;
     }
 
     .navbar-default .navbar-nav .open .dropdown-menu>li>a {

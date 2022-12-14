@@ -13,7 +13,7 @@ disable_toc: 1
             display: flex;
             flex-direction: row;
             align-items: flex-end;
-            padding: 24px;
+            padding: 24px 8px;
             gap: 24px;
             width: 1200px;
         }
@@ -155,9 +155,12 @@ disable_toc: 1
         }
 
         @media (max-width: 1000px) {
+            .index-card-header {
+                padding: 24px 0;
+            }
             .index-container-top {
                 flex-direction : column;
-                padding: 0 16px;
+                padding: 0;
             }
 
             .index-card-lg {
@@ -168,6 +171,10 @@ disable_toc: 1
             .index-card-sm {
                 width: 100%;
                 height: auto;
+            }
+            
+            .index-footer {
+                padding: 16px;
             }
         }
 
