@@ -69,6 +69,34 @@ body {
 
 h1, h2, h3, h4, h5 {
     font-family: Arboria;
+    font-weight: 700;
+    letter-spacing: 0em;
+    font-style: normal;
+}
+
+h1 {
+    font-size: 36px;
+    line-height: 47px;
+}
+
+h2 {
+    font-size: 28px;
+    line-height: 36px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 31px;
+}
+
+h4 {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+h5 {
+    font-size: 18px;
+    line-height: 27px;
 }
 
 h1, h2 {
@@ -87,12 +115,12 @@ h6 {
 }
 
 a {
-    color: #4C5863;
+    color: #00C1A2;
 }
 
 .main {
     margin: 0 auto; 
-    max-width: 1024px;
+    max-width: 1200px;
 }
 
 .base-container{
@@ -211,12 +239,14 @@ a {
 .top-left-header>a {
     font-size: 16px;
     font-weight: 400;
+    color: #4C5863
 }
 
 .bs-sidebar .nav>li>a {
     font-family: Karla;
     font-style: normal;
     font-size: 14px;
+    color: #4C5863
 }
 
 @media (min-width: 992px) {

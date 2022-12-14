@@ -1,83 +1,257 @@
 Authors: Mattia Basaglia
 no_nav: 1
 disable_toc: 1
+ <style>
+        .index-page {
 
-# A human's guide to the Lottie format
+        }
+        .index-page a:hover{
+            color: #00C1A2;
+            text-decoration: none;
+        }
+        .index-card-header {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            padding: 24px;
+            gap: 24px;
+            width: 1200px;
+        }
+        .index-card-header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 16px;
+            width: 768px;
+        }
+        .index-card-header-nav{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+            gap: 8px;
+            width: 360px;
+            background: #F3F6F8;
+            border-radius: 16px;
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+        }
+        .index-page a {
+            color: #20272C 
+        }
+        .index-card-lg {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 16px;
+            width: 588px; 
+            height: 200px; 
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #F3F6F8;
+        }
+        .index-card-sm {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 16px;
+            width: 282px;
+            left: 0px;
+            top: 0px;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #F3F6F8;
+        }
+        .index-footer {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            width: 100vw;
+            height: 110px;
+            border-top: 1px solid #F3F6F8;
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            background: white;
+        }
+        .index-footer-content {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 10px;
+            gap: 10px;
+            width: 1200px;
+        }
+        .index-footer-content > p {
+            font-family: 'Karla';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 150%;
+            letter-spacing: -0.02em;
+            color: #63727E;
+        }
+        .index-topic-header {
+            margin: 0
+        }
+        .index-card-lg:hover {
+            border: 1px solid #D9E0E6;
+        }
+        .index-card-sm:hover {
+            border: 1px solid #D9E0E6;
+        }
+        .index-container-top{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .index-card-header-content > h2 {
+            margin: 0;
+        }
 
-Lottie is a vector animation format, using JSON to represent its data.
+        .lottie-button{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 4px 12px;
+            gap: 8px;
+            height: 32px;
+            background: #F3F6F8;
+            border-radius: 8px;
+            border: 0;
+        }
 
-This guide aims to provide a human-readable description of the format and how
-everything works within it.
+        .lottie-button:hover {
+            background: #D9E0E6;
+        }
 
-This documentation assumes the reader is already familiar with the following concepts:
+        .lottie-button:focus {
+            background: #F3F6F8;
+            /* focus-on-light */
+            box-shadow: 0px 0px 0px 1px #FFFFFF, 0px 0px 0px 3px #00DDB3;
+        }
 
-* [JSON](https://en.wikipedia.org/wiki/JSON)
-* [Vector Graphics](https://en.wikipedia.org/wiki/Vector_graphics)
-* [Bezier Curves](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
-* [Tweening](https://en.wikipedia.org/wiki/Inbetweening)
-* [Easing Functions](https://www.febucci.com/2018/08/easing-functions/)
+        @media (max-width: 800px) {
+            .index-card-header-nav {
+                display: none;
+            }
+        }
 
-## What this guide is
+        @media (max-width: 1200px) {
+            .index-card-header{
+                width: 100%;
+            }
+        }
 
-This guide aims to describe the lottie format in its entirety, while also give
-in-depth descriptions of how every aspect works, which you can't get from just
-looking at a list of JSON attributes.
+        @media (max-width: 1000px) {
+            .index-container-top {
+                flex-direction : column;
+                padding: 0 16px;
+            }
 
-It contains a [section](breakdown/bouncy_ball.md) that shows a breakdown of
-simple lottie animation describing what is going on as an introduction for the format.
+            .index-card-lg {
+                width: 100%;
+                height: auto;
+            }
 
-It also has [reference pages](layers.md) which go over the details of every object
-you can find in a lottie file, and a description of its most notable attributes.
+            .index-card-sm {
+                width: 100%;
+                height: auto;
+            }
+        }
 
-It provides a complete [JSON schema](schema/lottie.schema.json), this is intended
-for people who want to write tools to parse or generate lottie and need to get
-every little detail.
+    </style>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
+<div class="index-page" style="margin-top: 36px; margin-bottom: 200px;">
+    <div class="index-card-header">
+        <div class="index-card-header-content">
+            <lottie-player
+            autoplay
+            loop
+            mode="normal"
+            src="https://assets9.lottiefiles.com/private_files/lf30_smcmhowt.json"
+            style="width: 200px; height: 195.43px;"
+            >
+            </lottie-player>
+            <h2>A human's guide to the Lottie format</h2>
+            <p>This guide aims to provide a human-Lottie is a vector animation format, using JSON to represent its data.</p>
+            <p>
+            This guide aims to provide a human-readable description of the format and how everything works within it.readable description of the format and how everything works within it.
+            </p>
+            <button class="lottie-button"  onclick="window.location='/lottie-docs/Introduction/'" style="font-weight: bold;">Read the guide<img src="/lottie-docs/img/icon-right-arrow.svg"/></button>
+        </div>
+        <div class="index-card-header-nav">
+            <h5>Topics</h5>
+            <ul>
+                <li><a href="/lottie-docs/Introduction/">Introduction</a></li>
+                <li><a href="/lottie-docs/breakdown/bouncy_ball/">Bouncy Ball</a></li>
+                <li><a href="/lottie-docs/breakdown/lottie_from_scratch/">Lottie from Scratch</a></li>
+                <li><a href="/lottie-docs/breakdown/bezier/">Bezier Curves </a></li>
+                <li><a href="/lottie-docs/breakdown/precomps/">Precompositions</a></li>
+                <li><a href="/lottie-docs/concepts/">Lottie Format</a></li>
+                <li><a href="/lottie-docs/rendering/">Tips for Rendering</a></li>
+                <li><a href="/lottie-docs/schema/">JSON Schema</a></li>
+                <li><a href="/lottie-docs/advanced_interactions/">Advanced Interactions</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="index-container-top">
+        <div class="index-card-lg" onclick="window.location='/lottie-docs/concepts/'">
+            <h3 class="index-topic-header">Lottie Format</h3>
+            <p>This page describes values and other objects used throughout the lottie format.</p>
+        </div>
+        <div class="index-card-lg">
+            <h3 class="index-topic-header" onclick="window.location='/lottie-docs/breakdown/lottie_from_scratch/'">Lottie from Scratch</h3>
+            <p>In this example, we'll build a simple lottie animation from scratch.</p>
+        </div>
+        <div class="index-card-lg" onclick="window.location='/lottie-docs/playground/json_editor/'">
+            <h3 class="index-topic-header">Lottie Playground</h3>
+            <ul>
+                <li><a href="/lottie-docs/playground/json_editor/">JSON Editor</a></li>
+                <li><a href="/lottie-docs/playground/builder/">Lottie Builder</a> </li>
+            </ul>
+        </div>
+    </div>
+    <div class="index-container-top">
+        <div class="index-card-sm"  onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-player'">
+            <img src="/lottie-docs/img/logo-lottie.svg"/>
+            <h4 class="index-topic-header">Lottie-Player</h4>
+            <p>Easily embedding and playing Lottie animations in websites.</p>
+        </div>
+        <div class="index-card-sm" onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-react'">
+            <img src="/lottie-docs/img/logo-react.svg"/>
+            <h4 class="index-topic-header">Lottie-React</h4>
+            <p>Easily add Lottie animations to your React projects.</p>
+        </div>
+        <div class="index-card-sm" onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-svelte'">
+            <img src="/lottie-docs/img/logo-svelte.svg"/>
+            <h4 class="index-topic-header">Lottie-Svelte</h4>
+            <p>Svelte provides a Lottie player using the lottie-web library.</p>
+        </div>
+        <div class="index-card-sm" onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-vue'">
+            <img src="/lottie-docs/img/vue-logo.svg"/>
+            <h4 class="index-topic-header">Lottie-Vue</h4>
+            <p>Vue component for the Lottie Web Player.</p>
+        </div>
+    </div>
+</div>
 
-Finally it has a [section with details about rendering](rendering.md),
-which gives tips and provides pseudo-code on how to draw various elements to
-match with the lottie web player.
-
-## What this guide is not
-
-You won't find here information on how to animate, or how to export a lottie
-file from your editor of choice.
-
-It also won't give information on how to embed lottie animations in your
-application or website.
-
-This is because there's already a lot of documentation for creating and using
-lottie animations, while this aims at providing a description of the file format itself.
-
-## For the Impatient
-
-The top level JSON object is the [Animation](animation.md).
-
-Note that some lottie players require certain JSON keys to be presents before others in the file
-to play properly.
-
-Objects within the JSON may have a mixture of animatable and non-animatable properties.
-
-If a property is not animated, the value is represented as usual within the JSON.
-If it's animated, it has a special [representation](concepts/#animated-property).
-
-## Interactive Explanation
-
-If you have a lottie animation and you want to see an interactive description
-of its contents, you can visit the [JSON Editor](playground/json_editor.md) page.
-
-## Anatomy of a Lottie file
-
-Go to the [next page](breakdown/bouncy_ball.md) for a breakdown of a simple
-lottie animation.
-
-## JSON Schema
-
-This guide provides a human-readable description of the format, but if you want
-a machine-readable description, we also have a [JSON schema](schema/lottie.schema.json).
-
-
-## Other Resources
-
-* [Lottie documentation from python-lottie](https://mattbas.gitlab.io/python-lottie/group__Lottie.html#details)
-* [Lottie community documentation](https://github.com/lottie-animation-community/docs)
-* [Lottie community schema](https://github.com/lottie-animation-community/tests)
+<div class="index-footer">
+    <div class="index-footer-content">
+        <p>
+        LottieFiles is by Design Barn Inc.<br>
+        Copyright © 2022 Design Barn Inc. All rights reserved.
+        </p>
+    </div>
+</div>

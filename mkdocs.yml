@@ -24,13 +24,14 @@ plugins:
             "playground/explain.md": "playground/json_editor.md"
 
 nav:
-    - "Topics":
-        - "Introduction": index.md
+    - "Home" : index.md
+    - "Guide":
+        - "Introduction" : Introduction.md 
         - breakdown/bouncy_ball.md
         - breakdown/lottie_from_scratch.md
         - breakdown/bezier.md
         - breakdown/precomps.md
-    - "Lottie":
+    - "Lottie Format":
         - concepts.md
         - animation.md
         - layers.md
@@ -43,7 +44,7 @@ nav:
     - "Playground":
         - "Builder": playground/builder.md
         - "JSON Editor": playground/json_editor.md
-    - "Advanced":
+    - "Advanced Concept":
         - rendering.md
         - schema.md
         - advanced_interactions.md
