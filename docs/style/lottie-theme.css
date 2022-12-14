@@ -122,6 +122,8 @@ a {
     margin: 0 auto; 
     max-width: 1200px;
     padding: 0 24px;
+    height: calc(100vh - 116px);
+    overflow-y: scroll;
 }
 
 .base-container{
@@ -482,6 +484,7 @@ ul.nav.navbar-nav.navbar-right > li > a > img {
     .main {
         margin: 0 0; 
         max-width: 1024px;
+        height: calc(100vh - 70px);
     }
 
 }

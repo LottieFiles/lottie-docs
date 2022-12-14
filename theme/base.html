@@ -81,7 +81,7 @@
         {% if page.meta.full_page %}
             <div class="col-md-12" style="padding: 0 0;" role="main">{% include "content.html" %}</div>
         {% elif page.meta.disable_toc %}
-        <div class="main">
+        <div class="main" id="content-container">
             <div class="col-md-12" role="main" style="padding: 0;">{% include "content.html" %}</div>
         </div>
         {% else %}
