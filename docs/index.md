@@ -3,7 +3,8 @@ no_nav: 1
 disable_toc: 1
  <style>
         .index-page {
-
+            margin-top: 36px; 
+            margin-bottom: 200px;
         }
         .index-page a:hover{
             color: #00C1A2;
@@ -130,6 +131,7 @@ disable_toc: 1
             background: #F3F6F8;
             border-radius: 8px;
             border: 0;
+            color: #20272C;
         }
 
         .lottie-button:hover {
@@ -145,6 +147,17 @@ disable_toc: 1
         @media (max-width: 800px) {
             .index-card-header-nav {
                 display: none;
+            }
+        }
+
+        @media (max-height: 1200px) {
+                .index-page {
+                    margin-bottom: 0px;
+                }
+                .index-footer {
+                margin-top: 64px;
+                margin-left: -16px;
+                position: static;
             }
         }
 
@@ -176,11 +189,19 @@ disable_toc: 1
             .index-footer {
                 padding: 16px;
             }
+            .index-page {
+                    margin-bottom: 0px;
+                }
+            .index-footer {
+                margin-top: 64px;
+                margin-left: -16px;
+                position: static;
+            }
         }
 
     </style>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
-<div class="index-page" style="margin-top: 36px; margin-bottom: 200px;">
+<div class="index-page">
     <div class="index-card-header">
         <div class="index-card-header-content">
             <lottie-player
@@ -252,13 +273,13 @@ disable_toc: 1
             <p>Vue component for the Lottie Web Player.</p>
         </div>
     </div>
-</div>
-
-<div class="index-footer">
-    <div class="index-footer-content">
-        <p>
-        LottieFiles is by Design Barn Inc.<br>
-        Copyright © 2022 Design Barn Inc. All rights reserved.
-        </p>
+    <div class="index-footer">
+        <div class="index-footer-content">
+            <p>
+            LottieFiles is by Design Barn Inc.<br>
+            Copyright © 2022 Design Barn Inc. All rights reserved.
+            </p>
+        </div>
     </div>
 </div>
+
