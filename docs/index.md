@@ -53,6 +53,7 @@ disable_toc: 1
             padding: 24px;
             border-radius: 12px;
             border: 1px solid #F3F6F8;
+            cursor: pointer;
         }
         .index-card-sm {
             display: flex;
@@ -66,6 +67,7 @@ disable_toc: 1
             border-radius: 12px;
             padding: 24px;
             border: 1px solid #F3F6F8;
+            cursor: pointer;
         }
         .index-footer {
             box-sizing: border-box;
