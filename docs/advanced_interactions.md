@@ -23,6 +23,14 @@ The techniques described below require knowledge on the following topics:
 {
     border: 1px solid #ccc;
 }
+
+pre {
+    margin-top: 0;
+}
+
+#content-container .nav.nav-tabs {
+    height: 45px;
+}
 </style>
 
 ## Level 0: Regular Lotties
