@@ -1573,4 +1573,4 @@ class TemplateFromSchemaBuilder
 
 
 if ( typeof window == "undefined" && typeof module != "undefined" )
-    module.exports = { SchemaData, SchemaObject };
+    module.exports = { SchemaData };

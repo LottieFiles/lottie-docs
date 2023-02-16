@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Text Selector",
+    "title": "Text Range",
     "description": "Range of text with custom animations and style",
     "caniuse": "animators-range-selectors",
     "properties": {

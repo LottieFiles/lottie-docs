@@ -191,6 +191,9 @@ class ShaderProgram
 
     set_fragment(fragment_source)
     {
+        if ( this.program )
+            this.gl.deleteProgram(this.program);
+
         let vertex_source;
 
         if ( fragment_source.indexOf("#version 300 es") != -1 )
