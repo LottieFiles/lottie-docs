@@ -141,6 +141,8 @@ Layer data.
 |                   | 6  |          | |
 | Attributes        | 3  | Flags    | |
 | Source ID         | 4  | `uint32` | |
+|                   | 20 |          | |
+| Layer Name        | *  | `string0`| It's repeated in the `Utf8` chunk right after |
 
 With the following Attributes:
 
@@ -237,6 +239,18 @@ Attributes:
 
 Color profile information as ICC data.
 
+### `wsnm`
+
+Utf-16 encoded string, referring to the screen layout?
+
+It's always followed by an `Utf8` with the same content.
+
+### `tdum` / `tduM`
+
+`float64` values often found inside `LIST` `tdbs`.
+
+In some cases they seem to indicate minimum and maximum values for that
+property but there are some cases in which they are both `0.0`.
 
 ### `LIST` `Fold`
 
@@ -295,6 +309,19 @@ for each keyframe.
 ### `LIST` `CPPl`
 
 Contains a `pprf`.
+
+### `LIST` `list`
+
+Always contains `lhd3`. For animated properties it replaces `cdat` and it also
+contains `ldat`.
+
+### `LIST` `SLay`
+
+Some kind of layer not rendered to lottie.
+
+They contain `ADBE Camera Options Group` with a property called `ADBE Camera Zoom`.
+
+
 
 Main Composition
 ----------------
