@@ -233,6 +233,10 @@ Attributes:
 
 * _Hidden_: (3, 0)
 
+### `pprf`
+
+Color profile information as ICC data.
+
 
 ### `LIST` `Fold`
 
@@ -281,12 +285,16 @@ Defines a gradient.
 
 Contains a `LIST` `tdbs` and a `LIST` `GCky`.
 
-## `LIST` `GCky`
+### `LIST` `GCky`
 
 Gradient data.
 
 Contains a sequence of `Utf8` formatted in XML with the gradient definition
 for each keyframe.
+
+### `LIST` `CPPl`
+
+Contains a `pprf`.
 
 Main Composition
 ----------------
@@ -430,6 +438,15 @@ If you interpret the XML as a mapping, you can gather the following info:
     "Gradient Colors": "1.0" // Version?
 }
 ```
+
+XMP Metadata
+------------
+
+After the RIFX data, an AEP file also contains some XML in the
+[XMP](https://en.wikipedia.org/wiki/Extensible_Metadata_Platform) format.
+
+This section contains the version of AfterEffects, when the file has been
+created and modified, and related info.
 
 
 Resources
