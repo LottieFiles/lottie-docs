@@ -26,7 +26,7 @@ plugins:
 nav:
     - "Home" : index.md
     - "Guide":
-        - "Introduction" : Introduction.md 
+        - "Introduction" : Introduction.md
         - breakdown/bouncy_ball.md
         - breakdown/lottie_from_scratch.md
         - breakdown/bezier.md
@@ -48,3 +48,4 @@ nav:
         - rendering.md
         - schema.md
         - advanced_interactions.md
+        - aep.md
