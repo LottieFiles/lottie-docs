@@ -192,42 +192,101 @@ and parse that many `float64`, that's the value of the property.
 
 ### `shph`
 
-Seems to specify bezier information of some kind.
+Header for bezier shape data, contained within `LIST` `shap`.
+
+It's followed by a `LIST` `list` with bezier data.
+
+|Field Name         |Size| Type     | Description       |
+|-------------------|----|----------|-------------------|
+|                   | 3  |          |                   |
+| Attributes        | 1  | Flags    |                   |
+| Top Left          | 2  | `float16`| Top-left corner of the shape area, relative to the layer position     |
+| Bottom Right      | 2  | `float16`| Bottom-right corner of the shape area, relative to the layer position |
+|                   | 4  |          |                   |
+
+Flags:
+
+* _Open_: (0, 3). When `true`, the shape is open (it's missing the segment connecting the last point to the first)
+
 
 ### `lhd3`
 
-Precedes `ldat` for shapes and animated properties.
+Inside a `LIST` `list`, defines the data format, followed by `ldat`.
+
+|Field Name         |Size| Type     | Description       |
+|-------------------|----|----------|-------------------|
+|                   | 10 |          |                   |
+| Count             | 2  | `uint16` | Number of items   |
+
 
 ### `ldat`
 
-Property data.
+Inside a `LIST` `list`, contains the list data, preceded by `lhd3`.
 
-It has a different format based on certain conditions.
+The number of element is the one defined in `lhd3`.
 
-For animated multi-dimensional properties, it contains a sequence of keyframes in this format:
+It has a different format based on certain conditions, follow some of the possible element formats.
+
+#### Keyframe (common)
+
+All keyframe items start like this:
+
+|Field Name         |Size|   Type       | Description |
+|-------------------|----|--------------|-------------|
+|                   | 1  |              | |
+| Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
+|                   | 5  |              | |
+
+#### Keyframe - Multi-Dimensional
 
 Given `n` as the number of dimensions found in `tdb4` (eg: 3 for 3D positions):
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-|                   | 1  |              | |
-| Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
 | Value             |8* n|`float64[n]`  | Value |
 |                   |8* n|`float64[n]`  | |
 |                   |8* n|`float64[n]`  | |
 |                   |8* n|`float64[n]`  | |
-|                   |8* n|`float64[n]`  | |
+
+#### Keyframe - Position
 
 If the property is an animated position, the keyframe is formatted like so:
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-|                   | 1  |              | |
-| Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
 |                   |8*6 |`float64[6]`  | |
 | Value             |8* n|`float64[n]`  |Value |
 | Tan In            |8* n|`float64[n]`  |Spatial tangents|
 | Tan Out           |8* n|`float64[n]`  |Spatial tangents|
+
+#### Keyframe - Gradient
+
+
+|Field Name         |Size|   Type       | Description |
+|-------------------|----|--------------|-------------|
+|                   |8*6 |`float64[6]`  | |
+|                   | 8  |              | |
+
+#### Shape Data
+
+Bezier data, positions are relative to the area defined by `shph`.
+
+Note that the items here are defines as bezier segments, all coordinates are relative
+to the area in `shph` but not to each other.
+
+A coordinate of \[0, 0\] will correspond to the top-left corner in `shph`,
+and \[1, 1\] corresponds to the bottom-right.
+
+Take care that the in tangent is the tangent entering the next point in
+the curve, not the vertex defined by this item.
+
+
+|Field Name         |Size|   Type       | Description |
+|-------------------|----|--------------|-------------|
+| Vertex            |2*4 |`float32[2]`  | Coordinates of the vertex                             |
+| Out Tangent       |2*4 |`float32[2]`  | Coordinates of the tangent leaving the vertex         |
+| In Tangent        |2*4 |`float32[2]`  | Coordinates of the tangent entering the next vertex   |
+
 
 ### `tdsb`
 
@@ -314,14 +373,25 @@ Gradient data.
 Contains a sequence of `Utf8` formatted in XML with the gradient definition
 for each keyframe.
 
+### `LIST` `omks`
+
+Bezier shape data.
+
+Contains a sequence of `LIST` `shap` with the shape data for each keyframe.
+
+### `LIST` `shap`
+
+Contains a `shph` and a `LIST` `list` with the shape data.
+
 ### `LIST` `CPPl`
 
 Contains a `pprf`.
 
 ### `LIST` `list`
 
-Always contains `lhd3`. For animated properties it replaces `cdat` and it also
-contains `ldat`.
+For animated properties it replaces `cdat`.
+
+The list header is defined in the chunk `lhd3`, the list data in `ldat`.
 
 ### `LIST` `SLay`
 
