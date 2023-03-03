@@ -6,6 +6,18 @@ It's a binary format based on the RIFX container format.
 
 The structure resembles that of a Lottie JSON exported from AE.
 
+You can perform the parsing in 3 steps:
+
+1. Parse the RIFX chunks into a tree structure
+2. Unpac the chunk data into more useful representations
+3. Traverse that tree to map find the relevant objects and properties
+
+Step 1 is fairly straightforward, RIFX is fairly easy to parse. <br/>
+Step 2 is the hard part as there's nor real documentation on how the data is laid out. <br/>
+Step 3 should be rather easy as now you basically only need to do the
+same as the bodymovin plugin to convert the strucured AE data into lottie.
+
+
 RIFX
 ----
 
@@ -794,3 +806,4 @@ Resources
 * [Multimedia Programming Interface and Data Specifications 1.0](https://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf) RIFF specs PDF.
 * [IEEE-754 Floating-Point Conversion](https://babbage.cs.qc.cuny.edu/IEEE-754.old/Decimal.html) Float to hex converter.
 * [Shape Layer Match Names](https://ae-scripting.docsforadobe.dev/matchnames/layer/shapelayer.html)
+* [bodymovin-extension](https://github.com/bodymovin/bodymovin-extension) AE extensions that exports to Lottie
