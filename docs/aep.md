@@ -30,6 +30,7 @@ Basic Types
 |`id`     | 4 | ASCII-encoded chunk identifier  |
 |`uint32` | 4 | Unsigned integer                |
 |`uint16` | 2 | Unsigned integer                |
+|`float32`| 4 | IEEE float                      |
 |`float64`| 8 | IEEE float                      |
 |`string` | * | Text, usually utf-8 encoded     |
 |`string0`| * | NUL terminated string           |
@@ -200,8 +201,8 @@ It's followed by a `LIST` `list` with bezier data.
 |-------------------|----|----------|-------------------|
 |                   | 3  |          |                   |
 | Attributes        | 1  | Flags    |                   |
-| Top Left          | 2  | `float16`| Top-left corner of the shape area, relative to the layer position     |
-| Bottom Right      | 2  | `float16`| Bottom-right corner of the shape area, relative to the layer position |
+| Top Left          | 2  | `float32`| Top-left corner of the shape area, relative to the layer position     |
+| Bottom Right      | 2  | `float32`| Bottom-right corner of the shape area, relative to the layer position |
 |                   | 4  |          |                   |
 
 Flags:
@@ -226,6 +227,12 @@ Inside a `LIST` `list`, contains the list data, preceded by `lhd3`.
 The number of element is the one defined in `lhd3`.
 
 It has a different format based on certain conditions, follow some of the possible element formats.
+
+The size of an item is found like so:
+
+```
+item_size = ldat_chunk_length / lhd3_count
+```
 
 #### Keyframe (common)
 
@@ -270,6 +277,8 @@ If the property is an animated position, the keyframe is formatted like so:
 #### Shape Data
 
 Bezier data, positions are relative to the area defined by `shph`.
+
+Note that `lhd3` will specify the number of coordinates, so you need to group them by 3.
 
 Note that the items here are defines as bezier segments, all coordinates are relative
 to the area in `shph` but not to each other.
@@ -373,6 +382,10 @@ Gradient data.
 Contains a sequence of `Utf8` formatted in XML with the gradient definition
 for each keyframe.
 
+### `LIST` `om-s`
+
+Contains a `LIST` `tbds` and a `LIST` `omks` to define a shape property.
+
 ### `LIST` `omks`
 
 Bezier shape data.
@@ -400,8 +413,10 @@ Some kind of layer not rendered to lottie.
 They contain `ADBE Camera Options Group` with a property called `ADBE Camera Zoom`.
 
 
-Main Composition
-----------------
+AfterEffects Logic
+------------------
+
+### Main Composition
 
 Search for `LIST` `Fold`, then iterate through it to look for a `LIST` `Item`
 with `idta` type of `4`.
@@ -413,11 +428,71 @@ and convert times into frames.
 
 Then look for `LIST` `Layr` to parse layers.
 
+### Objects
+
+Most objects are introduced by their match name (`tdmn`),
+followed by a `LIST` `tdgp` that defines the properties and sub-objects.
+
+Inside the `LIST` `tdgp` you can find more match names defining which
+property or the type of sub-object you are defining.
+
+
+### Properties
+
+Properties, like objects are introduced by their match name, the chunks
+following that depends on the type of property.
+
+#### MultiDimensional
+
+* `tdmn`: Match Name
+* `LIST` `tbds`: Property definition
+    * `tdb4`: Tells you how many components the property has and whether it's animated
+    * `cdat`: Value (if not animated)
+    * `LIST` `list`: Keyframes (if animated)
+        * `lhd3`: Tells you the number of keyframes
+        * `ldat`: Keyframe data and values
+
+#### Shape
+
+* `tdmn`: Match Name (`ADBE Vector Shape`)
+* `LIST` `om-s`
+    * `LIST` `tbds`: Property definition
+        * `tbd4`: Metadata
+        * `LIST` `list`: Present if the shape is animated
+            * `lhd3`: Keyframe list metadata
+            * `ldat`: Keyframe data without values
+    * `LIST` `omks`: Shape Values
+        * `LIST` `shap`: Bezier Data
+            * `shph`: Bezier metadata (whether it's closed and bounding box)
+            * `LIST` `list`
+                * `lhd3`: Bezier point list metadata
+                * `ldat`: Bezier points relative to `shph`
+
+If the property is animated, there will be multiple `LIST` `shap`, one
+per keyframe.
+
+
+#### Gradient Colors
+
+* `tdmn`: Match Name (`ADBE Vector Grad Colors`)
+* `LIST` `GCst`
+    * `LIST` `tbds`: Property definition
+        * `tbd4`: Metadata
+        * `LIST` `list`: Present if the shape is animated
+            * `lhd3`: Keyframe list metadata
+            * `ldat`: Keyframe data without values
+    * `LIST` `GCky`
+        * `Utf8` [Gradient XML](#gradient-xml)
+
+
+If the property is animated, there will be multiple `Utf8`, one
+per keyframe.
 
 
 Match Names
 -----------
 
+Follows a list of known match names grouped by object type.
 
 ### Layers
 
