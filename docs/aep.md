@@ -181,7 +181,7 @@ Property metadata.
 Flags:
 
 * _Position_: (1, 3). When `true`, this is a position property, which changes how animated values are parsed.
-
+* _Static_: (1, 0). When `false`, the property is animated and it will have a `cdat`.
 
 ### `cdat`
 
@@ -206,24 +206,28 @@ It has a different format based on certain conditions.
 
 For animated multi-dimensional properties, it contains a sequence of keyframes in this format:
 
+Given `n` as the number of dimensions found in `tdb4` (eg: 3 for 3D positions):
+
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-| Attributes        | 1  | `bytes`      | If other than 0, ignore the keyframe (same size but different data) |
+|                   | 1  |              | |
 | Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
-| Value             | *  |`float64[*]`  |Value, the amount depends on the number of components from `tdb4`|
-|                   |8*3 |`float64[3]`  | |
-|`o.x`?             | 8  |`float64`     | |
+| Value             |8* n|`float64[n]`  | Value |
+|                   |8* n|`float64[n]`  | |
+|                   |8* n|`float64[n]`  | |
+|                   |8* n|`float64[n]`  | |
+|                   |8* n|`float64[n]`  | |
 
 If the property is an animated position, the keyframe is formatted like so:
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-| Attributes        | 1  | `bytes`      | If other than 0, ignore the keyframe (same size but different data) |
+|                   | 1  |              | |
 | Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
 |                   |8*6 |`float64[6]`  | |
-| Value             | *  |`float64[*]`  |Value, the amount depends on the number of components from `tdb4`|
-| Tan In            | *  |`float64[*]`  |Spatial tangents, the amount depends on the number of components from `tdb4`|
-| Tan Out           | *  |`float64[*]`  |Spatial tangents, the amount depends on the number of components from `tdb4`|
+| Value             |8* n|`float64[n]`  |Value |
+| Tan In            |8* n|`float64[n]`  |Spatial tangents|
+| Tan Out           |8* n|`float64[n]`  |Spatial tangents|
 
 ### `tdsb`
 
@@ -293,6 +297,10 @@ Usually the last chunk here is a `tdmn` with value `ADBE Group End`.
 Defines an object's property. To know which property, you need to
 check the `tdmn` preceding this chunk.
 
+It will contain a `tbd4`, and usually `cdat` (static) or a `List` `list` (animated).
+
+For properties with expressions, it will have a `Utf8` with the expression code.
+
 ### `LIST` `GCst`
 
 Defines a gradient.
@@ -322,7 +330,6 @@ Some kind of layer not rendered to lottie.
 They contain `ADBE Camera Options Group` with a property called `ADBE Camera Zoom`.
 
 
-
 Main Composition
 ----------------
 
@@ -337,67 +344,226 @@ and convert times into frames.
 Then look for `LIST` `Layr` to parse layers.
 
 
+
 Match Names
 -----------
 
-### Objects
 
-Shape Group:
+### Layers
 
-* `ADBE Vector Group`
-
-Shapes:
-
-* `ADBE Vector Shape - Group` (Path)
-* `ADBE Vector Shape - Rect`
-* `ADBE Vector Shape - Ellipse`
-
-Shape Styles:
-
-* `ADBE Vector Graphic - Stroke`
-* `ADBE Vector Graphic - Fill`
-* `ADBE Vector Graphic - G-Fill` (Gradient fill)
-
-Shape Modifiers:
-
-* `ADBE Vector Filter - Trim`
-
-### Properties
-
-Shape Properties:
-
-* `ADBE Vector Position`
-* `ADBE Vector Shape` (Bezier)
-* `ADBE Vector Rect Size`
-* `ADBE Vector Ellipse Size`
+{aep_mn}
+ADBE Root Vectors Group : `shapes`
+ADBE Layer Styles : `styles`
+ADBE Transform Group : `ks`
+ADBE Layer Styles : `sy`
+ADBE Extrsn Options Group :
+ADBE Material Options Group :
+ADBE Audio Group :
+ADBE Layer Sets :
 
 
-Shape Style Properties:
+### Shapes
 
-* `ADBE Vector Stroke Color`
-* `ADBE Vector Fill Color`
-* `ADBE Vector Stroke Width`
-* `ADBE Vector Grad Start Pt`
-* `ADBE Vector Grad End Pt`
-* `ADBE Vector Grad Colors` (Colors are defined in XML)
+{aep_mn}
+ADBE Vector Group : object=shapes/group
+ADBE Vectors Group : prop=it
+ADBE Vector Transform Group : Transform
+ADBE Vector Materials Group :
 
-For color properties, they have 4 components as ARGB floats in \[0, 255\].
+{aep_mn}
+ADBE Vector Shape - Rect : object=shapes/rectangle
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Rect Position : prop=p
+ADBE Vector Rect Size : prop=s
+ADBE Vector Rect Roundness : prop=r
 
+{aep_mn}
+ADBE Vector Shape - Ellipse : object=shapes/ellipse
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Ellipse Position : prop=p
+ADBE Vector Ellipse Size : prop=s
 
-Modifier Properties:
+{aep_mn}
+ADBE Vector Shape - Ellipse : object=shapes/ellipse
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Ellipse Position : prop=p
+ADBE Vector Ellipse Size : prop=s
 
-* `ADBE Vector Trim Start`
+{aep_mn}
+ADBE Vector Shape - Star : object=shapes/polystar
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Star Type : prop=sy [^enum]
+ADBE Vector Star Points : prop=pt [^int]
+ADBE Vector Star Position : prop=p
+ADBE Vector Star Rotation : prop=r
+ADBE Vector Star Inner Radius : prop=ir
+ADBE Vector Star Outer Radius : prop=or
+ADBE Vector Star Inner Roundess : prop=is
+ADBE Vector Star Outer Roundess : prop=os
 
+{aep_mn}
+ADBE Vector Shape - Group : object=shapes/path
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Shape : prop=ks [^shape]
 
-Transform Properties:
+### Shape Styles
 
-* `ADBE Anchor Point`
-* `ADBE Position`
-* `ADBE Rotate X`
-* `ADBE Rotate Y`
-* `ADBE Rotate Z` (Rotation in 2D)
-* `ADBE Opacity` (In \[0, 1\])
-* `ADBE Scale` (In \[0, 1\])
+{aep_mn}
+ADBE Vector Graphic - Fill : object=shapes/fill
+ADBE Vector Fill Color : prop=c [^color]
+
+{aep_mn}
+ADBE Vector Graphic - Stroke : object=shapes/stroke
+ADBE Vector Stroke Color : prop=c [^color]
+ADBE Vector Stroke Width : prop=w
+ADBE Vector Stroke Line Cap : prop=lc [^enum]
+ADBE Vector Stroke Line Join : prop=lj [^enum]
+ADBE Vector Stroke Miter Limit : prop=ml2
+ADBE Vector Stroke Dashes : prop=d
+ADBE Vector Stroke Taper :
+ADBE Vector Stroke Wave :
+
+{aep_mn}
+ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
+ADBE Vector Grad Start Pt : prop=s
+ADBE Vector Grad End Pt : prop=e
+ADBE Vector Grad HiLite Length : prop=h
+ADBE Vector Grad HiLite Angle : prop=a
+ADBE Vector Grad Colors : prop=g [^gradient]
+
+{aep_mn}
+ADBE Vector Graphic - G-Stroke : object=shapes/gradient-stroke
+ADBE Vector Grad Start Pt : prop=s
+ADBE Vector Grad End Pt : prop=e
+ADBE Vector Grad HiLite Length : prop=h
+ADBE Vector Grad HiLite Angle : prop=a
+ADBE Vector Grad Colors : prop=g [^gradient]
+ADBE Vector Stroke Width : prop=w
+ADBE Vector Stroke Line Cap : prop=lc [^enum]
+ADBE Vector Stroke Line Join : prop=lj [^enum]
+ADBE Vector Stroke Miter Limit : prop=ml2
+ADBE Vector Stroke Dashes : prop=d
+ADBE Vector Stroke Taper :
+ADBE Vector Stroke Wave :
+
+### Shape Modifiers
+
+{aep_mn}
+ADBE Vector Filter - Merge : object=shapes/merge
+ADBE Vector Merge Type : prop=mm
+
+{aep_mn}
+ADBE Vector Filter - Offset : object=shapes/offset-path
+ADBE Vector Offset Amount : prop=a
+ADBE Vector Offset Line Join : prop=lj [^enum]
+ADBE Vector Offset Miter Limit : prop=ml
+
+{aep_mn}
+ADBE Vector Filter - PB : object=shapes/pucker-bloat
+ADBE Vector PuckerBloat Amount : prop=a
+
+{aep_mn}
+ADBE Vector Filter - Repeater : object=shapes/repeater
+ADBE Vector Repeater Transform : prop=tr
+ADBE Vector Repeater Copies : prop=c [^int]
+ADBE Vector Repeater Offset : prop=o
+ADBE Vector Repeater Order : prop=m [^enum]
+
+{aep_mn}
+ADBE Vector Filter - RC : object=shapes/rounded-corners
+ADBE Vector RoundCorner Radius : prop=r
+
+{aep_mn}
+ADBE Vector Filter - Trim : object=shapes/trim
+ADBE Vector Trim Start : prop=s
+ADBE Vector Trim End : prop=e
+ADBE Vector Trim Offset : prop=o
+
+{aep_mn}
+ADBE Vector Filter - Twist : object=shapes/twist
+ADBE Vector Twist Angle : prop=a
+ADBE Vector Twist Center : prop=c
+
+{aep_mn}
+ADBE Vector Filter - Roughen :
+ADBE Vector Roughen Size :
+ADBE Vector Roughen Detail :
+ADBE Vector Roughen Points :
+ADBE Vector Temporal Freq :
+ADBE Vector Correlation :
+ADBE Vector Temporal Phase :
+ADBE Vector Spatial Phase :
+ADBE Vector Random Seed :
+
+{aep_mn}
+ADBE Vector Filter - Wiggler :
+ADBE Vector Xform Temporal Freq :
+ADBE Vector Correlation :
+ADBE Vector Temporal Phase :
+ADBE Vector Spatial Phase :
+ADBE Vector Random Seed :
+ADBE Vector Wiggler Transform :
+
+{aep_mn}
+ADBE Vector Filter - Zigzag : object=shapes/zig-zag
+ADBE Vector Zigzag Size : prop=s
+ADBE Vector Zigzag Detail : prop=r
+ADBE Vector Zigzag Points : prop=pt [^int]
+
+### Transforms
+
+{aep_mn}
+ADBE Transform Group : object=helpers/transform
+ADBE Anchor Point: prop=a
+ADBE Position: prop=p
+ADBE Position_0: Split position X
+ADBE Position_1: Split position Y
+ADBE Position_2: Split position Z
+ADBE Scale: prop=s [^100]
+ADBE Orientation: Single float
+ADBE Rotate X: prop=rx
+ADBE Rotate Y: prop=ry
+ADBE Rotate Z: prop=rz or just normal rotation
+ADBE Opacity: prop=o [^100]
+
+{aep_mn}
+ADBE Vector Transform Group : object=shapes/transform
+ADBE Vector Anchor Point: prop=a
+ADBE Vector Position: prop=p
+ADBE Vector Scale: prop=s [^100]
+ADBE Vector Rotate X: prop=rx
+ADBE Vector Rotate Y: prop=ry
+ADBE Vector Rotate Z: prop=rz or just normal rotation
+
+### Misc
+
+{aep_mn}
+ADBE Group End : Indicates the end of a `LIST` `tdgp`
+
+<!--
+to verify:
+ADBE Vector Blend Mode (group, fill, stroke)
+ADBE Vector Composite Order (fill, stroke)
+ADBE Vector Fill Rule
+ADBE Vector Fill Opacity
+ADBE Vector Stroke Opacity
+ADBE Vector Grad Type
+ADBE Vector Offset Copies (offset path)
+ADBE Vector Offset Copy Offset (offset path)
+ADBE Vector Trim Type
+ADBE Vector Opacity (group transform)
+-->
+
+### Notes
+
+[^enum]: Enumerations needs to be converted from floats, but the values match
+[^int]: Needs to be converted from `float` to `int`.
+[^shape]: How to parse this?
+[^color]: Colors are defined as 4 floats (ARGB) in \[0, 255\].
+[^gradient]: Colors defined as [XML](#gradient-xml).
+[^100]: You need to multiply by 100 to get the lottie value.
+
+///Footnotes Go Here///
 
 
 Gradient XML
@@ -482,3 +648,4 @@ Resources
 * [aftereffects-aep-parser](https://github.com/boltframe/aftereffects-aep-parser) A basic AEP parser written in Go.
 * [Multimedia Programming Interface and Data Specifications 1.0](https://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf) RIFF specs PDF.
 * [IEEE-754 Floating-Point Conversion](https://babbage.cs.qc.cuny.edu/IEEE-754.old/Decimal.html) Float to hex converter.
+* [Shape Layer Match Names](https://ae-scripting.docsforadobe.dev/matchnames/layer/shapelayer.html)

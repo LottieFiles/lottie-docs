@@ -1172,8 +1172,6 @@ class SchemaLink(InlineProcessor):
         etree.SubElement(element, "i").attrib["class"] = "fas fa-list-check"
         return element
 
-
-
     def handleMatch(self, m, data):
         return SchemaLink.element(m.group(1)), m.start(0), m.end(0)
 
@@ -1577,6 +1575,57 @@ class EditorExample(BlockProcessor):
 
         return True
 
+class AepMatchNameTable(BlockProcessor):
+    re_fence_start = re.compile(r"\{aep_mn\}")
+    re_row = re.compile(r'^\s*(?P<mn>[^:]+)\s*:\s*(?:(?P<what>\w+)\s*=\s*(?P<lottie>[^: ]+))?\s*(?P<descr>.*)')
+
+    def __init__(self, parser, schema_data: Schema):
+        super().__init__(parser)
+        self.schema_data = schema_data
+
+    def test(self, parent, block):
+        return self.re_fence_start.match(block)
+
+    def run(self, parent, blocks):
+        table = etree.SubElement(parent, "table")
+
+        thead = etree.SubElement(etree.SubElement(table, "thead"), "tr")
+        etree.SubElement(thead, "th").text = "Match Name"
+        etree.SubElement(thead, "th").text = "Description"
+
+        tbody = etree.SubElement(table, "tbody")
+
+        lottie_obj = None
+
+
+        rows = blocks.pop(0)
+        for row in rows.split("\n")[1:]:
+            match = self.re_row.match(row)
+            if not match:
+                continue
+
+            tr = etree.SubElement(tbody, "tr")
+            etree.SubElement(etree.SubElement(tr, "td"), "code").text = match.group("mn")
+
+            td = etree.SubElement(tr, "td")
+            what = match.group("what")
+            if what:
+                if what == "object":
+                    ref = "$defs/" + match.group("lottie")
+                    lottie_obj = self.schema_data.get_ref(ref)
+                    link = ref_links(ref, self.schema_data)[0]
+                    a = etree.SubElement(td, "a")
+                    a.text = link.name
+                    a.attrib["href"] = "%s.md#%s" % (link.page, link.anchor)
+                elif what == "prop":
+                    etree.SubElement(td, "code").text = match.group("lottie")
+
+                td[0].tail = match.group("descr")
+            else:
+                td.text = match.group("descr")
+
+        return True
+
 
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
@@ -1601,6 +1650,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(EditorExample(md.parser), "editor_example", 175)
         md.parser.blockprocessors.register(ShapeBezierScript(md.parser, schema_data), "shape_bezier_script", 175)
         md.parser.blockprocessors.register(EffectShaderScript(md.parser, schema_data), "effect_shader_script", 175)
+        md.parser.blockprocessors.register(AepMatchNameTable(md.parser, schema_data), "aep_mn", 175)
 
 
 def makeExtension(**kwargs):

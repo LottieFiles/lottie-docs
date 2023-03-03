@@ -14,6 +14,7 @@ site_url: https://lottiefiles.github.io/lottie-docs/
 markdown_extensions:
     - md_in_html
     - md_extensions
+    - footnotes
 extra_css:
     - /lottie-docs/style/style.css
     - /lottie-docs/style/lottie-theme.css
