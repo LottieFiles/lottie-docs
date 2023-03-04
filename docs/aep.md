@@ -40,8 +40,9 @@ Basic Types
 |Type     |Size|Description|
 |---------|----|-----------|
 |`id`     | 4 | ASCII-encoded chunk identifier  |
-|`uint32` | 4 | Unsigned integer                |
 |`uint16` | 2 | Unsigned integer                |
+|`uint32` | 4 | Unsigned integer                |
+|`sint16` | 2 | Twos-complement signed integer  |
 |`float32`| 4 | IEEE float                      |
 |`float64`| 8 | IEEE float                      |
 |`string` | * | Text, usually utf-8 encoded     |
@@ -56,8 +57,17 @@ Time values are stored as `uint16`. they are scaled by a factor you can find in 
 To get the actual value in frames you need to do the following:
 
 ```
-frames = time_value / time_scale
+time_frames = time_value / cdta.time_scale
 ```
+
+Additionally, layers specify a start time, which shifts all the time values by a fixed amount.
+
+If you are within a layer the expression looks like this:
+
+```
+time_frames = (time_value + ldta.start_time) / (cdta.time_scale)
+```
+
 
 ### Flags
 
@@ -126,9 +136,9 @@ Composition data.
 |                   | 14 |        |                         |
 | Playhead          | 2  |  Time  | Playhead time           |
 |                   | 6  |        |                         |
-| Start Time        | 2  |  Time  | Same as `ip` in Lottie  |
+| In Time           | 2  |  Time  | Same as `ip` in Lottie  |
 |                   | 6  |        |                         |
-| End Time          | 2  |  Time  | Same as `op` in Lottie  |
+| Out Time          | 2  |  Time  | Same as `op` in Lottie  |
 |                   | 6  |        |                         |
 | Comp duration     | 2  |  Time  | Duration setting in AE  |
 |                   | 5  |        |                         |
@@ -150,10 +160,12 @@ Layer data.
 |-------------------|----|----------|-------------|
 |                   | 5  |          | |
 | Quality           | 2  | `uint16` | |
-|                   | 15 |          | |
-| Start Time        | 2  | Time     | Same as `ip` in Lottie |
+|                   | 7  |          | |
+| Start Time        | 2  |`sint16`  | Time offset for times withing the layer |
 |                   | 6  |          | |
-| End Time          | 2  | Time     | Same as `op` in Lottie |
+| In Time           | 2  | Time     | Same as `ip` in Lottie |
+|                   | 6  |          | |
+| Out Time          | 2  | Time     | Same as `op` in Lottie |
 |                   | 6  |          | |
 | Attributes        | 3  | Flags    | |
 | Source ID         | 4  | `uint32` | |
@@ -163,6 +175,7 @@ Layer data.
 With the following Attributes:
 
 * _Threedimensional_: (1, 2)
+* _Visible_: (2, 0)
 * _Effects_: (2, 2)
 * _Motion Blur_: (2, 3)
 * _Locked_: (2, 5)
@@ -311,16 +324,6 @@ the curve, not the vertex defined by this item.
 | Out Tangent       |2*4 |`float32[2]`  | Coordinates of the tangent leaving the vertex         |
 | In Tangent        |2*4 |`float32[2]`  | Coordinates of the tangent entering the next vertex   |
 
-
-### `tdsb`
-
-|Field Name         |Size|   Type   | Description |
-|-------------------|----|----------|-------------|
-| Attributes        | 4  | Flags    | |
-
-Attributes:
-
-* _Hidden_: (3, 0)
 
 ### `pprf`
 
@@ -573,17 +576,22 @@ ADBE Vector Shape : prop=ks [^shape]
 {aep_mn}
 ADBE Vector Graphic - Fill : object=shapes/fill
 ADBE Vector Fill Color : prop=c [^color] : \[255, 255, 0, 0\]
+ADBE Vector Fill Opacity : prop=o : 100
+ADBE Vector Fill Rule : prop=r [^enum] : 1
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
 
 {aep_mn}
 ADBE Vector Graphic - Stroke : object=shapes/stroke
-ADBE Vector Stroke Color : prop=c [^color] : \[255, 0, 0, \]
+ADBE Vector Stroke Color : prop=c [^color] : \[255, 255, 255, 255, \]
+ADBE Vector Stroke Opacity : prop=o : 100
 ADBE Vector Stroke Width : prop=w : 2
-ADBE Vector Stroke Line Cap : prop=lc [^enum]
-ADBE Vector Stroke Line Join : prop=lj [^enum]
-ADBE Vector Stroke Miter Limit : prop=ml2
+ADBE Vector Stroke Line Cap : prop=lc [^enum] : 1
+ADBE Vector Stroke Line Join : prop=lj [^enum] :  1
+ADBE Vector Stroke Miter Limit : prop=ml2 : 4
 ADBE Vector Stroke Dashes : prop=d
 ADBE Vector Stroke Taper :
 ADBE Vector Stroke Wave :
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
 
 {aep_mn}
 ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
@@ -592,6 +600,9 @@ ADBE Vector Grad End Pt : prop=e
 ADBE Vector Grad HiLite Length : prop=h
 ADBE Vector Grad HiLite Angle : prop=a
 ADBE Vector Grad Colors : prop=g [^gradient]
+ADBE Vector Fill Opacity : prop=o : 100
+ADBE Vector Fill Rule : prop=r [^enum] : 1
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
 
 {aep_mn}
 ADBE Vector Graphic - G-Stroke : object=shapes/gradient-stroke
@@ -600,13 +611,15 @@ ADBE Vector Grad End Pt : prop=e
 ADBE Vector Grad HiLite Length : prop=h
 ADBE Vector Grad HiLite Angle : prop=a
 ADBE Vector Grad Colors : prop=g [^gradient]
-ADBE Vector Stroke Width : prop=w
-ADBE Vector Stroke Line Cap : prop=lc [^enum]
-ADBE Vector Stroke Line Join : prop=lj [^enum]
+ADBE Vector Stroke Opacity : prop=o : 100
+ADBE Vector Stroke Width : prop=w : 2
+ADBE Vector Stroke Line Cap : prop=lc [^enum] : 1
+ADBE Vector Stroke Line Join : prop=lj [^enum] : 1
 ADBE Vector Stroke Miter Limit : prop=ml2
 ADBE Vector Stroke Dashes : prop=d
 ADBE Vector Stroke Taper :
 ADBE Vector Stroke Wave :
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
 
 ### Shape Modifiers
 
@@ -706,9 +719,6 @@ ADBE Group End : Indicates the end of a `LIST` `tdgp`
 to verify:
 ADBE Vector Blend Mode (group, fill, stroke)
 ADBE Vector Composite Order (fill, stroke)
-ADBE Vector Fill Rule
-ADBE Vector Fill Opacity
-ADBE Vector Stroke Opacity
 ADBE Vector Grad Type
 ADBE Vector Offset Copies (offset path)
 ADBE Vector Offset Copy Offset (offset path)
