@@ -1577,7 +1577,7 @@ class EditorExample(BlockProcessor):
 
 class AepMatchNameTable(BlockProcessor):
     re_fence_start = re.compile(r"\{aep_mn\}")
-    re_row = re.compile(r'^\s*(?P<mn>[^:]+)\s*:\s*(?:(?P<what>\w+)\s*=\s*(?P<lottie>[^: ]+))?\s*(?P<descr>.*)')
+    re_row = re.compile(r'^\s*(?P<mn>[^:]+)\s*:\s*(?:(?P<what>\w+)\s*=\s*(?P<lottie>[^: ]+))?\s*(?P<descr>[^:]*)(?:\s*:\s*(?P<default>.*))?')
 
     def __init__(self, parser, schema_data: Schema):
         super().__init__(parser)
@@ -1586,12 +1586,18 @@ class AepMatchNameTable(BlockProcessor):
     def test(self, parent, block):
         return self.re_fence_start.match(block)
 
+    def th(self, thead, width, text):
+        th = etree.SubElement(thead, "th")
+        th.attrib["style"] = "width: %s%%" % width
+        th.text = text
+
     def run(self, parent, blocks):
         table = etree.SubElement(parent, "table")
 
         thead = etree.SubElement(etree.SubElement(table, "thead"), "tr")
-        etree.SubElement(thead, "th").text = "Match Name"
-        etree.SubElement(thead, "th").text = "Description"
+        self.th(thead, 50, "Match Name")
+        self.th(thead, 25, "Description")
+        self.th(thead, 25, "Default")
 
         tbody = etree.SubElement(table, "tbody")
 
@@ -1623,6 +1629,8 @@ class AepMatchNameTable(BlockProcessor):
                 td[0].tail = match.group("descr")
             else:
                 td.text = match.group("descr")
+
+            etree.SubElement(tr, "td").text = match.group("default")
 
         return True
 

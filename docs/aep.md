@@ -51,12 +51,12 @@ Basic Types
 
 ### Time
 
-Time values are stored as `uint16` in centiseconds.
+Time values are stored as `uint16`. they are scaled by a factor you can find in `cdata`.
 
-To get the time in frames you need the following:
+To get the actual value in frames you need to do the following:
 
 ```
-frames = time * fps / 100
+frames = time_value / time_scale
 ```
 
 ### Flags
@@ -119,25 +119,28 @@ Contains a NUL-terminated string (You'll need to strip excess `\0`) and defines 
 
 Composition data.
 
-|Field Name         |Size|  Type  | Description |
-|-------------------|----|--------|-------------|
-|                   | 13 |        | |
-| Comp start        | 2  |  Time  | Time of the first keyframe (?) |
-|                   | 6  |        | |
-| Playhead          | 2  |  Time  | Position of the playhead in AE |
-|                   | 6  |        | |
-| Start Time        | 2  |  Time  | Same as `ip` in Lottie |
-|                   | 6  |        | |
-| End Time          | 2  |  Time  | Same as `op` in Lottie |
-|                   | 6  |        | |
-| Comp duration     | 2  |  Time  | Time of the last keyframe |
-|                   | 5  |        | |
-| Color             | 3  |`bytes` | Color as 24 bit RGB |
-|                   | 85 |        | |
-| Width             | 2  |`uint16`| Same as `w` in Lottie |
-| Height            | 2  |`uint16`| Same as `h` in Lottie |
-|                   | 12 |        | |
-| Framerate         | 2  |`uint16`| Same as `fr` in Lottie |
+|Field Name         |Size|  Type  | Description             |
+|-------------------|----|--------|-------------------------|
+|                   | 5  |        |                         |
+| Time Scale        | 2  |`uint16`| How much Time values are scaled by |
+|                   | 14 |        |                         |
+| Playhead          | 2  |  Time  | Playhead time           |
+|                   | 6  |        |                         |
+| Start Time        | 2  |  Time  | Same as `ip` in Lottie  |
+|                   | 6  |        |                         |
+| End Time          | 2  |  Time  | Same as `op` in Lottie  |
+|                   | 6  |        |                         |
+| Comp duration     | 2  |  Time  | Duration setting in AE  |
+|                   | 5  |        |                         |
+| Color             | 3  |`bytes` | Color as 24 bit RGB     |
+|                   | 85 |        |                         |
+| Width             | 2  |`uint16`| Same as `w` in Lottie   |
+| Height            | 2  |`uint16`| Same as `h` in Lottie   |
+|                   | 12 |        |                         |
+| Framerate         | 2  |`uint16`| Same as `fr` in Lottie  |
+
+
+Note that End Time might have a value of FFFF, if that's the case assume it to be the same as Comp Duration.
 
 ### `ldta`
 
@@ -435,8 +438,7 @@ with `idta` type of `4`.
 
 The name of the composition is in the first `Utf8` chunk.
 
-Its properties are in `cdta`, which you must parse in order to find the framerate
-and convert times into frames.
+Its properties are in `cdta`.
 
 Then look for `LIST` `Layr` to parse layers.
 
@@ -506,6 +508,9 @@ Match Names
 
 Follows a list of known match names grouped by object type.
 
+For properties that specify a default value, you should assume they have the specified value if they are not present in the
+AEP file.
+
 ### Layers
 
 {aep_mn}
@@ -567,12 +572,12 @@ ADBE Vector Shape : prop=ks [^shape]
 
 {aep_mn}
 ADBE Vector Graphic - Fill : object=shapes/fill
-ADBE Vector Fill Color : prop=c [^color]
+ADBE Vector Fill Color : prop=c [^color] : \[255, 255, 0, 0\]
 
 {aep_mn}
 ADBE Vector Graphic - Stroke : object=shapes/stroke
-ADBE Vector Stroke Color : prop=c [^color]
-ADBE Vector Stroke Width : prop=w
+ADBE Vector Stroke Color : prop=c [^color] : \[255, 0, 0, \]
+ADBE Vector Stroke Width : prop=w : 2
 ADBE Vector Stroke Line Cap : prop=lc [^enum]
 ADBE Vector Stroke Line Join : prop=lj [^enum]
 ADBE Vector Stroke Miter Limit : prop=ml2
@@ -671,17 +676,17 @@ ADBE Vector Zigzag Points : prop=pt [^int]
 
 {aep_mn}
 ADBE Transform Group : object=helpers/transform
-ADBE Anchor Point: prop=a
-ADBE Position: prop=p
+ADBE Anchor Point: prop=a : \[0, 0\]
+ADBE Position: prop=p : Half of the comp size
 ADBE Position_0: Split position X
 ADBE Position_1: Split position Y
 ADBE Position_2: Split position Z
-ADBE Scale: prop=s [^100]
+ADBE Scale: prop=s [^100] : \[1, 1\]
 ADBE Orientation: Single float
 ADBE Rotate X: prop=rx
 ADBE Rotate Y: prop=ry
-ADBE Rotate Z: prop=rz or just normal rotation
-ADBE Opacity: prop=o [^100]
+ADBE Rotate Z: prop=rz or just normal rotation : 0
+ADBE Opacity: prop=o [^100] : 1
 
 {aep_mn}
 ADBE Vector Transform Group : object=shapes/transform
