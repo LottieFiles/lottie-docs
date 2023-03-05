@@ -872,6 +872,47 @@ This section contains the version of AfterEffects, when the file has been
 created and modified, and related info.
 
 
+XML Project Format
+------------------
+
+Aftereffects allows you to save the project as XML.
+
+This is basically as the RIFX but with a different container format and
+binary data encoded as hex.
+
+Conversion notes for elements are provided below
+
+### AfterEffectsProject
+
+Root element, same as `RIFX`.
+
+### ProjectXMPMetadata
+
+In the RIFX file this is dumped at the end without a chunk.
+
+### string
+
+Used instead of `Utf8`.
+
+### numS / ppSn
+
+For some reason they have their value in a `<string>` but are not string in the RIFX.
+
+### tdsn / fnam
+
+These elements contain children but they are not `LIST` in RIFX, that's the only thing of note.
+
+### Child elements
+
+If an element has children. it's the same as the equivalent `LIST` in RIFX.
+
+### `bdata`
+
+Elements with the `bdata` attribute have their binary data hex encoded in said attribute.
+
+You can parse their data the same way as you'd do in RIFX.
+
+
 Resources
 ---------
 
