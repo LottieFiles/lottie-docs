@@ -414,6 +414,34 @@ Orientation data
 | Y                 | 8  |`float64`     | Y Coordinate|
 | Z                 | 8  |`float64`     | Z Coordinate|
 
+
+### `opti`
+
+Solid layer asset data.
+
+|Field Name |Size|Type      | Description   |
+|-----------|----|----------|---------------|
+|           | 10 |          |               |
+| Alpha     | 4  | `float32`|               |
+| Red       | 4  | `float32`|               |
+| Green     | 4  | `float32`|               |
+| Blue      | 4  | `float32`|               |
+| Name      |256 | `string0`|               |
+
+Color components are in \[0, 1\].
+
+### `sspc`
+
+More solid layer asset data.
+
+|Field Name |Size|Type      | Description   |
+|-----------|----|----------|---------------|
+|           | 32 |          |               |
+| Width     | 2  | `uint16` |               |
+|           | 2  |          |               |
+| Height    | 2  | `uint16` |               |
+
+
 ### `LIST` `Fold`
 
 Top level item.
