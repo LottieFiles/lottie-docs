@@ -217,9 +217,8 @@ Property metadata.
 |                   | 8  | `float64`| Always `1.0`? |
 |                   | 8  | `float64`| Always `1.0`? |
 |                   | 8  | `float64`| Always `1.0`? |
-|                   | 2  |          | Set to `0001` for gradients, markers, orientation, shapes, eveything else has it at `0000` |
-|                   | 1  |          | Always `00`? |
-| Type?             | 2  |          | `0101` for colors, `0404` for enums, most other properties have `0809` but I've seen other values too |
+| Type?             | 3  | Flags    | See below     |
+|                   | 1  |          | Seems correlated with the previous byte, it's set for `04` for enum properties |
 |                   | 7  |          | Bunch of `00` |
 | Animated          | 1  |          | Set to `1` when animated, kinda the reverse of the _Static_ bit in _Attributes_ |
 |                   | 7  |          | Bunch of `00` |
@@ -236,6 +235,11 @@ Attributes:
 
 * _Position_: (1, 3). When `true`, this is a position property, which changes how animated values are parsed.
 * _Static_: (1, 0). When `false`, the property is animated and it will have a `cdat`.
+
+Types:
+
+* _Special_: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.
+* _Color_: (3, 0). Set for color properties (they have a different keyframe format).
 
 124 bytes, most of which seems to be constant:
 
@@ -330,7 +334,7 @@ If the property is an animated position, the keyframe is formatted like so:
 #### Keyframe - No Value
 
 
-Used for shapes and gradients
+Used for shapes and gradients (_Special_ set in `tdb4`)
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
@@ -341,6 +345,20 @@ Used for shapes and gradients
 | Out Speed         | 8  |`float64`     | |
 | Out Influence     | 8  |`float64`     | |
 |                   | 8  |              | |
+
+#### Keyframe - Color
+
+
+|Field Name         |Size|   Type       | Description |
+|-------------------|----|--------------|-------------|
+|                   | 8  |`float64`     | |
+|                   | 8  |`float64`     | |
+| In Speed          | 8  |`float64`     | |
+| In Influence      | 8  |`float64`     | |
+| Out Speed         | 8  |`float64`     | |
+| Out Influence     | 8  |`float64`     | |
+| Value             | 8*4|`float64[4]`  | ARGB 255 |
+|                   | 8*8|`float64[8]`  | |
 
 #### Shape Data
 
@@ -386,6 +404,16 @@ property but there are some cases in which they are both `0.0`.
 
 Contains a `float64`, unknown meaning.
 
+### `otda`
+
+Orientation data
+
+|Field Name         |Size|   Type       | Description |
+|-------------------|----|--------------|-------------|
+| X                 | 8  |`float64`     | X Coordinate|
+| Y                 | 8  |`float64`     | Y Coordinate|
+| Z                 | 8  |`float64`     | Z Coordinate|
+
 ### `LIST` `Fold`
 
 Top level item.
@@ -396,7 +424,7 @@ Item, you can check its properties with `idta` contained inside it.
 
 ### `LIST` `Layr`
 
-Defines a shape layer.
+Defines a layer.
 
 Layer metadata is found in a `ldta`, the layer name is in a `Utf8`.
 
@@ -404,7 +432,8 @@ Go through its `LIST` `tdgp` to get shapes and transforms.
 
 You will find the following match names within it:
 
-* `ADBE Root Vectors Group`: Contains shape data
+* `ADBE Root Vectors Group`: Contains shape data (shape layer in lottie)
+* `ADBE Camera Options Group`: Lottie camera layer
 * `ADBE Transform Group`: Layer transform
 * `ADBE Layer Styles`: Layer styles
 
@@ -468,12 +497,34 @@ For animated properties it replaces `cdat`.
 
 The list header is defined in the chunk `lhd3`, the list data in `ldat`.
 
-### `LIST` `SLay`
+### `LIST` `SLay` / `LIST` `DLay` / `LIST` `CLay`
 
 Some kind of layer not rendered to lottie.
 
 They contain `ADBE Camera Options Group` with a property called `ADBE Camera Zoom`.
 
+`SLay` have names like "Top" and "Front", perhaps they define 3d views.
+
+`CLay` seem to be custom views.
+
+### `LIST` `SecL`
+
+Markers Layer.
+
+### `LIST` `otst`
+
+Orientation property.
+
+Contains a  `LIST` `tbds` and a `LIST` `otky` to define a shape property.
+
+### `LIST` `otky`
+
+Contains a sequence of `otda` with the orientation data for each keyframe.
+
+### `LIST` `CpS2`
+
+They contain a `CsCt` and two `Utf8`, the last of which seems to
+contain a locale name (eg: `en_US`)
 
 AfterEffects Logic
 ------------------
@@ -570,6 +621,10 @@ ADBE Material Options Group :
 ADBE Audio Group :
 ADBE Layer Sets :
 ADBE Time Remapping : prop=tm
+
+{aep_mn}
+ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
+ADBE Camera Aperture : prop=pe
 
 
 ### Shapes
