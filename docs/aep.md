@@ -197,20 +197,48 @@ The Type field above can have the following values:
 * `4`: Composition
 * `7`: Footage
 
-### `tbd4`
+### `tdb4`
 
 Property metadata.
 
 |Field Name         |Size|   Type   | Description |
 |-------------------|----|----------|-------------|
-|                   | 3  |          | |
-| Components        | 1  | `uint8`  |Number of values in a multi-dimensional|
+|                   | 2  |          | Always `db 99`? |
+| Components        | 2  | `uint16` | Number of values in a multi-dimensional |
 | Attributes        | 2  | Flags    | |
+|                   | 1  |          | |
+|                   | 1  |          | Some sort of flag, it has value `03` for position properties |
+|                   | 2  |          | |
+|                   | 2  |          | |
+|                   | 2  |          | Always `0000` ? |
+|                   | 2  |          | 2nd most significant bit always on, perhaps some kind of flag |
+|                   | 8  | `float64`| Most of the time `0.0001` |
+|                   | 8  | `float64`| Most of the time `1.0`, sometimes `1.777` |
+|                   | 8  | `float64`| Always `1.0`? |
+|                   | 8  | `float64`| Always `1.0`? |
+|                   | 8  | `float64`| Always `1.0`? |
+|                   | 2  |          | Set to `0001` for gradients, markers, orientation, shapes, eveything else has it at `0000` |
+|                   | 1  |          | Always `00`? |
+| Type?             | 2  |          | `0101` for colors, `0404` for enums, most other properties have `0809` but I've seen other values too |
+|                   | 7  |          | Bunch of `00` |
+| Animated          | 1  |          | Set to `1` when animated, kinda the reverse of the _Static_ bit in _Attributes_ |
+|                   | 7  |          | Bunch of `00` |
+|                   | 4  |          | Usually 0, probs flags |
+|                   | 4  |          | Mst likely flags, only last byte seems to contain data |
+|                   | 8  | `float64`| Always `0.0`? |
+|                   | 8  | `float64`| Mostly `0.0`, sometimes `0.333` |
+|                   | 8  | `float64`| Always `0.0`? |
+|                   | 8  | `float64`| Mostly `0.0`, sometimes `0.333` |
+|                   | 4  |          | Probs some flags |
+|                   | 4  |          | Probs some flags |
 
-Flags:
+Attributes:
 
 * _Position_: (1, 3). When `true`, this is a position property, which changes how animated values are parsed.
 * _Static_: (1, 0). When `false`, the property is animated and it will have a `cdat`.
+
+124 bytes, most of which seems to be constant:
+
 
 ### `cdat`
 
@@ -278,6 +306,11 @@ Given `n` as the number of dimensions found in `tdb4` (eg: 3 for 3D positions):
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
+|                   |8* 2|`float64[2]`  | |
+| In Speed          | 8  |`float64`     | |
+| In Influence      | 8  |`float64`     | |
+| Out Speed         | 8  |`float64`     | |
+| Out Influence     | 8  |`float64`     | |
 | Value             |8* n|`float64[n]`  | Value |
 |                   |8* n|`float64[n]`  | |
 |                   |8* n|`float64[n]`  | |
@@ -294,12 +327,19 @@ If the property is an animated position, the keyframe is formatted like so:
 | Tan In            |8* n|`float64[n]`  |Spatial tangents|
 | Tan Out           |8* n|`float64[n]`  |Spatial tangents|
 
-#### Keyframe - Gradient
+#### Keyframe - No Value
 
+
+Used for shapes and gradients
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-|                   |8*6 |`float64[6]`  | |
+|                   | 8  |              | |
+|                   | 8  |`float64`     | |
+| In Speed          | 8  |`float64`     | |
+| In Influence      | 8  |`float64`     | |
+| Out Speed         | 8  |`float64`     | |
+| Out Influence     | 8  |`float64`     | |
 |                   | 8  |              | |
 
 #### Shape Data
@@ -331,7 +371,7 @@ Color profile information as ICC data.
 
 ### `wsnm`
 
-Utf-16 encoded string, referring to the screen layout?
+Utf-16 encoded string, contains the name of the "workspace" (window layout in AE)
 
 It's always followed by an `Utf8` with the same content.
 
@@ -341,6 +381,10 @@ It's always followed by an `Utf8` with the same content.
 
 In some cases they seem to indicate minimum and maximum values for that
 property but there are some cases in which they are both `0.0`.
+
+### `ppSn`
+
+Contains a `float64`, unknown meaning.
 
 ### `LIST` `Fold`
 
@@ -525,6 +569,7 @@ ADBE Extrsn Options Group :
 ADBE Material Options Group :
 ADBE Audio Group :
 ADBE Layer Sets :
+ADBE Time Remapping : prop=tm
 
 
 ### Shapes
@@ -704,11 +749,24 @@ ADBE Opacity: prop=o [^100] : 1
 {aep_mn}
 ADBE Vector Transform Group : object=shapes/transform
 ADBE Vector Anchor Point: prop=a
+ADBE Vector Anchor: prop=a : probably an outdated name
 ADBE Vector Position: prop=p
-ADBE Vector Scale: prop=s [^100]
+ADBE Vector Scale: prop=s
 ADBE Vector Rotate X: prop=rx
 ADBE Vector Rotate Y: prop=ry
 ADBE Vector Rotate Z: prop=rz or just normal rotation
+ADBE Vector Rotation: prop=r
+ADBE Vector Group Opacity: prop=o : 1
+
+
+{aep_mn}
+ADBE Vector Repeater Transform: object=shapes/repeater-transform
+ADBE Vector Repeater Anchor Point: prop=a
+ADBE Vector Repeater Position: prop=p
+ADBE Vector Repeater Scale: prop=s [^100]
+ADBE Vector Repeater Rotation: prop=r
+ADBE Vector Repeater Start Opacity: prop=so [^100] : 1
+ADBE Vector Repeater End Opacity: prop=so [^100] : 1
 
 ### Misc
 
