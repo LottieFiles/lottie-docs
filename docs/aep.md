@@ -48,7 +48,7 @@ Basic Types
 |`float32`| 4 | IEEE float                      |
 |`float64`| 8 | IEEE float                      |
 |`string` | * | Text, usually utf-8 encoded     |
-|`string0`| * | NUL terminated string           |
+|`string0`| * | NUL terminated string, note that you might find junk data after the NUL (This can be caused by renaming something to a shorter name) |
 |`bytes`  | * | Unformatted / unknown data      |
 
 
@@ -122,7 +122,7 @@ so take care to not read over the chunk length.
 Contains utf-8 encoded text. Sometimes it contains the string `-_0_/-` which (I guess)
 is used as a placeholder for objects lacking a name.
 
-### `tdsn`
+### `tdsn` / `fnam` / `pdnm`
 
 Contains a `Utf8` chunk, used for object names
 
@@ -501,6 +501,39 @@ encountered in the wild:
 |22.6   |`5d 2b 0b 33 06 3b`|
 |23.2.1 |`5e 03 0b 39 0e 03`|
 
+### `EfDC`
+
+The first byte contains the number of `LIST` `EfDf` in a `LIST` `EfdG`
+
+### `parn`
+
+Contains a `uint64` with the number of parameters in a `LIST` `parT`.
+
+### `pard`
+
+Effect parameter definition.
+
+|Field Name |Size|Type      | Description   |
+|-----------|----|----------|---------------|
+|           | 15 |          |               |
+| Type      |  1 |`uint8`   |Parameter type |
+| Name      | 32 |`string0` | |
+
+Types:
+
+* 0: Layer
+* 2: Scalar
+* 3: Angle
+* 4: Boolean
+* 5: Color
+* 6: 2D
+* 7: Enum
+* 10: Scalar (again?)
+* 13: Group
+* 15: Unknown
+* 18: 3D
+
+
 ### `LIST` `Fold`
 
 Top level item.
@@ -621,6 +654,53 @@ Asset folder contents, contains several `LIST` `Item`.
 
 
 ### `LIST` `btdk`
+
+For some reason this doesn't conform to the RIFX specs, instead of a list
+it's some kind of blob.
+
+### `LIST` `sspc`
+
+Effect Definiton.
+
+The generic effect name is in `fnam` > `Utf8`.
+
+The effect parameters are defined in `LIST` `parT`.
+If the effect type has already been encountered, you might not find the
+`LIST` `parT` here, you might need to match the name to an entry in `LIST` `EfdG`.
+
+It finally contains a `LIST` `tdgp` where the effect properties are present
+like any other animated property. You can also find the name
+of the effect object in `fnam` > `Utf8`.
+
+
+### `LIST` `parT`
+
+Effect parameters.
+
+Contains a `parn` with the number of parameters, then follows
+a list of `tdmn` with the match name of the parameter followed by
+`pard` with its definition.
+
+For some parameters you might also have `pdnm` with its name.
+
+The first property seems to be a dummy?
+
+### `LIST` `EfdG`
+
+Effect definitions.
+
+This is where effect types used by the project are defined.
+
+Basically it repeats the first instance of any effect found in the layers.
+
+it contains a `EfDC` with the number of effects, and that many `LIST` `EfDf`.
+
+
+### `LIST` `EfDf`
+
+Effect type definition.
+
+Contains a `tdmn` with the match name of the effect and a `LIST` `sspc`.
 
 AfterEffects Logic
 ------------------
@@ -812,6 +892,7 @@ ADBE Material Options Group :
 ADBE Audio Group :
 ADBE Layer Sets :
 ADBE Time Remapping : prop=tm
+ADBE Effect Parade : prop=ef
 
 {aep_mn}
 ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
@@ -1186,7 +1267,7 @@ Used instead of `Utf8`.
 
 For some reason they have their value in a `<string>` but are not string in the RIFX.
 
-### tdsn / fnam
+### tdsn / fnam / pdnm
 
 These elements contain children but they are not `LIST` in RIFX, that's the only thing of note.
 
