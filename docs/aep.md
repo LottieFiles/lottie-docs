@@ -114,6 +114,9 @@ Starts with an `id`, specifying the type of the list, then followed by sub-chunk
 
 The format of specific `LIST` types are described later in this document.
 
+Note that the `List` chunk with `id` `btdk` doesn't conform to RIFF, it's just a binary blob
+so take care to not read over the chunk length.
+
 ### `Utf8`
 
 Contains utf-8 encoded text. Sometimes it contains the string `-_0_/-` which (I guess)
@@ -156,7 +159,7 @@ Note that End Time might have a value of FFFF, if that's the case assume it to b
 
 ### `ldta`
 
-Layer data.
+Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to older versions.
 
 |Field Name         |Size|   Type   | Description |
 |-------------------|----|----------|-------------|
@@ -456,6 +459,27 @@ Footage / asset data.
 
 JSON string containing external asset info.
 
+### `head`
+
+Seems the first 6 bytes contain AE version information.
+
+I haven't been able to decode it fully but here's a list of values
+encountered in the wild:
+
+|Version|Bytes              |
+|-------|-------------------|
+|15.0   |`5c 06 07 38 06 b4`|
+|16.0   |`5d 04 0b 00 06 eb`|
+|16.0.1 |`5d 04 0b 00 0e 30`|
+|16.1.2 |`5d 05 0b 00 96 37`|
+|16.1.3 |`5d 05 0b 00 9e 05`|
+|17.0   |`5d 09 4b 08 06 2b`|
+|17.0.4 |`5d 0b 0b 08 26 3b`|
+|18.2.1 |`5d 1b 0b 11 0e 08`|
+|18.4   |`5d 1d 0b 12 06 26`|
+|22.0   |`5d 1d 0b 70 06 6f`|
+|22.6   |`5d 2b 0b 33 06 3b`|
+|23.2.1 |`5e 03 0b 39 0e 03`|
 
 ### `LIST` `Fold`
 
@@ -577,6 +601,9 @@ Contains `alas` for external assets.
 
 Asset folder contents, contains several `LIST` `Item`.
 
+
+### `LIST` `btdk`
+
 AfterEffects Logic
 ------------------
 
@@ -634,6 +661,40 @@ the first 4 bytes of `opti` will change based on the file format.
 
 There will also be a `LIST` `CLRS` with some `Utf8`, in there there's
 some JSON with base64-encoded ICC color profiles.
+
+
+### Layers
+
+Layers are defined in `LIST` `Layr`.
+
+There are different types of layers:
+
+#### Shape Layer
+
+For shapes look for the match name `ADBE Root Vectors Group`.
+
+#### Camera Layer
+
+For camera settings look for the match name `ADBE Camera Options Group`.
+
+#### Text Layer
+
+For text contents look for the match name `ADBE Text Properties`.
+
+#### Asset Layer
+
+They have a non-zero Source ID in `ldta`.
+
+Image layers and similar will point to an appropriate asset.
+
+Several layer types point to a solid asset:
+* Solid layers
+* Null layers
+* Adjustment layers
+
+#### Light Layer
+
+For light settings look for the match name `ADBE Light Options Group`.
 
 
 ### Objects
