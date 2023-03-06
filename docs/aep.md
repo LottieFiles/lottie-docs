@@ -163,8 +163,8 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 
 |Field Name         |Size|   Type   | Description |
 |-------------------|----|----------|-------------|
-|                   | 5  |          | |
-| Quality           | 2  | `uint16` | |
+| Layer ID          | 4  | `uint32` | |
+| Quality           | 2  | `uint16` | `0`: Wireframe, `1`: Draft, `2`: Best     |
 |                   | 7  |          | |
 | Start Time        | 2  |`sint16`  | Time offset for times withing the layer |
 |                   | 6  |          | |
@@ -175,15 +175,32 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 | Attributes        | 3  | Flags    | |
 | Source ID         | 4  | `uint32` | Item id for the used asset |
 |                   | 20 |          | |
-| Layer Name        | *  | `string0`| It's repeated in the `Utf8` chunk right after |
+| Layer Name        | 32 | `string0`| It's repeated in the `Utf8` chunk right after |
+|                   | 35 |          | |
+| Layer Type        |  1 | `uint8`  | |
+| Parent ID         |  4 |`uint32`  |ID of the parent layer, if any |
+
 
 With the following Attributes:
 
+* _Bicubic Sampling_: (0, 6)
+* _Adjustment_: (1, 1) Whether it's an adjustment layer
 * _Threedimensional_: (1, 2)
+* _Solo_: (1, 3) (UI thing, only displays that layer)
+* _Null_: (1, 7) Whether it's a null layer
 * _Visible_: (2, 0)
 * _Effects_: (2, 2)
 * _Motion Blur_: (2, 3)
 * _Locked_: (2, 5)
+* _Shy_: (2, 6) (Used to hide some layers in the AE UI)
+* _Conitnuosly Rasterize_ (vector) / _Collapse Transform_ (comps): (2, 7)
+
+Layer Types:
+
+* 0: Asset layer
+* 1: Light Layer
+* 2: Camera Layer
+* 4: Shape Layer
 
 ### `idta`
 
@@ -201,6 +218,8 @@ The Type field above can have the following values:
 * `1`: Folder
 * `4`: Composition
 * `7`: Footage
+
+The last 2 bytes of this field seem to change every time you make a change.
 
 ### `tdb4`
 
@@ -566,9 +585,7 @@ The list header is defined in the chunk `lhd3`, the list data in `ldat`.
 
 ### `LIST` `SLay` / `LIST` `DLay` / `LIST` `CLay`
 
-Some kind of layer not rendered to lottie.
-
-They contain `ADBE Camera Options Group` with a property called `ADBE Camera Zoom`.
+They seem to be camera layers used to store internal views, not exported to lottie.
 
 `SLay` have names like "Top" and "Front", perhaps they define 3d views.
 
@@ -683,11 +700,13 @@ For text contents look for the match name `ADBE Text Properties`.
 
 #### Asset Layer
 
-They have a non-zero Source ID in `ldta`.
+(Also known as AVLayer in AE) They have a non-zero Source ID in `ldta`.
 
 Image layers and similar will point to an appropriate asset.
 
-Several layer types point to a solid asset:
+Several layer types point to a solid asset, you need to check the layer
+attributes to distinguish between them:
+
 * Solid layers
 * Null layers
 * Adjustment layers
@@ -796,12 +815,14 @@ ADBE Time Remapping : prop=tm
 {aep_mn}
 ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
 ADBE Camera Aperture : prop=pe
+ADBE Camera Zoom :
 
 
 ### Shapes
 
 {aep_mn}
 ADBE Vector Group : object=shapes/group
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
 ADBE Vectors Group : prop=it
 ADBE Vector Transform Group : Transform
 ADBE Vector Materials Group :
@@ -846,6 +867,7 @@ ADBE Vector Shape : prop=ks [^shape]
 
 {aep_mn}
 ADBE Vector Graphic - Fill : object=shapes/fill
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
 ADBE Vector Fill Color : prop=c [^color] : \[255, 255, 0, 0\]
 ADBE Vector Fill Opacity : prop=o : 100
 ADBE Vector Fill Rule : prop=r [^enum] : 1
@@ -853,6 +875,7 @@ ADBE Vector Composite Order : if 2, it should be drawn over the previous shape :
 
 {aep_mn}
 ADBE Vector Graphic - Stroke : object=shapes/stroke
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
 ADBE Vector Stroke Color : prop=c [^color] : \[255, 255, 255, 255, \]
 ADBE Vector Stroke Opacity : prop=o : 100
 ADBE Vector Stroke Width : prop=w : 2
@@ -866,6 +889,7 @@ ADBE Vector Composite Order : if 2, it should be drawn over the previous shape :
 
 {aep_mn}
 ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
 ADBE Vector Grad Start Pt : prop=s
 ADBE Vector Grad End Pt : prop=e
 ADBE Vector Grad HiLite Length : prop=h
@@ -877,6 +901,7 @@ ADBE Vector Composite Order : if 2, it should be drawn over the previous shape :
 
 {aep_mn}
 ADBE Vector Graphic - G-Stroke : object=shapes/gradient-stroke
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
 ADBE Vector Grad Start Pt : prop=s
 ADBE Vector Grad End Pt : prop=e
 ADBE Vector Grad HiLite Length : prop=h
@@ -1012,7 +1037,8 @@ ADBE Vector Opacity (group transform)
 
 ### Notes
 
-[^enum]: Enumerations needs to be converted from floats, but the values match
+[^enum]: Enumerations needs to be converted from floats, but the values match.
+[^blend]: Blend mode has different values than Lottie, see the section below for details.
 [^int]: Needs to be converted from `float` to `int`.
 [^shape]: How to parse this?
 [^color]: Colors are defined as 4 floats (ARGB) in \[0, 255\].
@@ -1021,6 +1047,41 @@ ADBE Vector Opacity (group transform)
 
 ///Footnotes Go Here///
 
+
+Enumerations
+------------
+
+Most enumerated values are the same in Lottie and AEP, this section lists the exceptions to this
+
+
+### Blend Mode
+
+| Name          |AEP|Lottie|
+|---------------|---|---|
+|Normal         | 1 | 0 |
+|Darken         | 3 | 4 |
+|Multiply       | 4 | 1 |
+|Color Burn     | 5 | 7 |
+|Linear Burn    | 6 |   |
+|Darker Color   | 7 |   |
+|Lighten        | 9 | 5 |
+|Screen         | 10| 2 |
+|Color Dodge    | 11| 6 |
+|Linear Dodge   | 12|   |
+|Lighter Color  | 13|   |
+|Overlay        | 15| 3 |
+|Soft Light     | 16| 9 |
+|Hard Light     | 17| 8 |
+|Linear Light   | 18|   |
+|Vivid Light    | 19|   |
+|Pin Light      | 20|   |
+|Hard Mix       | 21|16 |
+|Difference     | 23|10 |
+|Exclusion      | 24|11 |
+|Hue            | 26|12 |
+|Saturation     | 27|13 |
+|Color          | 28|14 |
+|Luminosity     | 29|15 |
 
 Gradient XML
 ------------
@@ -1144,6 +1205,7 @@ Resources
 
 * [aftereffects-aep-parser](https://github.com/boltframe/aftereffects-aep-parser) A basic AEP parser written in Go.
 * [Multimedia Programming Interface and Data Specifications 1.0](https://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf) RIFF specs PDF.
-* [IEEE-754 Floating-Point Conversion](https://babbage.cs.qc.cuny.edu/IEEE-754.old/Decimal.html) Float to hex converter.
+* [Floating Point to Hex Converter](https://gregstoll.com/~gregstoll/floattohex/) Float to hex converter.
 * [Shape Layer Match Names](https://ae-scripting.docsforadobe.dev/matchnames/layer/shapelayer.html)
 * [bodymovin-extension](https://github.com/bodymovin/bodymovin-extension) AE extensions that exports to Lottie
+* [After Effects Scripting Guide](https://ae-scripting.docsforadobe.dev/)
