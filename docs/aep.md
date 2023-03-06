@@ -13,9 +13,11 @@ You can perform the parsing in 3 steps:
 3. Traverse that tree to map find the relevant objects and properties
 
 Step 1 is fairly straightforward, RIFX is fairly easy to parse. <br/>
-Step 2 is the hard part as there's nor real documentation on how the data is laid out. <br/>
+Step 2 is the hard part as there's no official documentation on how the data is laid out,
+you can find the results of discovery on this in the [Chunks](#chunks) section. <br/>
 Step 3 should be rather easy as now you basically only need to do the
-same as the bodymovin plugin to convert the strucured AE data into lottie.
+same as the bodymovin plugin to convert the strucured AE data into lottie,
+info on this is in the [AfterEffects Logic](#aftereffects-logic) section.
 
 
 RIFX
@@ -168,7 +170,7 @@ Layer data.
 | Out Time          | 2  | Time     | Same as `op` in Lottie |
 |                   | 6  |          | |
 | Attributes        | 3  | Flags    | |
-| Source ID         | 4  | `uint32` | |
+| Source ID         | 4  | `uint32` | Item id for the used asset |
 |                   | 20 |          | |
 | Layer Name        | *  | `string0`| It's repeated in the `Utf8` chunk right after |
 
@@ -189,7 +191,7 @@ Item data.
 |-------------------|----|----------|-------------|
 | Type              | 2  | `uint16` | |
 |                   | 14 |          | |
-| ID                | 4  | `uint32` | |
+| ID                | 4  | `uint32` | ID used to reference this item |
 
 The Type field above can have the following values:
 
@@ -417,11 +419,20 @@ Orientation data
 
 ### `opti`
 
-Solid layer asset data.
+Asset data, format depends on type
+
 
 |Field Name |Size|Type      | Description   |
 |-----------|----|----------|---------------|
-|           | 10 |          |               |
+| Type      | 4  | `string` | Asset type    |
+
+### Solid
+
+_Type_ `Soli`, data for solid layers.
+
+|Field Name |Size|Type      | Description   |
+|-----------|----|----------|---------------|
+|           | 6  |          |               |
 | Alpha     | 4  | `float32`|               |
 | Red       | 4  | `float32`|               |
 | Green     | 4  | `float32`|               |
@@ -432,7 +443,7 @@ Color components are in \[0, 1\].
 
 ### `sspc`
 
-More solid layer asset data.
+Footage / asset data.
 
 |Field Name |Size|Type      | Description   |
 |-----------|----|----------|---------------|
@@ -440,6 +451,10 @@ More solid layer asset data.
 | Width     | 2  | `uint16` |               |
 |           | 2  |          |               |
 | Height    | 2  | `uint16` |               |
+
+### `alas`
+
+JSON string containing external asset info.
 
 
 ### `LIST` `Fold`
@@ -554,19 +569,72 @@ Contains a sequence of `otda` with the orientation data for each keyframe.
 They contain a `CsCt` and two `Utf8`, the last of which seems to
 contain a locale name (eg: `en_US`)
 
+### `LIST` `Als2`
+
+Contains `alas` for external assets.
+
+### `LIST` `Sfdr`
+
+Asset folder contents, contains several `LIST` `Item`.
+
 AfterEffects Logic
 ------------------
 
-### Main Composition
+### Project Structure
 
-Search for `LIST` `Fold`, then iterate through it to look for a `LIST` `Item`
-with `idta` type of `4`.
+Assets and compositions are stored in a folder structure, on the `RIFX`,
+looks like for a `LIST` `Fold` chunk.
+
+Inside here you'll find (among other things) `LIST` `Item` chunks,
+they all contain an `idta` which tells you how to interpret the item and its ID.
+
+#### Compositions
+
+`idta` has type of `4`. You need to know which composition to extract as
+a lottie corresponds to a specific comp (with other compositions showing
+as assets for precomps).
 
 The name of the composition is in the first `Utf8` chunk.
 
 Its properties are in `cdta`.
 
 Then look for `LIST` `Layr` to parse layers.
+
+#### Folders
+
+`idta` type `1`. These contain additional items inside them.
+
+The name of the folder is in the first `Utf8` chunk.
+
+Look for a `LIST` `Sfdr` and iterate through it for the child items.
+
+#### Assets
+
+`idta` type `7`. These can have different kinds of contents.
+
+`LIST` `Pin ` will contain the asset data:
+
+Look for `sspc` to get the size for visual assets.
+
+The type of asset is defined in the first 4 bytes of `opti`.
+
+##### Solids
+
+For some the `Item` has an `Utf8` but it seems to always be empty
+need to find the name from `opti`.
+
+##### Files
+
+The `Uft8` in `Item` only has a value if the user has set an explicit value for the name.
+
+The file path is in `List` `Pin ` > `LIST` `Als2` > `alas`.
+Interpret it as JSON and get `fullpath`.
+
+the first 4 bytes of `opti` will change based on the file format.
+
+There will also be a `LIST` `CLRS` with some `Utf8`, in there there's
+some JSON with base64-encoded ICC color profiles.
+
 
 ### Objects
 
@@ -628,6 +696,20 @@ per keyframe.
 If the property is animated, there will be multiple `Utf8`, one
 per keyframe.
 
+### Assets
+
+#### Image
+
+Defined within `LIST` `Item`, it will have `idta` with type `7`.
+
+Within that there's a `LIST` `Pin `, containing the following:
+
+`List` `Als2` with `alas`, which in turn has some JSON.
+Inside the JSON you can get `fullpath`.
+
+`opti`: Contains the asset name.
+
+`LIST` `CLRS`, the last `Utf8` here has some JSON with a base64-encoded color profile.
 
 Match Names
 -----------
