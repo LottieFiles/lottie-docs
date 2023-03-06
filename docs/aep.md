@@ -184,6 +184,7 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 With the following Attributes:
 
 * _Bicubic Sampling_: (0, 6)
+* _Auto Orient_: (1, 0)
 * _Adjustment_: (1, 1) Whether it's an adjustment layer
 * _Threedimensional_: (1, 2)
 * _Solo_: (1, 3) (UI thing, only displays that layer)
@@ -1206,6 +1207,6 @@ Resources
 * [aftereffects-aep-parser](https://github.com/boltframe/aftereffects-aep-parser) A basic AEP parser written in Go.
 * [Multimedia Programming Interface and Data Specifications 1.0](https://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf) RIFF specs PDF.
 * [Floating Point to Hex Converter](https://gregstoll.com/~gregstoll/floattohex/) Float to hex converter.
-* [Shape Layer Match Names](https://ae-scripting.docsforadobe.dev/matchnames/layer/shapelayer.html)
 * [bodymovin-extension](https://github.com/bodymovin/bodymovin-extension) AE extensions that exports to Lottie
 * [After Effects Scripting Guide](https://ae-scripting.docsforadobe.dev/)
+* [Shape Layer Match Names](https://ae-scripting.docsforadobe.dev/matchnames/layer/shapelayer.html)
