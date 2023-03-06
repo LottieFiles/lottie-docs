@@ -518,6 +518,8 @@ Effect parameter definition.
 |           | 15 |          |               |
 | Type      |  1 |`uint8`   |Parameter type |
 | Name      | 32 |`string0` | |
+|           |  4 |          | |
+|Default?   |  4 |          | |
 
 Types:
 
@@ -528,7 +530,7 @@ Types:
 * 5: Color
 * 6: 2D
 * 7: Enum
-* 10: Scalar (again?)
+* 10: Slider
 * 13: Group
 * 15: Unknown
 * 18: 3D
@@ -672,6 +674,8 @@ It finally contains a `LIST` `tdgp` where the effect properties are present
 like any other animated property. You can also find the name
 of the effect object in `fnam` > `Utf8`.
 
+Inside there you can also find a match name with `ADBE Effect Built In Params`
+which will contain values for built-in effect parameters.
 
 ### `LIST` `parT`
 
@@ -681,7 +685,7 @@ Contains a `parn` with the number of parameters, then follows
 a list of `tdmn` with the match name of the parameter followed by
 `pard` with its definition.
 
-For some parameters you might also have `pdnm` with its name.
+Enum parameters have their values in a  `pdnm` separated by `|` pipes.
 
 The first property seems to be a dummy?
 
@@ -1101,15 +1105,38 @@ ADBE Vector Repeater Rotation: prop=r
 ADBE Vector Repeater Start Opacity: prop=so [^100] : 1
 ADBE Vector Repeater End Opacity: prop=so [^100] : 1
 
+
+### Effects
+
+{aep_mn}
+ADBE Tint : object=effects/tint-effect
+ADBE Fill : object=effects/fill-effect
+ADBE Stroke : object=effects/stroke-effect
+ADBE Tritone : object=effects/tritone-effect
+ADBE Pro Levels2 : object=effects/pro-levels-effect
+ADBE Drop Shadow : object=effects/drop-shadow-effect
+ADBE Radial Wipe : object=effects/radial-wipe-effect
+ADBE Displacement Map : object=effects/displacement-map-effect
+ADBE Set Matte3 : object=effects/matte3-effect
+ADBE Gaussian Blur 2 : object=effects/gaussian-blur-effect
+ADBE Twirl : Todo?
+ADBE MESH WARP : object=effects/mesh-warp-effect
+ADBE Ripple : object=effects/wavy-effect
+ADBE Spherize : object=effects/spherize-effect
+ADBE FreePin3 : object=effects/puppet-effect
+
+{aep_mn}
+ADBE Effect Built In Params: : Marks a `tdgp` with built-in effect properties
+ADBE Effect Mask Opacity :
+
 ### Misc
 
 {aep_mn}
 ADBE Group End : Indicates the end of a `LIST` `tdgp`
 
+
 <!--
 to verify:
-ADBE Vector Blend Mode (group, fill, stroke)
-ADBE Vector Composite Order (fill, stroke)
 ADBE Vector Grad Type
 ADBE Vector Offset Copies (offset path)
 ADBE Vector Offset Copy Offset (offset path)
