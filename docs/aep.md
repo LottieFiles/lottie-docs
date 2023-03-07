@@ -114,7 +114,7 @@ Starts with an `id`, specifying the type of the list, then followed by sub-chunk
 
 The format of specific `LIST` types are described later in this document.
 
-Note that the {sl:`LIST` `btdk`} doesn't conform to RIFF, it's just a binary blob
+Note that the {sl:`LIST` `btdk`} doesn't conform to RIFF,
 so take care to not read over the chunk length.
 
 ### `Utf8`
@@ -569,6 +569,17 @@ Types:
 * 18: 3D
 
 
+### `prin`
+
+Seems to always have the same content:
+
+4 `00` bytes, the string `ADBE Escher`, 37 `00`, the string `Classic 3D`,
+41 `00`, and ends with `01`.
+
+### `prda`
+
+Seems to always have the same content: 3 `00`, a `01`, 8 `00`.
+
 ### `LIST` `Fold`
 
 Top level item.
@@ -691,7 +702,10 @@ Asset folder contents, contains several {sl:`LIST` `Item`}.
 ### `LIST` `btdk`
 
 For some reason this doesn't conform to the RIFX specs, instead of a list
-it's some kind of blob.
+its data is encoded in [Carousel Object Structure](https://en.wikipedia.org/wiki/PDF#File_format) (COS).
+
+The COS format is the same used in PDF but it's extremely difficult to
+find detailed information on it.
 
 ### `LIST` `sspc`
 
@@ -742,6 +756,11 @@ Contains a {sl:`tdmn`} with the match name of the effect and a {sl:`LIST` `sspc`
 ### `LIST` `ExEn`
 
 Contains a {sl:`Utf8`} with the expression language (eg: `javascript-1.0`).
+
+### `LIST` `PRin`
+
+Contains a {sl:`prin`} and a `prda`.
+
 
 AfterEffects Logic
 ------------------
@@ -1395,3 +1414,4 @@ Resources
 * [bodymovin-extension](https://github.com/bodymovin/bodymovin-extension) AE extensions that exports to Lottie
 * [After Effects Scripting Guide](https://ae-scripting.docsforadobe.dev/)
 * [Shape Layer Match Names](https://ae-scripting.docsforadobe.dev/matchnames/layer/shapelayer.html)
+* [Portable document format — Part 1: PDF 1.7](https://web.archive.org/web/20141020130815/http://wwwimages.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf) The only COS reference I've found
