@@ -1577,7 +1577,7 @@ class EditorExample(BlockProcessor):
 
 class AepMatchNameTable(BlockProcessor):
     re_fence_start = re.compile(r"\{aep_mn\}")
-    re_row = re.compile(r'^\s*(?P<mn>[^:]+)\s*:\s*(?:(?P<what>\w+)\s*=\s*(?P<lottie>[^: ]+))?\s*(?P<descr>[^:]*)(?:\s*:\s*(?P<default>.*))?')
+    re_row = re.compile(r'^\s*(?P<mn>[^:]+)\s*:\s*(?:(?P<what>\w+)\s*=\s*(?P<lottie>[^: ]+))?\s*(?P<descr>([^:]|:\S)*)(?:\s*:\s*(?P<default>.*))?')
 
     def __init__(self, parser, schema_data: Schema):
         super().__init__(parser)

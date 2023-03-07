@@ -128,7 +128,7 @@ Contains a {sl:`Utf8`} chunk, used for object names
 
 ### `tdmn`
 
-Contains a NUL-terminated string (You'll need to strip excess `\0`) and defines a Match Name.
+Contains a NUL-terminated string (You'll need to strip excess `\0`) and defines a [Match Name](#match-names).
 
 ### `cdta`
 
@@ -1162,16 +1162,16 @@ ADBE Spherize : object=effects/spherize-effect
 ADBE FreePin3 : object=effects/puppet-effect
 
 {aep_mn}
-ADBE Effect Built In Params: : Marks a {sl:`LIST` `tdgp`} with built-in effect properties
+ADBE Effect Built In Params : Marks a {sl:`LIST` `tdgp`} with built-in effect properties
 ADBE Effect Mask Opacity :
 
 {aep_mn}
-ADBE Paint Group : : Data for the paint effect
-ADBE Paint Atom : : Contains the following properties
+ADBE Paint Group : Data for the paint effect
+ADBE Paint Atom : Contains the following properties
 ADBE Paint Duration :
 ADBE Paint Shape :
-ADBE Paint Transform : : Same as other transform but match names starting with `ADBE Paint`
-ADBE Paint Properties : : contains the following
+ADBE Paint Transform : Same as other transform but match names starting with `ADBE Paint`
+ADBE Paint Properties : contains the following
 ADBE Paint Clone Layer :
 
 
