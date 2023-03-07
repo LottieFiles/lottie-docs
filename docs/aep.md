@@ -54,7 +54,7 @@ Basic Types
 
 ### Time
 
-Time values are stored as `uint16`. they are scaled by a factor you can find in `cdata`.
+Time values are stored as `uint16`. they are scaled by a factor you can find in {sl:`cdta`}.
 
 To get the actual value in frames you need to do the following:
 
@@ -114,7 +114,7 @@ Starts with an `id`, specifying the type of the list, then followed by sub-chunk
 
 The format of specific `LIST` types are described later in this document.
 
-Note that the `List` chunk with `id` `btdk` doesn't conform to RIFF, it's just a binary blob
+Note that the {sl:`LIST` `btdk`} doesn't conform to RIFF, it's just a binary blob
 so take care to not read over the chunk length.
 
 ### `Utf8`
@@ -124,7 +124,7 @@ is used as a placeholder for objects lacking a name.
 
 ### `tdsn` / `fnam` / `pdnm`
 
-Contains a `Utf8` chunk, used for object names
+Contains a {sl:`Utf8`} chunk, used for object names
 
 ### `tdmn`
 
@@ -175,7 +175,7 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 | Attributes        | 3  | Flags    | |
 | Source ID         | 4  | `uint32` | Item id for the used asset |
 |                   | 20 |          | |
-| Layer Name        | 32 | `string0`| It's repeated in the `Utf8` chunk right after |
+| Layer Name        | 32 | `string0`| It's repeated in the {sl:`Utf8`} chunk right after |
 |                   | 35 |          | |
 | Layer Type        |  1 | `uint8`  | |
 | Parent ID         |  4 |`uint32`  |ID of the parent layer, if any |
@@ -259,7 +259,7 @@ Property metadata.
 Attributes:
 
 * _Position_: (1, 3). When `true`, this is a position property, which changes how animated values are parsed.
-* _Static_: (1, 0). When `false`, the property is animated and it will have a `cdat`.
+* _Static_: (1, 0). When `false`, the property is animated and it will have a {sl:`cdat`}.
 
 Types:
 
@@ -273,14 +273,14 @@ Types:
 
 Property static value.
 
-For multi-dimensional properties, you look at the number of components in `tbd4`
+For multi-dimensional properties, you look at the number of components in {sl:`tbd4`}
 and parse that many `float64`, that's the value of the property.
 
 ### `shph`
 
-Header for bezier shape data, contained within `LIST` `shap`.
+Header for bezier shape data, contained within {sl:`LIST` `shap`}.
 
-It's followed by a `LIST` `list` with bezier data.
+It's followed by a {sl:`LIST` `list`} with bezier data.
 
 |Field Name         |Size| Type     | Description       |
 |-------------------|----|----------|-------------------|
@@ -297,7 +297,7 @@ Flags:
 
 ### `lhd3`
 
-Inside a `LIST` `list`, defines the data format, followed by `ldat`.
+Inside a {sl:`LIST` `list`}, defines the data format, followed by {sl:`ldat`}.
 
 |Field Name         |Size| Type     | Description                                                                   |
 |-------------------|----|----------|-------------------------------------------------------------------------------|
@@ -317,9 +317,9 @@ Inside a `LIST` `list`, defines the data format, followed by `ldat`.
 
 | Item Type     | Size  | Type  |
 |---------------|-------|-------|
-| `Gide`        |`00 01`| `02`  |
-| `LItm`        |`00 80`| `01`  |
-| `LRdr`        |`08 c6`| `01`  |
+| {sl:`Gide`}   |`00 01`| `02`  |
+| {sl:`LItm`}   |`00 80`| `01`  |
+| {sl:`LRdr`}   |`08 c6`| `01`  |
 | Color Kf      |`00 98`| `04`  |
 | 1D Kf         |`00 30`| `04`  |
 | 2D Kf         |`00 58`| `04`  |
@@ -331,14 +331,14 @@ Inside a `LIST` `list`, defines the data format, followed by `ldat`.
 | No Value Kf   |`00 40`| `04`  |
 
 
-The corresponding `ldat` should have _Item Size_ * _Count_ bytes, and it's omitted if _Count_ is 0.
+The corresponding {sl:`ldat`} should have _Item Size_ * _Count_ bytes, and it's omitted if _Count_ is 0.
 
 
 ### `ldat`
 
-Inside a `LIST` `list`, contains the list data, preceded by `lhd3`.
+Inside a {sl:`LIST` `list`}, contains the list data, preceded by {sl:`lhd3`}.
 
-The number of element is the one defined in `lhd3`.
+The number of element is the one defined in {sl:`lhd3`}.
 
 It has a different format based on certain conditions, follow some of the possible element formats.
 
@@ -360,7 +360,7 @@ All keyframe items start like this:
 
 #### Keyframe - Multi-Dimensional
 
-Given `n` as the number of dimensions found in `tdb4` (eg: 3 for 3D positions):
+Given `n` as the number of dimensions found in {sl:`tdb4`} (eg: 3 for 3D positions):
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
@@ -388,7 +388,7 @@ If the property is an animated position, the keyframe is formatted like so:
 #### Keyframe - No Value
 
 
-Used for shapes and gradients (_Special_ set in `tdb4`)
+Used for shapes and gradients (_Special_ set in {sl:`tdb4`})
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
@@ -416,7 +416,7 @@ Used for shapes and gradients (_Special_ set in `tdb4`)
 
 #### Shape Data
 
-Bezier data, positions are relative to the area defined by `shph`.
+Bezier data, positions are relative to the area defined by {sl:`shph`}.
 
 The list is a sequence of points, appearing in this order:
 
@@ -427,16 +427,16 @@ The list is a sequence of points, appearing in this order:
 * Out Tangent 1
 * ...
 
-Note that all coordinates are relative to the area in `shph` but not to each other.
+Note that all coordinates are relative to the area in {sl:`shph`} but not to each other.
 
-A coordinate of \[0, 0\] will correspond to the top-left corner in `shph`,
+A coordinate of \[0, 0\] will correspond to the top-left corner in {sl:`shph`},
 and \[1, 1\] corresponds to the bottom-right.
 
 
 |Field Name |Size| Type    | Description |
 |-----------|----|---------|-------------|
 | X         | 4  |`float32`| X Coordinate|
-| XY         | 4  |`float32`| X Coordinate|
+| XY        | 4  |`float32`| X Coordinate|
 
 
 ### `pprf`
@@ -447,11 +447,11 @@ Color profile information as ICC data.
 
 Utf-16 encoded string, contains the name of the "workspace" (window layout in AE)
 
-It's always followed by an `Utf8` with the same content.
+It's always followed by an {sl:`Utf8`} with the same content.
 
 ### `tdum` / `tduM`
 
-`float64` values often found inside `LIST` `tdbs`.
+`float64` values often found inside {sl:`LIST` `tdbs`}.
 
 In some cases they seem to indicate minimum and maximum values for that
 property but there are some cases in which they are both `0.0`.
@@ -534,11 +534,11 @@ encountered in the wild:
 
 ### `EfDC`
 
-The first byte contains the number of `LIST` `EfDf` in a `LIST` `EfdG`
+The first byte contains the number of {sl:`LIST` `EfDf`} in a {sl:`LIST` `EfdG`}
 
 ### `parn`
 
-Contains a `uint64` with the number of parameters in a `LIST` `parT`.
+Contains a `uint64` with the number of parameters in a {sl:`LIST` `parT`}.
 
 ### `pard`
 
@@ -574,15 +574,15 @@ Top level item.
 
 ### `LIST` `Item`
 
-Item, you can check its properties with `idta` contained inside it.
+Item, you can check its properties with {sl:`idta`} contained inside it.
 
 ### `LIST` `Layr`
 
 Defines a layer.
 
-Layer metadata is found in a `ldta`, the layer name is in a `Utf8`.
+Layer metadata is found in a {sl:`ldta`}, the layer name is in a {sl:`Utf8`}.
 
-Go through its `LIST` `tdgp` to get shapes and transforms.
+Go through its {sl:`LIST` `tdgp`} to get shapes and transforms.
 
 You will find the following match names within it:
 
@@ -594,62 +594,62 @@ You will find the following match names within it:
 ### `LIST` `tdgp`
 
 Defines a list of an object. To know what type of object, you need to check
-the `tdmn` preceding this chunk.
+the {sl:`tdmn`} preceding this chunk.
 
-The name of the object is in `tdsn` > `Utf8`.
+The name of the object is in {sl:`tdsn`} > {sl:`Utf8`}.
 
 Then follows a sequence of properties / objects defined as such:
 
-`tdmn` specifies the match name of the object, then it's followed by
-chunks that describe said object (usually more `LIST`s).
+{sl:`tdmn`} specifies the match name of the object, then it's followed by
+chunks that describe said object (usually more {sl:`LIST`}s).
 
-Usually the last chunk here is a `tdmn` with value `ADBE Group End`.
+Usually the last chunk here is a {sl:`tdmn`} with value `ADBE Group End`.
 
 ### `LIST` `tdbs`
 
 Defines an object's property. To know which property, you need to
-check the `tdmn` preceding this chunk.
+check the {sl:`tdmn`} preceding this chunk.
 
-It will contain a `tbd4`, and usually `cdat` (static) or a `List` `list` (animated).
+It will contain a {sl:`tbd4`}, and usually {sl:`cdat`} (static) or a `List` `list` (animated).
 
-For properties with expressions, it will have a `Utf8` with the expression code.
+For properties with expressions, it will have a {sl:`Utf8`} with the expression code.
 
 ### `LIST` `GCst`
 
 Defines a gradient.
 
-Contains a `LIST` `tdbs` and a `LIST` `GCky`.
+Contains a {sl:`LIST` `tdbs`} and a {sl:`LIST` `GCky`}.
 
 ### `LIST` `GCky`
 
 Gradient data.
 
-Contains a sequence of `Utf8` formatted in XML with the gradient definition
+Contains a sequence of {sl:`Utf8`} formatted in XML with the gradient definition
 for each keyframe.
 
 ### `LIST` `om-s`
 
-Contains a `LIST` `tbds` and a `LIST` `omks` to define a shape property.
+Contains a {sl:`LIST` `tbds`} and a {sl:`LIST` `omks`} to define a shape property.
 
 ### `LIST` `omks`
 
 Bezier shape data.
 
-Contains a sequence of `LIST` `shap` with the shape data for each keyframe.
+Contains a sequence of {sl:`LIST` `shap`} with the shape data for each keyframe.
 
 ### `LIST` `shap`
 
-Contains a `shph` and a `LIST` `list` with the shape data.
+Contains a {sl:`shph`} and a {sl:`LIST` `list`} with the shape data.
 
 ### `LIST` `CPPl`
 
-Contains a `pprf`.
+Contains a {sl:`pprf`}.
 
 ### `LIST` `list`
 
-For animated properties it replaces `cdat`.
+For animated properties it replaces {sl:`cdat`}.
 
-The list header is defined in the chunk `lhd3`, the list data in `ldat`.
+The list header is defined in the chunk {sl:`lhd3`}, the list data in {sl:`ldat`}.
 
 ### `LIST` `SLay` / `LIST` `DLay` / `LIST` `CLay`
 
@@ -667,24 +667,24 @@ Markers Layer.
 
 Orientation property.
 
-Contains a  `LIST` `tbds` and a `LIST` `otky` to define a shape property.
+Contains a  {sl:`LIST` `tbds`} and a {sl:`LIST` `otky`} to define a shape property.
 
 ### `LIST` `otky`
 
-Contains a sequence of `otda` with the orientation data for each keyframe.
+Contains a sequence of {sl:`otda`} with the orientation data for each keyframe.
 
 ### `LIST` `CpS2`
 
-They contain a `CsCt` and two `Utf8`, the last of which seems to
+They contain a {sl:`CsCt`} and two {sl:`Utf8`}, the last of which seems to
 contain a locale name (eg: `en_US`)
 
 ### `LIST` `Als2`
 
-Contains `alas` for external assets.
+Contains {sl:`alas`} for external assets.
 
 ### `LIST` `Sfdr`
 
-Asset folder contents, contains several `LIST` `Item`.
+Asset folder contents, contains several {sl:`LIST` `Item`}.
 
 
 ### `LIST` `btdk`
@@ -696,15 +696,15 @@ it's some kind of blob.
 
 Effect Definiton.
 
-The generic effect name is in `fnam` > `Utf8`.
+The generic effect name is in {sl:`fnam`} > {sl:`Utf8`}.
 
-The effect parameters are defined in `LIST` `parT`.
+The effect parameters are defined in {sl:`LIST` `parT`}.
 If the effect type has already been encountered, you might not find the
-`LIST` `parT` here, you might need to match the name to an entry in `LIST` `EfdG`.
+{sl:`LIST` `parT`} here, you might need to match the name to an entry in {sl:`LIST` `EfdG`}.
 
-It finally contains a `LIST` `tdgp` where the effect properties are present
+It finally contains a {sl:`LIST` `tdgp`} where the effect properties are present
 like any other animated property. You can also find the name
-of the effect object in `fnam` > `Utf8`.
+of the effect object in {sl:`fnam`} > {sl:`Utf8`}.
 
 Inside there you can also find a match name with `ADBE Effect Built In Params`
 which will contain values for built-in effect parameters.
@@ -713,11 +713,11 @@ which will contain values for built-in effect parameters.
 
 Effect parameters.
 
-Contains a `parn` with the number of parameters, then follows
-a list of `tdmn` with the match name of the parameter followed by
-`pard` with its definition.
+Contains a {sl:`parn`} with the number of parameters, then follows
+a list of {sl:`tdmn`} with the match name of the parameter followed by
+{sl:`pard`} with its definition.
 
-Enum parameters have their values in a  `pdnm` separated by `|` pipes.
+Enum parameters have their values in a  {sl:`pdnm`} separated by `|` pipes.
 
 The first property seems to be a dummy?
 
@@ -729,18 +729,18 @@ This is where effect types used by the project are defined.
 
 Basically it repeats the first instance of any effect found in the layers.
 
-it contains a `EfDC` with the number of effects, and that many `LIST` `EfDf`.
+it contains a {sl:`EfDC`} with the number of effects, and that many {sl:`LIST` `EfDf`}.
 
 
 ### `LIST` `EfDf`
 
 Effect type definition.
 
-Contains a `tdmn` with the match name of the effect and a `LIST` `sspc`.
+Contains a {sl:`tdmn`} with the match name of the effect and a {sl:`LIST` `sspc`}.
 
 ### `LIST` `ExEn`
 
-Contains a `Utf8` with the expression language (eg: `javascript-1.0`).
+Contains a {sl:`Utf8`} with the expression language (eg: `javascript-1.0`).
 
 AfterEffects Logic
 ------------------
@@ -748,62 +748,62 @@ AfterEffects Logic
 ### Project Structure
 
 Assets and compositions are stored in a folder structure, on the `RIFX`,
-looks like for a `LIST` `Fold` chunk.
+looks like for a {sl:`LIST` `Fold`} chunk.
 
-Inside here you'll find (among other things) `LIST` `Item` chunks,
-they all contain an `idta` which tells you how to interpret the item and its ID.
+Inside here you'll find (among other things) {sl:`LIST` `Item`} chunks,
+they all contain an {sl:`idta`} which tells you how to interpret the item and its ID.
 
 #### Compositions
 
-`idta` has type of `4`. You need to know which composition to extract as
+{sl:`idta`} has type of `4`. You need to know which composition to extract as
 a lottie corresponds to a specific comp (with other compositions showing
 as assets for precomps).
 
-The name of the composition is in the first `Utf8` chunk.
+The name of the composition is in the first {sl:`Utf8`} chunk.
 
-Its properties are in `cdta`.
+Its properties are in {sl:`cdta`}.
 
-Then look for `LIST` `Layr` to parse layers.
+Then look for {sl:`LIST` `Layr`} to parse layers.
 
 #### Folders
 
-`idta` type `1`. These contain additional items inside them.
+{sl:`idta`} type `1`. These contain additional items inside them.
 
-The name of the folder is in the first `Utf8` chunk.
+The name of the folder is in the first {sl:`Utf8`} chunk.
 
-Look for a `LIST` `Sfdr` and iterate through it for the child items.
+Look for a {sl:`LIST` `Sfdr`} and iterate through it for the child items.
 
 #### Assets
 
-`idta` type `7`. These can have different kinds of contents.
+{sl:`idta`} type `7`. These can have different kinds of contents.
 
-`LIST` `Pin ` will contain the asset data:
+{sl:`LIST` `Pin `} will contain the asset data:
 
-Look for `sspc` to get the size for visual assets.
+Look for {sl:`sspc`} to get the size for visual assets.
 
-The type of asset is defined in the first 4 bytes of `opti`.
+The type of asset is defined in the first 4 bytes of {sl:`opti`}.
 
 ##### Solids
 
 For some the `Item` has an `Utf8` but it seems to always be empty
-need to find the name from `opti`.
+need to find the name from {sl:`opti`}.
 
 ##### Files
 
 The `Uft8` in `Item` only has a value if the user has set an explicit value for the name.
 
-The file path is in `List` `Pin ` > `LIST` `Als2` > `alas`.
+The file path is in {sl:`LIST` `Pin `} > {sl:`LIST` `Als2`} > {sl:`alas`}.
 Interpret it as JSON and get `fullpath`.
 
-the first 4 bytes of `opti` will change based on the file format.
+the first 4 bytes of {sl:`opti`} will change based on the file format.
 
-There will also be a `LIST` `CLRS` with some `Utf8`, in there there's
+There will also be a {sl:`LIST` `CLRS`} with some {sl:`Utf8`}, in there there's
 some JSON with base64-encoded ICC color profiles.
 
 
 ### Layers
 
-Layers are defined in `LIST` `Layr`.
+Layers are defined in {sl:`LIST` `Layr`}.
 
 There are different types of layers:
 
@@ -821,7 +821,7 @@ For text contents look for the match name `ADBE Text Properties`.
 
 #### Asset Layer
 
-(Also known as AVLayer in AE) They have a non-zero Source ID in `ldta`.
+(Also known as AVLayer in AE) They have a non-zero Source ID in {sl:`ldta`}.
 
 Image layers and similar will point to an appropriate asset.
 
@@ -839,10 +839,10 @@ For light settings look for the match name `ADBE Light Options Group`.
 
 ### Objects
 
-Most objects are introduced by their match name (`tdmn`),
-followed by a `LIST` `tdgp` that defines the properties and sub-objects.
+Most objects are introduced by their match name ({sl:`tdmn`}),
+followed by a {sl:`LIST` `tdgp`} that defines the properties and sub-objects.
 
-Inside the `LIST` `tdgp` you can find more match names defining which
+Inside the {sl:`LIST` `tdgp`} you can find more match names defining which
 property or the type of sub-object you are defining.
 
 
@@ -853,64 +853,64 @@ following that depends on the type of property.
 
 #### MultiDimensional
 
-* `tdmn`: Match Name
-* `LIST` `tbds`: Property definition
-    * `tdb4`: Tells you how many components the property has and whether it's animated
-    * `cdat`: Value (if not animated)
-    * `LIST` `list`: Keyframes (if animated)
-        * `lhd3`: Tells you the number of keyframes
-        * `ldat`: Keyframe data and values
+* {sl:`tdmn`}: Match Name
+* {sl:`LIST` `tbds`}: Property definition
+    * {sl:`tdb4`}: Tells you how many components the property has and whether it's animated
+    * {sl:`cdat`}: Value (if not animated)
+    * {sl:`LIST` `list`}: Keyframes (if animated)
+        * {sl:`lhd3`}: Tells you the number of keyframes
+        * {sl:`ldat`}: Keyframe data and values
 
 #### Shape
 
-* `tdmn`: Match Name (`ADBE Vector Shape`)
-* `LIST` `om-s`
-    * `LIST` `tbds`: Property definition
-        * `tbd4`: Metadata
-        * `LIST` `list`: Present if the shape is animated
-            * `lhd3`: Keyframe list metadata
-            * `ldat`: Keyframe data without values
-    * `LIST` `omks`: Shape Values
-        * `LIST` `shap`: Bezier Data
-            * `shph`: Bezier metadata (whether it's closed and bounding box)
-            * `LIST` `list`
-                * `lhd3`: Bezier point list metadata
-                * `ldat`: Bezier points relative to `shph`
+* {sl:`tdmn`}: Match Name (`ADBE Vector Shape`)
+* {sl:`LIST` `om-s`}
+    * {sl:`LIST` `tbds`}: Property definition
+        * {sl:`tbd4`}: Metadata
+        * {sl:`LIST` `list`}: Present if the shape is animated
+            * {sl:`lhd3`}: Keyframe list metadata
+            * {sl:`ldat`}: Keyframe data without values
+    * {sl:`LIST` `omks`}: Shape Values
+        * {sl:`LIST` `shap`}: Bezier Data
+            * {sl:`shph`}: Bezier metadata (whether it's closed and bounding box)
+            * {sl:`LIST` `list`}
+                * {sl:`lhd3`}: Bezier point list metadata
+                * {sl:`ldat`}: Bezier points relative to {sl:`shph`}
 
-If the property is animated, there will be multiple `LIST` `shap`, one
+If the property is animated, there will be multiple {sl:`LIST` `shap`}, one
 per keyframe.
 
 
 #### Gradient Colors
 
-* `tdmn`: Match Name (`ADBE Vector Grad Colors`)
-* `LIST` `GCst`
-    * `LIST` `tbds`: Property definition
-        * `tbd4`: Metadata
-        * `LIST` `list`: Present if the shape is animated
-            * `lhd3`: Keyframe list metadata
-            * `ldat`: Keyframe data without values
-    * `LIST` `GCky`
-        * `Utf8` [Gradient XML](#gradient-xml)
+* {sl:`tdmn`}: Match Name (`ADBE Vector Grad Colors`)
+* {sl:`LIST` `GCst`}
+    * {sl:`LIST` `tbds`}: Property definition
+        * {sl:`tbd4`}: Metadata
+        * {sl:`LIST` `list`}: Present if the shape is animated
+            * {sl:`lhd3`}: Keyframe list metadata
+            * {sl:`ldat`}: Keyframe data without values
+    * {sl:`LIST` `GCky`}
+        * {sl:`Utf8`} [Gradient XML](#gradient-xml)
 
 
-If the property is animated, there will be multiple `Utf8`, one
+If the property is animated, there will be multiple {sl:`Utf8`}, one
 per keyframe.
 
 ### Assets
 
 #### Image
 
-Defined within `LIST` `Item`, it will have `idta` with type `7`.
+Defined within {sl:`LIST` `Item`}, it will have {sl:`idta`} with type `7`.
 
-Within that there's a `LIST` `Pin `, containing the following:
+Within that there's a {sl:`LIST` `Pin `}, containing the following:
 
-`List` `Als2` with `alas`, which in turn has some JSON.
+{sl:`LIST` `Als2`} with {sl:`alas`}, which in turn has some JSON.
 Inside the JSON you can get `fullpath`.
 
-`opti`: Contains the asset name.
+{sl:`opti`}: Contains the asset name.
 
-`LIST` `CLRS`, the last `Utf8` here has some JSON with a base64-encoded color profile.
+{sl:`LIST` `CLRS`}, the last {sl:`Utf8`} here has some JSON with a base64-encoded color profile.
 
 Match Names
 -----------
@@ -1162,7 +1162,7 @@ ADBE Spherize : object=effects/spherize-effect
 ADBE FreePin3 : object=effects/puppet-effect
 
 {aep_mn}
-ADBE Effect Built In Params: : Marks a `tdgp` with built-in effect properties
+ADBE Effect Built In Params: : Marks a {sl:`LIST` `tdgp`} with built-in effect properties
 ADBE Effect Mask Opacity :
 
 {aep_mn}
@@ -1178,7 +1178,7 @@ ADBE Paint Clone Layer :
 ### Misc
 
 {aep_mn}
-ADBE Group End : Indicates the end of a `LIST` `tdgp`
+ADBE Group End : Indicates the end of a {sl:`LIST` `tdgp`}
 
 
 <!--
@@ -1334,7 +1334,7 @@ In the RIFX file this is dumped at the end without a chunk.
 
 ### string
 
-Used instead of `Utf8`.
+Used instead of {sl:`Utf8`}.
 
 ### numS / ppSn
 
@@ -1342,15 +1342,15 @@ For some reason they have their value in a `<string>` but are not string in the 
 
 ### tdsn / fnam / pdnm
 
-These elements contain children but they are not `LIST` in RIFX, that's the only thing of note.
+These elements contain children but they are not {sl:`LIST`} in RIFX, that's the only thing of note.
 
 ### Child elements
 
-If an element has children. it's the same as the equivalent `LIST` in RIFX.
+If an element has children. it's the same as the equivalent {sl:`LIST`} in RIFX.
 
 ### `bdata`
 
-Elements with the `bdata` attribute have their binary data hex encoded in said attribute.
+Elements with the {sl:`bdata`} attribute have their binary data hex encoded in said attribute.
 
 You can parse their data the same way as you'd do in RIFX.
 

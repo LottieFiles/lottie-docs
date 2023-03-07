@@ -1635,6 +1635,23 @@ class AepMatchNameTable(BlockProcessor):
         return True
 
 
+class SectionLinkInlineProcessor(InlineProcessor):
+    pattern = r'{sl:([^}]+)}'
+
+    def __init__(self, md):
+        super().__init__(self.pattern, md)
+
+    def handleMatch(self, m, data):
+
+        text = m.group(1)
+        id = self.unescape(text).replace(" ", "-").lower()
+        element = etree.Element("a")
+        element.attrib["href"] = "#" + id
+        element.text = text
+
+        return element, m.start(0), m.end(0)
+
+
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
         with open(docs_path / "schema" / "lottie.schema.json") as file:
@@ -1659,6 +1676,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(ShapeBezierScript(md.parser, schema_data), "shape_bezier_script", 175)
         md.parser.blockprocessors.register(EffectShaderScript(md.parser, schema_data), "effect_shader_script", 175)
         md.parser.blockprocessors.register(AepMatchNameTable(md.parser, schema_data), "aep_mn", 175)
+        md.inlinePatterns.register(SectionLinkInlineProcessor(md), "sl", 175)
 
 
 def makeExtension(**kwargs):
