@@ -299,10 +299,39 @@ Flags:
 
 Inside a `LIST` `list`, defines the data format, followed by `ldat`.
 
-|Field Name         |Size| Type     | Description       |
-|-------------------|----|----------|-------------------|
-|                   | 10 |          |                   |
-| Count             | 2  | `uint16` | Number of items   |
+|Field Name         |Size| Type     | Description                                                                   |
+|-------------------|----|----------|-------------------------------------------------------------------------------|
+|                   | 4  |          | Seems to always be `00 d0 0b ee`                                              |
+|                   | 6  |          | All `00`                                                                      |
+| Count             | 2  | `uint16` | Number of items                                                               |
+|                   | 4  |          | The last byte is the only one that changes, greatest variation is on shapes   |
+|                   | 2  |          | All `00`                                                                      |
+| Item Size         | 2  | `uint16` | Size of an item in the list                                                   |
+|                   | 3  |          | All `00`                                                                      |
+| Type?             | 1  |          |                                                                               |
+|                   | 4  |          | `00 00 00 01`                                                                 |
+|                   | 2  |          | All `00`                                                                      |
+|                   | 2  |          | Some kind of flags                                                            |
+|                   |20  |          | All `00`                                                                      |
+
+
+| Item Type     | Size  | Type  |
+|---------------|-------|-------|
+| `Gide`        |`00 01`| `02`  |
+| `LItm`        |`00 80`| `01`  |
+| `LRdr`        |`08 c6`| `01`  |
+| Color Kf      |`00 98`| `04`  |
+| 1D Kf         |`00 30`| `04`  |
+| 2D Kf         |`00 58`| `04`  |
+| 2D pos Kf     |`00 68`| `04`  |
+| 3D Kf         |`00 80`| `04`  |
+| 3D pos Kf     |`00 80`| `04`  |
+| Marker Kf     |`00 10`| `04`  |
+| Orientation Kf|`00 50`| `04`  |
+| No Value Kf   |`00 40`| `04`  |
+
+
+The corresponding `ldat` should have _Item Size_ * _Count_ bytes, and it's omitted if _Count_ is 0.
 
 
 ### `ldat`
@@ -389,23 +418,25 @@ Used for shapes and gradients (_Special_ set in `tdb4`)
 
 Bezier data, positions are relative to the area defined by `shph`.
 
-Note that `lhd3` will specify the number of coordinates, so you need to group them by 3.
+The list is a sequence of points, appearing in this order:
 
-Note that the items here are defines as bezier segments, all coordinates are relative
-to the area in `shph` but not to each other.
+* Vertex 0
+* Out Tangent 0
+* In Tangent 1
+* Vertex 1
+* Out Tangent 1
+* ...
+
+Note that all coordinates are relative to the area in `shph` but not to each other.
 
 A coordinate of \[0, 0\] will correspond to the top-left corner in `shph`,
 and \[1, 1\] corresponds to the bottom-right.
 
-Take care that the in tangent is the tangent entering the next point in
-the curve, not the vertex defined by this item.
 
-
-|Field Name         |Size|   Type       | Description |
-|-------------------|----|--------------|-------------|
-| Vertex            |2*4 |`float32[2]`  | Coordinates of the vertex                             |
-| Out Tangent       |2*4 |`float32[2]`  | Coordinates of the tangent leaving the vertex         |
-| In Tangent        |2*4 |`float32[2]`  | Coordinates of the tangent entering the next vertex   |
+|Field Name |Size| Type    | Description |
+|-----------|----|---------|-------------|
+| X         | 4  |`float32`| X Coordinate|
+| XY         | 4  |`float32`| X Coordinate|
 
 
 ### `pprf`
@@ -706,6 +737,10 @@ it contains a `EfDC` with the number of effects, and that many `LIST` `EfDf`.
 Effect type definition.
 
 Contains a `tdmn` with the match name of the effect and a `LIST` `sspc`.
+
+### `LIST` `ExEn`
+
+Contains a `Utf8` with the expression language (eg: `javascript-1.0`).
 
 AfterEffects Logic
 ------------------
