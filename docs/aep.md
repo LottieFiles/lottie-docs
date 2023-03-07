@@ -546,11 +546,12 @@ Effect parameter definition.
 
 |Field Name |Size|Type      | Description   |
 |-----------|----|----------|---------------|
-|           | 15 |          |               |
-| Type      |  1 |`uint8`   |Parameter type |
-| Name      | 32 |`string0` | |
-|           |  4 |          | |
-|Default?   |  4 |          | |
+|                   | 15 |          |               |
+| Type              |  1 |`uint8`   |Parameter type |
+| Name              | 32 |`string0` | |
+|                   |  4 |          | |
+|Default?           |  4 |          | |
+|Last used value?
 
 Types:
 
@@ -912,6 +913,20 @@ Inside the JSON you can get `fullpath`.
 
 {sl:`LIST` `CLRS`}, the last {sl:`Utf8`} here has some JSON with a base64-encoded color profile.
 
+### Shapes
+
+#### Stroke Dashes
+
+Look for the match name `ADBE Vector Stroke Dashes`.
+
+Inside of it you'll find a bunch of properties with match name
+`ADBE Vector Stroke Dash n` or `ADBE Vector Stroke Gap n`, where `n` is
+an ineger starting from 1.
+
+You will also find a single `ADBE Vector Stroke Offset`.
+
+They are all animatable lengths and fairly straighforward.
+
 Match Names
 -----------
 
@@ -1008,6 +1023,22 @@ ADBE Vector Stroke Dashes : prop=d
 ADBE Vector Stroke Taper :
 ADBE Vector Stroke Wave :
 ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
+
+{aep_mn}
+ADBE Vector Stroke Taper : All properties are percentages in \[0, 100\]
+ADBE Vector Taper Start Length :
+ADBE Vector Taper End Length :
+ADBE Vector Taper Start Width :
+ADBE Vector Taper End Width :
+ADBE Vector Taper Start Ease :
+ADBE Vector Taper End Ease :
+
+{aep_mn}
+ADBE Vector Stroke Wave :
+ADBE Vector Taper Wave Amount :
+ADBE Vector Taper Wave Units : 1 for pixels, 2 for cycles
+ADBE Vector Taper Wavelength :
+ADBE Vector Taper Wave Phase :
 
 {aep_mn}
 ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
