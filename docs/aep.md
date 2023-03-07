@@ -530,6 +530,7 @@ Types:
 * 5: Color
 * 6: 2D
 * 7: Enum
+* 9: Paint group
 * 10: Slider
 * 13: Group
 * 15: Unknown
@@ -1128,6 +1129,16 @@ ADBE FreePin3 : object=effects/puppet-effect
 {aep_mn}
 ADBE Effect Built In Params: : Marks a `tdgp` with built-in effect properties
 ADBE Effect Mask Opacity :
+
+{aep_mn}
+ADBE Paint Group : : Data for the paint effect
+ADBE Paint Atom : : Contains the following properties
+ADBE Paint Duration :
+ADBE Paint Shape :
+ADBE Paint Transform : : Same as other transform but match names starting with `ADBE Paint`
+ADBE Paint Properties : : contains the following
+ADBE Paint Clone Layer :
+
 
 ### Misc
 
