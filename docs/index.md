@@ -217,7 +217,7 @@ disable_toc: 1
             <h2>A human's guide to the Lottie format</h2>
             <p>This guide aims to provide a human-Lottie is a vector animation format, using JSON to represent its data.</p>
             <p>
-            This guide aims to provide a human-readable description of the format and how everything works within it.readable description of the format and how everything works within it.
+            This guide aims to provide a human-readable description of the format and how everything works within it.
             </p>
             <button class="lottie-button"  onclick="window.location='/lottie-docs/Introduction/'" style="font-weight: bold;">Read the guide<img src="/lottie-docs/img/icon-right-arrow.svg"/></button>
         </div>
