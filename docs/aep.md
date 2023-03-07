@@ -273,7 +273,7 @@ Types:
 
 Property static value.
 
-For multi-dimensional properties, you look at the number of components in {sl:`tbd4`}
+For multi-dimensional properties, you look at the number of components in {sl:`tdb4`}
 and parse that many `float64`, that's the value of the property.
 
 ### `shph`
@@ -610,7 +610,7 @@ Usually the last chunk here is a {sl:`tdmn`} with value `ADBE Group End`.
 Defines an object's property. To know which property, you need to
 check the {sl:`tdmn`} preceding this chunk.
 
-It will contain a {sl:`tbd4`}, and usually {sl:`cdat`} (static) or a `List` `list` (animated).
+It will contain a {sl:`tdb4`}, and usually {sl:`cdat`} (static) or a `List` `list` (animated).
 
 For properties with expressions, it will have a {sl:`Utf8`} with the expression code.
 
@@ -866,7 +866,7 @@ following that depends on the type of property.
 * {sl:`tdmn`}: Match Name (`ADBE Vector Shape`)
 * {sl:`LIST` `om-s`}
     * {sl:`LIST` `tbds`}: Property definition
-        * {sl:`tbd4`}: Metadata
+        * {sl:`tdb4`}: Metadata
         * {sl:`LIST` `list`}: Present if the shape is animated
             * {sl:`lhd3`}: Keyframe list metadata
             * {sl:`ldat`}: Keyframe data without values
@@ -886,7 +886,7 @@ per keyframe.
 * {sl:`tdmn`}: Match Name (`ADBE Vector Grad Colors`)
 * {sl:`LIST` `GCst`}
     * {sl:`LIST` `tbds`}: Property definition
-        * {sl:`tbd4`}: Metadata
+        * {sl:`tdb4`}: Metadata
         * {sl:`LIST` `list`}: Present if the shape is animated
             * {sl:`lhd3`}: Keyframe list metadata
             * {sl:`ldat`}: Keyframe data without values
