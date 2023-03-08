@@ -1,6 +1,6 @@
 # Lottie from Scratch
 
-In this example, we'll build a simple lottie animation from scratch.
+In this example, we'll build a simple Lottie animation from scratch.
 
 ## Introducing the builder tool
 
@@ -15,7 +15,7 @@ To the right you have a preview of the animation and the corresponding JSON.
 
 The rest of this guide will assume you are following along using the builder.
 
-Most block can be right-clicked to bring up a context menu and you can select
+Most block can be right-clicked to bring up a context menu, and you can select
 "Help" from that menu to go on the page that describes the object represented by that block.
 
 
@@ -94,7 +94,7 @@ angle block shows the &deg; symbol.
 
 ## Animating the Star
 
-Until now we've only seen static properties, but now we can have a look at some
+Until now, we've only seen static properties, but now we can have a look at some
 animated ones.
 
 To animate the star rotation, we need to first disconnect the static property from it
@@ -113,7 +113,7 @@ You should now see the star spinning in the preview.
 
 ## Making the Animation longer
 
-Currently the animation lasts for 1 second (60 frames).
+Currently, the animation lasts for 1 second (60 frames).
 
 If you want it to last for longer, you need to first change the Out Point in the animation block.
 Let's change it to 120 to make the animation last for 2 seconds.
@@ -125,7 +125,7 @@ after another second.
 
 This is because we also need to update the layer Out Point.
 
-By default the layer properties are collapsed, so right click on the Layer Properties
+By default, the layer properties are collapsed, so right-click on the Layer Properties
 and select "Expand Block" from the context menu, then change its "Out Point"
 to match with the Animation block.
 
