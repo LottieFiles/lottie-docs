@@ -215,7 +215,7 @@ disable_toc: 1
             >
             </lottie-player>
             <h2>A human's guide to the Lottie format</h2>
-            <p>This guide aims to provide a human-Lottie is a vector animation format, using JSON to represent its data.</p>
+            <p>Lottie is a vector animation format, using JSON to represent its data.</p>
             <p>
             This guide aims to provide a human-readable description of the format and how everything works within it.
             </p>
@@ -239,7 +239,7 @@ disable_toc: 1
     <div class="index-container-top">
         <div class="index-card-lg" onclick="window.location='/lottie-docs/concepts/'">
             <h3 class="index-topic-header">Lottie Format</h3>
-            <p>This page describes values and other objects used throughout the lottie format.</p>
+            <p>This page describes values and other objects used throughout the Lottie format.</p>
         </div>
         <div class="index-card-lg">
             <h3 class="index-topic-header" onclick="window.location='/lottie-docs/breakdown/lottie_from_scratch/'">Lottie from Scratch</h3>
@@ -257,7 +257,7 @@ disable_toc: 1
         <div class="index-card-sm"  onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-player'">
             <img src="/lottie-docs/img/logo-lottie.svg"/>
             <h4 class="index-topic-header">Lottie-Player</h4>
-            <p>Easily embedding and playing Lottie animations in websites.</p>
+            <p>Easily embed and play Lottie animations in websites.</p>
         </div>
         <div class="index-card-sm" onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-react'">
             <img src="/lottie-docs/img/logo-react.svg"/>
