@@ -201,6 +201,7 @@ Layer Types:
 * 0: Asset layer
 * 1: Light Layer
 * 2: Camera Layer
+* 3: Text Layer
 * 4: Shape Layer
 
 ### `idta`
@@ -707,6 +708,34 @@ its data is encoded in [Carousel Object Structure](https://en.wikipedia.org/wiki
 The COS format is the same used in PDF but it's extremely difficult to
 find detailed information on it.
 
+Once you parse the COS, you can find the following data:
+
+* `0.1.0`: Array of available fonts:
+    * `0.99`: `CoolTYpeFont`
+    * `0.0.0`: Font family (seems to have bold/italic encoded in the name
+    * `0.0.2`: `0` or `1`?
+* `1.1`: Array of text documents (one for each keyframe) in this format:
+    * `0.0`: Text
+    * `0.5.0`: Array of paragraph styles
+        * `0.0.5` Paragraph Style:
+            * `0`: Text align (`0`: left, `1`: right, `2`: center)
+        * `1`: Length (in characters) the style applies to
+    * `0.6.0`: Array of character styles:
+        * `0.0.6`: Character Style:
+            * `0`: Index of the font from the array of available fonts
+            * `1`: Font size
+            * `2`: Faux Bold
+            * `3`: Faux Italic
+            * `12`: `0`: Normal, `1`: Small caps, `2`: All caps
+            * `13`: `0`: Normal, `1`: Superscript, `2`: Subscript
+            * `53.0.1`: Fill color in ARGB \[0, 1\]
+            * `54.0.1`: Stroke color in ARGB \[0, 1\]
+            * `57`: Stroke enabled
+            * `58`: Stroke over fill
+            * `63`: Stroke width
+        * `1`: Length (in characters) the style applies to
+
+
 ### `LIST` `sspc`
 
 Effect Definiton.
@@ -972,6 +1001,12 @@ ADBE Effect Parade : prop=ef
 ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
 ADBE Camera Aperture : prop=pe
 ADBE Camera Zoom :
+
+{aep_mn}
+ADBE Text Properties : object=text/text-data
+ADBE Text Document : prop=d
+ADBE Text Path Options : prop=p
+ADBE Text More Options : prop=m
 
 
 ### Shapes
