@@ -258,11 +258,31 @@ class ReferenceLink:
                 cls._link_mapping = json.load(file)
         return cls._link_mapping
 
+    def to_element(self, parent, links):
+        type_text = etree.SubElement(parent, "a")
+        type_text.attrib["href"] = "%s.md#%s" % (self.page, self.anchor)
+        type_text.text = self.name
+        type_text.tail = " "
+        if self.cls == "int-boolean":
+            type_text.text = "0-1 "
+            etree.SubElement(type_text, "code").text = "integer"
+        elif self.anchor == "animated-property" and len(links) == 1:
+            type_text.text = "Animated"
+            type_text.tail = " "
+            if self.cls == "value":
+                type_text = etree.SubElement(parent, "code").text = "number"
+            else:
+                type_text.tail += self.name.split(" ", 1)[1]
+
+        return type_text
+
 
 def ref_links(ref: str, data: Schema):
     chunks = ref.strip("#/").split("/")
     if len(chunks) > 0 and chunks[0] == "$defs":
         chunks.pop(0)
+    else:
+        ref = "#/$defs/" + ref
 
     if len(chunks) != 2:
         return []
@@ -893,20 +913,7 @@ class SchemaObject(BlockProcessor):
         elif type.startswith("#/$defs/"):
             links = ref_links(type, self.schema_data)
             for link in links:
-                type_text = etree.SubElement(parent, "a")
-                type_text.attrib["href"] = "%s.md#%s" % (link.page, link.anchor)
-                type_text.text = link.name
-                type_text.tail = " "
-                if link.cls == "int-boolean":
-                    type_text.text = "0-1 "
-                    etree.SubElement(type_text, "code").text = "integer"
-                elif link.anchor == "animated-property" and len(links) == 1:
-                    type_text.text = "Animated"
-                    type_text.tail = " "
-                    if link.cls == "value":
-                        type_text = etree.SubElement(parent, "code").text = "number"
-                    else:
-                        type_text.tail += link.name.split(" ", 1)[1]
+                type_text = link.to_element(parent, links)
         else:
             type_text = etree.SubElement(parent, "code")
             type_text.text = type
@@ -1652,6 +1659,26 @@ class SectionLinkInlineProcessor(InlineProcessor):
         return element, m.start(0), m.end(0)
 
 
+class RefLinkInlineProcessor(InlineProcessor):
+    pattern = r'{ref-link:([^}]+)}'
+
+    def __init__(self, md, schema_data: Schema):
+        super().__init__(self.pattern, md)
+        self.schema_data = schema_data
+
+
+    def handleMatch(self, m, data):
+        links = ref_links(m.group(1), self.schema_data)
+        element = etree.Element("span")
+        for link in links:
+            link.to_element(element, links)
+
+        if len(element) == 1:
+            element = element[0]
+
+        return element, m.start(0), m.end(0)
+
+
 class LottieExtension(Extension):
     def extendMarkdown(self, md):
         with open(docs_path / "schema" / "lottie.schema.json") as file:
@@ -1677,6 +1704,7 @@ class LottieExtension(Extension):
         md.parser.blockprocessors.register(EffectShaderScript(md.parser, schema_data), "effect_shader_script", 175)
         md.parser.blockprocessors.register(AepMatchNameTable(md.parser, schema_data), "aep_mn", 175)
         md.inlinePatterns.register(SectionLinkInlineProcessor(md), "sl", 175)
+        md.inlinePatterns.register(RefLinkInlineProcessor(md, schema_data), "ref-link", 175)
 
 
 def makeExtension(**kwargs):

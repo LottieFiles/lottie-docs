@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "title": "Paint over transparent effect",
+    "title": "Twirl Effect",
     "description": "",
     "allOf": [
         {
@@ -13,22 +13,32 @@
                 "ty": {
                     "title": "Type",
                     "type": "integer",
-                    "const": 7
+                    "const": 30
                 },
                 "ef": {
                     "title": "Effect values",
                     "type": "array",
                     "prefixItems": [
                         {
-                            "title": "00",
+                            "title": "Angle",
+                            "$ref": "#/$defs/effect-values/angle"
+                        },
+                        {
+                            "title": "Radius",
                             "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Center",
+                            "$ref": "#/$defs/effect-values/point"
                         }
                     ]
                 }
             },
             "required": [
-                "ty"
+                "ty",
+                "ef"
             ]
         }
     ]
 }
+

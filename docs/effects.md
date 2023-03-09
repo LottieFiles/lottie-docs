@@ -16,7 +16,6 @@ Effect types:
 |`ty`| Effect Type |
 |----|-------------|
 |`5` |[Misc Effect](#misc-effect)|
-|`7` |[Paint Over Transparent](#paint-over-transparent-effect)|
 |`20`|[Tint](#tint-effect)|
 |`21`|[Fill](#fill-effect)|
 |`22`|[Stroke](#stroke-effect)|
@@ -27,6 +26,7 @@ Effect types:
 |`27`|[Displacement Map](#displacement-map-wipe)|
 |`28`|[Matte3](#matte3-effect)|
 |`29`|[Gaussian Blur](#gaussian-blur-effect)|
+|`30`|[Twirl](#twirl-effect)|
 |`31`|[Mesh Warp](#mesh-warp-effect)|
 |`32`|[Wavy](#wavy-effect)|
 |`33`|[Spherize](#spherize-effect)|
@@ -314,15 +314,6 @@ SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/mesh-warp-effect}
 
-
-### Paint Over Transparent Effect
-
-{schema_object:effects/paint-over-transparent-effect}
-SKIP:#/$defs/effects/effect
-
-{schema_effect:effects/paint-over-transparent-effect}
-
-
 ### Puppet Effect
 
 {schema_object:effects/puppet-effect}
@@ -346,6 +337,12 @@ SKIP:#/$defs/effects/effect
 
 {schema_effect:effects/wavy-effect}
 
+### Twirl Effect
+
+{schema_object:effects/twirl-effect}
+SKIP:#/$defs/effects/effect
+
+{schema_effect:effects/twirl-effect}
 
 ### Custom Effect
 

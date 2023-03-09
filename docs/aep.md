@@ -556,18 +556,20 @@ Effect parameter definition.
 
 Types:
 
-* 0: Layer
-* 2: Scalar
-* 3: Angle
-* 4: Boolean
-* 5: Color
-* 6: 2D
-* 7: Enum
-* 9: Paint group
-* 10: Slider
-* 13: Group
-* 15: Unknown
-* 18: 3D
+|Type Name  |AEP |Lottie| Lottie Object                     |
+|-----------|----|------|-----------------------------------|
+|Layer      |`0` | `10` |{ref-link:effect-values/layer}     |
+|Scalar     |`2` | `0`  |{ref-link:effect-values/slider}    |
+|Angle      |`3` | `1`  |{ref-link:effect-values/angle}     |
+|Boolean    |`4` | `4`  |{ref-link:effect-values/checkbox}  |
+|Color      |`5` | `2`  |{ref-link:effect-values/color}     |
+|2D         |`6` | `3`  |{ref-link:effect-values/point}     |
+|Enum       |`7` | `7`  |{ref-link:effect-values/drop-down} |
+|Paint Group|`9` |      |                                   |
+|Slider     |`10`| `0`  |{ref-link:effect-values/slider}    |
+|Group      |`13`| `5`  |{ref-link:effects/custom-effect}   |
+|Unknown    |`15`| `6`  |{ref-link:effect-values/no-value}  |
+|3D         |`16`| `3`  |{ref-link:effect-values/point}     |
 
 
 ### `prin`
@@ -635,7 +637,7 @@ Contains a {sl:`LIST` `tdbs`} and a {sl:`LIST` `GCky`}.
 
 ### `LIST` `GCky`
 
-Gradient data.
+Gradient color keyframes.
 
 Contains a sequence of {sl:`Utf8`} formatted in XML with the gradient definition
 for each keyframe.
@@ -706,13 +708,14 @@ For some reason this doesn't conform to the RIFX specs, instead of a list
 its data is encoded in [Carousel Object Structure](https://en.wikipedia.org/wiki/PDF#File_format) (COS).
 
 The COS format is the same used in PDF but it's extremely difficult to
-find detailed information on it.
+find detailed information on it, the best technical specs is this very old
+[PDF 1.7 specification](https://web.archive.org/web/20141020130815/http://wwwimages.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf).
 
 Once you parse the COS, you can find the following data:
 
 * `0.1.0`: Array of available fonts:
-    * `0.99`: `CoolTYpeFont`
-    * `0.0.0`: Font family (seems to have bold/italic encoded in the name
+    * `0.99`: `CoolTypeFont`
+    * `0.0.0`: Font family (seems to have bold/italic encoded in the name)
     * `0.0.2`: `0` or `1`?
 * `1.1`: Array of text documents (one for each keyframe) in this format:
     * `0.0`: Text
@@ -936,7 +939,7 @@ per keyframe.
 * {sl:`LIST` `GCst`}
     * {sl:`LIST` `tbds`}: Property definition
         * {sl:`tdb4`}: Metadata
-        * {sl:`LIST` `list`}: Present if the shape is animated
+        * {sl:`LIST` `list`}: Present if the property is animated
             * {sl:`lhd3`}: Keyframe list metadata
             * {sl:`ldat`}: Keyframe data without values
     * {sl:`LIST` `GCky`}
@@ -1240,7 +1243,7 @@ ADBE Radial Wipe : object=effects/radial-wipe-effect
 ADBE Displacement Map : object=effects/displacement-map-effect
 ADBE Set Matte3 : object=effects/matte3-effect
 ADBE Gaussian Blur 2 : object=effects/gaussian-blur-effect
-ADBE Twirl : Todo?
+ADBE Twirl : object=effects/twirl-effect
 ADBE MESH WARP : object=effects/mesh-warp-effect
 ADBE Ripple : object=effects/wavy-effect
 ADBE Spherize : object=effects/spherize-effect
