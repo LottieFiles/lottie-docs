@@ -174,11 +174,12 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 |                   | 6  |          | |
 | Attributes        | 3  | Flags    | |
 | Source ID         | 4  | `uint32` | Item id for the used asset |
-|                   | 20 |          | |
+|                   | 17 |          | |
+| Label Color Index | 1  | `uint8`  | Color on the timeline |
 | Layer Name        | 32 | `string0`| It's repeated in the {sl:`Utf8`} chunk right after |
 |                   | 35 |          | |
 | Layer Type        |  1 | `uint8`  | |
-| Parent ID         |  4 |`uint32`  |ID of the parent layer, if any |
+| Parent ID         |  4 | `uint32` |ID of the parent layer, if any |
 
 
 With the following Attributes:
@@ -203,6 +204,27 @@ Layer Types:
 * 2: Camera Layer
 * 3: Text Layer
 * 4: Shape Layer
+
+
+Label Colors:
+
+0. None (shows as grey)
+1. Red
+2. Yellow
+3. Aqua
+4. Pink
+5. Lavender
+6. Peach
+7. Sea Foam
+8. Blue
+9. Green
+10. Purple
+11. Orange
+12. Brown
+13. Fuchsia
+14. Cyan
+15. Sandstone
+16. Dark Green
 
 ### `idta`
 
@@ -583,6 +605,17 @@ Seems to always have the same content:
 
 Seems to always have the same content: 3 `00`, a `01`, 8 `00`.
 
+### `NmHd`
+
+Marker attributes
+
+|Name           |Size| Type     | Description                               |
+|---------------|----|----------|-------------------------------------------|
+|               | 8  |          |                                           |
+| Duration      | 4  | `uint32` | Duration in frames                        |
+|               | 4  |          |                                           |
+| Label Color   | 1  | `uint8`  | Color index, see {sl:`ldta`} for values   |
+
 ### `LIST` `Fold`
 
 Top level item.
@@ -677,6 +710,34 @@ They seem to be camera layers used to store internal views, not exported to lott
 ### `LIST` `SecL`
 
 Markers Layer.
+
+Contains `ldta` and like other layers.
+
+in {sl:`LIST` `tbgp`} look for the match name `ADBE Marker`, the data is in
+the {sl:`LIST` `mrst`}.
+
+### `LIST` `mrst`
+
+Marker property.
+
+Contains a {sl:`LIST` `tdbs`} that defines the property, which should always be animated
+when present.
+
+Marker keyframe values are available in {sl:`LIST` `mrky`}.
+
+### `LIST` `mrky`
+
+Marker keyframes.
+
+contains a {sl:`LIST` `Nmrd`} for each keyframe
+
+### `LIST` `Nmrd`
+
+Marker data
+
+There's a {sl:`NmHd`} with the attributes.
+
+The marker comment is in the first {sl:`Utf8`}
 
 ### `LIST` `otst`
 
@@ -949,6 +1010,13 @@ per keyframe.
 If the property is animated, there will be multiple {sl:`Utf8`}, one
 per keyframe.
 
+#### Expressions
+
+Bodymovin [modifies expressions](https://github.com/bodymovin/bodymovin-extension/blob/master/src/helpers/expressions/expressions.js)
+when converting into lottie, if you add expressions but fail to convert them, the animation
+might not play properly.
+
+
 ### Assets
 
 #### Image
@@ -977,6 +1045,9 @@ an ineger starting from 1.
 You will also find a single `ADBE Vector Stroke Offset`.
 
 They are all animatable lengths and fairly straighforward.
+
+Note that lottie-web wants a unique "name" for these, and the file doesn't provide this
+but you can generate one based on the match name.
 
 Match Names
 -----------
@@ -1010,6 +1081,9 @@ ADBE Text Properties : object=text/text-data
 ADBE Text Document : prop=d
 ADBE Text Path Options : prop=p
 ADBE Text More Options : prop=m
+
+{aep_mn}
+ADBE Marker : Comp marker property
 
 
 ### Shapes
@@ -1325,6 +1399,7 @@ Most enumerated values are the same in Lottie and AEP, this section lists the ex
 |Saturation     | 27|13 |
 |Color          | 28|14 |
 |Luminosity     | 29|15 |
+
 
 Gradient XML
 ------------
