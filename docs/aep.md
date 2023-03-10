@@ -1359,7 +1359,7 @@ If you interpret the XML as a mapping, you can gather the following info:
                     "Stops Alpha":
                         [
                             0.0, // offset
-                            0.5, // ???
+                            0.5, // midpoint
                             1.0  // alpha
                         ]
                 },
@@ -1376,7 +1376,7 @@ If you interpret the XML as a mapping, you can gather the following info:
                     "Stops Color":
                     [
                         0.0, // offset
-                        0.5, // ???
+                        0.5, // midpoint
                         0.0, // red
                         0.0, // green
                         0.5, // blue
@@ -1391,6 +1391,69 @@ If you interpret the XML as a mapping, you can gather the following info:
     "Gradient Colors": "1.0" // Version?
 }
 ```
+
+### Midpoint
+
+You should use the "midpoint" values to add an additional color which is halfway between the other two.
+
+For example given these stops:
+```js
+    "Stop-0":
+    {
+        "Stops Color":
+        [
+            0.0, // offset
+            0.5, // midpoint
+            0.1, // red
+            0.2, // green
+            0.3, // blue
+            1.0  // alpha?
+        ]
+    },
+    "Stop-0":
+    {
+        "Stops Color":
+        [
+            0.6, // offset
+            0.5, // midpoint
+            0.3, // red
+            0.4, // green
+            0.5, // blue
+            1.0  // alpha?
+        ]
+    },
+```
+
+The final gradient will look like this:
+```js
+[
+    // stop 0
+    0.0, // offset_0
+    0.1, // red_0
+    0.2, // green_0
+    0.3, // blue_0
+    // midpoint stop
+    0.3, // offset_0 * (1 - midpoint_0) + offset_1 * midpoint_0
+    0.2, // (red_0 + red_1) / 2
+    0.3, // (green_0 + green_1) / 2
+    0.4, // (blue_0 + blue_1) / 2
+    // stop 1
+    0.6, // offset_1
+    0.5, // midpoint_1
+    0.3, // red_1
+    0.4, // green_1
+    0.5, // blue_1
+]
+```
+
+### Opacity
+
+For some reason in AE gradients alpha is independent from the color, so you have separate stops for
+color and opacity.
+
+You should treat the midpoint value for opacity stops in a similar way as to the color ones.
+
+Once you have both the color and opacity values, the final lottie array is simply a concatenation of the two.
 
 XMP Metadata
 ------------
