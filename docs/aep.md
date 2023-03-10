@@ -611,10 +611,16 @@ Marker attributes
 
 |Name           |Size| Type     | Description                               |
 |---------------|----|----------|-------------------------------------------|
-|               | 8  |          |                                           |
+|               | 3  |          |                                           |
+| Attributes    | 1  | Flags    |                                           |
 | Duration      | 4  | `uint32` | Duration in frames                        |
 |               | 4  |          |                                           |
 | Label Color   | 1  | `uint8`  | Color index, see {sl:`ldta`} for values   |
+
+Flags:
+
+* _Protected_: (0, 1) The marker signals a protected region
+* _???_: (0, 2) This flags seems to always be on
 
 ### `LIST` `Fold`
 
@@ -709,7 +715,7 @@ They seem to be camera layers used to store internal views, not exported to lott
 
 ### `LIST` `SecL`
 
-Markers Layer.
+Composition Markers Layer.
 
 Contains `ldta` and like other layers.
 
@@ -1070,6 +1076,7 @@ ADBE Audio Group :
 ADBE Layer Sets :
 ADBE Time Remapping : prop=tm
 ADBE Effect Parade : prop=ef
+ADBE Marker : Markers
 
 {aep_mn}
 ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
@@ -1081,10 +1088,6 @@ ADBE Text Properties : object=text/text-data
 ADBE Text Document : prop=d
 ADBE Text Path Options : prop=p
 ADBE Text More Options : prop=m
-
-{aep_mn}
-ADBE Marker : Comp marker property
-
 
 ### Shapes
 
