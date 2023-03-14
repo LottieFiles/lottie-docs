@@ -130,6 +130,10 @@ Contains a {sl:`Utf8`} chunk, used for object names
 
 Contains a NUL-terminated string (You'll need to strip excess `\0`) and defines a [Match Name](#match-names).
 
+### `fdta`
+
+Folder data.
+
 ### `cdta`
 
 Composition data.
@@ -375,11 +379,26 @@ item_size = ldat_chunk_length / lhd3_count
 
 All keyframe items start like this:
 
-|Field Name         |Size|   Type       | Description |
-|-------------------|----|--------------|-------------|
-|                   | 1  |              | |
+|Field Name         |Size| Type         | Description                                           |
+|-------------------|----|--------------|-------------------------------------------------------|
+|                   | 1  |              |                                                       |
 | Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
-|                   | 5  |              | |
+|                   | 2  |              |                                                       |
+| Inter
+| Label Color       | 1  | `uint8`      | Color index, see {sl:`ldta`} for values               |
+| Extra Attributes  | 1  | Flags        |                                                       |
+
+Attributes:
+* (0, 0) seems to always be on
+* Hold (0, 2)
+
+
+Extra Attributes:
+
+* Has label? (0, 7)
+
+Least significant 3 bits seems to always be on.
+
 
 #### Keyframe - Multi-Dimensional
 
@@ -622,6 +641,14 @@ Flags:
 * _Protected_: (0, 1) The marker signals a protected region
 * _???_: (0, 2) This flags seems to always be on
 
+
+### `tdsb`
+
+4 bytes specifying flags for a `tdsb`.
+
+the least significant bit marks if an object is visible.
+
+
 ### `LIST` `Fold`
 
 Top level item.
@@ -649,6 +676,8 @@ You will find the following match names within it:
 
 Defines a list of an object. To know what type of object, you need to check
 the {sl:`tdmn`} preceding this chunk.
+
+Flags for the objects are in {sl:`tdsb`}.
 
 The name of the object is in {sl:`tdsn`} > {sl:`Utf8`}.
 
@@ -1055,13 +1084,23 @@ They are all animatable lengths and fairly straighforward.
 Note that lottie-web wants a unique "name" for these, and the file doesn't provide this
 but you can generate one based on the match name.
 
-Match Names
------------
+### Transforms
+
+#### Split Position
+
+When a position is split the Position attribute is removed and you can get the data from Position_0 and Position_1.
+
+For some reason Position_0 and Position_1 are present (with value `0`) even when the position is not split.
+
+Their `tdsb` seems to change from `1` (not split) to `3` (split).
+
+## Match Names
 
 Follows a list of known match names grouped by object type.
 
 For properties that specify a default value, you should assume they have the specified value if they are not present in the
 AEP file.
+
 
 ### Layers
 
