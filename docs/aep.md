@@ -9,7 +9,7 @@ The structure resembles that of a Lottie JSON exported from AE.
 You can perform the parsing in 3 steps:
 
 1. Parse the RIFX chunks into a tree structure
-2. Unpac the chunk data into more useful representations
+2. Unpack the chunk data into more useful representations
 3. Traverse that tree to map find the relevant objects and properties
 
 Step 1 is fairly straightforward, RIFX is fairly easy to parse. <br/>
@@ -20,13 +20,10 @@ same as the bodymovin plugin to convert the strucured AE data into lottie,
 info on this is in the [AfterEffects Logic](#aftereffects-logic) section.
 
 
-RIFX
+RIFF
 ----
 
-RIFX is an extension of the RIFF format, the difference being RIFX uses big-endian
-notation for storing numbers.
-
-A RIFF/RIFX is composed of "chunks" with the following format
+A RIFF is composed of "chunks" with the following format
 
 
 |Field |Size|Description                                    |
@@ -36,20 +33,51 @@ A RIFF/RIFX is composed of "chunks" with the following format
 |Data  |Size| Data within the chunk                         |
 
 
+RIFX is an extension of the RIFF format, the difference being RIFX uses big-endian
+notation for storing numbers.
+
+A RIFF file will be structured in the same way as a chunk:
+
+|Field |Size|Description                    |
+|------|----|-------------------------------|
+|Header|  4 | `RIFF` or `RIFX`              |
+|Size  |  4 | `uint32` size of the chunk    |
+|Format|  4 | Format Identifier             |
+|Chunks|  * | Rest of the chunks            |
+
+
+## AEP-Specific Parsing
+
+It should always be `RIFX` format (big endian). The format identifier
+for AEP is `Egg!`.
+
+When parsing the RIFF structure, keep in mind the following chunks
+will contain other chunks:
+
+* {sl:`tdsn`}
+* {sl:`fnam`}
+* {sl:`pdnm`}
+
+And that {sl:`LIST` `btdk`} contains data in a different format, and
+it should not be parsed as a RIFF {sl:`LIST`}.
+
+At the end of the RIFF data, the AEP file has some XML-encoded metadata.
+
+
 Basic Types
 -----------
 
 |Type     |Size|Description|
 |---------|----|-----------|
-|`id`     | 4 | ASCII-encoded chunk identifier  |
-|`uint16` | 2 | Unsigned integer                |
-|`uint32` | 4 | Unsigned integer                |
-|`sint16` | 2 | Twos-complement signed integer  |
-|`float32`| 4 | IEEE float                      |
-|`float64`| 8 | IEEE float                      |
-|`string` | * | Text, usually utf-8 encoded     |
-|`string0`| * | NUL terminated string, note that you might find junk data after the NUL (This can be caused by renaming something to a shorter name) |
-|`bytes`  | * | Unformatted / unknown data      |
+|`id`     | 4  | ASCII-encoded chunk identifier  |
+|`uint16` | 2  | Unsigned integer                |
+|`uint32` | 4  | Unsigned integer                |
+|`sint16` | 2  | Twos-complement signed integer  |
+|`float32`| 4  | IEEE float                      |
+|`float64`| 8  | IEEE float                      |
+|`string` | *  | Text, usually utf-8 encoded     |
+|`string0`| *  | NUL terminated string, note that you might find junk data after the NUL (This can be caused by renaming something to a shorter name) |
+|`bytes`  | *  | Unformatted / unknown data      |
 
 
 ### Time
@@ -81,30 +109,11 @@ You'll get the value of the flag you'll need to do the following:
 flag = (flags[byte] & (1 << bit)) != 0
 ```
 
-Chunks
-------
+Chunk Data
+----------
 
 Note that chunks might have extra data after what is described here,
 always parse exactly as many bytes as specified in the chunk header.
-
-### Top Level
-
-You can think of the file itself as a chunk containing sub-chunks
-as it too starts with the same format.
-
-The header is `RIFF` or `RIFX`. `RIFF` uses little-endian notation
-and `RIFX` uses big-endian notation.
-
-Note that AEP files should always be `RIFX`.
-
-Note that how you interpret the size of chunks changes depending on the endianness.
-
-Follows a `uint32` size as usual.
-
-The data starts with an `id` specifying the file format. In the case of AEP
-this has the value `Egg!`.
-
-Then follows a list of chunks.
 
 ### `LIST`
 
@@ -180,6 +189,7 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 | Source ID         | 4  | `uint32` | Item id for the used asset |
 |                   | 17 |          | |
 | Label Color Index | 1  | `uint8`  | Color on the timeline |
+|                   | 2  |          | |
 | Layer Name        | 32 | `string0`| It's repeated in the {sl:`Utf8`} chunk right after |
 |                   | 35 |          | |
 | Layer Type        |  1 | `uint8`  | |
@@ -203,7 +213,7 @@ With the following Attributes:
 
 Layer Types:
 
-* 0: Asset layer
+* 0: Asset Layer
 * 1: Light Layer
 * 2: Camera Layer
 * 3: Text Layer
@@ -290,7 +300,7 @@ Attributes:
 
 Types:
 
-* _Special_: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.
+* _No Value_: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.
 * _Color_: (3, 0). Set for color properties (they have a different keyframe format).
 
 124 bytes, most of which seems to be constant:
@@ -384,20 +394,23 @@ All keyframe items start like this:
 |                   | 1  |              |                                                       |
 | Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
 |                   | 2  |              |                                                       |
-| Inter
+| Attributes        | 1  | Flags        |                                                       |
 | Label Color       | 1  | `uint8`      | Color index, see {sl:`ldta`} for values               |
 | Extra Attributes  | 1  | Flags        |                                                       |
 
 Attributes:
-* (0, 0) seems to always be on
+* Linear? (0, 0) seems to be on then Ease is off
+* Ease (0, 1)
 * Hold (0, 2)
 
 
 Extra Attributes:
 
-* Has label? (0, 7)
-
 Least significant 3 bits seems to always be on.
+
+* Continuous Bezier (0, 3)
+* Auto Bezier (0, 4)
+* Roving across time (0, 5)
 
 
 #### Keyframe - Multi-Dimensional
@@ -486,6 +499,8 @@ and \[1, 1\] corresponds to the bottom-right.
 Color profile information as ICC data.
 
 ### `wsnm`
+
+Worspace name.
 
 Utf-16 encoded string, contains the name of the "workspace" (window layout in AE)
 
@@ -644,7 +659,7 @@ Flags:
 
 ### `tdsb`
 
-4 bytes specifying flags for a `tdsb`.
+4 bytes specifying flags for a `tdgp`.
 
 the least significant bit marks if an object is visible.
 
@@ -712,7 +727,7 @@ for each keyframe.
 
 ### `LIST` `om-s`
 
-Contains a {sl:`LIST` `tbds`} and a {sl:`LIST` `omks`} to define a shape property.
+Contains a {sl:`LIST` `tdbs`} and a {sl:`LIST` `omks`} to define a shape property.
 
 ### `LIST` `omks`
 
@@ -778,7 +793,7 @@ The marker comment is in the first {sl:`Utf8`}
 
 Orientation property.
 
-Contains a  {sl:`LIST` `tbds`} and a {sl:`LIST` `otky`} to define a shape property.
+Contains a  {sl:`LIST` `tdbs`} and a {sl:`LIST` `otky`} to define a shape property.
 
 ### `LIST` `otky`
 
@@ -888,6 +903,17 @@ Contains a {sl:`Utf8`} with the expression language (eg: `javascript-1.0`).
 ### `LIST` `PRin`
 
 Contains a {sl:`prin`} and a `prda`.
+
+
+### `LIST` `Pin `
+
+Asset properties.
+
+Contains:
+
+* {sl:`sspc`} with some common properties
+* {sl:`Utf8`} with the name (except for solids)
+* {sl:`opti`} with asset data
 
 
 AfterEffects Logic
@@ -1002,7 +1028,7 @@ following that depends on the type of property.
 #### MultiDimensional
 
 * {sl:`tdmn`}: Match Name
-* {sl:`LIST` `tbds`}: Property definition
+* {sl:`LIST` `tdbs`}: Property definition
     * {sl:`tdb4`}: Tells you how many components the property has and whether it's animated
     * {sl:`cdat`}: Value (if not animated)
     * {sl:`LIST` `list`}: Keyframes (if animated)
@@ -1013,7 +1039,7 @@ following that depends on the type of property.
 
 * {sl:`tdmn`}: Match Name (`ADBE Vector Shape`)
 * {sl:`LIST` `om-s`}
-    * {sl:`LIST` `tbds`}: Property definition
+    * {sl:`LIST` `tdbs`}: Property definition
         * {sl:`tdb4`}: Metadata
         * {sl:`LIST` `list`}: Present if the shape is animated
             * {sl:`lhd3`}: Keyframe list metadata
@@ -1033,7 +1059,7 @@ per keyframe.
 
 * {sl:`tdmn`}: Match Name (`ADBE Vector Grad Colors`)
 * {sl:`LIST` `GCst`}
-    * {sl:`LIST` `tbds`}: Property definition
+    * {sl:`LIST` `tdbs`}: Property definition
         * {sl:`tdb4`}: Metadata
         * {sl:`LIST` `list`}: Present if the property is animated
             * {sl:`lhd3`}: Keyframe list metadata
