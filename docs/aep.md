@@ -101,6 +101,12 @@ The index of the byte here is in file order so a `byte` of 0 is the most signifi
 
 ## AfterEffects Logic
 
+This section assumes the file has already been parsed into RIFF chunks.
+
+Objects described here will have a nested list showing which chunks are
+used to represent them, you can click on the link pointing to the chunk
+details to get the data layout within that chunk.
+
 ### File Structure
 
 * {sl:`LIST` `EfdG`}: [Effect definitions](#effects)
