@@ -1039,53 +1039,62 @@ property or the type of sub-object you are defining.
 Properties, like objects are introduced by their match name, the chunks
 following that depends on the type of property.
 
-#### MultiDimensional
+The core of a property is defined in {sl:`LIST` `tdbs`} with the following structure:
 
-* {sl:`tdmn`}: Match Name
 * {sl:`LIST` `tdbs`}: Property definition
-    * {sl:`tdb4`}: Tells you how many components the property has and whether it's animated
+    * {sl:`tdb4`}: Tells you the type, number of components, whether it's animated
     * {sl:`cdat`}: Value (if not animated)
+    * {sl:`Utf8`}: Optional expression
     * {sl:`LIST` `list`}: Keyframes (if animated)
         * {sl:`lhd3`}: Tells you the number of keyframes
         * {sl:`ldat`}: Keyframe data and values
+
+For simple properties, with vector or scalar values, you get the structure above.
+
+For more complex properties, you get an outer object that contains that data as well
+as a list of values. You'll get the value for the keyframes (or the static value) from that list.
 
 Note that color properties are laid out as ARGB floats in \[0, 255\].
 
 #### Shape
 
-* {sl:`tdmn`}: Match Name (`ADBE Vector Shape`)
 * {sl:`LIST` `om-s`}
     * {sl:`LIST` `tdbs`}: Property definition
-        * {sl:`tdb4`}: Metadata
-        * {sl:`LIST` `list`}: Present if the shape is animated
-            * {sl:`lhd3`}: Keyframe list metadata
-            * {sl:`ldat`}: Keyframe data without values
-    * {sl:`LIST` `omks`}: Shape Values
-        * {sl:`LIST` `shap`}: Bezier Data
+    * {sl:`LIST` `omks`}: Keyframe values
+        * {sl:`LIST` `shap`}: Bezier Data (repeated)
             * {sl:`shph`}: Bezier metadata (whether it's closed and bounding box)
             * {sl:`LIST` `list`}
                 * {sl:`lhd3`}: Bezier point list metadata
                 * {sl:`ldat`}: Bezier points relative to {sl:`shph`}
 
-If the property is animated, there will be multiple {sl:`LIST` `shap`}, one
-per keyframe.
-
-
 #### Gradient Colors
 
-* {sl:`tdmn`}: Match Name (`ADBE Vector Grad Colors`)
 * {sl:`LIST` `GCst`}
     * {sl:`LIST` `tdbs`}: Property definition
-        * {sl:`tdb4`}: Metadata
-        * {sl:`LIST` `list`}: Present if the property is animated
-            * {sl:`lhd3`}: Keyframe list metadata
-            * {sl:`ldat`}: Keyframe data without values
-    * {sl:`LIST` `GCky`}
-        * {sl:`Utf8`} [Gradient XML](#gradient-xml)
+    * {sl:`LIST` `GCky`}: Keyframe values
+        * {sl:`Utf8`} [Gradient XML](#gradient-xml) (repeated)
 
+#### Orientation
 
-If the property is animated, there will be multiple {sl:`Utf8`}, one
-per keyframe.
+* {sl:`LIST` `otst`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `otky`}: Keyframe values
+        * {sl:`otda`} 3D vector (repeated)
+
+#### Marker
+
+* {sl:`LIST` `mrst`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `mrky`}: Keyframe values
+        * {sl:`Nmrd`} Marker (repeated)
+            * {sl:`NmHd`} Marker properties
+            * {sl:`Utf8`} Name
+
+#### Text Document
+
+* {sl:`LIST` `btds`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `btdk`}: COS-encoded data
 
 #### Expressions
 
@@ -1135,6 +1144,35 @@ When a position is split the Position attribute is removed and you can get the d
 For some reason Position_0 and Position_1 are present (with value `0`) even when the position is not split.
 
 Their `tdsb` seems to change from `1` (not split) to `3` (split).
+
+### Effects
+
+The effects used in by the file are defined in the top-level chunk {sl:`LIST` `EfdG`}, instanciations of these effects
+are present in the layers that use them.
+
+* {sl:`LIST` `EfdG`}: Effect definitions
+    * {sl:`EfDC`}: Effect definition count (number of definitions)
+    * {sl:`LIST` `EfDf`}: Effect definition (one per effect type used in the document)
+        * {sl:`tdmn`}: Effect match name
+        * {sl:`LIST` `sspc`}
+            * {sl:`fnam`} > {sl:`Utf8`}: Effect name
+        * {sl:`LIST` `parT`}: Effect parameters
+            * {sl:`parn`}: Number of parameters
+            * {sl:`tdmn`}: Parameter match name
+            * {sl:`pard`}: Parameter definition
+            * You get a pair of {sl:`tdmn`} and {sl:`pard`} for each parameter
+        * {sl:`LIST` `tdgp`}: Contains the values of the first instance of this effect, can be ignored
+
+Note that the first paramter in an effect should be ignored.
+
+The effects in a later are listed under `ADBE Effect Parade`:
+
+* {sl:`tdmn`}: Effect match name, you'll need to find the matching definition
+* {sl:`LIST` `sspc`}
+    * {sl:`fnam`} > {sl:`Utf8`}: Effect name
+    * {sl:`LIST` `parT`}: You might find this here as well but it isn't consistent. Refer to {sl:`LIST` `EfdG`} for the definition
+    * {sl:`LIST` `tdgp`}: Parameter values, works like any other property list
+
 
 ## Match Names
 
@@ -1423,12 +1461,10 @@ ADBE Paint Properties : contains the following
 ADBE Paint Clone Layer :
 
 
-
 ### Misc
 
 {aep_mn}
 ADBE Group End : Indicates the end of a {sl:`LIST` `tdgp`}
-
 
 <!--
 to verify:
