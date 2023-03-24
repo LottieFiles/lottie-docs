@@ -114,8 +114,7 @@ AfterEffects Logic
 
 ### Project Structure
 
-Assets and compositions are stored in a folder structure, on the `RIFX`,
-looks like for a {sl:`LIST` `Fold`} chunk.
+The contents of the project are in the top-level {sl:`LIST` `Fold`}.
 
 Inside here you'll find (among other things) {sl:`LIST` `Item`} chunks,
 they all contain an {sl:`idta`} which tells you how to interpret the item and its ID.
