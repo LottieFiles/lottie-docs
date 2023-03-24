@@ -204,13 +204,29 @@ attributes to distinguish between them:
 For light settings look for the match name `ADBE Light Options Group`.
 
 
-### Objects
+### Property Groups
 
-Most objects are introduced by their match name ({sl:`tdmn`}),
-followed by a {sl:`LIST` `tdgp`} that defines the properties and sub-objects.
+Most objects are described as a property groups.
 
-Inside the {sl:`LIST` `tdgp`} you can find more match names defining which
-property or the type of sub-object you are defining.
+These have the following structure:
+
+* {sl:`LIST` `tdgp`}: Property group
+    * {sl:`tdsb`}: Flags
+    * {sl:`tdsn`} > {sl:`Utf8`}: Name
+    * ... (properties)
+    * {sl:`tdmn`}: `ADBE Group End` (marks the end of the group)
+
+Then follows a list of properties, all introduced by their
+[match name](#match-names) ({sl:`tdmn`}).
+
+After a match name, you'll find the data for the property, which might
+be an actual propert (see the section below), other groups, or layer effects.
+
+This structure is used both for objects (that have a fixed set of properties)
+and groups/collections whose contents might vary.
+
+For objects with fixed properties you will not find duplicate match names
+but you might find duplicates within collections.
 
 
 ### Properties
