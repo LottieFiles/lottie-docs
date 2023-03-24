@@ -96,12 +96,24 @@ flag = (flags[byte] & (1 << bit)) != 0
 
 ## AfterEffects Logic
 
-### Project Structure
+### File Structure
 
-The contents of the project are in the top-level {sl:`LIST` `Fold`}.
+* {sl:`LIST` `EfdG`}: [Effect definitions](#effects)
+* {sl:`LIST` `ExEn`}
+    * {sl:`Utf8`}: Language used in expressions (eg: `javascript-1.0`)
+* {sl:`LIST` `Fold`}: Root folder
+    * {sl:`LIST` `Item`}: Folder item (repeated, see below)
 
-Inside here you'll find (among other things) {sl:`LIST` `Item`} chunks,
-they all contain an {sl:`idta`} which tells you how to interpret the item and its ID.
+#### Folder Item
+
+* {sl:`LIST` `Item`}
+    * {sl:`idta`}: Item data
+    * {sl:`Utf8`}: Name
+
+{sl:`idta`} will cointain the ID of the item (referenced by layers)
+and the item type.
+
+The following sections descript each type of item in detail
 
 #### Compositions
 
@@ -109,25 +121,30 @@ they all contain an {sl:`idta`} which tells you how to interpret the item and it
 a lottie corresponds to a specific comp (with other compositions showing
 as assets for precomps).
 
-The name of the composition is in the first {sl:`Utf8`} chunk.
+Structure:
 
-Its properties are in {sl:`cdta`}.
+* {sl:`LIST` `Item`}
+    * {sl:`idta`}: Item data (type and ID).
+    * {sl:`Utf8`}: Name
+    * {sl:`cdta`}: Composition data
+    * {sl:`LIST` `Layr`}: Layer (repeated)
 
-Then look for {sl:`LIST` `Layr`} to parse layers.
+Each layer will show as a {sl:`LIST` `Layr`} in the {sl:`LIST` `Item`}.
+
 
 #### Folders
 
 {sl:`idta`} type `1`. These contain additional items inside them.
 
-The name of the folder is in the first {sl:`Utf8`} chunk.
-
-Look for a {sl:`LIST` `Sfdr`} and iterate through it for the child items.
+* {sl:`LIST` `Item`}
+    * {sl:`idta`}: Item data (type and ID).
+    * {sl:`Utf8`}: Name
+    * {sl:`LIST` `Sfdr`}: Folder items
+        * {sl:`LIST` `Item`}: Child item (repeated)
 
 #### Assets
 
 {sl:`idta`} type `7`. These can have different kinds of contents.
-
-{sl:`LIST` `Pin `} will contain the asset data:
 
 Look for {sl:`sspc`} to get the size for visual assets.
 
@@ -138,42 +155,48 @@ The type of asset is defined in the first 4 bytes of {sl:`opti`}.
 For some the `Item` has an `Utf8` but it seems to always be empty
 need to find the name from {sl:`opti`}.
 
+* {sl:`LIST` `Item`}
+    * {sl:`idta`}: Item data (type and ID).
+    * {sl:`Utf8`}: Name (not used for solids)
+    * {sl:`LIST` `Pin `}
+        * {sl:`sspc`}: Contains info like width / height)
+        * {sl:`opti`}: Data
+
 ##### Files
+
+
+* {sl:`LIST` `Item`}
+    * {sl:`idta`}: Item data (type and ID).
+    * {sl:`Utf8`}: Name
+    * {sl:`LIST` `Pin `}
+        * {sl:`sspc`}: Contains info like width / height)
+        * {sl:`opti`}: Check this to tell files apart from solids
+        * {sl:`LIST` `Als2`}
+            * {sl:`alas`}: File info as JSON.
+        * {sl:`LIST` `CLRS`}
+            * {sl:`Utf8`}: JSON containing base64-encoded ICC color profiles.
 
 The `Uft8` in `Item` only has a value if the user has set an explicit value for the name.
 
-The file path is in {sl:`LIST` `Pin `} > {sl:`LIST` `Als2`} > {sl:`alas`}.
-Interpret it as JSON and get `fullpath`.
+The file path is in {sl:`alas`}, parse it as JSON and get `fullpath`.
 
 the first 4 bytes of {sl:`opti`} will change based on the file format.
-
-There will also be a {sl:`LIST` `CLRS`} with some {sl:`Utf8`}, in there there's
-some JSON with base64-encoded ICC color profiles.
 
 
 ### Layers
 
-Layers are defined in {sl:`LIST` `Layr`}.
-
-There are different types of layers:
-
-#### Shape Layer
-
-For shapes look for the match name `ADBE Root Vectors Group`.
-
-#### Camera Layer
-
-For camera settings look for the match name `ADBE Camera Options Group`.
-
-#### Text Layer
-
-For text contents look for the match name `ADBE Text Properties`.
+* {sl:`LIST` `Layr`}: Layer
+    * {sl:`ldta`}: Common layer data, including layer type.
+    * {sl:`Utf8`}: Name
+    * {sl:`LIST` `tdgp`}: [Property group](#property-groups)
 
 #### Asset Layer
 
+Layer type `0`.
+
 (Also known as AVLayer in AE) They have a non-zero Source ID in {sl:`ldta`}.
 
-Image layers and similar will point to an appropriate asset.
+Precomp, image, and similar layers will point to an appropriate asset.
 
 Several layer types point to a solid asset, you need to check the layer
 attributes to distinguish between them:
@@ -184,7 +207,28 @@ attributes to distinguish between them:
 
 #### Light Layer
 
+Layer type `1`.
+
 For light settings look for the match name `ADBE Light Options Group`.
+
+#### Camera Layer
+
+Layer type `2`.
+
+For camera settings look for the match name `ADBE Camera Options Group`.
+
+#### Text Layer
+
+Layer type `3`.
+
+For text contents look for the match name `ADBE Text Properties`.
+
+
+#### Shape Layer
+
+Layer type `4`.
+
+For shapes look for the match name `ADBE Root Vectors Group`.
 
 
 ### Property Groups
