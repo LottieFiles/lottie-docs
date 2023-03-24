@@ -109,6 +109,598 @@ You'll get the value of the flag you'll need to do the following:
 flag = (flags[byte] & (1 << bit)) != 0
 ```
 
+AfterEffects Logic
+------------------
+
+### Project Structure
+
+Assets and compositions are stored in a folder structure, on the `RIFX`,
+looks like for a {sl:`LIST` `Fold`} chunk.
+
+Inside here you'll find (among other things) {sl:`LIST` `Item`} chunks,
+they all contain an {sl:`idta`} which tells you how to interpret the item and its ID.
+
+#### Compositions
+
+{sl:`idta`} has type of `4`. You need to know which composition to extract as
+a lottie corresponds to a specific comp (with other compositions showing
+as assets for precomps).
+
+The name of the composition is in the first {sl:`Utf8`} chunk.
+
+Its properties are in {sl:`cdta`}.
+
+Then look for {sl:`LIST` `Layr`} to parse layers.
+
+#### Folders
+
+{sl:`idta`} type `1`. These contain additional items inside them.
+
+The name of the folder is in the first {sl:`Utf8`} chunk.
+
+Look for a {sl:`LIST` `Sfdr`} and iterate through it for the child items.
+
+#### Assets
+
+{sl:`idta`} type `7`. These can have different kinds of contents.
+
+{sl:`LIST` `Pin `} will contain the asset data:
+
+Look for {sl:`sspc`} to get the size for visual assets.
+
+The type of asset is defined in the first 4 bytes of {sl:`opti`}.
+
+##### Solids
+
+For some the `Item` has an `Utf8` but it seems to always be empty
+need to find the name from {sl:`opti`}.
+
+##### Files
+
+The `Uft8` in `Item` only has a value if the user has set an explicit value for the name.
+
+The file path is in {sl:`LIST` `Pin `} > {sl:`LIST` `Als2`} > {sl:`alas`}.
+Interpret it as JSON and get `fullpath`.
+
+the first 4 bytes of {sl:`opti`} will change based on the file format.
+
+There will also be a {sl:`LIST` `CLRS`} with some {sl:`Utf8`}, in there there's
+some JSON with base64-encoded ICC color profiles.
+
+
+### Layers
+
+Layers are defined in {sl:`LIST` `Layr`}.
+
+There are different types of layers:
+
+#### Shape Layer
+
+For shapes look for the match name `ADBE Root Vectors Group`.
+
+#### Camera Layer
+
+For camera settings look for the match name `ADBE Camera Options Group`.
+
+#### Text Layer
+
+For text contents look for the match name `ADBE Text Properties`.
+
+#### Asset Layer
+
+(Also known as AVLayer in AE) They have a non-zero Source ID in {sl:`ldta`}.
+
+Image layers and similar will point to an appropriate asset.
+
+Several layer types point to a solid asset, you need to check the layer
+attributes to distinguish between them:
+
+* Solid layers
+* Null layers
+* Adjustment layers
+
+#### Light Layer
+
+For light settings look for the match name `ADBE Light Options Group`.
+
+
+### Objects
+
+Most objects are introduced by their match name ({sl:`tdmn`}),
+followed by a {sl:`LIST` `tdgp`} that defines the properties and sub-objects.
+
+Inside the {sl:`LIST` `tdgp`} you can find more match names defining which
+property or the type of sub-object you are defining.
+
+
+### Properties
+
+Properties, like objects are introduced by their match name, the chunks
+following that depends on the type of property.
+
+The core of a property is defined in {sl:`LIST` `tdbs`} with the following structure:
+
+* {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`tdb4`}: Tells you the type, number of components, whether it's animated
+    * {sl:`cdat`}: Value (if not animated)
+    * {sl:`Utf8`}: Optional expression
+    * {sl:`LIST` `list`}: Keyframes (if animated)
+        * {sl:`lhd3`}: Tells you the number of keyframes
+        * {sl:`ldat`}: Keyframe data and values
+
+For simple properties, with vector or scalar values, you get the structure above.
+
+For more complex properties, you get an outer object that contains that data as well
+as a list of values. You'll get the value for the keyframes (or the static value) from that list.
+
+Note that color properties are laid out as ARGB floats in \[0, 255\].
+
+#### Shape
+
+* {sl:`LIST` `om-s`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `omks`}: Keyframe values
+        * {sl:`LIST` `shap`}: Bezier Data (repeated)
+            * {sl:`shph`}: Bezier metadata (whether it's closed and bounding box)
+            * {sl:`LIST` `list`}
+                * {sl:`lhd3`}: Bezier point list metadata
+                * {sl:`ldat`}: Bezier points relative to {sl:`shph`}
+
+#### Gradient Colors
+
+* {sl:`LIST` `GCst`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `GCky`}: Keyframe values
+        * {sl:`Utf8`} [Gradient XML](#gradient-xml) (repeated)
+
+#### Orientation
+
+* {sl:`LIST` `otst`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `otky`}: Keyframe values
+        * {sl:`otda`} 3D vector (repeated)
+
+#### Marker
+
+* {sl:`LIST` `mrst`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `mrky`}: Keyframe values
+        * {sl:`Nmrd`} Marker (repeated)
+            * {sl:`NmHd`} Marker properties
+            * {sl:`Utf8`} Name
+
+#### Text Document
+
+* {sl:`LIST` `btds`}
+    * {sl:`LIST` `tdbs`}: Property definition
+    * {sl:`LIST` `btdk`}: COS-encoded data
+
+#### Expressions
+
+Bodymovin [modifies expressions](https://github.com/bodymovin/bodymovin-extension/blob/master/src/helpers/expressions/expressions.js)
+when converting into lottie, if you add expressions but fail to convert them, the animation
+might not play properly.
+
+
+### Assets
+
+#### Image
+
+Defined within {sl:`LIST` `Item`}, it will have {sl:`idta`} with type `7`.
+
+Within that there's a {sl:`LIST` `Pin `}, containing the following:
+
+{sl:`LIST` `Als2`} with {sl:`alas`}, which in turn has some JSON.
+Inside the JSON you can get `fullpath`.
+
+{sl:`opti`}: Contains the asset name.
+
+{sl:`LIST` `CLRS`}, the last {sl:`Utf8`} here has some JSON with a base64-encoded color profile.
+
+### Shapes
+
+#### Stroke Dashes
+
+Look for the match name `ADBE Vector Stroke Dashes`.
+
+Inside of it you'll find a bunch of properties with match name
+`ADBE Vector Stroke Dash n` or `ADBE Vector Stroke Gap n`, where `n` is
+an ineger starting from 1.
+
+You will also find a single `ADBE Vector Stroke Offset`.
+
+They are all animatable lengths and fairly straighforward.
+
+Note that lottie-web wants a unique "name" for these, and the file doesn't provide this
+but you can generate one based on the match name.
+
+### Transforms
+
+#### Split Position
+
+When a position is split the Position attribute is removed and you can get the data from Position_0 and Position_1.
+
+For some reason Position_0 and Position_1 are present (with value `0`) even when the position is not split.
+
+Their `tdsb` seems to change from `1` (not split) to `3` (split).
+
+### Effects
+
+The effects used in by the file are defined in the top-level chunk {sl:`LIST` `EfdG`}, instanciations of these effects
+are present in the layers that use them.
+
+* {sl:`LIST` `EfdG`}: Effect definitions
+    * {sl:`EfDC`}: Effect definition count (number of definitions)
+    * {sl:`LIST` `EfDf`}: Effect definition (one per effect type used in the document)
+        * {sl:`tdmn`}: Effect match name
+        * {sl:`LIST` `sspc`}
+            * {sl:`fnam`} > {sl:`Utf8`}: Effect name
+        * {sl:`LIST` `parT`}: Effect parameters
+            * {sl:`parn`}: Number of parameters
+            * {sl:`tdmn`}: Parameter match name
+            * {sl:`pard`}: Parameter definition
+            * You get a pair of {sl:`tdmn`} and {sl:`pard`} for each parameter
+        * {sl:`LIST` `tdgp`}: Contains the values of the first instance of this effect, can be ignored
+
+Note that the first paramter in an effect should be ignored.
+
+The effects in a later are listed under `ADBE Effect Parade`:
+
+* {sl:`tdmn`}: Effect match name, you'll need to find the matching definition
+* {sl:`LIST` `sspc`}
+    * {sl:`fnam`} > {sl:`Utf8`}: Effect name
+    * {sl:`LIST` `parT`}: You might find this here as well but it isn't consistent. Refer to {sl:`LIST` `EfdG`} for the definition
+    * {sl:`LIST` `tdgp`}: Parameter values, works like any other property list
+
+
+## Match Names
+
+Follows a list of known match names grouped by object type.
+
+For properties that specify a default value, you should assume they have the specified value if they are not present in the
+AEP file.
+
+
+### Layers
+
+{aep_mn}
+ADBE Root Vectors Group : `shapes`
+ADBE Layer Styles : `styles`
+ADBE Transform Group : `ks`
+ADBE Layer Styles : `sy`
+ADBE Extrsn Options Group :
+ADBE Material Options Group :
+ADBE Audio Group :
+ADBE Layer Sets :
+ADBE Time Remapping : prop=tm
+ADBE Effect Parade : prop=ef
+ADBE Marker : Markers
+
+{aep_mn}
+ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
+ADBE Camera Aperture : prop=pe
+ADBE Camera Zoom :
+
+{aep_mn}
+ADBE Text Properties : object=text/text-data
+ADBE Text Document : prop=d
+ADBE Text Path Options : prop=p
+ADBE Text More Options : prop=m
+
+### Shapes
+
+{aep_mn}
+ADBE Vector Group : object=shapes/group
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
+ADBE Vectors Group : prop=it
+ADBE Vector Transform Group : Transform
+ADBE Vector Materials Group :
+
+{aep_mn}
+ADBE Vector Shape - Rect : object=shapes/rectangle
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Rect Position : prop=p
+ADBE Vector Rect Size : prop=s
+ADBE Vector Rect Roundness : prop=r
+
+{aep_mn}
+ADBE Vector Shape - Ellipse : object=shapes/ellipse
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Ellipse Position : prop=p
+ADBE Vector Ellipse Size : prop=s
+
+{aep_mn}
+ADBE Vector Shape - Ellipse : object=shapes/ellipse
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Ellipse Position : prop=p
+ADBE Vector Ellipse Size : prop=s
+
+{aep_mn}
+ADBE Vector Shape - Star : object=shapes/polystar
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Star Type : prop=sy [^enum]
+ADBE Vector Star Points : prop=pt [^int]
+ADBE Vector Star Position : prop=p
+ADBE Vector Star Rotation : prop=r
+ADBE Vector Star Inner Radius : prop=ir
+ADBE Vector Star Outer Radius : prop=or
+ADBE Vector Star Inner Roundess : prop=is
+ADBE Vector Star Outer Roundess : prop=os
+
+{aep_mn}
+ADBE Vector Shape - Group : object=shapes/path
+ADBE Vector Shape Direction : prop=d [^enum]
+ADBE Vector Shape : prop=ks [^shape]
+
+### Shape Styles
+
+{aep_mn}
+ADBE Vector Graphic - Fill : object=shapes/fill
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
+ADBE Vector Fill Color : prop=c [^color] : \[255, 255, 0, 0\]
+ADBE Vector Fill Opacity : prop=o : 100
+ADBE Vector Fill Rule : prop=r [^enum] : 1
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
+
+{aep_mn}
+ADBE Vector Graphic - Stroke : object=shapes/stroke
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
+ADBE Vector Stroke Color : prop=c [^color] : \[255, 255, 255, 255, \]
+ADBE Vector Stroke Opacity : prop=o : 100
+ADBE Vector Stroke Width : prop=w : 2
+ADBE Vector Stroke Line Cap : prop=lc [^enum] : 1
+ADBE Vector Stroke Line Join : prop=lj [^enum] :  1
+ADBE Vector Stroke Miter Limit : prop=ml2 : 4
+ADBE Vector Stroke Dashes : prop=d
+ADBE Vector Stroke Taper :
+ADBE Vector Stroke Wave :
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
+
+{aep_mn}
+ADBE Vector Stroke Taper : All properties are percentages in \[0, 100\]
+ADBE Vector Taper Start Length :
+ADBE Vector Taper End Length :
+ADBE Vector Taper Start Width :
+ADBE Vector Taper End Width :
+ADBE Vector Taper Start Ease :
+ADBE Vector Taper End Ease :
+
+{aep_mn}
+ADBE Vector Stroke Wave :
+ADBE Vector Taper Wave Amount :
+ADBE Vector Taper Wave Units : 1 for pixels, 2 for cycles
+ADBE Vector Taper Wavelength :
+ADBE Vector Taper Wave Phase :
+
+{aep_mn}
+ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
+ADBE Vector Grad Start Pt : prop=s
+ADBE Vector Grad End Pt : prop=e : \[100, 0\]
+ADBE Vector Grad HiLite Length : prop=h
+ADBE Vector Grad HiLite Angle : prop=a
+ADBE Vector Grad Colors : prop=g [^gradient]
+ADBE Vector Fill Opacity : prop=o : 100
+ADBE Vector Fill Rule : prop=r [^enum] : 1
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
+
+{aep_mn}
+ADBE Vector Graphic - G-Stroke : object=shapes/gradient-stroke
+ADBE Vector Blend Mode : prop=bm [^enum][^blend]
+ADBE Vector Grad Type: prop=t
+ADBE Vector Grad Start Pt : prop=s
+ADBE Vector Grad End Pt : prop=e
+ADBE Vector Grad HiLite Length : prop=h
+ADBE Vector Grad HiLite Angle : prop=a
+ADBE Vector Grad Colors : prop=g [^gradient]
+ADBE Vector Stroke Opacity : prop=o : 100
+ADBE Vector Stroke Width : prop=w : 2
+ADBE Vector Stroke Line Cap : prop=lc [^enum] : 1
+ADBE Vector Stroke Line Join : prop=lj [^enum] : 1
+ADBE Vector Stroke Miter Limit : prop=ml2
+ADBE Vector Stroke Dashes : prop=d
+ADBE Vector Stroke Taper :
+ADBE Vector Stroke Wave :
+ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
+
+### Shape Modifiers
+
+{aep_mn}
+ADBE Vector Filter - Merge : object=shapes/merge
+ADBE Vector Merge Type : prop=mm
+
+{aep_mn}
+ADBE Vector Filter - Offset : object=shapes/offset-path
+ADBE Vector Offset Amount : prop=a
+ADBE Vector Offset Line Join : prop=lj [^enum]
+ADBE Vector Offset Miter Limit : prop=ml
+
+{aep_mn}
+ADBE Vector Filter - PB : object=shapes/pucker-bloat
+ADBE Vector PuckerBloat Amount : prop=a
+
+{aep_mn}
+ADBE Vector Filter - Repeater : object=shapes/repeater
+ADBE Vector Repeater Transform : prop=tr
+ADBE Vector Repeater Copies : prop=c [^int]
+ADBE Vector Repeater Offset : prop=o
+ADBE Vector Repeater Order : prop=m [^enum]
+
+{aep_mn}
+ADBE Vector Filter - RC : object=shapes/rounded-corners
+ADBE Vector RoundCorner Radius : prop=r
+
+{aep_mn}
+ADBE Vector Filter - Trim : object=shapes/trim
+ADBE Vector Trim Start : prop=s
+ADBE Vector Trim End : prop=e
+ADBE Vector Trim Offset : prop=o
+
+{aep_mn}
+ADBE Vector Filter - Twist : object=shapes/twist
+ADBE Vector Twist Angle : prop=a
+ADBE Vector Twist Center : prop=c
+
+{aep_mn}
+ADBE Vector Filter - Roughen :
+ADBE Vector Roughen Size :
+ADBE Vector Roughen Detail :
+ADBE Vector Roughen Points :
+ADBE Vector Temporal Freq :
+ADBE Vector Correlation :
+ADBE Vector Temporal Phase :
+ADBE Vector Spatial Phase :
+ADBE Vector Random Seed :
+
+{aep_mn}
+ADBE Vector Filter - Wiggler :
+ADBE Vector Xform Temporal Freq :
+ADBE Vector Correlation :
+ADBE Vector Temporal Phase :
+ADBE Vector Spatial Phase :
+ADBE Vector Random Seed :
+ADBE Vector Wiggler Transform :
+
+{aep_mn}
+ADBE Vector Filter - Zigzag : object=shapes/zig-zag
+ADBE Vector Zigzag Size : prop=s
+ADBE Vector Zigzag Detail : prop=r
+ADBE Vector Zigzag Points : prop=pt [^int]
+
+### Transforms
+
+{aep_mn}
+ADBE Transform Group : object=helpers/transform
+ADBE Anchor Point: prop=a : \[0, 0\]
+ADBE Position: prop=p : Half of the comp size
+ADBE Position_0: Split position X
+ADBE Position_1: Split position Y
+ADBE Position_2: Split position Z
+ADBE Scale: prop=s [^100] : \[1, 1\]
+ADBE Orientation: prop=or
+ADBE Rotate X: prop=rx
+ADBE Rotate Y: prop=ry
+ADBE Rotate Z: prop=rz or just normal rotation : 0
+ADBE Opacity: prop=o [^100] : 1
+ADBE Envir Appear in Reflect: Single float, probably a boolean?
+
+{aep_mn}
+ADBE Vector Transform Group : object=shapes/transform
+ADBE Vector Anchor Point: prop=a
+ADBE Vector Anchor: prop=a : probably an outdated name
+ADBE Vector Position: prop=p
+ADBE Vector Scale: prop=s
+ADBE Vector Rotate X: prop=rx
+ADBE Vector Rotate Y: prop=ry
+ADBE Vector Rotate Z: prop=rz or just normal rotation
+ADBE Vector Rotation: prop=r
+ADBE Vector Group Opacity: prop=o : 1
+
+
+{aep_mn}
+ADBE Vector Repeater Transform: object=shapes/repeater-transform
+ADBE Vector Repeater Anchor Point: prop=a
+ADBE Vector Repeater Position: prop=p
+ADBE Vector Repeater Scale: prop=s [^100]
+ADBE Vector Repeater Rotation: prop=r
+ADBE Vector Repeater Start Opacity: prop=so [^100] : 1
+ADBE Vector Repeater End Opacity: prop=so [^100] : 1
+
+
+### Effects
+
+{aep_mn}
+ADBE Tint : object=effects/tint-effect : `ty`=`20`
+ADBE Fill : object=effects/fill-effect : `ty`=`21`
+ADBE Stroke : object=effects/stroke-effect : `ty`=`22`
+ADBE Tritone : object=effects/tritone-effect : `ty`=`23`
+ADBE Pro Levels2 : object=effects/pro-levels-effect : `ty`=`24`
+ADBE Drop Shadow : object=effects/drop-shadow-effect : `ty`=`25`
+ADBE Radial Wipe : object=effects/radial-wipe-effect : `ty`=`26`
+ADBE Displacement Map : object=effects/displacement-map-effect : `ty`=`27`
+ADBE Set Matte3 : object=effects/matte3-effect : `ty`=`28`
+ADBE Gaussian Blur 2 : object=effects/gaussian-blur-effect : `ty`=`29`
+ADBE Twirl : object=effects/twirl-effect : `ty`=`30`
+ADBE MESH WARP : object=effects/mesh-warp-effect : `ty`=`31`
+ADBE Ripple : object=effects/wavy-effect : `ty`=`32`
+ADBE Spherize : object=effects/spherize-effect : `ty`=`33`
+ADBE FreePin3 : object=effects/puppet-effect : `ty`=`34`
+
+{aep_mn}
+ADBE Effect Built In Params : Marks a {sl:`LIST` `tdgp`} with built-in effect properties
+ADBE Effect Mask Opacity :
+
+{aep_mn}
+ADBE Paint Group : Data for the paint effect
+ADBE Paint Atom : Contains the following properties
+ADBE Paint Duration :
+ADBE Paint Shape :
+ADBE Paint Transform : Same as other transform but match names starting with `ADBE Paint`
+ADBE Paint Properties : contains the following
+ADBE Paint Clone Layer :
+
+
+### Misc
+
+{aep_mn}
+ADBE Group End : Indicates the end of a {sl:`LIST` `tdgp`}
+
+<!--
+to verify:
+ADBE Vector Offset Copies (offset path)
+ADBE Vector Offset Copy Offset (offset path)
+ADBE Vector Trim Type
+-->
+
+### Notes
+
+[^enum]: Enumerations needs to be converted from floats, but the values match.
+[^blend]: Blend mode has different values than Lottie, see the section below for details.
+[^int]: Needs to be converted from `float` to `int`.
+[^shape]: How to parse this?
+[^color]: Colors are defined as 4 floats (ARGB) in \[0, 255\].
+[^gradient]: Colors defined as [XML](#gradient-xml).
+[^100]: You need to multiply by 100 to get the lottie value.
+
+///Footnotes Go Here///
+
+
+Enumerations
+------------
+
+Most enumerated values are the same in Lottie and AEP, this section lists the exceptions to this
+
+
+### Blend Mode
+
+| Name          |AEP|Lottie|
+|---------------|---|---|
+|Normal         | 1 | 0 |
+|Darken         | 3 | 4 |
+|Multiply       | 4 | 1 |
+|Color Burn     | 5 | 7 |
+|Linear Burn    | 6 |   |
+|Darker Color   | 7 |   |
+|Lighten        | 9 | 5 |
+|Screen         | 10| 2 |
+|Color Dodge    | 11| 6 |
+|Linear Dodge   | 12|   |
+|Lighter Color  | 13|   |
+|Overlay        | 15| 3 |
+|Soft Light     | 16| 9 |
+|Hard Light     | 17| 8 |
+|Linear Light   | 18|   |
+|Vivid Light    | 19|   |
+|Pin Light      | 20|   |
+|Hard Mix       | 21|16 |
+|Difference     | 23|10 |
+|Exclusion      | 24|11 |
+|Hue            | 26|12 |
+|Saturation     | 27|13 |
+|Color          | 28|14 |
+|Luminosity     | 29|15 |
+
+
 Chunk Data
 ----------
 
@@ -928,598 +1520,6 @@ Contains:
 * {sl:`sspc`} with some common properties
 * {sl:`Utf8`} with the name (except for solids)
 * {sl:`opti`} with asset data
-
-
-AfterEffects Logic
-------------------
-
-### Project Structure
-
-Assets and compositions are stored in a folder structure, on the `RIFX`,
-looks like for a {sl:`LIST` `Fold`} chunk.
-
-Inside here you'll find (among other things) {sl:`LIST` `Item`} chunks,
-they all contain an {sl:`idta`} which tells you how to interpret the item and its ID.
-
-#### Compositions
-
-{sl:`idta`} has type of `4`. You need to know which composition to extract as
-a lottie corresponds to a specific comp (with other compositions showing
-as assets for precomps).
-
-The name of the composition is in the first {sl:`Utf8`} chunk.
-
-Its properties are in {sl:`cdta`}.
-
-Then look for {sl:`LIST` `Layr`} to parse layers.
-
-#### Folders
-
-{sl:`idta`} type `1`. These contain additional items inside them.
-
-The name of the folder is in the first {sl:`Utf8`} chunk.
-
-Look for a {sl:`LIST` `Sfdr`} and iterate through it for the child items.
-
-#### Assets
-
-{sl:`idta`} type `7`. These can have different kinds of contents.
-
-{sl:`LIST` `Pin `} will contain the asset data:
-
-Look for {sl:`sspc`} to get the size for visual assets.
-
-The type of asset is defined in the first 4 bytes of {sl:`opti`}.
-
-##### Solids
-
-For some the `Item` has an `Utf8` but it seems to always be empty
-need to find the name from {sl:`opti`}.
-
-##### Files
-
-The `Uft8` in `Item` only has a value if the user has set an explicit value for the name.
-
-The file path is in {sl:`LIST` `Pin `} > {sl:`LIST` `Als2`} > {sl:`alas`}.
-Interpret it as JSON and get `fullpath`.
-
-the first 4 bytes of {sl:`opti`} will change based on the file format.
-
-There will also be a {sl:`LIST` `CLRS`} with some {sl:`Utf8`}, in there there's
-some JSON with base64-encoded ICC color profiles.
-
-
-### Layers
-
-Layers are defined in {sl:`LIST` `Layr`}.
-
-There are different types of layers:
-
-#### Shape Layer
-
-For shapes look for the match name `ADBE Root Vectors Group`.
-
-#### Camera Layer
-
-For camera settings look for the match name `ADBE Camera Options Group`.
-
-#### Text Layer
-
-For text contents look for the match name `ADBE Text Properties`.
-
-#### Asset Layer
-
-(Also known as AVLayer in AE) They have a non-zero Source ID in {sl:`ldta`}.
-
-Image layers and similar will point to an appropriate asset.
-
-Several layer types point to a solid asset, you need to check the layer
-attributes to distinguish between them:
-
-* Solid layers
-* Null layers
-* Adjustment layers
-
-#### Light Layer
-
-For light settings look for the match name `ADBE Light Options Group`.
-
-
-### Objects
-
-Most objects are introduced by their match name ({sl:`tdmn`}),
-followed by a {sl:`LIST` `tdgp`} that defines the properties and sub-objects.
-
-Inside the {sl:`LIST` `tdgp`} you can find more match names defining which
-property or the type of sub-object you are defining.
-
-
-### Properties
-
-Properties, like objects are introduced by their match name, the chunks
-following that depends on the type of property.
-
-The core of a property is defined in {sl:`LIST` `tdbs`} with the following structure:
-
-* {sl:`LIST` `tdbs`}: Property definition
-    * {sl:`tdb4`}: Tells you the type, number of components, whether it's animated
-    * {sl:`cdat`}: Value (if not animated)
-    * {sl:`Utf8`}: Optional expression
-    * {sl:`LIST` `list`}: Keyframes (if animated)
-        * {sl:`lhd3`}: Tells you the number of keyframes
-        * {sl:`ldat`}: Keyframe data and values
-
-For simple properties, with vector or scalar values, you get the structure above.
-
-For more complex properties, you get an outer object that contains that data as well
-as a list of values. You'll get the value for the keyframes (or the static value) from that list.
-
-Note that color properties are laid out as ARGB floats in \[0, 255\].
-
-#### Shape
-
-* {sl:`LIST` `om-s`}
-    * {sl:`LIST` `tdbs`}: Property definition
-    * {sl:`LIST` `omks`}: Keyframe values
-        * {sl:`LIST` `shap`}: Bezier Data (repeated)
-            * {sl:`shph`}: Bezier metadata (whether it's closed and bounding box)
-            * {sl:`LIST` `list`}
-                * {sl:`lhd3`}: Bezier point list metadata
-                * {sl:`ldat`}: Bezier points relative to {sl:`shph`}
-
-#### Gradient Colors
-
-* {sl:`LIST` `GCst`}
-    * {sl:`LIST` `tdbs`}: Property definition
-    * {sl:`LIST` `GCky`}: Keyframe values
-        * {sl:`Utf8`} [Gradient XML](#gradient-xml) (repeated)
-
-#### Orientation
-
-* {sl:`LIST` `otst`}
-    * {sl:`LIST` `tdbs`}: Property definition
-    * {sl:`LIST` `otky`}: Keyframe values
-        * {sl:`otda`} 3D vector (repeated)
-
-#### Marker
-
-* {sl:`LIST` `mrst`}
-    * {sl:`LIST` `tdbs`}: Property definition
-    * {sl:`LIST` `mrky`}: Keyframe values
-        * {sl:`Nmrd`} Marker (repeated)
-            * {sl:`NmHd`} Marker properties
-            * {sl:`Utf8`} Name
-
-#### Text Document
-
-* {sl:`LIST` `btds`}
-    * {sl:`LIST` `tdbs`}: Property definition
-    * {sl:`LIST` `btdk`}: COS-encoded data
-
-#### Expressions
-
-Bodymovin [modifies expressions](https://github.com/bodymovin/bodymovin-extension/blob/master/src/helpers/expressions/expressions.js)
-when converting into lottie, if you add expressions but fail to convert them, the animation
-might not play properly.
-
-
-### Assets
-
-#### Image
-
-Defined within {sl:`LIST` `Item`}, it will have {sl:`idta`} with type `7`.
-
-Within that there's a {sl:`LIST` `Pin `}, containing the following:
-
-{sl:`LIST` `Als2`} with {sl:`alas`}, which in turn has some JSON.
-Inside the JSON you can get `fullpath`.
-
-{sl:`opti`}: Contains the asset name.
-
-{sl:`LIST` `CLRS`}, the last {sl:`Utf8`} here has some JSON with a base64-encoded color profile.
-
-### Shapes
-
-#### Stroke Dashes
-
-Look for the match name `ADBE Vector Stroke Dashes`.
-
-Inside of it you'll find a bunch of properties with match name
-`ADBE Vector Stroke Dash n` or `ADBE Vector Stroke Gap n`, where `n` is
-an ineger starting from 1.
-
-You will also find a single `ADBE Vector Stroke Offset`.
-
-They are all animatable lengths and fairly straighforward.
-
-Note that lottie-web wants a unique "name" for these, and the file doesn't provide this
-but you can generate one based on the match name.
-
-### Transforms
-
-#### Split Position
-
-When a position is split the Position attribute is removed and you can get the data from Position_0 and Position_1.
-
-For some reason Position_0 and Position_1 are present (with value `0`) even when the position is not split.
-
-Their `tdsb` seems to change from `1` (not split) to `3` (split).
-
-### Effects
-
-The effects used in by the file are defined in the top-level chunk {sl:`LIST` `EfdG`}, instanciations of these effects
-are present in the layers that use them.
-
-* {sl:`LIST` `EfdG`}: Effect definitions
-    * {sl:`EfDC`}: Effect definition count (number of definitions)
-    * {sl:`LIST` `EfDf`}: Effect definition (one per effect type used in the document)
-        * {sl:`tdmn`}: Effect match name
-        * {sl:`LIST` `sspc`}
-            * {sl:`fnam`} > {sl:`Utf8`}: Effect name
-        * {sl:`LIST` `parT`}: Effect parameters
-            * {sl:`parn`}: Number of parameters
-            * {sl:`tdmn`}: Parameter match name
-            * {sl:`pard`}: Parameter definition
-            * You get a pair of {sl:`tdmn`} and {sl:`pard`} for each parameter
-        * {sl:`LIST` `tdgp`}: Contains the values of the first instance of this effect, can be ignored
-
-Note that the first paramter in an effect should be ignored.
-
-The effects in a later are listed under `ADBE Effect Parade`:
-
-* {sl:`tdmn`}: Effect match name, you'll need to find the matching definition
-* {sl:`LIST` `sspc`}
-    * {sl:`fnam`} > {sl:`Utf8`}: Effect name
-    * {sl:`LIST` `parT`}: You might find this here as well but it isn't consistent. Refer to {sl:`LIST` `EfdG`} for the definition
-    * {sl:`LIST` `tdgp`}: Parameter values, works like any other property list
-
-
-## Match Names
-
-Follows a list of known match names grouped by object type.
-
-For properties that specify a default value, you should assume they have the specified value if they are not present in the
-AEP file.
-
-
-### Layers
-
-{aep_mn}
-ADBE Root Vectors Group : `shapes`
-ADBE Layer Styles : `styles`
-ADBE Transform Group : `ks`
-ADBE Layer Styles : `sy`
-ADBE Extrsn Options Group :
-ADBE Material Options Group :
-ADBE Audio Group :
-ADBE Layer Sets :
-ADBE Time Remapping : prop=tm
-ADBE Effect Parade : prop=ef
-ADBE Marker : Markers
-
-{aep_mn}
-ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
-ADBE Camera Aperture : prop=pe
-ADBE Camera Zoom :
-
-{aep_mn}
-ADBE Text Properties : object=text/text-data
-ADBE Text Document : prop=d
-ADBE Text Path Options : prop=p
-ADBE Text More Options : prop=m
-
-### Shapes
-
-{aep_mn}
-ADBE Vector Group : object=shapes/group
-ADBE Vector Blend Mode : prop=bm [^enum][^blend]
-ADBE Vectors Group : prop=it
-ADBE Vector Transform Group : Transform
-ADBE Vector Materials Group :
-
-{aep_mn}
-ADBE Vector Shape - Rect : object=shapes/rectangle
-ADBE Vector Shape Direction : prop=d [^enum]
-ADBE Vector Rect Position : prop=p
-ADBE Vector Rect Size : prop=s
-ADBE Vector Rect Roundness : prop=r
-
-{aep_mn}
-ADBE Vector Shape - Ellipse : object=shapes/ellipse
-ADBE Vector Shape Direction : prop=d [^enum]
-ADBE Vector Ellipse Position : prop=p
-ADBE Vector Ellipse Size : prop=s
-
-{aep_mn}
-ADBE Vector Shape - Ellipse : object=shapes/ellipse
-ADBE Vector Shape Direction : prop=d [^enum]
-ADBE Vector Ellipse Position : prop=p
-ADBE Vector Ellipse Size : prop=s
-
-{aep_mn}
-ADBE Vector Shape - Star : object=shapes/polystar
-ADBE Vector Shape Direction : prop=d [^enum]
-ADBE Vector Star Type : prop=sy [^enum]
-ADBE Vector Star Points : prop=pt [^int]
-ADBE Vector Star Position : prop=p
-ADBE Vector Star Rotation : prop=r
-ADBE Vector Star Inner Radius : prop=ir
-ADBE Vector Star Outer Radius : prop=or
-ADBE Vector Star Inner Roundess : prop=is
-ADBE Vector Star Outer Roundess : prop=os
-
-{aep_mn}
-ADBE Vector Shape - Group : object=shapes/path
-ADBE Vector Shape Direction : prop=d [^enum]
-ADBE Vector Shape : prop=ks [^shape]
-
-### Shape Styles
-
-{aep_mn}
-ADBE Vector Graphic - Fill : object=shapes/fill
-ADBE Vector Blend Mode : prop=bm [^enum][^blend]
-ADBE Vector Fill Color : prop=c [^color] : \[255, 255, 0, 0\]
-ADBE Vector Fill Opacity : prop=o : 100
-ADBE Vector Fill Rule : prop=r [^enum] : 1
-ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
-
-{aep_mn}
-ADBE Vector Graphic - Stroke : object=shapes/stroke
-ADBE Vector Blend Mode : prop=bm [^enum][^blend]
-ADBE Vector Stroke Color : prop=c [^color] : \[255, 255, 255, 255, \]
-ADBE Vector Stroke Opacity : prop=o : 100
-ADBE Vector Stroke Width : prop=w : 2
-ADBE Vector Stroke Line Cap : prop=lc [^enum] : 1
-ADBE Vector Stroke Line Join : prop=lj [^enum] :  1
-ADBE Vector Stroke Miter Limit : prop=ml2 : 4
-ADBE Vector Stroke Dashes : prop=d
-ADBE Vector Stroke Taper :
-ADBE Vector Stroke Wave :
-ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
-
-{aep_mn}
-ADBE Vector Stroke Taper : All properties are percentages in \[0, 100\]
-ADBE Vector Taper Start Length :
-ADBE Vector Taper End Length :
-ADBE Vector Taper Start Width :
-ADBE Vector Taper End Width :
-ADBE Vector Taper Start Ease :
-ADBE Vector Taper End Ease :
-
-{aep_mn}
-ADBE Vector Stroke Wave :
-ADBE Vector Taper Wave Amount :
-ADBE Vector Taper Wave Units : 1 for pixels, 2 for cycles
-ADBE Vector Taper Wavelength :
-ADBE Vector Taper Wave Phase :
-
-{aep_mn}
-ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
-ADBE Vector Blend Mode : prop=bm [^enum][^blend]
-ADBE Vector Grad Start Pt : prop=s
-ADBE Vector Grad End Pt : prop=e : \[100, 0\]
-ADBE Vector Grad HiLite Length : prop=h
-ADBE Vector Grad HiLite Angle : prop=a
-ADBE Vector Grad Colors : prop=g [^gradient]
-ADBE Vector Fill Opacity : prop=o : 100
-ADBE Vector Fill Rule : prop=r [^enum] : 1
-ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
-
-{aep_mn}
-ADBE Vector Graphic - G-Stroke : object=shapes/gradient-stroke
-ADBE Vector Blend Mode : prop=bm [^enum][^blend]
-ADBE Vector Grad Type: prop=t
-ADBE Vector Grad Start Pt : prop=s
-ADBE Vector Grad End Pt : prop=e
-ADBE Vector Grad HiLite Length : prop=h
-ADBE Vector Grad HiLite Angle : prop=a
-ADBE Vector Grad Colors : prop=g [^gradient]
-ADBE Vector Stroke Opacity : prop=o : 100
-ADBE Vector Stroke Width : prop=w : 2
-ADBE Vector Stroke Line Cap : prop=lc [^enum] : 1
-ADBE Vector Stroke Line Join : prop=lj [^enum] : 1
-ADBE Vector Stroke Miter Limit : prop=ml2
-ADBE Vector Stroke Dashes : prop=d
-ADBE Vector Stroke Taper :
-ADBE Vector Stroke Wave :
-ADBE Vector Composite Order : if 2, it should be drawn over the previous shape : 1
-
-### Shape Modifiers
-
-{aep_mn}
-ADBE Vector Filter - Merge : object=shapes/merge
-ADBE Vector Merge Type : prop=mm
-
-{aep_mn}
-ADBE Vector Filter - Offset : object=shapes/offset-path
-ADBE Vector Offset Amount : prop=a
-ADBE Vector Offset Line Join : prop=lj [^enum]
-ADBE Vector Offset Miter Limit : prop=ml
-
-{aep_mn}
-ADBE Vector Filter - PB : object=shapes/pucker-bloat
-ADBE Vector PuckerBloat Amount : prop=a
-
-{aep_mn}
-ADBE Vector Filter - Repeater : object=shapes/repeater
-ADBE Vector Repeater Transform : prop=tr
-ADBE Vector Repeater Copies : prop=c [^int]
-ADBE Vector Repeater Offset : prop=o
-ADBE Vector Repeater Order : prop=m [^enum]
-
-{aep_mn}
-ADBE Vector Filter - RC : object=shapes/rounded-corners
-ADBE Vector RoundCorner Radius : prop=r
-
-{aep_mn}
-ADBE Vector Filter - Trim : object=shapes/trim
-ADBE Vector Trim Start : prop=s
-ADBE Vector Trim End : prop=e
-ADBE Vector Trim Offset : prop=o
-
-{aep_mn}
-ADBE Vector Filter - Twist : object=shapes/twist
-ADBE Vector Twist Angle : prop=a
-ADBE Vector Twist Center : prop=c
-
-{aep_mn}
-ADBE Vector Filter - Roughen :
-ADBE Vector Roughen Size :
-ADBE Vector Roughen Detail :
-ADBE Vector Roughen Points :
-ADBE Vector Temporal Freq :
-ADBE Vector Correlation :
-ADBE Vector Temporal Phase :
-ADBE Vector Spatial Phase :
-ADBE Vector Random Seed :
-
-{aep_mn}
-ADBE Vector Filter - Wiggler :
-ADBE Vector Xform Temporal Freq :
-ADBE Vector Correlation :
-ADBE Vector Temporal Phase :
-ADBE Vector Spatial Phase :
-ADBE Vector Random Seed :
-ADBE Vector Wiggler Transform :
-
-{aep_mn}
-ADBE Vector Filter - Zigzag : object=shapes/zig-zag
-ADBE Vector Zigzag Size : prop=s
-ADBE Vector Zigzag Detail : prop=r
-ADBE Vector Zigzag Points : prop=pt [^int]
-
-### Transforms
-
-{aep_mn}
-ADBE Transform Group : object=helpers/transform
-ADBE Anchor Point: prop=a : \[0, 0\]
-ADBE Position: prop=p : Half of the comp size
-ADBE Position_0: Split position X
-ADBE Position_1: Split position Y
-ADBE Position_2: Split position Z
-ADBE Scale: prop=s [^100] : \[1, 1\]
-ADBE Orientation: prop=or
-ADBE Rotate X: prop=rx
-ADBE Rotate Y: prop=ry
-ADBE Rotate Z: prop=rz or just normal rotation : 0
-ADBE Opacity: prop=o [^100] : 1
-ADBE Envir Appear in Reflect: Single float, probably a boolean?
-
-{aep_mn}
-ADBE Vector Transform Group : object=shapes/transform
-ADBE Vector Anchor Point: prop=a
-ADBE Vector Anchor: prop=a : probably an outdated name
-ADBE Vector Position: prop=p
-ADBE Vector Scale: prop=s
-ADBE Vector Rotate X: prop=rx
-ADBE Vector Rotate Y: prop=ry
-ADBE Vector Rotate Z: prop=rz or just normal rotation
-ADBE Vector Rotation: prop=r
-ADBE Vector Group Opacity: prop=o : 1
-
-
-{aep_mn}
-ADBE Vector Repeater Transform: object=shapes/repeater-transform
-ADBE Vector Repeater Anchor Point: prop=a
-ADBE Vector Repeater Position: prop=p
-ADBE Vector Repeater Scale: prop=s [^100]
-ADBE Vector Repeater Rotation: prop=r
-ADBE Vector Repeater Start Opacity: prop=so [^100] : 1
-ADBE Vector Repeater End Opacity: prop=so [^100] : 1
-
-
-### Effects
-
-{aep_mn}
-ADBE Tint : object=effects/tint-effect : `ty`=`20`
-ADBE Fill : object=effects/fill-effect : `ty`=`21`
-ADBE Stroke : object=effects/stroke-effect : `ty`=`22`
-ADBE Tritone : object=effects/tritone-effect : `ty`=`23`
-ADBE Pro Levels2 : object=effects/pro-levels-effect : `ty`=`24`
-ADBE Drop Shadow : object=effects/drop-shadow-effect : `ty`=`25`
-ADBE Radial Wipe : object=effects/radial-wipe-effect : `ty`=`26`
-ADBE Displacement Map : object=effects/displacement-map-effect : `ty`=`27`
-ADBE Set Matte3 : object=effects/matte3-effect : `ty`=`28`
-ADBE Gaussian Blur 2 : object=effects/gaussian-blur-effect : `ty`=`29`
-ADBE Twirl : object=effects/twirl-effect : `ty`=`30`
-ADBE MESH WARP : object=effects/mesh-warp-effect : `ty`=`31`
-ADBE Ripple : object=effects/wavy-effect : `ty`=`32`
-ADBE Spherize : object=effects/spherize-effect : `ty`=`33`
-ADBE FreePin3 : object=effects/puppet-effect : `ty`=`34`
-
-{aep_mn}
-ADBE Effect Built In Params : Marks a {sl:`LIST` `tdgp`} with built-in effect properties
-ADBE Effect Mask Opacity :
-
-{aep_mn}
-ADBE Paint Group : Data for the paint effect
-ADBE Paint Atom : Contains the following properties
-ADBE Paint Duration :
-ADBE Paint Shape :
-ADBE Paint Transform : Same as other transform but match names starting with `ADBE Paint`
-ADBE Paint Properties : contains the following
-ADBE Paint Clone Layer :
-
-
-### Misc
-
-{aep_mn}
-ADBE Group End : Indicates the end of a {sl:`LIST` `tdgp`}
-
-<!--
-to verify:
-ADBE Vector Offset Copies (offset path)
-ADBE Vector Offset Copy Offset (offset path)
-ADBE Vector Trim Type
--->
-
-### Notes
-
-[^enum]: Enumerations needs to be converted from floats, but the values match.
-[^blend]: Blend mode has different values than Lottie, see the section below for details.
-[^int]: Needs to be converted from `float` to `int`.
-[^shape]: How to parse this?
-[^color]: Colors are defined as 4 floats (ARGB) in \[0, 255\].
-[^gradient]: Colors defined as [XML](#gradient-xml).
-[^100]: You need to multiply by 100 to get the lottie value.
-
-///Footnotes Go Here///
-
-
-Enumerations
-------------
-
-Most enumerated values are the same in Lottie and AEP, this section lists the exceptions to this
-
-
-### Blend Mode
-
-| Name          |AEP|Lottie|
-|---------------|---|---|
-|Normal         | 1 | 0 |
-|Darken         | 3 | 4 |
-|Multiply       | 4 | 1 |
-|Color Burn     | 5 | 7 |
-|Linear Burn    | 6 |   |
-|Darker Color   | 7 |   |
-|Lighten        | 9 | 5 |
-|Screen         | 10| 2 |
-|Color Dodge    | 11| 6 |
-|Linear Dodge   | 12|   |
-|Lighter Color  | 13|   |
-|Overlay        | 15| 3 |
-|Soft Light     | 16| 9 |
-|Hard Light     | 17| 8 |
-|Linear Light   | 18|   |
-|Vivid Light    | 19|   |
-|Pin Light      | 20|   |
-|Hard Mix       | 21|16 |
-|Difference     | 23|10 |
-|Exclusion      | 24|11 |
-|Hue            | 26|12 |
-|Saturation     | 27|13 |
-|Color          | 28|14 |
-|Luminosity     | 29|15 |
 
 
 Gradient XML
