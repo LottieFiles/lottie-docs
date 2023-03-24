@@ -126,6 +126,16 @@ and the item type.
 
 The following sections descript each type of item in detail
 
+#### Folders
+
+{sl:`idta`} type `1`. These contain additional items inside them.
+
+* {sl:`LIST` `Item`}
+    * {sl:`idta`}: Item data (type and ID).
+    * {sl:`Utf8`}: Name
+    * {sl:`LIST` `Sfdr`}: Folder items
+        * {sl:`LIST` `Item`}: Child item (repeated)
+
 #### Compositions
 
 {sl:`idta`} has type of `4`. You need to know which composition to extract as
@@ -141,17 +151,6 @@ Structure:
     * {sl:`LIST` `Layr`}: Layer (repeated)
 
 Each layer will show as a {sl:`LIST` `Layr`} in the {sl:`LIST` `Item`}.
-
-
-#### Folders
-
-{sl:`idta`} type `1`. These contain additional items inside them.
-
-* {sl:`LIST` `Item`}
-    * {sl:`idta`}: Item data (type and ID).
-    * {sl:`Utf8`}: Name
-    * {sl:`LIST` `Sfdr`}: Folder items
-        * {sl:`LIST` `Item`}: Child item (repeated)
 
 #### Assets
 
