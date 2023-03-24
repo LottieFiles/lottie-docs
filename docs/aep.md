@@ -19,8 +19,8 @@ A RIFF is composed of "chunks" with the following format
 |Data  |Size| Data within the chunk                         |
 
 
-RIFX is an extension of the RIFF format, the difference being RIFX uses big-endian
-notation for storing numbers.
+`RIFX` is an extension of the `RIFF` format, the difference being `RIFX`
+uses big-endian notation for integers.
 
 A RIFF file will be structured in the same way as a chunk:
 
@@ -51,6 +51,9 @@ At the end of the RIFF data, the AEP file has some XML-encoded metadata.
 
 
 ### Basic Types
+
+In the chunk data descriptions, the types described below will be used
+to show how to interpret the raw binary data.
 
 |Type     |Size|Description|
 |---------|----|-----------|
@@ -93,6 +96,8 @@ You'll get the value of the flag you'll need to do the following:
 ```
 flag = (flags[byte] & (1 << bit)) != 0
 ```
+
+The index of the byte here is in file order so a `byte` of 0 is the most significant byte.
 
 ## AfterEffects Logic
 
