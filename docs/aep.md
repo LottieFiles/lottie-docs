@@ -191,13 +191,17 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 | Label Color Index | 1  | `uint8`  | Color on the timeline |
 |                   | 2  |          | |
 | Layer Name        | 32 | `string0`| It's repeated in the {sl:`Utf8`} chunk right after |
-|                   | 35 |          | |
+|                   | 11 |          | |
+| Matte Mode        | 1  | `uint8`  | |
 | Layer Type        |  1 | `uint8`  | |
 | Parent ID         |  4 | `uint32` |ID of the parent layer, if any |
+|                   | 24 |          | |
+| Matte Layer ID    | 4  | `uint32` | Id of the layer masking the current layer, if any |
 
 
 With the following Attributes:
 
+* _Guide_: (0, 1) Guide layers aren't rendered
 * _Bicubic Sampling_: (0, 6)
 * _Auto Orient_: (1, 0)
 * _Adjustment_: (1, 1) Whether it's an adjustment layer
@@ -240,6 +244,14 @@ Label Colors:
 15. Sandstone
 16. Dark Green
 
+Matte Modes:
+
+0. No Matte
+1. Alpha
+2. Inverted Alpha
+3. Luma
+4. Inverted Luma
+
 ### `idta`
 
 Item data.
@@ -279,7 +291,7 @@ Property metadata.
 |                   | 8  | `float64`| Always `1.0`? |
 |                   | 8  | `float64`| Always `1.0`? |
 |                   | 8  | `float64`| Always `1.0`? |
-| Type?             | 3  | Flags    | See below     |
+| Type?             | 4  | Flags    | See below     |
 |                   | 1  |          | Seems correlated with the previous byte, it's set for `04` for enum properties |
 |                   | 7  |          | Bunch of `00` |
 | Animated          | 1  |          | Set to `1` when animated, kinda the reverse of the _Static_ bit in _Attributes_ |
@@ -302,8 +314,6 @@ Types:
 
 * _No Value_: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.
 * _Color_: (3, 0). Set for color properties (they have a different keyframe format).
-
-124 bytes, most of which seems to be constant:
 
 
 ### `cdat`
@@ -399,7 +409,8 @@ All keyframe items start like this:
 | Extra Attributes  | 1  | Flags        |                                                       |
 
 Attributes:
-* Linear? (0, 0) seems to be on then Ease is off
+
+* Linear (0, 0) seems to be on then Ease is off
 * Ease (0, 1)
 * Hold (0, 2)
 
@@ -419,15 +430,11 @@ Given `n` as the number of dimensions found in {sl:`tdb4`} (eg: 3 for 3D positio
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-|                   |8* 2|`float64[2]`  | |
-| In Speed          | 8  |`float64`     | |
-| In Influence      | 8  |`float64`     | |
-| Out Speed         | 8  |`float64`     | |
-| Out Influence     | 8  |`float64`     | |
-| Value             |8* n|`float64[n]`  | Value |
-|                   |8* n|`float64[n]`  | |
-|                   |8* n|`float64[n]`  | |
-|                   |8* n|`float64[n]`  | |
+| Value             |8* n|`float64[n]`  | Value       |
+| In Speed          |8* n|`float64[n]`  | |
+| In Influence      |8* n|`float64[n]`  | |
+| Out Speed         |8* n|`float64[n]`  | |
+| Out Influence     |8* n|`float64[n]`  | |
 
 #### Keyframe - Position
 
@@ -435,7 +442,12 @@ If the property is an animated position, the keyframe is formatted like so:
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-|                   |8*6 |`float64[6]`  | |
+|                   | 8  |              | |
+|                   | 8  |`float64`     | |
+| In Speed          | 8  |`float64`     | |
+| In Influence      | 8  |`float64`     | |
+| Out Speed         | 8  |`float64`     | |
+| Out Influence     | 8  |`float64`     | |
 | Value             |8* n|`float64[n]`  |Value |
 | Tan In            |8* n|`float64[n]`  |Spatial tangents|
 | Tan Out           |8* n|`float64[n]`  |Spatial tangents|
@@ -460,7 +472,7 @@ Used for shapes and gradients (_Special_ set in {sl:`tdb4`})
 
 |Field Name         |Size|   Type       | Description |
 |-------------------|----|--------------|-------------|
-|                   | 8  |`float64`     | |
+|                   | 8  |              | |
 |                   | 8  |`float64`     | |
 | In Speed          | 8  |`float64`     | |
 | In Influence      | 8  |`float64`     | |
@@ -753,9 +765,11 @@ The list header is defined in the chunk {sl:`lhd3`}, the list data in {sl:`ldat`
 
 They seem to be camera layers used to store internal views, not exported to lottie.
 
-`SLay` have names like "Top" and "Front", perhaps they define 3d views.
+`SLay` (Side views?) have names like "Top" and "Front", perhaps they define 3d views.
 
-`CLay` seem to be custom views.
+`CLay`: Custom views.
+
+`DLay`: Default views.
 
 ### `LIST` `SecL`
 
@@ -1035,6 +1049,8 @@ following that depends on the type of property.
         * {sl:`lhd3`}: Tells you the number of keyframes
         * {sl:`ldat`}: Keyframe data and values
 
+Note that color properties are laid out as ARGB floats in \[0, 255\].
+
 #### Shape
 
 * {sl:`tdmn`}: Match Name (`ADBE Vector Shape`)
@@ -1243,7 +1259,7 @@ ADBE Vector Taper Wave Phase :
 ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
 ADBE Vector Blend Mode : prop=bm [^enum][^blend]
 ADBE Vector Grad Start Pt : prop=s
-ADBE Vector Grad End Pt : prop=e
+ADBE Vector Grad End Pt : prop=e : \[100, 0\]
 ADBE Vector Grad HiLite Length : prop=h
 ADBE Vector Grad HiLite Angle : prop=a
 ADBE Vector Grad Colors : prop=g [^gradient]
@@ -1254,6 +1270,7 @@ ADBE Vector Composite Order : if 2, it should be drawn over the previous shape :
 {aep_mn}
 ADBE Vector Graphic - G-Stroke : object=shapes/gradient-stroke
 ADBE Vector Blend Mode : prop=bm [^enum][^blend]
+ADBE Vector Grad Type: prop=t
 ADBE Vector Grad Start Pt : prop=s
 ADBE Vector Grad End Pt : prop=e
 ADBE Vector Grad HiLite Length : prop=h
@@ -1343,11 +1360,12 @@ ADBE Position_0: Split position X
 ADBE Position_1: Split position Y
 ADBE Position_2: Split position Z
 ADBE Scale: prop=s [^100] : \[1, 1\]
-ADBE Orientation: Single float
+ADBE Orientation: prop=or
 ADBE Rotate X: prop=rx
 ADBE Rotate Y: prop=ry
 ADBE Rotate Z: prop=rz or just normal rotation : 0
 ADBE Opacity: prop=o [^100] : 1
+ADBE Envir Appear in Reflect: Single float, probably a boolean?
 
 {aep_mn}
 ADBE Vector Transform Group : object=shapes/transform
@@ -1375,21 +1393,21 @@ ADBE Vector Repeater End Opacity: prop=so [^100] : 1
 ### Effects
 
 {aep_mn}
-ADBE Tint : object=effects/tint-effect
-ADBE Fill : object=effects/fill-effect
-ADBE Stroke : object=effects/stroke-effect
-ADBE Tritone : object=effects/tritone-effect
-ADBE Pro Levels2 : object=effects/pro-levels-effect
-ADBE Drop Shadow : object=effects/drop-shadow-effect
-ADBE Radial Wipe : object=effects/radial-wipe-effect
-ADBE Displacement Map : object=effects/displacement-map-effect
-ADBE Set Matte3 : object=effects/matte3-effect
-ADBE Gaussian Blur 2 : object=effects/gaussian-blur-effect
-ADBE Twirl : object=effects/twirl-effect
-ADBE MESH WARP : object=effects/mesh-warp-effect
-ADBE Ripple : object=effects/wavy-effect
-ADBE Spherize : object=effects/spherize-effect
-ADBE FreePin3 : object=effects/puppet-effect
+ADBE Tint : object=effects/tint-effect : `ty`=`20`
+ADBE Fill : object=effects/fill-effect : `ty`=`21`
+ADBE Stroke : object=effects/stroke-effect : `ty`=`22`
+ADBE Tritone : object=effects/tritone-effect : `ty`=`23`
+ADBE Pro Levels2 : object=effects/pro-levels-effect : `ty`=`24`
+ADBE Drop Shadow : object=effects/drop-shadow-effect : `ty`=`25`
+ADBE Radial Wipe : object=effects/radial-wipe-effect : `ty`=`26`
+ADBE Displacement Map : object=effects/displacement-map-effect : `ty`=`27`
+ADBE Set Matte3 : object=effects/matte3-effect : `ty`=`28`
+ADBE Gaussian Blur 2 : object=effects/gaussian-blur-effect : `ty`=`29`
+ADBE Twirl : object=effects/twirl-effect : `ty`=`30`
+ADBE MESH WARP : object=effects/mesh-warp-effect : `ty`=`31`
+ADBE Ripple : object=effects/wavy-effect : `ty`=`32`
+ADBE Spherize : object=effects/spherize-effect : `ty`=`33`
+ADBE FreePin3 : object=effects/puppet-effect : `ty`=`34`
 
 {aep_mn}
 ADBE Effect Built In Params : Marks a {sl:`LIST` `tdgp`} with built-in effect properties
@@ -1405,6 +1423,7 @@ ADBE Paint Properties : contains the following
 ADBE Paint Clone Layer :
 
 
+
 ### Misc
 
 {aep_mn}
@@ -1413,11 +1432,9 @@ ADBE Group End : Indicates the end of a {sl:`LIST` `tdgp`}
 
 <!--
 to verify:
-ADBE Vector Grad Type
 ADBE Vector Offset Copies (offset path)
 ADBE Vector Offset Copy Offset (offset path)
 ADBE Vector Trim Type
-ADBE Vector Opacity (group transform)
 -->
 
 ### Notes
