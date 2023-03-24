@@ -6,22 +6,8 @@ It's a binary format based on the RIFX container format.
 
 The structure resembles that of a Lottie JSON exported from AE.
 
-You can perform the parsing in 3 steps:
 
-1. Parse the RIFX chunks into a tree structure
-2. Unpack the chunk data into more useful representations
-3. Traverse that tree to map find the relevant objects and properties
-
-Step 1 is fairly straightforward, RIFX is fairly easy to parse. <br/>
-Step 2 is the hard part as there's no official documentation on how the data is laid out,
-you can find the results of discovery on this in the [Chunks](#chunks) section. <br/>
-Step 3 should be rather easy as now you basically only need to do the
-same as the bodymovin plugin to convert the strucured AE data into lottie,
-info on this is in the [AfterEffects Logic](#aftereffects-logic) section.
-
-
-RIFF
-----
+## RIFF
 
 A RIFF is composed of "chunks" with the following format
 
@@ -46,7 +32,7 @@ A RIFF file will be structured in the same way as a chunk:
 |Chunks|  * | Rest of the chunks            |
 
 
-## AEP-Specific Parsing
+### AEP-Specific Parsing
 
 It should always be `RIFX` format (big endian). The format identifier
 for AEP is `Egg!`.
@@ -64,8 +50,7 @@ it should not be parsed as a RIFF {sl:`LIST`}.
 At the end of the RIFF data, the AEP file has some XML-encoded metadata.
 
 
-Basic Types
------------
+### Basic Types
 
 |Type     |Size|Description|
 |---------|----|-----------|
@@ -80,7 +65,7 @@ Basic Types
 |`bytes`  | *  | Unformatted / unknown data      |
 
 
-### Time
+#### Time
 
 Time values are stored as `uint16`. they are scaled by a factor you can find in {sl:`cdta`}.
 
@@ -99,7 +84,7 @@ time_frames = (time_value + ldta.start_time) / (cdta.time_scale)
 ```
 
 
-### Flags
+#### Flags
 
 Flags is byte data, that will be specified using two integers: byte and bit index.
 
@@ -109,8 +94,7 @@ You'll get the value of the flag you'll need to do the following:
 flag = (flags[byte] & (1 << bit)) != 0
 ```
 
-AfterEffects Logic
-------------------
+## AfterEffects Logic
 
 ### Project Structure
 
@@ -248,7 +232,9 @@ For simple properties, with vector or scalar values, you get the structure above
 For more complex properties, you get an outer object that contains that data as well
 as a list of values. You'll get the value for the keyframes (or the static value) from that list.
 
-Note that color properties are laid out as ARGB floats in \[0, 255\].
+Color properties are laid out as ARGB floats in \[0, 255\].
+
+Note that the keyframe structure in {sl:`ldat`} changes based on the info found in {sl:`tdb4`}.
 
 #### Shape
 
