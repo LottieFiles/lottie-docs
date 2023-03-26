@@ -120,6 +120,7 @@ details to get the data layout within that chunk.
 * {sl:`LIST` `Item`}
     * {sl:`idta`}: Item data
     * {sl:`Utf8`}: Name
+* {sl:`fiac`} Whether the item is the active item
 
 {sl:`idta`} will cointain the ID of the item (referenced by layers)
 and the item type.
@@ -1180,6 +1181,10 @@ and \[1, 1\] corresponds to the bottom-right.
 ### `pprf`
 
 Color profile information as ICC data.
+
+### `fiac`
+
+Folder item active, `uint8` if it's 1 the previous {sl:`List Item`} is the active item.
 
 ### `wsnm`
 
