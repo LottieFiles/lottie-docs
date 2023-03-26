@@ -331,6 +331,25 @@ Note that the keyframe structure in {sl:`ldat`} changes based on the info found 
     * {sl:`LIST` `tdbs`}: Property definition
     * {sl:`LIST` `btdk`}: COS-encoded data
 
+
+#### Chunk naming
+
+Most of property related chunks seem to contain the prefix `td` in their name:
+
+* `tdgp`: property group
+* `tdsb`: property group flags
+* `tdsn`: property group name
+* `tdmn`: property match name
+* `tdbs`: property definition
+* `tdb4`: property details
+
+I'm not sure what `td` stands for my best guess would be "Track Data".
+
+For properties with external values, the naming convention generally is `XXst` for the parent chunk
+and `XXky` for the values (where `XX` changes depending on the type and its meaning is fairly obvious).
+
+I'm not sure what `st` stands for, `ky` most likely stands for "keyframes"
+
 #### Expressions
 
 Bodymovin [modifies expressions](https://github.com/bodymovin/bodymovin-extension/blob/master/src/helpers/expressions/expressions.js)
@@ -868,7 +887,7 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 | Layer Type        |  1 | `uint8`  | |
 | Parent ID         |  4 | `uint32` |ID of the parent layer, if any |
 |                   | 24 |          | |
-| Matte Layer ID    | 4  | `uint32` | Id of the layer masking the current layer, if any |
+| Matte Layer ID    | 4  | `uint32` | Id of the layer masking the current layer, if any (only for AE >= 23) |
 
 
 With the following Attributes:
@@ -1377,8 +1396,7 @@ You will find the following match names within it:
 
 ### `LIST` `tdgp`
 
-Defines a list of an object. To know what type of object, you need to check
-the {sl:`tdmn`} preceding this chunk.
+Defines an object / property group.
 
 Flags for the objects are in {sl:`tdsb`}.
 
