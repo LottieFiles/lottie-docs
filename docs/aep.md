@@ -390,12 +390,12 @@ are present in the layers that use them.
         * {sl:`tdmn`}: Effect match name
         * {sl:`LIST` `sspc`}
             * {sl:`fnam`} > {sl:`Utf8`}: Effect name
-        * {sl:`LIST` `parT`}: Effect parameters
-            * {sl:`parn`}: Number of parameters
-            * {sl:`tdmn`}: Parameter match name
-            * {sl:`pard`}: Parameter definition
-            * You get a pair of {sl:`tdmn`} and {sl:`pard`} for each parameter
-        * {sl:`LIST` `tdgp`}: Contains the values of the first instance of this effect, can be ignored
+            * {sl:`LIST` `parT`}: Effect parameters
+                * {sl:`parn`}: Number of parameters
+                * {sl:`tdmn`}: Parameter match name
+                * {sl:`pard`}: Parameter definition
+                * You get a pair of {sl:`tdmn`} and {sl:`pard`} for each parameter
+            * {sl:`LIST` `tdgp`}: Contains the values of the first instance of this effect, can be ignored
 
 Note that the first paramter in an effect should be ignored.
 
@@ -794,28 +794,52 @@ Folder data.
 
 Composition data.
 
-|Field Name         |Size|  Type  | Description             |
-|-------------------|----|--------|-------------------------|
-|                   | 5  |        |                         |
-| Time Scale        | 2  |`uint16`| How much Time values are scaled by |
-|                   | 14 |        |                         |
-| Playhead          | 2  |  Time  | Playhead time           |
-|                   | 6  |        |                         |
-| In Time           | 2  |  Time  | Same as `ip` in Lottie  |
-|                   | 6  |        |                         |
-| Out Time          | 2  |  Time  | Same as `op` in Lottie  |
-|                   | 6  |        |                         |
-| Comp duration     | 2  |  Time  | Duration setting in AE  |
-|                   | 5  |        |                         |
-| Color             | 3  |`bytes` | Color as 24 bit RGB     |
-|                   | 85 |        |                         |
-| Width             | 2  |`uint16`| Same as `w` in Lottie   |
-| Height            | 2  |`uint16`| Same as `h` in Lottie   |
-|                   | 12 |        |                         |
-| Framerate         | 2  |`uint16`| Same as `fr` in Lottie  |
+|Field Name             |Size|  Type  | Description             |
+|-----------------------|----|--------|-------------------------|
+| X Resolution          | 2  |`uint16`|                         |
+| Y Resolution          | 2  |`uint16`|                         |
+|                       | 1  |        |                         |
+| Time Scale            | 2  |`uint16`| How much Time values are scaled by |
+|                       | 14 |        |                         |
+| Playhead              | 2  |  Time  | Playhead time           |
+|                       | 6  |        |                         |
+| In Time               | 2  |  Time  | Same as `ip` in Lottie  |
+|                       | 6  |        |                         |
+| Out Time              | 2  |  Time  | Same as `op` in Lottie  |
+|                       | 6  |        |                         |
+| Comp duration         | 2  |  Time  | Duration setting in AE  |
+|                       | 5  |        |                         |
+| Color                 | 3  |`bytes` | Color as 24 bit RGB     |
+|                       | 84 |        |                         |
+| Attributes            | 1  | Flags  |                         |
+| Width                 | 2  |`uint16`| Same as `w` in Lottie   |
+| Height                | 2  |`uint16`| Same as `h` in Lottie   |
+| Pixel Ratio Width     | 4  |`uint32`|                         |
+| Pixel Ratio Height    | 4  |`uint32`|                         |
+|                       | 12 |        |                         |
+| Framerate             | 2  |`uint16`| Same as `fr` in Lottie  |
+|                       | 16 |        |                         |
+| Shutter Angle         | 2  |`uint16`|                         |
+| Shutter Phase         | 4  |`sint16`|                         |
+|                       | 16 |        |                         |
+| Samples Limit         | 4  |`sint16`|                         |
+| Samples per frame     | 4  |`sint16`|                         |
 
 
 Note that End Time might have a value of FFFF, if that's the case assume it to be the same as Comp Duration.
+
+The X/Y resolution represent a divisor of the size in that direction used for rendering.
+For example a X Resolution of 5, with a width of 500 will yield an output of 100px.
+
+The pixel ratio is represented as a fraction of width/height, if both values are 1 you get square pixels.
+
+Attributes:
+
+* Shy: (0, 0): Hides Shy layers from the timeline
+* Motion Blur: (0, 3): Allows layers to enable motion blur
+* Frame Blending: (0, 4): Allows layers to enable frame blending
+* Preserve Framerate: (0, 5): Something about nested render queues
+* Preserve Resolution: (0, 7): Something about nested render queues
 
 ### `ldta`
 
