@@ -414,7 +414,8 @@ are present in the layers that use them.
                 * {sl:`parn`}: Number of parameters
                 * {sl:`tdmn`}: Parameter match name
                 * {sl:`pard`}: Parameter definition
-                * You get a pair of {sl:`tdmn`} and {sl:`pard`} for each parameter
+                * {sl:`pdnm`}: (optional) Parameter control strings
+                * You get {sl:`tdmn`} and {sl:`pard`} (optionally followed by {sl:`pdnm`} for each parameter
             * {sl:`LIST` `tdgp`}: Contains the values of the first instance of this effect, can be ignored
 
 Note that the first paramter in an effect should be ignored.
@@ -1308,14 +1309,12 @@ Contains a `uint64` with the number of parameters in a {sl:`LIST` `parT`}.
 
 Effect parameter definition.
 
-|Field Name |Size|Type      | Description   |
-|-----------|----|----------|---------------|
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
 |                   | 15 |          |               |
 | Type              |  1 |`uint8`   |Parameter type |
-| Name              | 32 |`string0` | |
-|                   |  4 |          | |
-|Default?           |  4 |          | |
-|Last used value?
+| Name              | 32 |`string0` |               |
+|                   |  8 |          |               |
 
 Types:
 
@@ -1334,6 +1333,84 @@ Types:
 |Unknown    |`15`| `6`  |{ref-link:effect-values/no-value}  |
 |3D         |`16`| `3`  |{ref-link:effect-values/point}     |
 
+After the data above, there is more data that depends on the type
+
+#### Scalar
+
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
+|Last value integer |  2 |`uint16`  |               |
+|Last value fraction|  2 |`uint16`  |               |
+|                   |  4 |          |               |
+|                   | 64 |          |               |
+|                   |  4 |          |               |
+|Min Value          |  2 |`sint16`  |               |
+|                   |  2 |          |               |
+|Max Value          |  2 |`sint16`  |               |
+
+To get the last value, you need to do the following:
+
+```
+value = integer + fraction / 0x10000
+```
+
+#### Boolean
+
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
+|Last used value    |  4 |`uint32`  |               |
+|Default            |  1 |`uint8`   |               |
+|                   |  3 |          |               |
+|                   | 64 |          |               |
+|                   |  4 |`float32` |               |
+|                   |  4 |          |               |
+|                   |  4 |`float32` |               |
+
+#### Color
+
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
+|Last used value    |  4 |`uint8[4]`| ARGB          |
+|Default            |  4 |`uint8[4]`| ARGB          |
+|                   | 64 |          |               |
+|Max Value          |  4 |`uint8[4]`| ARGB          |
+
+#### 2D
+
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
+|Last value X       |  4 |`sint32`  |               |
+|Last value Y       |  4 |`sint32`  |               |
+
+Last value x/y are multiplied by 0x80, so divide them to get the right value.
+
+#### Enum
+
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
+|Last used value    |  4 |`uint32`  |               |
+|Default            |  1 |`uint8`   |               |
+
+#### Slider
+
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
+|Last used value    |  8 |`float64` |               |
+|                   | 44 |          |               |
+|                   |  4 |`float32` |               |
+|                   |  4 |          |               |
+|Max Value          |  4 |`float32` |               |
+
+#### `pdnm`
+
+Effect parameter definition name / strings.
+
+This will contain strings used by the widget in the effect controls of the preceding {sl:`pard`}.
+
+For example if the type in the {sl:`pard`} is `4` (Boolean) the name of the parameter might be
+empty and it will be in `pdnm` as that's how AE displays it.
+
+For Enum (type `7`), you get the drop down strings separated by `|`.
 
 ### `prin`
 
