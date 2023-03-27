@@ -1331,7 +1331,7 @@ Types:
 |Slider     |`10`| `0`  |{ref-link:effect-values/slider}    |
 |Group      |`13`| `5`  |{ref-link:effects/custom-effect}   |
 |Unknown    |`15`| `6`  |{ref-link:effect-values/no-value}  |
-|3D         |`16`| `3`  |{ref-link:effect-values/point}     |
+|3D         |`18`| `3`  |{ref-link:effect-values/point}     |
 
 After the data above, there is more data that depends on the type
 
@@ -1400,6 +1400,19 @@ Last value x/y are multiplied by 0x80, so divide them to get the right value.
 |                   |  4 |`float32` |               |
 |                   |  4 |          |               |
 |Max Value          |  4 |`float32` |               |
+
+
+#### 3D Point
+
+|Field Name         |Size|Type      | Description   |
+|-------------------|----|----------|---------------|
+|Last value X       |  8 |          |               |
+|Last value Y       |  8 |          |               |
+|Last value Z       |  8 |          |               |
+
+For the last values, you need to read them as `uint64`, then add `0x0090000000000000`
+before using the resulting bytes to decode as IEE-754 `float64`
+
 
 #### `pdnm`
 
