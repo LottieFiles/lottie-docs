@@ -277,6 +277,8 @@ The core of a property is defined in {sl:`LIST` `tdbs`} with the following struc
 * {sl:`LIST` `tdbs`}: Property definition
     * {sl:`tdb4`}: Tells you the type, number of components, whether it's animated
     * {sl:`cdat`}: Value (if not animated)
+    * {sl:`tdsn`}:
+        * {sl:`Utf8`}: Human-readable Name
     * {sl:`Utf8`}: Optional expression
     * {sl:`LIST` `list`}: Keyframes (if animated)
         * {sl:`lhd3`}: Tells you the number of keyframes
@@ -330,6 +332,16 @@ Note that the keyframe structure in {sl:`ldat`} changes based on the info found 
 * {sl:`LIST` `btds`}
     * {sl:`LIST` `tdbs`}: Property definition
     * {sl:`LIST` `btdk`}: COS-encoded data
+
+#### Layer
+
+Follows the usual {sl:`LIST` `tdbs`}, check {sl:`tdb4`} for the "Layer" property type.
+
+* {sl:`LIST` `tdbs`}
+    * {sl:`tdb4`}
+    * {sl:`cdat`}: Should always be `[0.0]`
+    * {sl:`tdpi`}: Layer index
+    * {sl:`tdps`}: Layer source
 
 
 #### Chunk naming
@@ -1005,6 +1017,7 @@ Attributes:
 Types:
 
 * _No Value_: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.
+* _Layer_: (3, 2). The value will be in {sl:`tdpi`} / {sl:`tdps`}
 * _Color_: (3, 0). Set for color properties (they have a different keyframe format).
 
 
@@ -1335,7 +1348,12 @@ Types:
 
 After the data above, there is more data that depends on the type
 
-#### Scalar
+#### Layer
+
+Doesn't seem to have much data
+
+
+#### Scalar / Angle
 
 |Field Name         |Size|Type      | Description   |
 |-------------------|----|----------|---------------|
@@ -1389,7 +1407,8 @@ Last value x/y are multiplied by 0x80, so divide them to get the right value.
 |Field Name         |Size|Type      | Description   |
 |-------------------|----|----------|---------------|
 |Last used value    |  4 |`uint32`  |               |
-|Default            |  1 |`uint8`   |               |
+|Option count       |  2 |`uint16`  |               |
+|Default            |  2 |`uint16`  |               |
 
 #### Slider
 
@@ -1406,13 +1425,11 @@ Last value x/y are multiplied by 0x80, so divide them to get the right value.
 
 |Field Name         |Size|Type      | Description   |
 |-------------------|----|----------|---------------|
-|Last value X       |  8 |          |               |
-|Last value Y       |  8 |          |               |
-|Last value Z       |  8 |          |               |
+|Last value X       |  8 |`float64` |               |
+|Last value Y       |  8 |`float64` |               |
+|Last value Z       |  8 |`float64` |               |
 
-For the last values, you need to read them as `uint64`, then add `0x0090000000000000`
-before using the resulting bytes to decode as IEE-754 `float64`
-
+You need to multiply the "Last value" components by 512 to get the actual values.
 
 #### `pdnm`
 
@@ -1424,6 +1441,20 @@ For example if the type in the {sl:`pard`} is `4` (Boolean) the name of the para
 empty and it will be in `pdnm` as that's how AE displays it.
 
 For Enum (type `7`), you get the drop down strings separated by `|`.
+
+
+#### `tdpi`
+
+Layer index for layer properties (`uint32`).
+
+#### `tdps`
+
+Layer source for layer properties (`sint32`).
+
+* `0`: Layer
+* `-1`: Effects & Masks
+* `-2`: Masks
+
 
 ### `prin`
 
