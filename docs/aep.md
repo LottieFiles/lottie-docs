@@ -120,6 +120,7 @@ details to get the data layout within that chunk.
 * {sl:`LIST` `Item`}
     * {sl:`idta`}: Item data
     * {sl:`Utf8`}: Name
+    * {sl:`cmta`}: (optional) Comment
 * {sl:`fiac`} Whether the item is the active item
 
 {sl:`idta`} will cointain the ID of the item (referenced by layers)
@@ -199,6 +200,7 @@ the first 4 bytes of {sl:`opti`} will change based on the file format.
 * {sl:`LIST` `Layr`}: Layer
     * {sl:`ldta`}: Common layer data, including layer type.
     * {sl:`Utf8`}: Name
+    * {sl:`cmta`}: (optional) Comment
     * {sl:`LIST` `tdgp`}: [Property group](#property-groups)
 
 #### Asset Layer
@@ -789,6 +791,18 @@ Most enumerated values are the same in Lottie and AEP, this section lists the ex
 |Luminosity     | 29|15 |
 
 
+<!--
+I've seen these values but I cannot verify them:
+|Linear Burn    | 6 |27 |
+|Darker Color   | 7 |22 |
+|Linear Dodge   | 12|28 |
+|Lighter Color  | 13|26 |
+|Linear Light   | 18|29 |
+|Vivid Light    | 19|37 |
+|Pin Light      | 20|31 |
+-->
+
+
 Chunk Data
 ----------
 
@@ -818,6 +832,12 @@ Contains a {sl:`Utf8`} chunk, used for object names
 ### `tdmn`
 
 Contains a NUL-terminated string (You'll need to strip excess `\0`) and defines a [Match Name](#match-names).
+
+
+### `cmta`
+
+Comment, NUL-terminated string. The size seems to be variable but rounded to 4 bytes.
+
 
 ### `fdta`
 
@@ -1017,7 +1037,7 @@ Attributes:
 Types:
 
 * _No Value_: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.
-* _Layer_: (3, 2). The value will be in {sl:`tdpi`} / {sl:`tdps`}
+* _Layer_: (3, 2). The value will be in {sl:`tdpi`} / {sl:`tdps`} (If these are not present, this flag should be ignored)
 * _Color_: (3, 0). Set for color properties (they have a different keyframe format).
 
 
@@ -1290,6 +1310,13 @@ JSON string containing external asset info.
 
 ### `head`
 
+
+|Field Name     |Size|Type      | Description   |
+|---------------|----|----------|---------------|
+|AE Version?    | 6  |          |               |
+|               | 12 |          |               |
+|File Revision? | 2  |`uint16`  | Increases by 2 every time you save |
+
 Seems the first 6 bytes contain AE version information.
 
 I haven't been able to decode it fully but here's a list of values
@@ -1357,8 +1384,7 @@ Doesn't seem to have much data
 
 |Field Name         |Size|Type      | Description   |
 |-------------------|----|----------|---------------|
-|Last value integer |  2 |`uint16`  |               |
-|Last value fraction|  2 |`uint16`  |               |
+|Last value         |  4 |`sint32`  |               |
 |                   |  4 |          |               |
 |                   | 64 |          |               |
 |                   |  4 |          |               |
@@ -1366,11 +1392,7 @@ Doesn't seem to have much data
 |                   |  2 |          |               |
 |Max Value          |  2 |`sint16`  |               |
 
-To get the last value, you need to do the following:
-
-```
-value = integer + fraction / 0x10000
-```
+To get the last value, you need to divide the raw value by `0x10000`.
 
 #### Boolean
 
