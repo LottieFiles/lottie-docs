@@ -5,7 +5,7 @@
     "description": "How masks interact with each other. See https://helpx.adobe.com/after-effects/using/alpha-channels-masks-mattes.html",
     "oneOf": [
         {
-            "title": "No",
+            "title": "None",
             "const": "n"
         },
         {

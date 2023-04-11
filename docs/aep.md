@@ -337,7 +337,7 @@ Note that the keyframe structure in {sl:`ldat`} changes based on the info found 
 
 #### Layer
 
-Follows the usual {sl:`LIST` `tdbs`}, check {sl:`tdb4`} for the "Layer" property type.
+Follows the usual {sl:`LIST` `tdbs`}, check {sl:`tdb4`} for the "Integer" property type.
 
 * {sl:`LIST` `tdbs`}
     * {sl:`tdb4`}
@@ -345,6 +345,20 @@ Follows the usual {sl:`LIST` `tdbs`}, check {sl:`tdb4`} for the "Layer" property
     * {sl:`tdpi`}: Layer index
     * {sl:`tdps`}: Layer source
 
+
+#### Mask Index
+
+Follows the usual {sl:`LIST` `tdbs`}, check {sl:`tdb4`} for the "Integer" property type.
+
+* {sl:`LIST` `tdbs`}
+    * {sl:`tdb4`}
+    * {sl:`cdat`}: Should always be `[0.0]`
+    * {sl:`tdli`}: Mask index
+
+#### Mask
+
+* {sl:`mkif`}: Basic mask properties
+* {sl:`LIST` `tdgp`}: Animated properties
 
 #### Chunk naming
 
@@ -465,6 +479,7 @@ ADBE Layer Sets :
 ADBE Time Remapping : prop=tm
 ADBE Effect Parade : prop=ef
 ADBE Marker : Markers
+ADBE Mask Parade : prop=masksProperties
 
 {aep_mn}
 ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
@@ -472,10 +487,14 @@ ADBE Camera Aperture : prop=pe
 ADBE Camera Zoom :
 
 {aep_mn}
-ADBE Text Properties : object=text/text-data
-ADBE Text Document : prop=d
-ADBE Text Path Options : prop=p
-ADBE Text More Options : prop=m
+ADBE Mask Atom : object=helpers/mask
+ADBE Mask Shape : prop=pt
+ADBE Mask Offset : prop=x : 0
+ADBE Mask Feather : : \[0, 0\]
+ADBE Mask Opacity : prop=0 : 100
+
+
+
 
 ### Shapes
 
@@ -728,6 +747,77 @@ ADBE Paint Shape :
 ADBE Paint Transform : Same as other transform but match names starting with `ADBE Paint`
 ADBE Paint Properties : contains the following
 ADBE Paint Clone Layer :
+
+### Text
+
+{aep_mn}
+ADBE Text Properties : object=text/text-data
+ADBE Text Document : prop=d
+ADBE Text Path Options : prop=p
+ADBE Text More Options : prop=m
+ADBE Text Animators : prop=a
+
+{aep_mn}
+ADBE Text Animator : object=text/text-range
+ADBE Text Selectors : prop=s (list)
+ADBE Text Animator Properties : prop=a
+
+{aep_mn}
+ADBE Text Selector : object=text/text-range-selector
+ADBE Text Percent Start : prop=s : 0
+ADBE Text Percent End : prop=e : 100
+ADBE Text Percent Offset : prop=o : 0
+ADBE Text Index Start  : prop=s
+ADBE Text Index End  : prop=e
+ADBE Text Index Offset  : prop=o
+ADBE Text Range Advanced :
+ADBE Text Selector Mode
+ADBE Text Selector Max Amount : prop=a
+ADBE Text Selector Smoothness : prop=sm
+ADBE Text Levels Max Ease : prop=xe
+ADBE Text Levels Min Ease : prop=ne
+ADBE Text Random Seed : prop=rn
+
+{aep_mn}
+ADBE Text Animator Properties : object=text/text-style
+ADBE Text Anchor Point 3D : prop=a
+ADBE Text Position 3D : prop=p
+ADBE Text Scale 3D : prop=s
+ADBE Text Skew : prop=sk
+ADBE Text Skew Axis : prop=sa
+ADBE Text Rotation X : prop=rx
+ADBE Text Rotation Y : prop=ry
+ADBE Text Rotation : prop=r
+ADBE Text Opacity : prop=o
+ADBE Text Fill Color : prop=fc
+ADBE Text Fill Opacity : prop=fo
+ADBE Text Fill Hue : prop=fh
+ADBE Text Fill Saturation : prop=fs
+ADBE Text Fill Brightness : prop=fb
+ADBE Text Stroke Color : prop=sc
+ADBE Text Stroke Opacity : prop=so
+ADBE Text Stroke Hue : prop=sh
+ADBE Text Stroke Saturation : prop=ss
+ADBE Text Stroke Brightness : prop=sb
+ADBE Text Stroke Width : prop=sw
+ADBE Text Line Spacing : prop=ls
+ADBE Text Line Anchor
+ADBE Text Track Type
+ADBE Text Tracking Amount
+ADBE Text Character Replace
+ADBE Text Character Offset
+ADBE Text Blur
+
+
+{aep_mn}
+ADBE Text Path Options : object=text/text-follow-path
+ADBE Text Path : prop=m
+ADBE Text Reverse Path : prop=r
+ADBE Text Perpendicular To Path : prop=p
+ADBE Text Force Align Path : prop=1
+ADBE Text First Margin : prop=f
+ADBE Text Last Margin : prop=l
+
 
 
 ### Misc
@@ -1037,8 +1127,13 @@ Attributes:
 Types:
 
 * _No Value_: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.
-* _Layer_: (3, 2). The value will be in {sl:`tdpi`} / {sl:`tdps`} (If these are not present, this flag should be ignored)
+* _Integer_: (3, 2).
+* _Vector_?: (3, 3).
 * _Color_: (3, 0). Set for color properties (they have a different keyframe format).
+
+For _Integer_ type, you might have indexed values:
+For layers, the value will be in {sl:`tdpi`} / {sl:`tdps`},
+for masks it will be in {sl:`tdli`}.
 
 
 ### `cdat`
@@ -1467,16 +1562,19 @@ For Enum (type `7`), you get the drop down strings separated by `|`.
 
 #### `tdpi`
 
-Layer index for layer properties (`uint32`).
+Layer index for index properties (`uint32`).
 
 #### `tdps`
 
-Layer source for layer properties (`sint32`).
+Layer source for index properties (`sint32`).
 
 * `0`: Layer
 * `-1`: Effects & Masks
 * `-2`: Masks
 
+#### `tdli`
+
+Mask index for index properties (`uint32`).
 
 ### `prin`
 
@@ -1512,6 +1610,28 @@ Flags:
 4 bytes specifying flags for a `tdgp`.
 
 the least significant bit marks if an object is visible.
+
+### `mkif`
+
+Mask properties.
+
+|Name       |Size| Type     |
+|-----------|----|----------|
+| Inverted  | 1  | `uint8`  |
+| Locked    | 1  | `uint8`  |
+|           | 4  |          |
+| Mode      | 2  | `uint16` |
+
+Mask Modes:
+
+* 0: None
+* 1: Add
+* 2: Subtract
+* 3: Intersect
+* 4: Darken
+* 5: Lighten
+* 6: Difference
+
 
 
 ### `LIST` `Fold`
