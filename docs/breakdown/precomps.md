@@ -292,7 +292,7 @@ If you look at the JSON you'll notice that this is how the structure changed:
         },
         {
             "id": "Circle",
-            "layers": [ /* First Animation Layers */ ]
+            "layers": [ /* Second Animation Layers */ ]
         }
     ],
     "layers": [
