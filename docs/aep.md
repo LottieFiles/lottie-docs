@@ -493,9 +493,6 @@ ADBE Mask Offset : prop=x : 0
 ADBE Mask Feather : : \[0, 0\]
 ADBE Mask Opacity : prop=0 : 100
 
-
-
-
 ### Shapes
 
 {aep_mn}
@@ -808,17 +805,21 @@ ADBE Text Character Replace
 ADBE Text Character Offset
 ADBE Text Blur
 
-
 {aep_mn}
 ADBE Text Path Options : object=text/text-follow-path
 ADBE Text Path : prop=m
 ADBE Text Reverse Path : prop=r
 ADBE Text Perpendicular To Path : prop=p
-ADBE Text Force Align Path : prop=1
+ADBE Text Force Align Path : prop=a
 ADBE Text First Margin : prop=f
 ADBE Text Last Margin : prop=l
 
-
+{aep_mn}
+ADBE Text More Options : object=text/text-alignment-options
+ADBE Text Anchor Point Option : prop=g : 1
+ADBE Text Anchor Point Align : prop=a : \[0, 0\]
+ADBE Text Render Order : 1 = Per character paletter, 2 = Fills over strokes, 3 = Strokes over fills : 1
+ADBE Text Character Blend Mode : : 1
 
 ### Misc
 
@@ -1631,7 +1632,6 @@ Mask Modes:
 * 4: Darken
 * 5: Lighten
 * 6: Difference
-
 
 
 ### `LIST` `Fold`
