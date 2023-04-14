@@ -798,12 +798,12 @@ ADBE Text Stroke Saturation : prop=ss
 ADBE Text Stroke Brightness : prop=sb
 ADBE Text Stroke Width : prop=sw
 ADBE Text Line Spacing : prop=ls
-ADBE Text Line Anchor
-ADBE Text Track Type
-ADBE Text Tracking Amount
-ADBE Text Character Replace
-ADBE Text Character Offset
-ADBE Text Blur
+ADBE Text Line Anchor :
+ADBE Text Track Type :
+ADBE Text Tracking Amount :
+ADBE Text Character Replace :
+ADBE Text Character Offset :
+ADBE Text Blur :
 
 {aep_mn}
 ADBE Text Path Options : object=text/text-follow-path
@@ -818,8 +818,9 @@ ADBE Text Last Margin : prop=l
 ADBE Text More Options : object=text/text-alignment-options
 ADBE Text Anchor Point Option : prop=g : 1
 ADBE Text Anchor Point Align : prop=a : \[0, 0\]
-ADBE Text Render Order : 1 = Per character paletter, 2 = Fills over strokes, 3 = Strokes over fills : 1
+ADBE Text Render Order : : 1
 ADBE Text Character Blend Mode : : 1
+
 
 ### Misc
 
@@ -849,7 +850,7 @@ ADBE Vector Trim Type
 Enumerations
 ------------
 
-Most enumerated values are the same in Lottie and AEP, this section lists the exceptions to this
+Most enumerated values are the same in Lottie and AEP, this section lists the exceptions to this and enums not in lottie
 
 
 ### Blend Mode
@@ -892,6 +893,12 @@ I've seen these values but I cannot verify them:
 |Vivid Light    | 19|37 |
 |Pin Light      | 20|31 |
 -->
+
+### Text Render Oder
+
+1. Per character palette
+2. Fills over strokes
+3. Strokes over fills
 
 
 Chunk Data
