@@ -40,7 +40,7 @@
                 "td": {
                     "title": "Matte Target",
                     "caniuse": "property-matte-mask",
-                    "type": "#/$defs/helpers/int-boolean",
+                    "$ref": "#/$defs/helpers/int-boolean",
                     "description": "If set to 1, it means a layer is using this layer as a track matte"
                 },
                 "hasMask": {
