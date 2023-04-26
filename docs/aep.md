@@ -203,6 +203,10 @@ the first 4 bytes of {sl:`opti`} will change based on the file format.
     * {sl:`cmta`}: (optional) Comment
     * {sl:`LIST` `tdgp`}: [Property group](#property-groups)
 
+When parsing layer transforms, keep in mind the default position is the center of the comp.
+For shape layers, the default anchor is \[0, 0\];
+for precomp layers the default anchor is the center of the comp (same as position).
+
 #### Asset Layer
 
 Layer type `0`.
@@ -360,6 +364,16 @@ Follows the usual {sl:`LIST` `tdbs`}, check {sl:`tdb4`} for the "Integer" proper
 * {sl:`mkif`}: Basic mask properties
 * {sl:`LIST` `tdgp`}: Animated properties
 
+#### Layer Overrides
+
+* `LIST OvG2`
+    * `CprC`: `uint32`?
+
+#### Layer Source Alternate
+
+* `blsv`: `uint32` Layer index?
+* `blsi`: `uint32`
+
 #### Chunk naming
 
 Most of property related chunks seem to contain the prefix `td` in their name:
@@ -480,6 +494,10 @@ ADBE Time Remapping : prop=tm
 ADBE Effect Parade : prop=ef
 ADBE Marker : Markers
 ADBE Mask Parade : prop=masksProperties
+ADBE Plane Options Group :
+ADBE Data Group :
+ADBE Layer Overrides :
+ADBE Source Options Group :
 
 {aep_mn}
 ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
@@ -492,6 +510,24 @@ ADBE Mask Shape : prop=pt
 ADBE Mask Offset : prop=x : 0
 ADBE Mask Feather : : \[0, 0\]
 ADBE Mask Opacity : prop=0 : 100
+
+{aep_mn}
+ADBE Extrsn Options Group :
+ADBE Bevel Direction :
+
+{aep_mn}
+ADBE Material Options Group :
+ADBE Appears in Reflections :
+ADBE Reflection Coefficient :
+ADBE Glossiness Coefficient :
+ADBE Fresnel Coefficient :
+ADBE Transparency Coefficient :
+ADBE Transp Rolloff :
+ADBE Index of Refraction :
+
+{aep_mn}
+ADBE Source Options Group :
+ADBE Layer Source Alternate
 
 ### Shapes
 
@@ -1232,18 +1268,17 @@ All keyframe items start like this:
 |                   | 1  |              |                                                       |
 | Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
 |                   | 2  |              |                                                       |
-| Attributes        | 1  | Flags        |                                                       |
+| Ease Mode         | 1  | `uint8`      |                                                       |
 | Label Color       | 1  | `uint8`      | Color index, see {sl:`ldta`} for values               |
-| Extra Attributes  | 1  | Flags        |                                                       |
+| Attributes        | 1  | Flags        |                                                       |
+
+Ease Mode:
+1. Linear
+2. Ease
+3. Hold
+
 
 Attributes:
-
-* Linear (0, 0) seems to be on then Ease is off
-* Ease (0, 1)
-* Hold (0, 2)
-
-
-Extra Attributes:
 
 Least significant 3 bits seems to always be on.
 

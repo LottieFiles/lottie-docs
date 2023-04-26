@@ -88,8 +88,10 @@ follows the path (`ao` is 1).
 A matte allows using a layer as a mask for another layer.
 
 The way it works is the layer defining the mask has a `tt` attribute with the
-appropriate [value](constants.md#mattemode)
-and it affects the layer on top (the layer before it in the layer list, which has the `td` attribute).
+appropriate [value](constants.md#mattemode).
+By defaults it affects the layer on top (the layer before it in the layer list, which has the `td` attribute),
+otherwise check the `tp` attribute.
+
 
 In this example there's a layer with a rectangle and a star being masked by an ellipse:
 

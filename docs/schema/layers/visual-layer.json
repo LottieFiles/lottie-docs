@@ -29,12 +29,19 @@
                 "tt": {
                     "title": "Matte Mode",
                     "caniuse": "property-matte-mask",
-                    "$ref": "#/$defs/constants/matte-mode"
+                    "$ref": "#/$defs/constants/matte-mode",
+                    "description": "Defines the track matte mode for the layer"
+                },
+                "tp": {
+                    "title": "Matte Parent",
+                    "type": "integer",
+                    "description": "Index of the layer used as matte, if omitted assume the layer above the current one"
                 },
                 "td": {
                     "title": "Matte Target",
                     "caniuse": "property-matte-mask",
-                    "type": "integer"
+                    "type": "#/$defs/helpers/int-boolean",
+                    "description": "If set to 1, it means a layer is using this layer as a track matte"
                 },
                 "hasMask": {
                     "title": "Has Masks",
