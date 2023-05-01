@@ -1852,7 +1852,7 @@ Representation depends on the value of the previous {sl:`CTyp`}.
 | Name      |Type | Value Format    |
 |-----------|-----|-----------------|
 | Scalar    | `2` | `float64`       |
-| Color     | `4` | `float32[4]`    |
+| Color     | `4` |`float32[4]` RGBA|
 | Position  | `5` | `float64[2]`    |
 | Comment   | `8` |                 |
 | Vector    | `9` | `float64[4]`    |
@@ -1876,6 +1876,10 @@ Essential graphics group item count
 | Count     | 1  | `uint8`  |
 |           | 3  |          |
 
+
+### `CDim`
+
+`uint32` number of dimensions for an essential vector property.
 
 ### `LIST` `Fold`
 
