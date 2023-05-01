@@ -154,6 +154,16 @@ Structure:
 
 Each layer will show as a {sl:`LIST` `Layr`} in the {sl:`LIST` `Item`}.
 
+The composition will also have other type of layer `LIST`s:
+
+* {sl:`LIST` `DLay`}: Default view
+* {sl:`LIST` `CLay`}: Custom views
+* {sl:`LIST` `SLay`}: Side views
+* {sl:`LIST` `SecL`}: Composition markers layer
+
+If the comp uses {sl:essential graphics}, it will have the appropriate `LIST`s as well.
+
+
 #### Assets
 
 {sl:`idta`} type `7`. These can have different kinds of contents.
@@ -471,6 +481,128 @@ The effects in a later are listed under `ADBE Effect Parade`:
     * {sl:`LIST` `tdgp`}: Parameter values, works like any other property list
 
 
+### Essential Graphics
+
+#### Definition
+
+Essential graphics are defined in the following chunks inside the comp's {sl:`LIST` `Item`}:
+
+* {sl:`LIST` `CIF0`}
+* {sl:`LIST` `CIF2`}
+* {sl:`LIST` `CIF3`}
+
+They seem to have the same structure and (almost) identical values. But only `CIF3`
+has data about groups:
+
+* {sl:`LIST` `CIF3`}
+    * {sl:`LIST` `CpS2`}
+        * `CsCt`: seems to always have the value `0x1000000`.
+        * {sl:`Utf8`}: Name (Defaults to `Untitled`)
+        * {sl:`Utf8`}: Locale? (`en_US`)
+    * {sl:`CapS`}
+        * `CsCt`: seems to always have the value `0x1000000`.
+        * `CapL`: seems to always have the value `0`.
+        * {sl:`Utf8`}: Name (again, same value as before)
+    * {sl:`LIST` `CCtl`}: Item (repeated)
+
+Items have the following common structure
+
+* {sl:`LIST` `CCtl`}
+    * {sl:`LIST` `CpS2`}
+        * {sl:`Utf8`}: Name
+    * {sl:`LIST` `CapS`}
+        * {sl:`Utf8`}: Name (again)
+    * {sl:`Utf8`}: UUID
+    * {sl:`CTyp`}: item type
+    * {sl:`CprC`}: Flags
+    * Type-specific data
+
+##### Comment
+
+* {sl:`CTyp`}: `8`
+* {sl:`Utf8`}: Comment string
+* {sl:`Utf8`}: Comment string (again)
+* {sl:`CprC`}: `0`
+
+##### Group
+
+
+* {sl:`CTyp`}: `8`
+* {sl:`LIST` `StVc`}: Items
+    * {sl:`StVS`}: Count
+    * {sl:`Utf8`}: UUID of child items (repeated)
+* {sl:`CprC`}: `0`
+
+##### Property
+
+* {sl:`CVal`}: Value
+* {sl:`CDef`}: Default Value
+* {sl:`Smin`}: Slider min value (only for scalar properties)
+* {sl:`Smax`}: Slider max value (only for scalar properties)
+* {sl:`CDim`}: Number of dimenstions (only for vector properties)
+* {sl:`CprC`}: `1`
+* {sl:`LIST` `CPrp`}
+    * {sl:`CCId`}: Composition ID (same as the one in {sl:`idta`}).
+    * {sl:`CLId`}: Layer ID (same as the one in {sl:`ldta`}).
+    * {sl:`Utf8`}: JSON-ecoded path.
+
+The JSON is a dict where the key is a string containing a number and the values are dicts like this:
+
+* `index`: Index for like shape groups and such, or the value `4294967295` (`0xffffffff`) is used when there is no index
+* `matchName`: Match name as per usual
+
+To find the property, something like this might work:
+
+```python
+CCId = 15
+CLId = 18
+json_data = {
+    "0": {
+        "index":4294967295,
+        "matchName":"ADBE Root Vectors Group"
+    },
+    "1": {
+        "index":0,
+        "matchName":"ADBE Vector Group"
+    },
+    "2": {
+        "index":4294967295,
+        "matchName":"ADBE Vectors Group"
+    },
+    "3": {
+        "index":2,
+        "matchName":"ADBE Vector Graphic - Fill"
+    },
+    "4": {
+        "index":4294967295,
+        "matchName":"ADBE Vector Fill Opacity"
+    }
+}
+
+property = get_layer(CCId, CLId)
+
+for item in json_data.values():
+    if item["index"] == 0xffffffff:
+        property = property.property(item["matchName"])
+    else:
+        property = property.properties[item["index"]]
+```
+
+
+The values in `Smin`, `Smax`, `CVal`, `CDef` depends on the type, refer to {sl:`CTyp`} for their representation.
+
+
+#### Overrides
+
+Defined in the precomp layer under match name `ADBE Layer Overrides`
+
+* {sl:`tdmn`}: `ADBE Layer Overrides`
+* {sl:`LIST` `OvG2`}
+    * {sl:`LIST` `CPrp`}: (repeated)
+        * {sl:`Utf8`}: UUID of the essential property
+* {sl:`LIST` `tdgp`}: Property groups with the matching properties defined as usual.
+
+
 ## Match Names
 
 Follows a list of known match names grouped by object type.
@@ -496,7 +628,7 @@ ADBE Marker : Markers
 ADBE Mask Parade : prop=masksProperties
 ADBE Plane Options Group :
 ADBE Data Group :
-ADBE Layer Overrides :
+ADBE Layer Overrides : Essential graphincs values
 ADBE Source Options Group :
 
 {aep_mn}
@@ -1676,6 +1808,71 @@ Mask Modes:
 * 6: Difference
 
 
+### `CCId`
+
+Composition ID for essential graphics properties (`uint32`)
+
+### `CLId`
+
+Layer ID for essential graphics properties (`uint32`)
+
+### `Smin`
+
+Essential graphics slider minimum value.
+
+Representation depends on the value of the previous {sl:`CTyp`}.
+
+### `Smax`
+
+Essential graphics slider maximum value.
+
+Representation depends on the value of the previous {sl:`CTyp`}.
+
+### `CVal`
+
+Essential graphics property current value.
+
+Representation depends on the value of the previous {sl:`CTyp`}.
+
+### `CDef`
+
+Essential graphics property default value.
+
+Representation depends on the value of the previous {sl:`CTyp`}.
+
+
+### `CTyp`
+
+`uint32` with the essential graphics item type
+
+
+| Name      |Type | Value Format    |
+|-----------|-----|-----------------|
+| Scalar    | `2` | `float64`       |
+| Color     | `4` | `float32[4]`    |
+| Position  | `5` | `float64[2]`    |
+| Comment   | `8` |                 |
+| Vector    | `9` | `float64[4]`    |
+| Group     |`10` |                 |
+
+
+### `CprC`
+
+Essential graphics flags (4bytes)
+
+* Is property (3, 0)
+
+### `StVS`
+
+Essential graphics group item count
+
+
+|Name       |Size| Type     |
+|-----------|----|----------|
+| Count     | 1  | `uint8`  |
+|           | 3  |          |
+
+
 ### `LIST` `Fold`
 
 Top level item.
@@ -1812,10 +2009,6 @@ Contains a  {sl:`LIST` `tdbs`} and a {sl:`LIST` `otky`} to define a shape proper
 
 Contains a sequence of {sl:`otda`} with the orientation data for each keyframe.
 
-### `LIST` `CpS2`
-
-They contain a {sl:`CsCt`} and two {sl:`Utf8`}, the last of which seems to
-contain a locale name (eg: `en_US`)
 
 ### `LIST` `Als2`
 
@@ -1929,8 +2122,46 @@ Contains:
 * {sl:`opti`} with asset data
 
 
-Gradient XML
-------------
+### `LIST` `CIF0`
+
+See {sl:`LIST` `CIF3`}.
+
+### `LIST` `CIF2`
+
+See {sl:`LIST` `CIF3`}.
+
+### `LIST` `CIF3`
+
+{sl:Essential Graphics} Definition.
+
+### `LIST` `CCtl`
+
+Essential graphics item.
+
+
+### `LIST` `CpS2`
+
+Essential graphics header.
+
+
+### `LIST` `StVc`
+
+Essential graphics group items
+
+### `LIST` `CPrp`
+
+Essential graphics property definition
+
+### `LIST` `OvG2`
+
+Essential graphics override property identifiers
+
+### `LIST` `CPrp`
+
+Essential graphics override property identifier
+
+
+## Gradient XML
 
 Gradient data seems to be stored in a convoluted XML structure.
 
@@ -2058,8 +2289,7 @@ You should treat the midpoint value for opacity stops in a similar way as to the
 
 Once you have both the color and opacity values, the final lottie array is simply a concatenation of the two.
 
-XMP Metadata
-------------
+## XMP Metadata
 
 After the RIFX data, an AEP file also contains some XML in the
 [XMP](https://en.wikipedia.org/wiki/Extensible_Metadata_Platform) format.
@@ -2068,8 +2298,7 @@ This section contains the version of AfterEffects, when the file has been
 created and modified, and related info.
 
 
-XML Project Format
-------------------
+## XML Project Format
 
 Aftereffects allows you to save the project as XML.
 
@@ -2109,8 +2338,7 @@ Elements with the {sl:`bdata`} attribute have their binary data hex encoded in s
 You can parse their data the same way as you'd do in RIFX.
 
 
-Resources
----------
+## Resources
 
 * [aftereffects-aep-parser](https://github.com/boltframe/aftereffects-aep-parser) A basic AEP parser written in Go.
 * [Multimedia Programming Interface and Data Specifications 1.0](https://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf) RIFF specs PDF.
