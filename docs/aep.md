@@ -540,6 +540,9 @@ Items have the following common structure
 * {sl:`Smin`}: Slider min value (only for scalar properties)
 * {sl:`Smax`}: Slider max value (only for scalar properties)
 * {sl:`CDim`}: Number of dimenstions (only for vector properties)
+* {sl:`LIST` `StVc`}: Enum values (only for enum properties)
+    * {sl:`StVS`}: Count
+    * {sl:`Utf8`}: Value name (repeated)
 * {sl:`CprC`}: `1`
 * {sl:`LIST` `CPrp`}
     * {sl:`CCId`}: Composition ID (same as the one in {sl:`idta`}).
@@ -1854,6 +1857,7 @@ Representation depends on the value of the previous {sl:`CTyp`}.
 | Comment   | `8` |                 |
 | Vector    | `9` | `float64[4]`    |
 | Group     |`10` |                 |
+| Enum      |`13` | `uint32`        |
 
 
 ### `CprC`
