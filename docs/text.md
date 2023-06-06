@@ -239,6 +239,8 @@ lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
 
 ### Text Alignment Options
 
+Used to change the origin point for transformations, such as Rotation, that may be applied to the text string. The origin point for each character, word, or line can be changed.
+
 {schema_object:text/text-alignment-options}
 
 
