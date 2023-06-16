@@ -201,14 +201,21 @@ class LottieColor(InlineProcessor):
         span = etree.Element("span")
         span.attrib["style"] = "font-family: right"
 
-        comp = [float(match.group(i)) / self.mult for i in range(2, 5)]
+        if self.mult == -1:
+            hex = match.group(1)
+        else:
+            comp = [float(match.group(i)) / self.mult for i in range(2, 5)]
+            hex = "#" + "".join("%02x" % round(x * 255) for x in comp)
 
-        hex = "#" + "".join("%02x" % round(x * 255) for x in comp)
         color = etree.SubElement(span, "span")
         color.attrib["style"] = css_style(background_color=hex)
         color.attrib["class"] = "color-preview"
+        code = etree.SubElement(span, "code")
 
-        etree.SubElement(span, "code").text = "[%s]" % ", ".join("%.3g" % x for x in comp)
+        if self.mult == -1:
+            code.text = hex
+        else:
+            code.text = "[%s]" % ", ".join("%.3g" % x for x in comp)
 
         return span, match.start(0), match.end(0)
 
@@ -1688,6 +1695,7 @@ class LottieExtension(Extension):
         md.inlinePatterns.register(LottieInlineProcessor(md), 'lottie', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 1), 'lottie_color', 175)
         md.inlinePatterns.register(LottieColor(r'{lottie_color_255:(([^,]+),\s*([^,]+),\s*([^,]+))}', md, 255), 'lottie_color_255', 175)
+        md.inlinePatterns.register(LottieColor(r'{lottie_color_hex:([^}]+)}', md, -1), 'lottie_color_hex', 175)
         md.parser.blockprocessors.register(Matrix(md.parser), 'matrix', 175)
         md.parser.blockprocessors.register(SchemaEnum(md.parser, schema_data), 'schema_enum', 175)
         md.inlinePatterns.register(SchemaAttribute(md, schema_data), 'schema_attribute', 175)

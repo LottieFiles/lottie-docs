@@ -752,6 +752,7 @@ ADBE Vector Taper Wave Phase :
 {aep_mn}
 ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
 ADBE Vector Blend Mode : prop=bm [^enum][^blend]
+ADBE Vector Grad Type : prop=t [^enum]
 ADBE Vector Grad Start Pt : prop=s
 ADBE Vector Grad End Pt : prop=e : \[100, 0\]
 ADBE Vector Grad HiLite Length : prop=h
@@ -764,7 +765,7 @@ ADBE Vector Composite Order : if 2, it should be drawn over the previous shape :
 {aep_mn}
 ADBE Vector Graphic - G-Stroke : object=shapes/gradient-stroke
 ADBE Vector Blend Mode : prop=bm [^enum][^blend]
-ADBE Vector Grad Type: prop=t
+ADBE Vector Grad Type: prop=t [^enum]
 ADBE Vector Grad Start Pt : prop=s
 ADBE Vector Grad End Pt : prop=e
 ADBE Vector Grad HiLite Length : prop=h
@@ -1065,6 +1066,28 @@ I've seen these values but I cannot verify them:
 |Pin Light      | 20|31 |
 -->
 
+### Label Colors
+
+| Value | Name      | Default Color             |
+|-------|-----------|---------------------------|
+| 0     | None      | (shows as grey)           |
+| 1     | Red       | {lottie_color_hex:#b4393b}|
+| 2     | Yellow    | {lottie_color_hex:#e2d759}|
+| 3     | Aqua      | {lottie_color_hex:#abcbc8}|
+| 4     | Pink      | {lottie_color_hex:#e5bcca}|
+| 5     | Lavender  | {lottie_color_hex:#a9aac9}|
+| 6     | Peach     | {lottie_color_hex:#e5c19f}|
+| 7     | Sea Foam  | {lottie_color_hex:#b4c7b4}|
+| 8     | Blue      | {lottie_color_hex:#687fdd}|
+| 9     | Green     | {lottie_color_hex:#4ea350}|
+| 10    | Purple    | {lottie_color_hex:#8d3299}|
+| 11    | Orange    | {lottie_color_hex:#e79228}|
+| 12    | Brown     | {lottie_color_hex:#7e442c}|
+| 13    | Fuchsia   | {lottie_color_hex:#f371d5}|
+| 14    | Cyan      | {lottie_color_hex:#43a2a4}|
+| 15    | Sandstone | {lottie_color_hex:#a7967a}|
+| 16    | Dark Green| {lottie_color_hex:#203f1f}|
+
 ### Text Render Oder
 
 1. Per character palette
@@ -1181,7 +1204,7 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 | Attributes        | 3  | Flags    | |
 | Source ID         | 4  | `uint32` | Item id for the used asset |
 |                   | 17 |          | |
-| Label Color Index | 1  | `uint8`  | Color on the timeline |
+| Label Color Index | 1  | `uint8`  | {sl:Label Colors} |
 |                   | 2  |          | |
 | Layer Name        | 32 | `string0`| It's repeated in the {sl:`Utf8`} chunk right after |
 |                   | 11 |          | |
@@ -1215,27 +1238,6 @@ Layer Types:
 * 2: Camera Layer
 * 3: Text Layer
 * 4: Shape Layer
-
-
-Label Colors:
-
-0. None (shows as grey)
-1. Red
-2. Yellow
-3. Aqua
-4. Pink
-5. Lavender
-6. Peach
-7. Sea Foam
-8. Blue
-9. Green
-10. Purple
-11. Orange
-12. Brown
-13. Fuchsia
-14. Cyan
-15. Sandstone
-16. Dark Green
 
 Matte Modes:
 
@@ -1404,7 +1406,7 @@ All keyframe items start like this:
 | Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
 |                   | 2  |              |                                                       |
 | Ease Mode         | 1  | `uint8`      |                                                       |
-| Label Color       | 1  | `uint8`      | Color index, see {sl:`ldta`} for values               |
+| Label Color       | 1  | `uint8`      | {sl:Label Colors}                                     |
 | Attributes        | 1  | Flags        |                                                       |
 
 Ease Mode:
@@ -1769,13 +1771,13 @@ Seems to always have the same content: 3 `00`, a `01`, 8 `00`.
 
 Marker attributes
 
-|Name           |Size| Type     | Description                               |
-|---------------|----|----------|-------------------------------------------|
-|               | 3  |          |                                           |
-| Attributes    | 1  | Flags    |                                           |
-| Duration      | 4  | `uint32` | Duration in frames                        |
-|               | 4  |          |                                           |
-| Label Color   | 1  | `uint8`  | Color index, see {sl:`ldta`} for values   |
+|Name           |Size| Type     | Description           |
+|---------------|----|----------|-----------------------|
+|               | 3  |          |                       |
+| Attributes    | 1  | Flags    |                       |
+| Duration      | 4  | `uint32` | Duration in frames    |
+|               | 4  |          |                       |
+| Label Color   | 1  | `uint8`  | {sl:Label Colors}     |
 
 Flags:
 
