@@ -1614,6 +1614,9 @@ encountered in the wild:
 |22.6   |`5d 2b 0b 33 06 3b`|
 |23.2.1 |`5e 03 0b 39 0e 03`|
 
+It's possible the 3rd to the 5th bytes encode some kind of internal build
+number that gets mapped to AE versions somehow...
+
 ### `EfDC`
 
 The first byte contains the number of {sl:`LIST` `EfDf`} in a {sl:`LIST` `EfdG`}
@@ -1884,6 +1887,23 @@ Essential graphics group item count
 ### `CDim`
 
 `uint32` number of dimensions for an essential vector property.
+
+### `fips`
+
+Contained in {sl:`LIST` `Fold`} contains preview settings.
+The chunk is repeated multiple times but only the first one seems
+to be relevant.
+
+
+|Name       |Size| Type     |
+|-----------|----|----------|
+|           | 15 |          |
+| Flags     |  1 | `uint8`  |
+
+Flags
+
+* Show alpha grid (0, 7)
+
 
 ### `LIST` `Fold`
 
