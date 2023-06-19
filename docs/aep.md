@@ -1257,6 +1257,8 @@ Item data.
 | Type              | 2  | `uint16` | |
 |                   | 14 |          | |
 | ID                | 4  | `uint32` | ID used to reference this item |
+|                   | 38 |          | |
+| Label Color       | 1  | `uint8`  | {sl:Label Colors}              |
 
 The Type field above can have the following values:
 
