@@ -27,7 +27,7 @@ class LottieMatrix
         return mat;
     }
 
-    static rotation_x(angle, axis)
+    static rotation_x(angle)
     {
         let cos = Math.cos(angle);
         let sin = Math.sin(angle);
@@ -42,7 +42,7 @@ class LottieMatrix
         return mat;
     }
 
-    static rotation_y(angle, axis)
+    static rotation_y(angle)
     {
         let cos = Math.cos(angle);
         let sin = Math.sin(angle);
