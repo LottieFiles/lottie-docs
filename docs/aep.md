@@ -849,7 +849,7 @@ ADBE Vector Zigzag Points : prop=pt [^int]
 
 {aep_mn}
 ADBE Transform Group : object=helpers/transform
-ADBE Anchor Point: prop=a : \[0, 0\]
+ADBE Anchor Point: prop=a [^anchor] : \[0, 0\]
 ADBE Position: prop=p : Half of the comp size
 ADBE Position_0: Split position X
 ADBE Position_1: Split position Y
@@ -1015,6 +1015,7 @@ ADBE Vector Trim Type
 [^color]: Colors are defined as 4 floats (ARGB) in \[0, 255\].
 [^gradient]: Colors defined as [XML](#gradient-xml).
 [^100]: You need to multiply by 100 to get the lottie value.
+[^anchor]: For asset layers, the anchor point is relative to the size of the asset (eg: `(0.5, 0.5)` would be the center).
 
 ///Footnotes Go Here///
 
