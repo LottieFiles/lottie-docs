@@ -1586,6 +1586,20 @@ Footage / asset data.
 
 JSON string containing external asset info.
 
+
+|Field Name             | Type      | Description                   |
+|-----------------------|-----------|-------------------------------|
+| `ascendcount_base`    | `number`  |                               |
+| `ascendcount_target`  | `number`  |                               |
+| `fullpath`            | `string`  | The absolute path to the file |
+| `platform`            | `number`  | Operating system (see below)  |
+| `server_name`         | `string`  | Hostname (?)                  |
+| `server_volume_name`  | `string`  |                               |
+| `target_is_folder`    | `boolean` | Whether the file is a folder  |
+
+`platform` values: `1` is Windows, other values are for Unix and MacOS,
+but the values are to be discovered
+
 ### `head`
 
 
@@ -2192,6 +2206,25 @@ Essential graphics override property identifiers
 ### `LIST` `CPrp`
 
 Essential graphics override property identifier
+
+### `LIST` `LRdr`
+
+Render queue data. this is a top-level chunk. Items are stored in {sl:`LIST` `LItm`}.
+
+### `LIST` `LItm`
+
+Render Queue items, contains a sequence of {sl:`LIST` `list`} and
+{sl:`LIST` `LOm `}, the latter having information on the render item (one per job).
+
+### `LIST` `LOm`
+
+Render list item, contains the following chunks:
+
+* `Roou` Output options?
+* `Ropt` Render options?
+* {sl:`LIST` `Als2`} Selected output file
+* {sl:`Utf8`} Name of the template applied to the item
+* {sl:`Utf8`} File name template
 
 
 ## Gradient XML
