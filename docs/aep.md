@@ -867,12 +867,12 @@ ADBE Vector Transform Group : object=shapes/transform
 ADBE Vector Anchor Point: prop=a
 ADBE Vector Anchor: prop=a : probably an outdated name
 ADBE Vector Position: prop=p
-ADBE Vector Scale: prop=s
+ADBE Vector Scale: prop=s : \[100, 100\]
 ADBE Vector Rotate X: prop=rx
 ADBE Vector Rotate Y: prop=ry
 ADBE Vector Rotate Z: prop=rz or just normal rotation
 ADBE Vector Rotation: prop=r
-ADBE Vector Group Opacity: prop=o : 1
+ADBE Vector Group Opacity: prop=o : 100
 
 
 {aep_mn}
@@ -1809,7 +1809,9 @@ Flags:
 
 4 bytes specifying flags for a `tdgp`.
 
-the least significant bit marks if an object is visible.
+* `0x00'00'00'01` - object is visible
+* `0x00'00'00'02` - split position
+* `0x00'00'20'00` - locked x/y ratio
 
 ### `mkif`
 
