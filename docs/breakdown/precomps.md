@@ -181,6 +181,21 @@ lottie.layers[0].op = 60 * time_mult;
 lottie.layers[0].sr = time_mult;
 </script>
 
+You can also change the start time to delay the start of the precomp playback:
+
+
+{lottie_playground:precomp/star-comp.json:512:512}
+Start:<input type="range" min="0" value="30" max="60" />
+Speed:<input type="range" min="10" value="50" max="200" />
+<json>{...lottie, assets:["..."]}</json>
+<script>
+var time_mult = 100 / data["Speed"];
+var start = data["Start"];
+lottie.op = 60 * time_mult + start;
+lottie.layers[0].op = 60 * time_mult + start;
+lottie.layers[0].sr = time_mult;
+lottie.layers[0].st = start;
+</script>
 
 ### Reversing Playback
 
@@ -207,7 +222,7 @@ lottie.layers[0].tm = {
             "i": { "x": 1, "y": 1}
         }
     ]
-}
+};
 </script>
 
 ### Repeated Elements
