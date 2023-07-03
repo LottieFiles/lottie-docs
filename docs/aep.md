@@ -638,6 +638,7 @@ ADBE Source Options Group :
 ADBE Camera Options Group : object=layers/camera-layer : Marks a layer as a camera layer
 ADBE Camera Aperture : prop=pe
 ADBE Camera Zoom :
+ADBE Camera Focus Distance :
 
 {aep_mn}
 ADBE Mask Atom : object=helpers/mask
@@ -662,7 +663,15 @@ ADBE Index of Refraction :
 
 {aep_mn}
 ADBE Source Options Group :
-ADBE Layer Source Alternate
+ADBE Layer Source Alternate :
+
+{aep_mn}
+ADBE Layer Styles :
+ADBE Blend Options Group :
+
+{aep_mn}
+ADBE Blend Options Group :
+ADBE Adv Blend Group :
 
 ### Shapes
 
@@ -679,12 +688,6 @@ ADBE Vector Shape Direction : prop=d [^enum]
 ADBE Vector Rect Position : prop=p
 ADBE Vector Rect Size : prop=s
 ADBE Vector Rect Roundness : prop=r
-
-{aep_mn}
-ADBE Vector Shape - Ellipse : object=shapes/ellipse
-ADBE Vector Shape Direction : prop=d [^enum]
-ADBE Vector Ellipse Position : prop=p
-ADBE Vector Ellipse Size : prop=s
 
 {aep_mn}
 ADBE Vector Shape - Ellipse : object=shapes/ellipse
@@ -748,6 +751,13 @@ ADBE Vector Taper Wave Amount :
 ADBE Vector Taper Wave Units : 1 for pixels, 2 for cycles
 ADBE Vector Taper Wavelength :
 ADBE Vector Taper Wave Phase :
+
+{aep_mn}
+ADBE Vector Stroke Dashes :
+ADBE Vector Stroke Offset :
+ADBE Vector Stroke Gap # :
+ADBE Vector Stroke Dash # :
+
 
 {aep_mn}
 ADBE Vector Graphic - G-Fill : object=shapes/gradient-fill
@@ -872,6 +882,8 @@ ADBE Vector Rotate X: prop=rx
 ADBE Vector Rotate Y: prop=ry
 ADBE Vector Rotate Z: prop=rz or just normal rotation
 ADBE Vector Rotation: prop=r
+ADBE Vector Skew: prop=sk
+ADBE Vector Skew Axis: prop=sa
 ADBE Vector Group Opacity: prop=o : 100
 
 
