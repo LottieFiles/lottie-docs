@@ -816,13 +816,14 @@ ADBE Vector Repeater Order : prop=m [^enum]
 
 {aep_mn}
 ADBE Vector Filter - RC : object=shapes/rounded-corners
-ADBE Vector RoundCorner Radius : prop=r
+ADBE Vector RoundCorner Radius : prop=r : 10
 
 {aep_mn}
 ADBE Vector Filter - Trim : object=shapes/trim
 ADBE Vector Trim Start : prop=s
 ADBE Vector Trim End : prop=e
 ADBE Vector Trim Offset : prop=o
+ADBE Vector Trim Type : prop=m [^enum]
 
 {aep_mn}
 ADBE Vector Filter - Twist : object=shapes/twist
@@ -851,9 +852,9 @@ ADBE Vector Wiggler Transform :
 
 {aep_mn}
 ADBE Vector Filter - Zigzag : object=shapes/zig-zag
-ADBE Vector Zigzag Size : prop=s
-ADBE Vector Zigzag Detail : prop=r
-ADBE Vector Zigzag Points : prop=pt [^int]
+ADBE Vector Zigzag Size : prop=s : 10
+ADBE Vector Zigzag Detail : prop=r : 5
+ADBE Vector Zigzag Points : prop=pt [^enum]
 
 ### Transforms
 
@@ -1015,7 +1016,6 @@ ADBE Group End : Indicates the end of a {sl:`LIST` `tdgp`}
 to verify:
 ADBE Vector Offset Copies (offset path)
 ADBE Vector Offset Copy Offset (offset path)
-ADBE Vector Trim Type
 -->
 
 ### Notes
@@ -1207,8 +1207,10 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 |-------------------|----|----------|-------------|
 | Layer ID          | 4  | `uint32` | |
 | Quality           | 2  | `uint16` | `0`: Wireframe, `1`: Draft, `2`: Best     |
-|                   | 7  |          | |
-| Start Time        | 2  |`sint16`  | Time offset for times withing the layer |
+|                   | 4  |          | |
+| Stretch Numerator | 2  | `uint16` | |
+|                   | 1  |          | |
+| Start Time        | 2  | `sint16` | Time offset for times withing the layer |
 |                   | 6  |          | |
 | In Time           | 2  | Time     | Same as `ip` in Lottie |
 |                   | 6  |          | |
@@ -1222,8 +1224,11 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 | Layer Name        | 32 | `string0`| It's repeated in the {sl:`Utf8`} chunk right after |
 |                   | 11 |          | |
 | Matte Mode        | 1  | `uint8`  | |
-| Layer Type        |  1 | `uint8`  | |
-| Parent ID         |  4 | `uint32` |ID of the parent layer, if any |
+|                   | 2  |          | |
+|Stretch Denominator| 2  | `uint16` | |
+|                   | 19 |          | |
+| Layer Type        | 1  | `uint8`  | |
+| Parent ID         | 4  | `uint32` |ID of the parent layer, if any |
 |                   | 24 |          | |
 | Matte Layer ID    | 4  | `uint32` | Id of the layer masking the current layer, if any (only for AE >= 23) |
 
@@ -1259,6 +1264,8 @@ Matte Modes:
 2. Inverted Alpha
 3. Luma
 4. Inverted Luma
+
+Time streching is defined as a fraction of _Stretch Numerator_ / _Stretch Denominator_
 
 ### `idta`
 
