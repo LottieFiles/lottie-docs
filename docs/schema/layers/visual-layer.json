@@ -10,10 +10,6 @@
         {
             "type": "object",
             "properties": {
-                "cp": {
-                    "title": "Collapse Transform",
-                    "type": "boolean"
-                },
                 "ks": {
                     "title": "Transform",
                     "caniuse": "transform",
@@ -126,6 +122,18 @@
                     "title": "Layer XML tag name",
                     "description": "tag name used by the SVG renderer",
                     "type": "string"
+                },
+                "cp": {
+                    "deprecated": true,
+                    "title": "Collapse Transform",
+                    "description": "This is deprecated in favour of `ct`",
+                    "type": "boolean"
+                },
+                "ct": {
+                    "title": "Collapse Transform",
+                    "description": "Marks that transforms should be applied before masks",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 0
                 }
             },
             "required": [
