@@ -2,7 +2,7 @@ site_name: Lottie Docs
 site_description: Documentation for the Lottie animation format
 copyright: Copyright (C) 2021-2022
 extra:
-    lottie_player_version: 5.9.1
+    lottie_player_version: 5.12.2
 theme:
     name: cinder
     custom_dir: theme
