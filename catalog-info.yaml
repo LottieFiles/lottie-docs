@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: lottie-docs
+  description: Documentation for the lottie file format
+  annotations:
+    github.com/project-slug: LottieFiles/lottie-docs
+    lighthouse.com/website-url: https://lottiefiles.github.io/lottie-docs/
+spec:
+  type: website
+  lifecycle: production
+  owner: rnd
