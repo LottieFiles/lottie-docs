@@ -359,7 +359,7 @@ return: Depends on the property :
 ### Property.loopOut()
 
 {function_docs}
-name: loopIn
+name: loopOut
 param: type : string :
 param: duration : number :
 param: wrap : boolean :
