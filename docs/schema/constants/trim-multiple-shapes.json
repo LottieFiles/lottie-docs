@@ -5,11 +5,11 @@
     "description": "How to handle multiple shapes in trim path",
     "oneOf": [
         {
-            "title": "Individually",
+            "title": "Simultaneously",
             "const": 1
         },
         {
-            "title": "Simultaneously",
+            "title": "Individually",
             "const": 2
         }
     ]
