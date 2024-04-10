@@ -27,6 +27,11 @@
                     "description": "Marks as part of an image sequence if present",
                     "type": "string",
                     "const": "seq"
+                },
+                "sid": {
+                    "title": "Slot ID",
+                    "description": "One of the ID in the file's slots",
+                    "type": "string"
                 }
             },
             "required": ["p"]

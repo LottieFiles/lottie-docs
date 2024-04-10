@@ -135,6 +135,9 @@
                                   },
                                   {
                                       "$ref": "#/$defs/animated-properties/value"
+                                  },
+                                  {
+                                      "$ref": "#/$defs/assets/image"
                                   }
                               ]
                             },
