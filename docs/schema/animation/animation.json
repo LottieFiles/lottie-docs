@@ -138,6 +138,9 @@
                                   },
                                   {
                                       "$ref": "#/$defs/assets/image"
+                                  },
+                                  {
+                                      "$ref": "#/$defs/text/animated-text-document"
                                   }
                               ]
                             },
