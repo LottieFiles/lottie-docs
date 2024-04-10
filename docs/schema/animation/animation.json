@@ -119,23 +119,26 @@
                     "type": "object",
                     "patternProperties": {
                         ".*": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/$defs/animated-properties/multi-dimensional"
-                                },
-                                {
-                                    "$ref": "#/$defs/animated-properties/color-value"
-                                },
-                                {
-                                    "$ref": "#/$defs/animated-properties/position"
-                                },
-                                {
-                                    "$ref": "#/$defs/animated-properties/shape-property"
-                                },
-                                {
-                                    "$ref": "#/$defs/animated-properties/value"
-                                }
-                            ]
+                            "p": {
+                              "anyOf": [
+                                  {
+                                      "$ref": "#/$defs/animated-properties/multi-dimensional"
+                                  },
+                                  {
+                                      "$ref": "#/$defs/animated-properties/color-value"
+                                  },
+                                  {
+                                      "$ref": "#/$defs/animated-properties/position"
+                                  },
+                                  {
+                                      "$ref": "#/$defs/animated-properties/shape-property"
+                                  },
+                                  {
+                                      "$ref": "#/$defs/animated-properties/value"
+                                  }
+                              ]
+                            },
+                            "required": ["p"]
                         }
                     }
                 }
