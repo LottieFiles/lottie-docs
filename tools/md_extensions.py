@@ -12,6 +12,7 @@ from markdown.blockprocessors import BlockProcessor
 from markdown.preprocessors import Preprocessor
 from markdown.extensions import Extension
 from markdown.util import HTML_PLACEHOLDER_RE, AtomicString
+from mkdocs.structure.pages import _RelativePathTreeprocessor
 from lottie_docs.schema import Schema
 
 
@@ -166,7 +167,7 @@ class LottieRenderer:
 
 def get_url(md, path):
     # Mkdocs adds a tree processor to adjust urls, but it won't work with lottie js so we do the same here
-    processor = next(proc for proc in md.treeprocessors if proc.__class__.__module__ == 'mkdocs.structure.pages')
+    processor = next(proc for proc in md.treeprocessors if proc.__class__ is _RelativePathTreeprocessor)
     return processor.files.get_file_from_path(path).url_relative_to(processor.file)
 
 
