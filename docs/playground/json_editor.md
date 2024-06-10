@@ -5,6 +5,10 @@ disable_toc: 1
 <script src="../../scripts/json_editor.js"></script>
 <script src="../../scripts/lottie_explain.js"></script>
 <link rel="stylesheet" href="../../style/editor.css" />
+<script type="module">
+   import { DotLottie } from "https://unpkg.com/@lottiefiles/dotlottie-web@0.23.2/dist/index.js"
+   window.DotLottie = DotLottie;
+</script>
 
 <div class="alert alert-danger" role="alert" style="display: none" id="error_alert"></div>
 <div class="alert alert-primary" role="alert" style="display: none" id="loading_alert">
@@ -115,6 +119,26 @@ disable_toc: 1
                             Preview Background...
                         </a>
                     </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="btn_menu_renderer"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Renderer
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btn_menu_renderer">
+                    <li><a class="dropdown-item" onclick="switch_renderer('svg')">
+                        lottie-web SVG
+                    </a></li>
+                    <li><a class="dropdown-item" onclick="switch_renderer('canvas')">
+                        lottie-web Canvas
+                    </a></li>
+                    <!--<li><a class="dropdown-item" onclick="switch_renderer('html')">
+                        lottie-web HTML
+                    </a></li>-->
+                    <li><a class="dropdown-item" onclick="switch_renderer('dotlottie')">
+                        DotLottie
+                    </a></li>
                 </ul>
             </div>
             <div class="dropdown">
@@ -301,6 +325,19 @@ disable_toc: 1
         lottie_string_input(JSON.stringify(data, undefined, 4));
     }
 
+    function attach_listener()
+    {
+        lottie_player.anim.addEventListener("enterFrame", (ev) => {
+            frame_slider.value = frame_edit.value = Math.round(lottie_player.anim.currentFrame);
+        });
+    }
+
+    function switch_renderer(renderer)
+    {
+        lottie_player.switch_renderer(renderer);
+        attach_listener();
+    }
+
     function on_lottie_update(lottie)
     {
         worker.update(lottie);
@@ -309,9 +346,7 @@ disable_toc: 1
         frame_slider.max = frame_edit.max = lottie.op;
         lottie_player.reload();
         frame_slider.value = frame_edit.value = Math.round(lottie_player.anim.currentFrame);
-        lottie_player.anim.addEventListener("enterFrame", (ev) => {
-            frame_slider.value = frame_edit.value = Math.round(lottie_player.anim.currentFrame);
-        });
+        attach_listener();
     }
 
     function update_frame(value)
