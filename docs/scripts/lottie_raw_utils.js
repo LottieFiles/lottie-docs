@@ -1,6 +1,6 @@
 class LottiePlayer
 {
-    constructor(container, lottie, auto_load=true, custom_options={})
+    constructor(container, lottie, auto_load=true, custom_options={}, renderer="svg")
     {
         if ( typeof container == "string" )
             this.container = document.getElementById(container);
@@ -8,6 +8,7 @@ class LottiePlayer
             this.container = container;
 
         this.lottie = lottie;
+        this.renderer = renderer;
 
         this.anim = null;
 
@@ -24,7 +25,7 @@ class LottiePlayer
     {
         var options = {
             container: this.container,
-            renderer: 'svg',
+            renderer: this.renderer,
             loop: true,
             autoplay: this.autoplay,
             ...this.custom_options,
@@ -50,7 +51,10 @@ class LottiePlayer
 
         if ( this.load_ok )
         {
-            this.anim = bodymovin.loadAnimation(options);
+            if ( options.renderer == "dotlottie" )
+                this.anim = new DotLottieWrapper(options);
+            else
+                this.anim = bodymovin.loadAnimation(options);
             if ( frame != undefined )
                 this.go_to_frame(frame);
         }
@@ -89,6 +93,79 @@ class LottiePlayer
             this.anim.goToAndPlay(frame, true);
         else
             this.anim.goToAndStop(frame, true);
+    }
+
+    switch_renderer(renderer)
+    {
+        this.renderer = renderer;
+        this.reload();
+    }
+}
+
+// Wrapper to dotlottie that makes it compatible with lottie-web
+class DotLottieWrapper
+{
+    constructor(options)
+    {
+        this.container = options.container;
+        this.canvas = document.createElement("canvas");
+        this.container.appendChild(this.canvas);
+        var dl_options = {
+            autoplay: options.autoplay,
+            loop: options.loop,
+            canvas: this.canvas,
+        };
+        if ( options.animationData !== undefined )
+        {
+            dl_options.data = JSON.stringify(options.animationData);
+            this.canvas.style.width = `${options.animationData.w}px`;
+            this.canvas.style.height = `${options.animationData.h}px`;
+        }
+        else
+        {
+            dl_options.src = options.path;
+        }
+        this.wrapped = new DotLottie(dl_options);
+    }
+
+    play()
+    {
+        this.wrapped.play();
+    }
+
+    pause()
+    {
+        this.wrapped.pause();
+    }
+
+    get currentFrame()
+    {
+        return this.wrapped.currentFrame;
+    }
+
+    destroy()
+    {
+        this.wrapped.destroy();
+        this.container.removeChild(this.canvas);
+        this.canvas = null;
+    }
+
+    goToAndPlay(frame, ignored)
+    {
+        this.wrapped.setFrame(frame);
+    }
+
+    goToAndStop(frame, ignored)
+    {
+        this.wrapped.setFrame(frame);
+        this.wrapped.pause();
+    }
+
+    addEventListener(event, listener)
+    {
+        if ( event == "enterFrame" )
+            event = "frame";
+        this.wrapped.addEventListener(event, listener);
     }
 }
 
