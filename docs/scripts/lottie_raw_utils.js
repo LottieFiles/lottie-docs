@@ -118,8 +118,8 @@ class DotLottieWrapper
         if ( options.animationData !== undefined )
         {
             dl_options.data = JSON.stringify(options.animationData);
-            this.canvas.style.width = `${options.animationData.w}px`;
-            this.canvas.style.height = `${options.animationData.h}px`;
+            this.canvas.style.width = "100%";
+            this.canvas.style.height = "100%";
         }
         else
         {
