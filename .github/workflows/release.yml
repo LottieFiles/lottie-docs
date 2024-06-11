@@ -18,7 +18,7 @@ jobs:
             name: Setup
             run: |
                 sudo apt update -q
-                sudo apt install -yy python make
+                sudo apt install -yy python3 make
         -
             name: Build
             run: |
