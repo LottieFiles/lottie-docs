@@ -5,11 +5,13 @@
     "description": "How to stack copies in a repeater",
     "oneOf": [
         {
-            "title": "Above",
+            "title": "Below",
+            "description": "Subsequent copies are added underneath the previous ones.",
             "const": 1
         },
         {
-            "title": "Below",
+            "title": "Above",
+            "description": "Subsequent copies are added on top of the previous ones.",
             "const": 2
         }
     ]
