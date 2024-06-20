@@ -28,7 +28,7 @@ Fix: Wrap into an animated property
 
 Until `v` 4.4.18.
 
-{ref-link:shapes/path} objects had a `closed` property and `c` was not
+{ref-link:shapes/path} objects had a boolean `closed` property and `c` was not
 present in the bezier data.
 
 Similarly, {ref-link:helpers/mask} had `cl` that worked the same way.
