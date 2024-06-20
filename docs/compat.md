@@ -5,6 +5,9 @@ This page describes breaking changes that have been introduced over time.
 You'd need to check `v` from {ref-link:animation/animation} to see the
 the lottie is so old to need to worry about these.
 
+The code examples are just for illustrative purposes and are not to be
+taken as a complete conversion code.
+
 ## [0,255] Colors
 
 Until `v` 4.1.9.
@@ -36,6 +39,8 @@ Similarly, {ref-link:helpers/mask} had `cl` that worked the same way.
 Fix: For each {ref-link:shapes/path}, update all the keyframes
 (or the non-animated value) of `ks`.
 Do the same to fix `pt` in each {ref-link:helpers/mask}.
+
+`shape.ks.k.c = shape.closed ? 1 : 0`
 
 ## Old keyframe style
 
