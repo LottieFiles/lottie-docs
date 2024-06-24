@@ -42,6 +42,7 @@ nav:
         - constants.md
         - text.md
         - expressions.md
+        - compat.md
     - "Playground":
         - "Builder": playground/builder.md
         - "JSON Editor": playground/json_editor.md
