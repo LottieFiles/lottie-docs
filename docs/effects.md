@@ -20,7 +20,7 @@ Effect types:
 |`21`|[Fill](#fill-effect)|
 |`22`|[Stroke](#stroke-effect)|
 |`23`|[Tritone](#tritone-effect)|
-|`24`|[Pro Levels](#pro-levles-effect)|
+|`24`|[Pro Levels](#pro-levels-effect)|
 |`25`|[Drop Shadow](#drop-shadow-effect)|
 |`26`|[Radial Wipe](#radial-wipe-effect)|
 |`27`|[Displacement Map](#displacement-map-wipe)|
