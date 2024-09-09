@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Merge",
+    "caniuse": "shape-merge-path",
+    "description": "Boolean operator on shapes",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "mm"
+                },
+                "mm": {
+                    "title": "Merge Mode",
+                    "$ref": "#/$defs/constants/merge-mode",
+                    "default": 1
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

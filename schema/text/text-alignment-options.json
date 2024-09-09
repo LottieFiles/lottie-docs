@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Alignment Options",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "title": "Alignment",
+                    "description": "Group alignment",
+                    "caniuse": "animators-grouping-alignment",
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                },
+                "g": {
+                    "title": "Grouping",
+                    "description": "Anchor point grouping",
+                    "caniuse": "animators-anchor-point-grouping",
+                    "$ref": "#/$defs/constants/text-grouping"
+                }
+            },
+            "required": []
+        }
+    ]
+}

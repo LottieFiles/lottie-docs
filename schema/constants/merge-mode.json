@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Merge Mode",
+    "description": "Boolean operation on shapes",
+    "oneOf": [
+        {
+            "title": "Normal",
+            "const": 1
+        },
+        {
+            "title": "Add",
+            "const": 2
+        },
+        {
+            "title": "Subtract",
+            "const": 3
+        },
+        {
+            "title": "Intersect",
+            "const": 4
+        },
+        {
+            "title": "Exclude Intersections",
+            "const": 5
+        }
+    ]
+}
+

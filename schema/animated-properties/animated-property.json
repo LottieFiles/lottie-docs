@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Animated Property",
+    "description": "An animatable property that holds an array of numbers",
+    "allOf": [
+        {
+            "properties": {
+                "ix": {
+                    "title": "Property Index",
+                    "type": "integer"
+                },
+                "a": {
+                    "title": "Animated",
+                    "description": "Whether the property is animated",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 0
+                },
+                "x": {
+                    "title": "Expression",
+                    "type": "string"
+                },
+                "sid": {
+                    "title": "Slot ID",
+                    "description": "One of the ID in the file's slots",
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "a": { "const": 1  }
+                }
+            },
+            "then": {
+                "properties": {
+                    "k": {
+                        "type": "array",
+                        "title": "Animated Value",
+                        "description": "Array of keyframes",
+                        "items": {
+                            "$ref": "#/$defs/animated-properties/keyframe"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "required": ["k"]
+}

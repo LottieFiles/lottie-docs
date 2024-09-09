@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "User Metadata",
+    "description": "User-defined metadata",
+    "properties": {
+        "filename": {
+            "title": "Filename",
+            "type": "string"
+        },
+        "customProps": {
+            "title": "Custom Properties",
+            "type": "object"
+        }
+    }
+}
+

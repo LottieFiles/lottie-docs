@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Spherize Effect",
+    "description": "",
+    "caniuse": "effect-cc-sphere",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 33
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "radius",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "center",
+                            "$ref": "#/$defs/effect-values/point"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}
+

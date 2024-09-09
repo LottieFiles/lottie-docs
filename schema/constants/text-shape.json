@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Text Shape",
+    "description": "Defines the function used to determine the interpolating factor on a text range selector.",
+    "oneOf": [
+        {
+            "title": "Square",
+            "const": 1
+        },
+        {
+            "title": "Ramp Up",
+            "const": 2
+        },
+        {
+            "title": "Ramp Down",
+            "const": 3
+        },
+        {
+            "title": "Triangle",
+            "const": 4
+        },
+        {
+            "title": "Round",
+            "const": 5
+        },
+        {
+            "title": "Smooth",
+            "const": 6
+        }
+    ]
+}

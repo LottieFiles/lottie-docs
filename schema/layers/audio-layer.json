@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Audio Layer",
+    "description": "A layer playing sounds",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer type",
+                    "type": "integer",
+                    "const": 6
+                },
+                "au": {
+                    "title": "Audio Settings",
+                    "$ref": "#/$defs/layers/audio-settings"
+                },
+                "refId": {
+                    "title": "Sound Id",
+                    "description": "ID of the sound as specified in the assets",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ty", "au"
+            ]
+        }
+    ]
+}
+

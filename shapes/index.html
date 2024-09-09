@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/shapes/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Shapes - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/">General concepts</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../animation/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../aep/">Parsing AEP Files</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../layers/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../assets/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/shapes.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#shape-elements">Shape Elements</a></li>
+            <li class="second-level"><a href="#shape-types">Shape Types</a></li>
+                
+            <li class="second-level"><a href="#shape">Shape</a></li>
+                
+                <li class="third-level"><a href="#rectangle">Rectangle</a></li>
+                <li class="third-level"><a href="#ellipse">Ellipse</a></li>
+                <li class="third-level"><a href="#polystar">PolyStar</a></li>
+                <li class="third-level"><a href="#path">Path</a></li>
+            <li class="second-level"><a href="#style">Style</a></li>
+                
+                <li class="third-level"><a href="#fill">Fill</a></li>
+                <li class="third-level"><a href="#stroke">Stroke</a></li>
+                <li class="third-level"><a href="#gradients">Gradients</a></li>
+                <li class="third-level"><a href="#no-style">No Style</a></li>
+            <li class="second-level"><a href="#group">Group</a></li>
+                
+                <li class="third-level"><a href="#transform-shape">Transform Shape</a></li>
+            <li class="second-level"><a href="#modifiers">Modifiers</a></li>
+                
+                <li class="third-level"><a href="#repeater">Repeater</a></li>
+                <li class="third-level"><a href="#trim-path">Trim Path</a></li>
+                <li class="third-level"><a href="#rounded-corners">Rounded Corners</a></li>
+                <li class="third-level"><a href="#pucker-bloat">Pucker / Bloat</a></li>
+                <li class="third-level"><a href="#twist">Twist</a></li>
+                <li class="third-level"><a href="#merge">Merge</a></li>
+                <li class="third-level"><a href="#offset-path">Offset Path</a></li>
+                <li class="third-level"><a href="#zig-zag">Zig Zag</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="shape-elements">Shape Elements</h1>
+<p>Lottie considers everything related to vector data as a "shape" but I think
+it's worth distinguishing across a few categories:</p>
+<ul>
+<li><strong>Shapes</strong> These provide only the shape information, but no styling</li>
+<li><strong>Style</strong> These provide styling info (like fill and stroke)</li>
+<li><strong>Group</strong> This is a shape that contains other shape</li>
+<li><strong>Modifier</strong> These change other shapes</li>
+<li><strong>Transform</strong> Special shape that defines the transforms in a group shape</li>
+</ul>
+<p>All shapes have the following properties:</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/shape-element" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code></td>
+<td>
+<p>Shape type (see values below)</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Whether the shape is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a> </td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="shape-types">Shape Types</h3>
+<table>
+<thead>
+<tr>
+<th><code>ty</code></th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rc</code></td>
+<td><a href="#rectangle">Rectangle</a></td>
+</tr>
+<tr>
+<td><code>el</code></td>
+<td><a href="#ellipse">Ellipse</a></td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><a href="#polystar">PolyStar</a></td>
+</tr>
+<tr>
+<td><code>sh</code></td>
+<td><a href="#path">Path</a></td>
+</tr>
+<tr>
+<td><code>fl</code></td>
+<td><a href="#fill">Fill</a></td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><a href="#stroke">Stroke</a></td>
+</tr>
+<tr>
+<td><code>gf</code></td>
+<td><a href="#gradients">Gradient Fill</a></td>
+</tr>
+<tr>
+<td><code>gs</code></td>
+<td><a href="#gradients">Gradient Stroke</a></td>
+</tr>
+<tr>
+<td><code>no</code></td>
+<td><a href="#no-style">No Style</a></td>
+</tr>
+<tr>
+<td><code>gr</code></td>
+<td><a href="#group">Group</a></td>
+</tr>
+<tr>
+<td><code>tr</code></td>
+<td><a href="transform-shape">Transform</a></td>
+</tr>
+<tr>
+<td><code>rp</code></td>
+<td><a href="#repeater">Repeater</a></td>
+</tr>
+<tr>
+<td><code>tm</code></td>
+<td><a href="#trim-path">Trim</a></td>
+</tr>
+<tr>
+<td><code>rd</code></td>
+<td><a href="#rounded-corners">Rounded Corners</a></td>
+</tr>
+<tr>
+<td><code>pb</code></td>
+<td><a href="#pucker-bloat">Pucker / Bloat</a></td>
+</tr>
+<tr>
+<td><code>mm</code></td>
+<td><a href="#merge">Merge</a></td>
+</tr>
+<tr>
+<td><code>tw</code></td>
+<td><a href="#twist">Twist</a></td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><a href="#offset-path">Offset Path</a></td>
+</tr>
+<tr>
+<td><code>zz</code></td>
+<td><a href="#zig-zag">Zig Zag</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="shape">Shape</h2>
+<p>These shapes only define path data, to actually show something, they must be
+followed by some <a href="#style">style shape</a>.</p>
+<p>They have a <code>d</code> attribute which specifies the drawing direction, which
+can be seen when using <a href="#trim-path">Trim Path</a>.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/shape" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td><a href="../constants/#shape-direction">Shape Direction</a> </td>
+<td>
+<p>Direction the shape is drawn as, mostly relevant when using trim path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="rectangle">Rectangle</h3>
+<p>A rectangle, defined by its center point and size.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/rectangle" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-rectangle" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'rc'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="../concepts/#animated-position">Animated Position</a> </td>
+<td>
+<p>Center of the rectangle</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> Vector</td>
+<td>
+<p>Size</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Rounded corners radius</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Position x</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="50" max="512" min="0" name="Position x" oninput="lottie_player_50.reload();document.getElementById('playground_50_1_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_50_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="50" max="512" min="0" name="Position y" oninput="lottie_player_50.reload();document.getElementById('playground_50_2_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_50_2_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="50" max="512" min="0" name="Width" oninput="lottie_player_50.reload();document.getElementById('playground_50_3_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_50_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Height</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="50" max="512" min="0" name="Height" oninput="lottie_player_50.reload();document.getElementById('playground_50_4_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_50_4_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="50" max="512" min="0" name="Roundness" oninput="lottie_player_50.reload();document.getElementById('playground_50_5_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_50_5_span">0</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_50" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_50" onclick="lottie_player_50.play(); document.getElementById('lottie_pause_50').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_50" onclick="lottie_player_50.pause(); document.getElementById('lottie_play_50').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_50.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_50_6_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_50_6_parent">
+<pre><code class="language-json hljs" id="playground_50_6">
+</code></pre>
+</div>
+<script>
+        var lottie_player_50 = new PlaygroundPlayer(
+            50,
+            'playground_50_6',
+            'lottie_target_50',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "rc", "nm": "Rectangle", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];
+lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="ellipse">Ellipse</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/ellipse" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-ellipse" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'el'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="../concepts/#animated-position">Animated Position</a> </td>
+<td>
+<p>Position</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> Vector</td>
+<td>
+<p>Size</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Position x</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="51" max="512" min="0" name="Position x" oninput="lottie_player_51.reload();document.getElementById('playground_51_1_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_51_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="51" max="512" min="0" name="Position y" oninput="lottie_player_51.reload();document.getElementById('playground_51_2_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_51_2_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="51" max="512" min="0" name="Width" oninput="lottie_player_51.reload();document.getElementById('playground_51_3_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_51_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Height</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="51" max="512" min="0" name="Height" oninput="lottie_player_51.reload();document.getElementById('playground_51_4_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_51_4_span">256</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_51" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_51" onclick="lottie_player_51.play(); document.getElementById('lottie_pause_51').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_51" onclick="lottie_player_51.pause(); document.getElementById('lottie_play_51').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_51.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_51_5_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_51_5_parent">
+<pre><code class="language-json hljs" id="playground_51_5">
+</code></pre>
+</div>
+<script>
+        var lottie_player_51 = new PlaygroundPlayer(
+            51,
+            'playground_51_5',
+            'lottie_target_51',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "el", "nm": "Ellipse", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [256, 256]}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                lottie.layers[0].shapes[0].it[0].p.k = [
+    data["Position x"], data["Position y"]
+];
+lottie.layers[0].shapes[0].it[0].s.k = [
+    data["Width"], data["Height"]
+];this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="polystar">PolyStar</h3>
+<p>Regular polygon or star.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/polystar" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-polystar" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'sr'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="../concepts/#animated-position">Animated Position</a> </td>
+<td>
+<p>Position</p>
+</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Outer Radius</p>
+</td>
+</tr>
+<tr>
+<td><code>os</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Outer Roundness as a percentage</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Rotation, clockwise in degrees</p>
+</td>
+</tr>
+<tr>
+<td><code>pt</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Points</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><a href="../constants/#star-type">Star Type</a> </td>
+<td>
+<p>Star type, <code>1</code> for Star, <code>2</code> for Polygon</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If <code>sy</code> is <code>1</code> (star) you also have attributes defining the inner ends of the star:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ir</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>Inner Radius</td>
+</tr>
+<tr>
+<td><code>is</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>Inner Roundness as a percentage</td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Points</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="52" max="10" min="3" name="Points" oninput="lottie_player_52.reload();document.getElementById('playground_52_1_span').innerText = event.target.value;" type="range" value="5" /><span id="playground_52_1_span">5</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="52" max="360" min="0" name="Rotation" oninput="lottie_player_52.reload();document.getElementById('playground_52_2_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_52_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Outer Radius</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="52" max="300" min="0" name="Outer Radius" oninput="lottie_player_52.reload();document.getElementById('playground_52_3_span').innerText = event.target.value;" type="range" value="200" /><span id="playground_52_3_span">200</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Inner Radius</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="52" max="300" min="0" name="Inner Radius" oninput="lottie_player_52.reload();document.getElementById('playground_52_4_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_52_4_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Outer Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="52" max="100" min="0" name="Outer Roundness" oninput="lottie_player_52.reload();document.getElementById('playground_52_5_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_52_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Inner Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="52" max="100" min="0" name="Inner Roundness" oninput="lottie_player_52.reload();document.getElementById('playground_52_6_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_52_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Type</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="52" name="Type" oninput="lottie_player_52.reload();"><option value="1">Star</option><option value="2">Polygon</option></select></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_52" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_52" onclick="lottie_player_52.play(); document.getElementById('lottie_pause_52').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_52" onclick="lottie_player_52.pause(); document.getElementById('lottie_play_52').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_52.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_52_8_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_52_8_parent">
+<pre><code class="language-json hljs" id="playground_52_8">
+</code></pre>
+</div>
+<script>
+        var lottie_player_52 = new PlaygroundPlayer(
+            52,
+            'playground_52_8',
+            'lottie_target_52',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "layers": [{"ty": 4, "ddd": 0, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ip": 0, "op": 180, "ind": 0, "st": 0, "sr": 1, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 200}, "ir": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.979995422293431, 0.28000305180437934]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                var star = {
+    "ty": "sr",
+    "nm": "PolyStar",
+    "sy": Number(data["Type"]),
+    "p": {
+        "a": 0,
+        "k": [
+            249.3134328358209,
+            254.47164179104476
+        ]
+    },
+    "r": {
+        "a": 0,
+        "k": data["Rotation"]
+    },
+    "pt": {
+        "a": 0,
+        "k": data["Points"]
+    },
+    "or": {
+        "a": 0,
+        "k": data["Outer Radius"]
+    },
+    "os": {
+        "a": 0,
+        "k": data["Outer Roundness"]
+    },
+};
+if ( data["Type"] == "1" )
+{
+    star = {
+        ...star,
+        "ir": {
+            "a": 0,
+            "k": data["Inner Radius"]
+        },
+        "is": {
+            "a": 0,
+            "k": data["Inner Roundness"]
+        },
+    };
+}
+lottie.layers[0].shapes[0].it[0] = star;this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="path">Path</h3>
+<p>Bezier path, note that it's a continuous shape, to have multiple shapes like
+when you need holes or gaps you need to create multiple Path shapes and group them together.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/path" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-path" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'sh'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#bezier">Bezier</a> </td>
+<td>
+<p>Bezier path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="style">Style</h2>
+<p>These apply a style (such as fill stroke) to the paths defined by the <a href="#shapes">shapes</a>.</p>
+<p>Each style is applied to all preceding shapes in the same group / layer.</p>
+<p>In most formats the style is usually defined as a property of a shape, in lottie they
+are separate and allows for more flexibility.</p>
+<p>Some examples of the added flexibility would be a shape with multiple strokes,
+or a gradient fading into a solid color.</p>
+<h3 id="fill">Fill</h3>
+<p>Solid fill color.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/fill" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-fill" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'fl'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity, 100 means fully opaque</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../constants/#fill-rule">Fill Rule</a> </td>
+<td>
+<p>Fill Rule</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="53" max="1" min="0" name="Red" oninput="lottie_player_53.reload();document.getElementById('playground_53_1_span').innerText = event.target.value;" step="0.01" type="range" value="1" /><span id="playground_53_1_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="53" max="1" min="0" name="Green" oninput="lottie_player_53.reload();document.getElementById('playground_53_2_span').innerText = event.target.value;" step="0.01" type="range" value="0.98" /><span id="playground_53_2_span">0.98</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="53" max="1" min="0" name="Blue" oninput="lottie_player_53.reload();document.getElementById('playground_53_3_span').innerText = event.target.value;" step="0.01" type="range" value="0.28" /><span id="playground_53_3_span">0.28</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="53" max="100" min="0" name="Opacity" oninput="lottie_player_53.reload();document.getElementById('playground_53_4_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_53_4_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill Rule</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="53" name="Fill Rule" oninput="lottie_player_53.reload();"><option value="1">Non Zero</option><option value="2">Even Odd</option></select></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_53" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_53" onclick="lottie_player_53.play(); document.getElementById('lottie_pause_53').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_53" onclick="lottie_player_53.pause(); document.getElementById('lottie_play_53').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_53.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_53_6_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_53_6_parent">
+<pre><code class="language-json hljs" id="playground_53_6">
+</code></pre>
+</div>
+<script>
+        var lottie_player_53 = new PlaygroundPlayer(
+            53,
+            'playground_53_6',
+            'lottie_target_53',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{f5d94f54-bb8f-4f07-be45-232ebd4b9eb1}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{4b0993ed-e35b-48a5-ab12-687dbc147c7c}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Path", "mn": "{29196ff2-0a65-48b4-a450-f9fbc3a3640d}", "it": [{"ty": "sh", "nm": "Path", "mn": "{bb7e6c60-755e-4a21-a7ba-bd054feab5c7}", "ks": {"a": 0, "k": {"c": true, "v": [[125.51641791044776, 452.20298507462684], [240.71641791044777, 38.6865671641791], [435.8686567164179, 447.9044776119403], [42.125373134328356, 173.65970149253732], [460.8, 156.46567164179103]], "i": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], "o": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]}}}, {"ty": "fl", "nm": "Fill", "mn": "{3af40b83-15f6-4f69-aa2a-96acd03eb3b6}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.98, 0.28]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [251.46268656716418, 245.4447761194029]}, "p": {"a": 0, "k": [251.46268656716418, 245.4447761194029]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                var shape = lottie.layers[0].shapes[0].it[1];
+shape.c.k = [data["Red"], data["Green"], data["Blue"]];
+shape.o.k = data["Opacity"];
+shape.r = Number(data["Fill Rule"]);this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="stroke">Stroke</h3>
+<p>Defines a stroke.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/stroke" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-stroke" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'st'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>lc</code></td>
+<td><a href="../constants/#line-cap">Line Cap</a> </td>
+<td>
+<p>Line Cap</p>
+</td>
+</tr>
+<tr>
+<td><code>lj</code></td>
+<td><a href="../constants/#line-join">Line Join</a> </td>
+<td>
+<p>Line Join</p>
+</td>
+</tr>
+<tr>
+<td><code>ml</code></td>
+<td><code>number</code></td>
+<td>
+<p>Miter Limit</p>
+</td>
+</tr>
+<tr>
+<td><code>ml2</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Animatable alternative to ml</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity, 100 means fully opaque</p>
+</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Stroke width</p>
+</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td><code>array</code> of <a href="./#stroke-dashes">Stroke Dash</a> </td>
+<td>
+<p>Dashed line definition</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Stroke color</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="stroke-dashes">Stroke Dashes</h4>
+<p>Defined as a sequence of alternating dashes and gaps.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/stroke-dash" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n</code></td>
+<td><a href="../constants/#stroke-dash-type">Stroke Dash Type</a> </td>
+<td>
+<p>Dash Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Length of the dash</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="1" min="0" name="Red" oninput="lottie_player_54.reload();document.getElementById('playground_54_1_span').innerText = event.target.value;" step="0.01" type="range" value="1" /><span id="playground_54_1_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="1" min="0" name="Green" oninput="lottie_player_54.reload();document.getElementById('playground_54_2_span').innerText = event.target.value;" step="0.01" type="range" value="0.98" /><span id="playground_54_2_span">0.98</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="1" min="0" name="Blue" oninput="lottie_player_54.reload();document.getElementById('playground_54_3_span').innerText = event.target.value;" step="0.01" type="range" value="0.28" /><span id="playground_54_3_span">0.28</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="100" min="0" name="Width" oninput="lottie_player_54.reload();document.getElementById('playground_54_4_span').innerText = event.target.value;" type="range" value="32" /><span id="playground_54_4_span">32</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="100" min="0" name="Opacity" oninput="lottie_player_54.reload();document.getElementById('playground_54_5_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_54_5_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Line Cap</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="54" name="Line Cap" oninput="lottie_player_54.reload();"><option value="1">Butt</option><option selected="selected" value="2">Round</option><option value="3">Square</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Line Join</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="54" name="Line Join" oninput="lottie_player_54.reload();"><option value="1">Miter</option><option selected="selected" value="2">Round</option><option value="3">Bevel</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Miter Limit</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="10" min="0" name="Miter Limit" oninput="lottie_player_54.reload();document.getElementById('playground_54_8_span').innerText = event.target.value;" type="range" value="3" /><span id="playground_54_8_span">3</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Dash Offset</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="512" min="0" name="Dash Offset" oninput="lottie_player_54.reload();document.getElementById('playground_54_9_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_54_9_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Dash Length</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="512" min="0" name="Dash Length" oninput="lottie_player_54.reload();document.getElementById('playground_54_10_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_54_10_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Dash Gap</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="54" max="512" min="0" name="Dash Gap" oninput="lottie_player_54.reload();document.getElementById('playground_54_11_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_54_11_span">0</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_54" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_54" onclick="lottie_player_54.play(); document.getElementById('lottie_pause_54').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_54" onclick="lottie_player_54.pause(); document.getElementById('lottie_play_54').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_54.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_54_12_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_54_12_parent">
+<pre><code class="language-json hljs" id="playground_54_12">
+</code></pre>
+</div>
+<script>
+        var lottie_player_54 = new PlaygroundPlayer(
+            54,
+            'playground_54_12',
+            'lottie_target_54',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "or": {"a": 0, "k": 200}, "ir": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "tm", "nm": "Trim Path", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "s": {"a": 0, "k": 0}, "e": {"a": 0, "k": 100}, "o": {"a": 0, "k": 0}, "m": 1}, {"ty": "st", "nm": "Stroke", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.98, 0.28]}, "lc": 2, "lj": 2, "ml": 3, "w": {"a": 0, "k": 20}, "d": [{"n": "o", "nm": "offset", "v": {"a": 0, "k": 0}}, {"n": "d", "nm": "dash", "v": {"a": 0, "k": 100}}, {"n": "g", "nm": "gap", "v": {"a": 0, "k": 0}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                var shape = lottie.layers[0].shapes[2];
+shape.c.k = [data["Red"], data["Green"], data["Blue"]];
+shape.o.k = data["Opacity"];
+shape.w.k = data["Width"];
+shape.r = Number(data["Fill Rule"]);
+shape.lc = Number(data["Line Cap"]);
+shape.lj = Number(data["Line Join"]);
+shape.ml = data["Miter Limit"];
+shape.d[0].v.k = data["Dash Offset"];
+shape.d[1].v.k = data["Dash Length"];
+shape.d[2].v.k = data["Dash Gap"];this.json_viewer_contents = lottie.layers[0].shapes[2];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="gradients">Gradients</h3>
+<p>Gradient fill and gradient stroke have the same attributes as <a href="#fill">fill</a> and <a href="#stroke">stroke</a>
+but remove color (<code>c</code>) and add the following:</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/gradient" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> Vector</td>
+<td>
+<p>Starting point for the gradient</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> Vector</td>
+<td>
+<p>End point for the gradient</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><a href="../constants/#gradient-type">Gradient Type</a> </td>
+<td>
+<p>Type of the gradient</p>
+</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td><a href="../concepts/#gradients">Gradient Colors</a> </td>
+<td>
+<p>Gradient colors</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If it's a radial gradient, <code>s</code> refers to the center of the gradient,
+and the style object may have these additional properties:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>Highlight Length, as a percentage between <code>s</code> and <code>e</code></td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>Highlight Angle, relative to the direction from <code>s</code> to <code>e</code></td>
+</tr>
+</tbody>
+</table>
+<p>Basically the radial highlight position is defined in polar coordinates relative to <code>s</code>.</p>
+<h4 id="gradient-colors">Gradient Colors</h4>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/animated-properties/gradient-colors">View Schema</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>k</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#gradients">Gradient</a></td>
+<td>Gradient Colors</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><code>integer</code></td>
+<td>Number of Colors</td>
+</tr>
+</tbody>
+</table>
+<p>Since <a href="../concepts/#gradients">gradient values</a> might have different representation based on whether
+they have transparency or not, you need to check <code>p</code> to determine whether a keyframe value
+has transparency.</p>
+<h4 id="gradient-example">Gradient Example</h4>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Start X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="55" max="512" min="0" name="Start X" oninput="lottie_player_55.reload();document.getElementById('playground_55_1_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_55_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Start Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="55" max="512" min="0" name="Start Y" oninput="lottie_player_55.reload();document.getElementById('playground_55_2_span').innerText = event.target.value;" type="range" value="496" /><span id="playground_55_2_span">496</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>End X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="55" max="512" min="0" name="End X" oninput="lottie_player_55.reload();document.getElementById('playground_55_3_span').innerText = event.target.value;" type="range" value="256" /><span id="playground_55_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>End Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="55" max="512" min="0" name="End Y" oninput="lottie_player_55.reload();document.getElementById('playground_55_4_span').innerText = event.target.value;" type="range" value="16" /><span id="playground_55_4_span">16</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Type</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="55" name="Type" oninput="lottie_player_55.reload();"><option value="1">Linear</option><option value="2">Radial</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Highlight</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="55" max="100" min="0" name="Highlight" oninput="lottie_player_55.reload();document.getElementById('playground_55_6_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_55_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Highlight Angle</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="55" max="360" min="0" name="Highlight Angle" oninput="lottie_player_55.reload();document.getElementById('playground_55_7_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_55_7_span">0</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_55" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_55" onclick="lottie_player_55.play(); document.getElementById('lottie_pause_55').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_55" onclick="lottie_player_55.pause(); document.getElementById('lottie_play_55').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_55.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_55_8_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_55_8_parent">
+<pre><code class="language-json hljs" id="playground_55_8">
+</code></pre>
+</div>
+<script>
+        var lottie_player_55 = new PlaygroundPlayer(
+            55,
+            'playground_55_8',
+            'lottie_target_55',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{3da63a46-0ec5-45b8-90fb-d31c5614d5be}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 1, "st": 0, "ip": 0, "op": 180, "nm": "Layer 2", "mn": "{04a8ef87-75fd-451c-868b-7413969c8ad9}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "e", "mn": "{078a0bf7-08ce-49f7-9dca-c473ad9ff09d}", "it": [{"ty": "gr", "nm": "e", "mn": "{efb1ff36-fe2b-4939-97a5-d75a167d003b}", "it": [{"ty": "gr", "nm": "e", "mn": "{759da60a-0439-496c-89a9-66e1d721ceb7}", "it": [{"ty": "gr", "nm": "", "mn": "{b56ba91b-5ef9-40d2-a1da-27265d105c7a}", "it": [{"ty": "sh", "nm": "", "mn": "{020e377d-646e-45f6-830f-756cfff57aa9}", "ks": {"a": 0, "k": {"c": true, "v": [[3.7994567051676293, -7.097994637365934], [5.33994951436286, -6.707992504500113], [6.327946284594615, -5.609490432573314], [6.672442201680043, -3.952002315682892], [6.672442201680043, -3.262995246756169], [1.901449879997, -3.262995246756169], [2.505949758118953, -1.4624984765244131], [4.124444517362934, -0.8449957342683567], [5.300948539338484, -0.968496282719568], [6.360449636240906, -1.326002681317033], [6.360449636240906, -0.32500304695117377], [5.307446162716568, 0.019500487512187806], [4.072448295582389, 0.12999817182929574], [2.3239477471311782, -0.2729992077926948], [1.1409537191554788, -1.4755013406585165], [0.7184558520213006, -3.4319943936098403], [1.1019527441311032, -5.395000304695118], [2.1809543285457136, -6.655996282719569], [3.7994567051676293, -7.097994637365934]], "i": [[0, 0], [-0.4290005687642191, -0.2600014219105473], [-0.22966394472361795, -0.4723332927073187], [0, -0.6326587852196304], [0, 0], [0, 0], [-0.3856627665691641, -0.411668494837371], [-0.69333373959349, 0], [-0.34233512087802254, 0.08233369896747422], [-0.3639989437235931, 0.15600390009750242], [0, 0], [0.34666686979674477, -0.07366512287807196], [0.47666504162604095, 0], [0.506997440561014, 0.2686649197479937], [0.281665244756119, 0.5330031688292207], [0, 0.7713255331383286], [-0.25566459473986836, 0.5459984155853892], [-0.4636697948698716, 0.29466556976424485], [-0.6153317895447388, 0]], "o": [[0.5979946373659342, 0], [0.4290005687642182, 0.2600014219105473], [0.22966394472361795, 0.47233329270731783], [0, 0], [0, 0], [0.017337152178804383, 0.7886626853171328], [0.3856627665691641, 0.411668494837371], [0.4420008937723443, 0], [0.34233512087802165, -0.08233369896747411], [0, 0], [-0.35533544588614685, 0.15600390009750242], [-0.34666686979674477, 0.07366512287807195], [-0.6586695917397929, 0], [-0.5069974405610138, -0.26866491974799367], [-0.28166524475611887, -0.5330031688292207], [0, -0.7626721918047954], [0.2556645947398686, -0.5459984155853901], [0.46366979486987203, -0.29466556976424396], [0, 0]]}}}, {"ty": "sh", "nm": "", "mn": "{b3f5759c-30aa-4352-a4ea-23b71ead28ad}", "ks": {"a": 0, "k": {"c": false, "v": [[3.7864462236555916, -6.162001706292657], [2.4929545113627842, -5.635496160841521], [1.9274556082652068, -4.172997684317108], [5.476452926948174, -4.172997684317108], [5.06045268319208, -5.609498049951249], [3.7864462236555916, -6.162001706292657]], "i": [[0, 0], [0.3163344708617717, -0.3510036969674246], [0.06066479786994661, -0.6239952873821846], [0, 0], [0.2686699979999494, 0.36833577089427205], [0.5806676416910426, 0]], "o": [[-0.5459933373334334, 0], [-0.3163344708617717, 0.3510036969674246], [0, 0], [-0.008663497837446243, -0.5893311395284879], [-0.2686699979999503, -0.36833577089427205], [0, 0]]}}}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "fl", "nm": "Fill 1", "mn": "{2fcb588a-7de7-4cba-8508-46952f160940}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.9411764705882353, 0.11372549019607843, 0.0392156862745098]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [-2.7166567164177735, 3.822454790113566]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [256, 16]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "s", "mn": "{e16b0057-203a-4dab-8e5b-495775987f85}", "it": [{"ty": "gr", "nm": "s", "mn": "{07bcfe04-40c2-4636-807c-d64982f7a44d}", "it": [{"ty": "gr", "nm": "s", "mn": "{0de90988-3e53-4e7a-8a7d-cb147d0c42b5}", "it": [{"ty": "sh", "nm": "", "mn": "{22460e65-f67b-48b8-844b-e361867d003b}", "ks": {"a": 0, "k": {"c": false, "v": [[5.645452073801845, -1.923997318682967], [4.891453536338409, -0.39000213286582164], [2.8634485393384836, 0.12999817182929574], [1.608957802070052, 0.013002864134103353], [0.679454876996925, -0.311992565439136], [0.679454876996925, -1.3519931748293708], [1.6869521347408687, -0.968496282719568], [2.8894542676066903, -0.7929995124878122], [4.150450245631141, -1.0724963436585915], [4.540444761119028, -1.820004875121878], [4.3974513425335635, -2.2880013406585165], [3.8839562785944652, -2.7040015844146104], [2.824447564314108, -3.171998049951249], [1.6674516472286809, -3.6919983546463664], [0.9264559738993475, -4.315998720280507], [0.666459630240756, -5.251999268731718], [1.3879548160579016, -6.616995307695193], [3.2794487830945775, -7.097994637365934], [4.468948051826296, -6.9744940889147236], [5.502443420460512, -6.629998171829296], [5.1124489049726245, -5.719995734268357], [4.189443603277582, -6.031995917085427], [3.2014468330458263, -6.162001706292657], [2.128950489387235, -5.934501096902423], [1.7584564614115354, -5.316990737268432], [1.9274556082652068, -4.82950140159754], [2.4929545113627842, -4.439499268731718], [3.552455608265207, -3.9910032907072677], [4.683453414460362, -3.4839982327683194], [5.398450976899423, -2.853500243756094], [5.645452073801845, -1.923997318682967]], "i": [[0, 0], [0.5026656916422914, -0.346666869796745], [0.8493376396909924, 0], [0.35099861871546767, 0.07799687179679493], [0.26866999799995006, 0.13866674791869799], [0, 0], [-0.3943313426585666, -0.11699784682117054], [-0.4073367459186481, 0], [-0.2599963436585919, 0.18633122078051945], [0, 0.31200780019500485], [0.09532894572364281, 0.13866674791869782], [0.2470010969024221, 0.13866674791869782], [0.45933804595114847, 0.17333089577239447], [0.32066621978049437, 0.17333597402435075], [0.17333089577239413, 0.24266426973174227], [0, 0.38133609590239725], [-0.48099679054476374, 0.32066621978049437], [-0.779999187479687, 0], [-0.36833577089427294, -0.08233369896747345], [-0.32066114152853853, -0.14733024575614362], [0, 0], [0.32066621978049437, 0.08667052613815329], [0.3379982937073427, 0], [0.24699601865046583, -0.15166707292682258], [0, -0.2600065001625049], [-0.11266609790244764, -0.13433499899997603], [-0.26433317082927044, -0.12566642291057306], [-0.4420008937723443, -0.17333089577239447], [-0.3119976436910923, -0.1733359740243503], [-0.16466739793494867, -0.24699601865046628], [0, -0.3726725980649519]], "o": [[0, 0.6759965874146854], [-0.5026656916422914, 0.3466668697967449], [-0.4853285394634863, 0], [-0.3509986187154679, -0.07799687179679493], [0, 0], [0.27733349583739597, 0.13866674791869804], [0.3943313426585664, 0.11699784682117043], [0.5806676416910421, 0], [0.2599963436585915, -0.18633122078051967], [0, -0.17333089577239424], [-0.09532894572364281, -0.13866674791869826], [-0.24700109690242256, -0.13866674791869826], [-0.45066439160979055, -0.17333089577239447], [-0.3206662197804946, -0.1733359740243503], [-0.17333089577239436, -0.24266426973174315], [0, -0.5893311395284879], [0.4809967905447634, -0.3206662197804935], [0.4246637415935397, 0], [0.36833577089427205, 0.08233369896747433], [0, 0], [-0.2946706480162007, -0.12132959573989321], [-0.3206662197804948, -0.08667052613815329], [-0.4680015437885947, 0], [-0.2469960186504665, 0.15166707292682347], [0, 0.1906578914472865], [0.11266609790244786, 0.13433499899997514], [0.26433317082927044, 0.12566642291057306], [0.44200089377234475, 0.16466739793494822], [0.3119976436910914, 0.17333597402435075], [0.16466739793494867, 0.24699601865046583], [0, 0]]}}}, {"ty": "fl", "nm": "Fill 1", "mn": "{2fcb588a-7de7-4cba-8508-46952f160940}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.9411764705882353, 0.11372549019607843, 0.0392156862745098]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [-2.7166567164177735, 3.822454790113566]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [256, 496]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}, {"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{a5276bb6-4d7c-4b4f-b371-a0e14a279176}", "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Gradient", "mn": "{9df3ba96-24a3-412e-abd4-e64e2e76e6df}", "it": [{"ty": "rc", "nm": "Rectangle", "mn": "{20934ad0-1c22-4752-a5b1-be99889ea79a}", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [512, 512]}, "r": {"a": 0, "k": 0}}, {"ty": "gf", "nm": "Gradient Fill", "o": {"a": 0, "k": 100}, "r": 1, "s": {"a": 0, "k": [256, 496]}, "e": {"a": 0, "k": [256, 16]}, "t": 1, "h": {"a": 0, "k": 0}, "a": {"a": 0, "k": 0}, "g": {"p": 3, "k": {"a": 0, "k": [0, 0.7686274509803922, 0.8509803921568627, 0.9607843137254902, 0.5, 0.19600213626306554, 0.31400015259021896, 0.6899977111467155, 1, 0.16099794003204396, 0.18399328603036547, 0.45900663767452504, 0, 1, 0.5, 1, 1, 1]}}}, {"ty": "tr", "a": {"a": 0, "k": [257.4805970149254, 255.76119402985074]}, "p": {"a": 0, "k": [257.4805970149254, 255.76119402985074]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                var gradient = lottie.layers[1].shapes[0].it[1];
+var start_marker = lottie.layers[0].shapes[1].it[1];
+var end_marker = lottie.layers[0].shapes[0].it[1];
+gradient.s.k = start_marker.p.k = [data["Start X"], data["Start Y"]];
+gradient.e.k = end_marker.p.k = [data["End X"], data["End Y"]];
+gradient.t = Number(data["Type"]);
+gradient.h.k = data["Highlight"];
+gradient.a.k = data["Highlight Angle"];this.json_viewer_contents = lottie.layers[1].shapes[0].it[1];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="no-style">No Style</h3>
+<p>Represents a style for shapes without fill or stroke.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/no-style" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'no'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="group">Group</h2>
+<p>A group is a shape that can contain other shapes (including other groups).</p>
+<p>The usual contents of a group are:</p>
+<ul>
+<li><a href="#shapes">Shapes</a></li>
+<li><a href="#style">Style</a></li>
+<li><a href="#transform">Transform</a></li>
+</ul>
+<p>For example, if you want to have a red rectangle with a black outline, its group will contain</p>
+<ol>
+<li>A <a href="#rectangle">Rectangle</a> defining the actual shape of the rectangle</li>
+<li>A <a href="#fill">Fill</a> for the color red</li>
+<li>A <a href="#stroke">Stroke</a> for the black outline</li>
+<li>A <a href="#transform">Transform</a> for the group transform</li>
+</ol>
+<p>While the contents may vary, a group must always end with a <a href="#transform">Transform shape</a>.</p>
+<p>The attributes of a Group are:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/shapes/group">View Schema</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np</code></td>
+<td><code>number</code></td>
+<td>Number of properties</td>
+</tr>
+<tr>
+<td><code>it</code></td>
+<td><a href="../concepts/#lists-of-layers-and-shapes">Array</a> of <a href="#shape">shapes</a></td>
+<td>Shapes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="transform-shape">Transform Shape</h3>
+<p>Basically the same as <a href="../concepts/#transform">Transform</a> but with the <code>ty</code> attribute.</p>
+<h2 id="modifiers">Modifiers</h2>
+<p>Modifiers process their siblings and alter the path defined by <a href="#shapes">shapes</a>.</p>
+<h3 id="repeater">Repeater</h3>
+<p>This is a bit different compared from other modifiers, since it will take into
+account style as well.</p>
+<p>The effect of a Repeater is to duplicate the other shapes a number of times applying a transform for each copy.</p>
+<div>
+<p>Also has the attributes from <a href="./#modifiers">Modifier</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/repeater" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-repeater" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'rp'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Number of copies</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Offset</p>
+</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td><a href="../constants/#composite">Composite</a> </td>
+<td>
+<p>Stacking order</p>
+</td>
+</tr>
+<tr>
+<td><code>tr</code></td>
+<td><a href="./#repeater-transform">Repeater Transform</a> </td>
+<td>
+<p>Transform applied to each copy</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The transform is multiplied by <code>o + 1</code> (where <code>o</code> is the Offset property above).<br/>
+So if <code>o</code> is <code>0</code>, the first instance shown by the Repeater is at its starting location.<br/>
+If it's <code>1</code>, the first instance has the matrix applied to it.
+Other values multiply the initial transform accordingly.</p>
+<h4 id="repeater-transform">Repeater Transform</h4>
+<p>Same as a regular <a href="../concepts/#transform">Transform</a> but instead of a single opacity value (<code>o</code>),
+it has two:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>so</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>Start Opacity</td>
+</tr>
+<tr>
+<td><code>eo</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>End Opacity</td>
+</tr>
+</tbody>
+</table>
+<p>The first copy will use <code>so</code>, the last <code>eo</code>, and copies between them will have an interpolated value.</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Copies</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="56" max="20" min="0" name="Copies" oninput="lottie_player_56.reload();document.getElementById('playground_56_1_span').innerText = event.target.value;" type="range" value="4" /><span id="playground_56_1_span">4</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Start Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="56" max="100" min="0" name="Start Opacity" oninput="lottie_player_56.reload();document.getElementById('playground_56_2_span').innerText = event.target.value;" type="range" value="100" /><span id="playground_56_2_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>End Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="56" max="100" min="0" name="End Opacity" oninput="lottie_player_56.reload();document.getElementById('playground_56_3_span').innerText = event.target.value;" type="range" value="50" /><span id="playground_56_3_span">50</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position x</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="56" max="200" min="0" name="Position x" oninput="lottie_player_56.reload();document.getElementById('playground_56_4_span').innerText = event.target.value;" type="range" value="130" /><span id="playground_56_4_span">130</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="56" max="200" min="0" name="Position y" oninput="lottie_player_56.reload();document.getElementById('playground_56_5_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_56_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="56" max="360" min="0" name="Rotation" oninput="lottie_player_56.reload();document.getElementById('playground_56_6_span').innerText = event.target.value;" type="range" value="137" /><span id="playground_56_6_span">137</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Offset</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="56" max="2" min="-1" name="Offset" oninput="lottie_player_56.reload();document.getElementById('playground_56_7_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_56_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Composite</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="56" name="Composite" oninput="lottie_player_56.reload();"><option value="1">Below</option><option value="2">Above</option></select></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_56" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_56" onclick="lottie_player_56.play(); document.getElementById('lottie_pause_56').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_56" onclick="lottie_player_56.pause(); document.getElementById('lottie_play_56').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_56.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_56_9_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_56_9_parent">
+<pre><code class="language-json hljs" id="playground_56_9">
+</code></pre>
+</div>
+<script>
+        var lottie_player_56 = new PlaygroundPlayer(
+            56,
+            'playground_56_9',
+            'lottie_target_56',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{33a02914-c5a9-4c4e-a0bd-0ec07f05b204}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{9eb62fdc-6d5b-4771-94c0-ebdafbd7a54e}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{bfbf6254-ff78-4d00-9d09-eafe4e34b732}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{5a453691-6b60-4bd3-bc43-e28b7a0ebc48}", "p": {"a": 0, "k": [80, 120]}, "or": {"a": 0, "k": 80}, "ir": {"a": 0, "k": 40}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "nm": "Stroke", "mn": "{b0ba4cf0-3a1b-45a3-8912-d0ed2bdd2082}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{0c2313ae-ccff-4e71-9e00-81649390d850}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "rp", "nm": "Repeater", "mn": "{a9e13270-7dd8-4520-b5a1-c1c9cf96286b}", "c": {"a": 0, "k": 4}, "o": {"a": 0, "k": 0}, "m": 1, "tr": {"a": {"a": 0, "k": [80, 120]}, "p": {"a": 0, "k": [130, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 137.508}, "so": {"a": 0, "k": 100}, "eo": {"a": 0, "k": 50}}}, {"ty": "tr", "a": {"a": 0, "k": [65.33731343283583, 117.77910447761194]}, "p": {"a": 0, "k": [73.93432835820896, 93.70746268656717]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                lottie.layers[0].shapes[0].it[3].c.k = data["Copies"];
+lottie.layers[0].shapes[0].it[3].tr.so.k = data["Start Opacity"];
+lottie.layers[0].shapes[0].it[3].tr.eo.k = data["End Opacity"];
+lottie.layers[0].shapes[0].it[3].tr.p.k[0] = data["Position x"];
+lottie.layers[0].shapes[0].it[3].tr.p.k[1] = data["Position y"];
+lottie.layers[0].shapes[0].it[3].tr.r.k = data["Rotation"];
+lottie.layers[0].shapes[0].it[3].o.k = data["Offset"];
+lottie.layers[0].shapes[0].it[3].m = Number(data["Composite"]);this.json_viewer_contents = lottie.layers[0].shapes[0].it[3];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="trim-path">Trim Path</h3>
+<p>This is mostly useful for shapes with a stroke and not a fill.</p>
+<p>It takes the path defined by <a href="#shapes">shapes</a> and only shows a segment of the resulting bezier data.</p>
+<div>
+<p>Also has the attributes from <a href="./#modifiers">Modifier</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/trim" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-trim-path" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'tm'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Segment start</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Segment end</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Offset</p>
+</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td><a href="../constants/#trim-multiple-shapes">Trim Multiple Shapes</a> </td>
+<td>
+<p>How to treat multiple copies</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>s</code> and <code>e</code> go from <code>0</code> to <code>100</code>, <code>0</code> being at the beginning of the path and <code>100</code> at the end.
+The displayed segment is what lays between the two.</p>
+<p><code>o</code> is an offset from the start, to allow values to wrap around.
+Its value goes from <code>0</code> (start of the path) to <code>360</code> (end of the path).
+It looks like an angle but it isn't really, the difference between <code>o</code> and <code>s</code> is
+that with <code>o</code> you can go over <code>360</code> or below <code>0</code> to shift the whole segment along the path.</p>
+<p>Here is an interactive example:</p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Start</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="57" max="100" min="0" name="Start" oninput="lottie_player_57.reload();document.getElementById('playground_57_1_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_57_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>End</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="57" max="100" min="0" name="End" oninput="lottie_player_57.reload();document.getElementById('playground_57_2_span').innerText = event.target.value;" type="range" value="50" /><span id="playground_57_2_span">50</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Offset</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="57" max="360" min="0" name="Offset" oninput="lottie_player_57.reload();document.getElementById('playground_57_3_span').innerText = event.target.value;" type="range" value="0" /><span id="playground_57_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Multiple Shapes</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="57" name="Multiple Shapes" oninput="lottie_player_57.reload();"><option value="1">Simultaneously</option><option value="2">Individually</option></select></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_57" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_57" onclick="lottie_player_57.play(); document.getElementById('lottie_pause_57').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_57" onclick="lottie_player_57.pause(); document.getElementById('lottie_play_57').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_57.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_57_5_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_57_5_parent">
+<pre><code class="language-json hljs" id="playground_57_5">
+</code></pre>
+</div>
+<script>
+        var lottie_player_57 = new PlaygroundPlayer(
+            57,
+            'playground_57_5',
+            'lottie_target_57',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [128, 128]}, "or": {"a": 0, "k": 100}, "ir": {"a": 0, "k": 50}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "el", "nm": "Ellipse", "mn": "{74587b40-1ef1-445d-b9ab-02b8a42a96aa}", "p": {"a": 0, "k": [384, 128]}, "s": {"a": 0, "k": [200, 200]}}, {"ty": "rc", "nm": "Rect", "mn": "{0776f2df-2619-415c-b10d-f648f2edfa0f}", "d": 1, "p": {"a": 0, "k": [128, 384]}, "s": {"a": 0, "k": [200, 200]}, "r": {"a": 0, "k": 0}}, {"ty": "sr", "nm": "Triangle", "mn": "{db373594-d0ae-44ff-9295-30ff72616af2}", "p": {"a": 0, "k": [384, 384]}, "or": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 3}, "sy": 2, "os": {"a": 0, "k": 0}}, {"ty": "tm", "nm": "Trim Path", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "s": {"a": 0, "k": 0}, "e": {"a": 0, "k": 50}, "o": {"a": 0, "k": 0}, "m": 1}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 20}}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                lottie.layers[0].shapes[4].s.k = data["Start"];
+lottie.layers[0].shapes[4].e.k = data["End"];
+lottie.layers[0].shapes[4].o.k = data["Offset"];
+lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);this.json_viewer_contents = lottie.layers[0].shapes[4];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="rounded-corners">Rounded Corners</h3>
+<p>Self explanatory</p>
+<div>
+<p>Also has the attributes from <a href="./#modifiers">Modifier</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/rounded-corners" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'rd'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Radius</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Radius</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="58" max="100" min="0" name="Radius" oninput="lottie_player_58.reload();document.getElementById('playground_58_1_span').innerText = event.target.value;" type="range" value="50" /><span id="playground_58_1_span">50</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_58" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_58" onclick="lottie_player_58.play(); document.getElementById('lottie_pause_58').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_58" onclick="lottie_player_58.pause(); document.getElementById('lottie_play_58').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_58.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_58_2_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_58_2_parent">
+<pre><code class="language-json hljs" id="playground_58_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_58 = new PlaygroundPlayer(
+            58,
+            'playground_58_2',
+            'lottie_target_58',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 222.72242736816406}, "ir": {"a": 0, "k": 111.36121368408203}, "r": {"a": 0, "k": 358.67291259765625}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "rd", "nm": "Rounded Corners", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "r": {"a": 0, "k": 50}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "hd": true, "nm": "Fill", "mn": "{a1bcc159-6916-4718-841d-a99140c0e74b}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="pucker-bloat">Pucker / Bloat</h3>
+<p>Interpolates bezier vertices towards the center of the shape, and tangent handles away from it (or vice-versa).</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/pucker-bloat" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-pucker-and-bloat" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'pb'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Amount as a percentage</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>When <code>a</code> is <code>0</code>, nothing changes.<br/>
+When <code>a</code> is positive, the vertices are pulled towards the center, with <code>100</code> being at the center. And the tangents are pushed away.<br/>
+When <code>a</code> is negative the vertices are pushed away from the center with <code>100</code> being twice far away from the center. And the tangents are pulled towards the center.<br/></p>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Amount</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="59" max="100" min="-100" name="Amount" oninput="lottie_player_59.reload();document.getElementById('playground_59_1_span').innerText = event.target.value;" type="range" value="50" /><span id="playground_59_1_span">50</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_59" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_59" onclick="lottie_player_59.play(); document.getElementById('lottie_pause_59').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_59" onclick="lottie_player_59.pause(); document.getElementById('lottie_play_59').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_59.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_59_2_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_59_2_parent">
+<pre><code class="language-json hljs" id="playground_59_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_59 = new PlaygroundPlayer(
+            59,
+            'playground_59_2',
+            'lottie_target_59',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 160}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 2, "os": {"a": 0, "k": 0}}, {"ty": "pb", "nm": "Inflate and Deflate", "mn": "{b4af429a-546e-4728-a869-711a404c55ae}", "a": {"a": 0, "k": 50}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "hd": true, "nm": "Fill", "mn": "{a1bcc159-6916-4718-841d-a99140c0e74b}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="twist">Twist</h3>
+<p><span></span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/twist" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'tw'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Angle</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> Vector</td>
+<td>
+<p>Center</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="merge">Merge</h3>
+<p><span>Boolean operator on shapes</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/merge" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-merge-path" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'mm'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>mm</code></td>
+<td><a href="../constants/#merge-mode">Merge Mode</a> </td>
+<td>
+<p>Merge Mode</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="offset-path">Offset Path</h3>
+<p><span>Interpolates the shape with its center point and bezier tangents with the opposite direction</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/offset-path" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/shape-offset-path" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'op'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Amount</p>
+</td>
+</tr>
+<tr>
+<td><code>lj</code></td>
+<td><a href="../constants/#line-join">Line Join</a> </td>
+<td>
+<p>Line Join</p>
+</td>
+</tr>
+<tr>
+<td><code>ml</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Miter Limit</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="zig-zag">Zig Zag</h3>
+<p><span>Changes the edges of affected shapes into a series of peaks and valleys of uniform size</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/shapes/zig-zag" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>string</code> = <code>'zz'</code></td>
+<td>
+<p>Shape Type</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Number of ridges per segment</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Distance between peaks and troughs</p>
+</td>
+</tr>
+<tr>
+<td><code>pt</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Point type (1 = corner, 2 = smooth)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

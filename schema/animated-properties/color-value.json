@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Color Value",
+    "description": "An animatable property that holds a Color",
+    "allOf": [
+        {
+            "$ref": "#/$defs/animated-properties/animated-property"
+        },
+        {
+            "if": {
+                "properties": {
+                    "a": { "const": 0  }
+                }
+            },
+            "then": {
+                "properties": {
+                    "k": {
+                        "title": "Static value",
+                        "$ref": "#/$defs/helpers/color"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Layer",
+    "description": "Layer with some text",
+    "caniuse": "layer-text",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/visual-layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer type",
+                    "type": "integer",
+                    "const": 5
+                },
+                "t": {
+                    "title": "Data",
+                    "$ref": "#/$defs/text/text-data"
+                }
+            },
+            "required": [
+                "ty", "t"
+            ]
+        }
+    ]
+}

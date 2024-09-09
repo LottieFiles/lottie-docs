@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Composite",
+    "description": "How to stack copies in a repeater",
+    "oneOf": [
+        {
+            "title": "Below",
+            "description": "Subsequent copies are added underneath the previous ones.",
+            "const": 1
+        },
+        {
+            "title": "Above",
+            "description": "Subsequent copies are added on top of the previous ones.",
+            "const": 2
+        }
+    ]
+}

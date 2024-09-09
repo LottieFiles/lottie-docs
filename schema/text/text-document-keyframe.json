@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Document Keyframe",
+    "description": "A keyframe containing a text document",
+    "properties": {
+        "s": {
+            "title": "Start",
+            "$ref": "#/$defs/text/text-document"
+        },
+        "t": {
+            "title": "Time",
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": ["s", "t"]
+}

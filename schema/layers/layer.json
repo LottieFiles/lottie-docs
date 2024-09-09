@@ -1,0 +1,130 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Layer",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ddd": {
+                    "title": "Threedimensional",
+                    "description": "Whether the layer is threedimensional",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 0
+                },
+                "hd": {
+                    "title": "Hidden",
+                    "description": "Whether the layer is hidden",
+                    "type": "boolean"
+                },
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "oneOf": [
+                        {
+                            "const": 0,
+                            "title": "Precomposition layer"
+                        },
+                        {
+                            "const": 1,
+                            "title": "Solid color layer"
+                        },
+                        {
+                            "const": 2,
+                            "title": "Image layer"
+                        },
+                        {
+                            "const": 3,
+                            "title": "Null layer"
+                        },
+                        {
+                            "const": 4,
+                            "title": "Shape layer"
+                        },
+                        {
+                            "const": 5,
+                            "title": "Text layer"
+                        },
+                        {
+                            "const": 6,
+                            "title": "Audio layer"
+                        },
+                        {
+                            "const": 7,
+                            "title": "Video placeholder"
+                        },
+                        {
+                            "const": 8,
+                            "title": "Image sequence"
+                        },
+                        {
+                            "const": 9,
+                            "title": "Video layer"
+                        },
+                        {
+                            "const": 10,
+                            "title": "Image placeholder"
+                        },
+                        {
+                            "const": 11,
+                            "title": "Guide layer"
+                        },
+                        {
+                            "const": 12,
+                            "title": "Adjustment layer"
+                        },
+                        {
+                            "const": 13,
+                            "title": "Camera"
+                        },
+                        {
+                            "const": 14,
+                            "title": "Light layer"
+                        },
+                        {
+                            "const": 15,
+                            "title": "Data layer"
+                        }
+                    ]
+                },
+                "ind": {
+                    "title": "Index",
+                    "type": "integer",
+                    "description": "Index that can be used for parenting and referenced in expressions"
+                },
+                "parent": {
+                    "title": "Parent Index",
+                    "description": "Must be the `ind` property of another layer",
+                    "type": "integer"
+                },
+                "sr": {
+                    "title": "Time Stretch",
+                    "caniuse": "property-time-stretch",
+                    "type": "number",
+                    "default": 1
+                },
+                "ip": {
+                    "title": "In Point",
+                    "description": "Frame when the layer becomes visible",
+                    "type": "number"
+                },
+                "op": {
+                    "title": "Out Point",
+                    "description": "Frame when the layer becomes invisible",
+                    "type": "number"
+                },
+                "st": {
+                    "title": "Start Time",
+                    "type": "number",
+                    "default": 0
+                }
+            },
+            "required": ["ty", "st", "ip", "op"]
+        }
+    ]
+}

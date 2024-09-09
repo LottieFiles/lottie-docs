@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/assets/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Assets - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/">General concepts</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../animation/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../aep/">Parsing AEP Files</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../shapes/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../effects/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/assets.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#assets">Assets</a></li>
+            <li class="second-level"><a href="#image">Image</a></li>
+                
+            <li class="second-level"><a href="#sound">Sound</a></li>
+                
+            <li class="second-level"><a href="#precomposition">Precomposition</a></li>
+                
+            <li class="second-level"><a href="#data-source">Data Source</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h2 id="assets">Assets</h2>
+<p>Assets are usually referenced by <a href="../layers/">layers</a> of the appropriate type.</p>
+<h3 id="image">Image</h3>
+<p>Represents a (static) image</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/assets/image" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>Unique identifier used by layers when referencing this asset</p>
+</td>
+</tr>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Human readable name</p>
+</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td><code>string</code></td>
+<td>
+<p>Path to the directory containing a file</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><code>string</code></td>
+<td>
+<p>Filename or data url</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Whether the file is embedded</p>
+</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td><code>number</code></td>
+<td>
+<p>Width of the image</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><code>number</code></td>
+<td>
+<p>Height of the image</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>string</code> = <code>'seq'</code></td>
+<td>
+<p>Marks as part of an image sequence if present</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the image is embedded, <code>u</code> is empty and <code>p</code> contains a base64-encoded data url:</p>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;my image&quot;,
+    &quot;h&quot;: 512,
+    &quot;w&quot;: 512,
+    &quot;e&quot;: 1,
+    &quot;u&quot;: &quot;&quot;,
+    &quot;p&quot;: &quot;data:image/png;base64,...&quot;
+}
+</code></pre>
+<p>If the image is not embedded,
+<code>u</code> will contain the path to the directory containing the image
+and <code>p</code> will have the filename.</p>
+<p>So for example if you want to store the image at <code>/path/to/images/image.png</code>,
+the asset will look something like this:</p>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;my image&quot;,
+    &quot;h&quot;: 512,
+    &quot;w&quot;: 512,
+    &quot;e&quot;: 0,
+    &quot;u&quot;: &quot;/path/to/images/&quot;,
+    &quot;p&quot;: &quot;image.png&quot;
+}
+</code></pre>
+<p>It works similarly for external images.
+If you want to store the image at <code>https://example.com/images/image.png</code>, you'd have:</p>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;my image&quot;,
+    &quot;h&quot;: 512,
+    &quot;w&quot;: 512,
+    &quot;e&quot;: 0,
+    &quot;u&quot;: &quot;https://example.com/images/&quot;,
+    &quot;p&quot;: &quot;image.png&quot;
+}
+</code></pre>
+<h3 id="sound">Sound</h3>
+<p>Similar to <a href="#image">Image</a> but for audio files.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/assets/sound" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>Unique identifier used by layers when referencing this asset</p>
+</td>
+</tr>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Human readable name</p>
+</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td><code>string</code></td>
+<td>
+<p>Path to the directory containing a file</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><code>string</code></td>
+<td>
+<p>Filename or data url</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Whether the file is embedded</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="precomposition">Precomposition</h3>
+<p>You can think of precompositions as self-contained animation within the
+main animation file that can be referenced using <a href="../layers/#precomposition-layer">precomp layers</a>.</p>
+<p>Within a precomposition you can have precomp layers showing other precompositions,
+as long as you don't create a dependency cycle.</p>
+<p>You can find more details in the <a href="../breakdown/precomps/">Precompositions</a> page.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/assets/precomposition" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layers</code></td>
+<td><code>array</code> of <span><a href="../layers/#precomposition-layer">Precomposition Layer</a> or <a href="../layers/#solid-color-layer">Solid Color Layer</a> or <a href="../layers/#image-layer">Image Layer</a> or <a href="../layers/#null-layer">Null Layer</a> or <a href="../layers/#shape-layer">Shape Layer</a> or <a href="../layers/#text-layer">Text Layer</a> or <a href="../layers/#audio-layer">Audio Layer</a> or <a href="../layers/#camera-layer">Camera Layer</a> or <a href="../layers/#data-layer">Data Layer</a></span></td>
+<td>
+<p>An array of <a href="../layers/">layers</a> (See: <a href="../concepts/#lists-of-layers-and-shapes">Lists of layers and shapes</a>)</p>
+</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>Unique identifier used by layers when referencing this asset</p>
+</td>
+</tr>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Human readable name</p>
+</td>
+</tr>
+<tr>
+<td><code>fr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Framerate in frames per second</p>
+</td>
+</tr>
+<tr>
+<td><code>xt</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Extra composition</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Follows a rather extreme example, that uses precompositions inside precompositions to generate a fractal:</p>
+<p>
+<div>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_0" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_0" onclick="lottie_player_0.play(); document.getElementById('lottie_pause_0').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_0" onclick="lottie_player_0.pause(); document.getElementById('lottie_play_0').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../examples/fractal.json" title="Download"><button><i class="fas fa-download"></i></button></a><button onclick="playground_set_url(&quot;/lottie-docs/examples/fractal.json&quot;);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button></div>
+<script>
+                var lottie_player_0 = new LottiePlayer(
+                    'lottie_target_0',
+                    '../examples/fractal.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</p>
+<h3 id="data-source">Data Source</h3>
+<p>Points to a JSON file for data.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/assets/data-source" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>Unique identifier used by layers when referencing this asset</p>
+</td>
+</tr>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Human readable name</p>
+</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td><code>string</code></td>
+<td>
+<p>Path to the directory containing a file</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><code>string</code></td>
+<td>
+<p>Filename or data url</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Whether the file is embedded</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>integer</code> = <code>3</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

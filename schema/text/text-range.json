@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Range",
+    "description": "Range of text with custom animations and style",
+    "caniuse": "animators-range-selectors",
+    "properties": {
+        "nm": {
+            "title": "Name",
+            "type": "string"
+        },
+        "s": {
+            "title": "Selector",
+            "$ref": "#/$defs/text/text-range-selector"
+        },
+        "a": {
+            "title": "Style",
+            "$ref": "#/$defs/text/text-style"
+        }
+    }
+}

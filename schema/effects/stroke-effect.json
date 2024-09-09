@@ -1,0 +1,75 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Stroke Effect",
+    "description": "",
+    "caniuse": "effect-stroke",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 22
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "00",
+                            "$ref": "#/$defs/effect-values/color"
+                        },
+                        {
+                            "title": "01",
+                            "$ref": "#/$defs/effect-values/checkbox"
+                        },
+                        {
+                            "title": "02",
+                            "$ref": "#/$defs/effect-values/checkbox"
+                        },
+                        {
+                            "title": "color",
+                            "$ref": "#/$defs/effect-values/color"
+                        },
+                        {
+                            "title": "04",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "05",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "06",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "07",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "08",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "09",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "type",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Wavy Effect",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 32
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Radius",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Center",
+                            "$ref": "#/$defs/effect-values/point"
+                        },
+                        {
+                            "title": "Conversion type",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Speed",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Width",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Height",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Phase",
+                            "$ref": "#/$defs/effect-values/slider"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty",
+                "ef"
+            ]
+        }
+    ]
+}

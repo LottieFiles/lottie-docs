@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gaussian Blur Effect",
+    "description": "Gaussian blur",
+    "caniuse": "effect-gaussian-blur",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 29
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "sigma",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "direction",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "wrap",
+                            "$ref": "#/$defs/effect-values/checkbox"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

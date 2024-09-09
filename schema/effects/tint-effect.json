@@ -1,0 +1,46 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Tint Effect",
+    "description": "Colorizes the layer",
+    "caniuse": "effect-tint",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 20
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Black Color",
+                            "description": "Tint of the darker parts of the layer",
+                            "$ref": "#/$defs/effect-values/color"
+                        },
+                        {
+                            "title": "White Color",
+                            "description": "Tint of the lighter parts of the layer",
+                            "$ref": "#/$defs/effect-values/color"
+                        },
+                        {
+                            "title": "Intensity",
+                            "description": "Intensity of the effect, 0 means the layer is unchanged. 100 means full effect",
+                            "$ref": "#/$defs/effect-values/slider"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

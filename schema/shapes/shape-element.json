@@ -1,0 +1,123 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Shape Element",
+    "description": "Base class for all elements of ShapeLayer and Group",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "hd": {
+                    "title": "Hidden",
+                    "description": "Whether the shape is hidden",
+                    "type": "boolean"
+                },
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "oneOf": [
+                        {
+                            "const": "rc",
+                            "title": "Rectangle"
+                        },
+                        {
+                            "const": "el",
+                            "title": "Ellipse"
+                        },
+                        {
+                            "const": "sr",
+                            "title": "Polygon / Star"
+                        },
+                        {
+                            "const": "sh",
+                            "title": "Path"
+                        },
+                        {
+                            "const": "fl",
+                            "title": "Fill"
+                        },
+                        {
+                            "const": "st",
+                            "title": "Stroke"
+                        },
+                        {
+                            "const": "gf",
+                            "title": "Gradient fill"
+                        },
+                        {
+                            "const": "gs",
+                            "title": "Gradient stroke"
+                        },
+                        {
+                            "const": "no",
+                            "title": "No Style"
+                        },
+                        {
+                            "const": "gr",
+                            "title": "Group"
+                        },
+                        {
+                            "const": "tr",
+                            "title": "Transform"
+                        },
+                        {
+                            "const": "rd",
+                            "title": "Rounded corners"
+                        },
+                        {
+                            "const": "pb",
+                            "title": "Pucker / bloat"
+                        },
+                        {
+                            "const": "mm",
+                            "title": "Merge"
+                        },
+                        {
+                            "const": "tw",
+                            "title": "Twist"
+                        },
+                        {
+                            "const": "op",
+                            "title": "Offset path"
+                        },
+                        {
+                            "const": "zz",
+                            "title": "Zig zag"
+                        },
+                        {
+                            "const": "rp",
+                            "title": "Repeater"
+                        },
+                        {
+                            "const": "tm",
+                            "title": "Trim"
+                        }
+                    ]
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/constants/blend-mode"
+                },
+                "ix": {
+                    "title": "Property index",
+                    "description": "Index used in expressions",
+                    "type": "integer"
+                },
+                "cl": {
+                    "title": "CSS Class",
+                    "description": "CSS class used by the SVG renderer",
+                    "type": "string"
+                },
+                "ln": {
+                    "title": "Layer XML ID",
+                    "description": "`id` attribute used by the SVG renderer",
+                    "type": "string"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

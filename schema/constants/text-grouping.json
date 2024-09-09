@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Text Grouping",
+    "description": "",
+    "oneOf": [
+        {
+            "title": "Characters",
+            "const": 1
+        },
+        {
+            "title": "Word",
+            "const": 2
+        },
+        {
+            "title": "Line",
+            "const": 3
+        },
+        {
+            "title": "All",
+            "const": 4
+        }
+    ]
+}

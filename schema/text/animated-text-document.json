@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Animated Text Document",
+    "description": "Animated property representing the text contents",
+    "properties": {
+        "k": {
+            "title": "Keyframes",
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/text/text-document-keyframe"
+            }
+        },
+        "x": {
+            "title": "Expression",
+            "type": "string"
+        },
+        "sid": {
+            "title": "Slot ID",
+            "description": "One of the ID in the file's slots",
+            "type": "string"
+        }
+    },
+    "required": ["k"]
+}

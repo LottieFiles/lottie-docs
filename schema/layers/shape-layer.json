@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Shape Layer",
+    "description": "Layer containing Shapes",
+    "caniuse": "layer-shape",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/visual-layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer type",
+                    "type": "integer",
+                    "const": 4
+                },
+                "shapes": {
+                    "title": "Shapes",
+                    "$ref": "#/$defs/shapes/shape-list"
+                }
+            },
+            "required": [
+                "ty", "shapes"
+            ]
+        }
+    ]
+}

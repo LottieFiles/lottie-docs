@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Text Based",
+    "description": "",
+    "oneOf": [
+        {
+            "title": "Characters",
+            "const": 1
+        },
+        {
+            "title": "Character Excluding Spaces",
+            "const": 2
+        },
+        {
+            "title": "Words",
+            "const": 3
+        },
+        {
+            "title": "Lines",
+            "const": 4
+        }
+    ]
+}

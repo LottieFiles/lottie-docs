@@ -1,0 +1,47 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Puppet Effect",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 34
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Puppet Engine",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Mesh Rotation Refinement",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "On Transparent",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "03",
+                            "$ref": "#/$defs/effect-values/no-value"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty",
+                "ef"
+            ]
+        }
+    ]
+}

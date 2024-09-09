@@ -1,0 +1,55 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Font",
+    "description": "Describes how a font with given settings should be loaded",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "ascent": {
+                    "title": "Ascent",
+                    "type": "number",
+                    "description": "Text will be moved down based on this value"
+                },
+                "fFamily": {
+                    "title": "Font Family",
+                    "type": "string",
+                    "default": "sans"
+                },
+                "fName": {
+                    "title": "Name",
+                    "description": "Name used by text documents to reference this font, usually it's `fFamily` followed by `fStyle`",
+                    "type": "string",
+                    "default": "sans-Regular"
+                },
+                "fStyle": {
+                    "title": "Font Style",
+                    "examples": ["Regular", "Bold", "Bold Italic"],
+                    "type": "string",
+                    "default": "Regular"
+                },
+                "fPath": {
+                    "title": "Path",
+                    "type": "string"
+                },
+                "fWeight": {
+                    "title": "Weight",
+                    "type": "string"
+                },
+                "origin": {
+                    "title": "Origin",
+                    "$ref": "#/$defs/constants/font-path-origin"
+                },
+                "fClass": {
+                    "type": "string",
+                    "title": "CSS Class",
+                    "description": "CSS Class applied to text objects using this font"
+                }
+            },
+            "required": [
+                "fFamily", "fName", "fStyle"
+            ]
+        }
+    ]
+}

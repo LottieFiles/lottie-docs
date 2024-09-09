@@ -1,0 +1,171 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Pro Levels Effect",
+    "description": "",
+    "caniuse": "effect-color-levels-individual-controls",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 24
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "00",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "01",
+                            "$ref": "#/$defs/effect-values/no-value"
+                        },
+                        {
+                            "title": "02",
+                            "$ref": "#/$defs/effect-values/no-value"
+                        },
+                        {
+                            "title": "comp_inblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "comp_inwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "comp_gamma",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "comp_outblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "comp_outwhite",
+                            "$ref": "#/$defs/effect-values/no-value"
+                        },
+                        {
+                            "title": "08",
+                            "$ref": "#/$defs/effect-values/no-value"
+                        },
+                        {
+                            "title": "09",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "r_inblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "r_inwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "r_gamma",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "r_outblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "r_outwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "15",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "16",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "g_inblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "g_inwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "g_gamma",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "g_outblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "g_outwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "22",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "23",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "b_inblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "b_inwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "b_gamma",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "b_outblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "b_outwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "29",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "a_inblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "a_inwhite",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "a_gamma",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "a_outblack",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "a_outwhite",
+                            "$ref": "#/$defs/effect-values/no-value"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

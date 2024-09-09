@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Text Range Units",
+    "description": "Unit type for a text selector",
+    "oneOf": [
+        {
+            "title": "Percent",
+            "const": 1
+        },
+        {
+            "title": "Index",
+            "const": 2
+        }
+    ]
+}
+
