@@ -21,8 +21,8 @@
                     "type": "array",
                     "prefixItems": [
                         {
-                            "title": "00",
-                            "$ref": "#/$defs/effect-values/point"
+                            "title": "10",
+                            "$ref": "#/$defs/effect-values/layer"
                         },
                         {
                             "title": "01",
