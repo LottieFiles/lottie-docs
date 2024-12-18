@@ -1,0 +1,255 @@
+/* navbar */
+.navbar-nav > li > a
+{
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.navbar-header {
+    display: flex;
+}
+
+.navbar-header button {
+    margin-left: auto;
+}
+
+.navbar-header.active > a
+{
+    color: #fff;
+    background-color: #272727;
+}
+
+.bs-sidenav a {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/* misc */
+
+.alpha_checkered {
+    position: relative;
+    background-color: white;
+    background-size: 64px 64px;
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, .3) 50%, transparent 50%),
+        linear-gradient(to bottom, rgba(0, 0, 0, .3) 50%, transparent 50%),
+        linear-gradient(to bottom, white 50%, transparent 50%),
+        linear-gradient(to right, transparent 50%, rgba(0, 0, 0, .5) 50%);
+}
+
+.animation-container {
+    width: fit-content;
+    max-width: 100%;
+    display: flex;
+}
+
+.table-plain {
+    width: auto;
+}
+.table-plain tr, .table-plain td {
+    border: none !important;
+    background: none !important;
+}
+
+.matrix, .playground {
+    background-color: #fcfdff; border: 1px solid #ccc;
+}
+.playground {
+    padding: 1em;
+}
+.schema-link {
+    font-size:small;
+    float: right;
+    margin-left: 5px;
+}
+
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+details {
+    margin: 0.5em 0;
+}
+
+input[type="color"]
+{
+    padding: 0;
+    width: 96px;
+    height: 48px;
+    margin-top: 1ex;
+}
+
+.playground input[type="color"] {
+    height: 32px;
+    margin: 0;
+}
+
+.color-preview {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5ex;
+    border-radius: 3px;
+    height: 1.2em;
+    width: 1.2em;
+}
+
+@media (max-width: 1000px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+/* syntax highlight */
+
+.code-input, .highlighted-input, .code-frame, .cm-editor {
+    background-color: #fcfdff;
+    border: 1px solid #ccc;
+}
+
+.code-input, .highlighted-input, .highlighted-input * {
+    font-family: Hack,Menlo,Monaco,Consolas,"Courier New",monospace;
+    white-space: pre;
+    font-size: small;
+    color: #333;
+    font-size: 14px;
+}
+
+.highlighted-input, .code-frame {
+    position: relative;
+    resize: vertical;
+    overflow: auto;
+    height: 128px;
+}
+
+.highlighted-input:focus-within, .code-frame:focus-within {
+    outline: 2px solid #3daee9;
+}
+
+.highlighted-input textarea, .highlighted-input pre {
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
+    border: 0;
+    overflow: auto;
+    white-space: nowrap;
+
+    text-align: left;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+}
+
+.highlighted-input textarea {
+    color: transparent;
+    background: transparent;
+    z-index: 1;
+    resize: none;
+    caret-color: black;
+    white-space: pre;
+    outline: none;
+}
+
+.highlighted-input pre {
+    z-index: 0;
+}
+.highlighted-input code {
+    background-color: transparent;
+    padding: 0;
+    background: none;
+}
+
+/* info box */
+
+.info_box_trigger {
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    cursor: pointer;
+    margin-bottom: -1px;
+    position: relative;
+    top: -2px;
+}
+
+.info_box_trigger > * {
+    position: relative;
+    top: 2px;
+}
+
+.info_box_lottie {
+    display: none;
+}
+
+.info_box_lottie {
+    max-width: 300px;
+    max-height: 300px;
+    margin-top: 1.2em;
+}
+
+.info_box_content .description {
+    white-space: pre-wrap;
+}
+
+/* embedded editors */
+
+.keyframe-preview-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.keyframe-preview-container canvas {
+    border: 1px solid #ccc;
+}
+
+.keyframe-preview {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    position: relative;
+    background-color: black;
+    animation: keyframe-preview 3s infinite;
+}
+
+@keyframes keyframe-preview {
+    0% {left: 0px;}
+    50% {left: 176px;}
+    100% {left: 0px;}
+}
+
+.gradient-preview {
+    height: 32px;
+}
+
+.gradient-editor input
+{
+    vertical-align: middle;
+    margin: 1ex;
+    height: 48px;
+}

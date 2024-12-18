@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Repeater",
+    "description": "Duplicates previous shapes in a group",
+    "caniuse": "shape-repeater",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/modifier"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "rp"
+                },
+                "c": {
+                    "title": "Copies",
+                    "description": "Number of copies",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "o": {
+                    "title": "Offset",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "m": {
+                    "title": "Composite",
+                    "description": "Stacking order",
+                    "$ref": "#/$defs/constants/composite",
+                    "default": 1
+                },
+                "tr": {
+                    "title": "Transform",
+                    "description": "Transform applied to each copy",
+                    "$ref": "#/$defs/shapes/repeater-transform"
+                }
+            },
+            "required": [
+                "ty", "c", "tr"
+            ]
+        }
+    ]
+}

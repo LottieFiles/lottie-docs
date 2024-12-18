@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Character Shape",
+    "description": "Defines a character as shapes",
+    "properties": {
+        "shapes": {
+            "title": "Shapes",
+            "description": "Shapes forming the character",
+            "$ref": "#/$defs/shapes/shape-list"
+        }
+    },
+    "required": ["shapes"]
+}

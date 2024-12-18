@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Data Layer",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer type",
+                    "type": "integer",
+                    "const": 15
+                },
+                "refId": {
+                    "title": "Data source Id",
+                    "description": "ID of the data source in assets",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}
+

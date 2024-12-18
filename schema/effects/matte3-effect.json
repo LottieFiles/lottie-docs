@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Set Matte Effect",
+    "description": "Uses a layer as a mask",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 28
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Layer",
+                            "description": "Use this layer as a mask",
+                            "$ref": "#/$defs/effect-values/layer"
+                        },
+                        {
+                            "title": "Channel",
+                            "description": "Channel to use as a mask:\n1 - Red\n2 - Green\n3 - Blue\n4 - Alpha\n5 - Luminance\n6 - Hue\n7 - Lightness\n8 - Saturation\n9 - Full\n10 - Off",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Invert",
+                            "description": "Use 0 as opaque value when true",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Stretch To Fit",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Show Mask",
+                            "description": "If false, the mask layer won't be shown",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Premultiply Mask",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

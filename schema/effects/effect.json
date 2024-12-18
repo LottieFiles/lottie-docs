@@ -1,0 +1,54 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Effect",
+    "description": "Layer effect",
+    "caniuse": "effects",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ef": {
+                    "title": "Effect Values",
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {"$ref": "#/$defs/effect-values/no-value"},
+                            {"$ref": "#/$defs/effect-values/angle"},
+                            {"$ref": "#/$defs/effect-values/checkbox"},
+                            {"$ref": "#/$defs/effect-values/color"},
+                            {"$ref": "#/$defs/effect-values/drop-down"},
+                            {"$ref": "#/$defs/effect-values/ignored"},
+                            {"$ref": "#/$defs/effect-values/layer"},
+                            {"$ref": "#/$defs/effect-values/point"},
+                            {"$ref": "#/$defs/effect-values/slider"}
+                        ]
+                    }
+                },
+                "np": {
+                    "title": "Property Count",
+                    "description": "Number of values in `ef`",
+                    "type": "integer"
+                },
+                "ix": {
+                    "title": "Effect Index",
+                    "type": "integer"
+                },
+                "ty": {
+                    "title": "Type",
+                    "description": "Effect type",
+                    "type": "integer"
+                },
+                "en": {
+                    "title": "Enabled",
+                    "$ref": "#/$defs/helpers/int-boolean",
+                    "default": 1
+                }
+            },
+            "required": ["ty", "ef"]
+        }
+    ]
+}

@@ -1,0 +1,64 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Displacement Map Effect",
+    "description": "",
+    "caniuse": "effect-displacement-map",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 27
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Displacement Map Layer",
+                            "$ref": "#/$defs/effect-values/layer"
+                        },
+                        {
+                            "title": "Use For Horizontal Displacement",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Max Horizontal Displacement",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Use For Vertical Displacement",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Max Vertical Displacement",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Displacement Map Behavior",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Edge Behavior",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        },
+                        {
+                            "title": "Expand Output",
+                            "$ref": "#/$defs/effect-values/drop-down"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty",
+                "ef"
+            ]
+        }
+    ]
+}

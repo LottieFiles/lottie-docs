@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Range Selector",
+    "caniuse": "animators-range-selectors",
+    "properties": {
+        "t": {
+            "title": "Expressible",
+            "$ref": "#/$defs/helpers/int-boolean"
+        },
+        "xe": {
+            "title": "Max Ease",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "ne": {
+            "title": "Min Ease",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "a": {
+            "title": "Max Amount",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "b": {
+            "title": "Based On",
+            "$ref": "#/$defs/constants/text-based"
+        },
+        "rn": {
+            "title": "Randomize",
+            "$ref": "#/$defs/helpers/int-boolean"
+        },
+        "sh": {
+            "title": "Shape",
+            "$ref": "#/$defs/constants/text-shape"
+        },
+        "o": {
+            "title": "Offset",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "r": {
+            "title": "Range Units",
+            "caniuse": "range-selectors-units",
+            "$ref": "#/$defs/constants/text-range-units"
+        },
+        "sm": {
+            "title": "Selector Smoothness",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "s": {
+            "title": "Start",
+            "$ref": "#/$defs/animated-properties/value"
+        },
+        "e": {
+            "title": "End",
+            "$ref": "#/$defs/animated-properties/value"
+        }
+    },
+    "required": ["t", "a", "b", "sh"]
+}

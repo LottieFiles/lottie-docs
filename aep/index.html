@@ -1,0 +1,5984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/aep/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Parsing AEP Files - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/">General concepts</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../animation/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Parsing AEP Files</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../advanced_interactions/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="next" >
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/aep.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#parsing-aep-files">Parsing AEP Files</a></li>
+            <li class="second-level"><a href="#riff">RIFF</a></li>
+                
+                <li class="third-level"><a href="#aep-specific-parsing">AEP-Specific Parsing</a></li>
+                <li class="third-level"><a href="#basic-types">Basic Types</a></li>
+            <li class="second-level"><a href="#aftereffects-logic">AfterEffects Logic</a></li>
+                
+                <li class="third-level"><a href="#file-structure">File Structure</a></li>
+                <li class="third-level"><a href="#layers">Layers</a></li>
+                <li class="third-level"><a href="#property-groups">Property Groups</a></li>
+                <li class="third-level"><a href="#properties">Properties</a></li>
+                <li class="third-level"><a href="#assets_1">Assets</a></li>
+                <li class="third-level"><a href="#shapes">Shapes</a></li>
+                <li class="third-level"><a href="#transforms">Transforms</a></li>
+                <li class="third-level"><a href="#effects">Effects</a></li>
+                <li class="third-level"><a href="#essential-graphics">Essential Graphics</a></li>
+            <li class="second-level"><a href="#match-names">Match Names</a></li>
+                
+                <li class="third-level"><a href="#layers_1">Layers</a></li>
+                <li class="third-level"><a href="#shapes_1">Shapes</a></li>
+                <li class="third-level"><a href="#shape-styles">Shape Styles</a></li>
+                <li class="third-level"><a href="#shape-modifiers">Shape Modifiers</a></li>
+                <li class="third-level"><a href="#transforms_1">Transforms</a></li>
+                <li class="third-level"><a href="#effects_1">Effects</a></li>
+                <li class="third-level"><a href="#text">Text</a></li>
+                <li class="third-level"><a href="#misc">Misc</a></li>
+                <li class="third-level"><a href="#notes">Notes</a></li>
+            <li class="second-level"><a href="#enumerations">Enumerations</a></li>
+                
+                <li class="third-level"><a href="#blend-mode">Blend Mode</a></li>
+                <li class="third-level"><a href="#label-colors">Label Colors</a></li>
+                <li class="third-level"><a href="#text-render-oder">Text Render Oder</a></li>
+            <li class="second-level"><a href="#chunk-data">Chunk Data</a></li>
+                
+                <li class="third-level"><a href="#list">LIST</a></li>
+                <li class="third-level"><a href="#utf8">Utf8</a></li>
+                <li class="third-level"><a href="#tdsn-fnam-pdnm">tdsn / fnam / pdnm</a></li>
+                <li class="third-level"><a href="#tdmn">tdmn</a></li>
+                <li class="third-level"><a href="#cmta">cmta</a></li>
+                <li class="third-level"><a href="#fdta">fdta</a></li>
+                <li class="third-level"><a href="#cdta">cdta</a></li>
+                <li class="third-level"><a href="#ldta">ldta</a></li>
+                <li class="third-level"><a href="#idta">idta</a></li>
+                <li class="third-level"><a href="#tdb4">tdb4</a></li>
+                <li class="third-level"><a href="#cdat">cdat</a></li>
+                <li class="third-level"><a href="#shph">shph</a></li>
+                <li class="third-level"><a href="#lhd3">lhd3</a></li>
+                <li class="third-level"><a href="#ldat">ldat</a></li>
+                <li class="third-level"><a href="#pprf">pprf</a></li>
+                <li class="third-level"><a href="#fiac">fiac</a></li>
+                <li class="third-level"><a href="#wsnm">wsnm</a></li>
+                <li class="third-level"><a href="#tdum-tdum">tdum / tduM</a></li>
+                <li class="third-level"><a href="#ppsn">ppSn</a></li>
+                <li class="third-level"><a href="#otda">otda</a></li>
+                <li class="third-level"><a href="#opti">opti</a></li>
+                <li class="third-level"><a href="#solid">Solid</a></li>
+                <li class="third-level"><a href="#sspc">sspc</a></li>
+                <li class="third-level"><a href="#alas">alas</a></li>
+                <li class="third-level"><a href="#head">head</a></li>
+                <li class="third-level"><a href="#efdc">EfDC</a></li>
+                <li class="third-level"><a href="#parn">parn</a></li>
+                <li class="third-level"><a href="#pard">pard</a></li>
+                <li class="third-level"><a href="#prin">prin</a></li>
+                <li class="third-level"><a href="#prda">prda</a></li>
+                <li class="third-level"><a href="#nmhd">NmHd</a></li>
+                <li class="third-level"><a href="#tdsb">tdsb</a></li>
+                <li class="third-level"><a href="#mkif">mkif</a></li>
+                <li class="third-level"><a href="#ccid">CCId</a></li>
+                <li class="third-level"><a href="#clid">CLId</a></li>
+                <li class="third-level"><a href="#smin">Smin</a></li>
+                <li class="third-level"><a href="#smax">Smax</a></li>
+                <li class="third-level"><a href="#cval">CVal</a></li>
+                <li class="third-level"><a href="#cdef">CDef</a></li>
+                <li class="third-level"><a href="#ctyp">CTyp</a></li>
+                <li class="third-level"><a href="#cprc">CprC</a></li>
+                <li class="third-level"><a href="#stvs">StVS</a></li>
+                <li class="third-level"><a href="#cdim">CDim</a></li>
+                <li class="third-level"><a href="#fips">fips</a></li>
+                <li class="third-level"><a href="#list-fold">LIST Fold</a></li>
+                <li class="third-level"><a href="#list-item">LIST Item</a></li>
+                <li class="third-level"><a href="#list-layr">LIST Layr</a></li>
+                <li class="third-level"><a href="#list-tdgp">LIST tdgp</a></li>
+                <li class="third-level"><a href="#list-tdbs">LIST tdbs</a></li>
+                <li class="third-level"><a href="#list-gcst">LIST GCst</a></li>
+                <li class="third-level"><a href="#list-gcky">LIST GCky</a></li>
+                <li class="third-level"><a href="#list-om-s">LIST om-s</a></li>
+                <li class="third-level"><a href="#list-omks">LIST omks</a></li>
+                <li class="third-level"><a href="#list-shap">LIST shap</a></li>
+                <li class="third-level"><a href="#list-cppl">LIST CPPl</a></li>
+                <li class="third-level"><a href="#list-list">LIST list</a></li>
+                <li class="third-level"><a href="#list-slay-list-dlay-list-clay">LIST SLay / LIST DLay / LIST CLay</a></li>
+                <li class="third-level"><a href="#list-secl">LIST SecL</a></li>
+                <li class="third-level"><a href="#list-mrst">LIST mrst</a></li>
+                <li class="third-level"><a href="#list-mrky">LIST mrky</a></li>
+                <li class="third-level"><a href="#list-nmrd">LIST Nmrd</a></li>
+                <li class="third-level"><a href="#list-otst">LIST otst</a></li>
+                <li class="third-level"><a href="#list-otky">LIST otky</a></li>
+                <li class="third-level"><a href="#list-als2">LIST Als2</a></li>
+                <li class="third-level"><a href="#list-sfdr">LIST Sfdr</a></li>
+                <li class="third-level"><a href="#list-btdk">LIST btdk</a></li>
+                <li class="third-level"><a href="#list-sspc">LIST sspc</a></li>
+                <li class="third-level"><a href="#list-part">LIST parT</a></li>
+                <li class="third-level"><a href="#list-efdg">LIST EfdG</a></li>
+                <li class="third-level"><a href="#list-efdf">LIST EfDf</a></li>
+                <li class="third-level"><a href="#list-exen">LIST ExEn</a></li>
+                <li class="third-level"><a href="#list-prin">LIST PRin</a></li>
+                <li class="third-level"><a href="#list-pin">LIST Pin</a></li>
+                <li class="third-level"><a href="#list-cif0">LIST CIF0</a></li>
+                <li class="third-level"><a href="#list-cif2">LIST CIF2</a></li>
+                <li class="third-level"><a href="#list-cif3">LIST CIF3</a></li>
+                <li class="third-level"><a href="#list-cctl">LIST CCtl</a></li>
+                <li class="third-level"><a href="#list-cps2">LIST CpS2</a></li>
+                <li class="third-level"><a href="#list-stvc">LIST StVc</a></li>
+                <li class="third-level"><a href="#list-cprp">LIST CPrp</a></li>
+                <li class="third-level"><a href="#list-ovg2">LIST OvG2</a></li>
+                <li class="third-level"><a href="#list-cprp_1">LIST CPrp</a></li>
+                <li class="third-level"><a href="#list-lrdr">LIST LRdr</a></li>
+                <li class="third-level"><a href="#list-litm">LIST LItm</a></li>
+                <li class="third-level"><a href="#list-lom">LIST LOm</a></li>
+            <li class="second-level"><a href="#gradient-xml">Gradient XML</a></li>
+                
+                <li class="third-level"><a href="#midpoint">Midpoint</a></li>
+                <li class="third-level"><a href="#opacity">Opacity</a></li>
+            <li class="second-level"><a href="#xmp-metadata">XMP Metadata</a></li>
+                
+            <li class="second-level"><a href="#xml-project-format">XML Project Format</a></li>
+                
+                <li class="third-level"><a href="#aftereffectsproject">AfterEffectsProject</a></li>
+                <li class="third-level"><a href="#projectxmpmetadata">ProjectXMPMetadata</a></li>
+                <li class="third-level"><a href="#string">string</a></li>
+                <li class="third-level"><a href="#nums-ppsn">numS / ppSn</a></li>
+                <li class="third-level"><a href="#tdsn-fnam-pdnm_1">tdsn / fnam / pdnm</a></li>
+                <li class="third-level"><a href="#child-elements">Child elements</a></li>
+                <li class="third-level"><a href="#bdata">bdata</a></li>
+            <li class="second-level"><a href="#resources">Resources</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="parsing-aep-files">Parsing AEP Files</h1>
+<p>AfterEffects Project files are the proprietary file format used by Adobe AfterEffects.</p>
+<p>It's a binary format based on the RIFX container format.</p>
+<p>The structure resembles that of a Lottie JSON exported from AE.</p>
+<h2 id="riff">RIFF</h2>
+<p>A RIFF is composed of "chunks" with the following format</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Header</td>
+<td>4</td>
+<td>ASCII name describing the type of the chunk</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>4</td>
+<td><code>uint32</code> size of the data section</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>Size</td>
+<td>Data within the chunk</td>
+</tr>
+</tbody>
+</table>
+<p><code>RIFX</code> is an extension of the <code>RIFF</code> format, the difference being <code>RIFX</code>
+uses big-endian notation for integers.</p>
+<p>A RIFF file will be structured in the same way as a chunk:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Header</td>
+<td>4</td>
+<td><code>RIFF</code> or <code>RIFX</code></td>
+</tr>
+<tr>
+<td>Size</td>
+<td>4</td>
+<td><code>uint32</code> size of the chunk</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>4</td>
+<td>Format Identifier</td>
+</tr>
+<tr>
+<td>Chunks</td>
+<td>*</td>
+<td>Rest of the chunks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aep-specific-parsing">AEP-Specific Parsing</h3>
+<p>It should always be <code>RIFX</code> format (big endian). The format identifier
+for AEP is <code>Egg!</code>.</p>
+<p>When parsing the RIFF structure, keep in mind the following chunks
+will contain other chunks:</p>
+<ul>
+<li><a href="#tdsn"><code>tdsn</code></a></li>
+<li><a href="#fnam"><code>fnam</code></a></li>
+<li><a href="#pdnm"><code>pdnm</code></a></li>
+</ul>
+<p>And that <a href="#list-btdk"><code>LIST</code> <code>btdk</code></a> contains data in a different format, and
+it should not be parsed as a RIFF <a href="#list"><code>LIST</code></a>.</p>
+<p>At the end of the RIFF data, the AEP file has some XML-encoded metadata.</p>
+<h3 id="basic-types">Basic Types</h3>
+<p>In the chunk data descriptions, the types described below will be used
+to show how to interpret the raw binary data.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>4</td>
+<td>ASCII-encoded chunk identifier</td>
+</tr>
+<tr>
+<td><code>uint16</code></td>
+<td>2</td>
+<td>Unsigned integer</td>
+</tr>
+<tr>
+<td><code>uint32</code></td>
+<td>4</td>
+<td>Unsigned integer</td>
+</tr>
+<tr>
+<td><code>sint16</code></td>
+<td>2</td>
+<td>Twos-complement signed integer</td>
+</tr>
+<tr>
+<td><code>float32</code></td>
+<td>4</td>
+<td>IEEE float</td>
+</tr>
+<tr>
+<td><code>float64</code></td>
+<td>8</td>
+<td>IEEE float</td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td>*</td>
+<td>Text, usually utf-8 encoded</td>
+</tr>
+<tr>
+<td><code>string0</code></td>
+<td>*</td>
+<td>NUL terminated string, note that you might find junk data after the NUL (This can be caused by renaming something to a shorter name)</td>
+</tr>
+<tr>
+<td><code>bytes</code></td>
+<td>*</td>
+<td>Unformatted / unknown data</td>
+</tr>
+</tbody>
+</table>
+<h4 id="time">Time</h4>
+<p>Time values are stored as <code>uint16</code>. they are scaled by a factor you can find in <a href="#cdta"><code>cdta</code></a>.</p>
+<p>To get the actual value in frames you need to do the following:</p>
+<pre><code>time_frames = time_value / cdta.time_scale
+</code></pre>
+<p>Additionally, layers specify a start time, which shifts all the time values by a fixed amount.</p>
+<p>If you are within a layer the expression looks like this:</p>
+<pre><code>time_frames = (time_value + ldta.start_time) / (cdta.time_scale)
+</code></pre>
+<h4 id="flags">Flags</h4>
+<p>Flags is byte data, that will be specified using two integers: byte and bit index.</p>
+<p>You'll get the value of the flag you'll need to do the following:</p>
+<pre><code>flag = (flags[byte] &amp; (1 &lt;&lt; bit)) != 0
+</code></pre>
+<p>The index of the byte here is in file order so a <code>byte</code> of 0 is the most significant byte.</p>
+<h2 id="aftereffects-logic">AfterEffects Logic</h2>
+<p>This section assumes the file has already been parsed into RIFF chunks.</p>
+<p>Objects described here will have a nested list showing which chunks are
+used to represent them, you can click on the link pointing to the chunk
+details to get the data layout within that chunk.</p>
+<h3 id="file-structure">File Structure</h3>
+<ul>
+<li><a href="#list-efdg"><code>LIST</code> <code>EfdG</code></a>: <a href="#effects">Effect definitions</a></li>
+<li><a href="#list-exen"><code>LIST</code> <code>ExEn</code></a><ul>
+<li><a href="#utf8"><code>Utf8</code></a>: Language used in expressions (eg: <code>javascript-1.0</code>)</li>
+</ul>
+</li>
+<li><a href="#list-fold"><code>LIST</code> <code>Fold</code></a>: Root folder<ul>
+<li><a href="#list-item"><code>LIST</code> <code>Item</code></a>: Folder item (repeated, see below)</li>
+</ul>
+</li>
+</ul>
+<h4 id="folder-item">Folder Item</h4>
+<ul>
+<li><a href="#list-item"><code>LIST</code> <code>Item</code></a><ul>
+<li><a href="#idta"><code>idta</code></a>: Item data</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name</li>
+<li><a href="#cmta"><code>cmta</code></a>: (optional) Comment</li>
+</ul>
+</li>
+<li><a href="#fiac"><code>fiac</code></a> Whether the item is the active item</li>
+</ul>
+<p><a href="#idta"><code>idta</code></a> will cointain the ID of the item (referenced by layers)
+and the item type.</p>
+<p>The following sections descript each type of item in detail</p>
+<h4 id="folders">Folders</h4>
+<p><a href="#idta"><code>idta</code></a> type <code>1</code>. These contain additional items inside them.</p>
+<ul>
+<li><a href="#list-item"><code>LIST</code> <code>Item</code></a><ul>
+<li><a href="#idta"><code>idta</code></a>: Item data (type and ID).</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name</li>
+<li><a href="#list-sfdr"><code>LIST</code> <code>Sfdr</code></a>: Folder items<ul>
+<li><a href="#list-item"><code>LIST</code> <code>Item</code></a>: Child item (repeated)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="compositions">Compositions</h4>
+<p><a href="#idta"><code>idta</code></a> has type of <code>4</code>. You need to know which composition to extract as
+a lottie corresponds to a specific comp (with other compositions showing
+as assets for precomps).</p>
+<p>Structure:</p>
+<ul>
+<li><a href="#list-item"><code>LIST</code> <code>Item</code></a><ul>
+<li><a href="#idta"><code>idta</code></a>: Item data (type and ID).</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name</li>
+<li><a href="#cdta"><code>cdta</code></a>: Composition data</li>
+<li><a href="#list-layr"><code>LIST</code> <code>Layr</code></a>: Layer (repeated)</li>
+</ul>
+</li>
+</ul>
+<p>Each layer will show as a <a href="#list-layr"><code>LIST</code> <code>Layr</code></a> in the <a href="#list-item"><code>LIST</code> <code>Item</code></a>.</p>
+<p>The composition will also have other type of layer <code>LIST</code>s:</p>
+<ul>
+<li><a href="#list-dlay"><code>LIST</code> <code>DLay</code></a>: Default view</li>
+<li><a href="#list-clay"><code>LIST</code> <code>CLay</code></a>: Custom views</li>
+<li><a href="#list-slay"><code>LIST</code> <code>SLay</code></a>: Side views</li>
+<li><a href="#list-secl"><code>LIST</code> <code>SecL</code></a>: Composition markers layer</li>
+</ul>
+<p>If the comp uses <a href="#essential-graphics">essential graphics</a>, it will have the appropriate <code>LIST</code>s as well.</p>
+<h4 id="assets">Assets</h4>
+<p><a href="#idta"><code>idta</code></a> type <code>7</code>. These can have different kinds of contents.</p>
+<p>Look for <a href="#sspc"><code>sspc</code></a> to get the size for visual assets.</p>
+<p>The type of asset is defined in the first 4 bytes of <a href="#opti"><code>opti</code></a>.</p>
+<h5 id="solids">Solids</h5>
+<p>For some the <code>Item</code> has an <code>Utf8</code> but it seems to always be empty
+need to find the name from <a href="#opti"><code>opti</code></a>.</p>
+<ul>
+<li><a href="#list-item"><code>LIST</code> <code>Item</code></a><ul>
+<li><a href="#idta"><code>idta</code></a>: Item data (type and ID).</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name (not used for solids)</li>
+<li><a href="#list-pin"><code>LIST</code> <code>Pin</code></a><ul>
+<li><a href="#sspc"><code>sspc</code></a>: Contains info like width / height)</li>
+<li><a href="#opti"><code>opti</code></a>: Data</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="files">Files</h5>
+<ul>
+<li><a href="#list-item"><code>LIST</code> <code>Item</code></a><ul>
+<li><a href="#idta"><code>idta</code></a>: Item data (type and ID).</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name</li>
+<li><a href="#list-pin"><code>LIST</code> <code>Pin</code></a><ul>
+<li><a href="#sspc"><code>sspc</code></a>: Contains info like width / height)</li>
+<li><a href="#opti"><code>opti</code></a>: Check this to tell files apart from solids</li>
+<li><a href="#list-als2"><code>LIST</code> <code>Als2</code></a><ul>
+<li><a href="#alas"><code>alas</code></a>: File info as JSON.</li>
+</ul>
+</li>
+<li><a href="#list-clrs"><code>LIST</code> <code>CLRS</code></a><ul>
+<li><a href="#utf8"><code>Utf8</code></a>: JSON containing base64-encoded ICC color profiles.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The <code>Uft8</code> in <code>Item</code> only has a value if the user has set an explicit value for the name.</p>
+<p>The file path is in <a href="#alas"><code>alas</code></a>, parse it as JSON and get <code>fullpath</code>.</p>
+<p>the first 4 bytes of <a href="#opti"><code>opti</code></a> will change based on the file format.</p>
+<h3 id="layers">Layers</h3>
+<ul>
+<li><a href="#list-layr"><code>LIST</code> <code>Layr</code></a>: Layer<ul>
+<li><a href="#ldta"><code>ldta</code></a>: Common layer data, including layer type.</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name</li>
+<li><a href="#cmta"><code>cmta</code></a>: (optional) Comment</li>
+<li><a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a>: <a href="#property-groups">Property group</a></li>
+</ul>
+</li>
+</ul>
+<p>When parsing layer transforms, keep in mind the default position is the center of the comp.
+For shape layers, the default anchor is [0, 0];
+for precomp layers the default anchor is the center of the comp (same as position).</p>
+<h4 id="asset-layer">Asset Layer</h4>
+<p>Layer type <code>0</code>.</p>
+<p>(Also known as AVLayer in AE) They have a non-zero Source ID in <a href="#ldta"><code>ldta</code></a>.</p>
+<p>Precomp, image, and similar layers will point to an appropriate asset.</p>
+<p>Several layer types point to a solid asset, you need to check the layer
+attributes to distinguish between them:</p>
+<ul>
+<li>Solid layers</li>
+<li>Null layers</li>
+<li>Adjustment layers</li>
+</ul>
+<h4 id="light-layer">Light Layer</h4>
+<p>Layer type <code>1</code>.</p>
+<p>For light settings look for the match name <code>ADBE Light Options Group</code>.</p>
+<h4 id="camera-layer">Camera Layer</h4>
+<p>Layer type <code>2</code>.</p>
+<p>For camera settings look for the match name <code>ADBE Camera Options Group</code>.</p>
+<h4 id="text-layer">Text Layer</h4>
+<p>Layer type <code>3</code>.</p>
+<p>For text contents look for the match name <code>ADBE Text Properties</code>.</p>
+<h4 id="shape-layer">Shape Layer</h4>
+<p>Layer type <code>4</code>.</p>
+<p>For shapes look for the match name <code>ADBE Root Vectors Group</code>.</p>
+<h3 id="property-groups">Property Groups</h3>
+<p>Most objects are described as a property groups.</p>
+<p>These have the following structure:</p>
+<ul>
+<li><a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a>: Property group<ul>
+<li><a href="#tdsb"><code>tdsb</code></a>: Flags</li>
+<li><a href="#tdsn"><code>tdsn</code></a> &gt; <a href="#utf8"><code>Utf8</code></a>: Name</li>
+<li>... (properties)</li>
+<li><a href="#tdmn"><code>tdmn</code></a>: <code>ADBE Group End</code> (marks the end of the group)</li>
+</ul>
+</li>
+</ul>
+<p>Then follows a list of properties, all introduced by their
+<a href="#match-names">match name</a> (<a href="#tdmn"><code>tdmn</code></a>).</p>
+<p>After a match name, you'll find the data for the property, which might
+be an actual propert (see the section below), other groups, or layer effects.</p>
+<p>This structure is used both for objects (that have a fixed set of properties)
+and groups/collections whose contents might vary.</p>
+<p>For objects with fixed properties you will not find duplicate match names
+but you might find duplicates within collections.</p>
+<h3 id="properties">Properties</h3>
+<p>Properties, like objects are introduced by their match name, the chunks
+following that depends on the type of property.</p>
+<p>The core of a property is defined in <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a> with the following structure:</p>
+<ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>: Property definition<ul>
+<li><a href="#tdb4"><code>tdb4</code></a>: Tells you the type, number of components, whether it's animated</li>
+<li><a href="#cdat"><code>cdat</code></a>: Value (if not animated)</li>
+<li><a href="#tdsn"><code>tdsn</code></a>:<ul>
+<li><a href="#utf8"><code>Utf8</code></a>: Human-readable Name</li>
+</ul>
+</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Optional expression</li>
+<li><a href="#list-list"><code>LIST</code> <code>list</code></a>: Keyframes (if animated)<ul>
+<li><a href="#lhd3"><code>lhd3</code></a>: Tells you the number of keyframes</li>
+<li><a href="#ldat"><code>ldat</code></a>: Keyframe data and values</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>For simple properties, with vector or scalar values, you get the structure above.</p>
+<p>For more complex properties, you get an outer object that contains that data as well
+as a list of values. You'll get the value for the keyframes (or the static value) from that list.</p>
+<p>Color properties are laid out as ARGB floats in [0, 255].</p>
+<p>Note that the keyframe structure in <a href="#ldat"><code>ldat</code></a> changes based on the info found in <a href="#tdb4"><code>tdb4</code></a>.</p>
+<h4 id="shape">Shape</h4>
+<ul>
+<li><a href="#list-om-s"><code>LIST</code> <code>om-s</code></a><ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>: Property definition</li>
+<li><a href="#list-omks"><code>LIST</code> <code>omks</code></a>: Keyframe values<ul>
+<li><a href="#list-shap"><code>LIST</code> <code>shap</code></a>: Bezier Data (repeated)<ul>
+<li><a href="#shph"><code>shph</code></a>: Bezier metadata (whether it's closed and bounding box)</li>
+<li><a href="#list-list"><code>LIST</code> <code>list</code></a><ul>
+<li><a href="#lhd3"><code>lhd3</code></a>: Bezier point list metadata</li>
+<li><a href="#ldat"><code>ldat</code></a>: Bezier points relative to <a href="#shph"><code>shph</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="gradient-colors">Gradient Colors</h4>
+<ul>
+<li><a href="#list-gcst"><code>LIST</code> <code>GCst</code></a><ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>: Property definition</li>
+<li><a href="#list-gcky"><code>LIST</code> <code>GCky</code></a>: Keyframe values<ul>
+<li><a href="#utf8"><code>Utf8</code></a> <a href="#gradient-xml">Gradient XML</a> (repeated)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="orientation">Orientation</h4>
+<ul>
+<li><a href="#list-otst"><code>LIST</code> <code>otst</code></a><ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>: Property definition</li>
+<li><a href="#list-otky"><code>LIST</code> <code>otky</code></a>: Keyframe values<ul>
+<li><a href="#otda"><code>otda</code></a> 3D vector (repeated)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="marker">Marker</h4>
+<ul>
+<li><a href="#list-mrst"><code>LIST</code> <code>mrst</code></a><ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>: Property definition</li>
+<li><a href="#list-mrky"><code>LIST</code> <code>mrky</code></a>: Keyframe values<ul>
+<li><a href="#nmrd"><code>Nmrd</code></a> Marker (repeated)<ul>
+<li><a href="#nmhd"><code>NmHd</code></a> Marker properties</li>
+<li><a href="#utf8"><code>Utf8</code></a> Name</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="text-document">Text Document</h4>
+<ul>
+<li><a href="#list-btds"><code>LIST</code> <code>btds</code></a><ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>: Property definition</li>
+<li><a href="#list-btdk"><code>LIST</code> <code>btdk</code></a>: COS-encoded data</li>
+</ul>
+</li>
+</ul>
+<h4 id="layer">Layer</h4>
+<p>Follows the usual <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>, check <a href="#tdb4"><code>tdb4</code></a> for the "Integer" property type.</p>
+<ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a><ul>
+<li><a href="#tdb4"><code>tdb4</code></a></li>
+<li><a href="#cdat"><code>cdat</code></a>: Should always be <code>[0.0]</code></li>
+<li><a href="#tdpi"><code>tdpi</code></a>: Layer index</li>
+<li><a href="#tdps"><code>tdps</code></a>: Layer source</li>
+</ul>
+</li>
+</ul>
+<h4 id="mask-index">Mask Index</h4>
+<p>Follows the usual <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>, check <a href="#tdb4"><code>tdb4</code></a> for the "Integer" property type.</p>
+<ul>
+<li><a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a><ul>
+<li><a href="#tdb4"><code>tdb4</code></a></li>
+<li><a href="#cdat"><code>cdat</code></a>: Should always be <code>[0.0]</code></li>
+<li><a href="#tdli"><code>tdli</code></a>: Mask index</li>
+</ul>
+</li>
+</ul>
+<h4 id="mask">Mask</h4>
+<ul>
+<li><a href="#mkif"><code>mkif</code></a>: Basic mask properties</li>
+<li><a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a>: Animated properties</li>
+</ul>
+<h4 id="layer-overrides">Layer Overrides</h4>
+<ul>
+<li><code>LIST OvG2</code><ul>
+<li><code>CprC</code>: <code>uint32</code>?</li>
+</ul>
+</li>
+</ul>
+<h4 id="layer-source-alternate">Layer Source Alternate</h4>
+<ul>
+<li><code>blsv</code>: <code>uint32</code> Layer index?</li>
+<li><code>blsi</code>: <code>uint32</code></li>
+</ul>
+<h4 id="chunk-naming">Chunk naming</h4>
+<p>Most of property related chunks seem to contain the prefix <code>td</code> in their name:</p>
+<ul>
+<li><code>tdgp</code>: property group</li>
+<li><code>tdsb</code>: property group flags</li>
+<li><code>tdsn</code>: property group name</li>
+<li><code>tdmn</code>: property match name</li>
+<li><code>tdbs</code>: property definition</li>
+<li><code>tdb4</code>: property details</li>
+</ul>
+<p>I'm not sure what <code>td</code> stands for my best guess would be "Track Data".</p>
+<p>For properties with external values, the naming convention generally is <code>XXst</code> for the parent chunk
+and <code>XXky</code> for the values (where <code>XX</code> changes depending on the type and its meaning is fairly obvious).</p>
+<p>I'm not sure what <code>st</code> stands for, <code>ky</code> most likely stands for "keyframes"</p>
+<h4 id="expressions">Expressions</h4>
+<p>Bodymovin <a href="https://github.com/bodymovin/bodymovin-extension/blob/master/src/helpers/expressions/expressions.js">modifies expressions</a>
+when converting into lottie, if you add expressions but fail to convert them, the animation
+might not play properly.</p>
+<h3 id="assets_1">Assets</h3>
+<h4 id="image">Image</h4>
+<p>Defined within <a href="#list-item"><code>LIST</code> <code>Item</code></a>, it will have <a href="#idta"><code>idta</code></a> with type <code>7</code>.</p>
+<p>Within that there's a <a href="#list-pin"><code>LIST</code> <code>Pin</code></a>, containing the following:</p>
+<p><a href="#list-als2"><code>LIST</code> <code>Als2</code></a> with <a href="#alas"><code>alas</code></a>, which in turn has some JSON.
+Inside the JSON you can get <code>fullpath</code>.</p>
+<p><a href="#opti"><code>opti</code></a>: Contains the asset name.</p>
+<p><a href="#list-clrs"><code>LIST</code> <code>CLRS</code></a>, the last <a href="#utf8"><code>Utf8</code></a> here has some JSON with a base64-encoded color profile.</p>
+<h3 id="shapes">Shapes</h3>
+<h4 id="stroke-dashes">Stroke Dashes</h4>
+<p>Look for the match name <code>ADBE Vector Stroke Dashes</code>.</p>
+<p>Inside of it you'll find a bunch of properties with match name
+<code>ADBE Vector Stroke Dash n</code> or <code>ADBE Vector Stroke Gap n</code>, where <code>n</code> is
+an ineger starting from 1.</p>
+<p>You will also find a single <code>ADBE Vector Stroke Offset</code>.</p>
+<p>They are all animatable lengths and fairly straighforward.</p>
+<p>Note that lottie-web wants a unique "name" for these, and the file doesn't provide this
+but you can generate one based on the match name.</p>
+<h3 id="transforms">Transforms</h3>
+<h4 id="split-position">Split Position</h4>
+<p>When a position is split the Position attribute is removed and you can get the data from Position_0 and Position_1.</p>
+<p>For some reason Position_0 and Position_1 are present (with value <code>0</code>) even when the position is not split.</p>
+<p>Their <code>tdsb</code> seems to change from <code>1</code> (not split) to <code>3</code> (split).</p>
+<h3 id="effects">Effects</h3>
+<p>The effects used in by the file are defined in the top-level chunk <a href="#list-efdg"><code>LIST</code> <code>EfdG</code></a>, instanciations of these effects
+are present in the layers that use them.</p>
+<ul>
+<li><a href="#list-efdg"><code>LIST</code> <code>EfdG</code></a>: Effect definitions<ul>
+<li><a href="#efdc"><code>EfDC</code></a>: Effect definition count (number of definitions)</li>
+<li><a href="#list-efdf"><code>LIST</code> <code>EfDf</code></a>: Effect definition (one per effect type used in the document)<ul>
+<li><a href="#tdmn"><code>tdmn</code></a>: Effect match name</li>
+<li><a href="#list-sspc"><code>LIST</code> <code>sspc</code></a><ul>
+<li><a href="#fnam"><code>fnam</code></a> &gt; <a href="#utf8"><code>Utf8</code></a>: Effect name</li>
+<li><a href="#list-part"><code>LIST</code> <code>parT</code></a>: Effect parameters<ul>
+<li><a href="#parn"><code>parn</code></a>: Number of parameters</li>
+<li><a href="#tdmn"><code>tdmn</code></a>: Parameter match name</li>
+<li><a href="#pard"><code>pard</code></a>: Parameter definition</li>
+<li><a href="#pdnm"><code>pdnm</code></a>: (optional) Parameter control strings</li>
+<li>You get <a href="#tdmn"><code>tdmn</code></a> and <a href="#pard"><code>pard</code></a> (optionally followed by <a href="#pdnm"><code>pdnm</code></a> for each parameter</li>
+</ul>
+</li>
+<li><a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a>: Contains the values of the first instance of this effect, can be ignored</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Note that the first paramter in an effect should be ignored.</p>
+<p>The effects in a later are listed under <code>ADBE Effect Parade</code>:</p>
+<ul>
+<li><a href="#tdmn"><code>tdmn</code></a>: Effect match name, you'll need to find the matching definition</li>
+<li><a href="#list-sspc"><code>LIST</code> <code>sspc</code></a><ul>
+<li><a href="#fnam"><code>fnam</code></a> &gt; <a href="#utf8"><code>Utf8</code></a>: Effect name</li>
+<li><a href="#list-part"><code>LIST</code> <code>parT</code></a>: You might find this here as well but it isn't consistent. Refer to <a href="#list-efdg"><code>LIST</code> <code>EfdG</code></a> for the definition</li>
+<li><a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a>: Parameter values, works like any other property list</li>
+</ul>
+</li>
+</ul>
+<h3 id="essential-graphics">Essential Graphics</h3>
+<h4 id="definition">Definition</h4>
+<p>Essential graphics are defined in the following chunks inside the comp's <a href="#list-item"><code>LIST</code> <code>Item</code></a>:</p>
+<ul>
+<li><a href="#list-cif0"><code>LIST</code> <code>CIF0</code></a></li>
+<li><a href="#list-cif2"><code>LIST</code> <code>CIF2</code></a></li>
+<li><a href="#list-cif3"><code>LIST</code> <code>CIF3</code></a></li>
+</ul>
+<p>They seem to have the same structure and (almost) identical values. But only <code>CIF3</code>
+has data about groups:</p>
+<ul>
+<li><a href="#list-cif3"><code>LIST</code> <code>CIF3</code></a><ul>
+<li><a href="#list-cps2"><code>LIST</code> <code>CpS2</code></a><ul>
+<li><code>CsCt</code>: seems to always have the value <code>0x1000000</code>.</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name (Defaults to <code>Untitled</code>)</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Locale? (<code>en_US</code>)</li>
+</ul>
+</li>
+<li><a href="#caps"><code>CapS</code></a><ul>
+<li><code>CsCt</code>: seems to always have the value <code>0x1000000</code>.</li>
+<li><code>CapL</code>: seems to always have the value <code>0</code>.</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Name (again, same value as before)</li>
+</ul>
+</li>
+<li><a href="#list-cctl"><code>LIST</code> <code>CCtl</code></a>: Item (repeated)</li>
+</ul>
+</li>
+</ul>
+<p>Items have the following common structure</p>
+<ul>
+<li><a href="#list-cctl"><code>LIST</code> <code>CCtl</code></a><ul>
+<li><a href="#list-cps2"><code>LIST</code> <code>CpS2</code></a><ul>
+<li><a href="#utf8"><code>Utf8</code></a>: Name</li>
+</ul>
+</li>
+<li><a href="#list-caps"><code>LIST</code> <code>CapS</code></a><ul>
+<li><a href="#utf8"><code>Utf8</code></a>: Name (again)</li>
+</ul>
+</li>
+<li><a href="#utf8"><code>Utf8</code></a>: UUID</li>
+<li><a href="#ctyp"><code>CTyp</code></a>: item type</li>
+<li><a href="#cprc"><code>CprC</code></a>: Flags</li>
+<li>Type-specific data</li>
+</ul>
+</li>
+</ul>
+<h5 id="comment">Comment</h5>
+<ul>
+<li><a href="#ctyp"><code>CTyp</code></a>: <code>8</code></li>
+<li><a href="#utf8"><code>Utf8</code></a>: Comment string</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Comment string (again)</li>
+<li><a href="#cprc"><code>CprC</code></a>: <code>0</code></li>
+</ul>
+<h5 id="group">Group</h5>
+<ul>
+<li><a href="#ctyp"><code>CTyp</code></a>: <code>8</code></li>
+<li><a href="#list-stvc"><code>LIST</code> <code>StVc</code></a>: Items<ul>
+<li><a href="#stvs"><code>StVS</code></a>: Count</li>
+<li><a href="#utf8"><code>Utf8</code></a>: UUID of child items (repeated)</li>
+</ul>
+</li>
+<li><a href="#cprc"><code>CprC</code></a>: <code>0</code></li>
+</ul>
+<h5 id="property">Property</h5>
+<ul>
+<li><a href="#cval"><code>CVal</code></a>: Value</li>
+<li><a href="#cdef"><code>CDef</code></a>: Default Value</li>
+<li><a href="#smin"><code>Smin</code></a>: Slider min value (only for scalar properties)</li>
+<li><a href="#smax"><code>Smax</code></a>: Slider max value (only for scalar properties)</li>
+<li><a href="#cdim"><code>CDim</code></a>: Number of dimenstions (only for vector properties)</li>
+<li><a href="#list-stvc"><code>LIST</code> <code>StVc</code></a>: Enum values (only for enum properties)<ul>
+<li><a href="#stvs"><code>StVS</code></a>: Count</li>
+<li><a href="#utf8"><code>Utf8</code></a>: Value name (repeated)</li>
+</ul>
+</li>
+<li><a href="#cprc"><code>CprC</code></a>: <code>1</code></li>
+<li><a href="#list-cprp"><code>LIST</code> <code>CPrp</code></a><ul>
+<li><a href="#ccid"><code>CCId</code></a>: Composition ID (same as the one in <a href="#idta"><code>idta</code></a>).</li>
+<li><a href="#clid"><code>CLId</code></a>: Layer ID (same as the one in <a href="#ldta"><code>ldta</code></a>).</li>
+<li><a href="#utf8"><code>Utf8</code></a>: JSON-ecoded path.</li>
+</ul>
+</li>
+</ul>
+<p>The JSON is a dict where the key is a string containing a number and the values are dicts like this:</p>
+<ul>
+<li><code>index</code>: Index for like shape groups and such, or the value <code>4294967295</code> (<code>0xffffffff</code>) is used when there is no index</li>
+<li><code>matchName</code>: Match name as per usual</li>
+</ul>
+<p>To find the property, something like this might work:</p>
+<pre><code class="language-python">CCId = 15
+CLId = 18
+json_data = {
+    &quot;0&quot;: {
+        &quot;index&quot;:4294967295,
+        &quot;matchName&quot;:&quot;ADBE Root Vectors Group&quot;
+    },
+    &quot;1&quot;: {
+        &quot;index&quot;:0,
+        &quot;matchName&quot;:&quot;ADBE Vector Group&quot;
+    },
+    &quot;2&quot;: {
+        &quot;index&quot;:4294967295,
+        &quot;matchName&quot;:&quot;ADBE Vectors Group&quot;
+    },
+    &quot;3&quot;: {
+        &quot;index&quot;:2,
+        &quot;matchName&quot;:&quot;ADBE Vector Graphic - Fill&quot;
+    },
+    &quot;4&quot;: {
+        &quot;index&quot;:4294967295,
+        &quot;matchName&quot;:&quot;ADBE Vector Fill Opacity&quot;
+    }
+}
+
+property = get_layer(CCId, CLId)
+
+for item in json_data.values():
+    if item[&quot;index&quot;] == 0xffffffff:
+        property = property.property(item[&quot;matchName&quot;])
+    else:
+        property = property.properties[item[&quot;index&quot;]]
+</code></pre>
+<p>The values in <code>Smin</code>, <code>Smax</code>, <code>CVal</code>, <code>CDef</code> depends on the type, refer to <a href="#ctyp"><code>CTyp</code></a> for their representation.</p>
+<h4 id="overrides">Overrides</h4>
+<p>Defined in the precomp layer under match name <code>ADBE Layer Overrides</code></p>
+<ul>
+<li><a href="#tdmn"><code>tdmn</code></a>: <code>ADBE Layer Overrides</code></li>
+<li><a href="#list-ovg2"><code>LIST</code> <code>OvG2</code></a><ul>
+<li><a href="#list-cprp"><code>LIST</code> <code>CPrp</code></a>: (repeated)<ul>
+<li><a href="#utf8"><code>Utf8</code></a>: UUID of the essential property</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a>: Property groups with the matching properties defined as usual.</li>
+</ul>
+<h2 id="match-names">Match Names</h2>
+<p>Follows a list of known match names grouped by object type.</p>
+<p>For properties that specify a default value, you should assume they have the specified value if they are not present in the
+AEP file.</p>
+<h3 id="layers_1">Layers</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Root Vectors Group </code></td>
+<td><code>shapes</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Layer Styles </code></td>
+<td><code>styles</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Transform Group </code></td>
+<td><code>ks</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Layer Styles </code></td>
+<td><code>sy</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Extrsn Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Material Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Audio Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Layer Sets </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Time Remapping </code></td>
+<td><code>tm</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Effect Parade </code></td>
+<td><code>ef</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Marker </code></td>
+<td>Markers</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Mask Parade </code></td>
+<td><code>masksProperties</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Plane Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Data Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Layer Overrides </code></td>
+<td>Essential graphincs values</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Source Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Camera Options Group </code></td>
+<td><a href="../layers/#camera-layer">Camera Layer</a></td>
+<td>Marks a layer as a camera layer</td>
+</tr>
+<tr>
+<td><code>ADBE Camera Aperture </code></td>
+<td><code>pe</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Camera Zoom </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Camera Focus Distance </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Mask Atom </code></td>
+<td><a href="../layers/#masks">Mask</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Mask Shape </code></td>
+<td><code>pt</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Mask Offset </code></td>
+<td><code>x</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>ADBE Mask Feather </code></td>
+<td></td>
+<td>[0, 0]</td>
+</tr>
+<tr>
+<td><code>ADBE Mask Opacity </code></td>
+<td><code>0</code></td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Extrsn Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Bevel Direction </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Material Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Appears in Reflections </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Reflection Coefficient </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Glossiness Coefficient </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Fresnel Coefficient </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Transparency Coefficient </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Transp Rolloff </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Index of Refraction </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Source Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Layer Source Alternate </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Layer Styles </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Blend Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Blend Options Group </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Adv Blend Group </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="shapes_1">Shapes</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Group </code></td>
+<td><a href="../shapes/#group">Group</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Blend Mode </code></td>
+<td><code>bm</code><sup id="fnref22:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup><sup id="fnref5:blend"><a class="footnote-ref" href="#fn:blend">2</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vectors Group </code></td>
+<td><code>it</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Transform Group </code></td>
+<td>Transform</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Materials Group </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Shape - Rect </code></td>
+<td><a href="../shapes/#rectangle">Rectangle</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Shape Direction </code></td>
+<td><code>d</code><sup id="fnref21:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Rect Position </code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Rect Size </code></td>
+<td><code>s</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Rect Roundness </code></td>
+<td><code>r</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Shape - Ellipse </code></td>
+<td><a href="../shapes/#ellipse">Ellipse</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Shape Direction </code></td>
+<td><code>d</code><sup id="fnref20:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Ellipse Position </code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Ellipse Size </code></td>
+<td><code>s</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Shape - Star </code></td>
+<td><a href="../shapes/#polystar">PolyStar</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Shape Direction </code></td>
+<td><code>d</code><sup id="fnref19:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Type </code></td>
+<td><code>sy</code><sup id="fnref18:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Points </code></td>
+<td><code>pt</code><sup id="fnref2:int"><a class="footnote-ref" href="#fn:int">3</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Position </code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Rotation </code></td>
+<td><code>r</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Inner Radius </code></td>
+<td><code>ir</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Outer Radius </code></td>
+<td><code>or</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Inner Roundess </code></td>
+<td><code>is</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Star Outer Roundess </code></td>
+<td><code>os</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Shape - Group </code></td>
+<td><a href="../shapes/#path">Path</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Shape Direction </code></td>
+<td><code>d</code><sup id="fnref17:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Shape </code></td>
+<td><code>ks</code><sup id="fnref:shape"><a class="footnote-ref" href="#fn:shape">4</a></sup></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="shape-styles">Shape Styles</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Graphic - Fill </code></td>
+<td><a href="../shapes/#fill">Fill</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Blend Mode </code></td>
+<td><code>bm</code><sup id="fnref16:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup><sup id="fnref4:blend"><a class="footnote-ref" href="#fn:blend">2</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Fill Color </code></td>
+<td><code>c</code><sup id="fnref2:color"><a class="footnote-ref" href="#fn:color">5</a></sup> </td>
+<td>[255, 255, 0, 0]</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Fill Opacity </code></td>
+<td><code>o</code></td>
+<td>100</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Fill Rule </code></td>
+<td><code>r</code><sup id="fnref15:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Composite Order </code></td>
+<td>if 2, it should be drawn over the previous shape </td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Graphic - Stroke </code></td>
+<td><a href="../shapes/#stroke">Stroke</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Blend Mode </code></td>
+<td><code>bm</code><sup id="fnref14:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup><sup id="fnref3:blend"><a class="footnote-ref" href="#fn:blend">2</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Color </code></td>
+<td><code>c</code><sup id="fnref:color"><a class="footnote-ref" href="#fn:color">5</a></sup> </td>
+<td>[255, 255, 255, 255, ]</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Opacity </code></td>
+<td><code>o</code></td>
+<td>100</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Width </code></td>
+<td><code>w</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Line Cap </code></td>
+<td><code>lc</code><sup id="fnref13:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Line Join </code></td>
+<td><code>lj</code><sup id="fnref12:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Miter Limit </code></td>
+<td><code>ml2</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Dashes </code></td>
+<td><code>d</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Taper </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Wave </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Composite Order </code></td>
+<td>if 2, it should be drawn over the previous shape </td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Stroke Taper </code></td>
+<td>All properties are percentages in [0, 100]</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper Start Length </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper End Length </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper Start Width </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper End Width </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper Start Ease </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper End Ease </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Stroke Wave </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper Wave Amount </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper Wave Units </code></td>
+<td>1 for pixels, 2 for cycles</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper Wavelength </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Taper Wave Phase </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Stroke Dashes </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Offset </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Gap # </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Dash # </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Graphic - G-Fill </code></td>
+<td><a href="../shapes/#gradients">Gradient Fill</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Blend Mode </code></td>
+<td><code>bm</code><sup id="fnref11:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup><sup id="fnref2:blend"><a class="footnote-ref" href="#fn:blend">2</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad Type </code></td>
+<td><code>t</code><sup id="fnref10:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad Start Pt </code></td>
+<td><code>s</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad End Pt </code></td>
+<td><code>e</code></td>
+<td>[100, 0]</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad HiLite Length </code></td>
+<td><code>h</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad HiLite Angle </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad Colors </code></td>
+<td><code>g</code><sup id="fnref2:gradient"><a class="footnote-ref" href="#fn:gradient">6</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Fill Opacity </code></td>
+<td><code>o</code></td>
+<td>100</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Fill Rule </code></td>
+<td><code>r</code><sup id="fnref9:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Composite Order </code></td>
+<td>if 2, it should be drawn over the previous shape </td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Graphic - G-Stroke </code></td>
+<td><a href="../shapes/#gradients">Gradient Stroke</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Blend Mode </code></td>
+<td><code>bm</code><sup id="fnref8:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup><sup id="fnref:blend"><a class="footnote-ref" href="#fn:blend">2</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad Type</code></td>
+<td><code>t</code><sup id="fnref7:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad Start Pt </code></td>
+<td><code>s</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad End Pt </code></td>
+<td><code>e</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad HiLite Length </code></td>
+<td><code>h</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad HiLite Angle </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Grad Colors </code></td>
+<td><code>g</code><sup id="fnref:gradient"><a class="footnote-ref" href="#fn:gradient">6</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Opacity </code></td>
+<td><code>o</code></td>
+<td>100</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Width </code></td>
+<td><code>w</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Line Cap </code></td>
+<td><code>lc</code><sup id="fnref6:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Line Join </code></td>
+<td><code>lj</code><sup id="fnref5:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Miter Limit </code></td>
+<td><code>ml2</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Dashes </code></td>
+<td><code>d</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Taper </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Stroke Wave </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Composite Order </code></td>
+<td>if 2, it should be drawn over the previous shape </td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="shape-modifiers">Shape Modifiers</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Merge </code></td>
+<td><a href="../shapes/#merge">Merge</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Merge Type </code></td>
+<td><code>mm</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Offset </code></td>
+<td><a href="../shapes/#offset-path">Offset Path</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Offset Amount </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Offset Line Join </code></td>
+<td><code>lj</code><sup id="fnref4:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Offset Miter Limit </code></td>
+<td><code>ml</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - PB </code></td>
+<td><a href="../shapes/#pucker-bloat">Pucker Bloat</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector PuckerBloat Amount </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Repeater </code></td>
+<td><a href="../shapes/#repeater">Repeater</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Transform </code></td>
+<td><code>tr</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Copies </code></td>
+<td><code>c</code><sup id="fnref:int"><a class="footnote-ref" href="#fn:int">3</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Offset </code></td>
+<td><code>o</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Order </code></td>
+<td><code>m</code><sup id="fnref3:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - RC </code></td>
+<td><a href="../shapes/#rounded-corners">Rounded Corners</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector RoundCorner Radius </code></td>
+<td><code>r</code></td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Trim </code></td>
+<td><a href="../shapes/#trim-path">Trim</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Trim Start </code></td>
+<td><code>s</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Trim End </code></td>
+<td><code>e</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Trim Offset </code></td>
+<td><code>o</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Trim Type </code></td>
+<td><code>m</code><sup id="fnref2:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Twist </code></td>
+<td><a href="../shapes/#twist">Twist</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Twist Angle </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Twist Center </code></td>
+<td><code>c</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Roughen </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Roughen Size </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Roughen Detail </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Roughen Points </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Temporal Freq </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Correlation </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Temporal Phase </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Spatial Phase </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Random Seed </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Wiggler </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Xform Temporal Freq </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Correlation </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Temporal Phase </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Spatial Phase </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Random Seed </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Wiggler Transform </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Filter - Zigzag </code></td>
+<td><a href="../shapes/#zig-zag">Zig Zag</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Zigzag Size </code></td>
+<td><code>s</code></td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Zigzag Detail </code></td>
+<td><code>r</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Zigzag Points </code></td>
+<td><code>pt</code><sup id="fnref:enum"><a class="footnote-ref" href="#fn:enum">1</a></sup></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="transforms_1">Transforms</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Transform Group </code></td>
+<td><a href="../concepts/#transform">Transform</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Anchor Point</code></td>
+<td><code>a</code><sup id="fnref:anchor"><a class="footnote-ref" href="#fn:anchor">8</a></sup> </td>
+<td>[0, 0]</td>
+</tr>
+<tr>
+<td><code>ADBE Position</code></td>
+<td><code>p</code></td>
+<td>Half of the comp size</td>
+</tr>
+<tr>
+<td><code>ADBE Position_0</code></td>
+<td>Split position X</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Position_1</code></td>
+<td>Split position Y</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Position_2</code></td>
+<td>Split position Z</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Scale</code></td>
+<td><code>s</code><sup id="fnref5:100"><a class="footnote-ref" href="#fn:100">7</a></sup> </td>
+<td>[1, 1]</td>
+</tr>
+<tr>
+<td><code>ADBE Orientation</code></td>
+<td><code>or</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Rotate X</code></td>
+<td><code>rx</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Rotate Y</code></td>
+<td><code>ry</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Rotate Z</code></td>
+<td><code>rz</code>or just normal rotation </td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>ADBE Opacity</code></td>
+<td><code>o</code><sup id="fnref4:100"><a class="footnote-ref" href="#fn:100">7</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Envir Appear in Reflect</code></td>
+<td>Single float, probably a boolean?</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Transform Group </code></td>
+<td><a href="../shapes/#transform-shape">Transform Shape</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Anchor Point</code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Anchor</code></td>
+<td><code>a</code></td>
+<td>probably an outdated name</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Position</code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Scale</code></td>
+<td><code>s</code></td>
+<td>[100, 100]</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Rotate X</code></td>
+<td><code>rx</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Rotate Y</code></td>
+<td><code>ry</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Rotate Z</code></td>
+<td><code>rz</code>or just normal rotation</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Rotation</code></td>
+<td><code>r</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Skew</code></td>
+<td><code>sk</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Skew Axis</code></td>
+<td><code>sa</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Group Opacity</code></td>
+<td><code>o</code></td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Vector Repeater Transform</code></td>
+<td><a href="../shapes/#repeater-transform">Repeater Transform</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Anchor Point</code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Position</code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Scale</code></td>
+<td><code>s</code><sup id="fnref3:100"><a class="footnote-ref" href="#fn:100">7</a></sup></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Rotation</code></td>
+<td><code>r</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater Start Opacity</code></td>
+<td><code>so</code><sup id="fnref2:100"><a class="footnote-ref" href="#fn:100">7</a></sup> </td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Vector Repeater End Opacity</code></td>
+<td><code>so</code><sup id="fnref:100"><a class="footnote-ref" href="#fn:100">7</a></sup> </td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="effects_1">Effects</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Tint </code></td>
+<td><a href="../effects/#tint-effect">Tint Effect</a></td>
+<td><code>ty</code>=<code>20</code></td>
+</tr>
+<tr>
+<td><code>ADBE Fill </code></td>
+<td><a href="../effects/#fill-effect">Fill Effect</a></td>
+<td><code>ty</code>=<code>21</code></td>
+</tr>
+<tr>
+<td><code>ADBE Stroke </code></td>
+<td><a href="../effects/#stroke-effect">Stroke Effect</a></td>
+<td><code>ty</code>=<code>22</code></td>
+</tr>
+<tr>
+<td><code>ADBE Tritone </code></td>
+<td><a href="../effects/#tritone-effect">Tritone Effect</a></td>
+<td><code>ty</code>=<code>23</code></td>
+</tr>
+<tr>
+<td><code>ADBE Pro Levels2 </code></td>
+<td><a href="../effects/#pro-levels-effect">Pro Levels Effect</a></td>
+<td><code>ty</code>=<code>24</code></td>
+</tr>
+<tr>
+<td><code>ADBE Drop Shadow </code></td>
+<td><a href="../effects/#drop-shadow-effect">Drop Shadow Effect</a></td>
+<td><code>ty</code>=<code>25</code></td>
+</tr>
+<tr>
+<td><code>ADBE Radial Wipe </code></td>
+<td><a href="../effects/#radial-wipe-effect">Radial Wipe</a></td>
+<td><code>ty</code>=<code>26</code></td>
+</tr>
+<tr>
+<td><code>ADBE Displacement Map </code></td>
+<td><a href="../effects/#displacement-map-effect">Displacement Map Effect</a></td>
+<td><code>ty</code>=<code>27</code></td>
+</tr>
+<tr>
+<td><code>ADBE Set Matte3 </code></td>
+<td><a href="../effects/#matte3-effect">Set Matte Effect</a></td>
+<td><code>ty</code>=<code>28</code></td>
+</tr>
+<tr>
+<td><code>ADBE Gaussian Blur 2 </code></td>
+<td><a href="../effects/#gaussian-blur-effect">Gaussian Blur Effect</a></td>
+<td><code>ty</code>=<code>29</code></td>
+</tr>
+<tr>
+<td><code>ADBE Twirl </code></td>
+<td><a href="../effects/#twirl-effect">Twirl Effect</a></td>
+<td><code>ty</code>=<code>30</code></td>
+</tr>
+<tr>
+<td><code>ADBE MESH WARP </code></td>
+<td><a href="../effects/#mesh-warp-effect">Mesh Warp Effect</a></td>
+<td><code>ty</code>=<code>31</code></td>
+</tr>
+<tr>
+<td><code>ADBE Ripple </code></td>
+<td><a href="../effects/#wavy-effect">Wavy Effect</a></td>
+<td><code>ty</code>=<code>32</code></td>
+</tr>
+<tr>
+<td><code>ADBE Spherize </code></td>
+<td><a href="../effects/#spherize-effect">Spherize Effect</a></td>
+<td><code>ty</code>=<code>33</code></td>
+</tr>
+<tr>
+<td><code>ADBE FreePin3 </code></td>
+<td><a href="../effects/#puppet-effect">Puppet Effect</a></td>
+<td><code>ty</code>=<code>34</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Effect Built In Params </code></td>
+<td>Marks a <a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a> with built-in effect properties</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Effect Mask Opacity </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Paint Group </code></td>
+<td>Data for the paint effect</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Paint Atom </code></td>
+<td>Contains the following properties</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Paint Duration </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Paint Shape </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Paint Transform </code></td>
+<td>Same as other transform but match names starting with <code>ADBE Paint</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Paint Properties </code></td>
+<td>contains the following</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Paint Clone Layer </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="text">Text</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Text Properties </code></td>
+<td><a href="../text/#text-data">Text Data</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Document </code></td>
+<td><code>d</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Path Options </code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text More Options </code></td>
+<td><code>m</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Animators </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Text Animator </code></td>
+<td><a href="../text/#text-range">Text Range</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Selectors </code></td>
+<td><code>s</code>(list)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Animator Properties </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Text Selector </code></td>
+<td><a href="../text/#text-range-selector">Text Range Selector</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Percent Start </code></td>
+<td><code>s</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>ADBE Text Percent End </code></td>
+<td><code>e</code></td>
+<td>100</td>
+</tr>
+<tr>
+<td><code>ADBE Text Percent Offset </code></td>
+<td><code>o</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>ADBE Text Index Start  </code></td>
+<td><code>s</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Index End  </code></td>
+<td><code>e</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Index Offset  </code></td>
+<td><code>o</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Range Advanced </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Selector Max Amount </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Selector Smoothness </code></td>
+<td><code>sm</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Levels Max Ease </code></td>
+<td><code>xe</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Levels Min Ease </code></td>
+<td><code>ne</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Random Seed </code></td>
+<td><code>rn</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Text Animator Properties </code></td>
+<td><a href="../text/#text-style">Text Style</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Anchor Point 3D </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Position 3D </code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Scale 3D </code></td>
+<td><code>s</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Skew </code></td>
+<td><code>sk</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Skew Axis </code></td>
+<td><code>sa</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Rotation X </code></td>
+<td><code>rx</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Rotation Y </code></td>
+<td><code>ry</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Rotation </code></td>
+<td><code>r</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Opacity </code></td>
+<td><code>o</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Fill Color </code></td>
+<td><code>fc</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Fill Opacity </code></td>
+<td><code>fo</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Fill Hue </code></td>
+<td><code>fh</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Fill Saturation </code></td>
+<td><code>fs</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Fill Brightness </code></td>
+<td><code>fb</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Stroke Color </code></td>
+<td><code>sc</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Stroke Opacity </code></td>
+<td><code>so</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Stroke Hue </code></td>
+<td><code>sh</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Stroke Saturation </code></td>
+<td><code>ss</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Stroke Brightness </code></td>
+<td><code>sb</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Stroke Width </code></td>
+<td><code>sw</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Line Spacing </code></td>
+<td><code>ls</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Line Anchor </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Track Type </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Tracking Amount </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Character Replace </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Character Offset </code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Blur </code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Text Path Options </code></td>
+<td><a href="../text/#text-follow-path">Text Follow Path</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Path </code></td>
+<td><code>m</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Reverse Path </code></td>
+<td><code>r</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Perpendicular To Path </code></td>
+<td><code>p</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Force Align Path </code></td>
+<td><code>a</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text First Margin </code></td>
+<td><code>f</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Last Margin </code></td>
+<td><code>l</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Text More Options </code></td>
+<td><a href="../text/#text-alignment-options">Text Alignment Options</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADBE Text Anchor Point Option </code></td>
+<td><code>g</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Text Anchor Point Align </code></td>
+<td><code>a</code></td>
+<td>[0, 0]</td>
+</tr>
+<tr>
+<td><code>ADBE Text Render Order </code></td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ADBE Text Character Blend Mode </code></td>
+<td></td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="misc">Misc</h3>
+<table>
+<thead>
+<tr>
+<th style="width: 50%">Match Name</th>
+<th style="width: 25%">Description</th>
+<th style="width: 25%">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADBE Group End </code></td>
+<td>Indicates the end of a <a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<!--
+to verify:
+ADBE Vector Offset Copies (offset path)
+ADBE Vector Offset Copy Offset (offset path)
+-->
+
+<h3 id="notes">Notes</h3>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:enum">
+<p>Enumerations needs to be converted from floats, but the values match.&#160;<a class="footnote-backref" href="#fnref:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref7:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref8:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref9:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref10:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref11:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref12:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref13:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref14:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref15:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref16:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref17:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref18:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref19:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref20:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref21:enum" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref22:enum" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:blend">
+<p>Blend mode has different values than Lottie, see the section below for details.&#160;<a class="footnote-backref" href="#fnref:blend" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:blend" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:blend" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:blend" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:blend" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:int">
+<p>Needs to be converted from <code>float</code> to <code>int</code>.&#160;<a class="footnote-backref" href="#fnref:int" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:int" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:shape">
+<p>How to parse this?&#160;<a class="footnote-backref" href="#fnref:shape" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:color">
+<p>Colors are defined as 4 floats (ARGB) in [0, 255].&#160;<a class="footnote-backref" href="#fnref:color" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:color" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:gradient">
+<p>Colors defined as <a href="#gradient-xml">XML</a>.&#160;<a class="footnote-backref" href="#fnref:gradient" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:gradient" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:100">
+<p>You need to multiply by 100 to get the lottie value.&#160;<a class="footnote-backref" href="#fnref:100" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:100" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:100" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:100" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:100" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:anchor">
+<p>For asset layers, the anchor point is relative to the size of the asset (eg: <code>(0.5, 0.5)</code> would be the center).&#160;<a class="footnote-backref" href="#fnref:anchor" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<h2 id="enumerations">Enumerations</h2>
+<p>Most enumerated values are the same in Lottie and AEP, this section lists the exceptions to this and enums not in lottie</p>
+<h3 id="blend-mode">Blend Mode</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>AEP</th>
+<th>Lottie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normal</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Darken</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Multiply</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Color Burn</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Linear Burn</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>Darker Color</td>
+<td>7</td>
+<td></td>
+</tr>
+<tr>
+<td>Lighten</td>
+<td>9</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Screen</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Color Dodge</td>
+<td>11</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Linear Dodge</td>
+<td>12</td>
+<td></td>
+</tr>
+<tr>
+<td>Lighter Color</td>
+<td>13</td>
+<td></td>
+</tr>
+<tr>
+<td>Overlay</td>
+<td>15</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Soft Light</td>
+<td>16</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Hard Light</td>
+<td>17</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Linear Light</td>
+<td>18</td>
+<td></td>
+</tr>
+<tr>
+<td>Vivid Light</td>
+<td>19</td>
+<td></td>
+</tr>
+<tr>
+<td>Pin Light</td>
+<td>20</td>
+<td></td>
+</tr>
+<tr>
+<td>Hard Mix</td>
+<td>21</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Difference</td>
+<td>23</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Exclusion</td>
+<td>24</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Hue</td>
+<td>26</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Saturation</td>
+<td>27</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>28</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Luminosity</td>
+<td>29</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<!--
+I've seen these values but I cannot verify them:
+|Linear Burn    | 6 |27 |
+|Darker Color   | 7 |22 |
+|Linear Dodge   | 12|28 |
+|Lighter Color  | 13|26 |
+|Linear Light   | 18|29 |
+|Vivid Light    | 19|37 |
+|Pin Light      | 20|31 |
+-->
+
+<h3 id="label-colors">Label Colors</h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name</th>
+<th>Default Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>None</td>
+<td>(shows as grey)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Red</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#b4393b;"></span><code>#b4393b</code></span></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Yellow</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#e2d759;"></span><code>#e2d759</code></span></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Aqua</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#abcbc8;"></span><code>#abcbc8</code></span></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Pink</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#e5bcca;"></span><code>#e5bcca</code></span></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Lavender</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#a9aac9;"></span><code>#a9aac9</code></span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Peach</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#e5c19f;"></span><code>#e5c19f</code></span></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Sea Foam</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#b4c7b4;"></span><code>#b4c7b4</code></span></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Blue</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#687fdd;"></span><code>#687fdd</code></span></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Green</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#4ea350;"></span><code>#4ea350</code></span></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Purple</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#8d3299;"></span><code>#8d3299</code></span></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Orange</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#e79228;"></span><code>#e79228</code></span></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Brown</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#7e442c;"></span><code>#7e442c</code></span></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Fuchsia</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#f371d5;"></span><code>#f371d5</code></span></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Cyan</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#43a2a4;"></span><code>#43a2a4</code></span></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Sandstone</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#a7967a;"></span><code>#a7967a</code></span></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Dark Green</td>
+<td><span style="font-family: right"><span class="color-preview" style="background-color:#203f1f;"></span><code>#203f1f</code></span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="text-render-oder">Text Render Oder</h3>
+<ol>
+<li>Per character palette</li>
+<li>Fills over strokes</li>
+<li>Strokes over fills</li>
+</ol>
+<h2 id="chunk-data">Chunk Data</h2>
+<p>Note that chunks might have extra data after what is described here,
+always parse exactly as many bytes as specified in the chunk header.</p>
+<h3 id="list"><code>LIST</code></h3>
+<p>This chunk is defined by the RIFF specs, its data has the following format:</p>
+<p>Starts with an <code>id</code>, specifying the type of the list, then followed by sub-chunks.</p>
+<p>The format of specific <code>LIST</code> types are described later in this document.</p>
+<p>Note that the <a href="#list-btdk"><code>LIST</code> <code>btdk</code></a> doesn't conform to RIFF,
+so take care to not read over the chunk length.</p>
+<h3 id="utf8"><code>Utf8</code></h3>
+<p>Contains utf-8 encoded text. Sometimes it contains the string <code>-_0_/-</code> which (I guess)
+is used as a placeholder for objects lacking a name.</p>
+<h3 id="tdsn-fnam-pdnm"><code>tdsn</code> / <code>fnam</code> / <code>pdnm</code></h3>
+<p>Contains a <a href="#utf8"><code>Utf8</code></a> chunk, used for object names</p>
+<h3 id="tdmn"><code>tdmn</code></h3>
+<p>Contains a NUL-terminated string (You'll need to strip excess <code>\0</code>) and defines a <a href="#match-names">Match Name</a>.</p>
+<h3 id="cmta"><code>cmta</code></h3>
+<p>Comment, NUL-terminated string. The size seems to be variable but rounded to 4 bytes.</p>
+<h3 id="fdta"><code>fdta</code></h3>
+<p>Folder data.</p>
+<h3 id="cdta"><code>cdta</code></h3>
+<p>Composition data.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X Resolution</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Y Resolution</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Time Scale</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>How much Time values are scaled by</td>
+</tr>
+<tr>
+<td></td>
+<td>14</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Playhead</td>
+<td>2</td>
+<td>Time</td>
+<td>Playhead time</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>In Time</td>
+<td>2</td>
+<td>Time</td>
+<td>Same as <code>ip</code> in Lottie</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Time</td>
+<td>2</td>
+<td>Time</td>
+<td>Same as <code>op</code> in Lottie</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Comp duration</td>
+<td>2</td>
+<td>Time</td>
+<td>Duration setting in AE</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Color</td>
+<td>3</td>
+<td><code>bytes</code></td>
+<td>Color as 24 bit RGB</td>
+</tr>
+<tr>
+<td></td>
+<td>84</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>1</td>
+<td>Flags</td>
+<td></td>
+</tr>
+<tr>
+<td>Width</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>Same as <code>w</code> in Lottie</td>
+</tr>
+<tr>
+<td>Height</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>Same as <code>h</code> in Lottie</td>
+</tr>
+<tr>
+<td>Pixel Ratio Width</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Pixel Ratio Height</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>12</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Framerate</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>Same as <code>fr</code> in Lottie</td>
+</tr>
+<tr>
+<td></td>
+<td>16</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Shutter Angle</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Shutter Phase</td>
+<td>4</td>
+<td><code>sint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>16</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Samples Limit</td>
+<td>4</td>
+<td><code>sint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Samples per frame</td>
+<td>4</td>
+<td><code>sint16</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Note that End Time might have a value of FFFF, if that's the case assume it to be the same as Comp Duration.</p>
+<p>The X/Y resolution represent a divisor of the size in that direction used for rendering.
+For example a X Resolution of 5, with a width of 500 will yield an output of 100px.</p>
+<p>The pixel ratio is represented as a fraction of width/height, if both values are 1 you get square pixels.</p>
+<p>Attributes:</p>
+<ul>
+<li>Shy: (0, 0): Hides Shy layers from the timeline</li>
+<li>Motion Blur: (0, 3): Allows layers to enable motion blur</li>
+<li>Frame Blending: (0, 4): Allows layers to enable frame blending</li>
+<li>Preserve Framerate: (0, 5): Something about nested render queues</li>
+<li>Preserve Resolution: (0, 7): Something about nested render queues</li>
+</ul>
+<h3 id="ldta"><code>ldta</code></h3>
+<p>Layer data, it seems that AE23 adds 4 extra <code>00</code> bytes at the end compared to older versions.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer ID</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td><code>0</code>: Wireframe, <code>1</code>: Draft, <code>2</code>: Best</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Stretch Numerator</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Start Time</td>
+<td>2</td>
+<td><code>sint16</code></td>
+<td>Time offset for times withing the layer</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>In Time</td>
+<td>2</td>
+<td>Time</td>
+<td>Same as <code>ip</code> in Lottie</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Time</td>
+<td>2</td>
+<td>Time</td>
+<td>Same as <code>op</code> in Lottie</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>3</td>
+<td>Flags</td>
+<td></td>
+</tr>
+<tr>
+<td>Source ID</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td>Item id for the used asset</td>
+</tr>
+<tr>
+<td></td>
+<td>17</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Label Color Index</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td><a href="#label-colors">Label Colors</a></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Layer Name</td>
+<td>32</td>
+<td><code>string0</code></td>
+<td>It's repeated in the <a href="#utf8"><code>Utf8</code></a> chunk right after</td>
+</tr>
+<tr>
+<td></td>
+<td>11</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Matte Mode</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Stretch Denominator</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>19</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Layer Type</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Parent ID</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td>ID of the parent layer, if any</td>
+</tr>
+<tr>
+<td></td>
+<td>24</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Matte Layer ID</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td>Id of the layer masking the current layer, if any (only for AE &gt;= 23)</td>
+</tr>
+</tbody>
+</table>
+<p>With the following Attributes:</p>
+<ul>
+<li><em>Guide</em>: (0, 1) Guide layers aren't rendered</li>
+<li><em>Bicubic Sampling</em>: (0, 6)</li>
+<li><em>Auto Orient</em>: (1, 0)</li>
+<li><em>Adjustment</em>: (1, 1) Whether it's an adjustment layer</li>
+<li><em>Threedimensional</em>: (1, 2)</li>
+<li><em>Solo</em>: (1, 3) (UI thing, only displays that layer)</li>
+<li><em>Null</em>: (1, 7) Whether it's a null layer</li>
+<li><em>Visible</em>: (2, 0)</li>
+<li><em>Effects</em>: (2, 2)</li>
+<li><em>Motion Blur</em>: (2, 3)</li>
+<li><em>Locked</em>: (2, 5)</li>
+<li><em>Shy</em>: (2, 6) (Used to hide some layers in the AE UI)</li>
+<li><em>Conitnuosly Rasterize</em> (vector) / <em>Collapse Transform</em> (comps): (2, 7)</li>
+</ul>
+<p>Layer Types:</p>
+<ul>
+<li>0: Asset Layer</li>
+<li>1: Light Layer</li>
+<li>2: Camera Layer</li>
+<li>3: Text Layer</li>
+<li>4: Shape Layer</li>
+</ul>
+<p>Matte Modes:</p>
+<ol>
+<li>No Matte</li>
+<li>Alpha</li>
+<li>Inverted Alpha</li>
+<li>Luma</li>
+<li>Inverted Luma</li>
+</ol>
+<p>Time streching is defined as a fraction of <em>Stretch Numerator</em> / <em>Stretch Denominator</em></p>
+<h3 id="idta"><code>idta</code></h3>
+<p>Item data.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>14</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ID</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td>ID used to reference this item</td>
+</tr>
+<tr>
+<td></td>
+<td>38</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Label Color</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td><a href="#label-colors">Label Colors</a></td>
+</tr>
+</tbody>
+</table>
+<p>The Type field above can have the following values:</p>
+<ul>
+<li><code>1</code>: Folder</li>
+<li><code>4</code>: Composition</li>
+<li><code>7</code>: Footage</li>
+</ul>
+<p>The last 2 bytes of this field seem to change every time you make a change.</p>
+<h3 id="tdb4"><code>tdb4</code></h3>
+<p>Property metadata.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td>Always <code>db 99</code>?</td>
+</tr>
+<tr>
+<td>Components</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>Number of values in a multi-dimensional</td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>2</td>
+<td>Flags</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1</td>
+<td></td>
+<td>Some sort of flag, it has value <code>03</code> for position properties</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td>Always <code>0000</code> ?</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td>2nd most significant bit always on, perhaps some kind of flag</td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Most of the time <code>0.0001</code></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Most of the time <code>1.0</code>, sometimes <code>1.777</code></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Always <code>1.0</code>?</td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Always <code>1.0</code>?</td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Always <code>1.0</code>?</td>
+</tr>
+<tr>
+<td>Type?</td>
+<td>4</td>
+<td>Flags</td>
+<td>See below</td>
+</tr>
+<tr>
+<td></td>
+<td>1</td>
+<td></td>
+<td>Seems correlated with the previous byte, it's set for <code>04</code> for enum properties</td>
+</tr>
+<tr>
+<td></td>
+<td>7</td>
+<td></td>
+<td>Bunch of <code>00</code></td>
+</tr>
+<tr>
+<td>Animated</td>
+<td>1</td>
+<td></td>
+<td>Set to <code>1</code> when animated, kinda the reverse of the <em>Static</em> bit in <em>Attributes</em></td>
+</tr>
+<tr>
+<td></td>
+<td>7</td>
+<td></td>
+<td>Bunch of <code>00</code></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td>Usually 0, probs flags</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td>Mst likely flags, only last byte seems to contain data</td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Always <code>0.0</code>?</td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Mostly <code>0.0</code>, sometimes <code>0.333</code></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Always <code>0.0</code>?</td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Mostly <code>0.0</code>, sometimes <code>0.333</code></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td>Probs some flags</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td>Probs some flags</td>
+</tr>
+</tbody>
+</table>
+<p>Attributes:</p>
+<ul>
+<li><em>Position</em>: (1, 3). When <code>true</code>, this is a position property, which changes how animated values are parsed.</li>
+<li><em>Static</em>: (1, 0). When <code>false</code>, the property is animated and it will have a <a href="#cdat"><code>cdat</code></a>.</li>
+</ul>
+<p>Types:</p>
+<ul>
+<li><em>No Value</em>: (1, 0). Used for properties like shapes, gradients, etc, where the values are not in the keyframe.</li>
+<li><em>Integer</em>: (3, 2).</li>
+<li><em>Vector</em>?: (3, 3).</li>
+<li><em>Color</em>: (3, 0). Set for color properties (they have a different keyframe format).</li>
+</ul>
+<p>For <em>Integer</em> type, you might have indexed values:
+For layers, the value will be in <a href="#tdpi"><code>tdpi</code></a> / <a href="#tdps"><code>tdps</code></a>,
+for masks it will be in <a href="#tdli"><code>tdli</code></a>.</p>
+<h3 id="cdat"><code>cdat</code></h3>
+<p>Property static value.</p>
+<p>For multi-dimensional properties, you look at the number of components in <a href="#tdb4"><code>tdb4</code></a>
+and parse that many <code>float64</code>, that's the value of the property.</p>
+<h3 id="shph"><code>shph</code></h3>
+<p>Header for bezier shape data, contained within <a href="#list-shap"><code>LIST</code> <code>shap</code></a>.</p>
+<p>It's followed by a <a href="#list-list"><code>LIST</code> <code>list</code></a> with bezier data.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>1</td>
+<td>Flags</td>
+<td></td>
+</tr>
+<tr>
+<td>Top Left</td>
+<td>2</td>
+<td><code>float32</code></td>
+<td>Top-left corner of the shape area, relative to the layer position</td>
+</tr>
+<tr>
+<td>Bottom Right</td>
+<td>2</td>
+<td><code>float32</code></td>
+<td>Bottom-right corner of the shape area, relative to the layer position</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Flags:</p>
+<ul>
+<li><em>Open</em>: (0, 3). When <code>true</code>, the shape is open (it's missing the segment connecting the last point to the first)</li>
+</ul>
+<h3 id="lhd3"><code>lhd3</code></h3>
+<p>Inside a <a href="#list-list"><code>LIST</code> <code>list</code></a>, defines the data format, followed by <a href="#ldat"><code>ldat</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td>Seems to always be <code>00 d0 0b ee</code></td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td>All <code>00</code></td>
+</tr>
+<tr>
+<td>Count</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>Number of items</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td>The last byte is the only one that changes, greatest variation is on shapes</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td>All <code>00</code></td>
+</tr>
+<tr>
+<td>Item Size</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>Size of an item in the list</td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td></td>
+<td>All <code>00</code></td>
+</tr>
+<tr>
+<td>Type?</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td><code>00 00 00 01</code></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td>All <code>00</code></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td>Some kind of flags</td>
+</tr>
+<tr>
+<td></td>
+<td>20</td>
+<td></td>
+<td>All <code>00</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Item Type</th>
+<th>Size</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#gide"><code>Gide</code></a></td>
+<td><code>00 01</code></td>
+<td><code>02</code></td>
+</tr>
+<tr>
+<td><a href="#litm"><code>LItm</code></a></td>
+<td><code>00 80</code></td>
+<td><code>01</code></td>
+</tr>
+<tr>
+<td><a href="#lrdr"><code>LRdr</code></a></td>
+<td><code>08 c6</code></td>
+<td><code>01</code></td>
+</tr>
+<tr>
+<td>Color Kf</td>
+<td><code>00 98</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>1D Kf</td>
+<td><code>00 30</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>2D Kf</td>
+<td><code>00 58</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>2D pos Kf</td>
+<td><code>00 68</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>3D Kf</td>
+<td><code>00 80</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>3D pos Kf</td>
+<td><code>00 80</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>Marker Kf</td>
+<td><code>00 10</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>Orientation Kf</td>
+<td><code>00 50</code></td>
+<td><code>04</code></td>
+</tr>
+<tr>
+<td>No Value Kf</td>
+<td><code>00 40</code></td>
+<td><code>04</code></td>
+</tr>
+</tbody>
+</table>
+<p>The corresponding <a href="#ldat"><code>ldat</code></a> should have <em>Item Size</em> * <em>Count</em> bytes, and it's omitted if <em>Count</em> is 0.</p>
+<h3 id="ldat"><code>ldat</code></h3>
+<p>Inside a <a href="#list-list"><code>LIST</code> <code>list</code></a>, contains the list data, preceded by <a href="#lhd3"><code>lhd3</code></a>.</p>
+<p>The number of element is the one defined in <a href="#lhd3"><code>lhd3</code></a>.</p>
+<p>It has a different format based on certain conditions, follow some of the possible element formats.</p>
+<p>The size of an item is found like so:</p>
+<pre><code>item_size = ldat_chunk_length / lhd3_count
+</code></pre>
+<h4 id="keyframe-common">Keyframe (common)</h4>
+<p>All keyframe items start like this:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Time</td>
+<td>2</td>
+<td>Time</td>
+<td>Time of the keyframe, seems they always start from 0.</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ease Mode</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Label Color</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td><a href="#label-colors">Label Colors</a></td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>1</td>
+<td>Flags</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Ease Mode:
+1. Linear
+2. Ease
+3. Hold</p>
+<p>Attributes:</p>
+<p>Least significant 3 bits seems to always be on.</p>
+<ul>
+<li>Continuous Bezier (0, 3)</li>
+<li>Auto Bezier (0, 4)</li>
+<li>Roving across time (0, 5)</li>
+</ul>
+<h4 id="keyframe-multi-dimensional">Keyframe - Multi-Dimensional</h4>
+<p>Given <code>n</code> as the number of dimensions found in <a href="#tdb4"><code>tdb4</code></a> (eg: 3 for 3D positions):</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td>Value</td>
+</tr>
+<tr>
+<td>In Speed</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td></td>
+</tr>
+<tr>
+<td>In Influence</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Speed</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Influence</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="keyframe-position">Keyframe - Position</h4>
+<p>If the property is an animated position, the keyframe is formatted like so:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>In Speed</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>In Influence</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Speed</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Influence</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Value</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td>Value</td>
+</tr>
+<tr>
+<td>Tan In</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td>Spatial tangents</td>
+</tr>
+<tr>
+<td>Tan Out</td>
+<td>8* n</td>
+<td><code>float64[n]</code></td>
+<td>Spatial tangents</td>
+</tr>
+</tbody>
+</table>
+<h4 id="keyframe-no-value">Keyframe - No Value</h4>
+<p>Used for shapes and gradients (<em>Special</em> set in <a href="#tdb4"><code>tdb4</code></a>)</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>In Speed</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>In Influence</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Speed</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Influence</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="keyframe-color">Keyframe - Color</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>In Speed</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>In Influence</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Speed</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Out Influence</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Value</td>
+<td>8*4</td>
+<td><code>float64[4]</code></td>
+<td>ARGB 255</td>
+</tr>
+<tr>
+<td></td>
+<td>8*8</td>
+<td><code>float64[8]</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="shape-data">Shape Data</h4>
+<p>Bezier data, positions are relative to the area defined by <a href="#shph"><code>shph</code></a>.</p>
+<p>The list is a sequence of points, appearing in this order:</p>
+<ul>
+<li>Vertex 0</li>
+<li>Out Tangent 0</li>
+<li>In Tangent 1</li>
+<li>Vertex 1</li>
+<li>Out Tangent 1</li>
+<li>...</li>
+</ul>
+<p>Note that all coordinates are relative to the area in <a href="#shph"><code>shph</code></a> but not to each other.</p>
+<p>A coordinate of [0, 0] will correspond to the top-left corner in <a href="#shph"><code>shph</code></a>,
+and [1, 1] corresponds to the bottom-right.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>4</td>
+<td><code>float32</code></td>
+<td>X Coordinate</td>
+</tr>
+<tr>
+<td>XY</td>
+<td>4</td>
+<td><code>float32</code></td>
+<td>X Coordinate</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pprf"><code>pprf</code></h3>
+<p>Color profile information as ICC data.</p>
+<h3 id="fiac"><code>fiac</code></h3>
+<p>Folder item active, <code>uint8</code> if it's 1 the previous <a href="#list-item"><code>List Item</code></a> is the active item.</p>
+<h3 id="wsnm"><code>wsnm</code></h3>
+<p>Worspace name.</p>
+<p>Utf-16 encoded string, contains the name of the "workspace" (window layout in AE)</p>
+<p>It's always followed by an <a href="#utf8"><code>Utf8</code></a> with the same content.</p>
+<h3 id="tdum-tdum"><code>tdum</code> / <code>tduM</code></h3>
+<p><code>float64</code> values often found inside <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a>.</p>
+<p>In some cases they seem to indicate minimum and maximum values for that
+property but there are some cases in which they are both <code>0.0</code>.</p>
+<h3 id="ppsn"><code>ppSn</code></h3>
+<p>Contains a <code>float64</code>, unknown meaning.</p>
+<h3 id="otda"><code>otda</code></h3>
+<p>Orientation data</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>X Coordinate</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Y Coordinate</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td>Z Coordinate</td>
+</tr>
+</tbody>
+</table>
+<h3 id="opti"><code>opti</code></h3>
+<p>Asset data, format depends on type</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>4</td>
+<td><code>string</code></td>
+<td>Asset type</td>
+</tr>
+</tbody>
+</table>
+<h3 id="solid">Solid</h3>
+<p><em>Type</em> <code>Soli</code>, data for solid layers.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Alpha</td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Red</td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Green</td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Name</td>
+<td>256</td>
+<td><code>string0</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Color components are in [0, 1].</p>
+<h3 id="sspc"><code>sspc</code></h3>
+<p>Footage / asset data.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>32</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Width</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Height</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="alas"><code>alas</code></h3>
+<p>JSON string containing external asset info.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ascendcount_base</code></td>
+<td><code>number</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ascendcount_target</code></td>
+<td><code>number</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>fullpath</code></td>
+<td><code>string</code></td>
+<td>The absolute path to the file</td>
+</tr>
+<tr>
+<td><code>platform</code></td>
+<td><code>number</code></td>
+<td>Operating system (see below)</td>
+</tr>
+<tr>
+<td><code>server_name</code></td>
+<td><code>string</code></td>
+<td>Hostname (?)</td>
+</tr>
+<tr>
+<td><code>server_volume_name</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>target_is_folder</code></td>
+<td><code>boolean</code></td>
+<td>Whether the file is a folder</td>
+</tr>
+</tbody>
+</table>
+<p><code>platform</code> values: <code>1</code> is Windows, other values are for Unix and MacOS,
+but the values are to be discovered</p>
+<h3 id="head"><code>head</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AE Version?</td>
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>12</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>File Revision?</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td>Increases by 2 every time you save</td>
+</tr>
+</tbody>
+</table>
+<p>Seems the first 6 bytes contain AE version information.</p>
+<p>I haven't been able to decode it fully but here's a list of values
+encountered in the wild:</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15.0</td>
+<td><code>5c 06 07 38 06 b4</code></td>
+</tr>
+<tr>
+<td>16.0</td>
+<td><code>5d 04 0b 00 06 eb</code></td>
+</tr>
+<tr>
+<td>16.0.1</td>
+<td><code>5d 04 0b 00 0e 30</code></td>
+</tr>
+<tr>
+<td>16.1.2</td>
+<td><code>5d 05 0b 00 96 37</code></td>
+</tr>
+<tr>
+<td>16.1.3</td>
+<td><code>5d 05 0b 00 9e 05</code></td>
+</tr>
+<tr>
+<td>17.0</td>
+<td><code>5d 09 4b 08 06 2b</code></td>
+</tr>
+<tr>
+<td>17.0.4</td>
+<td><code>5d 0b 0b 08 26 3b</code></td>
+</tr>
+<tr>
+<td>18.2.1</td>
+<td><code>5d 1b 0b 11 0e 08</code></td>
+</tr>
+<tr>
+<td>18.4</td>
+<td><code>5d 1d 0b 12 06 26</code></td>
+</tr>
+<tr>
+<td>22.0</td>
+<td><code>5d 1d 0b 70 06 6f</code></td>
+</tr>
+<tr>
+<td>22.6</td>
+<td><code>5d 2b 0b 33 06 3b</code></td>
+</tr>
+<tr>
+<td>23.2.1</td>
+<td><code>5e 03 0b 39 0e 03</code></td>
+</tr>
+</tbody>
+</table>
+<p>It's possible the 3rd to the 5th bytes encode some kind of internal build
+number that gets mapped to AE versions somehow...</p>
+<h3 id="efdc"><code>EfDC</code></h3>
+<p>The first byte contains the number of <a href="#list-efdf"><code>LIST</code> <code>EfDf</code></a> in a <a href="#list-efdg"><code>LIST</code> <code>EfdG</code></a></p>
+<h3 id="parn"><code>parn</code></h3>
+<p>Contains a <code>uint64</code> with the number of parameters in a <a href="#list-part"><code>LIST</code> <code>parT</code></a>.</p>
+<h3 id="pard"><code>pard</code></h3>
+<p>Effect parameter definition.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>15</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Type</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td>Parameter type</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>32</td>
+<td><code>string0</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Types:</p>
+<table>
+<thead>
+<tr>
+<th>Type Name</th>
+<th>AEP</th>
+<th>Lottie</th>
+<th>Lottie Object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer</td>
+<td><code>0</code></td>
+<td><code>10</code></td>
+<td><a href="../effects/#layer">Effect Value Layer</a> </td>
+</tr>
+<tr>
+<td>Scalar</td>
+<td><code>2</code></td>
+<td><code>0</code></td>
+<td><a href="../effects/#slider">Effect Value Slider</a> </td>
+</tr>
+<tr>
+<td>Angle</td>
+<td><code>3</code></td>
+<td><code>1</code></td>
+<td><a href="../effects/#angle">Effect Value Angle</a> </td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td><code>4</code></td>
+<td><code>4</code></td>
+<td><a href="../effects/#checkbox">Effect Value Checkbox</a> </td>
+</tr>
+<tr>
+<td>Color</td>
+<td><code>5</code></td>
+<td><code>2</code></td>
+<td><a href="../effects/#color">Effect Value Color</a> </td>
+</tr>
+<tr>
+<td>2D</td>
+<td><code>6</code></td>
+<td><code>3</code></td>
+<td><a href="../effects/#point">Effect Value Point</a> </td>
+</tr>
+<tr>
+<td>Enum</td>
+<td><code>7</code></td>
+<td><code>7</code></td>
+<td><a href="../effects/#drop-down">Effect Value Drop Down</a> </td>
+</tr>
+<tr>
+<td>Paint Group</td>
+<td><code>9</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Slider</td>
+<td><code>10</code></td>
+<td><code>0</code></td>
+<td><a href="../effects/#slider">Effect Value Slider</a> </td>
+</tr>
+<tr>
+<td>Group</td>
+<td><code>13</code></td>
+<td><code>5</code></td>
+<td><a href="../effects/#custom-effect">Custom Effect</a> </td>
+</tr>
+<tr>
+<td>Unknown</td>
+<td><code>15</code></td>
+<td><code>6</code></td>
+<td><a href="../effects/#no-value">Effect No Value</a> </td>
+</tr>
+<tr>
+<td>3D</td>
+<td><code>18</code></td>
+<td><code>3</code></td>
+<td><a href="../effects/#point">Effect Value Point</a> </td>
+</tr>
+</tbody>
+</table>
+<p>After the data above, there is more data that depends on the type</p>
+<h4 id="layer_1">Layer</h4>
+<p>Doesn't seem to have much data</p>
+<h4 id="scalar-angle">Scalar / Angle</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last value</td>
+<td>4</td>
+<td><code>sint32</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>64</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Min Value</td>
+<td>2</td>
+<td><code>sint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Value</td>
+<td>2</td>
+<td><code>sint16</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>To get the last value, you need to divide the raw value by <code>0x10000</code>.</p>
+<h4 id="boolean">Boolean</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last used value</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Default</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>64</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="color">Color</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last used value</td>
+<td>4</td>
+<td><code>uint8[4]</code></td>
+<td>ARGB</td>
+</tr>
+<tr>
+<td>Default</td>
+<td>4</td>
+<td><code>uint8[4]</code></td>
+<td>ARGB</td>
+</tr>
+<tr>
+<td></td>
+<td>64</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Value</td>
+<td>4</td>
+<td><code>uint8[4]</code></td>
+<td>ARGB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2d">2D</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last value X</td>
+<td>4</td>
+<td><code>sint32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Last value Y</td>
+<td>4</td>
+<td><code>sint32</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Last value x/y are multiplied by 0x80, so divide them to get the right value.</p>
+<h4 id="enum">Enum</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last used value</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Option count</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Default</td>
+<td>2</td>
+<td><code>uint16</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="slider">Slider</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last used value</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>44</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Max Value</td>
+<td>4</td>
+<td><code>float32</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="3d-point">3D Point</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last value X</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Last value Y</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Last value Z</td>
+<td>8</td>
+<td><code>float64</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>You need to multiply the "Last value" components by 512 to get the actual values.</p>
+<h4 id="pdnm"><code>pdnm</code></h4>
+<p>Effect parameter definition name / strings.</p>
+<p>This will contain strings used by the widget in the effect controls of the preceding <a href="#pard"><code>pard</code></a>.</p>
+<p>For example if the type in the <a href="#pard"><code>pard</code></a> is <code>4</code> (Boolean) the name of the parameter might be
+empty and it will be in <code>pdnm</code> as that's how AE displays it.</p>
+<p>For Enum (type <code>7</code>), you get the drop down strings separated by <code>|</code>.</p>
+<h4 id="tdpi"><code>tdpi</code></h4>
+<p>Layer index for index properties (<code>uint32</code>).</p>
+<h4 id="tdps"><code>tdps</code></h4>
+<p>Layer source for index properties (<code>sint32</code>).</p>
+<ul>
+<li><code>0</code>: Layer</li>
+<li><code>-1</code>: Effects &amp; Masks</li>
+<li><code>-2</code>: Masks</li>
+</ul>
+<h4 id="tdli"><code>tdli</code></h4>
+<p>Mask index for index properties (<code>uint32</code>).</p>
+<h3 id="prin"><code>prin</code></h3>
+<p>Seems to always have the same content:</p>
+<p>4 <code>00</code> bytes, the string <code>ADBE Escher</code>, 37 <code>00</code>, the string <code>Classic 3D</code>,
+41 <code>00</code>, and ends with <code>01</code>.</p>
+<h3 id="prda"><code>prda</code></h3>
+<p>Seems to always have the same content: 3 <code>00</code>, a <code>01</code>, 8 <code>00</code>.</p>
+<h3 id="nmhd"><code>NmHd</code></h3>
+<p>Marker attributes</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>1</td>
+<td>Flags</td>
+<td></td>
+</tr>
+<tr>
+<td>Duration</td>
+<td>4</td>
+<td><code>uint32</code></td>
+<td>Duration in frames</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Label Color</td>
+<td>1</td>
+<td><code>uint8</code></td>
+<td><a href="#label-colors">Label Colors</a></td>
+</tr>
+</tbody>
+</table>
+<p>Flags:</p>
+<ul>
+<li><em>Protected</em>: (0, 1) The marker signals a protected region</li>
+<li><em>???</em>: (0, 2) This flags seems to always be on</li>
+</ul>
+<h3 id="tdsb"><code>tdsb</code></h3>
+<p>4 bytes specifying flags for a <code>tdgp</code>.</p>
+<ul>
+<li><code>0x00'00'00'01</code> - object is visible</li>
+<li><code>0x00'00'00'02</code> - split position</li>
+<li><code>0x00'00'20'00</code> - locked x/y ratio</li>
+</ul>
+<h3 id="mkif"><code>mkif</code></h3>
+<p>Mask properties.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Size</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inverted</td>
+<td>1</td>
+<td><code>uint8</code></td>
+</tr>
+<tr>
+<td>Locked</td>
+<td>1</td>
+<td><code>uint8</code></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>Mode</td>
+<td>2</td>
+<td><code>uint16</code></td>
+</tr>
+</tbody>
+</table>
+<p>Mask Modes:</p>
+<ul>
+<li>0: None</li>
+<li>1: Add</li>
+<li>2: Subtract</li>
+<li>3: Intersect</li>
+<li>4: Darken</li>
+<li>5: Lighten</li>
+<li>6: Difference</li>
+</ul>
+<h3 id="ccid"><code>CCId</code></h3>
+<p>Composition ID for essential graphics properties (<code>uint32</code>)</p>
+<h3 id="clid"><code>CLId</code></h3>
+<p>Layer ID for essential graphics properties (<code>uint32</code>)</p>
+<h3 id="smin"><code>Smin</code></h3>
+<p>Essential graphics slider minimum value.</p>
+<p>Representation depends on the value of the previous <a href="#ctyp"><code>CTyp</code></a>.</p>
+<h3 id="smax"><code>Smax</code></h3>
+<p>Essential graphics slider maximum value.</p>
+<p>Representation depends on the value of the previous <a href="#ctyp"><code>CTyp</code></a>.</p>
+<h3 id="cval"><code>CVal</code></h3>
+<p>Essential graphics property current value.</p>
+<p>Representation depends on the value of the previous <a href="#ctyp"><code>CTyp</code></a>.</p>
+<h3 id="cdef"><code>CDef</code></h3>
+<p>Essential graphics property default value.</p>
+<p>Representation depends on the value of the previous <a href="#ctyp"><code>CTyp</code></a>.</p>
+<h3 id="ctyp"><code>CTyp</code></h3>
+<p><code>uint32</code> with the essential graphics item type</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Value Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scalar</td>
+<td><code>2</code></td>
+<td><code>float64</code></td>
+</tr>
+<tr>
+<td>Color</td>
+<td><code>4</code></td>
+<td><code>float32[4]</code> RGBA</td>
+</tr>
+<tr>
+<td>Position</td>
+<td><code>5</code></td>
+<td><code>float64[2]</code></td>
+</tr>
+<tr>
+<td>Comment</td>
+<td><code>8</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><code>9</code></td>
+<td><code>float64[4]</code></td>
+</tr>
+<tr>
+<td>Group</td>
+<td><code>10</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Enum</td>
+<td><code>13</code></td>
+<td><code>uint32</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cprc"><code>CprC</code></h3>
+<p>Essential graphics flags (4bytes)</p>
+<ul>
+<li>Is property (3, 0)</li>
+</ul>
+<h3 id="stvs"><code>StVS</code></h3>
+<p>Essential graphics group item count</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Size</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Count</td>
+<td>1</td>
+<td><code>uint8</code></td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cdim"><code>CDim</code></h3>
+<p><code>uint32</code> number of dimensions for an essential vector property.</p>
+<h3 id="fips"><code>fips</code></h3>
+<p>Contained in <a href="#list-fold"><code>LIST</code> <code>Fold</code></a> contains preview settings.
+The chunk is repeated multiple times but only the first one seems
+to be relevant.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Size</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>15</td>
+<td></td>
+</tr>
+<tr>
+<td>Flags</td>
+<td>1</td>
+<td><code>uint8</code></td>
+</tr>
+</tbody>
+</table>
+<p>Flags</p>
+<ul>
+<li>Show alpha grid (0, 7)</li>
+</ul>
+<h3 id="list-fold"><code>LIST</code> <code>Fold</code></h3>
+<p>Top level item.</p>
+<h3 id="list-item"><code>LIST</code> <code>Item</code></h3>
+<p>Item, you can check its properties with <a href="#idta"><code>idta</code></a> contained inside it.</p>
+<h3 id="list-layr"><code>LIST</code> <code>Layr</code></h3>
+<p>Defines a layer.</p>
+<p>Layer metadata is found in a <a href="#ldta"><code>ldta</code></a>, the layer name is in a <a href="#utf8"><code>Utf8</code></a>.</p>
+<p>Go through its <a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a> to get shapes and transforms.</p>
+<p>You will find the following match names within it:</p>
+<ul>
+<li><code>ADBE Root Vectors Group</code>: Contains shape data (shape layer in lottie)</li>
+<li><code>ADBE Camera Options Group</code>: Lottie camera layer</li>
+<li><code>ADBE Transform Group</code>: Layer transform</li>
+<li><code>ADBE Layer Styles</code>: Layer styles</li>
+</ul>
+<h3 id="list-tdgp"><code>LIST</code> <code>tdgp</code></h3>
+<p>Defines an object / property group.</p>
+<p>Flags for the objects are in <a href="#tdsb"><code>tdsb</code></a>.</p>
+<p>The name of the object is in <a href="#tdsn"><code>tdsn</code></a> &gt; <a href="#utf8"><code>Utf8</code></a>.</p>
+<p>Then follows a sequence of properties / objects defined as such:</p>
+<p><a href="#tdmn"><code>tdmn</code></a> specifies the match name of the object, then it's followed by
+chunks that describe said object (usually more <a href="#list"><code>LIST</code></a>s).</p>
+<p>Usually the last chunk here is a <a href="#tdmn"><code>tdmn</code></a> with value <code>ADBE Group End</code>.</p>
+<h3 id="list-tdbs"><code>LIST</code> <code>tdbs</code></h3>
+<p>Defines an object's property. To know which property, you need to
+check the <a href="#tdmn"><code>tdmn</code></a> preceding this chunk.</p>
+<p>It will contain a <a href="#tdb4"><code>tdb4</code></a>, and usually <a href="#cdat"><code>cdat</code></a> (static) or a <code>List</code> <code>list</code> (animated).</p>
+<p>For properties with expressions, it will have a <a href="#utf8"><code>Utf8</code></a> with the expression code.</p>
+<h3 id="list-gcst"><code>LIST</code> <code>GCst</code></h3>
+<p>Defines a gradient.</p>
+<p>Contains a <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a> and a <a href="#list-gcky"><code>LIST</code> <code>GCky</code></a>.</p>
+<h3 id="list-gcky"><code>LIST</code> <code>GCky</code></h3>
+<p>Gradient color keyframes.</p>
+<p>Contains a sequence of <a href="#utf8"><code>Utf8</code></a> formatted in XML with the gradient definition
+for each keyframe.</p>
+<h3 id="list-om-s"><code>LIST</code> <code>om-s</code></h3>
+<p>Contains a <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a> and a <a href="#list-omks"><code>LIST</code> <code>omks</code></a> to define a shape property.</p>
+<h3 id="list-omks"><code>LIST</code> <code>omks</code></h3>
+<p>Bezier shape data.</p>
+<p>Contains a sequence of <a href="#list-shap"><code>LIST</code> <code>shap</code></a> with the shape data for each keyframe.</p>
+<h3 id="list-shap"><code>LIST</code> <code>shap</code></h3>
+<p>Contains a <a href="#shph"><code>shph</code></a> and a <a href="#list-list"><code>LIST</code> <code>list</code></a> with the shape data.</p>
+<h3 id="list-cppl"><code>LIST</code> <code>CPPl</code></h3>
+<p>Contains a <a href="#pprf"><code>pprf</code></a>.</p>
+<h3 id="list-list"><code>LIST</code> <code>list</code></h3>
+<p>For animated properties it replaces <a href="#cdat"><code>cdat</code></a>.</p>
+<p>The list header is defined in the chunk <a href="#lhd3"><code>lhd3</code></a>, the list data in <a href="#ldat"><code>ldat</code></a>.</p>
+<h3 id="list-slay-list-dlay-list-clay"><code>LIST</code> <code>SLay</code> / <code>LIST</code> <code>DLay</code> / <code>LIST</code> <code>CLay</code></h3>
+<p>They seem to be camera layers used to store internal views, not exported to lottie.</p>
+<p><code>SLay</code> (Side views?) have names like "Top" and "Front", perhaps they define 3d views.</p>
+<p><code>CLay</code>: Custom views.</p>
+<p><code>DLay</code>: Default views.</p>
+<h3 id="list-secl"><code>LIST</code> <code>SecL</code></h3>
+<p>Composition Markers Layer.</p>
+<p>Contains <code>ldta</code> and like other layers.</p>
+<p>in <a href="#list-tbgp"><code>LIST</code> <code>tbgp</code></a> look for the match name <code>ADBE Marker</code>, the data is in
+the <a href="#list-mrst"><code>LIST</code> <code>mrst</code></a>.</p>
+<h3 id="list-mrst"><code>LIST</code> <code>mrst</code></h3>
+<p>Marker property.</p>
+<p>Contains a <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a> that defines the property, which should always be animated
+when present.</p>
+<p>Marker keyframe values are available in <a href="#list-mrky"><code>LIST</code> <code>mrky</code></a>.</p>
+<h3 id="list-mrky"><code>LIST</code> <code>mrky</code></h3>
+<p>Marker keyframes.</p>
+<p>contains a <a href="#list-nmrd"><code>LIST</code> <code>Nmrd</code></a> for each keyframe</p>
+<h3 id="list-nmrd"><code>LIST</code> <code>Nmrd</code></h3>
+<p>Marker data</p>
+<p>There's a <a href="#nmhd"><code>NmHd</code></a> with the attributes.</p>
+<p>The marker comment is in the first <a href="#utf8"><code>Utf8</code></a></p>
+<h3 id="list-otst"><code>LIST</code> <code>otst</code></h3>
+<p>Orientation property.</p>
+<p>Contains a  <a href="#list-tdbs"><code>LIST</code> <code>tdbs</code></a> and a <a href="#list-otky"><code>LIST</code> <code>otky</code></a> to define a shape property.</p>
+<h3 id="list-otky"><code>LIST</code> <code>otky</code></h3>
+<p>Contains a sequence of <a href="#otda"><code>otda</code></a> with the orientation data for each keyframe.</p>
+<h3 id="list-als2"><code>LIST</code> <code>Als2</code></h3>
+<p>Contains <a href="#alas"><code>alas</code></a> for external assets.</p>
+<h3 id="list-sfdr"><code>LIST</code> <code>Sfdr</code></h3>
+<p>Asset folder contents, contains several <a href="#list-item"><code>LIST</code> <code>Item</code></a>.</p>
+<h3 id="list-btdk"><code>LIST</code> <code>btdk</code></h3>
+<p>For some reason this doesn't conform to the RIFX specs, instead of a list
+its data is encoded in <a href="https://en.wikipedia.org/wiki/PDF#File_format">Carousel Object Structure</a> (COS).</p>
+<p>The COS format is the same used in PDF but it's extremely difficult to
+find detailed information on it, the best technical specs is this very old
+<a href="https://web.archive.org/web/20141020130815/http://wwwimages.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf">PDF 1.7 specification</a>.</p>
+<p>Once you parse the COS, you can find the following data:</p>
+<ul>
+<li><code>0.1.0</code>: Array of available fonts:<ul>
+<li><code>0.99</code>: <code>CoolTypeFont</code></li>
+<li><code>0.0.0</code>: Font family (seems to have bold/italic encoded in the name)</li>
+<li><code>0.0.2</code>: <code>0</code> or <code>1</code>?</li>
+</ul>
+</li>
+<li><code>1.1</code>: Array of text documents (one for each keyframe) in this format:<ul>
+<li><code>0.0</code>: Text</li>
+<li><code>0.5.0</code>: Array of paragraph styles<ul>
+<li><code>0.0.5</code> Paragraph Style:<ul>
+<li><code>0</code>: Text align (<code>0</code>: left, <code>1</code>: right, <code>2</code>: center)</li>
+</ul>
+</li>
+<li><code>1</code>: Length (in characters) the style applies to</li>
+</ul>
+</li>
+<li><code>0.6.0</code>: Array of character styles:<ul>
+<li><code>0.0.6</code>: Character Style:<ul>
+<li><code>0</code>: Index of the font from the array of available fonts</li>
+<li><code>1</code>: Font size</li>
+<li><code>2</code>: Faux Bold</li>
+<li><code>3</code>: Faux Italic</li>
+<li><code>12</code>: <code>0</code>: Normal, <code>1</code>: Small caps, <code>2</code>: All caps</li>
+<li><code>13</code>: <code>0</code>: Normal, <code>1</code>: Superscript, <code>2</code>: Subscript</li>
+<li><code>53.0.1</code>: Fill color in ARGB [0, 1]</li>
+<li><code>54.0.1</code>: Stroke color in ARGB [0, 1]</li>
+<li><code>57</code>: Stroke enabled</li>
+<li><code>58</code>: Stroke over fill</li>
+<li><code>63</code>: Stroke width</li>
+</ul>
+</li>
+<li><code>1</code>: Length (in characters) the style applies to</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="list-sspc"><code>LIST</code> <code>sspc</code></h3>
+<p>Effect Definiton.</p>
+<p>The generic effect name is in <a href="#fnam"><code>fnam</code></a> &gt; <a href="#utf8"><code>Utf8</code></a>.</p>
+<p>The effect parameters are defined in <a href="#list-part"><code>LIST</code> <code>parT</code></a>.
+If the effect type has already been encountered, you might not find the
+<a href="#list-part"><code>LIST</code> <code>parT</code></a> here, you might need to match the name to an entry in <a href="#list-efdg"><code>LIST</code> <code>EfdG</code></a>.</p>
+<p>It finally contains a <a href="#list-tdgp"><code>LIST</code> <code>tdgp</code></a> where the effect properties are present
+like any other animated property. You can also find the name
+of the effect object in <a href="#fnam"><code>fnam</code></a> &gt; <a href="#utf8"><code>Utf8</code></a>.</p>
+<p>Inside there you can also find a match name with <code>ADBE Effect Built In Params</code>
+which will contain values for built-in effect parameters.</p>
+<h3 id="list-part"><code>LIST</code> <code>parT</code></h3>
+<p>Effect parameters.</p>
+<p>Contains a <a href="#parn"><code>parn</code></a> with the number of parameters, then follows
+a list of <a href="#tdmn"><code>tdmn</code></a> with the match name of the parameter followed by
+<a href="#pard"><code>pard</code></a> with its definition.</p>
+<p>Enum parameters have their values in a  <a href="#pdnm"><code>pdnm</code></a> separated by <code>|</code> pipes.</p>
+<p>The first property seems to be a dummy?</p>
+<h3 id="list-efdg"><code>LIST</code> <code>EfdG</code></h3>
+<p>Effect definitions.</p>
+<p>This is where effect types used by the project are defined.</p>
+<p>Basically it repeats the first instance of any effect found in the layers.</p>
+<p>it contains a <a href="#efdc"><code>EfDC</code></a> with the number of effects, and that many <a href="#list-efdf"><code>LIST</code> <code>EfDf</code></a>.</p>
+<h3 id="list-efdf"><code>LIST</code> <code>EfDf</code></h3>
+<p>Effect type definition.</p>
+<p>Contains a <a href="#tdmn"><code>tdmn</code></a> with the match name of the effect and a <a href="#list-sspc"><code>LIST</code> <code>sspc</code></a>.</p>
+<h3 id="list-exen"><code>LIST</code> <code>ExEn</code></h3>
+<p>Contains a <a href="#utf8"><code>Utf8</code></a> with the expression language (eg: <code>javascript-1.0</code>).</p>
+<h3 id="list-prin"><code>LIST</code> <code>PRin</code></h3>
+<p>Contains a <a href="#prin"><code>prin</code></a> and a <code>prda</code>.</p>
+<h3 id="list-pin"><code>LIST</code> <code>Pin</code></h3>
+<p>Asset properties.</p>
+<p>Contains:</p>
+<ul>
+<li><a href="#sspc"><code>sspc</code></a> with some common properties</li>
+<li><a href="#utf8"><code>Utf8</code></a> with the name (except for solids)</li>
+<li><a href="#opti"><code>opti</code></a> with asset data</li>
+</ul>
+<h3 id="list-cif0"><code>LIST</code> <code>CIF0</code></h3>
+<p>See <a href="#list-cif3"><code>LIST</code> <code>CIF3</code></a>.</p>
+<h3 id="list-cif2"><code>LIST</code> <code>CIF2</code></h3>
+<p>See <a href="#list-cif3"><code>LIST</code> <code>CIF3</code></a>.</p>
+<h3 id="list-cif3"><code>LIST</code> <code>CIF3</code></h3>
+<p><a href="#essential-graphics">Essential Graphics</a> Definition.</p>
+<h3 id="list-cctl"><code>LIST</code> <code>CCtl</code></h3>
+<p>Essential graphics item.</p>
+<h3 id="list-cps2"><code>LIST</code> <code>CpS2</code></h3>
+<p>Essential graphics header.</p>
+<h3 id="list-stvc"><code>LIST</code> <code>StVc</code></h3>
+<p>Essential graphics group items</p>
+<h3 id="list-cprp"><code>LIST</code> <code>CPrp</code></h3>
+<p>Essential graphics property definition</p>
+<h3 id="list-ovg2"><code>LIST</code> <code>OvG2</code></h3>
+<p>Essential graphics override property identifiers</p>
+<h3 id="list-cprp_1"><code>LIST</code> <code>CPrp</code></h3>
+<p>Essential graphics override property identifier</p>
+<h3 id="list-lrdr"><code>LIST</code> <code>LRdr</code></h3>
+<p>Render queue data. this is a top-level chunk. Items are stored in <a href="#list-litm"><code>LIST</code> <code>LItm</code></a>.</p>
+<h3 id="list-litm"><code>LIST</code> <code>LItm</code></h3>
+<p>Render Queue items, contains a sequence of <a href="#list-list"><code>LIST</code> <code>list</code></a> and
+<a href="#list-lom"><code>LIST</code> <code>LOm</code></a>, the latter having information on the render item (one per job).</p>
+<h3 id="list-lom"><code>LIST</code> <code>LOm</code></h3>
+<p>Render list item, contains the following chunks:</p>
+<ul>
+<li><code>Roou</code> Output options?</li>
+<li><code>Ropt</code> Render options?</li>
+<li><a href="#list-als2"><code>LIST</code> <code>Als2</code></a> Selected output file</li>
+<li><a href="#utf8"><code>Utf8</code></a> Name of the template applied to the item</li>
+<li><a href="#utf8"><code>Utf8</code></a> File name template</li>
+</ul>
+<h2 id="gradient-xml">Gradient XML</h2>
+<p>Gradient data seems to be stored in a convoluted XML structure.</p>
+<p>The easiest way to describe it is as a mapping, the elements can be parsed like so:</p>
+<table>
+<thead>
+<tr>
+<th>Tag Name</th>
+<th>Logical Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prop.map</code></td>
+<td></td>
+<td>Top-level, just get its first child</td>
+</tr>
+<tr>
+<td><code>prop.list</code></td>
+<td><code>dict</code></td>
+<td>Mapping of key-value pairs</td>
+</tr>
+<tr>
+<td><code>prop.pair</code></td>
+<td></td>
+<td>Item in <code>prop.list</code></td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td><code>str</code></td>
+<td>Property key</td>
+</tr>
+<tr>
+<td><code>array</code></td>
+<td><code>list</code></td>
+<td>Array of values, the first item is <code>array.type</code> which specifies the type</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td><code>int</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><code>float</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>If you interpret the XML as a mapping, you can gather the following info:</p>
+<pre><code class="language-js">{
+    &quot;Gradient Color Data&quot;:
+    {
+        &quot;Alpha Stops&quot;:
+        {
+            &quot;Stops List&quot;:
+            {
+                &quot;Stop-0&quot;:
+                {
+                    &quot;Stops Alpha&quot;:
+                        [
+                            0.0, // offset
+                            0.5, // midpoint
+                            1.0  // alpha
+                        ]
+                },
+                // More stops defined the same way...
+            }
+            &quot;Stops Size&quot;: 2 // Number of stops
+        },
+        &quot;Color Stops&quot;:
+        {
+            &quot;Stops List&quot;:
+            {
+                &quot;Stop-0&quot;:
+                {
+                    &quot;Stops Color&quot;:
+                    [
+                        0.0, // offset
+                        0.5, // midpoint
+                        0.0, // red
+                        0.0, // green
+                        0.5, // blue
+                        1.0  // alpha?
+                    ]
+                },
+                // More stops defined the same way...
+            }
+            &quot;Stops Size&quot;: 2 // Number of stops
+        }
+    },
+    &quot;Gradient Colors&quot;: &quot;1.0&quot; // Version?
+}
+</code></pre>
+<h3 id="midpoint">Midpoint</h3>
+<p>You should use the "midpoint" values to add an additional color which is halfway between the other two.</p>
+<p>For example given these stops:</p>
+<pre><code class="language-js">    &quot;Stop-0&quot;:
+    {
+        &quot;Stops Color&quot;:
+        [
+            0.0, // offset
+            0.5, // midpoint
+            0.1, // red
+            0.2, // green
+            0.3, // blue
+            1.0  // alpha?
+        ]
+    },
+    &quot;Stop-0&quot;:
+    {
+        &quot;Stops Color&quot;:
+        [
+            0.6, // offset
+            0.5, // midpoint
+            0.3, // red
+            0.4, // green
+            0.5, // blue
+            1.0  // alpha?
+        ]
+    },
+</code></pre>
+<p>The final gradient will look like this:</p>
+<pre><code class="language-js">[
+    // stop 0
+    0.0, // offset_0
+    0.1, // red_0
+    0.2, // green_0
+    0.3, // blue_0
+    // midpoint stop
+    0.3, // offset_0 * (1 - midpoint_0) + offset_1 * midpoint_0
+    0.2, // (red_0 + red_1) / 2
+    0.3, // (green_0 + green_1) / 2
+    0.4, // (blue_0 + blue_1) / 2
+    // stop 1
+    0.6, // offset_1
+    0.5, // midpoint_1
+    0.3, // red_1
+    0.4, // green_1
+    0.5, // blue_1
+]
+</code></pre>
+<h3 id="opacity">Opacity</h3>
+<p>For some reason in AE gradients alpha is independent from the color, so you have separate stops for
+color and opacity.</p>
+<p>You should treat the midpoint value for opacity stops in a similar way as to the color ones.</p>
+<p>Once you have both the color and opacity values, the final lottie array is simply a concatenation of the two.</p>
+<h2 id="xmp-metadata">XMP Metadata</h2>
+<p>After the RIFX data, an AEP file also contains some XML in the
+<a href="https://en.wikipedia.org/wiki/Extensible_Metadata_Platform">XMP</a> format.</p>
+<p>This section contains the version of AfterEffects, when the file has been
+created and modified, and related info.</p>
+<h2 id="xml-project-format">XML Project Format</h2>
+<p>Aftereffects allows you to save the project as XML.</p>
+<p>This is basically as the RIFX but with a different container format and
+binary data encoded as hex.</p>
+<p>Conversion notes for elements are provided below</p>
+<h3 id="aftereffectsproject">AfterEffectsProject</h3>
+<p>Root element, same as <code>RIFX</code>.</p>
+<h3 id="projectxmpmetadata">ProjectXMPMetadata</h3>
+<p>In the RIFX file this is dumped at the end without a chunk.</p>
+<h3 id="string">string</h3>
+<p>Used instead of <a href="#utf8"><code>Utf8</code></a>.</p>
+<h3 id="nums-ppsn">numS / ppSn</h3>
+<p>For some reason they have their value in a <code>&lt;string&gt;</code> but are not string in the RIFX.</p>
+<h3 id="tdsn-fnam-pdnm_1">tdsn / fnam / pdnm</h3>
+<p>These elements contain children but they are not <a href="#list"><code>LIST</code></a> in RIFX, that's the only thing of note.</p>
+<h3 id="child-elements">Child elements</h3>
+<p>If an element has children. it's the same as the equivalent <a href="#list"><code>LIST</code></a> in RIFX.</p>
+<h3 id="bdata"><code>bdata</code></h3>
+<p>Elements with the <a href="#bdata"><code>bdata</code></a> attribute have their binary data hex encoded in said attribute.</p>
+<p>You can parse their data the same way as you'd do in RIFX.</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://github.com/boltframe/aftereffects-aep-parser">aftereffects-aep-parser</a> A basic AEP parser written in Go.</li>
+<li><a href="https://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf">Multimedia Programming Interface and Data Specifications 1.0</a> RIFF specs PDF.</li>
+<li><a href="https://gregstoll.com/~gregstoll/floattohex/">Floating Point to Hex Converter</a> Float to hex converter.</li>
+<li><a href="https://github.com/bodymovin/bodymovin-extension">bodymovin-extension</a> AE extensions that exports to Lottie</li>
+<li><a href="https://ae-scripting.docsforadobe.dev/">After Effects Scripting Guide</a></li>
+<li><a href="https://ae-scripting.docsforadobe.dev/matchnames/layer/shapelayer.html">Shape Layer Match Names</a></li>
+<li><a href="https://web.archive.org/web/20141020130815/http://wwwimages.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf">Portable document format — Part 1: PDF 1.7</a> The only COS reference I've found</li>
+</ul></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

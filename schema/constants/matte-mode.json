@@ -1,0 +1,28 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Matte Mode",
+    "description": "How a layer should mask another layer",
+    "oneOf": [
+        {
+            "title": "Normal",
+            "const": 0
+        },
+        {
+            "title": "Alpha",
+            "const": 1
+        },
+        {
+            "title": "Inverted Alpha",
+            "const": 2
+        },
+        {
+            "title": "Luma",
+            "const": 3
+        },
+        {
+            "title": "Inverted Luma",
+            "const": 4
+        }
+    ]
+}

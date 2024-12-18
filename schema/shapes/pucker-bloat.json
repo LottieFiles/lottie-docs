@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Pucker Bloat",
+    "description": "Interpolates the shape with its center point and bezier tangents with the opposite direction",
+    "caniuse": "shape-pucker-and-bloat",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "pb"
+                },
+                "a": {
+                    "title": "Amount",
+                    "description": "Amount as a percentage",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Twirl Effect",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/effects/effect"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "type": "integer",
+                    "const": 30
+                },
+                "ef": {
+                    "title": "Effect values",
+                    "type": "array",
+                    "prefixItems": [
+                        {
+                            "title": "Angle",
+                            "$ref": "#/$defs/effect-values/angle"
+                        },
+                        {
+                            "title": "Radius",
+                            "$ref": "#/$defs/effect-values/slider"
+                        },
+                        {
+                            "title": "Center",
+                            "$ref": "#/$defs/effect-values/point"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "ty",
+                "ef"
+            ]
+        }
+    ]
+}
+

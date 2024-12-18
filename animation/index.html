@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/animation/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Animation - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/">General concepts</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../aep/">Parsing AEP Files</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../concepts/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../layers/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/animation.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#animation">Animation</a></li>
+            <li class="second-level"><a href="#metadata">Metadata</a></li>
+                
+                <li class="third-level"><a href="#document-metadata">Document Metadata</a></li>
+                <li class="third-level"><a href="#user-metadata">User Metadata</a></li>
+            <li class="second-level"><a href="#motion-blur">Motion Blur</a></li>
+                
+            <li class="second-level"><a href="#marker">Marker</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="animation">Animation</h1>
+<p>This is the top-level JSON object, describing the document, layers, assets, etc.</p>
+<p>The size of the canvas is determined by <code>w</code> and <code>h</code>. Duration is expressed in frames with <code>op</code>, and the framerate is in <code>fr</code>.</p>
+<p>Most of the contents are in <a href="../layers/"><code>layers</code></a> and <a href="../assets/"><code>assets</code></a>.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/animation/animation" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layers</code></td>
+<td><code>array</code> of <span><a href="../layers/#precomposition-layer">Precomposition Layer</a> or <a href="../layers/#solid-color-layer">Solid Color Layer</a> or <a href="../layers/#image-layer">Image Layer</a> or <a href="../layers/#null-layer">Null Layer</a> or <a href="../layers/#shape-layer">Shape Layer</a> or <a href="../layers/#text-layer">Text Layer</a> or <a href="../layers/#audio-layer">Audio Layer</a> or <a href="../layers/#camera-layer">Camera Layer</a> or <a href="../layers/#data-layer">Data Layer</a></span></td>
+<td>
+<p>An array of <a href="../layers/">layers</a> (See: <a href="../concepts/#lists-of-layers-and-shapes">Lists of layers and shapes</a>)</p>
+</td>
+</tr>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>assets</code></td>
+<td><code>array</code> of <span><a href="../assets/#image">Image</a> or <a href="../assets/#precomposition">Precomposition</a> or <a href="../assets/#sound">Sound</a> or <a href="../assets/#data-source">Data source</a></span></td>
+<td>
+<p>An array of <a href="../assets/">assets</a></p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><code>string</code></td>
+<td>
+<p>Lottie version, on very old versions some things might be slightly different from what is explained here</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Whether the animation has 3D layers. Lottie doesn't actually support 3D stuff so this should always be 0</p>
+</td>
+</tr>
+<tr>
+<td><code>fr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Framerate in frames per second</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>"In Point", which frame the animation starts at (usually 0)</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>"Out Point", which frame the animation stops/loops at, which makes this the duration in frames when <code>ip</code> is 0</p>
+</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Width of the animation</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Height of the animation</p>
+</td>
+</tr>
+<tr>
+<td><code>comps</code></td>
+<td><code>array</code> of <a href="../assets/#precomposition">Precomposition</a> </td>
+<td>
+<p>List of Extra compositions not referenced by anything</p>
+</td>
+</tr>
+<tr>
+<td><code>fonts</code></td>
+<td><a href="../text/#font-list">Font List</a> </td>
+<td>
+<p>Fonts</p>
+</td>
+</tr>
+<tr>
+<td><code>chars</code></td>
+<td><code>array</code> of <a href="../text/#character-data">Character Data</a> </td>
+<td>
+<p>Data defining text characters as lottie shapes. If present a player might only render characters defined here and nothing else.</p>
+</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><a href="./#metadata">Metadata</a> </td>
+<td>
+<p>Document metadata</p>
+</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><a href="./#user-metadata">User Metadata</a> </td>
+<td>
+<p>User Metadata</p>
+</td>
+</tr>
+<tr>
+<td><code>markers</code></td>
+<td><code>array</code> of <a href="./#marker">Marker</a> </td>
+<td>
+<p>Markers defining named sections of the composition.</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><a href="./#motion-blur">Motion Blur</a> </td>
+<td>
+<p>Motion Blur</p>
+</td>
+</tr>
+<tr>
+<td><code>slots</code></td>
+<td><code>object</code></td>
+<td>
+<p>Available property overrides</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="metadata">Metadata</h2>
+<p>Some (but not all) lottie files will have a metadata object describing the
+program used to create the file and other useful information:</p>
+<h3 id="document-metadata">Document Metadata</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/animation/metadata" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td><code>string</code></td>
+<td>
+<p>Author</p>
+</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td><code>string</code></td>
+<td>
+<p>Description</p>
+</td>
+</tr>
+<tr>
+<td><code>tc</code></td>
+<td><code>string</code></td>
+<td>
+<p>Theme Color</p>
+</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td><code>string</code></td>
+<td>
+<p>Software used to generate the file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="user-metadata">User Metadata</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/animation/user-metadata" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filename</code></td>
+<td><code>string</code></td>
+<td>
+<p>Filename</p>
+</td>
+</tr>
+<tr>
+<td><code>customProps</code></td>
+<td><code>object</code></td>
+<td>
+<p>Custom Properties</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="motion-blur">Motion Blur</h2>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/animation/motion-blur" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sa</code></td>
+<td><code>number</code></td>
+<td>
+<p>Angle in degrees</p>
+</td>
+</tr>
+<tr>
+<td><code>sp</code></td>
+<td><code>number</code></td>
+<td>
+<p>Angle in degrees</p>
+</td>
+</tr>
+<tr>
+<td><code>spf</code></td>
+<td><code>number</code></td>
+<td>
+<p>Samples per Frame</p>
+</td>
+</tr>
+<tr>
+<td><code>asl</code></td>
+<td><code>number</code></td>
+<td>
+<p>Adaptive Sample Limit</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="marker">Marker</h2>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/helpers/marker" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Comment</p>
+</td>
+</tr>
+<tr>
+<td><code>tm</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+<tr>
+<td><code>dr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Duration</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

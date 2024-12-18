@@ -1,0 +1,64 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient Overlay",
+    "caniuse": "style-gradient-overlay",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 8
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "gf": {
+                    "title": "Gradient",
+                    "$ref": "#/$defs/animated-properties/gradient-colors"
+                },
+                "gs": {
+                    "title": "Smoothness",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "a": {
+                    "title": "Angle",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "gt": {
+                    "title": "Gradient Type",
+                    "$ref": "#/$defs/constants/gradient-type"
+                },
+                "re": {
+                    "title": "Reverse",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "al": {
+                    "title": "Align",
+                    "description": "Align with layer",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "s": {
+                    "title": "Scale",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "of": {
+                    "title": "Offset",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

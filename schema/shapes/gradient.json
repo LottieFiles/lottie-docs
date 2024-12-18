@@ -1,0 +1,47 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient",
+    "description": "",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "s": {
+                    "title": "Start Point",
+                    "description": "Starting point for the gradient",
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                },
+                "e": {
+                    "title": "End Point",
+                    "description": "End point for the gradient",
+                    "$ref": "#/$defs/animated-properties/multi-dimensional"
+                },
+                "t": {
+                    "title": "Gradient Type",
+                    "description": "Type of the gradient",
+                    "$ref": "#/$defs/constants/gradient-type",
+                    "default": 1
+                },
+                "h": {
+                    "title": "Highlight Length",
+                    "description": "Highlight Length, as a percentage between `s` and `e`",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "a": {
+                    "title": "Highlight Angle",
+                    "description": "Highlight Angle, relative to the direction from `s` to `e`",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "g": {
+                    "title": "Colors",
+                    "description": "Gradient colors",
+                    "$ref": "#/$defs/animated-properties/gradient-colors"
+                }
+            },
+            "required": [
+                "s", "e", "g"
+            ]
+        }
+    ]
+}

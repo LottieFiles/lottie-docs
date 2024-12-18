@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Motion Blur",
+    "description": "Motion blur settings",
+    "properties": {
+        "sa": {
+            "title": "Shutter Angle",
+            "description": "Angle in degrees",
+            "type": "number"
+        },
+        "sp": {
+            "title": "Shutter Phase",
+            "description": "Angle in degrees",
+            "type": "number"
+        },
+        "spf": {
+            "title": "Samples per Frame",
+            "type": "number"
+        },
+        "asl": {
+            "title": "Adaptive Sample Limit",
+            "type": "number"
+        }
+    }
+}
+

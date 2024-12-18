@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Path",
+    "description": "Animatable Bezier curve",
+    "caniuse": "shape-path",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "sh"
+                },
+                "ks": {
+                    "title": "Shape",
+                    "description": "Bezier path",
+                    "$ref": "#/$defs/animated-properties/shape-property"
+                }
+            },
+            "required": [
+                "ty", "ks"
+            ]
+        }
+    ]
+}

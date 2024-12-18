@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Zig Zag",
+    "description": "Changes the edges of affected shapes into a series of peaks and valleys of uniform size",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "zz"
+                },
+                "r": {
+                    "title": "Frequency",
+                    "description": "Number of ridges per segment",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "s": {
+                    "title": "Amplitude",
+                    "description": "Distance between peaks and troughs",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "pt": {
+                    "title": "Point Type",
+                    "description": "Point type (1 = corner, 2 = smooth)",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}
+

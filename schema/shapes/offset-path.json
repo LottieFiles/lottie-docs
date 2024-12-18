@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Offset Path",
+    "caniuse": "shape-offset-path",
+    "description": "Interpolates the shape with its center point and bezier tangents with the opposite direction",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape-element"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "op"
+                },
+                "a": {
+                    "title": "Amount",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "lj": {
+                    "title": "Line Join",
+                    "$ref": "#/$defs/constants/line-join",
+                    "default": 2
+                },
+                "ml": {
+                    "title": "Miter Limit",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

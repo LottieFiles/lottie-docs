@@ -1,0 +1,74 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Style",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/transform"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "sw": {
+                    "title": "Stroke Width",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sc": {
+                    "title": "Stroke Color",
+                    "$ref": "#/$defs/animated-properties/color-value"
+                },
+                "sh": {
+                    "title": "Stroke Hue",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "ss": {
+                    "title": "Stroke Saturation",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "sb": {
+                    "title": "Stroke Brightness",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "so": {
+                    "title": "Stroke Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "fc": {
+                    "title": "Fill Color",
+                    "$ref": "#/$defs/animated-properties/color-value"
+                },
+                "fh": {
+                    "title": "Fill Hue",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "fs": {
+                    "title": "Fill Saturation",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "fb": {
+                    "title": "Fill Brightness",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "fo": {
+                    "title": "Fill Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "t": {
+                    "title": "Letter Spacing",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "bl": {
+                    "title": "Blur",
+                    "caniuse": "text-animators-blur",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "ls": {
+                    "title": "Line Spacing",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": []
+        }
+    ]
+}

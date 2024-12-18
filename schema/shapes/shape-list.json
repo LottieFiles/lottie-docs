@@ -1,0 +1,28 @@
+{
+    "title": "Shape List",
+    "description": "List of valid shapes",
+    "type": "array",
+    "items": {
+        "oneOf": [
+            {"$ref": "#/$defs/shapes/ellipse"},
+            {"$ref": "#/$defs/shapes/fill"},
+            {"$ref": "#/$defs/shapes/gradient-fill"},
+            {"$ref": "#/$defs/shapes/gradient-stroke"},
+            {"$ref": "#/$defs/shapes/group"},
+            {"$ref": "#/$defs/shapes/path"},
+            {"$ref": "#/$defs/shapes/polystar"},
+            {"$ref": "#/$defs/shapes/pucker-bloat"},
+            {"$ref": "#/$defs/shapes/rectangle"},
+            {"$ref": "#/$defs/shapes/repeater"},
+            {"$ref": "#/$defs/shapes/rounded-corners"},
+            {"$ref": "#/$defs/shapes/stroke"},
+            {"$ref": "#/$defs/shapes/transform"},
+            {"$ref": "#/$defs/shapes/trim"},
+            {"$ref": "#/$defs/shapes/twist"},
+            {"$ref": "#/$defs/shapes/merge"},
+            {"$ref": "#/$defs/shapes/offset-path"},
+            {"$ref": "#/$defs/shapes/zig-zag"},
+            {"$ref": "#/$defs/shapes/no-style"}
+        ]
+    }
+}

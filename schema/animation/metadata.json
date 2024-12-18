@@ -1,0 +1,46 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Metadata",
+    "description": "Document metadata",
+    "properties": {
+        "a": {
+            "title": "Author",
+            "type": "string"
+        },
+        "d": {
+            "title": "Description",
+            "type": "string"
+        },
+        "tc": {
+            "title": "Theme Color",
+            "type": "string"
+        },
+        "g": {
+            "title": "Generator",
+            "description": "Software used to generate the file",
+            "type": "string"
+        }
+    },
+    "anyOf": [
+        {
+            "properties": {
+                "k": {
+                    "title": "Keywords",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "properties": {
+                "k": {
+                    "title": "Keywords",
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}

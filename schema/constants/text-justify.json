@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Text Justify",
+    "description": "Text alignment / justification",
+    "oneOf": [
+        {
+            "title": "Left",
+            "const": 0
+        },
+        {
+            "title": "Right",
+            "const": 1
+        },
+        {
+            "title": "Center",
+            "const": 2
+        },
+        {
+            "title": "Justify with Last Line Left",
+            "const": 3
+        },
+        {
+            "title": "Justify with Last Line Right",
+            "const": 4
+        },
+        {
+            "title": "Justify with Last Line Center",
+            "const": 5
+        },
+        {
+            "title": "Justify with Last Line Full",
+            "const": 6
+        }
+    ]
+}

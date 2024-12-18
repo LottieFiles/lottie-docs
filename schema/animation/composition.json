@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Composition",
+    "description": "Base class for layer holders",
+    "properties": {
+        "layers": {
+            "title": "Layers",
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {"$ref": "#/$defs/layers/precomposition-layer"},
+                    {"$ref": "#/$defs/layers/solid-color-layer"},
+                    {"$ref": "#/$defs/layers/image-layer"},
+                    {"$ref": "#/$defs/layers/null-layer"},
+                    {"$ref": "#/$defs/layers/shape-layer"},
+                    {"$ref": "#/$defs/layers/text-layer"},
+                    {"$ref": "#/$defs/layers/audio-layer"},
+                    {"$ref": "#/$defs/layers/camera-layer"},
+                    {"$ref": "#/$defs/layers/data-layer"}
+                ]
+            }
+        }
+    },
+    "required": ["layers"]
+}

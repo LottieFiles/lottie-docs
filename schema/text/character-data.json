@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Character Data",
+    "description": "Defines character shapes",
+    "properties": {
+        "ch": {
+            "title": "Character",
+            "type": "string",
+            "default": ""
+        },
+        "fFamily": {
+            "title": "Font Family",
+            "type": "string",
+            "default": ""
+        },
+        "size": {
+            "title": "Font Size",
+            "type": "number",
+            "default": 0
+        },
+        "style": {
+            "title": "Font Style",
+            "type": "string",
+            "default": ""
+        },
+        "w": {
+            "title": "Width",
+            "type": "number",
+            "default": 0
+        },
+        "data": {
+            "title": "Data",
+            "oneOf": [
+                {"$ref": "#/$defs/text/character-shapes"},
+                {"$ref": "#/$defs/text/character-precomp"}
+            ]
+        }
+    },
+    "required": ["data", "ch", "fFamily", "size", "style", "w"]
+}

@@ -1,0 +1,139 @@
+{
+    "animated-properties": {
+        "_defaults": {
+            "page": "concepts",
+            "anchor": "animated-property"
+        },
+        "value": {
+            "name_prefix": "Animated ",
+            "name": "number"
+        },
+        "multi-dimensional": {
+            "name_prefix": "Animated ",
+            "name": "Vector"
+        },
+        "color-value": {
+            "name_prefix": "",
+            "name": "Animated",
+            "extra": {
+                "page": "concepts",
+                "anchor": "colors",
+                "name": "Color"
+            }
+        },
+        "shape-property": {
+            "name_prefix": "",
+            "name": "Animated",
+            "extra": {
+                "page": "concepts",
+                "anchor": "bezier",
+                "name": "Bezier"
+            }
+        },
+        "position": {
+            "name_prefix": "Animated ",
+            "anchor": "animated-position",
+            "name": "Position"
+        },
+        "gradient-colors": {
+            "anchor": "gradients"
+        }
+    },
+    "shapes": {
+        "gradient": {
+            "anchor": "gradients"
+        },
+        "gradient-fill": {
+            "anchor": "gradients"
+        },
+        "gradient-stroke": {
+            "anchor": "gradients"
+        },
+        "shape-element": {
+            "anchor": "shape-elements"
+        },
+        "base-stroke": {
+            "anchor": "stroke"
+        },
+        "trim": {
+            "anchor": "trim-path"
+        },
+        "shape-list": {
+            "page": "concepts",
+            "anchor": "lists-of-layers-and-shapes"
+        },
+        "transform": {
+            "anchor": "transform-shape"
+        },
+        "modifier": {
+            "anchor": "modifiers"
+        },
+        "stroke-dash": {
+            "anchor": "stroke-dashes"
+        }
+    },
+    "helpers": {
+        "_defaults": {
+            "page": "concepts"
+        },
+        "mask": {
+            "page": "layers",
+            "anchor": "masks"
+        },
+        "color": {
+            "anchor": "colors"
+        },
+        "int-boolean": {
+            "anchor": "booleans",
+            "name": "0-1 Integer"
+        },
+        "visual-object": {
+            "page": null
+        },
+        "marker": {
+            "page": "animation"
+        }
+    },
+    "effect-values": {
+        "_defaults": {
+            "page": "effects"
+        },
+        "effect-value": {
+            "anchor": "effect-values"
+        }
+    },
+    "styles": {
+        "_defaults": {
+            "page": "effects"
+        }
+    },
+    "text": {
+        "font": {
+            "anchor": "font-list"
+        }
+    },
+    "effects": {
+        "effect":{
+            "anchor": "effects"
+        }
+    },
+    "assets": {
+        "asset":{
+            "anchor": "assets"
+        },
+        "file-asset": {
+            "anchor": "data-source"
+        }
+    },
+    "animation": {
+        "composition":{
+            "page": "concepts",
+            "anchor": "lists-of-layers-and-shapes"
+        }
+    },
+    "layers": {
+        "visual-layer":{
+            "anchor": "layer"
+        }
+    }
+}

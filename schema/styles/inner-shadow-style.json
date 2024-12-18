@@ -1,0 +1,57 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Inner Shadow",
+    "caniuse": "style-inner-shadow",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 2
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/$defs/animated-properties/color-value"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "a": {
+                    "title": "Angle",
+                    "description": "Local light angle",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "s": {
+                    "title": "Size",
+                    "description": "Blur size",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "d": {
+                    "title": "Distance",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "ch": {
+                    "title": "Choke Spread",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/animated-properties/value"
+                },
+                "no": {
+                    "title": "Noise",
+                    "$ref": "#/$defs/animated-properties/value"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

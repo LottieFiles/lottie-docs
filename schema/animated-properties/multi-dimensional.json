@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Multi Dimensional",
+    "description": "An animatable property that holds an array of numbers",
+    "allOf": [
+        {
+            "$ref": "#/$defs/animated-properties/animated-property"
+        },
+        {
+            "if": {
+                "properties": {
+                    "a": { "const": 0  }
+                }
+            },
+            "then": {
+                "properties": {
+                    "k": {
+                        "title": "Static value",
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "properties": {
+                "l": {
+                    "title": "Length",
+                    "description": "Number of components in the value arrays.\nIf present values will be truncated or expanded to match this length when accessed from expressions.",
+                    "type": "integer"
+                }
+            }
+        }
+    ]
+}

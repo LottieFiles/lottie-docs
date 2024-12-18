@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Shape Keyframe",
+    "description": "Keyframe holding Bezier objects",
+    "allOf": [
+        {
+            "$ref": "#/$defs/animated-properties/keyframe-base"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "s": {
+                    "title": "Start",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/helpers/bezier"
+                    }
+                }
+            }
+        }
+    ]
+}

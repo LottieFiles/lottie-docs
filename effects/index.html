@@ -1,0 +1,3216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/effects/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Layer Effects - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/">General concepts</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../animation/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../aep/">Parsing AEP Files</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../assets/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../constants/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/effects.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#layer-effects">Layer Effects</a></li>
+            <li class="second-level"><a href="#effects">Effects</a></li>
+                
+                <li class="third-level"><a href="#fill-effect">Fill Effect</a></li>
+                <li class="third-level"><a href="#stroke-effect">Stroke Effect</a></li>
+                <li class="third-level"><a href="#tritone-effect">Tritone Effect</a></li>
+                <li class="third-level"><a href="#pro-levels-effect">Pro Levels Effect</a></li>
+                <li class="third-level"><a href="#tint-effect">Tint Effect</a></li>
+                <li class="third-level"><a href="#matte3-effect">Matte3 Effect</a></li>
+                <li class="third-level"><a href="#gaussian-blur-effect">Gaussian Blur Effect</a></li>
+                <li class="third-level"><a href="#drop-shadow-effect">Drop Shadow Effect</a></li>
+                <li class="third-level"><a href="#radial-wipe-effect">Radial Wipe Effect</a></li>
+                <li class="third-level"><a href="#displacement-map-effect">Displacement Map Effect</a></li>
+                <li class="third-level"><a href="#mesh-warp-effect">Mesh Warp Effect</a></li>
+                <li class="third-level"><a href="#puppet-effect">Puppet Effect</a></li>
+                <li class="third-level"><a href="#spherize-effect">Spherize Effect</a></li>
+                <li class="third-level"><a href="#wavy-effect">Wavy Effect</a></li>
+                <li class="third-level"><a href="#twirl-effect">Twirl Effect</a></li>
+                <li class="third-level"><a href="#custom-effect">Custom Effect</a></li>
+            <li class="second-level"><a href="#effect-values">Effect Values</a></li>
+                
+                <li class="third-level"><a href="#no-value">No Value</a></li>
+                <li class="third-level"><a href="#slider">Slider</a></li>
+                <li class="third-level"><a href="#angle">Angle</a></li>
+                <li class="third-level"><a href="#color">Color</a></li>
+                <li class="third-level"><a href="#point">Point</a></li>
+                <li class="third-level"><a href="#checkbox">Checkbox</a></li>
+                <li class="third-level"><a href="#ignored">Ignored</a></li>
+                <li class="third-level"><a href="#drop-down">Drop Down</a></li>
+                <li class="third-level"><a href="#layer">Layer</a></li>
+            <li class="second-level"><a href="#layer-style">Layer Style</a></li>
+                
+                <li class="third-level"><a href="#stroke-style">Stroke Style</a></li>
+                <li class="third-level"><a href="#drop-shadow-style">Drop Shadow Style</a></li>
+                <li class="third-level"><a href="#inner-shadow-style">Inner Shadow Style</a></li>
+                <li class="third-level"><a href="#outer-glow-style">Outer Glow Style</a></li>
+                <li class="third-level"><a href="#inner-glow-style">Inner Glow Style</a></li>
+                <li class="third-level"><a href="#bevel-emboss-style">Bevel / Emboss Style</a></li>
+                <li class="third-level"><a href="#satin-style">Satin Style</a></li>
+                <li class="third-level"><a href="#color-overlay-style">Color Overlay Style</a></li>
+                <li class="third-level"><a href="#gradient-overlay-style">Gradient Overlay Style</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="layer-effects">Layer Effects</h1>
+<p>Layers can have post-processing effects applied to them.</p>
+<h2 id="effects">Effects</h2>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effects" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <span><a href="./#no-value">Effect No Value</a> or <a href="./#angle">Effect Value Angle</a> or <a href="./#checkbox">Effect Value Checkbox</a> or <a href="./#color">Effect Value Color</a> or <a href="./#drop-down">Effect Value Drop Down</a> or <a href="./#ignored">Ignored Value</a> or <a href="./#layer">Effect Value Layer</a> or <a href="./#point">Effect Value Point</a> or <a href="./#slider">Effect Value Slider</a></span></td>
+<td>
+<p>Array of <a href="#effect-values">effect values</a>. Each effect below shows a table with the values it expects.</p>
+</td>
+</tr>
+<tr>
+<td><code>np</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Number of values in <code>ef</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Effect Index</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Effect type</p>
+</td>
+</tr>
+<tr>
+<td><code>en</code></td>
+<td><a href="../concepts/#booleans">0-1 <code>integer</code></a> </td>
+<td>
+<p>Enabled</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Many effects have unused values which are labeled with a number.</p>
+<p>Effect types:</p>
+<table>
+<thead>
+<tr>
+<th><code>ty</code></th>
+<th>Effect Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td><a href="#misc-effect">Misc Effect</a></td>
+</tr>
+<tr>
+<td><code>20</code></td>
+<td><a href="#tint-effect">Tint</a></td>
+</tr>
+<tr>
+<td><code>21</code></td>
+<td><a href="#fill-effect">Fill</a></td>
+</tr>
+<tr>
+<td><code>22</code></td>
+<td><a href="#stroke-effect">Stroke</a></td>
+</tr>
+<tr>
+<td><code>23</code></td>
+<td><a href="#tritone-effect">Tritone</a></td>
+</tr>
+<tr>
+<td><code>24</code></td>
+<td><a href="#pro-levels-effect">Pro Levels</a></td>
+</tr>
+<tr>
+<td><code>25</code></td>
+<td><a href="#drop-shadow-effect">Drop Shadow</a></td>
+</tr>
+<tr>
+<td><code>26</code></td>
+<td><a href="#radial-wipe-effect">Radial Wipe</a></td>
+</tr>
+<tr>
+<td><code>27</code></td>
+<td><a href="#displacement-map-wipe">Displacement Map</a></td>
+</tr>
+<tr>
+<td><code>28</code></td>
+<td><a href="#matte3-effect">Matte3</a></td>
+</tr>
+<tr>
+<td><code>29</code></td>
+<td><a href="#gaussian-blur-effect">Gaussian Blur</a></td>
+</tr>
+<tr>
+<td><code>30</code></td>
+<td><a href="#twirl-effect">Twirl</a></td>
+</tr>
+<tr>
+<td><code>31</code></td>
+<td><a href="#mesh-warp-effect">Mesh Warp</a></td>
+</tr>
+<tr>
+<td><code>32</code></td>
+<td><a href="#wavy-effect">Wavy</a></td>
+</tr>
+<tr>
+<td><code>33</code></td>
+<td><a href="#spherize-effect">Spherize</a></td>
+</tr>
+<tr>
+<td><code>34</code></td>
+<td><a href="#puppet-effect">Puppet</a></td>
+</tr>
+</tbody>
+</table>
+<p>All the examples will use this as their base:</p>
+<p>
+<div>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_15" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_15" onclick="lottie_player_15.play(); document.getElementById('lottie_pause_15').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_15" onclick="lottie_player_15.pause(); document.getElementById('lottie_play_15').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../examples/image.json" title="Download"><button><i class="fas fa-download"></i></button></a><button onclick="playground_set_url(&quot;/lottie-docs/examples/image.json&quot;);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button></div>
+<script>
+                var lottie_player_15 = new LottiePlayer(
+                    'lottie_target_15',
+                    '../examples/image.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</p>
+<h3 id="fill-effect">Fill Effect</h3>
+<p>Fill all opaque areas with a solid color</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/fill-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-fill" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>21</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/fill-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-fill" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td><a href="#layer">Effect Value Layer</a></td>
+</tr>
+<tr>
+<td>01</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>color</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>03</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>04</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>05</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>opacity</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="8" max="1" min="0" name="Opacity" oninput="lottie_player_8.reload();document.getElementById('playground_8_1_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_8_1_span">1</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Color</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="8" max="1" min="0" name="Red" oninput="lottie_player_8.reload();document.getElementById('playground_8_2_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_8_2_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="8" max="1" min="0" name="Green" oninput="lottie_player_8.reload();document.getElementById('playground_8_3_span').innerText = event.target.value;" step="0.1" type="range" value="0.9" /><span id="playground_8_3_span">0.9</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="8" max="1" min="0" name="Blue" oninput="lottie_player_8.reload();document.getElementById('playground_8_4_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_8_4_span">0</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_8" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_8" onclick="lottie_player_8.play(); document.getElementById('lottie_pause_8').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_8" onclick="lottie_player_8.pause(); document.getElementById('lottie_play_8').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_8.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_8_5_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_8_5_parent">
+<pre><code class="language-json hljs" id="playground_8_5">
+</code></pre>
+</div>
+<script>
+        var lottie_player_8 = new PlaygroundPlayer(
+            8,
+            'playground_8_5',
+            'lottie_target_8',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 21, "ef": [{"ty": 3, "v": {"k": [0, 0], "a": 0}}, {"ty": 7, "v": {"k": 0, "a": 0}}, {"ty": 2, "v": {"k": [1, 0.9, 0, 1], "a": 0}}, {"ty": 2, "v": {"k": [0, 0, 0, 1], "a": 0}}, {"ty": 7, "v": {"k": 0, "a": 0}}, {"ty": 0, "v": {"a": 0, "k": 0}}, {"ty": 0, "v": {"a": 0, "k": 1}}, {"ty": 0, "v": {"a": 0, "k": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                lottie.layers[0].ef[0].ef[6].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["Blue"];this.json_viewer_contents = lottie.layers[0].ef[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="stroke-effect">Stroke Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/stroke-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-stroke" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>22</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/stroke-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-stroke" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>01</td>
+<td><a href="#checkbox">Effect Value Checkbox</a></td>
+</tr>
+<tr>
+<td>02</td>
+<td><a href="#checkbox">Effect Value Checkbox</a></td>
+</tr>
+<tr>
+<td>color</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>04</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>05</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>06</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>07</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>08</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>09</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>type</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tritone-effect">Tritone Effect</h3>
+<p>Converts the layer to greyscale, then applies the gradient based on bright/mid/dark.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/tritone-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-tritone" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>23</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/tritone-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-tritone" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bright</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>mid</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>dark</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<th colspan="2" style="white-space: pre"><span>Bright</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="r1" oninput="lottie_player_9.reload();document.getElementById('playground_9_1_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_9_1_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="g1" oninput="lottie_player_9.reload();document.getElementById('playground_9_2_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_9_2_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="b1" oninput="lottie_player_9.reload();document.getElementById('playground_9_3_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_9_3_span">1</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Mid</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="r2" oninput="lottie_player_9.reload();document.getElementById('playground_9_4_span').innerText = event.target.value;" step="0.1" type="range" value="0.3" /><span id="playground_9_4_span">0.3</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="g2" oninput="lottie_player_9.reload();document.getElementById('playground_9_5_span').innerText = event.target.value;" step="0.1" type="range" value="0.8" /><span id="playground_9_5_span">0.8</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="b2" oninput="lottie_player_9.reload();document.getElementById('playground_9_6_span').innerText = event.target.value;" step="0.1" type="range" value="0.3" /><span id="playground_9_6_span">0.3</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Dark</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="r3" oninput="lottie_player_9.reload();document.getElementById('playground_9_7_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_9_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="g3" oninput="lottie_player_9.reload();document.getElementById('playground_9_8_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_9_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="9" max="1" min="0" name="b3" oninput="lottie_player_9.reload();document.getElementById('playground_9_9_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_9_9_span">0</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_9" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_9" onclick="lottie_player_9.play(); document.getElementById('lottie_pause_9').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_9" onclick="lottie_player_9.pause(); document.getElementById('lottie_play_9').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_9.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_9_10_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_9_10_parent">
+<pre><code class="language-json hljs" id="playground_9_10">
+</code></pre>
+</div>
+<script>
+        var lottie_player_9 = new PlaygroundPlayer(
+            9,
+            'playground_9_10',
+            'lottie_target_9',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 23, "ef": [{"ty": 2, "v": {"k": [1, 1, 1, 1], "a": 0}}, {"ty": 2, "v": {"k": [0.3, 0.8, 0.3, 1], "a": 0}}, {"ty": 2, "v": {"k": [0, 0, 0, 1], "a": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                lottie.layers[0].ef[0].ef[0].v.k[0] = data["r1"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["g1"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["b1"];
+lottie.layers[0].ef[0].ef[1].v.k[0] = data["r2"];
+lottie.layers[0].ef[0].ef[1].v.k[1] = data["g2"];
+lottie.layers[0].ef[0].ef[1].v.k[2] = data["b2"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["r3"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["g3"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["b3"];this.json_viewer_contents = lottie.layers[0].ef[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="pro-levels-effect">Pro Levels Effect</h3>
+<p>Color correction levels.
+For more information refer to the <a href="https://helpx.adobe.com/after-effects/using/color-correction-effects.html#levels_effect">After Effects Documentation</a>.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/pro-levels-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-color-levels-individual-controls" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>24</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/pro-levels-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-color-levels-individual-controls" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>01</td>
+<td><a href="#no-value">Effect No Value</a></td>
+</tr>
+<tr>
+<td>02</td>
+<td><a href="#no-value">Effect No Value</a></td>
+</tr>
+<tr>
+<td>comp_inblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>comp_inwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>comp_gamma</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>comp_outblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>comp_outwhite</td>
+<td><a href="#no-value">Effect No Value</a></td>
+</tr>
+<tr>
+<td>08</td>
+<td><a href="#no-value">Effect No Value</a></td>
+</tr>
+<tr>
+<td>09</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>r_inblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>r_inwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>r_gamma</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>r_outblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>r_outwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>g_inblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>g_inwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>g_gamma</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>g_outblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>g_outwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>b_inblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>b_inwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>b_gamma</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>b_outblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>b_outwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>29</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>a_inblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>a_inwhite</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>a_gamma</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>a_outblack</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>a_outwhite</td>
+<td><a href="#no-value">Effect No Value</a></td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<th colspan="2" style="white-space: pre"><span>Composite</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Composite In Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_1_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Composite In White" oninput="lottie_player_10.reload();document.getElementById('playground_10_2_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_2_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Gamma</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="3" min="0" name="Composite Gamma" oninput="lottie_player_10.reload();document.getElementById('playground_10_3_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_3_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Composite Out Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_4_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Composite Out White" oninput="lottie_player_10.reload();document.getElementById('playground_10_5_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_5_span">1</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Red</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Red In Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_6_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Red In White" oninput="lottie_player_10.reload();document.getElementById('playground_10_7_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_7_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Gamma</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="3" min="0" name="Red Gamma" oninput="lottie_player_10.reload();document.getElementById('playground_10_8_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_8_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Red Out Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_9_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_9_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Red Out White" oninput="lottie_player_10.reload();document.getElementById('playground_10_10_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_10_span">1</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Green</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Green In Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_11_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_11_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Green In White" oninput="lottie_player_10.reload();document.getElementById('playground_10_12_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_12_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Gamma</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="3" min="0" name="Green Gamma" oninput="lottie_player_10.reload();document.getElementById('playground_10_13_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_13_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Green Out Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_14_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_14_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Green Out White" oninput="lottie_player_10.reload();document.getElementById('playground_10_15_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_15_span">1</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Blue</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Blue In Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_16_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_16_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>In White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Blue In White" oninput="lottie_player_10.reload();document.getElementById('playground_10_17_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_17_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Gamma</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="3" min="0" name="Blue Gamma" oninput="lottie_player_10.reload();document.getElementById('playground_10_18_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_18_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out Black</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Blue Out Black" oninput="lottie_player_10.reload();document.getElementById('playground_10_19_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_10_19_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Out White</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="10" max="1" min="0" name="Blue Out White" oninput="lottie_player_10.reload();document.getElementById('playground_10_20_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_10_20_span">1</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_10" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_10" onclick="lottie_player_10.play(); document.getElementById('lottie_pause_10').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_10" onclick="lottie_player_10.pause(); document.getElementById('lottie_play_10').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_10.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_10_21_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_10_21_parent">
+<pre><code class="language-json hljs" id="playground_10_21">
+</code></pre>
+</div>
+<script>
+        var lottie_player_10 = new PlaygroundPlayer(
+            10,
+            'playground_10_21',
+            'lottie_target_10',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 24, "ef": [{"ty": 7, "v": {"nm": "00 Dropdown", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "01", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "02", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "comp_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "comp_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "comp_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "comp_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "comp_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "08", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "09 slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "r_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "r_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "r_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "r_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "r_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "15 slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "16 slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "g_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "g_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "g_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "g_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "g_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "22", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "23", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "b_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "b_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "b_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "b_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "b_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "29", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "a_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "a_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "a_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "a_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "a_outwhite slider", "a": 0, "k": 1}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                lottie.layers[0].ef[0].ef[3].v.k = data["Composite In Black"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Composite In White"];
+lottie.layers[0].ef[0].ef[5].v.k = data["Composite Gamma"];
+lottie.layers[0].ef[0].ef[6].v.k = data["Composite Out Black"];
+lottie.layers[0].ef[0].ef[7].v.k = data["Composite Out White"];
+lottie.layers[0].ef[0].ef[10].v.k = data["Red In Black"];
+lottie.layers[0].ef[0].ef[11].v.k = data["Red In White"];
+lottie.layers[0].ef[0].ef[12].v.k = data["Red Gamma"];
+lottie.layers[0].ef[0].ef[13].v.k = data["Red Out Black"];
+lottie.layers[0].ef[0].ef[14].v.k = data["Red Out White"];
+lottie.layers[0].ef[0].ef[17].v.k = data["Green In Black"];
+lottie.layers[0].ef[0].ef[18].v.k = data["Green In White"];
+lottie.layers[0].ef[0].ef[19].v.k = data["Green Gamma"];
+lottie.layers[0].ef[0].ef[20].v.k = data["Green Out Black"];
+lottie.layers[0].ef[0].ef[21].v.k = data["Green Out White"];
+lottie.layers[0].ef[0].ef[24].v.k = data["Blue In Black"];
+lottie.layers[0].ef[0].ef[25].v.k = data["Blue In White"];
+lottie.layers[0].ef[0].ef[26].v.k = data["Blue Gamma"];
+lottie.layers[0].ef[0].ef[27].v.k = data["Blue Out Black"];
+lottie.layers[0].ef[0].ef[28].v.k = data["Blue Out White"];this.json_viewer_contents = lottie.layers[0].ef[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="tint-effect">Tint Effect</h3>
+<p>The layer is converted to grayscale, then black to white is mapped to
+the given color.</p>
+<p>The result is merged back with the original based on the intensity.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/tint-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-tint" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>20</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/tint-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-tint" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Black Color</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>White Color</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>Intensity</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<th colspan="2" style="white-space: pre"><span>Black</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="11" max="1" min="0" name="Black Red" oninput="lottie_player_11.reload();document.getElementById('playground_11_1_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_11_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="11" max="1" min="0" name="Black Green" oninput="lottie_player_11.reload();document.getElementById('playground_11_2_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_11_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="11" max="1" min="0" name="Black Blue" oninput="lottie_player_11.reload();document.getElementById('playground_11_3_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_11_3_span">0</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>White</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="11" max="1" min="0" name="White Red" oninput="lottie_player_11.reload();document.getElementById('playground_11_4_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_11_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="11" max="1" min="0" name="White Green" oninput="lottie_player_11.reload();document.getElementById('playground_11_5_span').innerText = event.target.value;" step="0.1" type="range" value="1" /><span id="playground_11_5_span">1</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="11" max="1" min="0" name="White Blue" oninput="lottie_player_11.reload();document.getElementById('playground_11_6_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_11_6_span">0</span></td>
+</tr>
+<tr>
+<th colspan="2" style="white-space: pre"><span>Intensity</span></th>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Effect Intensity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="11" max="100" min="0" name="Effect Intensity" oninput="lottie_player_11.reload();document.getElementById('playground_11_7_span').innerText = event.target.value;" type="range" value="90" /><span id="playground_11_7_span">90</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_11" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_11" onclick="lottie_player_11.play(); document.getElementById('lottie_pause_11').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_11" onclick="lottie_player_11.pause(); document.getElementById('lottie_play_11').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_11.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_11_8_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_11_8_parent">
+<pre><code class="language-json hljs" id="playground_11_8">
+</code></pre>
+</div>
+<script>
+        var lottie_player_11 = new PlaygroundPlayer(
+            11,
+            'playground_11_8',
+            'lottie_target_11',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 20, "ef": [{"ty": 2, "v": {"k": [0, 0, 0, 1], "a": 0}}, {"ty": 2, "v": {"k": [0, 1, 0, 1], "a": 0}}, {"ty": 0, "v": {"k": 90, "a": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                lottie.layers[0].ef[0].ef[0].v.k[0] = data["Black Red"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["Black Green"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["Black Blue"];
+lottie.layers[0].ef[0].ef[1].v.k[0] = data["White Red"];
+lottie.layers[0].ef[0].ef[1].v.k[1] = data["White Green"];
+lottie.layers[0].ef[0].ef[1].v.k[2] = data["White Blue"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Effect Intensity"];this.json_viewer_contents = lottie.layers[0].ef[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="matte3-effect">Matte3 Effect</h3>
+<p><span>Uses a layer as a mask</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/matte3-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>28</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/matte3-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer</td>
+<td><a href="#layer">Effect Value Layer</a></td>
+</tr>
+<tr>
+<td>Channel</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Invert</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Stretch To Fit</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Show Mask</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Premultiply Mask</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Layer</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="12" name="Layer" oninput="lottie_player_12.reload();"><option value="2">Circle</option><option value="3">Rectangle</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Channel</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="12" name="Channel" oninput="lottie_player_12.reload();">    <option value="1">Red</option>
+    <option value="2">Green</option>
+    <option value="3">Blue</option>
+    <option selected="selected" value="4">Alpha</option>
+    <option value="5">Luma</option>
+    <option value="6">Hue</option>
+    <option value="7">Lightness</option>
+    <option value="8">Saturation</option>
+    <option value="9">Full</option>
+    <option value="10">Off</option>
+</select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Invert</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="12" name="Invert" oninput="lottie_player_12.reload();" type="checkbox" /></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stretch To Fit</label> </td>
+<td style="width: 100%"><input autocomplete="off" checked="checked" data-lottie-input="12" name="Stretch To Fit" oninput="lottie_player_12.reload();" type="checkbox" /></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Show Mask</label> </td>
+<td style="width: 100%"><input autocomplete="off" checked="checked" data-lottie-input="12" name="Show Mask" oninput="lottie_player_12.reload();" type="checkbox" /></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Premultiply Mask</label> </td>
+<td style="width: 100%"><input autocomplete="off" checked="checked" data-lottie-input="12" name="Premultiply Mask" oninput="lottie_player_12.reload();" type="checkbox" /></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_12" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_12" onclick="lottie_player_12.play(); document.getElementById('lottie_pause_12').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_12" onclick="lottie_player_12.pause(); document.getElementById('lottie_play_12').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_12.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_12_7_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_12_7_parent">
+<pre><code class="language-json hljs" id="playground_12_7">
+</code></pre>
+</div>
+<script>
+        var lottie_player_12 = new PlaygroundPlayer(
+            12,
+            'playground_12_7',
+            'lottie_target_12',
+            {"v": "5.9.0", "fr": 29.9700012207031, "ip": 0, "op": 900.000036657751, "w": 1920, "h": 1080, "nm": "Comp 1", "ddd": 0, "assets": [], "layers": [{"ddd": 0, "ind": 1, "ty": 4, "nm": "Star", "sr": 1, "ks": {"o": {"a": 0, "k": 100, "ix": 11}, "r": {"a": 0, "k": 0, "ix": 10}, "p": {"a": 0, "k": [960, 540, 0], "ix": 2, "l": 2}, "a": {"a": 0, "k": [0, 0, 0], "ix": 1, "l": 2}, "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}}, "ao": 0, "ef": [{"ty": 28, "nm": "Set Matte", "np": 8, "mn": "ADBE Set Matte3", "ix": 1, "en": 1, "ef": [{"ty": 10, "nm": "Take Matte From Layer", "mn": "ADBE Set Matte3-0001", "ix": 1, "v": {"a": 0, "k": 3, "ix": 1}}, {"ty": 7, "nm": "Use For Matte", "mn": "ADBE Set Matte3-0002", "ix": 2, "v": {"a": 0, "k": 1, "ix": 2}}, {"ty": 7, "nm": "Invert Matte", "mn": "ADBE Set Matte3-0003", "ix": 3, "v": {"a": 0, "k": 0, "ix": 3}}, {"ty": 7, "nm": "If Layer Sizes Differ", "mn": "ADBE Set Matte3-0004", "ix": 4, "v": {"a": 0, "k": 1, "ix": 4}}, {"ty": 7, "nm": "Composite Matte with Original", "mn": "ADBE Set Matte3-0005", "ix": 5, "v": {"a": 0, "k": 1, "ix": 5}}, {"ty": 7, "nm": "Premultiply Matte Layer", "mn": "ADBE Set Matte3-0006", "ix": 6, "v": {"a": 0, "k": 1, "ix": 6}}]}], "shapes": [{"ty": "gr", "it": [{"ty": "sr", "sy": 1, "d": 1, "pt": {"a": 0, "k": 5, "ix": 3}, "p": {"a": 0, "k": [0, 0], "ix": 4}, "r": {"a": 0, "k": 222.865, "ix": 5}, "ir": {"a": 0, "k": 226.442, "ix": 6}, "is": {"a": 0, "k": 0, "ix": 8}, "or": {"a": 0, "k": 452.885, "ix": 7}, "os": {"a": 0, "k": 0, "ix": 9}, "ix": 1, "nm": "Polystar Path 1", "mn": "ADBE Vector Shape - Star", "hd": false}, {"ty": "fl", "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725], "ix": 4}, "o": {"a": 0, "k": 100, "ix": 5}, "r": 1, "bm": 0, "nm": "Fill 1", "mn": "ADBE Vector Graphic - Fill", "hd": false}, {"ty": "tr", "p": {"a": 0, "k": [124, -148], "ix": 2}, "a": {"a": 0, "k": [0, 0], "ix": 1}, "s": {"a": 0, "k": [100, 100], "ix": 3}, "r": {"a": 0, "k": 0, "ix": 6}, "o": {"a": 0, "k": 100, "ix": 7}, "sk": {"a": 0, "k": 0, "ix": 4}, "sa": {"a": 0, "k": 0, "ix": 5}, "nm": "Transform"}], "nm": "Polystar 1", "np": 3, "cix": 2, "bm": 0, "ix": 1, "mn": "ADBE Vector Group", "hd": false}], "ip": 0, "op": 900.000036657751, "st": 0, "bm": 0}, {"ddd": 0, "ind": 2, "ty": 4, "nm": "Ellipse", "sr": 1, "ks": {"o": {"a": 0, "k": 100, "ix": 11}, "r": {"a": 0, "k": 0, "ix": 10}, "p": {"a": 0, "k": [960, 540, 0], "ix": 2, "l": 2}, "a": {"a": 0, "k": [0, 0, 0], "ix": 1, "l": 2}, "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}}, "ao": 0, "shapes": [{"ty": "gr", "it": [{"d": 1, "ty": "el", "s": {"a": 0, "k": [528.102, 545.938], "ix": 2}, "p": {"a": 0, "k": [0, 0], "ix": 3}, "nm": "Ellipse Path 1", "mn": "ADBE Vector Shape - Ellipse", "hd": false}, {"ty": "st", "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 3}, "o": {"a": 0, "k": 100, "ix": 4}, "w": {"a": 0, "k": 2, "ix": 5}, "lc": 1, "lj": 1, "ml": 4, "bm": 0, "nm": "Stroke 1", "mn": "ADBE Vector Graphic - Stroke", "hd": false}, {"ty": "fl", "c": {"a": 0, "k": [0.7686274509803922, 0.8509803921568627, 0.9607843137254902], "ix": 4}, "o": {"a": 0, "k": 100, "ix": 5}, "r": 1, "bm": 0, "nm": "Fill 1", "mn": "ADBE Vector Graphic - Fill", "hd": false}, {"ty": "tr", "p": {"a": 0, "k": [409.91, -95.102], "ix": 2}, "a": {"a": 0, "k": [0, 0], "ix": 1}, "s": {"a": 0, "k": [100, 100], "ix": 3}, "r": {"a": 0, "k": 0, "ix": 6}, "o": {"a": 0, "k": 100, "ix": 7}, "sk": {"a": 0, "k": 0, "ix": 4}, "sa": {"a": 0, "k": 0, "ix": 5}, "nm": "Transform"}], "nm": "Ellipse 1", "np": 3, "cix": 2, "bm": 0, "ix": 1, "mn": "ADBE Vector Group", "hd": false}], "ip": 0, "op": 900.000036657751, "st": 0, "bm": 0}, {"ddd": 0, "ind": 3, "ty": 4, "nm": "Rectangle", "sr": 1, "ks": {"o": {"a": 0, "k": 100, "ix": 11}, "r": {"a": 0, "k": 0, "ix": 10}, "p": {"a": 0, "k": [960, 540, 0], "ix": 2, "l": 2}, "a": {"a": 0, "k": [0, 0, 0], "ix": 1, "l": 2}, "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}}, "ao": 0, "shapes": [{"ty": "gr", "it": [{"ty": "rc", "d": 1, "s": {"a": 0, "k": [78.482, 70.992], "ix": 2}, "p": {"a": 0, "k": [0, 0], "ix": 3}, "r": {"a": 0, "k": 0, "ix": 4}, "nm": "Rectangle Path 1", "mn": "ADBE Vector Shape - Rect", "hd": false}, {"ty": "st", "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 3}, "o": {"a": 0, "k": 100, "ix": 4}, "w": {"a": 0, "k": 2, "ix": 5}, "lc": 1, "lj": 1, "ml": 4, "bm": 0, "nm": "Stroke 1", "mn": "ADBE Vector Graphic - Stroke", "hd": false}, {"ty": "fl", "c": {"a": 0, "k": [0.9411764705882353, 0.11372549019607843, 0.0392156862745098], "ix": 4}, "o": {"a": 0, "k": 100, "ix": 5}, "r": 1, "bm": 0, "nm": "Fill 1", "mn": "ADBE Vector Graphic - Fill", "hd": false}, {"ty": "tr", "p": {"a": 0, "k": [-143.321, -63.043], "ix": 2}, "a": {"a": 0, "k": [0, 0], "ix": 1}, "s": {"a": 0, "k": [563.332, 416.105], "ix": 3}, "r": {"a": 0, "k": 0, "ix": 6}, "o": {"a": 0, "k": 100, "ix": 7}, "sk": {"a": 0, "k": 0, "ix": 4}, "sa": {"a": 0, "k": 0, "ix": 5}, "nm": "Transform"}], "nm": "Rectangle 1", "np": 3, "cix": 2, "bm": 0, "ix": 1, "mn": "ADBE Vector Group", "hd": false}], "ip": 0, "op": 900.000036657751, "st": 0, "bm": 0}], "markers": []},
+            function (lottie, data)
+            {
+                lottie.layers[0].ef[0].ef[0].v.k = Number(data["Layer"]);
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Channel"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Invert"]);
+lottie.layers[0].ef[0].ef[3].v.k = Number(data["Stretch To Fit"]);
+lottie.layers[0].ef[0].ef[4].v.k = Number(data["Show Mask"]);
+lottie.layers[0].ef[0].ef[5].v.k = Number(data["Premultiply Mask"]);this.json_viewer_contents = lottie.layers[0].ef[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="gaussian-blur-effect">Gaussian Blur Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/gaussian-blur-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-gaussian-blur" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>29</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/gaussian-blur-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-gaussian-blur" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sigma</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>direction</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>wrap</td>
+<td><a href="#checkbox">Effect Value Checkbox</a></td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Sigma</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="13" max="100" min="0" name="Sigma" oninput="lottie_player_13.reload();document.getElementById('playground_13_1_span').innerText = event.target.value;" type="range" value="25" /><span id="playground_13_1_span">25</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Direction</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="13" name="Direction" oninput="lottie_player_13.reload();">    <option value="1">Both</option>
+    <option value="2">Horizontal</option>
+    <option value="3">Vertical</option>
+</select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Wrap</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="13" name="Wrap" oninput="lottie_player_13.reload();" type="checkbox" /></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_13" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_13" onclick="lottie_player_13.play(); document.getElementById('lottie_pause_13').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_13" onclick="lottie_player_13.pause(); document.getElementById('lottie_play_13').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_13.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_13_4_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_13_4_parent">
+<pre><code class="language-json hljs" id="playground_13_4">
+</code></pre>
+</div>
+<script>
+        var lottie_player_13 = new PlaygroundPlayer(
+            13,
+            'playground_13_4',
+            'lottie_target_13',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 29, "en": 1, "ef": [{"ty": 0, "v": {"a": 0, "k": 25}}, {"ty": 0, "v": {"k": 0, "a": 0}}, {"ty": 4, "v": {"k": 0, "a": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                lottie.layers[0].ef[0].ef[0].v.k = data["Sigma"];
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Direction"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Wrap"]);this.json_viewer_contents = lottie.layers[0].ef[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="drop-shadow-effect">Drop Shadow Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/drop-shadow-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-drop-shadow" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>25</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/drop-shadow-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-drop-shadow" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>color</td>
+<td><a href="#color">Effect Value Color</a></td>
+</tr>
+<tr>
+<td>opacity</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>angle</td>
+<td><a href="#angle">Effect Value Angle</a></td>
+</tr>
+<tr>
+<td>distance</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>blur</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+</tbody>
+</table>
+<div class="playground">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="14" max="1" min="0" name="Red" oninput="lottie_player_14.reload();document.getElementById('playground_14_1_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_14_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="14" max="1" min="0" name="Green" oninput="lottie_player_14.reload();document.getElementById('playground_14_2_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_14_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="14" max="1" min="0" name="Blue" oninput="lottie_player_14.reload();document.getElementById('playground_14_3_span').innerText = event.target.value;" step="0.1" type="range" value="0" /><span id="playground_14_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="14" max="256" min="0" name="Opacity" oninput="lottie_player_14.reload();document.getElementById('playground_14_4_span').innerText = event.target.value;" type="range" value="128" /><span id="playground_14_4_span">128</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Angle</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="14" max="360" min="0" name="Angle" oninput="lottie_player_14.reload();document.getElementById('playground_14_5_span').innerText = event.target.value;" type="range" value="135" /><span id="playground_14_5_span">135</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Distance</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="14" max="512" min="0" name="Distance" oninput="lottie_player_14.reload();document.getElementById('playground_14_6_span').innerText = event.target.value;" type="range" value="10" /><span id="playground_14_6_span">10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blur</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="14" max="512" min="0" name="Blur" oninput="lottie_player_14.reload();document.getElementById('playground_14_7_span').innerText = event.target.value;" type="range" value="7" /><span id="playground_14_7_span">7</span></td>
+</tr>
+</table>
+<div class="animation-container alpha_checkered">
+<div id="lottie_target_14" style="width:512px;height:512px"></div>
+</div>
+<div><button id="lottie_play_14" onclick="lottie_player_14.play(); document.getElementById('lottie_pause_14').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_14" onclick="lottie_player_14.pause(); document.getElementById('lottie_play_14').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><button onclick="playground_set_data(lottie_player_14.lottie);
+window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;;" title="Open in Editor"><i class="fas fa-edit"></i></button><button onclick="var element = document.getElementById('playground_14_8_parent');
+element.hidden = !element.hidden;" title="Toggle JSON"><i class="fas fa-file-code"></i> Show JSON</button></div>
+<div class="json-parent" hidden="hidden" id="playground_14_8_parent">
+<pre><code class="language-json hljs" id="playground_14_8">
+</code></pre>
+</div>
+<script>
+        var lottie_player_14 = new PlaygroundPlayer(
+            14,
+            'playground_14_8',
+            'lottie_target_14',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 25, "ef": [{"ty": 2, "v": {"k": [0, 0, 0, 1], "a": 0}}, {"ty": 0, "v": {"k": 128, "a": 0}}, {"ty": 1, "v": {"k": 135, "a": 0}}, {"ty": 0, "v": {"k": 10, "a": 0}}, {"ty": 0, "v": {"k": 7, "a": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                lottie.layers[0].ef[0].ef[0].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["Blue"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Angle"];
+lottie.layers[0].ef[0].ef[3].v.k = data["Distance"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Blur"];this.json_viewer_contents = lottie.layers[0].ef[0];
+            },
+            {}
+        );
+        </script>
+</div>
+<h3 id="radial-wipe-effect">Radial Wipe Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/radial-wipe-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-radial-wipe" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>26</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/radial-wipe-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-radial-wipe" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Completion</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Start Angle</td>
+<td><a href="#angle">Effect Value Angle</a></td>
+</tr>
+<tr>
+<td>Wipe Center</td>
+<td><a href="#point">Effect Value Point</a></td>
+</tr>
+<tr>
+<td>Wipe</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Feather</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="displacement-map-effect">Displacement Map Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/displacement-map-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-displacement-map" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>27</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/displacement-map-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-displacement-map" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Displacement Map Layer</td>
+<td><a href="#layer">Effect Value Layer</a></td>
+</tr>
+<tr>
+<td>Use For Horizontal Displacement</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Max Horizontal Displacement</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Use For Vertical Displacement</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Max Vertical Displacement</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Displacement Map Behavior</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Edge Behavior</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Expand Output</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mesh-warp-effect">Mesh Warp Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/mesh-warp-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>31</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/mesh-warp-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rows</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Columns</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Quality</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>03</td>
+<td><a href="#no-value">Effect No Value</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="puppet-effect">Puppet Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/puppet-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>34</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/puppet-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Puppet Engine</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Mesh Rotation Refinement</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>On Transparent</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>03</td>
+<td><a href="#no-value">Effect No Value</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="spherize-effect">Spherize Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/spherize-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-cc-sphere" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>33</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/spherize-effect" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effect-cc-sphere" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>radius</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>center</td>
+<td><a href="#point">Effect Value Point</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="wavy-effect">Wavy Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/wavy-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>32</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/wavy-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Radius</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Center</td>
+<td><a href="#point">Effect Value Point</a></td>
+</tr>
+<tr>
+<td>Conversion type</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Speed</td>
+<td><a href="#drop-down">Effect Value Drop Down</a></td>
+</tr>
+<tr>
+<td>Width</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Height</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Phase</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="twirl-effect">Twirl Effect</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/twirl-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>30</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code></td>
+<td>
+<p>Effect values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type<a class="schema-link" href="../schema/#/$defs/effects/effects/twirl-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Angle</td>
+<td><a href="#angle">Effect Value Angle</a></td>
+</tr>
+<tr>
+<td>Radius</td>
+<td><a href="#slider">Effect Value Slider</a></td>
+</tr>
+<tr>
+<td>Center</td>
+<td><a href="#point">Effect Value Point</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="custom-effect">Custom Effect</h3>
+<p>You might find various different effects all with <code>ty</code> = 5.</p>
+<p>Sometimes these are used together with expressions.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effects/custom-effect" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>5</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="effect-values">Effect Values</h2>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/effect-value" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/effects" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+</tr>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Effect Index</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<table>
+<thead>
+<tr>
+<th><code>ty</code></th>
+<th>Control Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><a href="#slider">Slider</a></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><a href="#angle">Angle</a></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><a href="#color">Color</a></td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><a href="#point">Point</a></td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><a href="#checkbox">Checkbox</a></td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td><a href="#ignored">Ignored</a></td>
+</tr>
+<tr>
+<td><code>7</code></td>
+<td><a href="#drop-down">Dropdown</a></td>
+</tr>
+<tr>
+<td><code>10</code></td>
+<td><a href="#layer">Layer</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="no-value">No Value</h3>
+<div></div>
+<h3 id="slider">Slider</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/slider" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>0</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="angle">Angle</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/angle" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>1</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="color">Color</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/color" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>2</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="point">Point</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/point" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>3</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> Vector</td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="checkbox">Checkbox</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/checkbox" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>4</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="ignored">Ignored</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/ignored" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>6</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><code>number</code></td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="drop-down">Drop Down</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/drop-down" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>7</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="layer">Layer</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/effect-values/layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>10</code></td>
+<td>
+<p>Type</p>
+</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="layer-style">Layer Style</h2>
+<p>A layer can also have a list of styles applied to it</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/layer-style" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Style Type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Style types:</p>
+<table>
+<thead>
+<tr>
+<th><code>ty</code></th>
+<th>Style Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><a href="#stroke-style">Stroke</a></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><a href="#drop-shadow-style">Drop Shadow</a></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><a href="#inner-shadow-style">Inner Shadow</a></td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><a href="#outer-glow-style">Outer Glow</a></td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><a href="#inner-glow-style">Inner Glow</a></td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td><a href="#bevel-emboss-style">Bevel / Emboss</a></td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td><a href="#satin-style">Satin</a></td>
+</tr>
+<tr>
+<td><code>7</code></td>
+<td><a href="#color-overlay-style">Color Overlay</a></td>
+</tr>
+<tr>
+<td><code>8</code></td>
+<td><a href="#gradient-overlay-style">Gradient Overlay</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="stroke-style">Stroke Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/stroke-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-stroke" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>0</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Size</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="drop-shadow-style">Drop Shadow Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/drop-shadow-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-drop-shadow" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>1</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Local light angle</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blur size</p>
+</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Distance</p>
+</td>
+</tr>
+<tr>
+<td><code>ch</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Choke Spread</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>no</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Noise</p>
+</td>
+</tr>
+<tr>
+<td><code>lc</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Layer knowck out drop shadow</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="inner-shadow-style">Inner Shadow Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/inner-shadow-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-inner-shadow" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>2</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Local light angle</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blur size</p>
+</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Distance</p>
+</td>
+</tr>
+<tr>
+<td><code>ch</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Choke Spread</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>no</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Noise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="outer-glow-style">Outer Glow Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/outer-glow-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-outer-glow" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>3</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Range</p>
+</td>
+</tr>
+<tr>
+<td><code>ch</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Choke Spread</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>no</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Noise</p>
+</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Jitter</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="inner-glow-style">Inner Glow Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/inner-glow-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-inner-glow" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>4</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Range</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Source</p>
+</td>
+</tr>
+<tr>
+<td><code>ch</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Choke Spread</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>no</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Noise</p>
+</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Jitter</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="bevel-emboss-style">Bevel / Emboss Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/bevel-emboss-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-bevel-and-emboss" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>5</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>bs</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Bevel Style</p>
+</td>
+</tr>
+<tr>
+<td><code>bt</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Technique</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Strength</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Size</p>
+</td>
+</tr>
+<tr>
+<td><code>sf</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Soften</p>
+</td>
+</tr>
+<tr>
+<td><code>ga</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Use global light</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Local lighting angle</p>
+</td>
+</tr>
+<tr>
+<td><code>ll</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Local lighting altitude</p>
+</td>
+</tr>
+<tr>
+<td><code>hm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Highlight Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>hc</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Highlight Color</p>
+</td>
+</tr>
+<tr>
+<td><code>ho</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Highlight Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>sm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Shadow Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>sc</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Shadow Color</p>
+</td>
+</tr>
+<tr>
+<td><code>so</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Shadow Opacity</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="satin-style">Satin Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/satin-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-satin" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>6</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Angle</p>
+</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Distance</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Size</p>
+</td>
+</tr>
+<tr>
+<td><code>in</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Invert</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="color-overlay-style">Color Overlay Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/color-overlay-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-color-overlay" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>7</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <a href="../concepts/#colors">Color</a> </td>
+<td>
+<p>Color</p>
+</td>
+</tr>
+<tr>
+<td><code>so</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="gradient-overlay-style">Gradient Overlay Style</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description<a class="schema-link" href="../schema/#/$defs/styles/gradient-overlay-style" title="View Schema"><i class="fas fa-file-code"></i></a><a class="schema-link" href="https://canilottie.com/style-gradient-overlay" title="View Compatibility"><i class="fas fa-list-check"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>8</code></td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>gf</code></td>
+<td><a href="../concepts/#gradients">Gradient Colors</a> </td>
+<td>
+<p>Gradient</p>
+</td>
+</tr>
+<tr>
+<td><code>gs</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Smoothness</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Angle</p>
+</td>
+</tr>
+<tr>
+<td><code>gt</code></td>
+<td><a href="../constants/#gradient-type">Gradient Type</a> </td>
+<td>
+<p>Gradient Type</p>
+</td>
+</tr>
+<tr>
+<td><code>re</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Reverse</p>
+</td>
+</tr>
+<tr>
+<td><code>al</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Align with layer</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Scale</p>
+</td>
+</tr>
+<tr>
+<td><code>of</code></td>
+<td><a href="../concepts/#animated-property">Animated</a> <code>number</code></td>
+<td>
+<p>Offset</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
