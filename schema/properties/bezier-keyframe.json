@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Shape Keyframe",
+    "allOf": [
+        {
+            "$ref": "#/$defs/properties/base-keyframe"
+        },
+        {
+            "properties": {
+                "s": {
+                    "title": "Value",
+                    "description": "Value at this keyframe.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/values/bezier"
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
+                },
+                "e": {
+                    "title": "End value",
+                    "description": "Value at the end of the keyframe, note that this is deprecated and you should use `s` from the next keyframe to get this value",
+                    "deprecated": true,
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/values/bezier"
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
+                }
+            }
+        }
+    ],
+    "required": ["s"]
+}

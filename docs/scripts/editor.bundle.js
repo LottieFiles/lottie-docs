@@ -14125,7 +14125,7 @@
            // (`maxSize`) or before such a node.
            let fork = cursor.fork();
            let size = 0, start = 0, skip = 0, minStart = fork.end - maxBufferLength;
-           let result = { size: 0, start: 0, skip: 0 };
+           let result = { size: 0, start: 0, 
            scan: for (let minPos = fork.pos - maxSize; fork.pos > minPos;) {
                let nodeSize = fork.size;
                // Pretend nested repeat nodes of the same type don't exist

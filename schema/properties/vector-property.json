@@ -1,0 +1,61 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Vector Property",
+    "description": "An animatable property that holds an array of numbers",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/slottable-property"
+        },
+        {
+            "properties": {
+                "ix": {
+                    "title": "Property Index",
+                    "type": "integer"
+                },
+                "l": {
+                    "title": "Length",
+                    "description": "Number of components in the value arrays.\nIf present values will be truncated or expanded to match this length when accessed from expressions.",
+                    "type": "integer"
+                }
+            }
+        }
+    ],
+    "oneOf": [
+        {
+            "$comment": "Not animated",
+            "properties": {
+                "a": {
+                    "title": "Animated",
+                    "description": "Whether the property is animated",
+                    "$ref": "#/$defs/values/int-boolean",
+                    "const": 0
+                },
+                "k": {
+                    "title": "Value",
+                    "description": "Static Value",
+                    "$ref": "#/$defs/values/vector"
+                }
+            }
+        },
+        {
+            "$comment": "Animated",
+            "properties": {
+                "a": {
+                    "title": "Animated",
+                    "description": "Whether the property is animated",
+                    "$ref": "#/$defs/values/int-boolean",
+                    "const": 1
+                },
+                "k": {
+                    "type": "array",
+                    "title": "Keyframes",
+                    "description": "Array of keyframes",
+                    "items": {
+                        "$ref": "#/$defs/properties/vector-keyframe"
+                    }
+                }
+            }
+        }
+    ]
+}

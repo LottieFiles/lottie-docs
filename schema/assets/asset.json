@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Asset",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "description": "Unique identifier used by layers when referencing this asset",
+                    "type": "string"
+                }
+            },
+            "required": ["id"]
+        }
+    ]
+}

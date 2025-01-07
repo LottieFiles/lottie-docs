@@ -13,37 +13,36 @@ CANIUSE_DIR ?= $(SOURCE_DIR)/../caniuse/data
 
 all: docs
 
-lottie.schema.json:$(SOURCE_DIR)/docs/schema/lottie.schema.json
+lottie.schema.json:$(SOURCE_DIR)/docs/lottie.schema.json
 
-$(SOURCE_DIR)/docs/schema/lottie.schema.json: $(wildcard $(SOURCE_DIR)/docs/schema/**/*.json)
-$(SOURCE_DIR)/docs/schema/lottie.schema.json: $(SOURCE_DIR)/tools/schema-merge.py
-	$(SOURCE_DIR)/tools/schema-merge.py
+$(SOURCE_DIR)/docs/lottie.schema.json: $(wildcard $(SOURCE_DIR)/schema/**/*.json)
+	schema-merge.py
 
-docs:$(SOURCE_DIR)/docs/schema/lottie.schema.json
+docs:$(SOURCE_DIR)/docs/lottie.schema.json
 docs:$(SOURCE_DIR)/docs/scripts/blockly_generated.js
 	$(MKDOCS) build -f $(SOURCE_DIR)/mkdocs.yml -d $(OUTPUT_DIR)
 
 $(OUTPUT_DIR)/index.html:$(wildcard $(SOURCE_DIR)/docs/**/*)
-$(OUTPUT_DIR)/index.html:$(SOURCE_DIR)/docs/schema/lottie.schema.json
+$(OUTPUT_DIR)/index.html:$(SOURCE_DIR)/docs/lottie.schema.json
 $(OUTPUT_DIR)/index.html:$(SOURCE_DIR)/tools/md_extensions.py
 $(OUTPUT_DIR)/index.html:docs
 
-docs_serve:$(SOURCE_DIR)/docs/schema/lottie.schema.json
+docs_serve:$(SOURCE_DIR)/docs/lottie.schema.json
 	$(MKDOCS) serve -f $(SOURCE_DIR)/mkdocs.yml
 
 install_dependencies:
 	$(PIP) install -r $(SOURCE_DIR)/requirements.txt
 
-validate: $(SOURCE_DIR)/docs/schema/lottie.schema.json
-	$(SOURCE_DIR)/tools/schema-validate.py
+validate: $(SOURCE_DIR)/docs/lottie.schema.json
+	schema-validate.py
 
 
 validate_links:$(OUTPUT_DIR)/index.html
-	$(SOURCE_DIR)/tools/schema-validate.py --html $(OUTPUT_DIR)
+	schema-validate.py --html $(OUTPUT_DIR)
 
 $(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/tools/generate-blockly.py
-$(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/docs/schema/lottie.schema.json
+$(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/docs/lottie.schema.json
 	$(SOURCE_DIR)/tools/generate-blockly.py
 
-validate_caniuse: $(SOURCE_DIR)/docs/schema/lottie.schema.json
+validate_caniuse: $(SOURCE_DIR)/docs/lottie.schema.json
 	$(SOURCE_DIR)/tools/caniuse.py '$(CANIUSE_DIR)'

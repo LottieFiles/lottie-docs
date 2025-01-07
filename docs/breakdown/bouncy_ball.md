@@ -13,7 +13,7 @@ pages where you can find a description for those.
 
 ## Top level
 
-The top level object, describes the [animation](../animation.md) as a whole.
+The top level object, describes the {link:composition/animation:animation} as a whole.
 
 ```json
 {
@@ -92,7 +92,7 @@ Here it's not being used since there is only one layer.
 
 ## Layer transform
 
-Here we'll have a look at the `ks` attribute of the layer that represents its [transform](../concepts.md#transform):
+Here we'll have a look at the `ks` attribute of the layer that represents its {link:helpers/transform:transform}:
 
 ```json
 {
@@ -133,7 +133,7 @@ This layer does not have any transform so everything is at its default value.
 
 You might have noticed that all the attributes of the transform are objects with the same structure.
 
-This is because they are [animatable properties](../concepts.md#animated-property).
+This is because they are [animatable properties](../properties.md#animated-property).
 In this case they don't have any animations applied to them so `a` is `0` and `k` is the actual value.
 
 If they were animated, `a` would be `1` and `k` would have a list of keyframes (more on this later).
@@ -238,7 +238,7 @@ that determines the fill color for the ellipse.
 
 `o` is the opacity, as a percentage.
 
-`c` is a [color](../concepts.md#colors). Colors are RGB triplets with components in `[0, 1]`.<br/>
+`c` is a {link:values/color}. Colors are RGB triplets with components in `[0, 1]`.<br/>
 In this case it represents this color: {lottie_color:0.710,0.192,0.278}.
 
 ## Transform
@@ -341,7 +341,7 @@ Here position (`p`) and scale (`s`) are animated and we'll look into them separa
     ]
 }
 ```
-`a` is `1`, denoting the property is animated. `k` contains a list of [keyframes](../concepts.md#keyframe).
+`a` is `1`, denoting the property is animated. `k` contains a list of {link:properties/base-keyframe:keyframe}.
 
 ### First Keyframe
 
@@ -377,7 +377,7 @@ In this case `t` is `0`, meaning the animation starts right away.
 
 `s` shows the value the property will have at `t`.
 
-`o` and `i` specify the [easing function](../concepts.md#easing-handles).
+`o` and `i` specify the {link:properties/easing-handle:easing function}.
 
 `o` affects the movement at the beginning of the keyframe and `i` at the end.
 

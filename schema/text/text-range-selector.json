@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Range Selector",
+    "caniuse": "animators-range-selectors",
+    "properties": {
+        "t": {
+            "title": "Expressible",
+            "$ref": "#/$defs/values/int-boolean"
+        },
+        "xe": {
+            "title": "Max Ease",
+            "$ref": "#/$defs/properties/scalar-property"
+        },
+        "ne": {
+            "title": "Min Ease",
+            "$ref": "#/$defs/properties/scalar-property"
+        },
+        "a": {
+            "title": "Max Amount",
+            "$ref": "#/$defs/properties/scalar-property"
+        },
+        "b": {
+            "title": "Based On",
+            "$ref": "#/$defs/constants/text-based"
+        },
+        "rn": {
+            "title": "Randomize",
+            "$ref": "#/$defs/values/int-boolean"
+        },
+        "sh": {
+            "title": "Shape",
+            "$ref": "#/$defs/constants/text-shape"
+        },
+        "o": {
+            "title": "Offset",
+            "$ref": "#/$defs/properties/scalar-property"
+        },
+        "r": {
+            "title": "Range Units",
+            "caniuse": "range-selectors-units",
+            "$ref": "#/$defs/constants/text-range-units"
+        },
+        "sm": {
+            "title": "Selector Smoothness",
+            "$ref": "#/$defs/properties/scalar-property"
+        },
+        "s": {
+            "title": "Start",
+            "$ref": "#/$defs/properties/scalar-property"
+        },
+        "e": {
+            "title": "End",
+            "$ref": "#/$defs/properties/scalar-property"
+        }
+    },
+    "required": ["t", "a", "b", "sh"]
+}

@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Follow Path",
+    "caniuse": "text-path",
+    "description": "Uses the path described by a layer mask to put the text on said path.",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "m": {
+                    "title": "Mask",
+                    "type": "integer",
+                    "description": "Index of the mask to use"
+                },
+                "f": {
+                    "title": "First Margin",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "l": {
+                    "title": "Last Margin",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "r": {
+                    "title": "Reverse Path",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "a": {
+                    "title": "Force Alignment",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "p": {
+                    "title": "Perpendicular To Path",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": []
+        }
+    ]
+}

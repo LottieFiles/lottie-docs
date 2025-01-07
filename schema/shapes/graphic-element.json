@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Graphic Element",
+    "description": "Element used to display vector data in a shape layer",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "hd": {
+                    "title": "Hidden",
+                    "description": "Whether the shape is hidden",
+                    "type": "boolean"
+                },
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string"
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/constants/blend-mode"
+                },
+                "ix": {
+                    "title": "Property index",
+                    "description": "Index used in expressions",
+                    "type": "integer"
+                },
+                "cl": {
+                    "title": "CSS Class",
+                    "description": "CSS class used by the SVG renderer",
+                    "type": "string"
+                },
+                "ln": {
+                    "title": "Layer XML ID",
+                    "description": "`id` attribute used by the SVG renderer",
+                    "type": "string"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

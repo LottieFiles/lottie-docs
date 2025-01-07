@@ -4,7 +4,7 @@
 
 Fonts are defined in the animation object, under `fonts`.
 
-When `fonts` is present in the [Animation](animation.md) object,
+When `fonts` is present in the {link:composition/animation} object,
 it has a single attribute called `list`, which is an array of font objects:
 
 {schema_object:text/font}
@@ -154,7 +154,7 @@ Here we use `origin` 3.
 ### Character Data
 
 You can also have font data directly into the lottie, this is done by having an
-array of character data objects in the `chars` attribute of the [animation](animation.md).
+array of character data objects in the `chars` attribute of the {link:composition/animation}.
 
 {schema_object:text/character-data}
 data:Defines how the character is defined
@@ -162,13 +162,13 @@ data:Defines how the character is defined
 
 #### Character Shapes
 
-{schema_attribute:description:text/character-shapes}
+{schema_string:text/character-shapes/description}
 
 {schema_object:text/character-shapes}
 
 #### Character Precomp
 
-{schema_attribute:description:text/character-precomp}
+{schema_string:text/character-precomp/description}
 
 {schema_object:text/character-precomp}
 
@@ -178,13 +178,13 @@ The [text layer](layers.md#text-layer) has an attribute called `t` containing a 
 
 ### Text Data
 
-{schema_attribute:description:text/text-data}
+{schema_string:text/text-data/description}
 
 {schema_object:text/text-data}
 
 ### Animated Text Document
 
-This object is similar to an [animated property](concepts.md#animated-property) for text.
+This object is similar to an [animated property](properties.md#animated-property) for text.
 
 The main difference is that it's always treated as animated (ie: you _must_ use keyframes).
 
@@ -194,7 +194,7 @@ k: Array of [keyframes](#text-document-keyframe)
 
 ### Text Document Keyframe
 
-This is similar to the [keyframe](concepts.md#keyframe) object used by animated properties,
+This is similar to the {link:properties/base-keyframe:keyframe} object used by animated properties,
 but it doesn't have any attribute specifying interpolation as text is always animated in discrete steps.
 
 {schema_object:text/text-document-keyframe}
@@ -205,37 +205,39 @@ This is where the actual text data is stored.
 
 {schema_object:text/text-document}
 
-{lottie_playground:text-document.json:300:100}
-Text:<input type="text" value="Hello"/>
-Color Red:<input type="range" min="0" value="0" max="1" step="0.01"/>
-Color Green:<input type="range" min="0" value="0" max="1" step="0.01"/>
-Color Blue:<input type="range" min="0" value="0" max="1" step="0.01"/>
-Stroke Width:<input type="range" min="0" value="0" max="32" />
-Stroke Red:<input type="range" min="0" value="0" max="1" step="0.01"/>
-Stroke Green:<input type="range" min="0" value="0" max="1" step="0.01"/>
-Stroke Blue:<input type="range" min="0" value="0" max="1" step="0.01"/>
-Position X:<input type="range" min="0" value="5" max="300"/>
-Position Y:<input type="range" min="0" value="80" max="100"/>
-Font Size:<input type="range" min="0" value="100" max="150"/>
-Justify:<enum>text-justify</enum>
-<json>lottie.layers[0]</json>
-<script>
-lottie.layers[0].t.d.k[0].s.t = data["Text"];
-lottie.layers[0].t.d.k[0].s.fc[0] = data["Color Red"];
-lottie.layers[0].t.d.k[0].s.fc[1] = data["Color Green"];
-lottie.layers[0].t.d.k[0].s.fc[2] = data["Color Blue"];
-lottie.layers[0].t.d.k[0].s.sc = [
-    data["Stroke Red"],
-    data["Stroke Green"],
-    data["Stroke Blue"]
-];
-lottie.layers[0].t.d.k[0].s.sw = data["Stroke Width"];
-lottie.layers[0].ks.p.k[0] = data["Position X"];
-lottie.layers[0].ks.p.k[1] = data["Position Y"];
-lottie.layers[0].t.d.k[0].s.s = data["Font Size"];
-lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
-</script>
-
+<lottie-playground example="text-document.json" width="300" height="100">
+    <form>
+        <input title="Text" type="text" value="Hello"/>
+        <input title="Color Red" type="range" min="0" value="0" max="1" step="0.01"/>
+        <input title="Color Green" type="range" min="0" value="0" max="1" step="0.01"/>
+        <input title="Color Blue" type="range" min="0" value="0" max="1" step="0.01"/>
+        <input title="Stroke Width" type="range" min="0" value="0" max="32" />
+        <input title="Stroke Red" type="range" min="0" value="0" max="1" step="0.01"/>
+        <input title="Stroke Green" type="range" min="0" value="0" max="1" step="0.01"/>
+        <input title="Stroke Blue" type="range" min="0" value="0" max="1" step="0.01"/>
+        <input title="Position X" type="range" min="0" value="5" max="300"/>
+        <input title="Position Y" type="range" min="0" value="80" max="100"/>
+        <input title="Font Size" type="range" min="0" value="100" max="150"/>
+        <enum title="Justify">text-justify</enum>
+    </form>
+    <json>lottie.layers[0]</json>
+    <script>
+    lottie.layers[0].t.d.k[0].s.t = data["Text"];
+    lottie.layers[0].t.d.k[0].s.fc[0] = data["Color Red"];
+    lottie.layers[0].t.d.k[0].s.fc[1] = data["Color Green"];
+    lottie.layers[0].t.d.k[0].s.fc[2] = data["Color Blue"];
+    lottie.layers[0].t.d.k[0].s.sc = [
+        data["Stroke Red"],
+        data["Stroke Green"],
+        data["Stroke Blue"]
+    ];
+    lottie.layers[0].t.d.k[0].s.sw = data["Stroke Width"];
+    lottie.layers[0].ks.p.k[0] = data["Position X"];
+    lottie.layers[0].ks.p.k[1] = data["Position Y"];
+    lottie.layers[0].t.d.k[0].s.s = data["Font Size"];
+    lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
+    </script>
+</lottie-playground>
 
 ### Text Alignment Options
 
@@ -246,73 +248,75 @@ Used to change the origin point for transformations, such as Rotation, that may 
 
 ### Text Follow Path
 
-{schema_attribute:description:text/text-follow-path}
+{schema_string:text/text-follow-path/description}
 
 {schema_object:text/text-follow-path}
 
 
 ### Text Range
 
-{schema_attribute:description:text/text-range}
+{schema_string:text/text-range/description}
 
 {schema_object:text/text-range}
 
-{lottie_playground:text-selector.json:512:350}
-Text:<textarea>
-Hello World
-the quick brown
-fox jumps over
-the lazy dog
-</textarea>
-Selector:
-Start:<input type="range" min="0" value="60" max="100" step="1"/>
-End:<input type="range" min="0" value="75" max="100" step="1"/>
-Offset:<input type="range" min="-100" value="0" max="100" step="1"/>
-Min Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
-Max Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
-Randomize:<input type="checkbox" />
-Range Units:<enum>text-range-units</enum>
-Based On:<enum>text-based</enum>
-Shape:<enum>text-shape</enum>
-Transform:
-Position X:<input type="range" min="-100" value="0" max="100" step="1"/>
-Position Y:<input type="range" min="-100" value="0" max="100" step="1"/>
-Rotation:<input type="range" min="0" value="0" max="360" step="1"/>
-Opacity:<input type="range" min="0" value="100" max="100" step="1"/>
-Style:
-Fill:<input type="color" lottie-color="1" value="#3250b0" />
-Fill Hue:<input type="range" min="-360" value="0" max="360" step="1"/>
-Fill Saturation:<input type="range" min="-100" value="0" max="100" step="1"/>
-Fill Brightness:<input type="range" min="-100" value="0" max="100" step="1"/>
-Stroke:<input type="color" lottie-color="1" value="#000000" />
-Stroke Width:<input type="range" min="0" value="0" max="20" step="1"/>
-Letter Spacing:<input type="range" min="-100" value="0" max="100" step="1"/>
-<json>lottie.layers[0].t.a[0]</json>
-<script>
-var range = lottie.layers[0].t.a[0];
-lottie.fonts.list[0].fFamily = "monospace";
-lottie.layers[0].t.d.k[0].s.t = data["Text"].replace(/\n\r?/g, "\r")
-range.s.s.k = data["Start"];
-range.s.e.k = data["End"];
-range.s.o.k = data["Offset"];
-range.s.ne.k = data["Min Ease"];
-range.s.xe.k = data["Max Ease"];
-range.s.rn = Number(data["Randomize"]);
-range.s.b = Number(data["Based On"]);
-range.s.sh = Number(data["Shape"]);
-range.s.r = Number(data["Range Units"]);
-range.a.p.k = [data["Position X"], data["Position Y"]];
-range.a.o.k = data["Opacity"];
-range.a.r.k = data["Rotation"];
-range.a.fc.k = data["Fill"];
-range.a.sc.k = data["Stroke"];
-range.a.sw.k = data["Stroke Width"];
-range.a.t.k = data["Letter Spacing"];
-range.a.fh.k = data["Fill Hue"];
-range.a.fs.k = data["Fill Saturation"];
-range.a.fb.k = data["Fill Brightness"];
-</script>
-
+<lottie-playground example="text-selector.json" width="512" height="350">
+    <form>
+        <textarea title="Text">
+        Hello World
+        the quick brown
+        fox jumps over
+        the lazy dog
+        </textarea>
+        <th>Selector</th>
+        <input title="Start" type="range" min="0" value="60" max="100" step="1"/>
+        <input title="End" type="range" min="0" value="75" max="100" step="1"/>
+        <input title="Offset" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Min Ease" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Max Ease" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Randomize" type="checkbox" />
+        <enum title="Range Units">text-range-units</enum>
+        <enum title="Based On">text-based</enum>
+        <enum title="Shape">text-shape</enum>
+        <th>Transform</th>
+        <input title="Position X" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Position Y" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Rotation" type="range" min="0" value="0" max="360" step="1"/>
+        <input title="Opacity" type="range" min="0" value="100" max="100" step="1"/>
+        <th>Style</th>
+        <input title="Fill" type="color" lottie-color="1" value="#3250b0" />
+        <input title="Fill Hue" type="range" min="-360" value="0" max="360" step="1"/>
+        <input title="Fill Saturation" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Fill Brightness" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Stroke" type="color" lottie-color="1" value="#000000" />
+        <input title="Stroke Width" type="range" min="0" value="0" max="20" step="1"/>
+        <input title="Letter Spacing" type="range" min="-100" value="0" max="100" step="1"/>
+    </form>
+    <json>lottie.layers[0].t.a[0]</json>
+    <script>
+    var range = lottie.layers[0].t.a[0];
+    lottie.fonts.list[0].fFamily = "monospace";
+    lottie.layers[0].t.d.k[0].s.t = data["Text"].replace(/\n\r?/g, "\r")
+    range.s.s.k = data["Start"];
+    range.s.e.k = data["End"];
+    range.s.o.k = data["Offset"];
+    range.s.ne.k = data["Min Ease"];
+    range.s.xe.k = data["Max Ease"];
+    range.s.rn = Number(data["Randomize"]);
+    range.s.b = Number(data["Based On"]);
+    range.s.sh = Number(data["Shape"]);
+    range.s.r = Number(data["Range Units"]);
+    range.a.p.k = [data["Position X"], data["Position Y"]];
+    range.a.o.k = data["Opacity"];
+    range.a.r.k = data["Rotation"];
+    range.a.fc.k = data["Fill"];
+    range.a.sc.k = data["Stroke"];
+    range.a.sw.k = data["Stroke Width"];
+    range.a.t.k = data["Letter Spacing"];
+    range.a.fh.k = data["Fill Hue"];
+    range.a.fs.k = data["Fill Saturation"];
+    range.a.fb.k = data["Fill Brightness"];
+    </script>
+</lottie-playground>
 
 #### Text Range Selector
 
@@ -331,29 +335,32 @@ It also changes the meaning of an index when `r` is set to Indices.
 
 {schema_object:text/text-range-selector}
 
-{lottie_playground:text-selector.json:512:350}
-Start:<input type="range" min="0" value="60" max="100" step="1"/>
-End:<input type="range" min="0" value="75" max="100" step="1"/>
-Offset:<input type="range" min="-100" value="0" max="100" step="1"/>
-Min Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
-Max Ease:<input type="range" min="-100" value="0" max="100" step="1"/>
-Randomize:<input type="checkbox" />
-Range Units:<enum>text-range-units</enum>
-Based On:<enum>text-based</enum>
-Shape:<enum>text-shape</enum>
-<json>lottie.layers[0].t.a[0].s</json>
-<script>
-var selector = lottie.layers[0].t.a[0].s;
-selector.s.k = data["Start"];
-selector.e.k = data["End"];
-selector.o.k = data["Offset"];
-selector.ne.k = data["Min Ease"];
-selector.xe.k = data["Max Ease"];
-selector.rn = Number(data["Randomize"]);
-selector.b = Number(data["Based On"]);
-selector.sh = Number(data["Shape"]);
-selector.r = Number(data["Range Units"]);
-</script>
+<lottie-playground example="text-selector.json" width="512" height="350">
+    <form>
+        <input title="Start" type="range" min="0" value="60" max="100" step="1"/>
+        <input title="End" type="range" min="0" value="75" max="100" step="1"/>
+        <input title="Offset" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Min Ease" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Max Ease" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Randomize" type="checkbox" />
+        <enum title="Range Units">text-range-units</enum>
+        <enum title="Based On">text-based</enum>
+        <enum title="Shape">text-shape</enum>
+    </form>
+    <json>lottie.layers[0].t.a[0].s</json>
+    <script>
+    var selector = lottie.layers[0].t.a[0].s;
+    selector.s.k = data["Start"];
+    selector.e.k = data["End"];
+    selector.o.k = data["Offset"];
+    selector.ne.k = data["Min Ease"];
+    selector.xe.k = data["Max Ease"];
+    selector.rn = Number(data["Randomize"]);
+    selector.b = Number(data["Based On"]);
+    selector.sh = Number(data["Shape"]);
+    selector.r = Number(data["Range Units"]);
+    </script>
+</lottie-playground>
 
 #### Text Style
 
@@ -364,32 +371,34 @@ by the text selector property
 
 {schema_object:text/text-style}
 
-
-{lottie_playground:text-selector.json:512:350}
-Transform:
-Position X:<input type="range" min="-100" value="0" max="100" step="1"/>
-Position Y:<input type="range" min="-100" value="0" max="100" step="1"/>
-Rotation:<input type="range" min="0" value="0" max="360" step="1"/>
-Opacity:<input type="range" min="0" value="100" max="100" step="1"/>
-Style:
-Fill:<input type="color" lottie-color="1" value="#3250b0" />
-Fill Hue:<input type="range" min="-360" value="0" max="360" step="1"/>
-Fill Saturation:<input type="range" min="-100" value="0" max="100" step="1"/>
-Fill Brightness:<input type="range" min="-100" value="0" max="100" step="1"/>
-Stroke:<input type="color" lottie-color="1" value="#000000" />
-Stroke Width:<input type="range" min="0" value="0" max="20" step="1"/>
-Letter Spacing:<input type="range" min="-100" value="0" max="100" step="1"/>
-<json>lottie.layers[0].t.a[0].a</json>
-<script>
-var range = lottie.layers[0].t.a[0];
-range.a.p.k = [data["Position X"], data["Position Y"]];
-range.a.o.k = data["Opacity"];
-range.a.r.k = data["Rotation"];
-range.a.fc.k = data["Fill"];
-range.a.sc.k = data["Stroke"];
-range.a.sw.k = data["Stroke Width"];
-range.a.t.k = data["Letter Spacing"];
-range.a.fh.k = data["Fill Hue"];
-range.a.fs.k = data["Fill Saturation"];
-range.a.fb.k = data["Fill Brightness"];
-</script>
+<lottie-playground example="text-selector.json" width="512" height="350">
+    <form>
+        <tr>Transform</tr>
+        <input title="Position X" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Position Y" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Rotation" type="range" min="0" value="0" max="360" step="1"/>
+        <input title="Opacity" type="range" min="0" value="100" max="100" step="1"/>
+        <tr>Style</tr>
+        <input title="Fill" type="color" lottie-color="1" value="#3250b0" />
+        <input title="Fill Hue" type="range" min="-360" value="0" max="360" step="1"/>
+        <input title="Fill Saturation" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Fill Brightness" type="range" min="-100" value="0" max="100" step="1"/>
+        <input title="Stroke" type="color" lottie-color="1" value="#000000" />
+        <input title="Stroke Width" type="range" min="0" value="0" max="20" step="1"/>
+        <input title="Letter Spacing" type="range" min="-100" value="0" max="100" step="1"/>
+    </form>
+    <json>lottie.layers[0].t.a[0].a</json>
+    <script>
+    var range = lottie.layers[0].t.a[0];
+    range.a.p.k = [data["Position X"], data["Position Y"]];
+    range.a.o.k = data["Opacity"];
+    range.a.r.k = data["Rotation"];
+    range.a.fc.k = data["Fill"];
+    range.a.sc.k = data["Stroke"];
+    range.a.sw.k = data["Stroke Width"];
+    range.a.t.k = data["Letter Spacing"];
+    range.a.fh.k = data["Fill Hue"];
+    range.a.fs.k = data["Fill Saturation"];
+    range.a.fb.k = data["Fill Brightness"];
+    </script>
+</lottie-playground>

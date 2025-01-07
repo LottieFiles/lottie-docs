@@ -36,8 +36,8 @@ In the example below you can control the _t_ value to see how this algorithm wor
 The black dots are the ones that define the bezier, and the red dot is the position
 along the bezier at the given _t_.
 
-{lottie_playground:bezier_expression.json:512:512}
-t:<input type="range" min="0" value="0.5" max="1" step="0.1"/>
+<lottie-playground example="bezier_expression.json">
+    <input title="t" type="range" min="0" value="0.5" max="1" step="0.1"/>
 <script>
 lottie.layers[0].ef[0].ef[0].v.a = 0;
 lottie.layers[0].ef[0].ef[0].v.k = data["t"];

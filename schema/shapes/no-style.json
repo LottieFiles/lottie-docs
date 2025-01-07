@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "No Style",
+    "description": "Represents a style for shapes without fill or stroke",
+    "deprecated": true,
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/shape-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "no"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}
+

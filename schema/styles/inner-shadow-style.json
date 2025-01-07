@@ -1,0 +1,57 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Inner Shadow",
+    "caniuse": "style-inner-shadow",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 2
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "a": {
+                    "title": "Angle",
+                    "description": "Local light angle",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "s": {
+                    "title": "Size",
+                    "description": "Blur size",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "d": {
+                    "title": "Distance",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "ch": {
+                    "title": "Choke Spread",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "no": {
+                    "title": "Noise",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

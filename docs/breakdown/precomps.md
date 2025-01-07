@@ -152,8 +152,8 @@ have parented layers or transforms applied to some of the layers.
 Note that in the example below `w` and `h` keep their initial value
 and only the scale is changed.
 
-{lottie_playground:precomp/star-comp.json:512:512}
-Scale:<input type="range" min="10" value="50" max="200" />
+<lottie-playground example="precomp/star-comp.json">
+    <input title="Scale" type="range" min="10" value="50" max="200" />
 <json>{...lottie, assets:["..."]}</json>
 <script>
 lottie.w = lottie.h = 512 * data["Scale"] / 100;
@@ -171,8 +171,8 @@ lottie.layers[0].ks.s = {
 Similarly, you can use time stretch to speed up and slow down an animation:
 
 
-{lottie_playground:precomp/star-comp.json:512:512}
-Speed:<input type="range" min="10" value="50" max="200" />
+<lottie-playground example="precomp/star-comp.json">
+    <input title="Speed" type="range" min="10" value="50" max="200" />
 <json>{...lottie, assets:["..."]}</json>
 <script>
 var time_mult = 100 / data["Speed"];
@@ -184,9 +184,9 @@ lottie.layers[0].sr = time_mult;
 You can also change the start time to delay the start of the precomp playback:
 
 
-{lottie_playground:precomp/star-comp.json:512:512}
-Start:<input type="range" min="0" value="30" max="60" />
-Speed:<input type="range" min="10" value="50" max="200" />
+<lottie-playground example="precomp/star-comp.json">
+    <input title="Start" type="range" min="0" value="30" max="60" />
+    <input title="Speed" type="range" min="10" value="50" max="200" />
 <json>{...lottie, assets:["..."]}</json>
 <script>
 var time_mult = 100 / data["Speed"];
@@ -203,7 +203,7 @@ While `sr` only allows you to speed up and slow down time, with
 [time remapping](../layers.md#time-remapping) You can have more
 interesting effects, such as reversing playback:
 
-{lottie_playground:precomp/star-comp.json:512:512}
+<lottie-playground example="precomp/star-comp.json">
 <json>{...lottie, assets:["..."]}</json>
 <script>
 lottie.layers[0].tm = {
@@ -255,7 +255,7 @@ Second Animation:
 
 Overlaid:
 
-{lottie_playground:precomp/star-circle.json:512:512}
+<lottie-playground example="precomp/star-circle.json">
 <json>{...lottie, assets:["..."]}</json>
 
 
@@ -347,7 +347,7 @@ durations.
 This works basically the same as overlaying them, just by changing
 some timing properties in the precomp layers.
 
-{lottie_playground:precomp/star-circle.json:512:512}
+<lottie-playground example="precomp/star-circle.json">
 <json>{...lottie, assets:["..."]}</json>
 <script>
 lottie.op = 120
@@ -361,7 +361,7 @@ lottie.layers[1].st = 60;
 Just like any other visual layer, precomp layers can be used for [mattes](../layers.md#mattes).
 
 
-{lottie_playground:precomp/star-circle.json:512:512}
+<lottie-playground example="precomp/star-circle.json">
 <json>{...lottie, assets:["..."]}</json>
 <script>
 lottie.layers[0].td = 1;

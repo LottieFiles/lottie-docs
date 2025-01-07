@@ -1,0 +1,121 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Animation",
+    "description": "Top level object, describing the animation",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "v": {
+                    "title": "Bodymovin version, on very old versions some things might be slightly different from what is explained here",
+                    "type": "string"
+                },
+                "ver": {
+                    "title": "Specification Version",
+                    "description": "Specification version this Lottie is targeting. This is a 6 digit number with version components encoded as `MMmmpp`, with `MM` being major version, `mm` being minor and `pp` being patch.",
+                    "type": "integer",
+                    "minimum": 10000
+                },
+                "fr": {
+                    "title": "Framerate",
+                    "description": "Framerate in frames per second",
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                },
+                "ip": {
+                    "title": "In Point",
+                    "description": "Frame the animation starts at (usually 0)",
+                    "type": "number"
+                },
+                "op": {
+                    "title": "Out Point",
+                    "description": "Frame the animation stops/loops at, which makes this the duration in frames when `ip` is 0",
+                    "type": "number"
+                },
+                "w": {
+                    "title": "Width",
+                    "description": "Width of the animation",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "h": {
+                    "title": "Height",
+                    "description": "Height of the animation",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "ddd": {
+                    "title": "Threedimensional",
+                    "$ref": "#/$defs/values/int-boolean",
+                    "default": 0,
+                    "description": "Whether the animation has 3D layers"
+                },
+                "assets": {
+                    "title": "Assets",
+                    "type": "array",
+                    "description": "List of assets that can be referenced by layers",
+                    "items": {
+                        "$ref": "#/$defs/assets/all-assets"
+                    }
+                },
+                "comps": {
+                    "title": "Extra Compositions",
+                    "type": "array",
+                    "description": "List of Extra compositions not referenced by anything",
+                    "items": {
+                            "$ref": "#/$defs/assets/precomposition"
+                    }
+                },
+                "fonts": {
+                    "title": "Fonts",
+                    "$ref": "#/$defs/text/font-list"
+                },
+                "chars": {
+                    "title": "Characters",
+                    "description": "Data defining text characters as lottie shapes. If present a player might only render characters defined here and nothing else.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/text/character-data"
+                    }
+                },
+                "meta": {
+                    "title": "Metadata",
+                    "description": "Document metadata",
+                    "$ref": "#/$defs/composition/metadata"
+                },
+                "metadata": {
+                    "title": "User Metadata",
+                    "$ref": "#/$defs/composition/user-metadata"
+                },
+                "markers": {
+                    "title": "Markers",
+                    "description": "Markers defining named sections of the composition.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/helpers/marker"
+                    }
+                },
+                "mb": {
+                    "title": "Motion Blur",
+                    "$ref": "#/$defs/composition/motion-blur"
+                },
+                "slots": {
+                    "title": "Slots",
+                    "description": "Dictionary of slot ids that will replace matching properties.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/$defs/helpers/slot"
+                    }
+                }
+            },
+            "required": ["w", "h", "fr", "op", "ip"]
+        },
+        {
+            "$ref": "#/$defs/composition/composition"
+        }
+    ]
+}

@@ -1,0 +1,82 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Bevel Emboss",
+    "caniuse": "style-bevel-and-emboss",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 5
+                },
+                "bs": {
+                    "title": "Bevel Style",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "bt": {
+                    "title": "Technique",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "sr": {
+                    "title": "Strength",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "s": {
+                    "title": "Size",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "sf": {
+                    "title": "Soften",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "ga": {
+                    "title": "Global Angle",
+                    "description": "Use global light",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "a": {
+                    "title": "Angle",
+                    "description": "Local lighting angle",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "ll": {
+                    "title": "Altitude",
+                    "description": "Local lighting altitude",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "hm": {
+                    "title": "Highlight Mode",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "hc": {
+                    "title": "Highlight Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "ho": {
+                    "title": "Highlight Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "sm": {
+                    "title": "Shadow Mode",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "sc": {
+                    "title": "Shadow Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "so": {
+                    "title": "Shadow Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

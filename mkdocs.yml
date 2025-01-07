@@ -13,8 +13,21 @@ use_directory_urls: true
 site_url: https://lottiefiles.github.io/lottie-docs/
 markdown_extensions:
     - md_in_html
-    - md_extensions
     - footnotes
+    - attr_list
+    - lottie_specs.markdown.lottie_markdown:
+        docs_link_prefix: ""
+        link_mapping:
+            effect-values: effects
+            styles: effects
+        avoid_grabby_html:
+            - lottie
+            - lottie-playground
+            - algorithm
+            - shape_bezier_script
+            - effect_shader_script
+    - lottie_specs.markdown.latex_markdown
+    - md_extensions
 extra_css:
     - /lottie-docs/style/style.css
     - /lottie-docs/style/lottie-theme.css
@@ -23,6 +36,7 @@ plugins:
     - redirects:
         redirect_maps:
             "playground/explain.md": "playground/json_editor.md"
+            "animation.md": "composition.md"
 
 nav:
     - "Home" : index.md
@@ -33,11 +47,13 @@ nav:
         - breakdown/bezier.md
         - breakdown/precomps.md
     - "Lottie Format":
-        - concepts.md
-        - animation.md
+        - values.md
+        - properties.md
+        - composition.md
         - layers.md
         - "Shapes": shapes.md
         - assets.md
+        - helpers.md
         - effects.md
         - constants.md
         - text.md

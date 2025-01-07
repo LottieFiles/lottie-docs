@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Color Overlay",
+    "caniuse": "style-color-overlay",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 7
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "so": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Precomposition",
+    "description": "Asset containing a composition that can be referenced by layers.",
+    "allOf": [
+        {
+            "$ref": "#/$defs/assets/asset"
+        },
+        {
+            "$ref": "#/$defs/composition/composition"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "fr": {
+                    "title": "Framerate",
+                    "description": "Framerate in frames per second",
+                    "type": "number"
+                },
+                "xt": {
+                    "title": "Extra",
+                    "description": "Extra composition",
+                    "$ref": "#/$defs/values/int-boolean",
+                    "default": 0
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Position Keyframe",
+    "allOf": [
+        {
+            "$ref": "#/$defs/properties/vector-keyframe"
+        },
+        {
+            "properties": {
+                "ti": {
+                    "title": "Value In Tangent",
+                    "description": "Tangent for values (eg: moving position around a curved path)",
+                    "$ref": "#/$defs/values/vector"
+                },
+                "to": {
+                    "title": "Value Out Tangent",
+                    "description": "Tangent for values (eg: moving position around a curved path)",
+                    "$ref": "#/$defs/values/vector"
+                }
+            }
+        }
+    ]
+}

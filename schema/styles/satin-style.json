@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Satin",
+    "caniuse": "style-satin",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 6
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "a": {
+                    "title": "Angle",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "d": {
+                    "title": "Distance",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "s": {
+                    "title": "Size",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "in": {
+                    "title": "Invert",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

@@ -846,7 +846,7 @@ for ( let [ev_type, expression] of Object.entries(json.events) )
 
 While the above would work, we should expose some objects for it to be
 useful. The lottie player define a bunch of [objects](expressions.md#global-objects)
-and [functions](expressions/#misc-functions) for expressions, but we don't really
+and [functions](expressions.md#misc-functions) for expressions, but we don't really
 need all of them since the even handlers only need to pass along the information
 that an event has occurred.
 
