@@ -1,0 +1,1 @@
+../../../js-lottie-specs/src/validator.js

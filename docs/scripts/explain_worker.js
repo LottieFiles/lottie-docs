@@ -1,6 +1,11 @@
-importScripts("lottie_explain.js");
+importScripts(
+    "https://cdnjs.cloudflare.com/ajax/libs/ajv/8.17.1/ajv2020.min.js",
+    // "https://cdn.jsdelivr.net/npm/@lottie-animation-community/lottie-specs/src/validator.js",
+    "validator.js",
+    "lottie_explain.js"
+);
 
-var schema = null;
+var validator = null;
 
 function critical_error(err)
 {
@@ -8,19 +13,18 @@ function critical_error(err)
 }
 
 var requests = [
-    fetch("/lottie-docs/schema/lottie.schema.json"),
-    fetch("/lottie-docs/schema/docs_mapping.json"),
-    fetch("/lottie-docs/schema/expressions.json")
+    fetch("/lottie-docs/lottie.schema.json"),
+    fetch("/lottie-docs/static/expressions.json")
 ]
 Promise.all(requests)
 .then(responses => {
     Promise.all(responses.map(r => r.json()))
     .then(jsons => {
-        schema = new SchemaData(jsons[0], jsons[1]);
+        validator = new LottieDocsValidator(jsons[0]);
         postMessage({
             type: "schema_loaded",
-            schema: schema,
-            expressions: jsons[2]
+            schema: validator.schema,
+            expressions: jsons[1]
         });
     })
     .catch(critical_error);
@@ -29,13 +33,13 @@ Promise.all(requests)
 
 function process_lottie(json)
 {
-    if ( schema === null )
+    if ( validator === null )
         return;
 
-    var validation = schema.root.validate(json);
+    var errors = validator.validate(json);
     postMessage({
         type: "result",
-        result: validation,
+        result: validator.errors_to_validation(errors),
     });
 }
 

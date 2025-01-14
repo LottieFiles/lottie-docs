@@ -4,6 +4,7 @@ class ValidationResult
     {
         this.issues = [];
         this.warnings = [];
+        this.unknown_properties = new Set();
         this.items_array = [];
         this.valid = true;
         this.fitness = 0;
@@ -52,6 +53,8 @@ class ValidationResult
             ...this.all_properties,
             ...other.all_properties
         };
+
+        this.unknown_properties = this.unknown_properties.union(other.unknown_properties);
     }
 
     add_child(child_key, child_validation)
@@ -70,9 +73,31 @@ class ValidationResult
         if ( !this.key.title )
             this.key.title = name;
     }
+
+    add_descendant(path, child_validation)
+    {
+        let target = this;
+        let i;
+        for ( i = 0; i < path.length - 1; i++ )
+        {
+            let chunk = path[i];
+            if ( chunk in target.children )
+            {
+                target = target.children[chunk]
+            }
+            else
+            {
+                let child = new ValidationResult();
+                target.add_child(chunk, child);
+                target = child;
+            }
+        }
+        target.add_child(path[i], child_validation);
+        return target.children[path[i]];
+    }
 }
 
-ValidationResult.matcher_keys = ["title", "description", "feature", "group", "cls", "def", "type"];
+ValidationResult.matcher_keys = ["title", "description", "feature", "group", "cls", "def", "type", "_links"];
 ValidationResult.simple_keys = ValidationResult.matcher_keys.concat("const", "key");
 ValidationResult.array_keys = ["issues", "warnings"];
 
@@ -148,16 +173,9 @@ function get_validation_links(validation, schema)
 {
     if ( validation._links === null )
     {
-        if ( validation.cls )
-        {
-            validation._links = schema.get_links(validation.group, validation.cls, validation.title);
-            if ( validation._links.length )
-                validation.title = validation._links.map(l => l.name).join(" ");
-        }
-        else
-        {
-            validation._links = [];
-        }
+        validation._links = [
+            new ReferenceLink(validation.group, validation.cls, validation.title)
+        ];
     }
 
     return validation._links;
@@ -601,9 +619,9 @@ class SchemaData
     constructor(schema, mapping_data)
     {
         this.schema = schema;
-        this.mapping_data = mapping_data;
+        // this.mapping_data = mapping_data;
         this.cache = {};
-        this.root = new SchemaMatcher(this, schema);
+        // this.root = new SchemaMatcher(this, schema);
     }
 
     get_ref(ref)
@@ -672,6 +690,104 @@ class SchemaData
             ));
         }
         return links;
+    }
+}
+
+class LottieDocsValidator extends LottieValidator
+{
+    constructor(schema)
+    {
+        super(ajv2020.Ajv2020, schema, {docs_url: "/docs"});
+    }
+
+    errors_to_validation(errors)
+    {
+        let root = new ValidationResult();
+        let results = {"": root};
+
+        for ( let error of errors )
+        {
+            console.log(error);
+            let res = new ValidationResult();
+            let path = error.path;
+
+            if ( error.type == "error" )
+            {
+                res.valid = false;
+                res.issues.push(error.message);
+            }
+            else if ( error.type == "warning" )
+            {
+                if ( error.warning == "property" )
+                {
+                    let match = path.match(/(.*)\/([^\/]+)/);
+                    let propname = match[2];
+                    path = match[1];
+                    res.unknown_properties.add(propname);
+                }
+                else
+                {
+                    res.warnings.push(error.message);
+                }
+            }
+
+            res.title = error.name;
+            res.description = error.schema.description;
+            if ( error.schema._docs_extra )
+            {
+                res.group = error.schema._docs_extra.group;
+                res.cls = error.schema._docs_extra.cls;
+            }
+
+            if ( path in results )
+            {
+                results[path].merge_from(res);
+            }
+            else
+            {
+                results[path] = root.add_descendant(path.slice(1).split("/"), res);
+            }
+        }
+        return root;
+    }
+
+    patch_object(cat, obj, ref, obj_schema, cat_docs, cat_name)
+    {
+        let obj_docs = cat_docs;
+        let obj_name = cat_name;
+        if ( obj_schema.type )
+        {
+            obj_docs += "#" + obj;
+            obj_name = obj_schema.title || kebab_to_title(obj);
+        }
+        patch_docs_links(obj_schema, {
+            _docs_extra: {
+                cls: obj,
+                group: cat,
+            },
+            _docs: obj_docs, _name: obj_name, _docs_name: obj_name
+        });
+    }
+
+    custom_validator_keywords()
+    {
+        return super.custom_validator_keywords().concat([
+            {
+                keyword: ["_docs_extra"],
+                validate: function add_docs(schema, data, parent_schema, data_ctx) {
+                    add_docs.errors = [];
+
+                    add_docs.errors.push({
+                        type: "docs",
+                        message: "",
+                        instancePath: data_ctx.instancePath,
+                        parentSchema: parent_schema,
+                    });
+
+                    return add_docs.errors.length == 0;
+                }
+            },
+        ]);
     }
 }
 
@@ -1456,13 +1572,17 @@ class TemplateFromSchemaBuilder
             for ( let s of obj.allOf )
                 this.item_data(s, out)
 
+        if ( obj.prop_oneof )
+            this.item_data(obj.prop_oneof[0].schema, out)
+
         if ( obj.if )
         {
             this.item_data(obj.if, out);
-            this.item_data(obj.then, out);
+            if ( obj.then )
+                this.item_data(obj.then, out);
         }
 
-        if ( obj.$ref )
+        if ( obj.$ref && !obj.$ref.match("slottable") )
         {
             if ( obj.title === "Opacity" && obj.$ref == "#/$defs/properties/scalar-property" )
                 this.merge_data(out, this.prop_schema(100));

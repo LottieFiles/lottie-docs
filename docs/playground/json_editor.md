@@ -3,6 +3,7 @@ disable_toc: 1
 
 <script src="../../scripts/editor.bundle.js"></script>
 <script src="../../scripts/json_editor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lottie-animation-community/lottie-specs/src/validator.js"></script>
 <script src="../../scripts/lottie_explain.js"></script>
 <link rel="stylesheet" href="../../style/editor.css" />
 <script type="module">

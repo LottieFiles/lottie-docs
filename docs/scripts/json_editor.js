@@ -271,15 +271,14 @@ class TreeResultVisitor
                 {
                     let prop_result = result.children[name];
                     this.on_property(name, name_node, prop_node, prop_result, result, path);
-                    if ( name == "ty" && prop_result.const )
+                    if ( name == "ty" )
                         this.on_ty_value(prop_node.lastChild, prop_result, result)
                     else
                         this.visit(prop_node.lastChild, prop_result, json[name], path.concat([name]), {...context, prop: name});
                 }
-                else
-                {
-                    this.on_unknown_property(name, name_node, prop_node, path.concat([name]));
-                }
+
+                if ( result.unknown_properties.has(name) )
+                    this.lint_error(name_node, "warning", `Unknown Property <code>${name}</code>`);
             }
 
             return true;
@@ -423,11 +422,6 @@ class TreeResultVisitor
 
     }
 
-    on_unknown_property(name, name_node, prop_node, path)
-    {
-        this.lint_error(name_node, "warning", `Unknown Property <code>${name}</code>`);
-    }
-
     on_value(node, result, json, path)
     {
         this.add_lint_errors(node, result);
@@ -535,8 +529,8 @@ class LottieCompletions
 
     load_schema(schema)
     {
-        let template_builder = new TemplateFromSchemaBuilder(schema);
-        for ( let name of Object.keys(schema.schema.$defs.layers) )
+        let template_builder = new TemplateFromSchemaBuilder(new SchemaData(schema));
+        for ( let name of Object.keys(schema.$defs.layers) )
         {
             if ( !name.endsWith("-layer") )
                 continue;
@@ -552,7 +546,7 @@ class LottieCompletions
             "shape-list", "shape",
         ]);
 
-        for ( let name of Object.keys(schema.schema.$defs.shapes) )
+        for ( let name of Object.keys(schema.$defs.shapes) )
         {
             if ( ! avoid.has(name) )
                 this.add_schema_completion(template_builder, name == "transform" ? "transform_shape" : name, "#/$defs/shapes/" + name);
