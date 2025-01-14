@@ -60,7 +60,6 @@
                 },
                 "bl": {
                     "title": "Blur",
-                    "caniuse": "text-animators-blur",
                     "$ref": "#/$defs/properties/scalar-property"
                 },
                 "ls": {

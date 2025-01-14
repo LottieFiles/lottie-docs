@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Effect Value",
     "description": "Value for an effect",
-    "caniuse": "effects",
     "allOf": [
         {
             "$ref": "#/$defs/helpers/visual-object"

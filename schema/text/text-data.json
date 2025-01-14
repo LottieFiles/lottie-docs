@@ -9,7 +9,6 @@
             "properties": {
                 "a": {
                     "title": "Ranges",
-                    "caniuse": "text-animators",
                     "type": "array",
                     "items": {
                         "$ref": "#/$defs/text/text-range"

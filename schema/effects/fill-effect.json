@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Fill Effect",
     "description": "Replaces the whole layer with the given color",
-    "caniuse": "effect-fill",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

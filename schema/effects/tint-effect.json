@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Tint Effect",
     "description": "Colorizes the layer",
-    "caniuse": "effect-tint",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"

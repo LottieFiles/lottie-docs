@@ -2,7 +2,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Range Selector",
-    "caniuse": "animators-range-selectors",
     "properties": {
         "t": {
             "title": "Expressible",
@@ -38,7 +37,6 @@
         },
         "r": {
             "title": "Range Units",
-            "caniuse": "range-selectors-units",
             "$ref": "#/$defs/constants/text-range-units"
         },
         "sm": {

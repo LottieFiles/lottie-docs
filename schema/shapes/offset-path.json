@@ -2,7 +2,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Offset Path",
-    "caniuse": "shape-offset-path",
     "description": "Interpolates the shape with its center point and bezier tangents with the opposite direction",
     "allOf": [
         {

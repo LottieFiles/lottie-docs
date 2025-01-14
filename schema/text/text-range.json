@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Text Range",
     "description": "Range of text with custom animations and style",
-    "caniuse": "animators-range-selectors",
     "properties": {
         "nm": {
             "title": "Name",

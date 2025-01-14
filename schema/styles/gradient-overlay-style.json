@@ -2,7 +2,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Gradient Overlay",
-    "caniuse": "style-gradient-overlay",
     "allOf": [
         {
             "$ref": "#/$defs/styles/layer-style"

@@ -2,7 +2,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Inner Glow",
-    "caniuse": "style-inner-glow",
     "allOf": [
         {
             "$ref": "#/$defs/styles/layer-style"

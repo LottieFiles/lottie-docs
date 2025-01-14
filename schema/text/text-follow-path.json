@@ -2,7 +2,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "title": "Text Follow Path",
-    "caniuse": "text-path",
     "description": "Uses the path described by a layer mask to put the text on said path.",
     "allOf": [
         {

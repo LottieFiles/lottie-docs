@@ -3,7 +3,6 @@
     "type": "object",
     "title": "Tritone Effect",
     "description": "Maps layers colors based on bright/mid/dark colors",
-    "caniuse": "effect-tritone",
     "allOf": [
         {
             "$ref": "#/$defs/effects/effect"
