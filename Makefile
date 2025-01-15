@@ -38,7 +38,7 @@ validate: $(SOURCE_DIR)/docs/lottie.schema.json
 
 
 validate_links:$(OUTPUT_DIR)/index.html
-	schema-validate.py --html $(OUTPUT_DIR)
+	schema-validate.py --html $(OUTPUT_DIR) -i assets/file-asset -i effect-values/effect-value
 
 $(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/tools/generate-blockly.py
 $(SOURCE_DIR)/docs/scripts/blockly_generated.js: $(SOURCE_DIR)/docs/lottie.schema.json

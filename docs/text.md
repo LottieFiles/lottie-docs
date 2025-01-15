@@ -7,13 +7,13 @@ Fonts are defined in the animation object, under `fonts`.
 When `fonts` is present in the {link:composition/animation} object,
 it has a single attribute called `list`, which is an array of font objects:
 
+<div id="font"></div>
 {schema_object:text/font}
 
 
 To understand how to load fonts it's better to look at some examples so here
 follow various ways of adding a font into lottie. The tables show the JSON,
 its resulting output, then an equivalent font definition using CSS.
-
 
 
 <style>
