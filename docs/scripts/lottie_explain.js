@@ -733,7 +733,7 @@ class LottiePreviewGenerator
                 ]
             });
         }
-        else if ( this.group == "animation" && this.cls == "animation" )
+        else if ( this.group == "composition" && this.cls == "animation" )
         {
             generated = lottie_clone(this.lottie);
         }
@@ -1386,7 +1386,7 @@ class TemplateFromSchemaBuilder
         let data = {};
         switch ( ref )
         {
-            case "#/$defs/properties/position-propert":
+            case "#/$defs/properties/position-property":
             case "#/$defs/properties/vector-property":
                 data = this.prop_schema([0, 0]);
                 break;
@@ -1399,6 +1399,9 @@ class TemplateFromSchemaBuilder
             case "#/$defs/properties/position-keyframe":
             case "#/$defs/properties/vector-keyframe":
                 data = this.keyframe_schema([0, 0]);
+                break;
+            case "#/$defs/properties/bezier-property":
+                data = this.prop_schema({v:[], i: [], o: [], c: false});
                 break;
             case "#/$defs/helpers/transform":
                 data = {
@@ -1416,6 +1419,7 @@ class TemplateFromSchemaBuilder
                 this.item_data(this.schema.get_ref_data(ref), data);
                 break;
         }
+        data._ref = ref
         this.data_cache[ref] = data;
         return data;
     }
@@ -1426,7 +1430,8 @@ class TemplateFromSchemaBuilder
             "const": {
                 a: 0,
                 k: value,
-            }
+            },
+            properties: {"a": {}, "k": {}}
         }
     }
 
@@ -1459,11 +1464,13 @@ class TemplateFromSchemaBuilder
         if ( obj.if )
         {
             this.item_data(obj.if, out);
-            this.item_data(obj.then, out);
+            if ( obj.then )
+                this.item_data(obj.then, out);
         }
 
-        if ( obj.$ref )
+        if ( obj.$ref && !obj.$ref.match("slottable") )
         {
+            out._ref = obj.$ref;
             if ( obj.title === "Opacity" && obj.$ref == "#/$defs/properties/scalar-property" )
                 this.merge_data(out, this.prop_schema(100));
             else
@@ -1472,6 +1479,7 @@ class TemplateFromSchemaBuilder
 
         if ( obj.description )
             out.description = obj.description;
+
 
         if ( obj.properties )
         {
