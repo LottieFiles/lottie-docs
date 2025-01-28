@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "oneOf": [
+        {"$ref": "#/$defs/effects/custom-effect"},
+        {"$ref": "#/$defs/effects/displacement-map-effect"},
+        {"$ref": "#/$defs/effects/drop-shadow-effect"},
+        {"$ref": "#/$defs/effects/effect"},
+        {"$ref": "#/$defs/effects/fill-effect"},
+        {"$ref": "#/$defs/effects/gaussian-blur-effect"},
+        {"$ref": "#/$defs/effects/matte3-effect"},
+        {"$ref": "#/$defs/effects/mesh-warp-effect"},
+        {"$ref": "#/$defs/effects/pro-levels-effect"},
+        {"$ref": "#/$defs/effects/puppet-effect"},
+        {"$ref": "#/$defs/effects/radial-wipe-effect"},
+        {"$ref": "#/$defs/effects/spherize-effect"},
+        {"$ref": "#/$defs/effects/stroke-effect"},
+        {"$ref": "#/$defs/effects/tint-effect"},
+        {"$ref": "#/$defs/effects/tritone-effect"},
+        {"$ref": "#/$defs/effects/twirl-effect"},
+        {"$ref": "#/$defs/effects/wavy-effect"}
+    ]
+}

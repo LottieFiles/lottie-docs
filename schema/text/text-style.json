@@ -1,0 +1,73 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Text Style",
+    "description": "",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/transform"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "sw": {
+                    "title": "Stroke Width",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "sc": {
+                    "title": "Stroke Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "sh": {
+                    "title": "Stroke Hue",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "ss": {
+                    "title": "Stroke Saturation",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "sb": {
+                    "title": "Stroke Brightness",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "so": {
+                    "title": "Stroke Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "fc": {
+                    "title": "Fill Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "fh": {
+                    "title": "Fill Hue",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "fs": {
+                    "title": "Fill Saturation",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "fb": {
+                    "title": "Fill Brightness",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "fo": {
+                    "title": "Fill Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "t": {
+                    "title": "Letter Spacing",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "bl": {
+                    "title": "Blur",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "ls": {
+                    "title": "Line Spacing",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": []
+        }
+    ]
+}

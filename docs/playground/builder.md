@@ -1,7 +1,7 @@
 full_page: 1
 disable_toc: 1
 
-<script src="https://unpkg.com/blockly/blockly.min.js"></script>
+<script src="https://unpkg.com/blockly@10.3.0/blockly.min.js"></script>
 <script src="../../scripts/blockly_generated.js"></script>
 <script src="../../scripts/lottie_blockly.js"></script>
 <style>

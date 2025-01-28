@@ -1,0 +1,111 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Visual Layer",
+    "description": "Layer used to affect visual elements",
+    "allOf": [
+        {
+            "$ref": "#/$defs/layers/layer"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ks": {
+                    "title": "Transform",
+                    "description": "Layer transform",
+                    "$ref": "#/$defs/helpers/transform"
+                },
+                "ao": {
+                    "title": "Auto Orient",
+                    "$ref": "#/$defs/values/int-boolean",
+                    "default": 0,
+                    "description": "If 1, the layer will rotate itself to match its animated position path"
+                },
+                "tt": {
+                    "title": "Matte Mode",
+                    "$ref": "#/$defs/constants/matte-mode",
+                    "description": "Defines the track matte mode for the layer"
+                },
+                "tp": {
+                    "title": "Matte Parent",
+                    "type": "integer",
+                    "description": "Index of the layer used as matte, if omitted assume the layer above the current one"
+                },
+                "td": {
+                    "title": "Matte Target",
+                    "$ref": "#/$defs/values/int-boolean",
+                    "description": "If set to 1, it means a layer is using this layer as a track matte"
+                },
+                "hasMask": {
+                    "title": "Has Masks",
+                    "description": "Whether the layer has masks applied",
+                    "type": "boolean"
+                },
+                "masksProperties": {
+                    "title": "Masks",
+                    "description": "Optional array of masks for the layer.",
+                    "type" : "array",
+                    "items": {
+                      "$ref": "#/$defs/helpers/mask"
+                    }
+                },
+                "ef": {
+                    "title": "Effects",
+                    "description": "List of layer effects",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/effects/all-effects"
+                    }
+                },
+                "mb": {
+                    "title": "Motion Blur",
+                    "description": "Whether motion blur is enabled for the layer",
+                    "type": "boolean"
+                },
+                "sy": {
+                    "title": "Layer style",
+                    "description": "Styling effects for this layer",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/styles/all-layer-styles"
+                    }
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/constants/blend-mode",
+                    "default": 0
+                },
+                "cl": {
+                    "title": "CSS Class",
+                    "description": "CSS class used by the SVG renderer",
+                    "type": "string"
+                },
+                "ln": {
+                    "title": "Layer XML ID",
+                    "description": "`id` attribute used by the SVG renderer",
+                    "type": "string"
+                },
+                "tg": {
+                    "title": "Layer XML tag name",
+                    "description": "tag name used by the SVG renderer",
+                    "type": "string"
+                },
+                "cp": {
+                    "deprecated": true,
+                    "title": "Collapse Transform",
+                    "description": "This is deprecated in favour of `ct`",
+                    "type": "boolean"
+                },
+                "ct": {
+                    "title": "Collapse Transform",
+                    "description": "Marks that transforms should be applied before masks",
+                    "$ref": "#/$defs/values/int-boolean",
+                    "default": 0
+                }
+            },
+            "required": [
+                "ks"
+            ]
+        }
+    ]
+}

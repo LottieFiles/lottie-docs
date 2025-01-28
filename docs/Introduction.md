@@ -29,7 +29,7 @@ simple lottie animation describing what is going on as an introduction for the f
 It also has [reference pages](layers.md) which go over the details of every object
 you can find in a lottie file, and a description of its most notable attributes.
 
-It provides a complete [JSON schema](schema/lottie.schema.json), this is intended
+It provides a complete [JSON schema](schema.md), this is intended
 for people who want to write tools to parse or generate lottie and need to get
 every little detail.
 
@@ -50,7 +50,7 @@ lottie animations, while this aims at providing a description of the file format
 
 ## For the Impatient
 
-The top level JSON object is the [Animation](animation.md).
+The top level JSON object is the {link:composition/animation}.
 
 Note that some lottie players require certain JSON keys to be presents before others in the file
 to play properly.
@@ -58,7 +58,7 @@ to play properly.
 Objects within the JSON may have a mixture of animatable and non-animatable properties.
 
 If a property is not animated, the value is represented as usual within the JSON.
-If it's animated, it has a special [representation](concepts/#animated-property).
+If it's animated, it has a special [representation](properties.md).
 
 ## Interactive Explanation
 
@@ -73,7 +73,7 @@ lottie animation.
 ## JSON Schema
 
 This guide provides a human-readable description of the format, but if you want
-a machine-readable description, we also have a [JSON schema](schema/lottie.schema.json).
+a machine-readable description, we also have a [JSON schema](lottie.schema.json).
 
 
 ## Other Resources

@@ -733,7 +733,7 @@ class LottiePreviewGenerator
                 ]
             });
         }
-        else if ( this.group == "animation" && this.cls == "animation" )
+        else if ( this.group == "composition" && this.cls == "animation" )
         {
             generated = lottie_clone(this.lottie);
         }
@@ -809,9 +809,9 @@ class LottiePreviewGenerator
                 generated.nobutton = true;
             }
         }
-        else if ( this.group == "animated-properties" )
+        else if ( this.group == "properties" )
         {
-            if ( this.cls == "color-value" )
+            if ( this.cls == "color-property" )
             {
                 generated = this.rect_shape_lottie(96, 48);
                 generated.layers[0].shapes.push({
@@ -839,7 +839,7 @@ class LottiePreviewGenerator
                 generated = this.bezier_shape_lottie(this.json);
             }
         }
-        else if ( this.group == "helpers" )
+        else if ( this.group == "values" )
         {
             if ( this.cls == "color" )
             {
@@ -856,7 +856,10 @@ class LottiePreviewGenerator
                 var prop = {"a": 0, "k": this.json};
                 generated = this.bezier_shape_lottie(prop);
             }
-            else if ( this.cls == "mask" )
+        }
+        else if ( this.group == "helpers" )
+        {
+           if ( this.cls == "mask" )
             {
                 generated = this.rect_shape_lottie(this.lottie.w, this.lottie.h);
                 generated.layers[0].shapes.push({
@@ -1310,22 +1313,22 @@ function clear_element(parent)
 }
 
 const schema_icons = {
-    "#/$defs/animated-properties/color-value": "fas fa-palette",
-    "#/$defs/animated-properties/gradient-colors": "fas fa-swatchbook",
-    //"#/$defs/animated-properties/keyframe-bezier-handle": "fas fa-bezier-curve",
-    "#/$defs/animated-properties/keyframe": "fas fa-key",
-    "#/$defs/animated-properties/multi-dimensional": "fas fa-running",
-    "#/$defs/animated-properties/position-keyframe": "fas fa-key",
-    "#/$defs/animated-properties/position": "fas fa-map-marker-alt",
-    "#/$defs/animated-properties/shape-keyframe": "fas fa-key",
-    "#/$defs/animated-properties/shape-property": "fas fa-bezier-curve",
-    "#/$defs/animated-properties/split-vector": "fas fa-map-marker-alt",
-    "#/$defs/animated-properties/position-value": "fas fa-running",
-    "#/$defs/animated-properties/value": "fas fa-running",
+    "#/$defs/properties/color-property": "fas fa-palette",
+    "#/$defs/properties/gradient-colors": "fas fa-swatchbook",
+    //"#/$defs/properties/keyframe-bezier-handle": "fas fa-bezier-curve",
+    "#/$defs/properties/vector-keyframe": "fas fa-key",
+    "#/$defs/properties/vector-property": "fas fa-running",
+    "#/$defs/properties/position-keyframe": "fas fa-key",
+    "#/$defs/properties/position-property": "fas fa-map-marker-alt",
+    "#/$defs/properties/shape-keyframe": "fas fa-key",
+    "#/$defs/properties/shape-property": "fas fa-bezier-curve",
+    "#/$defs/properties/split-vector": "fas fa-map-marker-alt",
+    "#/$defs/properties/position-property": "fas fa-running",
+    "#/$defs/properties/scalar-property": "fas fa-running",
 
-    "#/$defs/animation/animation": "fas fa-video",
-    "#/$defs/animation/metadata": "fas fa-info-circle",
-    "#/$defs/animation/motion-blur": "fas fa-wind",
+    "#/$defs/composition/animation": "fas fa-video",
+    "#/$defs/composition/metadata": "fas fa-info-circle",
+    "#/$defs/composition/motion-blur": "fas fa-wind",
 
     "#/$defs/assets/image": "fas fa-file-image",
     "#/$defs/assets/sound": "fas fa-file-audio",
@@ -1383,19 +1386,22 @@ class TemplateFromSchemaBuilder
         let data = {};
         switch ( ref )
         {
-            case "#/$defs/animated-properties/position":
-            case "#/$defs/animated-properties/multi-dimensional":
+            case "#/$defs/properties/position-property":
+            case "#/$defs/properties/vector-property":
                 data = this.prop_schema([0, 0]);
                 break;
-            case "#/$defs/animated-properties/color-value":
+            case "#/$defs/properties/color-property":
                 data = this.prop_schema([0, 0, 0]);
                 break;
-            case "#/$defs/animated-properties/value":
+            case "#/$defs/properties/scalar-property":
                 data = this.prop_schema(0);
                 break;
-            case "#/$defs/animated-properties/position-keyframe":
-            case "#/$defs/animated-properties/keyframe":
+            case "#/$defs/properties/position-keyframe":
+            case "#/$defs/properties/vector-keyframe":
                 data = this.keyframe_schema([0, 0]);
+                break;
+            case "#/$defs/properties/bezier-property":
+                data = this.prop_schema({v:[], i: [], o: [], c: false});
                 break;
             case "#/$defs/helpers/transform":
                 data = {
@@ -1413,6 +1419,7 @@ class TemplateFromSchemaBuilder
                 this.item_data(this.schema.get_ref_data(ref), data);
                 break;
         }
+        data._ref = ref
         this.data_cache[ref] = data;
         return data;
     }
@@ -1423,7 +1430,8 @@ class TemplateFromSchemaBuilder
             "const": {
                 a: 0,
                 k: value,
-            }
+            },
+            properties: {"a": {}, "k": {}}
         }
     }
 
@@ -1456,12 +1464,14 @@ class TemplateFromSchemaBuilder
         if ( obj.if )
         {
             this.item_data(obj.if, out);
-            this.item_data(obj.then, out);
+            if ( obj.then )
+                this.item_data(obj.then, out);
         }
 
-        if ( obj.$ref )
+        if ( obj.$ref && !obj.$ref.match("slottable") )
         {
-            if ( obj.title === "Opacity" && obj.$ref == "#/$defs/animated-properties/value" )
+            out._ref = obj.$ref;
+            if ( obj.title === "Opacity" && obj.$ref == "#/$defs/properties/scalar-property" )
                 this.merge_data(out, this.prop_schema(100));
             else
                 this.merge_data(out, this.ref_data(obj.$ref));
@@ -1469,6 +1479,7 @@ class TemplateFromSchemaBuilder
 
         if ( obj.description )
             out.description = obj.description;
+
 
         if ( obj.properties )
         {

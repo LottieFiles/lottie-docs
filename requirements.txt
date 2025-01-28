@@ -3,3 +3,4 @@ mkdocs-cinder
 mkdocs-redirects
 git+https://github.com/bmcorser/fontawesome-markdown.git@master
 lxml
+lottie_specs[docs] @ git+https://github.com/lottie/lottie-specs-python.git

@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "oneOf": [
+        {"$ref": "#/$defs/styles/bevel-emboss-style"},
+        {"$ref": "#/$defs/styles/color-overlay-style"},
+        {"$ref": "#/$defs/styles/drop-shadow-style"},
+        {"$ref": "#/$defs/styles/gradient-overlay-style"},
+        {"$ref": "#/$defs/styles/inner-glow-style"},
+        {"$ref": "#/$defs/styles/inner-shadow-style"},
+        {"$ref": "#/$defs/styles/outer-glow-style"},
+        {"$ref": "#/$defs/styles/satin-style"},
+        {"$ref": "#/$defs/styles/stroke-style"}
+    ]
+}

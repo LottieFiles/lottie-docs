@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "oneOf": [
+        {"$ref": "#/$defs/effect-values/angle"},
+        {"$ref": "#/$defs/effect-values/checkbox"},
+        {"$ref": "#/$defs/effect-values/color"},
+        {"$ref": "#/$defs/effect-values/drop-down"},
+        {"$ref": "#/$defs/effect-values/ignored"},
+        {"$ref": "#/$defs/effect-values/layer"},
+        {"$ref": "#/$defs/effect-values/no-value"},
+        {"$ref": "#/$defs/effect-values/point"},
+        {"$ref": "#/$defs/effect-values/slider"}
+    ]
+}

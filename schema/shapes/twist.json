@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Twist",
+    "allOf": [
+        {
+            "$ref": "#/$defs/shapes/modifier"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Shape Type",
+                    "type": "string",
+                    "const": "tw"
+                },
+                "a": {
+                    "title": "Angle",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "c": {
+                    "title": "Center",
+                    "$ref": "#/$defs/properties/vector-property"
+                }
+            },
+            "required": [
+                "ty"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "integer",
+    "title": "Trim Multiple Shapes",
+    "description": "How to handle multiple shapes in trim path",
+    "oneOf": [
+        {
+            "title": "Parallel",
+            "description": "All shapes apply the trim at the same time",
+            "const": 1
+        },
+        {
+            "title": "Sequential",
+            "description": "Shapes are considered as a continuous sequence",
+            "const": 2
+        }
+    ]
+}

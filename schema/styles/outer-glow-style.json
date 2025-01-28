@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Outer Glow",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 3
+                },
+                "c": {
+                    "title": "Color",
+                    "$ref": "#/$defs/properties/color-property"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "r": {
+                    "title": "Range",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "ch": {
+                    "title": "Choke Spread",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "no": {
+                    "title": "Noise",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "j": {
+                    "title": "Jitter",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

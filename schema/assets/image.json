@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Image",
+    "description": "Asset containing an image that can be referenced by layers.",
+    "allOf": [
+        {
+            "$ref": "#/$defs/assets/file-asset"
+        },
+        {
+            "$ref": "#/$defs/helpers/slottable-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "w": {
+                    "title": "Width",
+                    "description": "Width of the image",
+                    "type": "number"
+                },
+                "h": {
+                    "title": "Height",
+                    "description": "Height of the image",
+                    "type": "number"
+                }
+            },
+            "if": {
+                "required": ["sid"]
+            },
+            "else": {
+                "required": ["w", "h", "p"]
+            }
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "oneOf": [
+        {"$ref": "#/$defs/layers/precomposition-layer"},
+        {"$ref": "#/$defs/layers/solid-layer"},
+        {"$ref": "#/$defs/layers/image-layer"},
+        {"$ref": "#/$defs/layers/null-layer"},
+        {"$ref": "#/$defs/layers/shape-layer"},
+        {"$ref": "#/$defs/layers/text-layer"},
+        {"$ref": "#/$defs/layers/audio-layer"},
+        {"$ref": "#/$defs/layers/data-layer"},
+        {"$ref": "#/$defs/layers/camera-layer"},
+        {"$ref": "#/$defs/layers/unknown-layer"}
+    ]
+}

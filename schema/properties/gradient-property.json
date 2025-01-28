@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient Property",
+    "description": "An animatable property that holds a Gradient",
+    "properties": {
+        "p": {
+            "title": "Color stop count",
+            "type": "number"
+        },
+        "k": {
+            "title": "Gradient stops",
+            "$ref": "#/$defs/properties/gradient-stops"
+        }
+    }
+}

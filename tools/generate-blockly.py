@@ -10,7 +10,7 @@ from xml.etree import ElementTree
 
 
 import md_extensions
-from lottie_docs.schema import Schema
+from lottie_specs.schema import Schema
 
 
 class BlockDef:
@@ -466,6 +466,10 @@ class SchemaProperties:
             return None
         group = chunks[-2]
         cls = chunks[-1]
+        if cls.startswith("all-"):
+            # cls = cls[4:]
+            return group
+
         if group in categories:
             cat = categories[group]
             return "lottie_" + cat.infix + cls.replace("-", "_")
@@ -475,7 +479,7 @@ class SchemaProperties:
 
 
 def convert_object(schema_object, schema):
-    help_links = md_extensions.ref_links(str(schema_object.path), None)
+    help_links = md_extensions.ref_links(str(schema_object.path), schema)
     if not len(help_links):
         return
 
@@ -483,16 +487,16 @@ def convert_object(schema_object, schema):
 
     help_url = "/lottie-docs/%s/#%s" % (link.page, link.anchor)
 
+    path = str(schema_object.path)
+    if path in exclude:
+        return
+
     cat = categories[link.group]
     label = schema_object["title"]
-    path = str(schema_object.path)
     name = "lottie_" + cat.infix + link.cls.replace("-", "_")
     hue = custom_colors.get(path, cat.hue)
     if path == "#/$defs/shapes/transform":
         name += "_shape"
-
-    if path in exclude:
-        return
 
     blockly = BlocklyType(name, label, hue, help_url)
     blockly_types.setdefault(link.group, []).append(blockly)
@@ -537,7 +541,7 @@ def convert_object(schema_object, schema):
         if path == "#/$defs/shapes/transform":
             properties.add_property(
                 "p",
-                {"title": "Position", "$ref": "#/$defs/animated-properties/position"},
+                {"title": "Position", "$ref": "#/$defs/properties/position-property"},
                 properties.index_of("a") + 1
             )
         properties.to_blockly(blockly, schema)
@@ -610,12 +614,12 @@ def convert_group(schema_object, schema):
 
 root = pathlib.Path(__file__).parent.parent
 
-schema_filename = root / "docs" / "schema" / "lottie.schema.json"
+schema_filename = root / "docs" / "lottie.schema.json"
 
 ty_to_block_types = {}
 
 categories = {
-    "animation": Category(260, "Animation"),
+    "composition": Category(260, "Animation"),
     "layers": Category(60, "Layers"),
     "shapes": Category(120, "Shapes"),
     "assets": Category(30, "Assets"),
@@ -629,7 +633,7 @@ split_bases = {
 other_bases = {
     "#/$defs/shapes/shape-element",
     "#/$defs/effects/effect",
-    "#/$defs/effects/effect-value"
+    "#/$defs/effect-values/effect-value"
 }
 custom_colors = {
     "#/$defs/shapes/stroke-dash": 0,
@@ -638,23 +642,28 @@ custom_colors = {
     "#/$defs/text/text-data-keyframe": 45,
 }
 exclude = {
-    "#/$defs/animation/composition",
+    "#/$defs/composition/composition",
     "#/$defs/shapes/shape",
     "#/$defs/shapes/modifier",
-    "#/$defs/shapes/shape-list",
-    "#/$defs/shapes/gradient",
+    "#/$defs/shapes/all-graphic-elements",
+    "#/$defs/shapes/base-gradient",
     "#/$defs/shapes/base-stroke",
     "#/$defs/shapes/twist",
     "#/$defs/shapes/merge",
     "#/$defs/shapes/offset-path",
     "#/$defs/effects/custom-effect",
+    "#/$defs/effects/all-effects",
+    "#/$defs/effect-values/all-effect-values",
+    "#/$defs/layers/all-layers",
+    "#/$defs/styles/all-layer-styles",
+    "#/$defs/assets/all-assets",
 }
 blockly_types = {}
 icons = {
     "#/$defs/shapes/ellipse": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/circle.svg",
     "#/$defs/shapes/rectangle": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/square.svg",
     "#/$defs/shapes/polystar": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/star.svg",
-    "#/$defs/shapes/trim": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/star-half.svg",
+    "#/$defs/shapes/trim-path": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/star-half.svg",
     "#/$defs/shapes/fill": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/fill-drip.svg",
     "#/$defs/shapes/stroke": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/border-style.svg",
     "#/$defs/shapes/repeater": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/clone.svg",

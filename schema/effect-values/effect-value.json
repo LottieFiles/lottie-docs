@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Effect Value",
+    "description": "Value for an effect",
+    "allOf": [
+        {
+            "$ref": "#/$defs/helpers/visual-object"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ix": {
+                    "title": "Effect Index",
+                    "type": "integer"
+                },
+                "ty": {
+                    "title": "Type",
+                    "type": "integer"
+                }
+            },
+            "required": []
+        }
+    ]
+}

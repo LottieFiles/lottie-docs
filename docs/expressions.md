@@ -39,18 +39,21 @@ var $bm_rt;
 $bm_rt = 60;
 ```
 
-{lottie_playground:image.json:512:512}
-Rotation Expression:<highlight>
-var $bm_rt = 60;
-</highlight>
-Position Expression:<highlight>
-var $bm_rt = [256, 256];
-</highlight>
-<json>lottie.layers[0].ks</json>
-<script>
-lottie.layers[0].ks.r.x = data["Rotation Expression"];
-lottie.layers[0].ks.p.x = data["Position Expression"];
-</script>
+<lottie-playground example="image.json">
+    <form>
+        <highlight title="Rotation Expression">
+        var $bm_rt = 60;
+        </highlight>
+        <highlight title="Position Expression">
+        var $bm_rt = [256, 256];
+        </highlight>
+    </form>
+    <json>lottie.layers[0].ks</json>
+    <script>
+    lottie.layers[0].ks.r.x = data["Rotation Expression"];
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    </script>
+</lottie-playground>
 
 
 
@@ -61,14 +64,17 @@ lottie.layers[0].ks.p.x = data["Position Expression"];
 schema: time
 
 
-{lottie_playground:image.json:512:512}
-Rotation Expression:<highlight>
-var $bm_rt = time * 360;
-</highlight>
-<json>lottie.layers[0].ks.r</json>
-<script>
-lottie.layers[0].ks.r.x = data["Rotation Expression"];
-</script>
+<lottie-playground example="image.json">
+    <form>
+        <highlight title="Rotation Expression">
+        var $bm_rt = time * 360;
+        </highlight>
+    </form>
+    <json>lottie.layers[0].ks.r</json>
+    <script>
+    lottie.layers[0].ks.r.x = data["Rotation Expression"];
+    </script>
+</lottie-playground>
 
 
 ### `value`
@@ -76,16 +82,19 @@ lottie.layers[0].ks.r.x = data["Rotation Expression"];
 {variable_docs}
 schema: value
 
-{lottie_playground:image.json:512:512}
-Position Expression:<highlight>
-var $bm_rt = [];
-$bm_rt[0] = value[0] + Math.cos(2 * Math.PI * time) * 100;
-$bm_rt[1] = value[1];
-</highlight>
-<json>lottie.layers[0].ks.p</json>
-<script>
-lottie.layers[0].ks.p.x = data["Position Expression"];
-</script>
+<lottie-playground example="image.json">
+    <form>
+        <highlight title="Position Expression">
+        var $bm_rt = [];
+        $bm_rt[0] = value[0] + Math.cos(2 * Math.PI * time) * 100;
+        $bm_rt[1] = value[1];
+        </highlight>
+    </form>
+    <json>lottie.layers[0].ks.p</json>
+    <script>
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    </script>
+</lottie-playground>
 
 
 ### `thisProperty`
@@ -370,36 +379,42 @@ return: Depends on the property :
 
 Composition object
 
-{lottie_playground:image_animated.json:512:512}
-Position Expression:<highlight>
-var $bm_rt = [256, 256]
-var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.PI;
-$bm_rt[0] += Math.cos(rotation) * 200;
-$bm_rt[1] += Math.sin(rotation) * 200;
-</highlight>
-<json>lottie.layers[0].ks.p</json>
-<script>
-lottie.layers[0].ks.p.x = data["Position Expression"];
-</script>
+<lottie-playground example="image_animated.json">
+    <form>
+        <highlight title="Position Expression">
+        var $bm_rt = [256, 256]
+        var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.PI;
+        $bm_rt[0] += Math.cos(rotation) * 200;
+        $bm_rt[1] += Math.sin(rotation) * 200;
+        </highlight>
+    </form>
+    <json>lottie.layers[0].ks.p</json>
+    <script>
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    </script>
+</lottie-playground>
 
 ### As a function
 
 As a function a composition object can give you access to the layers by name or index
 
-{lottie_playground:image_animated.json:512:512}
-Position Expression:<highlight>
-var $bm_rt = [256, 256]
-var rotation = thisComp("Layer").transform.rotation / 180 * Math.PI;
-$bm_rt[0] += Math.cos(rotation) * 200;
-$bm_rt[1] += Math.sin(rotation) * 200;
-</highlight>
-<json>lottie.layers[0].ks.p</json>
-<script>
-lottie.layers[0].ks.p.x = data["Position Expression"];
-</script>
+<lottie-playground example="image_animated.json">
+    <form>
+        <highlight title="Position Expression">
+        var $bm_rt = [256, 256]
+        var rotation = thisComp("Layer").transform.rotation / 180 * Math.PI;
+        $bm_rt[0] += Math.cos(rotation) * 200;
+        $bm_rt[1] += Math.sin(rotation) * 200;
+        </highlight>
+    </form>
+    <json>lottie.layers[0].ks.p</json>
+    <script>
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    </script>
+</lottie-playground>
+
 
 ### Composition.numLayers
-
 
 {variable_docs}
 name: numLayers

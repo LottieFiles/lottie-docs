@@ -1399,9 +1399,9 @@ class GradientSchemaWidget extends EditorSchemaWidget
             ...result,
             title: "Gradient Value",
             cls: "gradient-colors",
-            group: "animated-properties",
-            description: editor.schema.get_ref_data("#/$defs/animated-properties/gradient-colors").description,
-            def: "#/$defs/animated-properties/gradient-colors"
+            group: "properties",
+            description: editor.schema.get_ref_data("#/$defs/properties/gradient-colors").description,
+            def: "#/$defs/properties/gradient-colors"
         }
         super(editor, path, result, json, pos, node);
         this.color_count = color_count;

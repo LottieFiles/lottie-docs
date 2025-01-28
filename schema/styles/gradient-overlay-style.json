@@ -1,0 +1,63 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Gradient Overlay",
+    "allOf": [
+        {
+            "$ref": "#/$defs/styles/layer-style"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "ty": {
+                    "title": "Type",
+                    "description": "Layer Type",
+                    "type": "integer",
+                    "const": 8
+                },
+                "bm": {
+                    "title": "Blend Mode",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "o": {
+                    "title": "Opacity",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "gf": {
+                    "title": "Gradient",
+                    "$ref": "#/$defs/properties/gradient-property"
+                },
+                "gs": {
+                    "title": "Smoothness",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "a": {
+                    "title": "Angle",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "gt": {
+                    "title": "Gradient Type",
+                    "$ref": "#/$defs/constants/gradient-type"
+                },
+                "re": {
+                    "title": "Reverse",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "al": {
+                    "title": "Align",
+                    "description": "Align with layer",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "s": {
+                    "title": "Scale",
+                    "$ref": "#/$defs/properties/scalar-property"
+                },
+                "of": {
+                    "title": "Offset",
+                    "$ref": "#/$defs/properties/scalar-property"
+                }
+            },
+            "required": ["ty"]
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "oneOf": [
+        {
+            "$ref": "#/$defs/assets/precomposition"
+        },
+        {
+            "$ref": "#/$defs/assets/image"
+        },
+        {
+            "$ref": "#/$defs/assets/data-source"
+        },
+        {
+            "$ref": "#/$defs/assets/sound"
+        }
+    ]
+}

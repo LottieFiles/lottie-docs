@@ -1,0 +1,44 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "File Asset",
+    "description": "Asset referencing a file",
+    "allOf": [
+        {
+            "$ref": "#/$defs/assets/asset"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "p": {
+                    "title": "File Name",
+                    "description": "Name of the asset file or a data url",
+                    "type": "string"
+                },
+                "u": {
+                    "title": "File Path",
+                    "description": "Path to the asset file",
+                    "type": "string"
+                },
+                "e": {
+                    "title": "Embedded",
+                    "description": "If '1', 'p' is a Data URL",
+                    "$ref": "#/$defs/values/int-boolean"
+                }
+            },
+            "if": {
+                "properties": {
+                    "e": {"const": 1}
+                },
+                "required": ["e"]
+            },
+            "then": {
+                "properties": {
+                    "p": {"$ref": "#/$defs/values/data-url"}
+                }
+            }
+        }
+    ]
+}
+
+

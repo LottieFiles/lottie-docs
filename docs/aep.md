@@ -819,7 +819,7 @@ ADBE Vector Filter - RC : object=shapes/rounded-corners
 ADBE Vector RoundCorner Radius : prop=r : 10
 
 {aep_mn}
-ADBE Vector Filter - Trim : object=shapes/trim
+ADBE Vector Filter - Trim : object=shapes/trim-path
 ADBE Vector Trim Start : prop=s
 ADBE Vector Trim End : prop=e
 ADBE Vector Trim Offset : prop=o
@@ -1084,22 +1084,22 @@ I've seen these values but I cannot verify them:
 | Value | Name      | Default Color             |
 |-------|-----------|---------------------------|
 | 0     | None      | (shows as grey)           |
-| 1     | Red       | {lottie_color_hex:#b4393b}|
-| 2     | Yellow    | {lottie_color_hex:#e2d759}|
-| 3     | Aqua      | {lottie_color_hex:#abcbc8}|
-| 4     | Pink      | {lottie_color_hex:#e5bcca}|
-| 5     | Lavender  | {lottie_color_hex:#a9aac9}|
-| 6     | Peach     | {lottie_color_hex:#e5c19f}|
-| 7     | Sea Foam  | {lottie_color_hex:#b4c7b4}|
-| 8     | Blue      | {lottie_color_hex:#687fdd}|
-| 9     | Green     | {lottie_color_hex:#4ea350}|
-| 10    | Purple    | {lottie_color_hex:#8d3299}|
-| 11    | Orange    | {lottie_color_hex:#e79228}|
-| 12    | Brown     | {lottie_color_hex:#7e442c}|
-| 13    | Fuchsia   | {lottie_color_hex:#f371d5}|
-| 14    | Cyan      | {lottie_color_hex:#43a2a4}|
-| 15    | Sandstone | {lottie_color_hex:#a7967a}|
-| 16    | Dark Green| {lottie_color_hex:#203f1f}|
+| 1     | Red       | {lottie_hexcolor:#b4393b}|
+| 2     | Yellow    | {lottie_hexcolor:#e2d759}|
+| 3     | Aqua      | {lottie_hexcolor:#abcbc8}|
+| 4     | Pink      | {lottie_hexcolor:#e5bcca}|
+| 5     | Lavender  | {lottie_hexcolor:#a9aac9}|
+| 6     | Peach     | {lottie_hexcolor:#e5c19f}|
+| 7     | Sea Foam  | {lottie_hexcolor:#b4c7b4}|
+| 8     | Blue      | {lottie_hexcolor:#687fdd}|
+| 9     | Green     | {lottie_hexcolor:#4ea350}|
+| 10    | Purple    | {lottie_hexcolor:#8d3299}|
+| 11    | Orange    | {lottie_hexcolor:#e79228}|
+| 12    | Brown     | {lottie_hexcolor:#7e442c}|
+| 13    | Fuchsia   | {lottie_hexcolor:#f371d5}|
+| 14    | Cyan      | {lottie_hexcolor:#43a2a4}|
+| 15    | Sandstone | {lottie_hexcolor:#a7967a}|
+| 16    | Dark Green| {lottie_hexcolor:#203f1f}|
 
 ### Text Render Oder
 
@@ -1674,18 +1674,18 @@ Types:
 
 |Type Name  |AEP |Lottie| Lottie Object                     |
 |-----------|----|------|-----------------------------------|
-|Layer      |`0` | `10` |{ref-link:effect-values/layer}     |
-|Scalar     |`2` | `0`  |{ref-link:effect-values/slider}    |
-|Angle      |`3` | `1`  |{ref-link:effect-values/angle}     |
-|Boolean    |`4` | `4`  |{ref-link:effect-values/checkbox}  |
-|Color      |`5` | `2`  |{ref-link:effect-values/color}     |
-|2D         |`6` | `3`  |{ref-link:effect-values/point}     |
-|Enum       |`7` | `7`  |{ref-link:effect-values/drop-down} |
+|Layer      |`0` | `10` |{link:effect-values/layer}     |
+|Scalar     |`2` | `0`  |{link:effect-values/slider}    |
+|Angle      |`3` | `1`  |{link:effect-values/angle}     |
+|Boolean    |`4` | `4`  |{link:effect-values/checkbox}  |
+|Color      |`5` | `2`  |{link:effect-values/color}     |
+|2D         |`6` | `3`  |{link:effect-values/point}     |
+|Enum       |`7` | `7`  |{link:effect-values/drop-down} |
 |Paint Group|`9` |      |                                   |
-|Slider     |`10`| `0`  |{ref-link:effect-values/slider}    |
-|Group      |`13`| `5`  |{ref-link:effects/custom-effect}   |
-|Unknown    |`15`| `6`  |{ref-link:effect-values/no-value}  |
-|3D         |`18`| `3`  |{ref-link:effect-values/point}     |
+|Slider     |`10`| `0`  |{link:effect-values/slider}    |
+|Group      |`13`| `5`  |{link:effects/custom-effect}   |
+|Unknown    |`15`| `6`  |{link:effect-values/no-value}  |
+|3D         |`18`| `3`  |{link:effect-values/point}     |
 
 After the data above, there is more data that depends on the type
 

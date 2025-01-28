@@ -9,39 +9,19 @@ it's worth distinguishing across a few categories:
 * **Modifier** These change other shapes
 * **Transform** Special shape that defines the transforms in a group shape
 
-All shapes have the following properties:
 
-{schema_object:shapes/shape-element}
-EXPAND:#/$defs/helpers/visual-object
-ty:Shape type (see values below)
+<h2 id="graphic-element">Graphic Element</h2>
 
+{schema_string:shapes/graphic-element/description}
 
-### Shape Types
+{schema_object:shapes/graphic-element}
 
-|`ty`|Shape                                     |
-|----|------------------------------------------|
-|`rc`|[Rectangle](#rectangle)                   |
-|`el`|[Ellipse](#ellipse)                       |
-|`sr`|[PolyStar](#polystar)                     |
-|`sh`|[Path](#path)                             |
-|`fl`|[Fill](#fill)                             |
-|`st`|[Stroke](#stroke)                         |
-|`gf`|[Gradient Fill](#gradients)               |
-|`gs`|[Gradient Stroke](#gradients)             |
-|`no`|[No Style](#no-style)                     |
-|`gr`|[Group](#group)                           |
-|`tr`|[Transform](transform-shape)              |
-|`rp`|[Repeater](#repeater)                     |
-|`tm`|[Trim](#trim-path)                        |
-|`rd`|[Rounded Corners](#rounded-corners)       |
-|`pb`|[Pucker / Bloat](#pucker-bloat)           |
-|`mm`|[Merge](#merge)                           |
-|`tw`|[Twist](#twist)                           |
-|`op`|[Offset Path](#offset-path)               |
-|`zz`|[Zig Zag](#zig-zag)                       |
+The `ty` property defines the specific element type based on the following values:
+
+{schema_subtype_table:shapes/all-graphic-elements:ty}
 
 
-## Shape
+<h2 id="shape">Shapes</h2>
 
 These shapes only define path data, to actually show something, they must be
 followed by some [style shape](#style).
@@ -50,142 +30,152 @@ They have a `d` attribute which specifies the drawing direction, which
 can be seen when using [Trim Path](#trim-path).
 
 {schema_object:shapes/shape}
-SKIP:#/$defs/shapes/shape-element
 
 
-### Rectangle
+<h3 id="ellipse">Ellipse</h3>
 
-A rectangle, defined by its center point and size.
-
-
-{schema_object:shapes/rectangle}
-SKIP:#/$defs/shapes/shape
-
-
-
-{lottie_playground:rectangle.json:512:512}
-Position x:<input type="range" min="0" max="512" value="256"/>
-Position y:<input type="range" min="0" max="512" value="256"/>
-Width:<input type="range" min="0" max="512" value="256"/>
-Height:<input type="range" min="0" max="512" value="256"/>
-Roundness:<input type="range" min="0" max="512" value="0"/>
-<json>lottie.layers[0].shapes[0].it[0]</json>
-<script>
-lottie.layers[0].shapes[0].it[0].p.k = [
-    data["Position x"], data["Position y"]
-];
-lottie.layers[0].shapes[0].it[0].s.k = [
-    data["Width"], data["Height"]
-];
-lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
-</script>
-
-
-### Ellipse
+{schema_string:shapes/ellipse/description}
 
 {schema_object:shapes/ellipse}
-SKIP:#/$defs/shapes/shape
+
+<lottie-playground example="ellipse.json">
+    <title>Example</title>
+    <form>
+        <input title="Position x" type="range" min="0" max="512" value="256"/>
+        <input title="Position y" type="range" min="0" max="512" value="256"/>
+        <input title="Width" type="range" min="0" max="512" value="256"/>
+        <input title="Height" type="range" min="0" max="512" value="256"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[0]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[0].p.k = [
+        data["Position x"], data["Position y"]
+    ];
+    lottie.layers[0].shapes[0].it[0].s.k = [
+        data["Width"], data["Height"]
+    ];
+    </script>
+</lottie-playground>
 
 
-{lottie_playground:ellipse.json:512:512}
-Position x:<input type="range" min="0" max="512" value="256"/>
-Position y:<input type="range" min="0" max="512" value="256"/>
-Width:<input type="range" min="0" max="512" value="256"/>
-Height:<input type="range" min="0" max="512" value="256"/>
-<json>lottie.layers[0].shapes[0].it[0]</json>
-<script>
-lottie.layers[0].shapes[0].it[0].p.k = [
-    data["Position x"], data["Position y"]
-];
-lottie.layers[0].shapes[0].it[0].s.k = [
-    data["Width"], data["Height"]
-];
-</script>
+<h3 id="rectangle">Rectangle</h3>
+
+{schema_string:shapes/rectangle/description}
+
+{schema_object:shapes/rectangle}
+
+<lottie-playground example="rectangle.json">
+    <title>Example</title>
+    <form>
+        <input title="Position x" type="range" min="0" max="512" value="256"/>
+        <input title="Position y" type="range" min="0" max="512" value="256"/>
+        <input title="Width" type="range" min="0" max="512" value="256"/>
+        <input title="Height" type="range" min="0" max="512" value="256"/>
+        <input title="Roundness" type="range" min="0" max="512" value="0"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[0]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[0].p.k = [
+        data["Position x"], data["Position y"]
+    ];
+    lottie.layers[0].shapes[0].it[0].s.k = [
+        data["Width"], data["Height"]
+    ];
+    lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
+    </script>
+</lottie-playground>
+
+
 
 ### PolyStar
 
-Regular polygon or star.
+
+<h3 id="polystar">PolyStar</h3>
+
+{schema_string:shapes/polystar/description}
 
 {schema_object:shapes/polystar}
-SKIP:#/$defs/shapes/shape
-SKIP:ir
-SKIP:is
 
-If `sy` is `1` (star) you also have attributes defining the inner ends of the star:
+<lottie-playground example="star.json">
+    <title>Example</title>
+    <form>
+        <input title="Position x" type="range" min="0" max="512" value="256"/>
+        <input title="Position y" type="range" min="0" max="512" value="256"/>
+        <input title="Points" type="range" min="3" max="10" value="5"/>
+        <input title="Rotation" type="range" min="0" max="360" value="0"/>
+        <input title="Outer Radius" type="range" min="0" max="300" value="200"/>
+        <input title="Inner Radius" type="range" min="0" max="300" value="100"/>
+        <input title="Outer Roundness" type="range" min="0" max="100" value="0"/>
+        <input title="Inner Roundness" type="range" min="0" max="100" value="0"/>
+        <enum title="Star Type">star-type</enum>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[0]</json>
+    <script>
+        var star = {
+            "ty": "sr",
+            "nm": "PolyStar",
+            "sy": Number(data["Star Type"]),
+            "p": {
+                "a": 0,
+                "k": [data["Position x"], data["Position y"]]
+            },
+            "r": {
+                "a": 0,
+                "k": data["Rotation"]
+            },
+            "pt": {
+                "a": 0,
+                "k": data["Points"]
+            },
+            "or": {
+                "a": 0,
+                "k": data["Outer Radius"]
+            },
+            "os": {
+                "a": 0,
+                "k": data["Outer Roundness"]
+            },
+        };
+        if ( data["Star Type"] == "1" )
+        {
+            star = {
+                ...star,
+                "ir": {
+                    "a": 0,
+                    "k": data["Inner Radius"]
+                },
+                "is": {
+                    "a": 0,
+                    "k": data["Inner Roundness"]
+                },
+            };
+        }
+        lottie.layers[0].shapes[0].it[0] = star;
+    </script>
+</lottie-playground>
 
-|Attribute|Type                                             |Description                                |
-|----|------------------------------------------------------|-------------------------------------------|
-|`ir`|[Animated](concepts.md#animated-property) `number`    |Inner Radius                               |
-|`is`|[Animated](concepts.md#animated-property) `number`    |Inner Roundness as a percentage            |
+<h3 id="path">Path</h3>
 
-
-{lottie_playground:star.json:512:512}
-Points:<input type="range" min="3" max="10" value="5"/>
-Rotation:<input type="range" min="0" max="360" value="0"/>
-Outer Radius:<input type="range" min="0" max="300" value="200"/>
-Inner Radius:<input type="range" min="0" max="300" value="100"/>
-Outer Roundness:<input type="range" min="0" max="100" value="0"/>
-Inner Roundness:<input type="range" min="0" max="100" value="0"/>
-Type:<select><option value="1">Star</option><option value="2">Polygon</option></select>
-<json>lottie.layers[0].shapes[0].it[0]</json>
-<script>
-var star = {
-    "ty": "sr",
-    "nm": "PolyStar",
-    "sy": Number(data["Type"]),
-    "p": {
-        "a": 0,
-        "k": [
-            249.3134328358209,
-            254.47164179104476
-        ]
-    },
-    "r": {
-        "a": 0,
-        "k": data["Rotation"]
-    },
-    "pt": {
-        "a": 0,
-        "k": data["Points"]
-    },
-    "or": {
-        "a": 0,
-        "k": data["Outer Radius"]
-    },
-    "os": {
-        "a": 0,
-        "k": data["Outer Roundness"]
-    },
-};
-if ( data["Type"] == "1" )
-{
-    star = {
-        ...star,
-        "ir": {
-            "a": 0,
-            "k": data["Inner Radius"]
-        },
-        "is": {
-            "a": 0,
-            "k": data["Inner Roundness"]
-        },
-    };
-}
-lottie.layers[0].shapes[0].it[0] = star;
-</script>
-
-
-### Path
-
-Bezier path, note that it's a continuous shape, to have multiple shapes like
-when you need holes or gaps you need to create multiple Path shapes and group them together.
-
+{schema_string:shapes/path/description}
 
 {schema_object:shapes/path}
-SKIP:#/$defs/shapes/shape
+
+<lottie-playground example="bezier.json">
+    <title>Example</title>
+    <form>
+        <input title="Shape" type="bezier"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[0]</json>
+    <script>
+        var shape = lottie.layers[0].shapes[0].it[0];
+        if ( data["Shape"] )
+            shape.ks.k = data["Shape"];
+    </script>
+</lottie-playground>
 
 
-## Style
+<h2 id="shape-style">Style</h2>
+
 
 These apply a style (such as fill stroke) to the paths defined by the [shapes](#shapes).
 
@@ -197,139 +187,204 @@ are separate and allows for more flexibility.
 Some examples of the added flexibility would be a shape with multiple strokes,
 or a gradient fading into a solid color.
 
-### Fill
+{schema_object:shapes/shape-style}
 
-Solid fill color.
+
+<h3 id="fill">Fill</h3>
+
+{schema_string:shapes/fill/description}
 
 {schema_object:shapes/fill}
-SKIP:#/$defs/shapes/shape-element
 
-{lottie_playground:fill.json:512:512}
-Red:<input type="range" min="0" max="1" step="0.01" value="1"/>
-Green:<input type="range" min="0" max="1" step="0.01" value="0.98"/>
-Blue:<input type="range" min="0" max="1" step="0.01" value="0.28"/>
-Opacity:<input type="range" min="0" max="100" value="100"/>
-Fill Rule:<enum>fill-rule</enum>
-<json>lottie.layers[0].shapes[0].it[1]</json>
-<script>
-var shape = lottie.layers[0].shapes[0].it[1];
-shape.c.k = [data["Red"], data["Green"], data["Blue"]];
-shape.o.k = data["Opacity"];
-shape.r = Number(data["Fill Rule"]);
-</script>
+<lottie-playground example="fill.json">
+    <title>Example</title>
+    <form>
+        <input title="Red" type="range" min="0" max="1" step="0.01" value="1"/>
+        <input title="Green" type="range" min="0" max="1" step="0.01" value="0.98"/>
+        <input title="Blue" type="range" min="0" max="1" step="0.01" value="0.28"/>
+        <input title="Opacity" type="range" min="0" max="100" value="100"/>
+        <enum title="Fill Rule">fill-rule</enum>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[1]</json>
+    <script>
+        var shape = lottie.layers[0].shapes[0].it[1];
+        shape.c.k = [data["Red"], data["Green"], data["Blue"]];
+        shape.o.k = data["Opacity"];
+        shape.r = Number(data["Fill Rule"]);
+    </script>
+</lottie-playground>
 
 
-### Stroke
+<h3 id="stroke"><span id="base-stroke">Stroke</span></h3>
 
-Defines a stroke.
+{schema_string:shapes/stroke/description}
 
 {schema_object:shapes/stroke}
-ty:
-SKIP:#/$defs/shapes/shape-element
-EXPAND:#/$defs/shapes/base-stroke
+
+<lottie-playground example="stroke.json">
+    <title>Example</title>
+    <form>
+        <input title="Red" type="range" min="0" max="1" step="0.01" value="1"/>
+        <input title="Green" type="range" min="0" max="1" step="0.01" value="0.98"/>
+        <input title="Blue" type="range" min="0" max="1" step="0.01" value="0.28"/>
+        <input type="range" min="0" max="100" value="32" title="Width"/>
+        <input title="Opacity" type="range" min="0" max="100" value="100"/>
+        <enum title="Line Cap" value="2">line-cap</enum>
+        <enum title="Line Join" value="2">line-join</enum>
+        <input type="range" min="0" max="10" value="3" title="Miter Limit"/>
+    </form>
+    <json>lottie.layers[0].shapes[2]</json>
+    <script>
+        var shape = lottie.layers[0].shapes[2];
+        shape.c.k = [data["Red"], data["Green"], data["Blue"]];
+        shape.o.k = data["Opacity"];
+        shape.w.k = data["Width"];
+        shape.lc = Number(data["Line Cap"]);
+        shape.lj = Number(data["Line Join"]);
+        shape.ml = data["Miter Limit"];
+        shape.d = undefined;
+    </script>
+</lottie-playground>
 
 
+<h4 id="stroke-dash">Stroke Dashes</h4>
 
-#### Stroke Dashes
+{schema_string:shapes/stroke-dash/description}
 
-Defined as a sequence of alternating dashes and gaps.
+A stroke dash array consists of `n` dash entries, `[n-1,n]` gap entries and `[0-1]` offset entries.
+
+Dash and gap entries MUST all be in a continuous order and alternate between dash and gap, starting with dash. If there are an odd number of dashes + gaps, the sequence will repeat with dashes and gaps reversed. For example a sequence of `[4d, 8g, 16d]` MUST be rendered as `[4d, 8g, 16d, 4g, 8d, 16g]`.
+
+Offset entry, if present, MUST be at the end of the array.
 
 {schema_object:shapes/stroke-dash}
-SKIP:#/$defs/helpers/visual-object
+
+<lottie-playground example="stroke.json">
+    <title>Example</title>
+    <form>
+        <input title="Red" type="range" min="0" max="1" step="0.01" value="1"/>
+        <input title="Green" type="range" min="0" max="1" step="0.01" value="0.98"/>
+        <input title="Blue" type="range" min="0" max="1" step="0.01" value="0.28"/>
+        <input type="range" min="0" max="100" value="32" title="Width"/>
+        <input title="Opacity" type="range" min="0" max="100" value="100"/>
+        <enum title="Line Cap" value="2">line-cap</enum>
+        <enum title="Line Join" value="2">line-join</enum>
+        <input type="range" min="0" max="10" value="3" title="Miter Limit"/>
+        <input type="range" min="0" max="512" value="0" title="Dash Offset"/>
+        <input type="range" min="0" max="512" value="30" title="Dash Length"/>
+        <input type="range" min="0" max="512" value="50" title="Dash Gap"/>
+    </form>
+    <json>lottie.layers[0].shapes[2]</json>
+    <script>
+        var shape = lottie.layers[0].shapes[2];
+        shape.c.k = [data["Red"], data["Green"], data["Blue"]];
+        shape.o.k = data["Opacity"];
+        shape.w.k = data["Width"];
+        shape.lc = Number(data["Line Cap"]);
+        shape.lj = Number(data["Line Join"]);
+        shape.ml = data["Miter Limit"];
+        shape.d[0].v.k = data["Dash Offset"];
+        shape.d[1].v.k = data["Dash Length"];
+        shape.d[2].v.k = data["Dash Gap"];
+        var trim = lottie.layers[0].shapes[1];
+        trim.e.k = 100;
+        trim.o.k = 0;
+    </script>
+</lottie-playground>
 
 
-{lottie_playground:stroke.json:512:512}
-Red:<input type="range" min="0" max="1" step="0.01" value="1"/>
-Green:<input type="range" min="0" max="1" step="0.01" value="0.98"/>
-Blue:<input type="range" min="0" max="1" step="0.01" value="0.28"/>
-Width:<input type="range" min="0" max="100" value="32"/>
-Opacity:<input type="range" min="0" max="100" value="100"/>
-Line Cap:<enum value="2">line-cap</enum>
-Line Join:<enum value="2">line-join</enum>
-Miter Limit:<input type="range" min="0" max="10" value="3"/>
-Dash Offset:<input type="range" min="0" max="512" value="0"/>
-Dash Length:<input type="range" min="0" max="512" value="100"/>
-Dash Gap:<input type="range" min="0" max="512" value="0"/>
-<json>lottie.layers[0].shapes[2]</json>
-<script>
-var shape = lottie.layers[0].shapes[2];
-shape.c.k = [data["Red"], data["Green"], data["Blue"]];
-shape.o.k = data["Opacity"];
-shape.w.k = data["Width"];
-shape.r = Number(data["Fill Rule"]);
-shape.lc = Number(data["Line Cap"]);
-shape.lj = Number(data["Line Join"]);
-shape.ml = data["Miter Limit"];
-shape.d[0].v.k = data["Dash Offset"];
-shape.d[1].v.k = data["Dash Length"];
-shape.d[2].v.k = data["Dash Gap"];
-</script>
+<h3 id="gradient-fill"><span id="gradient-fill">Gradient Fill</span></h3>
 
+{schema_string:shapes/gradient-fill/description}
 
-### Gradients
+{schema_object:shapes/gradient-fill}
 
-Gradient fill and gradient stroke have the same attributes as [fill](#fill) and [stroke](#stroke)
-but remove color (`c`) and add the following:
+<lottie-playground example="gradient.json">
+    <title>Example</title>
+    <form>
+        <input title="Start X" type="range" min="0" max="512"  value="256"/>
+        <input title="Start Y" type="range" min="0" max="512"  value="496"/>
+        <input title="End X" type="range" min="0" max="512"  value="256"/>
+        <input title="End Y" type="range" min="0" max="512"  value="16"/>
+        <enum title="Type" value="1">gradient-type</enum>
+        <input title="Highlight" type="range" min="0" max="100"  value="0"/>
+        <input title="Highlight Angle" type="range" min="0" max="360"  value="0"/>
+    </form>
+    <json>lottie.layers[1].shapes[0].it[1]</json>
+    <script>
+    var gradient = lottie.layers[1].shapes[0].it[1];
+    var start_marker = lottie.layers[0].shapes[1].it[1];
+    var end_marker = lottie.layers[0].shapes[0].it[1];
+    gradient.s.k = start_marker.p.k = [data["Start X"], data["Start Y"]];
+    gradient.e.k = end_marker.p.k = [data["End X"], data["End Y"]];
+    gradient.t = Number(data["Type"]);
+    if (gradient.t === 2) {
+        gradient.h = {
+            a: 0,
+            k: data["Highlight"]
+        };
+        gradient.a = {
+            a: 0,
+            k: data["Highlight Angle"]
+        };
+    } else {
+        delete gradient.h;
+        delete gradient.a;
+    }
+    </script>
+</lottie-playground>
 
-{schema_object:shapes/gradient}
-SKIP:a
-SKIP:h
+<h3 id="gradient-stroke"><span id="gradient-stroke">Gradient Stroke</span></h3>
 
-If it's a radial gradient, `s` refers to the center of the gradient,
-and the style object may have these additional properties:
+{schema_string:shapes/gradient-stroke/description}
 
-|Attribute|Type                                         |Description                                                |
-|----|--------------------------------------------------|-----------------------------------------------------------|
-|`h` |[Animated](concepts.md#animated-property) `number`|Highlight Length, as a percentage between `s` and `e`      |
-|`a` |[Animated](concepts.md#animated-property) `number`|Highlight Angle, relative to the direction from `s` to `e` |
+{schema_object:shapes/gradient-stroke}
 
-Basically the radial highlight position is defined in polar coordinates relative to `s`.
+<lottie-playground example="gradient-stroke.json">
+    <title>Example</title>
+    <form>
+        <input title="Start X" type="range" min="0" max="512"  value="256"/>
+        <input title="Start Y" type="range" min="0" max="512"  value="496"/>
+        <input title="End X" type="range" min="0" max="512"  value="256"/>
+        <input title="End Y" type="range" min="0" max="512"  value="16"/>
+        <enum title="Type" value="1">gradient-type</enum>
+        <input title="Highlight" type="range" min="0" max="100"  value="0"/>
+        <input title="Highlight Angle" type="range" min="0" max="360"  value="0"/>
+    </form>
+    <json>lottie.layers[1].shapes[1]</json>
+    <script>
+    var gradient = lottie.layers[1].shapes[1];
+    var start_marker = lottie.layers[0].shapes[1].it[1];
+    var end_marker = lottie.layers[0].shapes[0].it[1];
+    gradient.s.k = start_marker.p.k = [data["Start X"], data["Start Y"]];
+    gradient.e.k = end_marker.p.k = [data["End X"], data["End Y"]];
+    gradient.t = Number(data["Type"]);
+    if (gradient.t === 2) {
+        gradient.h = {
+            a: 0,
+            k: data["Highlight"]
+        };
+        gradient.a = {
+            a: 0,
+            k: data["Highlight Angle"]
+        };
+    } else {
+        delete gradient.h;
+        delete gradient.a;
+    }
+    </script>
+</lottie-playground>
 
-#### Gradient Colors
-
-|Attribute|Type                                                                  |Description {schema_link:animated-properties/gradient-colors}|
-|----|---------------------------------------------------------------------------|------------------|
-|`k` |[Animated](concepts.md#animated-property) [Gradient](concepts.md#gradients)|Gradient Colors   |
-|`p` |`integer`                                                                  |Number of Colors  |
-
-Since [gradient values](concepts.md#gradients) might have different representation based on whether
-they have transparency or not, you need to check `p` to determine whether a keyframe value
-has transparency.
-
-#### Gradient Example
-
-
-{lottie_playground:gradient.json:512:512}
-Start X:<input type="range" min="0" value="256" max="512"/>
-Start Y:<input type="range" min="0" value="496" max="512"/>
-End X:<input type="range" min="0" value="256" max="512"/>
-End Y:<input type="range" min="0" value="16" max="512"/>
-Type:<enum>gradient-type</enum>
-Highlight:<input type="range" min="0" max="100" value="0"/>
-Highlight Angle:<input type="range" min="0" max="360" value="0"/>
-<json>lottie.layers[1].shapes[0].it[1]</json>
-<script>
-var gradient = lottie.layers[1].shapes[0].it[1];
-var start_marker = lottie.layers[0].shapes[1].it[1];
-var end_marker = lottie.layers[0].shapes[0].it[1];
-gradient.s.k = start_marker.p.k = [data["Start X"], data["Start Y"]];
-gradient.e.k = end_marker.p.k = [data["End X"], data["End Y"]];
-gradient.t = Number(data["Type"]);
-gradient.h.k = data["Highlight"];
-gradient.a.k = data["Highlight Angle"];
-</script>
-
-
-### No Style
+<h3 id="no-style">No Style</h3>
 
 Represents a style for shapes without fill or stroke.
 
-
 {schema_object:shapes/no-style}
-SKIP:#/$defs/shapes/shape-element
 
 
-## Group
+<h2 id="grouping">Grouping</h2>
+
+<h3 id="group">Group</h3>
 
 A group is a shape that can contain other shapes (including other groups).
 
@@ -350,20 +405,23 @@ While the contents may vary, a group must always end with a [Transform shape](#t
 
 The attributes of a Group are:
 
-|Attribute|Type                                                             |Description {schema_link:shapes/group}|
-|----|----------------------------------------------------------------------|-----------------------|
-|`np`|`number`                                                              |Number of properties   |
-|`it`|[Array](concepts.md#lists-of-layers-and-shapes) of [shapes](#shape)   |Shapes                 |
+{schema_object:shapes/group}
 
-### Transform Shape
+<h3 id="transform">Transform</h3>
 
-Basically the same as [Transform](concepts.md#transform) but with the `ty` attribute.
+Basically the same as {link:helpers/transform} but with the `ty` attribute.
 
-## Modifiers
+{schema_object:shapes/transform}
+
+Transform shapes MUST always be present in the group and they MUST be
+the last item in the `it` array.
+
+
+<h2 id="modifier">Modifiers</h2>
 
 Modifiers process their siblings and alter the path defined by [shapes](#shapes).
 
-### Repeater
+<h3 id="repeater">Repeater</h3>
 
 This is a bit different compared from other modifiers, since it will take into
 account style as well.
@@ -371,8 +429,6 @@ account style as well.
 The effect of a Repeater is to duplicate the other shapes a number of times applying a transform for each copy.
 
 {schema_object:shapes/repeater}
-SKIP:#/$defs/shapes/shape-element
-
 
 The transform is multiplied by `o + 1` (where `o` is the Offset property above).<br/>
 So if `o` is `0`, the first instance shown by the Repeater is at its starting location.<br/>
@@ -381,47 +437,51 @@ Other values multiply the initial transform accordingly.
 
 #### Repeater Transform
 
-Same as a regular [Transform](concepts.md#transform) but instead of a single opacity value (`o`),
+Same as a regular {link:helpers/transform} but instead of a single opacity value (`o`),
 it has two:
+
+{schema_object:shapes/repeater-transform}
 
 |Attribute|Type                                         |Description            |
 |----|--------------------------------------------------|-----------------------|
-|`so`|[Animated](concepts.md#animated-property) `number`|Start Opacity          |
-|`eo`|[Animated](concepts.md#animated-property) `number`|End Opacity            |
+|`so`|[Animated](properties.md#scalar-property) `number`|Start Opacity          |
+|`eo`|[Animated](properties.md#scalar-property) `number`|End Opacity            |
 
 The first copy will use `so`, the last `eo`, and copies between them will have an interpolated value.
 
-{lottie_playground:repeater.json:512:512}
-Copies:<input type="range" min="0" value="4" max="20"/>
-Start Opacity:<input type="range" min="0" value="100" max="100"/>
-End Opacity:<input type="range" min="0" value="50" max="100"/>
-Position x:<input type="range" min="0" value="130" max="200"/>
-Position y:<input type="range" min="0" value="0" max="200"/>
-Rotation:<input type="range" min="0" value="137" max="360"/>
-Offset:<input type="range" min="-1" value="0" max="2" step="0.1"/>
-Composite:<enum>composite</enum>
-<json>lottie.layers[0].shapes[0].it[3]</json>
-<script>
-lottie.layers[0].shapes[0].it[3].c.k = data["Copies"];
-lottie.layers[0].shapes[0].it[3].tr.so.k = data["Start Opacity"];
-lottie.layers[0].shapes[0].it[3].tr.eo.k = data["End Opacity"];
-lottie.layers[0].shapes[0].it[3].tr.p.k[0] = data["Position x"];
-lottie.layers[0].shapes[0].it[3].tr.p.k[1] = data["Position y"];
-lottie.layers[0].shapes[0].it[3].tr.r.k = data["Rotation"];
-lottie.layers[0].shapes[0].it[3].o.k = data["Offset"];
-lottie.layers[0].shapes[0].it[3].m = Number(data["Composite"]);
-</script>
+<lottie-playground example="repeater.json">
+    <form>
+        <input title="Copies" type="range" min="0" value="4" max="20"/>
+        <input title="Start Opacity" type="range" min="0" value="100" max="100"/>
+        <input title="End Opacity" type="range" min="0" value="50" max="100"/>
+        <input title="Position x" type="range" min="0" value="130" max="200"/>
+        <input title="Position y" type="range" min="0" value="0" max="200"/>
+        <input title="Rotation" type="range" min="0" value="137" max="360"/>
+        <input title="Offset" type="range" min="-1" value="0" max="2" step="0.1"/>
+        <enum title="Composite">composite</enum>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[3]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[3].c.k = data["Copies"];
+    lottie.layers[0].shapes[0].it[3].tr.so.k = data["Start Opacity"];
+    lottie.layers[0].shapes[0].it[3].tr.eo.k = data["End Opacity"];
+    lottie.layers[0].shapes[0].it[3].tr.p.k[0] = data["Position x"];
+    lottie.layers[0].shapes[0].it[3].tr.p.k[1] = data["Position y"];
+    lottie.layers[0].shapes[0].it[3].tr.r.k = data["Rotation"];
+    lottie.layers[0].shapes[0].it[3].o.k = data["Offset"];
+    lottie.layers[0].shapes[0].it[3].m = Number(data["Composite"]);
+    </script>
+</lottie-playground>
 
-
-### Trim Path
+<h3 id="trim-path">Trim Path</h3>
 
 This is mostly useful for shapes with a stroke and not a fill.
 
 It takes the path defined by [shapes](#shapes) and only shows a segment of the resulting bezier data.
 
 
-{schema_object:shapes/trim}
-SKIP:#/$defs/shapes/shape-element
+{schema_object:shapes/trim-path}
+
 
 `s` and `e` go from `0` to `100`, `0` being at the beginning of the path and `100` at the end.
 The displayed segment is what lays between the two.
@@ -434,81 +494,88 @@ that with `o` you can go over `360` or below `0` to shift the whole segment alon
 
 Here is an interactive example:
 
-{lottie_playground:trim_path.json:512:512}
-Start:<input type="range" min="0" value="0" max="100"/>
-End:<input type="range" min="0" value="50" max="100"/>
-Offset:<input type="range" min="0" value="0" max="360"/>
-Multiple Shapes:<enum>trim-multiple-shapes</enum>
-<json>lottie.layers[0].shapes[4]</json>
-<script>
-lottie.layers[0].shapes[4].s.k = data["Start"];
-lottie.layers[0].shapes[4].e.k = data["End"];
-lottie.layers[0].shapes[4].o.k = data["Offset"];
-lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
-</script>
+<lottie-playground example="trim_path.json">
+    <form>
+        <input title="Start" type="range" min="0" value="0" max="100"/>
+        <input title="End" type="range" min="0" value="50" max="100"/>
+        <input title="Offset" type="range" min="0" value="0" max="360"/>
+        <enum title="Multiple Shapes">trim-multiple-shapes</enum>
+    </form>
+    <json>lottie.layers[0].shapes[4]</json>
+    <script>
+        lottie.layers[0].shapes[4].s.k = data["Start"];
+        lottie.layers[0].shapes[4].e.k = data["End"];
+        lottie.layers[0].shapes[4].o.k = data["Offset"];
+        lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
+    </script>
+</lottie-playground>
 
 
-### Rounded Corners
 
-Self explanatory
+<h3 id="rounded-corners">Rounded Corners</h3>
+
+{schema_string:shapes/rounded-corners/description}
 
 {schema_object:shapes/rounded-corners}
-SKIP:#/$defs/shapes/shape-element
 
-{lottie_playground:rounded_corners.json:512:512}
-Radius:<input type="range" min="0" value="50" max="100"/>
-<json>lottie.layers[0].shapes[0].it[1]</json>
-<script>
-lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
-</script>
+<lottie-playground example="rounded_corners.json">
+    <form>
+        <input title="Radius" type="range" min="0" value="50" max="100"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[1]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
+    </script>
+</lottie-playground>
 
 
-### Pucker / Bloat
+<h3 id="pucker-bloat">Pucker / Bloat</h3>
 
-Interpolates bezier vertices towards the center of the shape, and tangent handles away from it (or vice-versa).
+{schema_string:shapes/pucker-bloat/description}
 
 {schema_object:shapes/pucker-bloat}
-SKIP:#/$defs/shapes/shape-element
 
 When `a` is `0`, nothing changes.<br/>
 When `a` is positive, the vertices are pulled towards the center, with `100` being at the center. And the tangents are pushed away.<br/>
 When `a` is negative the vertices are pushed away from the center with `100` being twice far away from the center. And the tangents are pulled towards the center.<br/>
 
+The center is defined as the mean of the bezier vertices.
 
-{lottie_playground:pucker_bloat.json:512:512}
-Amount:<input type="range" min="-100" value="50" max="100"/>
-<json>lottie.layers[0].shapes[0].it[1]</json>
-<script>
-lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
-</script>
+<lottie-playground example="pucker_bloat.json">
+    <form>
+        <input title="Amount" type="range" min="-100" value="50" max="100"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[1]</json>
+    <script>
+        lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+    </script>
+</lottie-playground>
 
+<h3 id="twist">Twist</h3>
 
-### Twist
-
-{schema_attribute:description:shapes/twist}
+{schema_string:shapes/twist/description}
 
 {schema_object:shapes/twist}
-SKIP:#/$defs/shapes/shape-element
 
-### Merge
 
-{schema_attribute:description:shapes/merge}
+<h3 id="merge">Merge</h3>
+
+{schema_string:shapes/merge/description}
 
 {schema_object:shapes/merge}
-SKIP:#/$defs/shapes/shape-element
 
 
-### Offset Path
+<h3 id="offset-path">Offset Path</h3>
 
-{schema_attribute:description:shapes/offset-path}
+{schema_string:shapes/offset-path/description}
 
 {schema_object:shapes/offset-path}
-SKIP:#/$defs/shapes/shape-element
 
 
-### Zig Zag
 
-{schema_attribute:description:shapes/zig-zag}
+<h3 id="zig-zag">Zig Zag</h3>
+
+{schema_string:shapes/zig-zag/description}
 
 {schema_object:shapes/zig-zag}
-SKIP:#/$defs/shapes/shape-element
+

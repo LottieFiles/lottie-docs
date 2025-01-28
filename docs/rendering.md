@@ -66,105 +66,48 @@ See [Rectangle](shapes.md#rectangle).
 Note that unlike other shapes, on lottie web when the `d` attribute is missing,
 the rectangle defaults as being reversed.
 
+<algorithm>
+def rectangle(shape: Bezier, p: Vector2D, s: Vector2D, r: float):
+    left: float = p.x - s.x / 2
+    right: float = p.x + s.x / 2
+    top: float = p.y - s.y / 2
+    bottom: float = p.y + s.y / 2
 
-Rectangle without rounded corners:
+    shape.closed = True
 
-{shape_bezier_script:rectangle.json:394:394}
-Position x:<input type="range" min="0" max="512" value="256"/>
-Position y:<input type="range" min="0" max="512" value="256"/>
-Width:<input type="range" min="0" max="512" value="256"/>
-Height:<input type="range" min="0" max="512" value="256"/>
-<json>lottie.layers[0].shapes[0].it[0]</json>
-<script func="rect(shape.p.k, shape.s.k)" varname="shape">
-function rect(position, size)
-{
-    let left = position[0] - size[0] / 2;
-    let right = position[0] + size[0] / 2;
-    let top = position[1] - size[1] / 2;
-    let bottom = position[1] + size[1] / 2;
+    if r <= 0:
 
-    let bezier = new Bezier();
+        # The rectangle is rendered from the top-right going clockwise
 
-    bezier.add_vertex(right, top);
-    bezier.add_vertex(right, bottom);
-    bezier.add_vertex(left, bottom);
-    bezier.add_vertex(left, top);
+        shape.add_vertex(Vector2D(right, top))
+        shape.add_vertex(Vector2D(right, bottom))
+        shape.add_vertex(Vector2D(left, bottom))
+        shape.add_vertex(Vector2D(left, top))
 
-    return bezier;
-}
-</script>
-<script>
-lottie.layers[0].shapes[0].it[0].p.k = [
-    data["Position x"], data["Position y"]
-];
-lottie.layers[0].shapes[0].it[0].s.k = [
-    data["Width"], data["Height"]
-];
-</script>
+    else:
 
-With rounded corners:
+        # Rounded corners must be taken into account
 
-{shape_bezier_script:rectangle.json:rc:394:394}
-Position x:<input type="range" min="0" max="512" value="256"/>
-Position y:<input type="range" min="0" max="512" value="256"/>
-Width:<input type="range" min="0" max="512" value="256"/>
-Height:<input type="range" min="0" max="512" value="256"/>
-Roundness:<input type="range" min="0" max="512" value="50"/>
-<json>lottie.layers[0].shapes[0].it[0]</json>
-<script func="rounded_rect(shape.p.k, shape.s.k, shape.r.k)" varname="shape">
-function rounded_rect(position, size, roundness)
-{
-    let left = position[0] - size[0] / 2;
-    let right = position[0] + size[0] / 2;
-    let top = position[1] - size[1] / 2;
-    let bottom = position[1] + size[1] / 2;
+        rounded: float = min(s.x/2, s.y/2, r)
+        tangent: float = rounded * ELLIPSE_CONSTANT
 
-    let rounded = Math.min(size[0] / 2, size[1] / 2, roundness);
-
-    let bezier = new Bezier();
-
-    // top right, going down
-    bezier.add_vertex(right, top + rounded)
-        .set_in_tangent(0, -rounded/2);
-
-    // bottom right
-    bezier.add_vertex(right, bottom - rounded)
-        .set_out_tangent(0, rounded/2);
-
-    bezier.add_vertex(right - rounded, bottom)
-        .set_in_tangent(rounded/2, 0);
-
-    // bottom left
-    bezier.add_vertex(left + rounded, bottom)
-        .set_out_tangent(-rounded/2, 0);
-
-    bezier.add_vertex(left, bottom - rounded)
-        .set_in_tangent(0, rounded/2);
-
-    // top left
-    bezier.add_vertex(left, top + rounded)
-        .set_out_tangent(0, -rounded/2);
-
-    bezier.add_vertex(left + rounded, top)
-        .set_in_tangent(-rounded/2, 0);
-
-
-    // back to top right
-    bezier.add_vertex(right - rounded, top)
-        .set_out_tangent(rounded/2, 0);
-
-    return bezier;
-}
-</script>
-<script>
-lottie.layers[0].shapes[0].it[0].p.k = [
-    data["Position x"], data["Position y"]
-];
-lottie.layers[0].shapes[0].it[0].s.k = [
-    data["Width"], data["Height"]
-];
-lottie.layers[0].shapes[0].it[0].r.k = data["Roundness"];
-</script>
+        shape.add_vertex(Vector2D(right, top + rounded))
+        shape.set_in_tangent(Vector2D(0, -tangent))
+        shape.add_vertex(Vector2D(right, bottom - rounded))
+        shape.set_out_tangent(Vector2D(0, tangent))
+        shape.add_vertex(Vector2D(right - rounded, bottom))
+        shape.set_in_tangent(Vector2D(tangent, 0))
+        shape.add_vertex(Vector2D(left + rounded, bottom))
+        shape.set_out_tangent(Vector2D(-tangent, 0))
+        shape.add_vertex(Vector2D(left, bottom - rounded))
+        shape.set_in_tangent(Vector2D(0, tangent))
+        shape.add_vertex(Vector2D(left, top + rounded))
+        shape.set_out_tangent(Vector2D(0, -tangent))
+        shape.add_vertex(Vector2D(left + rounded, top))
+        shape.set_in_tangent(Vector2D(-tangent, 0))
+        shape.add_vertex(Vector2D(right - rounded, top))
+        shape.set_out_tangent(Vector2D(tangent, 0))
+</algorithm>
 
 
 ## Ellipse
@@ -177,53 +120,28 @@ If you think of the ellipse as a clock, start at 12 go clockwise.
 
 The magic number `0.5519` is what lottie uses for this, based on [this article](https://spencermortensen.com/articles/bezier-circle/).
 
-{shape_bezier_script:ellipse.json:el:394:394}
-Position x:<input type="range" min="0" max="512" value="256"/>
-Position y:<input type="range" min="0" max="512" value="256"/>
-Width:<input type="range" min="0" max="512" value="256"/>
-Height:<input type="range" min="0" max="512" value="256"/>
-<json>lottie.layers[0].shapes[0].it[0]</json>
-<script func="ellipse(shape.p.k, shape.s.k)" varname="shape">
-function ellipse(position, size)
-{
-    const ellipse_constant = 0.5519;
+<algorithm>
+def ellipse(shape: Bezier, p: Vector2D, s: Vector2D):
+    # An ellipse is drawn from the top quandrant point going clockwise:
+    radius = s / 2
+    tangent = radius * ELLIPSE_CONSTANT
+    x = p.x
+    y = p.y
 
-    let x = position[0];
-    let y = position[1];
-    let radius_x = size[0] / 2;
-    let radius_y = size[1] / 2;
-    let tangent_x = radius_x * ellipse_constant;
-    let tangent_y = radius_y * ellipse_constant;
-
-    let bezier = new Bezier();
-
-    bezier.add_vertex(x, y - radius_y)
-        .set_in_tangent(-tangent_x, 0)
-        .set_out_tangent(tangent_x, 0);
-
-    bezier.add_vertex(x + radius_x, y)
-        .set_in_tangent(0, -tangent_y)
-        .set_out_tangent(0, tangent_y);
-
-    bezier.add_vertex(x, y + radius_y)
-        .set_in_tangent(tangent_x, 0)
-        .set_out_tangent(-tangent_x, 0);
-
-    bezier.add_vertex(x - radius_x, y)
-        .set_in_tangent(0, tangent_y)
-        .set_out_tangent(0, -tangent_y);
-
-    return bezier;
-}
-</script>
-<script>
-lottie.layers[0].shapes[0].it[0].p.k = [
-    data["Position x"], data["Position y"]
-];
-lottie.layers[0].shapes[0].it[0].s.k = [
-    data["Width"], data["Height"]
-];
-</script>
+    shape.closed = True
+    shape.add_vertex(Vector2D(x, y - radius.y))
+    shape.set_in_tangent(Vector2D(-tangent.x, 0))
+    shape.set_out_tangent(Vector2D(tangent.x, 0))
+    shape.add_vertex(Vector2D(x + radius.x, y))
+    shape.set_in_tangent(Vector2D(0, -tangent.y))
+    shape.set_out_tangent(Vector2D(0, tangent.y))
+    shape.add_vertex(Vector2D(x, y + radius.y))
+    shape.set_in_tangent(Vector2D(tangent.x, 0))
+    shape.set_out_tangent(Vector2D(-tangent.x, 0))
+    shape.add_vertex(Vector2D(x - radius.x, y))
+    shape.set_in_tangent(Vector2D(0, tangent.y))
+    shape.set_out_tangent(Vector2D(0, -tangent.y))
+</algorithm>
 
 
 ## PolyStar
@@ -231,122 +149,38 @@ lottie.layers[0].shapes[0].it[0].s.k = [
 Pseudocode for rendering a [PolyStar](shapes.md#polystar).
 
 
-{shape_bezier_script:star.json:sr:394:394}
-Points:<input type="range" min="3" max="10" value="5"/>
-Rotation:<input type="range" min="0" max="360" value="0"/>
-Outer Radius:<input type="range" min="0" max="300" value="200"/>
-Inner Radius:<input type="range" min="0" max="300" value="100"/>
-Outer Roundness:<input type="range" min="0" max="100" value="0"/>
-Inner Roundness:<input type="range" min="0" max="100" value="0"/>
-Type:<select><option value="1">Star</option><option value="2">Polygon</option></select>
-<json>lottie.layers[0].shapes[0].it[0]</json>
-<script func="polystar(new Point(shape.p.k), shape.sy, shape.pt.k, shape.r.k, shape.or.k, shape.os.k, shape.ir?.k, shape.is?.k)">
-function polystar(
-    position,
-    type,
-    points,
-    rotation,
-    outer_radius,
-    outer_roundness,
-    inner_radius,
-    inner_roundness
-)
-{
-    let result = new Bezier();
+<algorithm>
+def polystar(shape: Bezier, p: Vector2D, pt: float, r: float, or_: float, os: float, sy: int, ir: float, is_: float):
+    points: int = int(round(pt))
+    alpha: float = -r * math.pi / 180 - math.pi / 2
+    theta: float = -math.pi / points
+    tan_len_out: float = (2 * math.pi * or_) / (4 * points) * (os / 100)
+    tan_len_in: float = (2 * math.pi * ir) / (4 * points) * (is_ / 100)
 
-    let half_angle = Math.PI / points;
-    let angle_radians = rotation / 180 * Math.PI
+    shape.closed = True
 
-    // Tangents for rounded courners
-    let tangent_len_outer = outer_roundness * outer_radius * 2 * Math.PI / (points * 4 * 100);
-    let tangent_len_inner = inner_roundness * inner_radius * 2 * Math.PI / (points * 4 * 100);
+    for i in range(points):
+        beta: float = alpha + i * theta * 2
+        v_out: Vector2D = Vector2D(or_ * math.cos(beta),  or_ * math.sin(beta))
+        shape.add_vertex(p + v_out)
 
-    for ( let i = 0; i < points; i++ )
-    {
-        let main_angle = -Math.PI / 2 + angle_radians + i * half_angle * 2;
+        if os != 0 and or_ != 0:
+            # We need to add bezier tangents
+            tan_out: Vector2D = v_out * tan_len_out / or_
+            shape.set_in_tangent(Vector2D(-tan_out.y, tan_out.x))
+            shape.set_out_tangent(Vector2D(tan_out.y, -tan_out.x))
 
-        let outer_vertex = new Point(
-            outer_radius * Math.cos(main_angle),
-            outer_radius * Math.sin(main_angle)
-        );
+        if sy == 1:
+            # We need to add a vertex towards the inner radius to make a star
+            v_in: Vector2D = Vector2D(ir * math.cos(beta + theta), ir * math.sin(beta + theta))
+            shape.add_vertex(p + v_in)
 
-        let outer_tangent = new Point(0, 0);
-        if ( outer_radius != 0 )
-            outer_tangent = new Point(
-                outer_vertex.y / outer_radius * tangent_len_outer,
-                -outer_vertex.x / outer_radius * tangent_len_outer
-            );
-
-        result.add_vertex(position.add(outer_vertex))
-            .set_in_tangent(outer_tangent)
-            .set_out_tangent(outer_tangent.neg());
-
-        // Star inner radius
-        if ( type == 1 )
-        {
-            let inner_vertex = new Point(
-                inner_radius * Math.cos(main_angle + half_angle),
-                inner_radius * Math.sin(main_angle + half_angle)
-            );
-
-            let inner_tangent = new Point(0, 0);
-            if ( inner_radius != 0 )
-                inner_tangent = new Point(
-                    inner_vertex.y / inner_radius * tangent_len_inner,
-                    -inner_vertex.x / inner_radius * tangent_len_inner
-                );
-
-            result.add_vertex(position.add(inner_vertex))
-                .set_in_tangent(inner_tangent)
-                .set_out_tangent(inner_tangent.neg());
-        }
-    }
-
-    return result;
-}
-</script>
-<script>
-var star = {
-    "ty": "sr",
-    "nm": "PolyStar",
-    "sy": Number(data["Type"]),
-    "p": {
-        "a": 0,
-        "k": [
-            256,
-            256
-        ]
-    },
-    "r": {
-        "a": 0,
-        "k": data["Rotation"]
-    },
-    "pt": {
-        "a": 0,
-        "k": data["Points"]
-    },
-    "or": {
-        "a": 0,
-        "k": data["Outer Radius"]
-    },
-    "os": {
-        "a": 0,
-        "k": data["Outer Roundness"]
-    },
-};
-if ( data["Type"] == "1" )
-{
-    star.ir = {
-        "a": 0,
-        "k": data["Inner Radius"]
-    };
-    star.is = {
-        "a": 0,
-        "k": data["Inner Roundness"]
-    };
-}
-lottie.layers[0].shapes[0].it[0] = star;
-</script>
+            if is_ != 0 and ir != 0:
+                # We need to add bezier tangents
+                tan_in = v_in * tan_len_in / ir
+                shape.set_in_tangent(Vector2D(-tan_in.y, tan_in.x))
+                shape.set_out_tangent(Vector2D(tan_in.y, -tan_in.x))
+</algorithm>
 
 
 ## Pucker Bloat
@@ -354,65 +188,60 @@ lottie.layers[0].shapes[0].it[0] = star;
 See [Pucker / Bloat](shapes.md#pucker-bloat).
 
 
-{shape_bezier_script:pucker_bloat.json:394:394}
-Amount:<input type="range" min="-100" value="50" max="100"/>
-<json>lottie.layers[0].shapes[0].it[1]</json>
-<script>
-lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
-let star = lottie.layers[0].shapes[0].it[0];
-</script>
-<script func="pucker_bloat([convert_shape(star)], modifier.a.k)" varname="modifier" suffix="[0].to_lottie()">
-function pucker_bloat(
-    // Beziers as collected from the other shapes
-    collected_shapes,
-    // "a" property from the Pucker/Bloat modifier
-    amount
-)
-{
-    // Normalize to [0, 1]
-    amount /= 100;
-
-    // Find the mean of the bezier vertices
-    let center = new Point(0, 0);
-    let number_of_vertices = 0;
-    for ( let input_bezier of collected_shapes )
+<shape_bezier_script width="394" height="394" example="pucker_bloat.json">
+    <form>
+        <input title="Amount" type="range" min="-100" value="50" max="100"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[1]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+    let star = lottie.layers[0].shapes[0].it[0];
+    </script>
+    <script func="pucker_bloat([convert_shape(star)], modifier.a.k)" varname="modifier" suffix="[0].to_lottie()">
+    function pucker_bloat(
+        // Beziers as collected from the other shapes
+        collected_shapes,
+        // "a" property from the Pucker/Bloat modifier
+        amount
+    )
     {
-        for ( let point of input_bezier.points )
+        // Normalize to [0, 1]
+        amount /= 100;
+        // Find the mean of the bezier vertices
+        let center = new Point(0, 0);
+        let number_of_vertices = 0;
+        for ( let input_bezier of collected_shapes )
         {
-            center.x += point.pos.x;
-            center.y += point.pos.y;
-            number_of_vertices += 1;
+            for ( let point of input_bezier.points )
+            {
+                center.x += point.pos.x;
+                center.y += point.pos.y;
+                number_of_vertices += 1;
+            }
         }
-    }
-
-    center.x /= number_of_vertices;
-    center.y /= number_of_vertices;
-
-    let result = [];
-
-    for ( let input_bezier of collected_shapes )
-    {
-        let output_bezier = new Bezier();
-        for ( let point of input_bezier.points )
+        center.x /= number_of_vertices;
+        center.y /= number_of_vertices;
+        let result = [];
+        for ( let input_bezier of collected_shapes )
         {
-            // Here we convert tangents to global coordinates
-            let vertex = lerp(point.pos, center, amount);
-            let in_tangent = lerp(point.in_tangent.add(point.pos), center, -amount).sub(vertex);
-
-            let out_tangent = lerp(point.out_tangent.add(point.pos), center, -amount).sub(vertex);
-            output_bezier.add_vertex(vertex)
-                .set_in_tangent(in_tangent)
-                .set_out_tangent(out_tangent);
+            let output_bezier = new Bezier();
+            for ( let point of input_bezier.points )
+            {
+                // Here we convert tangents to global coordinates
+                let vertex = lerp(point.pos, center, amount);
+                let in_tangent = lerp(point.in_tangent.add(point.pos), center, -amount).sub(vertex);
+                let out_tangent = lerp(point.out_tangent.add(point.pos), center, -amount).sub(vertex);
+                output_bezier.add_vertex(vertex)
+                    .set_in_tangent(in_tangent)
+                    .set_out_tangent(out_tangent);
+            }
+            output_bezier.closed = input_bezier.closed;
+            result.push(output_bezier);
         }
-
-        output_bezier.closed = input_bezier.closed;
-
-        result.push(output_bezier);
+        return result;
     }
-
-    return result;
-}
-</script>
+    </script>
+</shape_bezier_script>
 
 
 ## Rounded Corners
@@ -424,95 +253,87 @@ It approximates rounding using circular arcs.
 
 The magic number `0.5519` is what lottie uses for this, based on [this article](https://spencermortensen.com/articles/bezier-circle/).
 
-{shape_bezier_script:rounded_corners.json:394:394}
-Radius:<input type="range" min="0" value="50" max="100"/>
-<json>lottie.layers[0].shapes[0].it[1]</json>
-<script>
-lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
-let star = lottie.layers[0].shapes[0].it[0];
-</script>
-<script func="round_corners([convert_shape(star)], modifier.r.k)" varname="modifier" suffix="[0].to_lottie()">
-// Helper function to perform rounding on a single vertex
-function get_vertex_tangent(
-    // Bezier to round
-    bezier,
-    // Vertex in the bezier we are rounding
-    current_vertex,
-    // Index of the next point along the curve
-    closest_index,
-    // Rounding radius
-    round_distance
-)
-{
-    const tangent_length = 0.5519;
-
-    // closest_index module bezier.length
-    closest_index = closest_index % bezier.points.length;
-    if ( closest_index < 0 )
-        closest_index += bezier.points.length;
-
-
-    let closest_vertex = bezier.points[closest_index].pos;
-    let distance = current_vertex.distance(closest_vertex);
-    let new_pos_perc = distance != 0 ? Math.min(distance/2, round_distance) / distance : 0;
-    let vertex = closest_vertex.sub(current_vertex).mul(new_pos_perc).add(current_vertex);
-    let tangent = vertex.sub(current_vertex).neg().mul(tangent_length);
-    return [vertex, tangent];
-}
-
-// Rounding for a single continuos curve
-function round_bezier_corners(
-    // Bezier to round
-    original,
-    // Rounding radius
-    round_distance
-)
-{
-    let result = new Bezier()
-    result.closed = original.closed;
-
-    for ( let i = 0; i < original.points.length; i++ )
+<shape_bezier_script width="394" height="394" example="rounded_corners.json">
+    <form>
+        <input title="Radius" type="range" min="0" value="50" max="100"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[1]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
+    let star = lottie.layers[0].shapes[0].it[0];
+    </script>
+    <script func="round_corners([convert_shape(star)], modifier.r.k)" varname="modifier" suffix="[0].to_lottie()">
+    // Helper function to perform rounding on a single vertex
+    function get_vertex_tangent(
+        // Bezier to round
+        bezier,
+        // Vertex in the bezier we are rounding
+        current_vertex,
+        // Index of the next point along the curve
+        closest_index,
+        // Rounding radius
+        round_distance
+    )
     {
-        let point = original.points[i];
-
-        // Start and end of a non-closed path don't get rounded
-        if ( !original.closed && (i == 0 || i == original.points.length - 1) )
-        {
-            result.add_vertex(point.pos)
-                .set_in_tangent(point.in_tangent)
-                .set_out_tangent(point.out_tangent);
-        }
-        else
-        {
-            let [vert1, out_t] = get_vertex_tangent(original, point.pos, i - 1, round_distance);
-            result.add_vertex(vert1)
-                .set_out_tangent(out_t);
-
-            let [vert2, in_t] = get_vertex_tangent(original, point.pos, i + 1, round_distance);
-            result.add_vertex(vert2)
-                .set_in_tangent(in_t);
-        }
+        const tangent_length = 0.5519;
+        // closest_index module bezier.length
+        closest_index = closest_index % bezier.points.length;
+        if ( closest_index < 0 )
+            closest_index += bezier.points.length;
+        let closest_vertex = bezier.points[closest_index].pos;
+        let distance = current_vertex.distance(closest_vertex);
+        let new_pos_perc = distance != 0 ? Math.min(distance/2, round_distance) / distance : 0;
+        let vertex = closest_vertex.sub(current_vertex).mul(new_pos_perc).add(current_vertex);
+        let tangent = vertex.sub(current_vertex).neg().mul(tangent_length);
+        return [vertex, tangent];
     }
-
-    return result;
-}
-
-// Rounding on multiple bezier
-function round_corners(
-    // Beziers as collected from the other shapes
-    collected_shapes,
-    // "r" property from lottie
-    r
-)
-{
-    let result = []
-
-    for ( let input_bezier of collected_shapes )
-        result.push(round_bezier_corners(input_bezier, r));
-
-    return result;
-}
-</script>
+    // Rounding for a single continuos curve
+    function round_bezier_corners(
+        // Bezier to round
+        original,
+        // Rounding radius
+        round_distance
+    )
+    {
+        let result = new Bezier()
+        result.closed = original.closed;
+        for ( let i = 0; i < original.points.length; i++ )
+        {
+            let point = original.points[i];
+            // Start and end of a non-closed path don't get rounded
+            if ( !original.closed && (i == 0 || i == original.points.length - 1) )
+            {
+                result.add_vertex(point.pos)
+                    .set_in_tangent(point.in_tangent)
+                    .set_out_tangent(point.out_tangent);
+            }
+            else
+            {
+                let [vert1, out_t] = get_vertex_tangent(original, point.pos, i - 1, round_distance);
+                result.add_vertex(vert1)
+                    .set_out_tangent(out_t);
+                let [vert2, in_t] = get_vertex_tangent(original, point.pos, i + 1, round_distance);
+                result.add_vertex(vert2)
+                    .set_in_tangent(in_t);
+            }
+        }
+        return result;
+    }
+    // Rounding on multiple bezier
+    function round_corners(
+        // Beziers as collected from the other shapes
+        collected_shapes,
+        // "r" property from lottie
+        r
+    )
+    {
+        let result = []
+        for ( let input_bezier of collected_shapes )
+            result.push(round_bezier_corners(input_bezier, r));
+        return result;
+    }
+    </script>
+</shape_bezier_script>
 
 
 ## Zig Zag
@@ -520,153 +341,130 @@ function round_corners(
 See [Zig Zag](shapes.md#zig-zag).
 
 
-{shape_bezier_script:zig-zag.json:394:394}
-Zig Zag:
-Amplitude:<input type="range" min="-100" value="10" max="100"/>
-Frequency:<input type="range" min="0" value="10" max="30"/>
-Point Type:<select><option value="1">Point</option><option value="2">Smooth</option></select>
-Star:
-Roundness:<input type="range" min="0" value="0" max="100"/>
-Rotation:<input type="range" min="0" value="0" max="360"/>
-Points:<input type="range" min="3" value="5" max="10"/>
-Stroke Width:<input type="range" min="1" value="3" max="30"/>
-<json>lottie.layers[0].shapes[0].it[1]</json>
-<script>
-lottie.layers[0].shapes[0].it[1].s.k = data["Amplitude"];
-lottie.layers[0].shapes[0].it[1].r.k = data["Frequency"];
-lottie.layers[0].shapes[0].it[1].pt.k = Number(data["Point Type"]);
-
-lottie.layers[0].shapes[0].it[0].pt.k = data["Points"];
-lottie.layers[0].shapes[0].it[0].r.k = data["Rotation"];
-lottie.layers[0].shapes[0].it[0].is.k = data["Roundness"];
-lottie.layers[0].shapes[0].it[0].os.k = data["Roundness"];
-lottie.layers[0].shapes[0].it[2].w.k = data["Stroke Width"];
-
-let star = lottie.layers[0].shapes[0].it[0];
-bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
-</script>
-<script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.r.k, modifier.pt.k)" varname="modifier" suffix="[0].to_lottie()">
-
-function angle_mean(a, b)
-{
-    if ( Math.abs(a-b) > Math.PI )
-        return (a + b) / 2 + Math.PI;
-
-    return (a + b) / 2;
-}
-
-function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude, direction, tangent_length)
-{
-    let point;
-    let angle;
-    let tan_angle;
-
-    // We use 0.01 and 0.99 instead of 0 and 1 because they yield better results
-    if ( !segment_before )
+<shape_bezier_script width="394" height="394" example="zig-zag.json">
+    <form>
+        <th>Zig Zag</th>
+        <input title="Amplitude" type="range" min="-100" value="10" max="100"/>
+        <input title="Frequency" type="range" min="0" value="10" max="30"/>
+        <select title="Point Type"><option value="1">Point</option><option value="2">Smooth</option></select>
+        <th>Star</th>
+        <input title="Roundness" type="range" min="0" value="0" max="100"/>
+        <input title="Rotation" type="range" min="0" value="0" max="360"/>
+        <input title="Points" type="range" min="3" value="5" max="10"/>
+        <input title="Stroke Width" type="range" min="1" value="3" max="30"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[1]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[1].s.k = data["Amplitude"];
+    lottie.layers[0].shapes[0].it[1].r.k = data["Frequency"];
+    lottie.layers[0].shapes[0].it[1].pt.k = Number(data["Point Type"]);
+    lottie.layers[0].shapes[0].it[0].pt.k = data["Points"];
+    lottie.layers[0].shapes[0].it[0].r.k = data["Rotation"];
+    lottie.layers[0].shapes[0].it[0].is.k = data["Roundness"];
+    lottie.layers[0].shapes[0].it[0].os.k = data["Roundness"];
+    lottie.layers[0].shapes[0].it[2].w.k = data["Stroke Width"];
+    let star = lottie.layers[0].shapes[0].it[0];
+    bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
+    </script>
+    <script func="zig_zag([convert_shape(star)], modifier.s.k, modifier.r.k, modifier.pt.k)" varname="modifier" suffix="[0].to_lottie()">
+    function angle_mean(a, b)
     {
-        point = segment_after.points[0];
-        angle = segment_after.normal_angle(0.01);
-        tan_angle = segment_after.tangent_angle(0.01);
+        if ( Math.abs(a-b) > Math.PI )
+            return (a + b) / 2 + Math.PI;
+        return (a + b) / 2;
     }
-    else if ( !segment_after )
+    function zig_zag_corner(output_bezier, segment_before, segment_after, amplitude, direction, tangent_length)
     {
-        point = segment_before.points[3];
-        angle = segment_before.normal_angle(0.99);
-        tan_angle = segment_before.tangent_angle(0.99);
-    }
-    else
-    {
-        point = segment_after.points[0];
-        angle = angle_mean(segment_after.normal_angle(0.01), segment_before.normal_angle(0.99));
-        tan_angle = angle_mean(segment_after.tangent_angle(0.01), segment_before.tangent_angle(0.99));
-    }
-
-    let vertex = output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
-    if ( tangent_length !== 0 )
-    {
-        vertex.set_in_tangent(Point.polar(tan_angle, -tangent_length));
-        vertex.set_out_tangent(Point.polar(tan_angle, tangent_length));
-    }
-}
-
-function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction, tangent_length)
-{
-    for ( let i = 0; i < frequency; i++ )
-    {
-        let f = (i + 1) / (frequency + 1);
-        let t = segment.t_at_length_percent(f);
-        let angle = segment.normal_angle(t);
-        let point = segment.point(t);
-
+        let point;
+        let angle;
+        let tan_angle;
+        // We use 0.01 and 0.99 instead of 0 and 1 because they yield better results
+        if ( !segment_before )
+        {
+            point = segment_after.points[0];
+            angle = segment_after.normal_angle(0.01);
+            tan_angle = segment_after.tangent_angle(0.01);
+        }
+        else if ( !segment_after )
+        {
+            point = segment_before.points[3];
+            angle = segment_before.normal_angle(0.99);
+            tan_angle = segment_before.tangent_angle(0.99);
+        }
+        else
+        {
+            point = segment_after.points[0];
+            angle = angle_mean(segment_after.normal_angle(0.01), segment_before.normal_angle(0.99));
+            tan_angle = angle_mean(segment_after.tangent_angle(0.01), segment_before.tangent_angle(0.99));
+        }
         let vertex = output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
         if ( tangent_length !== 0 )
         {
-            let tan_angle = segment.tangent_angle(t);
             vertex.set_in_tangent(Point.polar(tan_angle, -tangent_length));
             vertex.set_out_tangent(Point.polar(tan_angle, tangent_length));
         }
-
-        direction = -direction;
     }
-
-    return direction;
-}
-
-function zig_zag_bezier(input_bezier, amplitude, frequency, smooth)
-{
-    let output_bezier = new Bezier();
-
-    output_bezier.closed = input_bezier.closed;
-    let count = input_bezier.segment_count();
-
-    if ( count == 0 )
-        return output_bezier;
-
-    let direction = -1;
-    let segment = input_bezier.closed ? input_bezier.segment(count - 1) : null;
-    let next_segment = input_bezier.segment(0);
-
-    next_segment.calculate_length_data();
-    let tangent_length = smooth ? next_segment.length / (frequency + 1) / 2 : 0;
-
-    zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1, tangent_length);
-
-    for ( let i = 0; i < count; i++ )
+    function zig_zag_segment(output_bezier, segment, amplitude, frequency, direction, tangent_length)
     {
-        segment = next_segment;
-
-        direction = zig_zag_segment(output_bezier, segment, amplitude, frequency, -direction, tangent_length);
-
-        if ( i == count - 1 && !input_bezier.closed )
-            next_segment = null;
-        else
-            next_segment = input_bezier.segment((i + 1) % count);
-
-        zig_zag_corner(output_bezier, segment, next_segment, amplitude, direction, tangent_length);
+        for ( let i = 0; i < frequency; i++ )
+        {
+            let f = (i + 1) / (frequency + 1);
+            let t = segment.t_at_length_percent(f);
+            let angle = segment.normal_angle(t);
+            let point = segment.point(t);
+            let vertex = output_bezier.add_vertex(point.add_polar(angle, direction * amplitude));
+            if ( tangent_length !== 0 )
+            {
+                let tan_angle = segment.tangent_angle(t);
+                vertex.set_in_tangent(Point.polar(tan_angle, -tangent_length));
+                vertex.set_out_tangent(Point.polar(tan_angle, tangent_length));
+            }
+            direction = -direction;
+        }
+        return direction;
     }
-
-    return output_bezier;
-}
-
-function zig_zag(
-    // Beziers as collected from the other shapes
-    collected_shapes,
-    amplitude,
-    frequency,
-    point_type
-)
-{
-    // Ensure we have an integer number of segments
-    frequency = Math.max(0, Math.round(frequency));
-
-    let result = [];
-
-    for ( let input_bezier of collected_shapes )
-        result.push(zig_zag_bezier(input_bezier, amplitude, frequency, point_type === 2));
-
-    return result;
-}
-</script>
+    function zig_zag_bezier(input_bezier, amplitude, frequency, smooth)
+    {
+        let output_bezier = new Bezier();
+        output_bezier.closed = input_bezier.closed;
+        let count = input_bezier.segment_count();
+        if ( count == 0 )
+            return output_bezier;
+        let direction = -1;
+        let segment = input_bezier.closed ? input_bezier.segment(count - 1) : null;
+        let next_segment = input_bezier.segment(0);
+        next_segment.calculate_length_data();
+        let tangent_length = smooth ? next_segment.length / (frequency + 1) / 2 : 0;
+        zig_zag_corner(output_bezier, segment, next_segment, amplitude, -1, tangent_length);
+        for ( let i = 0; i < count; i++ )
+        {
+            segment = next_segment;
+            direction = zig_zag_segment(output_bezier, segment, amplitude, frequency, -direction, tangent_length);
+            if ( i == count - 1 && !input_bezier.closed )
+                next_segment = null;
+            else
+                next_segment = input_bezier.segment((i + 1) % count);
+            zig_zag_corner(output_bezier, segment, next_segment, amplitude, direction, tangent_length);
+        }
+        return output_bezier;
+    }
+    function zig_zag(
+        // Beziers as collected from the other shapes
+        collected_shapes,
+        amplitude,
+        frequency,
+        point_type
+    )
+    {
+        // Ensure we have an integer number of segments
+        frequency = Math.max(0, Math.round(frequency));
+        let result = [];
+        for ( let input_bezier of collected_shapes )
+            result.push(zig_zag_bezier(input_bezier, amplitude, frequency, point_type === 2));
+        return result;
+    }
+    </script>
+</shape_bezier_script>
 
 
 ## Offset Path
@@ -674,463 +472,439 @@ function zig_zag(
 See [Offset Path](shapes.md#offset-path).
 
 
-{shape_bezier_script:offset-path.json:394:394}
-Offset Path:
-Amount:<input type="range" min="-100" value="10" max="100"/>
-Miter Limit:<input type="range" min="0" value="100" max="100"/>
-Line Join:<enum value="2">line-join</enum>
-Star:
-Star Roundness:<input type="range" min="0" value="0" max="100"/>
-<json>lottie.layers[0].shapes[0].it[1]</json>
-<script>
-lottie.layers[0].shapes[0].it[0].is.k = data["Star Roundness"];
-lottie.layers[0].shapes[0].it[0].os.k = data["Star Roundness"];
-lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
-lottie.layers[0].shapes[0].it[1].lj = Number(data["Line Join"]);
-lottie.layers[0].shapes[0].it[1].ml.k = data["Miter Limit"];
+<shape_bezier_script width="394" height="394" example="offset-path.json">
+    <form>
+        <th>Offset Path</th>
+        <input title="Amount" type="range" min="-100" value="10" max="100"/>
+        <input title="Miter Limit" type="range" min="0" value="100" max="100"/>
+        <enum title="Line Join" value="2">line-join</enum>
+        <th>Star</th>
+        <input title="Star Roundness" type="range" min="0" value="0" max="100"/>
+    </form>
+    <json>lottie.layers[0].shapes[0].it[1]</json>
+    <script>
+    lottie.layers[0].shapes[0].it[0].is.k = data["Star Roundness"];
+    lottie.layers[0].shapes[0].it[0].os.k = data["Star Roundness"];
+    lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+    lottie.layers[0].shapes[0].it[1].lj = Number(data["Line Join"]);
+    lottie.layers[0].shapes[0].it[1].ml.k = data["Miter Limit"];
 
-let star = lottie.layers[0].shapes[0].it[0];
-bezier_lottie.layers[0].shapes[0].it[1].w.k = 3;
-</script>
-<script func="offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)" varname="modifier">
-/*
-    Simple offset of a linear segment
-*/
-function linear_offset(p1, p2, amount)
-{
-    let angle = Math.atan2(p2.x - p1.x, p2.y - p1.y);
-    return [
-        p1.add_polar(angle, amount),
-        p2.add_polar(angle, amount)
-    ];
-}
+    let star = lottie.layers[0].shapes[0].it[0];
+    bezier_lottie.layers[0].shapes[0].it[1].w.k = 3;
+    </script>
+    <script func="offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)" varname="modifier">
+    /*
+        Simple offset of a linear segment
+    */
+    function linear_offset(p1, p2, amount)
+    {
+        let angle = Math.atan2(p2.x - p1.x, p2.y - p1.y);
+        return [
+            p1.add_polar(angle, amount),
+            p2.add_polar(angle, amount)
+        ];
+    }
 
-/*
-    Offset a bezier segment
-    only works well if the segment is flat enough
-*/
-function offset_segment(segment, amount)
-{
-    let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
-    let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
-    let [p2a, p3] = linear_offset(segment.points[2], segment.points[3], amount);
-    let p1 = line_intersection(p0, p1a, p1b, p2b) ?? p1a;
-    let p2 = line_intersection(p2a, p3, p1b, p2b) ?? p2a;
+    /*
+        Offset a bezier segment
+        only works well if the segment is flat enough
+    */
+    function offset_segment(segment, amount)
+    {
+        let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
+        let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
+        let [p2a, p3] = linear_offset(segment.points[2], segment.points[3], amount);
+        let p1 = line_intersection(p0, p1a, p1b, p2b) ?? p1a;
+        let p2 = line_intersection(p2a, p3, p1b, p2b) ?? p2a;
 
-    return new BezierSegment(p0, p1, p2, p3);
-}
+        return new BezierSegment(p0, p1, p2, p3);
+    }
 
-/*
-    Join two segments
-*/
-function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
-{
-    let p0 = seg1.points[3];
-    let p1 = seg2.points[0];
+    /*
+        Join two segments
+    */
+    function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
+    {
+        let p0 = seg1.points[3];
+        let p1 = seg2.points[0];
 
-    // Bevel
-    if ( line_join == 3 )
+        // Bevel
+        if ( line_join == 3 )
+            return p0;
+
+
+        // Connected, they don't need a joint
+        if ( p0.is_equal(p1) )
+            return p0;
+
+        let last_point = output_bezier.points[output_bezier.points.length - 1];
+
+        // Round
+        if ( line_join == 2 )
+        {
+            const ellipse_constant = 0.5519;
+            let angle_out = seg1.tangent_angle(1);
+            let angle_in = seg2.tangent_angle(0) + Math.PI;
+            let center = line_intersection(
+                p0, p0.add_polar(angle_out + Math.PI / 2, 100),
+                p1, p1.add_polar(angle_out + Math.PI / 2, 100)
+            );
+            let radius = center ? center.distance(p0) : p0.distance(p1) / 2;
+            last_point.set_out_tangent(Point.polar(angle_out, 2 * radius * ellipse_constant));
+
+            output_bezier.add_vertex(p1)
+                .set_in_tangent(Point.polar(angle_in, 2 * radius * ellipse_constant));
+
+            return p1;
+        }
+
+        // Miter
+        let t0 = p0.is_equal(seg1.points[2]) ? seg1.points[0] : seg1.points[2];
+        let t1 = p1.is_equal(seg2.points[1]) ? seg2.points[3] : seg2.points[1];
+        let intersection = line_intersection(t0, p0, p1, t1);
+        if ( intersection && intersection.distance(p0) < miter_limit )
+        {
+            output_bezier.add_vertex(intersection);
+            return intersection;
+        }
+
         return p0;
-
-
-    // Connected, they don't need a joint
-    if ( p0.is_equal(p1) )
-        return p0;
-
-    let last_point = output_bezier.points[output_bezier.points.length - 1];
-
-    // Round
-    if ( line_join == 2 )
-    {
-        const ellipse_constant = 0.5519;
-        let angle_out = seg1.tangent_angle(1);
-        let angle_in = seg2.tangent_angle(0) + Math.PI;
-        let center = line_intersection(
-            p0, p0.add_polar(angle_out + Math.PI / 2, 100),
-            p1, p1.add_polar(angle_out + Math.PI / 2, 100)
-        );
-        let radius = center ? center.distance(p0) : p0.distance(p1) / 2;
-        last_point.set_out_tangent(Point.polar(angle_out, 2 * radius * ellipse_constant));
-
-        output_bezier.add_vertex(p1)
-            .set_in_tangent(Point.polar(angle_in, 2 * radius * ellipse_constant));
-
-        return p1;
     }
 
-    // Miter
-    let t0 = p0.is_equal(seg1.points[2]) ? seg1.points[0] : seg1.points[2];
-    let t1 = p1.is_equal(seg2.points[1]) ? seg2.points[3] : seg2.points[1];
-    let intersection = line_intersection(t0, p0, p1, t1);
-    if ( intersection && intersection.distance(p0) < miter_limit )
+
+    function get_intersection(a, b)
     {
-        output_bezier.add_vertex(intersection);
-        return intersection;
+        let intersect = a.intersections(b);
+
+        if ( intersect.length && fuzzy_compare(intersect[0], 1) )
+            intersect.shift();
+
+        if ( intersect.length )
+            return intersect[0];
+
+        return null;
     }
 
-    return p0;
-}
-
-
-function get_intersection(a, b)
-{
-    let intersect = a.intersections(b);
-
-    if ( intersect.length && fuzzy_compare(intersect[0], 1) )
-        intersect.shift();
-
-    if ( intersect.length )
-        return intersect[0];
-
-    return null;
-}
-
-function prune_segment_intersection(a, b)
-{
-    let out_a = [...a];
-    let out_b = [...b];
-
-    let intersect = get_intersection(a[a.length-1], b[0]);
-
-    if ( intersect )
+    function prune_segment_intersection(a, b)
     {
-        out_a[a.length-1] = a[a.length-1].split(intersect[0])[0];
-        out_b[0] = b[0].split(intersect[1])[1];
-    }
+        let out_a = [...a];
+        let out_b = [...b];
 
-    if ( a.length > 1 && b.length > 1 )
-    {
-        intersect = get_intersection(a[0], b[b.length - 1]);
+        let intersect = get_intersection(a[a.length-1], b[0]);
 
         if ( intersect )
         {
-            return [
-                [a[0].split(intersect[0])[0]],
-                [b[b.length-1].split(intersect[1])[1]],
-            ];
-        }
-    }
-
-    return [out_a, out_b];
-}
-
-function prune_intersections(segments)
-{
-    for ( let i = 1; i < segments.length; i++ )
-    {
-        [segments[i-1], segments[i]] = prune_segment_intersection(segments[i - 1], segments[i]);
-    }
-
-    if ( segments.length > 1 )
-        [segments[segments.length - 1], segments[0]] = prune_segment_intersection(segments[segments.length - 1], segments[0]);
-
-    return segments;
-}
-
-function offset_segment_split(segment, amount)
-{
-    /*
-        We split each bezier segment into smaller pieces based
-        on inflection points, this ensures the control point
-        polygon is convex.
-
-        (A cubic bezier can have none, one, or two inflection points)
-    */
-    let flex = segment.inflection_points();
-
-    if ( flex.length == 0 )
-    {
-        return [offset_segment(segment, amount)];
-    }
-    else if ( flex.length == 1 || flex[1] == 1 )
-    {
-        let [left, right] = segment.split(flex[0]);
-
-        return [
-            offset_segment(left, amount),
-            offset_segment(right, amount)
-        ];
-    }
-    else
-    {
-        let [left, mid_right] = segment.split(flex[0]);
-        let t = (flex[1] - flex[0]) / (1 - flex[0]);
-        let [mid, right] = mid_right.split(t);
-
-        return [
-            offset_segment(left, amount),
-            offset_segment(mid, amount),
-            offset_segment(right, amount)
-        ];
-    }
-
-}
-
-function offset_path(
-    // Beziers as collected from the other shapes
-    collected_shapes,
-    amount,
-    line_join,
-    miter_limit,
-)
-{
-    let result = [];
-
-    for ( let input_bezier of collected_shapes )
-    {
-        let output_bezier = new Bezier();
-
-        output_bezier.closed = input_bezier.closed;
-        let count = input_bezier.segment_count();
-
-        let multi_segments = [];
-
-        for ( let i = 0; i < count; i++ )
-            multi_segments.push(offset_segment_split(input_bezier.segment(i), amount));
-
-        // Open paths are stroked rather than being simply offset
-        if ( !input_bezier.closed )
-        {
-            for ( let i = count - 1; i >= 0; i-- )
-                multi_segments.push(offset_segment_split(input_bezier.inverted_segment(i), amount));
+            out_a[a.length-1] = a[a.length-1].split(intersect[0])[0];
+            out_b[0] = b[0].split(intersect[1])[1];
         }
 
-        multi_segments = prune_intersections(multi_segments);
-
-        // Add bezier segments to the output and apply line joints
-        let last_point = null;
-        let last_seg = null;
-
-        for ( let multi_segment of multi_segments )
+        if ( a.length > 1 && b.length > 1 )
         {
-            if ( last_seg )
-                last_point = join_lines(output_bezier, last_seg, multi_segment[0], line_join, miter_limit);
+            intersect = get_intersection(a[0], b[b.length - 1]);
 
-            last_seg = multi_segment[multi_segment.length - 1];
-
-            for ( let segment of multi_segment )
+            if ( intersect )
             {
-                if ( segment.points[0].is_equal(last_point) )
-                {
-                    output_bezier.points[output_bezier.points.length - 1]
-                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
-                }
-                else
-                {
-                    output_bezier.add_vertex(segment.points[0])
-                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
-                }
-
-
-                output_bezier.add_vertex(segment.points[3])
-                    .set_in_tangent(segment.points[2].sub(segment.points[3]));
-
-                last_point = segment.points[3];
+                return [
+                    [a[0].split(intersect[0])[0]],
+                    [b[b.length-1].split(intersect[1])[1]],
+                ];
             }
         }
 
-        if ( multi_segments.length )
-            join_lines(output_bezier, last_seg, multi_segments[0][0], line_join, miter_limit);
-
-        result.push(output_bezier);
+        return [out_a, out_b];
     }
 
-    return result;
-}
-</script>
+    function prune_intersections(segments)
+    {
+        for ( let i = 1; i < segments.length; i++ )
+        {
+            [segments[i-1], segments[i]] = prune_segment_intersection(segments[i - 1], segments[i]);
+        }
+
+        if ( segments.length > 1 )
+            [segments[segments.length - 1], segments[0]] = prune_segment_intersection(segments[segments.length - 1], segments[0]);
+
+        return segments;
+    }
+
+    function offset_segment_split(segment, amount)
+    {
+        /*
+            We split each bezier segment into smaller pieces based
+            on inflection points, this ensures the control point
+            polygon is convex.
+
+            (A cubic bezier can have none, one, or two inflection points)
+        */
+        let flex = segment.inflection_points();
+
+        if ( flex.length == 0 )
+        {
+            return [offset_segment(segment, amount)];
+        }
+        else if ( flex.length == 1 || flex[1] == 1 )
+        {
+            let [left, right] = segment.split(flex[0]);
+
+            return [
+                offset_segment(left, amount),
+                offset_segment(right, amount)
+            ];
+        }
+        else
+        {
+            let [left, mid_right] = segment.split(flex[0]);
+            let t = (flex[1] - flex[0]) / (1 - flex[0]);
+            let [mid, right] = mid_right.split(t);
+
+            return [
+                offset_segment(left, amount),
+                offset_segment(mid, amount),
+                offset_segment(right, amount)
+            ];
+        }
+
+    }
+
+    function offset_path(
+        // Beziers as collected from the other shapes
+        collected_shapes,
+        amount,
+        line_join,
+        miter_limit,
+    )
+    {
+        let result = [];
+
+        for ( let input_bezier of collected_shapes )
+        {
+            let output_bezier = new Bezier();
+
+            output_bezier.closed = input_bezier.closed;
+            let count = input_bezier.segment_count();
+
+            let multi_segments = [];
+
+            for ( let i = 0; i < count; i++ )
+                multi_segments.push(offset_segment_split(input_bezier.segment(i), amount));
+
+            // Open paths are stroked rather than being simply offset
+            if ( !input_bezier.closed )
+            {
+                for ( let i = count - 1; i >= 0; i-- )
+                    multi_segments.push(offset_segment_split(input_bezier.inverted_segment(i), amount));
+            }
+
+            multi_segments = prune_intersections(multi_segments);
+
+            // Add bezier segments to the output and apply line joints
+            let last_point = null;
+            let last_seg = null;
+
+            for ( let multi_segment of multi_segments )
+            {
+                if ( last_seg )
+                    last_point = join_lines(output_bezier, last_seg, multi_segment[0], line_join, miter_limit);
+
+                last_seg = multi_segment[multi_segment.length - 1];
+
+                for ( let segment of multi_segment )
+                {
+                    if ( segment.points[0].is_equal(last_point) )
+                    {
+                        output_bezier.points[output_bezier.points.length - 1]
+                            .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                    }
+                    else
+                    {
+                        output_bezier.add_vertex(segment.points[0])
+                            .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                    }
+
+
+                    output_bezier.add_vertex(segment.points[3])
+                        .set_in_tangent(segment.points[2].sub(segment.points[3]));
+
+                    last_point = segment.points[3];
+                }
+            }
+
+            if ( multi_segments.length )
+                join_lines(output_bezier, last_seg, multi_segments[0][0], line_join, miter_limit);
+
+            result.push(output_bezier);
+        }
+
+        return result;
+    }
+    </script>
+</shape_bezier_script>
 
 
 ## Trim Path
 
-{shape_bezier_script:trim_path.json:394:394}
-Start:<input type="range" min="0" value="0" max="100"/>
-End:<input type="range" min="0" value="50" max="100"/>
-Offset:<input type="range" min="0" value="0" max="360"/>
-Multiple Shapes:<enum>trim-multiple-shapes</enum>
-<json>lottie.layers[0].shapes[4]</json>
-<script>
-lottie.layers[0].shapes[4].s.k = data["Start"];
-lottie.layers[0].shapes[4].e.k = data["End"];
-lottie.layers[0].shapes[4].o.k = data["Offset"];
-lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
+<shape_bezier_script width="394" height="394" example="trim_path.json">
+    <form>
+        <input title="Start" type="range" min="0" value="0" max="100"/>
+        <input title="End" type="range" min="0" value="50" max="100"/>
+        <input title="Offset" type="range" min="0" value="0" max="360"/>
+        <enum title="Multiple Shapes">trim-multiple-shapes</enum>
+    </form>
+    <json>lottie.layers[0].shapes[4]</json>
+    <script>
+    lottie.layers[0].shapes[4].s.k = data["Start"];
+    lottie.layers[0].shapes[4].e.k = data["End"];
+    lottie.layers[0].shapes[4].o.k = data["Offset"];
+    lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
 
-let siblings = bezier_lottie.layers[0].shapes[0].it;
-siblings[siblings.length-2].w.k = 20;
+    let siblings = bezier_lottie.layers[0].shapes[0].it;
+    siblings[siblings.length-2].w.k = 20;
 
-let shapes = [];
-for ( let i = 0; i < 4; i++ )
-    shapes.push(convert_shape(lottie.layers[0].shapes[i]));
-</script>
-<script func="trim_path(shapes, modifier.s.k, modifier.e.k, modifier.o.k, modifier.m)" varname="modifier">
+    let shapes = [];
+    for ( let i = 0; i < 4; i++ )
+        shapes.push(convert_shape(lottie.layers[0].shapes[i]));
+    </script>
+    <script func="trim_path(shapes, modifier.s.k, modifier.e.k, modifier.o.k, modifier.m)" varname="modifier">
 
-function trim_path_gather_chunks(collected_shapes, multiple)
-{
-    let chunks = [];
-
-    // Shapes are handled as a single unit
-    if ( multiple === 2 )
-        chunks.push({segments: [], length: 0});
-
-    for ( let input_bezier of collected_shapes )
+    function trim_path_gather_chunks(collected_shapes, multiple)
     {
-        // Shapes are all affected separately
-        if ( multiple === 1 )
+        let chunks = [];
+        // Shapes are handled as a single unit
+        if ( multiple === 2 )
             chunks.push({segments: [], length: 0});
-
-        let chunk = chunks[chunks.length-1];
-
-        for ( let i = 0; i < input_bezier.segment_count(); i++ )
+        for ( let input_bezier of collected_shapes )
         {
-            let segment = input_bezier.segment(i);
-            let length = segment.get_length();
-            chunk.segments.push(segment);
-            chunk.length += length;
+            // Shapes are all affected separately
+            if ( multiple === 1 )
+                chunks.push({segments: [], length: 0});
+            let chunk = chunks[chunks.length-1];
+            for ( let i = 0; i < input_bezier.segment_count(); i++ )
+            {
+                let segment = input_bezier.segment(i);
+                let length = segment.get_length();
+                chunk.segments.push(segment);
+                chunk.length += length;
+            }
+            // Use null as a marker to start a new bezier
+            if ( multiple == 2 )
+                chunk.segments.push(null);
         }
-
-        // Use null as a marker to start a new bezier
-        if ( multiple == 2 )
-            chunk.segments.push(null);
+        return chunks;
     }
-
-    return chunks;
-}
-
-function trim_path_chunk(chunk, start, end, output_shapes)
-{
-    // Note: start and end have been normalized and have the offset applied
-    // The offset itself was normalized into [0, 1] so this is always true:
-    // 0 <= start < end <= 2
-
-    // Some offsets require us to handle different "splits"
-    // We want each split to be a pair [s, e] such that
-    // 0 <= s < e <= 1
-    var splits = [];
-
-    if ( end <= 1 )
+    function trim_path_chunk(chunk, start, end, output_shapes)
     {
-        // Simplest case, the segment is in [0, 1]
-        splits.push([start, end]);
-    }
-    else if ( start > 1 )
-    {
-        // The whole segment is outside [0, 1]
-        splits.push([start-1, end-1]);
-    }
-    else
-    {
-        // The segment goes over the end point, so we need two splits
-        splits.push([start, 1]);
-        splits.push([0, end-1]);
-    }
-
-    // Each split is a separate bezier, all left to do is finding the
-    // bezier segment to add to the output
-    for ( let [s, e] of splits )
-    {
-        let start_length = s * chunk.length;
-        let start_t;
-        let end_length = e * chunk.length;
-        let prev_length = 0;
-
-        let output_bezier = new Bezier(false);
-        output_shapes.push(output_bezier);
-
-        for ( let i = 0; i < chunk.segments.length; i++ )
+        // Note: start and end have been normalized and have the offset applied
+        // The offset itself was normalized into [0, 1] so this is always true:
+        // 0 <= start < end <= 2
+        // Some offsets require us to handle different "splits"
+        // We want each split to be a pair [s, e] such that
+        // 0 <= s < e <= 1
+        var splits = [];
+        if ( end <= 1 )
         {
-            let segment = chunk.segments[i];
-
-            // New bezier marker found
-            if ( segment === null )
+            // Simplest case, the segment is in [0, 1]
+            splits.push([start, end]);
+        }
+        else if ( start > 1 )
+        {
+            // The whole segment is outside [0, 1]
+            splits.push([start-1, end-1]);
+        }
+        else
+        {
+            // The segment goes over the end point, so we need two splits
+            splits.push([start, 1]);
+            splits.push([0, end-1]);
+        }
+        // Each split is a separate bezier, all left to do is finding the
+        // bezier segment to add to the output
+        for ( let [s, e] of splits )
+        {
+            let start_length = s * chunk.length;
+            let start_t;
+            let end_length = e * chunk.length;
+            let prev_length = 0;
+            let output_bezier = new Bezier(false);
+            output_shapes.push(output_bezier);
+            for ( let i = 0; i < chunk.segments.length; i++ )
             {
-                output_bezier = new Bezier(false);
-                output_shapes.push(output_bezier);
-                continue;
-            }
-
-            if ( segment.length >= end_length )
-            {
-                let end_t = segment.t_at_length(end_length);
-
-                if ( segment.length >= start_length )
+                let segment = chunk.segments[i];
+                // New bezier marker found
+                if ( segment === null )
                 {
-                    start_t = segment.t_at_length(start_length);
-                    segment = segment.split(start_t)[1];
-                    end_t = (end_t - start_t) / (1 - start_t);
+                    output_bezier = new Bezier(false);
+                    output_shapes.push(output_bezier);
+                    continue;
                 }
-
-                output_bezier.add_segment(segment.split(end_t)[0], false);
-                break;
-            }
-
-            if ( start_t === undefined )
-            {
-                if ( segment.length >= start_length )
+                if ( segment.length >= end_length )
                 {
-                    start_t = segment.t_at_length(start_length);
-                    output_bezier.add_segment(segment.split(start_t)[1], false);
+                    let end_t = segment.t_at_length(end_length);
+                    if ( segment.length >= start_length )
+                    {
+                        start_t = segment.t_at_length(start_length);
+                        segment = segment.split(start_t)[1];
+                        end_t = (end_t - start_t) / (1 - start_t);
+                    }
+                    output_bezier.add_segment(segment.split(end_t)[0], false);
+                    break;
                 }
+                if ( start_t === undefined )
+                {
+                    if ( segment.length >= start_length )
+                    {
+                        start_t = segment.t_at_length(start_length);
+                        output_bezier.add_segment(segment.split(start_t)[1], false);
+                    }
+                }
+                else
+                {
+                    output_bezier.add_segment(segment, true);
+                }
+                start_length -= segment.length;
+                end_length -= segment.length;
             }
-            else
-            {
-                output_bezier.add_segment(segment, true);
-            }
-
-            start_length -= segment.length;
-            end_length -= segment.length;
         }
     }
-}
-
-function trim_path(
-    collected_shapes,
-    start,
-    end,
-    offset,
-    multiple
-)
-{
-    // Normalize Inputs
-    offset = offset / 360 % 1;
-    if ( offset < 0 )
-        offset += 1;
-
-    start = Math.min(1, Math.max(0, start / 100));
-    end = Math.min(1, Math.max(0, end / 100));
-
-    if ( end < start )
-        [start, end] = [end, start];
-
-    // Apply offset
-    start += offset;
-    end += offset;
-
-    // Handle the degenerate cases
-    if ( fuzzy_compare(start, end) )
-        return [new Bezier(false)];
-
-    if ( fuzzy_zero(start) && fuzzy_compare(end, 1) )
-        return collected_shapes;
-
-    // Gather up the segments to trim
-    let chunks = trim_path_gather_chunks(collected_shapes, multiple);
-
-    let output_shapes = [];
-
-    for ( let chunk of chunks )
-        trim_path_chunk(chunk, start, end, output_shapes);
-
-    return output_shapes;
-
-}
-</script>
+    function trim_path(
+        collected_shapes,
+        start,
+        end,
+        offset,
+        multiple
+    )
+    {
+        // Normalize Inputs
+        offset = offset / 360 % 1;
+        if ( offset < 0 )
+            offset += 1;
+        start = Math.min(1, Math.max(0, start / 100));
+        end = Math.min(1, Math.max(0, end / 100));
+        if ( end < start )
+            [start, end] = [end, start];
+        // Apply offset
+        start += offset;
+        end += offset;
+        // Handle the degenerate cases
+        if ( fuzzy_compare(start, end) )
+            return [new Bezier(false)];
+        if ( fuzzy_zero(start) && fuzzy_compare(end, 1) )
+            return collected_shapes;
+        // Gather up the segments to trim
+        let chunks = trim_path_gather_chunks(collected_shapes, multiple);
+        let output_shapes = [];
+        for ( let chunk of chunks )
+            trim_path_chunk(chunk, start, end, output_shapes);
+        return output_shapes;
+    }
+    </script>
+</shape_bezier_script>
 
 
 ## Transform
 
-
 <script src="/lottie-docs/scripts/lottie_matrix.js"></script>
 
-This is how to convert a [transform](concepts.md#transform) object into a matrix.
+This is how to convert a {link:helpers/transform:transform} object into a matrix.
 
 Assuming the matrix
 
@@ -1210,27 +984,28 @@ Translate by `p`
 p[0]    p[1]    0   1
 
 
-{lottie_playground:transform.json:512:512}
-Anchor X:<input type="range" min="0" value="256" max="512"/>
-Anchor Y:<input type="range" min="0" value="256" max="512"/>
-Position X:<input type="range" min="0" value="256" max="512"/>
-Position Y:<input type="range" min="0" value="256" max="512"/>
-Scale X:<input type="range" min="0" value="100" max="200"/>
-Scale Y:<input type="range" min="0" value="100" max="200"/>
-Rotation:<input type="range" min="0" value="0" max="360"/>
-Skew:<input type="range" min="0" value="0" max="360"/>
-Skew Angle:<input type="range" min="0" value="0" max="360"/>
-Opacity:<input type="range" min="0" value="100" max="100"/>
-<json>
-[
-    transform.elements.slice(0, 4),
-    transform.elements.slice(4, 8),
-    transform.elements.slice(8, 12),
-    transform.elements.slice(12, 16)
-].map(x => Array.from(x))
-</json>
-<script>
-
+<lottie-playground example="transform.json">
+    <form>
+        <input title="Anchor X" type="range" min="0" value="256" max="512"/>
+        <input title="Anchor Y" type="range" min="0" value="256" max="512"/>
+        <input title="Position X" type="range" min="0" value="256" max="512"/>
+        <input title="Position Y" type="range" min="0" value="256" max="512"/>
+        <input title="Scale X" type="range" min="0" value="100" max="200"/>
+        <input title="Scale Y" type="range" min="0" value="100" max="200"/>
+        <input title="Rotation" type="range" min="0" value="0" max="360"/>
+        <input title="Skew" type="range" min="0" value="0" max="360"/>
+        <input title="Skew Angle" type="range" min="0" value="0" max="360"/>
+        <input title="Opacity" type="range" min="0" value="100" max="100"/>
+    </form>
+    <json>
+    [
+        transform.elements.slice(0, 4),
+        transform.elements.slice(4, 8),
+        transform.elements.slice(8, 12),
+        transform.elements.slice(12, 16)
+    ].map(x => Array.from(x))
+    </json>
+    <script>
 if ( lottie.layers.length == 3 )
 {
     lottie.layers.splice(1, 0, {
@@ -1307,8 +1082,8 @@ lottie.layers[1].shapes[0].ks.k.v = [
     transform.map(cx + rx, cy + ry).slice(0, 2),
     transform.map(cx - rx, cy + ry).slice(0, 2)
 ];
-
 </script>
+</lottie-playground>
 
 ### 3D Transform
 
@@ -1518,12 +1293,14 @@ The final value is as follows: `lerp(y, start_value, end_value)`.
 
 ### Fill Effect
 
-{effect_shader_script:effects-fill.json:394:394}
-Opacity:<input type="range" min="0" value="1" max="1" step="0.1"/>
-Color:
-Red:<input type="range" min="0" value="1" max="1" step="0.1"/>
-Green:<input type="range" min="0" value="0.9" max="1" step="0.1"/>
-Blue:<input type="range" min="0" value="0" max="1" step="0.1"/>
+<effect_shader_script width="394" height="394" example="effects-fill.json">
+<form>
+    <input title="Opacity" type="range" min="0" value="1" max="1" step="0.1"/>
+    <th>Color</th>
+    <input title="Red" type="range" min="0" value="1" max="1" step="0.1"/>
+    <input title="Green" type="range" min="0" value="0.9" max="1" step="0.1"/>
+    <input title="Blue" type="range" min="0" value="0" max="1" step="0.1"/>
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[6].v.k = data["Opacity"];
@@ -1551,22 +1328,25 @@ void main()
     gl_FragColor *= pixel.a * color.a;
 }
 </script>
+</effect_shader_script>
 
 
 ### Tritone Effect
-{effect_shader_script:effects-tritone.json:394:394}
-Bright:
-Red:<input type="range" min="0" value="1" max="1" step="0.1" name="r1"/>
-Green:<input type="range" min="0" value="1" max="1" step="0.1" name="g1"/>
-Blue:<input type="range" min="0" value="1" max="1" step="0.1" name="b1"/>
-Mid:
-Red:<input type="range" min="0" value="0.3" max="1" step="0.1" name="r2"/>
-Green:<input type="range" min="0" value="0.8" max="1" step="0.1" name="g2"/>
-Blue:<input type="range" min="0" value="0.3" max="1" step="0.1" name="b2"/>
-Dark:
-Red:<input type="range" min="0" value="0" max="1" step="0.1" name="r3"/>
-Green:<input type="range" min="0" value="0" max="1" step="0.1" name="g3"/>
-Blue:<input type="range" min="0" value="0" max="1" step="0.1" name="b3"/>
+<effect_shader_script width="394" height="394" example="effects-tritone.json">
+<form>
+    <th>Bright</th>
+    <input title="Red" type="range" min="0" value="1" max="1" step="0.1" name="r1"/>
+    <input title="Green" type="range" min="0" value="1" max="1" step="0.1" name="g1"/>
+    <input title="Blue" type="range" min="0" value="1" max="1" step="0.1" name="b1"/>
+    <th>Mid</th>
+    <input title="Red" type="range" min="0" value="0.3" max="1" step="0.1" name="r2"/>
+    <input title="Green" type="range" min="0" value="0.8" max="1" step="0.1" name="g2"/>
+    <input title="Blue" type="range" min="0" value="0.3" max="1" step="0.1" name="b2"/>
+    <th>Dark</th>
+    <input title="Red" type="range" min="0" value="0" max="1" step="0.1" name="r3"/>
+    <input title="Green" type="range" min="0" value="0" max="1" step="0.1" name="g3"/>
+    <input title="Blue" type="range" min="0" value="0" max="1" step="0.1" name="b3"/>
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k[0] = data["r1"];
@@ -1618,6 +1398,7 @@ void main()
     gl_FragColor *= pixel.a;
 }
 </script>
+</effect_shader_script>
 
 
 ### Gaussian Blur
@@ -1625,14 +1406,16 @@ void main()
 This is a two-pass shader, the uniform `pass` is has value `0`
 on the first pass and value `1` on the second pass.
 
-{effect_shader_script:effects-blur.json:394:394}
-Sigma:<input type="range" min="0" value="25" max="100"/>
-Direction:<select>
-    <option value="1">Both</option>
-    <option value="2">Horizontal</option>
-    <option value="3">Vertical</option>
-</select>
-Wrap:<input type="checkbox" />
+<effect_shader_script width="394" height="394" example="effects-blur.json">
+<form>
+    <input title="Sigma" type="range" min="0" value="25" max="100"/>
+    <select title=Direction">
+        <option value="1">Both</option>
+        <option value="2">Horizontal</option>
+        <option value="3">Vertical</option>
+    </select>
+    <input title="Wrap" type="checkbox" />
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k = data["Sigma"];
@@ -1751,6 +1534,7 @@ void main()
     }
 }
 </script>
+</effect_shader_script>
 
 
 ### Drop Shadow Effect
@@ -1761,14 +1545,16 @@ The effect below is split into multiple shaders:
 * Then it has a 2 pass gaussian blur (simplified from the example above)
 * Finally, it composites the original image on top of the blurred shadow
 
-{effect_shader_script:effects-shadow.json:394:394}
-Red:<input type="range" min="0" value="0" max="1" step="0.1"/>
-Green:<input type="range" min="0" value="0" max="1" step="0.1"/>
-Blue:<input type="range" min="0" value="0" max="1" step="0.1"/>
-Opacity:<input type="range" min="0" value="128" max="256"/>
-Angle:<input type="range" min="0" value="135" max="360"/>
-Distance:<input type="range" min="0" value="10" max="512"/>
-Blur:<input type="range" min="0" value="7" max="512"/>
+<effect_shader_script width="394" height="394" example="effects-shadow.json">
+<form>
+    <input title="Red" type="range" min="0" value="0" max="1" step="0.1"/>
+    <input title="Green" type="range" min="0" value="0" max="1" step="0.1"/>
+    <input title="Blue" type="range" min="0" value="0" max="1" step="0.1"/>
+    <input title="Opacity" type="range" min="0" value="128" max="256"/>
+    <input title="Angle" type="range" min="0" value="135" max="360"/>
+    <input title="Distance" type="range" min="0" value="10" max="512"/>
+    <input title="Blur" type="range" min="0" value="7" max="512"/>
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k[0] = data["Red"];
@@ -1930,35 +1716,38 @@ void main()
     );
 }
 </script>
+</effect_shader_script>
 
 
 ### Pro Levels Effect
 
-{effect_shader_script:effects-prolevels.json:394:394}
-Composite:
-In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Composite In Black"/>
-In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Composite In White"/>
-Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Composite Gamma"/>
-Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Composite Out Black"/>
-Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Composite Out White"/>
-Red:
-In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Red In Black"/>
-In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Red In White"/>
-Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Red Gamma"/>
-Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Red Out Black"/>
-Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Red Out White"/>
-Green:
-In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Green In Black"/>
-In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Green In White"/>
-Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Green Gamma"/>
-Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Green Out Black"/>
-Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Green Out White"/>
-Blue:
-In Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Blue In Black"/>
-In White:<input type="range" min="0" value="1" max="1" step="0.1" name="Blue In White"/>
-Gamma:<input type="range" min="0" value="1" max="3" step="0.1" name="Blue Gamma"/>
-Out Black:<input type="range" min="0" value="0" max="1" step="0.1" name="Blue Out Black"/>
-Out White:<input type="range" min="0" value="1" max="1" step="0.1" name="Blue Out White"/>
+<effect_shader_script width="394" height="394" example="effects-prolevels.json">
+<form>
+    <th>Composite</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Composite In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Composite In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Composite Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Composite Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Composite Out White"/>
+    <th>Red</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Red In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Red In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Red Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Red Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Red Out White"/>
+    <th>Green</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Green In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Green In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Green Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Green Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Green Out White"/>
+    <th>Blue</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Blue In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Blue In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Blue Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Blue Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Blue Out White"/>
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[3].v.k = data["Composite In Black"];
@@ -2081,27 +1870,30 @@ void main()
     gl_FragColor.a = pixel.a;
 }
 </script>
+</effect_shader_script>
 
 
 ### Matte3
 
-{effect_shader_script:effects-matte3-image.json:394:394}
-Channel:<select>
-    <option value="1">Red</option>
-    <option value="2">Green</option>
-    <option value="3">Blue</option>
-    <option value="4" selected="selected">Alpha</option>
-    <option value="5">Luma</option>
-    <option value="6">Hue</option>
-    <option value="7">Lightness</option>
-    <option value="8">Saturation</option>
-    <option value="9">Full</option>
-    <option value="10">Off</option>
-</select>
-Invert:<input type="checkbox" />
-Stretch To Fit:<input type="checkbox" checked="checked"/>
-Show Mask:<input type="checkbox"/>
-Premultiply Mask:<input type="checkbox" checked="checked"/>
+<effect_shader_script width="394" height="394" example="effects-matte3-image.json">
+<form>
+    <select title="Channel">
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        <option value="4" selected="selected">Alpha</option>
+        <option value="5">Luma</option>
+        <option value="6">Hue</option>
+        <option value="7">Lightness</option>
+        <option value="8">Saturation</option>
+        <option value="9">Full</option>
+        <option value="10">Off</option>
+    </select>
+    <input title="Invert" type="checkbox" />
+    <input title="Stretch To Fit" type="checkbox" checked="checked"/>
+    <input title="Show Mask" type="checkbox"/>
+    <input title="Premultiply Mask" type="checkbox" checked="checked"/>
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[1].v.k = Number(data["Channel"]);
@@ -2212,16 +2004,19 @@ void main()
         gl_FragColor = alpha_blend(gl_FragColor, mask);
 }
 </script>
+</effect_shader_script>
 
 
 ### Bulge
 
-{effect_shader_script:effects-bulge.json:394:394}
-Center X:<input type="range" min="0" max="512" value="286"/>
-Center Y:<input type="range" min="0" max="512" value="277"/>
-Radius X:<input type="range" min="0" max="512" value="197"/>
-Radius Y:<input type="range" min="0" max="512" value="179"/>
-Height:<input type="range" min="-4" max="4" step="0.1" value="1.9"/>
+<effect_shader_script width="394" height="394" example="effects-bulge.json">
+<form>
+    <input title="Center X" type="range" min="0" max="512" value="286"/>
+    <input title="Center Y" type="range" min="0" max="512" value="277"/>
+    <input title="Radius X" type="range" min="0" max="512" value="197"/>
+    <input title="Radius Y" type="range" min="0" max="512" value="179"/>
+    <input title="Height" type="range" min="-4" max="4" step="0.1" value="1.9"/>
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k = data["Radius X"];
@@ -2305,30 +2100,33 @@ void main()
     gl_FragColor = texture2D(texture_sampler, uv);
 }
 </script>
+</effect_shader_script>
 
 
 ### Wave Warp
 
 This effect is animated by default, so it has a "time" slider (in seconds).
 
-{effect_shader_script:effects-wave.json:394:394}
-Shape:<select>
-    <option value="1">Sine</option>
-    <option value="2">Square</option>
-    <option value="3">Triangle</option>
-    <option value="4">Sawtooth</option>
-    <option value="5">Circle</option>
-    <option value="6">Semicircle</option>
-    <option value="7">Uncircle</option>
-    <option value="8">Noise</option>
-    <option value="9">Smooth noise</option>
-</select>
-Amplitude:<input type="range" min="-100" max="100" value="10"/>
-Wavelength:<input type="range" min="-100" max="100" value="40"/>
-Direction:<input type="range" min="0" max="360" value="90"/>
-Phase:<input type="range" min="0" max="360" value="0"/>
-Speed:<input type="range" min="0" max="10" value="1" step="0.1"/>
-Time:<input type="range" min="0" max="2" value="0" step="0.1"/>
+<effect_shader_script width="394" height="394" example="effects-wave.json">
+<form>
+    <select title="Shape">
+        <option value="1">Sine</option>
+        <option value="2">Square</option>
+        <option value="3">Triangle</option>
+        <option value="4">Sawtooth</option>
+        <option value="5">Circle</option>
+        <option value="6">Semicircle</option>
+        <option value="7">Uncircle</option>
+        <option value="8">Noise</option>
+        <option value="9">Smooth noise</option>
+    </select>
+    <input title="Amplitude" type="range" min="-100" max="100" value="10"/>
+    <input title="Wavelength" type="range" min="-100" max="100" value="40"/>
+    <input title="Direction" type="range" min="0" max="360" value="90"/>
+    <input title="Phase" type="range" min="0" max="360" value="0"/>
+    <input title="Speed" type="range" min="0" max="10" value="1" step="0.1"/>
+    <input title="Time" type="range" min="0" max="2" value="0" step="0.1"/>
+</form>
 <json>lottie.layers[0].ef[0]</json>
 <script>
 lottie.layers[0].ef[0].ef[0].v.k = Number(data["Shape"]);
@@ -2453,3 +2251,4 @@ void main()
     gl_FragColor = texture2D(texture_sampler, normalize_uv(uv));
 }
 </script>
+</effect_shader_script>
