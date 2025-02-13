@@ -1,16 +1,18 @@
 # Propeties
 
-## Animated Property
+<h2 id="property">Animated Property</h2>
 
 Properties in Lottie can be animated.
 
 Their structure depends on whether it's animated or not:
 
+{schema_object:properties/property}
+<tr><td>`k`</td>
+<td>`any` or `array` of {link:properties/base-keyframe:Keyframes}</td>
+<td>Value or Keyframes</td>
+<td>When it's not animated, `k` will contain the value directly. When animated, `k` will be an array of keyframes.</td>
+</tr>
 
-|Attribute|Type|Description|
-|---------|----|-----------|
-|`a`|[0-1 `int`](#booleans)|Whether the property is animated. Note some old animations might not have this|
-|`k`||Value or keyframes, this changes based on the value of `a`|
 
 If `a` is `0`, then `k` just has the value of the property.
 
@@ -96,12 +98,6 @@ you can see a representation of its easing function.
 Animatable {link:values/vector}.
 
 {schema_object:properties/vector-property}
-<tr><td>`a`</td><td>{link:values/int-boolean}</td><td>Animated</td><td>Whether the property is animated</td></tr>
-<tr><td>`k`</td>
-<td>{link:values/vector} or `array`</td>
-<td>Value or Keyframes</td>
-<td>When it's not animated, `k` will contain the value directly. When animated, `k` will be an array of keyframes.</td>
-</tr>
 
 <h4 id="vector-keyframe">Vector Keyframe</h4>
 
@@ -118,26 +114,12 @@ Note that when animated it uses {link:properties/vector-keyframe:Vector Keyframe
 so instead of scalars keyframes have arrays with a single values.
 
 {schema_object:properties/scalar-property}
-<tr><td>`a`</td><td>{link:values/int-boolean}</td><td>Animated</td><td>Whether the property is animated</td></tr>
-<tr><td>`k`</td>
-<td>`number` or `array`</td>
-<td>Value or Keyframes</td>
-<td>When it's not animated, `k` will contain the value directly. When animated, `k` will be an array of keyframes.</td>
-</tr>
-
 
 <h3 id="position-property">Position</h3>
 
 Animatable 2D {link:values/vector} with optional spatial tangents.
 
 {schema_object:properties/position-property}
-<tr><td>`a`</td><td>{link:values/int-boolean}</td><td>Animated</td><td>Whether the property is animated</td></tr>
-<tr><td>`k`</td>
-<td>{link:values/vector} or `array`</td>
-<td>Value or Keyframes</td>
-<td>When it's not animated, `k` will contain the value directly. When animated, `k` will be an array of keyframes.</td>
-</tr>
-
 
 <h4 id="position-keyframe">Position Keyframe</h4>
 
@@ -158,13 +140,6 @@ Animatable 2D {link:values/vector} with optional spatial tangents.
 Animatable {link:values/bezier}.
 
 {schema_object:properties/bezier-property}
-<tr><td>`a`</td><td>{link:values/int-boolean}</td><td>Animated</td><td>Whether the property is animated</td></tr>
-<tr><td>`k`</td>
-<td>{link:values/bezier} or `array`</td>
-<td>Value or Keyframes</td>
-<td>When it's not animated, `k` will contain the value directly. When animated, `k` will be an array of keyframes.</td>
-</tr>
-
 
 <h4 id="bezier-keyframe">Bezier Shape Keyframe</h4>
 
@@ -177,13 +152,6 @@ Animatable {link:values/bezier}.
 Animatable {link:values/color}.
 
 {schema_object:properties/color-property}
-<tr><td>`a`</td><td>{link:values/int-boolean}</td><td>Animated</td><td>Whether the property is animated</td></tr>
-<tr><td>`k`</td>
-<td>{link:values/color} or `array`</td>
-<td>Value or Keyframes</td>
-<td>When it's not animated, `k` will contain the value directly. When animated, `k` will be an array of keyframes.</td>
-</tr>
-
 
 <h4 id="color-keyframe">Color Keyframe</h4>
 
