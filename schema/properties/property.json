@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "title": "Property",
+    "properties": {
+        "ix": {
+            "title": "Property Index",
+            "type": "integer"
+        },
+        "a": {
+            "title": "Animated",
+            "description": "Whether the property is animated",
+            "$ref": "#/$defs/values/int-boolean",
+            "default": 0
+        },
+        "x": {
+            "title": "Expression",
+            "type": "string"
+        },
+        "sid": {
+            "title": "Slot ID",
+            "description": "One of the ID in the file's slots",
+            "type": "string"
+        }
+    },
+    "if": {
+        "required": ["sid"]
+    },
+    "else": {
+        "required": ["a", "k"]
+    }
+}

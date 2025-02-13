@@ -5,14 +5,10 @@
     "description": "An animatable property that holds an array of numbers",
     "allOf": [
         {
-            "$ref": "#/$defs/helpers/slottable-property"
+            "$ref": "#/$defs/properties/property"
         },
         {
             "properties": {
-                "ix": {
-                    "title": "Property Index",
-                    "type": "integer"
-                },
                 "l": {
                     "title": "Length",
                     "description": "Number of components in the value arrays.\nIf present values will be truncated or expanded to match this length when accessed from expressions.",

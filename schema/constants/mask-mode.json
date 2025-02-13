@@ -23,6 +23,18 @@
             "title": "Intersect",
             "const": "i",
             "description": "Mask coverage is intersected (Source-In blending)."
+        },
+        {
+            "title": "Lighten",
+            "const": "l"
+        },
+        {
+            "title": "Darken",
+            "const": "d"
+        },
+        {
+            "title": "Difference",
+            "const": "f"
         }
     ]
 }
