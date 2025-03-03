@@ -22,6 +22,12 @@
                     "title": "Height",
                     "description": "Height of the image",
                     "type": "number"
+                },
+                "t": {
+                    "title": "Type",
+                    "description": "Marks as part of an image sequence if present",
+                    "type": "string",
+                    "const": "seq"
                 }
             },
             "if": {

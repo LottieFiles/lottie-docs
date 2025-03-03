@@ -3,6 +3,11 @@
     "type": "object",
     "title": "Gradient stops",
     "description": "Animatable vector representing the gradient stops",
+    "allOf": [
+        {
+            "$ref": "#/$defs/properties/property"
+        }
+    ],
     "oneOf": [
         {
             "$comment": "Not animated",

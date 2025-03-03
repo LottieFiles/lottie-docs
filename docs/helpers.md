@@ -81,12 +81,6 @@ replacement.
 
 {schema_object:helpers/slottable-object}
 
-<h3 id="slottable-property">Slotabble Property</h3>
-
-{schema_string:helpers/slottable-property/description}
-
-{schema_object:helpers/slottable-property}
-
 <lottie-playground example="slots.json">
     <form>
         <input title="Scale X" type="range" min="0" value="100" max="200"/>

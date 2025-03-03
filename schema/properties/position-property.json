@@ -5,7 +5,16 @@
     "description": "An animatable property to represent a position in space",
     "allOf": [
         {
-            "$ref": "#/$defs/helpers/slottable-property"
+            "$ref": "#/$defs/properties/property"
+        },
+        {
+            "properties": {
+                "l": {
+                    "title": "Length",
+                    "description": "Number of components in the value arrays.\nIf present values will be truncated or expanded to match this length when accessed from expressions.",
+                    "type": "integer"
+                }
+            }
         }
     ],
     "oneOf": [
