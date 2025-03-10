@@ -1157,8 +1157,8 @@ Composition data.
 |-----------------------|----|--------|-------------------------|
 | X Resolution          | 2  |`uint16`|                         |
 | Y Resolution          | 2  |`uint16`|                         |
-| Time Scale            | 4  |`uint32`| How much Time values are scaled by |
-|                       | 4  |`uint32`|                         |
+| Framerate Den         | 4  |`uint32`| Same as `fr` in Lottie (fraction) |
+| Framerate Num         | 4  |`uint32`|                         |
 |                       | 8  |        |                         |
 | Playhead Num          | 4  |`sint32`| Playhead time           |
 | Playhead Den          | 4  |`uint32`|                         |
@@ -1176,7 +1176,7 @@ Composition data.
 | Pixel Ratio Width     | 4  |`uint32`|                         |
 | Pixel Ratio Height    | 4  |`uint32`|                         |
 |                       | 12 |        |                         |
-| Framerate             | 2  |`uint16`| Same as `fr` in Lottie  |
+| Framerate             | 2  |`uint16`| Same as `fr` in Lottie (as integer)  |
 |                       | 16 |        |                         |
 | Shutter Angle         | 2  |`uint16`|                         |
 | Shutter Phase         | 4  |`sint16`|                         |
@@ -1185,7 +1185,8 @@ Composition data.
 | Samples per frame     | 4  |`sint16`|                         |
 
 
-Note that End Time might have a value of FFFF, if that's the case assume it to be the same as Comp Duration.
+Framerate is expressed both as an integer and as a fraction, but the fraction has
+numerator after denominator unlike other fractioned values.
 
 The X/Y resolution represent a divisor of the size in that direction used for rendering.
 For example a X Resolution of 5, with a width of 500 will yield an output of 100px.
