@@ -1622,14 +1622,47 @@ JSON string containing external asset info.
 `platform` values: `1` is Windows, other values are for Unix and MacOS,
 but the values are to be discovered
 
+
+### `svap`
+
+4 bytes with the AE version number encoded as a bit field (repeated in {sl:`head`})
+
+
+From the least significant bit:
+
+| Field Name    | Bits  | Size  |
+|---------------|-------|-------|
+| Build Number  | 0-7   | 8     |
+|               | 8     | 1     |
+| Beta          | 9     | 1     |
+|               | 10    | 1     |
+| Patch         | 11-14 | 4     |
+| Minor         | 15-18 | 4     |
+| Major low bits| 19-21 | 3     |
+| OS            | 22-25 | 4     |
+|Major high bits| 26-31 | 6     |
+
+Values for the OS:
+
+| OS String | Bin   |Hex|Dec|
+|-----------|-------|---|---|
+|Win        |`1100` |`C`|12 |
+|Mac        |`1101` |`D`|13 |
+|Mac Arm 64 |`1100` |`E`|14 |
+
+Major version is split into 2 fields, and its evaluated as follows:
+
+`(maj_high << 3) | maj_low`
+
 ### `head`
 
 
-|Field Name     |Size|Type      | Description   |
-|---------------|----|----------|---------------|
-|AE Version?    | 6  |          |               |
-|               | 12 |          |               |
-|File Revision? | 2  |`uint16`  | Increases by 2 every time you save |
+|Field Name     |Size|Type      | Description                           |
+|---------------|----|----------|---------------------------------------|
+|               | 4  |          |                                       |
+|AE Version     | 4  | `bytes`  | See {sl:`svap`}                       |
+|               | 10 |          |                                       |
+|File Revision? | 2  |`uint16`  | Increases by 2 every time you save    |
 
 Seems the first 6 bytes contain AE version information.
 
