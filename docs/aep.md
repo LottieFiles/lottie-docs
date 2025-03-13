@@ -1640,7 +1640,8 @@ From the least significant bit:
 | Minor         | 15-18 | 4     |
 | Major low bits| 19-21 | 3     |
 | OS            | 22-25 | 4     |
-|Major high bits| 26-31 | 6     |
+|Major high bits| 26-30 | 5     |
+|               | 31    | 1     |
 
 Values for the OS:
 
@@ -1663,29 +1664,6 @@ Major version is split into 2 fields, and its evaluated as follows:
 |AE Version     | 4  | `bytes`  | See {sl:`svap`}                       |
 |               | 10 |          |                                       |
 |File Revision? | 2  |`uint16`  | Increases by 2 every time you save    |
-
-Seems the first 6 bytes contain AE version information.
-
-I haven't been able to decode it fully but here's a list of values
-encountered in the wild:
-
-|Version|Bytes              |
-|-------|-------------------|
-|15.0   |`5c 06 07 38 06 b4`|
-|16.0   |`5d 04 0b 00 06 eb`|
-|16.0.1 |`5d 04 0b 00 0e 30`|
-|16.1.2 |`5d 05 0b 00 96 37`|
-|16.1.3 |`5d 05 0b 00 9e 05`|
-|17.0   |`5d 09 4b 08 06 2b`|
-|17.0.4 |`5d 0b 0b 08 26 3b`|
-|18.2.1 |`5d 1b 0b 11 0e 08`|
-|18.4   |`5d 1d 0b 12 06 26`|
-|22.0   |`5d 1d 0b 70 06 6f`|
-|22.6   |`5d 2b 0b 33 06 3b`|
-|23.2.1 |`5e 03 0b 39 0e 03`|
-
-It's possible the 3rd to the 5th bytes encode some kind of internal build
-number that gets mapped to AE versions somehow...
 
 ### `EfDC`
 
