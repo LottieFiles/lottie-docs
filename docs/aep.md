@@ -68,14 +68,15 @@ to show how to interpret the raw binary data.
 |`bytes`  | *  | Unformatted / unknown data      |
 
 
-#### Time
+#### Time Values
 
-Time values are stored as `uint16`. they are scaled by a factor you can find in {sl:`cdta`}.
+Time values are stored as a fraction of a numerator `sint32` and denominator `uint32`.
+The result of the fraction gives the time in seconds.
 
-To get the actual value in frames you need to do the following:
+To get the actual value in frames you need to multiply by the framerate in {sl:`cdta`}:
 
 ```
-time_frames = time_value / cdta.time_scale
+time_frames = time_num / time_den * cdta.frame_rate
 ```
 
 Additionally, layers specify a start time, which shifts all the time values by a fixed amount.
@@ -83,7 +84,7 @@ Additionally, layers specify a start time, which shifts all the time values by a
 If you are within a layer the expression looks like this:
 
 ```
-time_frames = (time_value + ldta.start_time) / (cdta.time_scale)
+time_frames = (time_num / time_den + ldta.start_time_num / ldta.start_time_den) * cdta.frame_rate
 ```
 
 
@@ -1156,17 +1157,17 @@ Composition data.
 |-----------------------|----|--------|-------------------------|
 | X Resolution          | 2  |`uint16`|                         |
 | Y Resolution          | 2  |`uint16`|                         |
-|                       | 1  |        |                         |
-| Time Scale            | 2  |`uint16`| How much Time values are scaled by |
-|                       | 14 |        |                         |
-| Playhead              | 2  |  Time  | Playhead time           |
-|                       | 6  |        |                         |
-| In Time               | 2  |  Time  | Same as `ip` in Lottie  |
-|                       | 6  |        |                         |
-| Out Time              | 2  |  Time  | Same as `op` in Lottie  |
-|                       | 6  |        |                         |
-| Comp duration         | 2  |  Time  | Duration setting in AE  |
-|                       | 5  |        |                         |
+| Framerate Den         | 4  |`uint32`| Same as `fr` in Lottie (fraction) |
+| Framerate Num         | 4  |`uint32`|                         |
+|                       | 8  |        |                         |
+| Playhead Num          | 4  |`sint32`| Playhead time           |
+| Playhead Den          | 4  |`uint32`|                         |
+| In Time Num           | 4  |`sint32`| Same as `ip` in Lottie  |
+| In Time Den           | 4  |`uint32`|                         |
+| Out Time Num          | 4  |`sint32`| Same as `op` in Lottie, if `0xffffffff` (`-1`) use Comp Duration |
+| Out Time Den          | 4  |`uint32`|                         |
+| Comp Duration Num     | 4  |`sint32`| Duration setting in AE  |
+| Comp Duration Den     | 4  |`uint32`|                         |
 | Color                 | 3  |`bytes` | Color as 24 bit RGB     |
 |                       | 84 |        |                         |
 | Attributes            | 1  | Flags  |                         |
@@ -1175,7 +1176,7 @@ Composition data.
 | Pixel Ratio Width     | 4  |`uint32`|                         |
 | Pixel Ratio Height    | 4  |`uint32`|                         |
 |                       | 12 |        |                         |
-| Framerate             | 2  |`uint16`| Same as `fr` in Lottie  |
+| Framerate             | 2  |`uint16`| Same as `fr` in Lottie (as integer)  |
 |                       | 16 |        |                         |
 | Shutter Angle         | 2  |`uint16`|                         |
 | Shutter Phase         | 4  |`sint16`|                         |
@@ -1184,7 +1185,8 @@ Composition data.
 | Samples per frame     | 4  |`sint16`|                         |
 
 
-Note that End Time might have a value of FFFF, if that's the case assume it to be the same as Comp Duration.
+Framerate is expressed both as an integer and as a fraction, but the fraction has
+numerator after denominator unlike other fractioned values.
 
 The X/Y resolution represent a divisor of the size in that direction used for rendering.
 For example a X Resolution of 5, with a width of 500 will yield an output of 100px.
@@ -1207,16 +1209,15 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 |-------------------|----|----------|-------------|
 | Layer ID          | 4  | `uint32` | |
 | Quality           | 2  | `uint16` | `0`: Wireframe, `1`: Draft, `2`: Best     |
-|                   | 4  |          | |
-| Stretch Numerator | 2  | `uint16` | |
-|                   | 1  |          | |
-| Start Time        | 2  | `sint16` | Time offset for times withing the layer |
-|                   | 6  |          | |
-| In Time           | 2  | Time     | Same as `ip` in Lottie |
-|                   | 6  |          | |
-| Out Time          | 2  | Time     | Same as `op` in Lottie |
-|                   | 6  |          | |
-| Attributes        | 3  | Flags    | |
+|                   | 2  |          | |
+| Stretch Numerator | 4  | `sint32` | |
+| Start Time Num    | 4  | `sint32` | Time offset for times withing the layer |
+| Start Time Den    | 4  | `uint32` | Time offset for times withing the layer |
+| In Time Num       | 4  | `sint32` | Same as `ip` in Lottie |
+| In Time Den       | 4  | `uint32` | |
+| Out Time Num      | 4  | `sint32` | Same as `op` in Lottie |
+| Out Time Den      | 4  | `uint32` | |
+| Attributes        | 4  | `sint32` | |
 | Source ID         | 4  | `uint32` | Item id for the used asset |
 |                   | 17 |          | |
 | Label Color Index | 1  | `uint8`  | {sl:Label Colors} |
@@ -1235,19 +1236,19 @@ Layer data, it seems that AE23 adds 4 extra `00` bytes at the end compared to ol
 
 With the following Attributes:
 
-* _Guide_: (0, 1) Guide layers aren't rendered
-* _Bicubic Sampling_: (0, 6)
-* _Auto Orient_: (1, 0)
-* _Adjustment_: (1, 1) Whether it's an adjustment layer
-* _Threedimensional_: (1, 2)
-* _Solo_: (1, 3) (UI thing, only displays that layer)
-* _Null_: (1, 7) Whether it's a null layer
-* _Visible_: (2, 0)
-* _Effects_: (2, 2)
-* _Motion Blur_: (2, 3)
-* _Locked_: (2, 5)
-* _Shy_: (2, 6) (Used to hide some layers in the AE UI)
-* _Conitnuosly Rasterize_ (vector) / _Collapse Transform_ (comps): (2, 7)
+* _Guide_: (1, 1) Guide layers aren't rendered
+* _Bicubic Sampling_: (1, 6)
+* _Auto Orient_: (2, 0)
+* _Adjustment_: (2, 1) Whether it's an adjustment layer
+* _Threedimensional_: (2, 2)
+* _Solo_: (2, 3) (UI thing, only displays that layer)
+* _Null_: (2, 7) Whether it's a null layer
+* _Visible_: (3, 0)
+* _Effects_: (3, 2)
+* _Motion Blur_: (3, 3)
+* _Locked_: (3, 5)
+* _Shy_: (3, 6) (Used to hide some layers in the AE UI)
+* _Conitnuosly Rasterize_ (vector) / _Collapse Transform_ (comps): (3, 7)
 
 Layer Types:
 
@@ -1265,7 +1266,9 @@ Matte Modes:
 3. Luma
 4. Inverted Luma
 
-Time streching is defined as a fraction of _Stretch Numerator_ / _Stretch Denominator_
+Time streching an is defined as a fraction of _Stretch Numerator_ / _Stretch Denominator_
+In, Out, and Start time are similarly defined as fractions, yielding their time in seconds.
+The default denominator for theese seems to be _frame\_rate * 512_.
 
 ### `idta`
 
@@ -1301,8 +1304,7 @@ Property metadata.
 |                   | 1  |          | Some sort of flag, it has value `03` for position properties |
 |                   | 2  |          | |
 |                   | 2  |          | |
-|                   | 2  |          | Always `0000` ? |
-|                   | 2  |          | 2nd most significant bit always on, perhaps some kind of flag |
+| Time Den          | 4  | `uint32` | Denominator for time values in the keyframes |
 |                   | 8  | `float64`| Most of the time `0.0001` |
 |                   | 8  | `float64`| Most of the time `1.0`, sometimes `1.777` |
 |                   | 8  | `float64`| Always `1.0`? |
@@ -1424,9 +1426,8 @@ All keyframe items start like this:
 
 |Field Name         |Size| Type         | Description                                           |
 |-------------------|----|--------------|-------------------------------------------------------|
+| Time Num          | 4  | `sint32`     | Time of the keyframe, seems they always start from 0. Denominator is in {sl:`tdb4`} |
 |                   | 1  |              |                                                       |
-| Time              | 2  | Time         | Time of the keyframe, seems they always start from 0. |
-|                   | 2  |              |                                                       |
 | Ease Mode         | 1  | `uint8`      |                                                       |
 | Label Color       | 1  | `uint8`      | {sl:Label Colors}                                     |
 | Attributes        | 1  | Flags        |                                                       |
@@ -1600,6 +1601,8 @@ Footage / asset data.
 | Width     | 2  | `uint16` |               |
 |           | 2  |          |               |
 | Height    | 2  | `uint16` |               |
+|           | 2  |          |               |
+| Frames    | 2  | `uint16` | Number of frames in an image sequece (0 if a static image) |
 
 ### `alas`
 
@@ -1619,37 +1622,48 @@ JSON string containing external asset info.
 `platform` values: `1` is Windows, other values are for Unix and MacOS,
 but the values are to be discovered
 
+
+### `svap`
+
+4 bytes with the AE version number encoded as a bit field (repeated in {sl:`head`})
+
+
+From the least significant bit:
+
+| Field Name    | Bits  | Size  |
+|---------------|-------|-------|
+| Build Number  | 0-7   | 8     |
+|               | 8     | 1     |
+| Beta          | 9     | 1     |
+|               | 10    | 1     |
+| Patch         | 11-14 | 4     |
+| Minor         | 15-18 | 4     |
+| Major low bits| 19-21 | 3     |
+| OS            | 22-25 | 4     |
+|Major high bits| 26-30 | 5     |
+|               | 31    | 1     |
+
+Values for the OS:
+
+| OS String | Bin   |Hex|Dec|
+|-----------|-------|---|---|
+|Win        |`1100` |`C`|12 |
+|Mac        |`1101` |`D`|13 |
+|Mac Arm 64 |`1100` |`E`|14 |
+
+Major version is split into 2 fields, and its evaluated as follows:
+
+`(maj_high << 3) | maj_low`
+
 ### `head`
 
 
-|Field Name     |Size|Type      | Description   |
-|---------------|----|----------|---------------|
-|AE Version?    | 6  |          |               |
-|               | 12 |          |               |
-|File Revision? | 2  |`uint16`  | Increases by 2 every time you save |
-
-Seems the first 6 bytes contain AE version information.
-
-I haven't been able to decode it fully but here's a list of values
-encountered in the wild:
-
-|Version|Bytes              |
-|-------|-------------------|
-|15.0   |`5c 06 07 38 06 b4`|
-|16.0   |`5d 04 0b 00 06 eb`|
-|16.0.1 |`5d 04 0b 00 0e 30`|
-|16.1.2 |`5d 05 0b 00 96 37`|
-|16.1.3 |`5d 05 0b 00 9e 05`|
-|17.0   |`5d 09 4b 08 06 2b`|
-|17.0.4 |`5d 0b 0b 08 26 3b`|
-|18.2.1 |`5d 1b 0b 11 0e 08`|
-|18.4   |`5d 1d 0b 12 06 26`|
-|22.0   |`5d 1d 0b 70 06 6f`|
-|22.6   |`5d 2b 0b 33 06 3b`|
-|23.2.1 |`5e 03 0b 39 0e 03`|
-
-It's possible the 3rd to the 5th bytes encode some kind of internal build
-number that gets mapped to AE versions somehow...
+|Field Name     |Size|Type      | Description                           |
+|---------------|----|----------|---------------------------------------|
+|               | 4  |          |                                       |
+|AE Version     | 4  | `bytes`  | See {sl:`svap`}                       |
+|               | 10 |          |                                       |
+|File Revision? | 2  |`uint16`  | Increases by 2 every time you save    |
 
 ### `EfDC`
 
@@ -1814,8 +1828,8 @@ Marker attributes
 |---------------|----|----------|-----------------------|
 |               | 3  |          |                       |
 | Attributes    | 1  | Flags    |                       |
-| Duration      | 4  | `uint32` | Duration in frames    |
-|               | 4  |          |                       |
+| Duration Num  | 4  | `sint32` | Duration in seconds   |
+| Duration Den  | 4  | `uint32` |                       |
 | Label Color   | 1  | `uint8`  | {sl:Label Colors}     |
 
 Flags:
