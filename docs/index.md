@@ -224,7 +224,7 @@ disable_toc: 1
                 <li><a href="/lottie-docs/breakdown/lottie_from_scratch/">Lottie from Scratch</a></li>
                 <li><a href="/lottie-docs/breakdown/bezier/">Bezier Curves </a></li>
                 <li><a href="/lottie-docs/breakdown/precomps/">Precompositions</a></li>
-                <li><a href="/lottie-docs/concepts/">Lottie Format</a></li>
+                <li><a href="/lottie-docs/values/">Values</a></li>
                 <li><a href="/lottie-docs/rendering/">Tips for Rendering</a></li>
                 <li><a href="/lottie-docs/schema/">JSON Schema</a></li>
                 <li><a href="/lottie-docs/advanced_interactions/">Advanced Interactions</a></li>
@@ -232,7 +232,7 @@ disable_toc: 1
         </div>
     </div>
     <div class="index-container-top">
-        <div class="index-card-lg" onclick="window.location='/lottie-docs/concepts/'">
+        <div class="index-card-lg" onclick="window.location='/lottie-docs/values/'">
             <h3 class="index-topic-header">Lottie Format</h3>
             <p>This page describes values and other objects used throughout the Lottie format.</p>
         </div>
