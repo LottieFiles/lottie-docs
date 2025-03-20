@@ -75,6 +75,12 @@ lottie animation.
 This guide provides a human-readable description of the format, but if you want
 a machine-readable description, we also have a [JSON schema](lottie.schema.json).
 
+## Media Type
+
+The registered internet media type for lottie is
+[video/lottie+json](https://www.iana.org/assignments/media-types/video/lottie+json)
+with `.lot` file extension.
+
 
 ## Other Resources
 
