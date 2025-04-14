@@ -50,7 +50,7 @@ Here we use `origin` 0 (and we can omit it).
 
 </td><td markdown="block">
 
-{lottie:font-local.json:300:100}
+{lottie src="static/examples/font-local.json" buttons="false" background="white"}
 
 </td></tr>
 <tr><th>CSS</th><th>Output</th></tr>
@@ -88,7 +88,7 @@ Here we use `origin` 1.
 
 </td><td markdown="block">
 
-{lottie:font-css.json:300:100}
+{lottie src="static/examples/font-css.json" buttons="false" background="white"}
 
 </td></tr>
 <tr><th>CSS</th><th>Output</th></tr>
@@ -130,7 +130,7 @@ Here we use `origin` 3.
 
 </td><td markdown="block">
 
-{lottie:font-url.json:300:100}
+{lottie src="static/examples/font-url.json" buttons="false" background="white"}
 
 </td></tr>
 <tr><th>CSS</th><th>Output</th></tr>

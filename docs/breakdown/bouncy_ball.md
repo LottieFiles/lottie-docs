@@ -2,7 +2,7 @@
 
 This page will show the basics of Lottie by inspecting this simple animation:
 
-{lottie:bouncy_ball.json:512:512}
+{lottie src="static/examples/bouncy_ball.json"}
 
 Note that Lottie files usually have their JSON minified, but the example files
 here have been expanded for ease of inspection.
@@ -144,7 +144,7 @@ The animated properties of a transform are as follows:
 
 `p` is the position (translation). Both `a` and `p` have arrays as values representing 2D coordinates.
 
-`s` is the scale and, similar to `a` and `p`, its value has 2 components. 
+`s` is the scale and, similar to `a` and `p`, its value has 2 components.
 Note that values are expressed as percentages (`100` meaning 100% or no scaling).
 
 `r` is the rotation angle in degrees.

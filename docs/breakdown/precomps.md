@@ -29,11 +29,11 @@ Follows a simple example:
 
 First we start with a file without precomps:
 
-{lottie:precomp/star-nocomp.json:512:512}
+{lottie src="static/examples/precomp/star-nocomp.json"}
 
 And the same animation but using a precomp:
 
-{lottie:precomp/star-comp.json:512:512}
+{lottie src="static/examples/precomp/star-comp.json"}
 
 Now let's have a look at how the JSON changed:
 
@@ -233,7 +233,7 @@ layers showing the same precomp.
 In the following example the star is animated once but there are 8
 precomp layers with different rotations:
 
-{lottie:precomp/star-splosion.json:512:512}
+{lottie src="static/examples/precomp/star-splosion.json"}
 
 ### Overlaying Animations
 
@@ -248,10 +248,10 @@ In the following example we will overlay the animation from the last
 example with a different animation.
 
 First Animation:
-{lottie:precomp/star-splosion.json:512:512}
+{lottie src="static/examples/precomp/star-splosion.json"}
 
 Second Animation:
-{lottie:precomp/circle.json:512:512}
+{lottie src="static/examples/precomp/circle.json"}
 
 Overlaid:
 
