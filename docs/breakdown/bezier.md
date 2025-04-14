@@ -1,6 +1,6 @@
 # Bezier Curves
 
-{lottie:bezier_expression.json:512:512}
+{lottie src="static/examples/bezier_expression.json"}
 
 
 ## Introduction to Beziers

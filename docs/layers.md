@@ -45,7 +45,7 @@ In the following example, the star and the ellipse are in separate layers,
 but both have the same parent, which moves left and right.
 Between the two there's an additional layer with the rectangle.
 
-{lottie:parenting.json:512:512}
+{lottie src="static/examples/parenting.json"}
 
 ### Auto Orient
 
@@ -58,7 +58,7 @@ with no rotation when the position moves towards the right.
 The transparent one keeps its rotation the same (`ao` is 0), while the solid one
 follows the path (`ao` is 1).
 
-{lottie:auto_orient.json:512:512}
+{lottie src="static/examples/auto_orient.json"}
 
 ### Mattes
 
@@ -135,7 +135,7 @@ So if you have for example: `[Ellipse, Rectangle]`
 
 The ellipse will show on top of the rectangle:
 
-{lottie:layer_order.json:512:512}
+{lottie src="static/examples/layer_order.json"}
 
 This means the render order goes from the last element to the first.
 

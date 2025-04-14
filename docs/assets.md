@@ -81,7 +81,7 @@ You can find more details in the [Precompositions](breakdown/precomps.md) page.
 
 Follows a rather extreme example, that uses precompositions inside precompositions to generate a fractal:
 
-{lottie:fractal.json:512:512}
+{lottie src="static/examples/fractal.json"}
 
 
 ### Data Source

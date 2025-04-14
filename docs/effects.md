@@ -16,7 +16,7 @@ Effect types:
 
 All the examples will use this as their base:
 
-{lottie:image.json:512:512}
+{lottie src="static/examples/image.json"}
 
 
 ### Fill Effect
