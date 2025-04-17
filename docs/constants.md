@@ -243,7 +243,7 @@ To better illustrate what the value mean, the graphics below shows an
 example for each value, including the function itself, based on the
 range start and end character.
 
-![Text Shapes](/lottie-docs/examples/text_shape.png)
+![Text Shapes](/lottie-docs/static/examples/text_shape.png)
 
 
 <h2 id="trim-multiple-shapes">Trim Multiple Shapes</h2>
