@@ -84,7 +84,8 @@
         },
         "ls": {
             "title": "Baseline Shift",
-            "type": "number"
+            "type": "number",
+            "default": 0
         }
     },
     "required": ["f", "fc", "s", "t"]
