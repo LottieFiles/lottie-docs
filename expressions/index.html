@@ -1,0 +1,3510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/expressions/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Expressions - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../text/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../compat/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/expressions.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#expressions">Expressions</a></li>
+            <li class="second-level"><a href="#global-objects">Global objects</a></li>
+                
+                <li class="third-level"><a href="#bm_rt">$bm_rt</a></li>
+                <li class="third-level"><a href="#time">time</a></li>
+                <li class="third-level"><a href="#value">value</a></li>
+                <li class="third-level"><a href="#thisproperty">thisProperty</a></li>
+                <li class="third-level"><a href="#thiscomp">thisComp</a></li>
+                <li class="third-level"><a href="#thislayer">thisLayer</a></li>
+            <li class="second-level"><a href="#animation-structure-functions">Animation Structure functions</a></li>
+                
+                <li class="third-level"><a href="#comp">comp()</a></li>
+            <li class="second-level"><a href="#misc-functions">Misc Functions</a></li>
+                
+                <li class="third-level"><a href="#posterizetime">posterizeTime()</a></li>
+                <li class="third-level"><a href="#timetoframes">timeToFrames()</a></li>
+                <li class="third-level"><a href="#framestotime">framesToTime()</a></li>
+                <li class="third-level"><a href="#rgbtohsl">rgbToHsl()</a></li>
+                <li class="third-level"><a href="#hsltorgb">hslToRgb()</a></li>
+                <li class="third-level"><a href="#createpath">createPath()</a></li>
+            <li class="second-level"><a href="#math-functions">Math functions</a></li>
+                
+                <li class="third-level"><a href="#add">add()</a></li>
+                <li class="third-level"><a href="#sub">sub()</a></li>
+                <li class="third-level"><a href="#mul">mul()</a></li>
+                <li class="third-level"><a href="#div">div()</a></li>
+                <li class="third-level"><a href="#mod">mod()</a></li>
+                <li class="third-level"><a href="#clamp">clamp()</a></li>
+                <li class="third-level"><a href="#normalize">normalize()</a></li>
+                <li class="third-level"><a href="#length">length()</a></li>
+                <li class="third-level"><a href="#looat">looAt()</a></li>
+                <li class="third-level"><a href="#seedrandom">seedRandom()</a></li>
+                <li class="third-level"><a href="#random">random()</a></li>
+                <li class="third-level"><a href="#linear">linear()</a></li>
+                <li class="third-level"><a href="#ease">ease()</a></li>
+                <li class="third-level"><a href="#easein">easeIn()</a></li>
+                <li class="third-level"><a href="#easeout">easeOut()</a></li>
+                <li class="third-level"><a href="#degreestoradians">degreesToRadians()</a></li>
+                <li class="third-level"><a href="#radianstodegrees">radiansToDegrees()</a></li>
+            <li class="second-level"><a href="#property">Property</a></li>
+                
+                <li class="third-level"><a href="#propertyvalue">Property.value</a></li>
+                <li class="third-level"><a href="#propertynumkeys">Property.numKeys</a></li>
+                <li class="third-level"><a href="#propertypropertyindex">Property.propertyIndex</a></li>
+                <li class="third-level"><a href="#propertyvalueattime">Property.valueAtTime()</a></li>
+                <li class="third-level"><a href="#propertygetvelocityattime">Property.getVelocityAtTime()</a></li>
+                <li class="third-level"><a href="#propertygetspeedattime">Property.getSpeedAtTime()</a></li>
+                <li class="third-level"><a href="#propertysmooth">Property.smooth()</a></li>
+                <li class="third-level"><a href="#propertyloopin">Property.loopIn()</a></li>
+                <li class="third-level"><a href="#propertyloopout">Property.loopOut()</a></li>
+            <li class="second-level"><a href="#composition">Composition</a></li>
+                
+                <li class="third-level"><a href="#as-a-function">As a function</a></li>
+                <li class="third-level"><a href="#compositionnumlayers">Composition.numLayers</a></li>
+                <li class="third-level"><a href="#compositionwidth">Composition.width</a></li>
+                <li class="third-level"><a href="#compositionheight">Composition.height</a></li>
+                <li class="third-level"><a href="#compositiondisplaystarttime">Composition.displayStartTime</a></li>
+                <li class="third-level"><a href="#compositionframeduration">Composition.frameDuration</a></li>
+                <li class="third-level"><a href="#compositionpixelaspect">Composition.pixelAspect</a></li>
+                <li class="third-level"><a href="#compositionlayer">Composition.layer()</a></li>
+            <li class="second-level"><a href="#layer">Layer</a></li>
+                
+                <li class="third-level"><a href="#layerindex">Layer.index</a></li>
+                <li class="third-level"><a href="#layerinpoint">Layer.inPoint</a></li>
+                <li class="third-level"><a href="#layeroutpoint">Layer.outPoint</a></li>
+                <li class="third-level"><a href="#layerstarttime">Layer.startTime</a></li>
+                <li class="third-level"><a href="#layertransform">Layer.transform</a></li>
+                <li class="third-level"><a href="#layersource">Layer.source</a></li>
+                <li class="third-level"><a href="#layerwidth">Layer.width</a></li>
+                <li class="third-level"><a href="#layerheight">Layer.height</a></li>
+                <li class="third-level"><a href="#layerhasparent">Layer.hasParent</a></li>
+                <li class="third-level"><a href="#layerparent">Layer.parent</a></li>
+                <li class="third-level"><a href="#layersourcerectattime">Layer.sourceRectAtTime</a></li>
+                <li class="third-level"><a href="#layereffect">Layer.effect</a></li>
+                <li class="third-level"><a href="#layercontents">Layer.contents</a></li>
+            <li class="second-level"><a href="#layer-space-transforms">Layer space transforms</a></li>
+                
+                <li class="third-level"><a href="#layertocomp">Layer.toComp</a></li>
+                <li class="third-level"><a href="#layerfromcomp">Layer.fromComp</a></li>
+                <li class="third-level"><a href="#layertocompvec">Layer.toCompVec</a></li>
+                <li class="third-level"><a href="#layerfromcompvec">Layer.fromCompVec</a></li>
+                <li class="third-level"><a href="#layertoworld">Layer.toWorld</a></li>
+                <li class="third-level"><a href="#layerfromworld">Layer.fromWorld</a></li>
+                <li class="third-level"><a href="#layertoworldvec">Layer.toWorldVec</a></li>
+                <li class="third-level"><a href="#layerfromworldvec">Layer.fromWorldVec</a></li>
+                <li class="third-level"><a href="#transform">Transform</a></li>
+                <li class="third-level"><a href="#effect">Effect</a></li>
+                <li class="third-level"><a href="#effect_1">Effect()</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="expressions">Expressions</h1>
+<!--
+    https://github.com/bodymovin/bodymovin-extension/blob/master/src/helpers/expressions/expressions.js
+    https://github.com/airbnb/lottie-web/blob/master/player/js/utils/expressions/ExpressionManager.js
+    https://helpx.adobe.com/after-effects/using/expression-language-reference.html
+
+    continue from
+    https://helpx.adobe.com/after-effects/using/expression-language-reference.html#mask_attributes_and_methods_expression_reference
+-->
+
+<p>Properties can have expressions associated with them,
+when this is the case the value of such properties can be modified by using the expression.</p>
+<p>The expression language is based on JavaScript / ECMAScript.</p>
+<p>For the most part it uses what is described in the After Effects expressions.</p>
+<p>More resources on AE expressions:</p>
+<ul>
+<li><a href="https://helpx.adobe.com/after-effects/using/expression-language-reference.html">Expression Language Reference</a></li>
+<li><a href="https://ae-expressions.docsforadobe.dev/">After Effects Expression Reference</a></li>
+</ul>
+<h2 id="global-objects">Global objects</h2>
+<h3 id="bm_rt"><code>$bm_rt</code></h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>$bm_rt</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Output value for the expression</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Must be declared and be assigned a value in every expression</p>
+</td>
+</tr>
+</table>
+<p>The special variable <code>$bm_rt</code> is used to determine the value of the expression.</p>
+<p>This variable must be declared by the expression and must have a value compatible with the property;</p>
+<pre><code class="language-js">var $bm_rt;
+$bm_rt = 60;
+</code></pre>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td colspan="2" style="white-space: pre"><label>Rotation Expression</label> </td>
+</tr>
+<tr>
+<td colspan="2" style="width: 100%">
+<div class="highlighted-input">
+<textarea autocomplete="off" class="code-input" data-lang="javascript" data-lottie-input="18" name="Rotation Expression" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this);lottie_player_18.reload();" onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);" rows="3" spellcheck="false" style="width: 100%">var $bm_rt = 60;</textarea>
+<pre aria-hidden="true"><code class="language-js hljs">var $bm_rt = 60;
+</code></pre>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="white-space: pre"><label>Position Expression</label> </td>
+</tr>
+<tr>
+<td colspan="2" style="width: 100%">
+<div class="highlighted-input">
+<textarea autocomplete="off" class="code-input" data-lang="javascript" data-lottie-input="18" name="Position Expression" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this);lottie_player_18.reload();" onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);" rows="3" spellcheck="false" style="width: 100%">var $bm_rt = [256, 256];</textarea>
+<pre aria-hidden="true"><code class="language-js hljs">var $bm_rt = [256, 256];
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_18"></div>
+</div>
+<div class="json-parent" id="playground_18_3_parent">
+<pre><code class="language-json hljs" id="playground_18_3">
+</code></pre>
+</div>
+<script>
+        var lottie_player_18 = new PlaygroundPlayer(
+            18,
+            'playground_18_3',
+            'lottie_target_18',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 0}], "layers": [{"nm": "foo", "mn": "bar", "ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [256, 256], "a": 0}, "p": {"k": [256, 256], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "refId": "blep"}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].ks.r.x = data["Rotation Expression"];
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    this.json_viewer_contents = lottie.layers[0].ks;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="time"><code>time</code></h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>time</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>The current time within the composition in seconds</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td colspan="2" style="white-space: pre"><label>Rotation Expression</label> </td>
+</tr>
+<tr>
+<td colspan="2" style="width: 100%">
+<div class="highlighted-input">
+<textarea autocomplete="off" class="code-input" data-lang="javascript" data-lottie-input="19" name="Rotation Expression" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this);lottie_player_19.reload();" onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);" rows="3" spellcheck="false" style="width: 100%">var $bm_rt = time * 360;</textarea>
+<pre aria-hidden="true"><code class="language-js hljs">var $bm_rt = time * 360;
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_19"></div>
+</div>
+<div class="json-parent" id="playground_19_2_parent">
+<pre><code class="language-json hljs" id="playground_19_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_19 = new PlaygroundPlayer(
+            19,
+            'playground_19_2',
+            'lottie_target_19',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 0}], "layers": [{"nm": "foo", "mn": "bar", "ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [256, 256], "a": 0}, "p": {"k": [256, 256], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "refId": "blep"}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].ks.r.x = data["Rotation Expression"];
+    this.json_viewer_contents = lottie.layers[0].ks.r;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="value"><code>value</code></h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>value</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>The value the property would have without expressions</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td colspan="2" style="white-space: pre"><label>Position Expression</label> </td>
+</tr>
+<tr>
+<td colspan="2" style="width: 100%">
+<div class="highlighted-input">
+<textarea autocomplete="off" class="code-input" data-lang="javascript" data-lottie-input="20" name="Position Expression" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this);lottie_player_20.reload();" onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);" rows="3" spellcheck="false" style="width: 100%">var $bm_rt = [];
+        $bm_rt[0] = value[0] + Math.cos(2 * Math.PI * time) * 100;
+        $bm_rt[1] = value[1];</textarea>
+<pre aria-hidden="true"><code class="language-js hljs">var $bm_rt = [];
+        $bm_rt[0] = value[0] + Math.cos(2 * Math.PI * time) * 100;
+        $bm_rt[1] = value[1];
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_20"></div>
+</div>
+<div class="json-parent" id="playground_20_2_parent">
+<pre><code class="language-json hljs" id="playground_20_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_20 = new PlaygroundPlayer(
+            20,
+            'playground_20_2',
+            'lottie_target_20',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 0}], "layers": [{"nm": "foo", "mn": "bar", "ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [256, 256], "a": 0}, "p": {"k": [256, 256], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "refId": "blep"}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    this.json_viewer_contents = lottie.layers[0].ks.p;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="thisproperty"><code>thisProperty</code></h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>thisProperty</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><a href="#property">Property</a></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Property the expression is operating on</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<h3 id="thiscomp"><code>thisComp</code></h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>thisComp</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><a href="#composition">Composition</a></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Composition the property is in</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<h3 id="thislayer"><code>thisLayer</code></h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>thisLayer</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><a href="#layer">Layer</a></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Layer the property is in</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<h2 id="animation-structure-functions">Animation Structure functions</h2>
+<h3 id="comp">comp()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">comp (
+    name: string
+): Composition
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>
+<p>Composition name</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#composition">Composition</a></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Composition object matching the given name</p>
+</td>
+</tr>
+</table>
+<h2 id="misc-functions">Misc Functions</h2>
+<h3 id="posterizetime">posterizeTime()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">posterizeTime (
+    fps: number
+)
+</code></pre>
+<p>
+<p>The rest of the expression will only be updated this many times per second</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Frames per second</p>
+</td>
+</tr>
+</table>
+<h3 id="timetoframes">timeToFrames()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">timeToFrames (
+    time: number = time + thisComp.displayStartTime
+    fps: number = 1.0 / thisComp.frameDuration
+): number
+</code></pre>
+<p>
+<p>Converts a time in seconds to a number of frames</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time + thisComp.displayStartTime</code></td>
+<td>
+<p>Time in seconds</p>
+</td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>number</code></td>
+<td><code>1.0 / thisComp.frameDuration</code></td>
+<td>
+<p>Frames per second</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Number of frames</p>
+</td>
+</tr>
+</table>
+<h3 id="framestotime">framesToTime()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">framesToTime (
+    frames: number
+    fps: number = 1.0 / thisComp.frameDuration
+): number
+</code></pre>
+<p>
+<p>Converts a number of frames to a time in seconds</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>frames</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Number of frames</p>
+</td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>number</code></td>
+<td><code>1.0 / thisComp.frameDuration</code></td>
+<td>
+<p>Frames per second</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Time in seconds</p>
+</td>
+</tr>
+</table>
+<h3 id="rgbtohsl">rgbToHsl()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">rgbToHsl (
+    rgb: array[3]|array[4]
+): array[3]|array[4]
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>rgb</code></td>
+<td><code>array[3]</code>|<code>array[4]</code></td>
+<td></td>
+<td>
+<p>RGB(A) color, with components in 0, 1</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>array[3]</code>|<code>array[4]</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>HSL(A) color, with components in 0, 1</p>
+</td>
+</tr>
+</table>
+<h3 id="hsltorgb">hslToRgb()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">hslToRgb (
+    hsl: array[3]|array[4]
+): array[3]|array[4]
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>hsl</code></td>
+<td><code>array[3]</code>|<code>array[4]</code></td>
+<td></td>
+<td>
+<p>HSL(A) color, with components in 0, 1</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>array[3]</code>|<code>array[4]</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>RGB(A) color, with components in 0, 1</p>
+</td>
+</tr>
+</table>
+<h3 id="createpath">createPath()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">createPath (
+    points: array
+    in_tangents: array = []
+    out_tangents: array = []
+    is_closed: boolean = true
+): Path
+</code></pre>
+<p>
+<p>Creates bezier path data</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>points</code></td>
+<td><code>array</code></td>
+<td></td>
+<td>
+<p>Array of points (each point is a list with 2 numbers)</p>
+</td>
+</tr>
+<tr>
+<td><code>in_tangents</code></td>
+<td><code>array</code></td>
+<td><code>[]</code></td>
+<td>
+<p>Array of in tangents correponding to the point with the same index</p>
+</td>
+</tr>
+<tr>
+<td><code>out_tangents</code></td>
+<td><code>array</code></td>
+<td><code>[]</code></td>
+<td>
+<p>Array of out tangents correponding to the point with the same index</p>
+</td>
+</tr>
+<tr>
+<td><code>is_closed</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>
+<p>Whether the path is closed</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#path">Path</a></td>
+</tr>
+</table>
+<h2 id="math-functions">Math functions</h2>
+<h3 id="add">add()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">add (
+    a: any
+    b: any
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#any">any</a></td>
+</tr>
+</table>
+<p>If <code>a</code> and <code>b</code> are numbers, it will return their sum.</p>
+<p>If they string, their concatenation.</p>
+<p>If they are vectors, their element-wise sum.</p>
+<p>If one is a vector and the other a number, it will return the sum of the number by the first element of the vector.</p>
+<p>This function is also available as <code>$bm_sum</code> and <code>sum</code>.</p>
+<h3 id="sub">sub()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">sub (
+    a: any
+    b: any
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#any">any</a></td>
+</tr>
+</table>
+<p>If <code>a</code> and <code>b</code> are numbers, or can be converted to numbers, it will return their difference.</p>
+<p>If they are vectors, their element-wise difference.</p>
+<p>This function is also avilable as <code>$bm_sub</code>.</p>
+<h3 id="mul">mul()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">mul (
+    a: any
+    b: any
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#any">any</a></td>
+</tr>
+</table>
+<p>If <code>a</code> and <code>b</code> are numbers, or can be converted to numbers, it will return their product.</p>
+<p>If one of them is a vector and the other a number, it will return a vector with each element multiplied by the number.</p>
+<p>This function is also avilable as <code>$bm_mul</code>.</p>
+<h3 id="div">div()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">div (
+    a: any
+    b: any
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#any">any</a></td>
+</tr>
+</table>
+<p>If <code>a</code> and <code>b</code> are numbers, or can be converted to numbers, it will return their division.</p>
+<p>If one of them is a vector and the other a number, it will return a vector with each element divided by the number.</p>
+<p>This function is also avilable as <code>$bm_div</code>.</p>
+<h3 id="mod">mod()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">mod (
+    a: any
+    b: any
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><a href="#any">any</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#any">any</a></td>
+</tr>
+</table>
+<h3 id="clamp">clamp()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">clamp (
+    value: number
+    minimum: number
+    maximum: number
+): number
+</code></pre>
+<p>
+<p>Clamps a value inside a range</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>The value to clamp</p>
+</td>
+</tr>
+<tr>
+<td><code>minimum</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Minimum value</p>
+</td>
+</tr>
+<tr>
+<td><code>maximum</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Maximum value</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+</table>
+<h3 id="normalize">normalize()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">normalize (
+    vector: array
+): number
+</code></pre>
+<p>
+<p>Divides a vector by its length</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>vector</code></td>
+<td><code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>same as <code>div(vector, length(vector))</code></p>
+</td>
+</tr>
+</table>
+<h3 id="length">length()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">length (
+    vector: array
+): number
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>vector</code></td>
+<td><code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>length of <code>vector</code></p>
+</td>
+</tr>
+</table>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">length (
+    a: array
+    b: array
+): number
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Distance between <code>a</code> and <code>b</code>.</p>
+</td>
+</tr>
+</table>
+<h3 id="looat">looAt()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">lookAt (
+    from_point: array[3]
+    to_point: array[3]
+): number
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>from_point</code></td>
+<td><code>array[3]</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>to_point</code></td>
+<td><code>array[3]</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>length of <code>vector</code></p>
+</td>
+</tr>
+</table>
+<h3 id="seedrandom">seedRandom()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">seedRandom (
+    seed: number
+)
+</code></pre>
+<p>
+<p>Sets the seed for random functions</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td><code>number</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<h3 id="random">random()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">random (): number
+</code></pre>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Random number between 0 and 1</p>
+</td>
+</tr>
+</table>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">random (
+    max: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Random number between 0 and <code>max</code>, element wise if the argument is an array</p>
+</td>
+</tr>
+</table>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">random (
+    min: number|array
+    max: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Random number between <code>min</code> and <code>max</code>, element wise if the arguments are arrays</p>
+</td>
+</tr>
+</table>
+<h3 id="linear">linear()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">linear (
+    t: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between 0 and 1</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Linear interpolation between <code>value1</code> and <code>value2</code></p>
+</td>
+</tr>
+</table>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">linear (
+    t: number
+    t_min: number
+    t_max: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+<tr>
+<td><code>t_min</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>t_max</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Linear interpolation between <code>value1</code> and <code>value2</code>, <code>t</code> is first normalized inside <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+</table>
+<h3 id="ease">ease()</h3>
+<p>Works the same as <code>linear()</code> but with a smooth cubic interpolation.</p>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">ease (
+    t: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between 0 and 1</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Interpolation between <code>value1</code> and <code>value2</code></p>
+</td>
+</tr>
+</table>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">ease (
+    t: number
+    t_min: number
+    t_max: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+<tr>
+<td><code>t_min</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>t_max</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Interpolation between <code>value1</code> and <code>value2</code>, <code>t</code> is first normalized inside <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+</table>
+<h3 id="easein">easeIn()</h3>
+<p>Interpolation, starts the same as <code>ease()</code> and ends the same as <code>linear()</code></p>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">easeIn (
+    t: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between 0 and 1</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Interpolation between <code>value1</code> and <code>value2</code></p>
+</td>
+</tr>
+</table>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">easeIn (
+    t: number
+    t_min: number
+    t_max: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+<tr>
+<td><code>t_min</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>t_max</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Interpolation between <code>value1</code> and <code>value2</code>, <code>t</code> is first normalized inside <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+</table>
+<h3 id="easeout">easeOut()</h3>
+<p>Interpolation, starts the same as <code>linear()</code> and ends the same as <code>ease()</code></p>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">easeOut (
+    t: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between 0 and 1</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Interpolation between <code>value1</code> and <code>value2</code></p>
+</td>
+</tr>
+</table>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">easeOut (
+    t: number
+    t_min: number
+    t_max: number
+    value1: number|array
+    value2: number|array
+): number|array
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Interpolation factor between <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+<tr>
+<td><code>t_min</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>t_max</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Lower bound for the <code>t</code> range</p>
+</td>
+</tr>
+<tr>
+<td><code>value1</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value2</code></td>
+<td><code>number</code>|<code>array</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<code>array</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Interpolation between <code>value1</code> and <code>value2</code>, <code>t</code> is first normalized inside <code>t_min</code> and <code>t_max</code></p>
+</td>
+</tr>
+</table>
+<h3 id="degreestoradians">degreesToRadians()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">degreesToRadians (
+    degrees: number
+): number
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>degrees</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Angle in degrees</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Angle in radians</p>
+</td>
+</tr>
+</table>
+<h3 id="radianstodegrees">radiansToDegrees()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">radiansToDegrees (
+    radians: number
+): number
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>radians</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Angle in radians</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Angle in degrees</p>
+</td>
+</tr>
+</table>
+<!--
+Not implemented:
+    footage()
+    colorDepth()
+    dot()
+    cross()
+    gaussRandom()
+    noise()
+    Footage
+
+-->
+
+<h2 id="property">Property</h2>
+<h3 id="propertyvalue">Property.value</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>value</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>The current value the property</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<h3 id="propertynumkeys">Property.numKeys</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>numKeys</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Number of keyframes</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<h3 id="propertypropertyindex">Property.propertyIndex</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>propertyIndex</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>ix</code> in the JSON for this property</p>
+</td>
+</tr>
+<tr>
+<th>Notes</th>
+<td>
+<p>Read only</p>
+</td>
+</tr>
+</table>
+<h3 id="propertyvalueattime">Property.valueAtTime()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">valueAtTime (
+    t: number
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Time in seconds</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>The value of the property at the given time (without expressions)</p>
+</td>
+</tr>
+</table>
+<h3 id="propertygetvelocityattime">Property.getVelocityAtTime()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">getVelocityAtTime (
+    t: number
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Time in seconds</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>The rate of change for the property, with the same dimensions as the value</p>
+</td>
+</tr>
+</table>
+<h3 id="propertygetspeedattime">Property.getSpeedAtTime()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">getSpeedAtTime (
+    t: number
+): number
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>
+<p>Time in seconds</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>The rate of change for the property as a scalar</p>
+</td>
+</tr>
+</table>
+<h3 id="propertysmooth">Property.smooth()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">smooth (
+    width: number
+    samples: number
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td><code>number</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>samples</code></td>
+<td><code>number</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+</table>
+<h3 id="propertyloopin">Property.loopIn()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">loopIn (
+    type: string
+    duration: number
+    wrap: boolean
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td><code>number</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>wrap</code></td>
+<td><code>boolean</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+</table>
+<h3 id="propertyloopout">Property.loopOut()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">loopOut (
+    type: string
+    duration: number
+    wrap: boolean
+): any
+</code></pre>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td><code>number</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>wrap</code></td>
+<td><code>boolean</code></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><span>Depends on the property</span></td>
+</tr>
+</table>
+<h2 id="composition">Composition</h2>
+<p>Composition object</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td colspan="2" style="white-space: pre"><label>Position Expression</label> </td>
+</tr>
+<tr>
+<td colspan="2" style="width: 100%">
+<div class="highlighted-input">
+<textarea autocomplete="off" class="code-input" data-lang="javascript" data-lottie-input="21" name="Position Expression" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this);lottie_player_21.reload();" onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);" rows="3" spellcheck="false" style="width: 100%">var $bm_rt = [256, 256]
+        var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.PI;
+        $bm_rt[0] += Math.cos(rotation) * 200;
+        $bm_rt[1] += Math.sin(rotation) * 200;</textarea>
+<pre aria-hidden="true"><code class="language-js hljs">var $bm_rt = [256, 256]
+        var rotation = comp("Animation").layer("Layer").transform.rotation / 180 * Math.PI;
+        $bm_rt[0] += Math.cos(rotation) * 200;
+        $bm_rt[1] += Math.sin(rotation) * 200;
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_21"></div>
+</div>
+<div class="json-parent" id="playground_21_2_parent">
+<pre><code class="language-json hljs" id="playground_21_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_21 = new PlaygroundPlayer(
+            21,
+            'playground_21_2',
+            'lottie_target_21',
+            {"v": "5.5.2", "nm": "Animation", "fr": 60, "ip": 0, "op": 180, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}, {"id": "precomp0", "nm": "Precomp", "layers": []}], "layers": [{"nm": "Layer", "ddd": 0, "ty": 2, "sr": 1, "ks": {"nm": "Transform", "a": {"k": [256, 256], "a": 0}, "p": {"k": [256, 256], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"nm": "Rotation", "ix": 123, "a": 1, "k": [{"t": 0, "s": [0], "i": {"x": [1], "y": [1]}, "o": {"x": [1], "y": [1]}}, {"t": 180, "s": [360]}]}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 180, "st": 0, "bm": 0, "ind": 0, "refId": "blep"}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    this.json_viewer_contents = lottie.layers[0].ks.p;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="as-a-function">As a function</h3>
+<p>As a function a composition object can give you access to the layers by name or index</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td colspan="2" style="white-space: pre"><label>Position Expression</label> </td>
+</tr>
+<tr>
+<td colspan="2" style="width: 100%">
+<div class="highlighted-input">
+<textarea autocomplete="off" class="code-input" data-lang="javascript" data-lottie-input="22" name="Position Expression" oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this);lottie_player_22.reload();" onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);" rows="3" spellcheck="false" style="width: 100%">var $bm_rt = [256, 256]
+        var rotation = thisComp("Layer").transform.rotation / 180 * Math.PI;
+        $bm_rt[0] += Math.cos(rotation) * 200;
+        $bm_rt[1] += Math.sin(rotation) * 200;</textarea>
+<pre aria-hidden="true"><code class="language-js hljs">var $bm_rt = [256, 256]
+        var rotation = thisComp("Layer").transform.rotation / 180 * Math.PI;
+        $bm_rt[0] += Math.cos(rotation) * 200;
+        $bm_rt[1] += Math.sin(rotation) * 200;
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_22"></div>
+</div>
+<div class="json-parent" id="playground_22_2_parent">
+<pre><code class="language-json hljs" id="playground_22_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_22 = new PlaygroundPlayer(
+            22,
+            'playground_22_2',
+            'lottie_target_22',
+            {"v": "5.5.2", "nm": "Animation", "fr": 60, "ip": 0, "op": 180, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}, {"id": "precomp0", "nm": "Precomp", "layers": []}], "layers": [{"nm": "Layer", "ddd": 0, "ty": 2, "sr": 1, "ks": {"nm": "Transform", "a": {"k": [256, 256], "a": 0}, "p": {"k": [256, 256], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"nm": "Rotation", "ix": 123, "a": 1, "k": [{"t": 0, "s": [0], "i": {"x": [1], "y": [1]}, "o": {"x": [1], "y": [1]}}, {"t": 180, "s": [360]}]}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 180, "st": 0, "bm": 0, "ind": 0, "refId": "blep"}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].ks.p.x = data["Position Expression"];
+    this.json_viewer_contents = lottie.layers[0].ks.p;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="compositionnumlayers">Composition.numLayers</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>numLayers</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Number of layers in the composition</p>
+</td>
+</tr>
+</table>
+<h3 id="compositionwidth">Composition.width</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>width</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Width of the composition, same as <code>w</code> in the JSON</p>
+</td>
+</tr>
+</table>
+<h3 id="compositionheight">Composition.height</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>height</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Height of the composition, same as <code>h</code> in the JSON</p>
+</td>
+</tr>
+</table>
+<h3 id="compositiondisplaystarttime">Composition.displayStartTime</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>displayStartTime</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Start time of the composition, in seconds. Similar to <code>ip</code> in the JSON but converted into seconds</p>
+</td>
+</tr>
+</table>
+<h3 id="compositionframeduration">Composition.frameDuration</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>frameDuration</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Duration of a frame in second, reciprocal of frames per second</p>
+</td>
+</tr>
+</table>
+<h3 id="compositionpixelaspect">Composition.pixelAspect</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>pixelAspect</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Pixel aspect ratio, generally <code>1</code></p>
+</td>
+</tr>
+</table>
+<h3 id="compositionlayer">Composition.layer()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">layer (
+    layer: number|string
+): Layer
+</code></pre>
+<p>
+<p>Returns the given layer</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>layer</code></td>
+<td><code>number</code>|<code>string</code></td>
+<td></td>
+<td>
+<p>Layer name or index</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#layer">Layer</a></td>
+</tr>
+</table>
+<!--
+
+Not implemented:
+    layer(otherLayer, relIndex)
+    marker
+    activeCamera
+    duration
+    ntscDropFrame
+    shutterAngle
+    shutterPhase
+    bgColor
+    name
+-->
+
+<h2 id="layer">Layer</h2>
+<p>Layer object.</p>
+<p>Note that it also has all the attributes from <a href="#transform">Transform</a>.</p>
+<h3 id="layerindex">Layer.index</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>index</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Layer index, same as <code>ind</code> in the JSON</p>
+</td>
+</tr>
+</table>
+<h3 id="layerinpoint">Layer.inPoint</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>inPoint</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Same as <code>ip</code> in the JSON but in seconds</p>
+</td>
+</tr>
+</table>
+<h3 id="layeroutpoint">Layer.outPoint</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>outPoint</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Same as <code>op</code> in the JSON but in seconds</p>
+</td>
+</tr>
+</table>
+<h3 id="layerstarttime">Layer.startTime</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>startTime</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Same as <code>st</code> in the JSON but in seconds</p>
+</td>
+</tr>
+</table>
+<h3 id="layertransform">Layer.transform</h3>
+<p>Transform attributes can also be accessed from the layer object directly</p>
+<table>
+<tr>
+<th>Name</th>
+<td><code>transofrm</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><a href="#transform">Transform</a></td>
+</tr>
+<tr>
+<th>Description</th>
+<td></td>
+</tr>
+</table>
+<h3 id="layersource">Layer.source</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>source</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>string</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>For layers referencing an asset, the <code>id</code> of that asses. (Same as <code>refId</code> in the JSON)</p>
+</td>
+</tr>
+</table>
+<h3 id="layerwidth">Layer.width</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>width</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Same as <code>Layer.sourceRectAtTime().width</code></p>
+</td>
+</tr>
+</table>
+<h3 id="layerheight">Layer.height</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>height</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Same as <code>Layer.sourceRectAtTime().height</code></p>
+</td>
+</tr>
+</table>
+<h3 id="layerhasparent">Layer.hasParent</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>hasParent</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Whether the layer has a parent</p>
+</td>
+</tr>
+</table>
+<h3 id="layerparent">Layer.parent</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>parent</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><a href="#layer">Layer</a></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Parent layer</p>
+</td>
+</tr>
+</table>
+<h3 id="layersourcerectattime">Layer.sourceRectAtTime</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">sourceRectAtTime (): object
+</code></pre>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>object</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Object with these attributes</p>
+</td>
+</tr>
+</table>
+<h3 id="layereffect">Layer.effect</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">effect (
+    effect: number|string
+): Effect
+</code></pre>
+<p>
+<p>Returns the given effect</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>effect</code></td>
+<td><code>number</code>|<code>string</code></td>
+<td></td>
+<td>
+<p>Name or index</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#effect">Effect</a></td>
+</tr>
+</table>
+<h3 id="layercontents">Layer.contents</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">contents (
+    shape: number|string
+): Shape
+</code></pre>
+<p>
+<p>For shape layers, returns the given shape</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>shape</code></td>
+<td><code>number</code>|<code>string</code></td>
+<td></td>
+<td>
+<p>Name or index</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#shape">Shape</a></td>
+</tr>
+</table>
+<h2 id="layer-space-transforms">Layer space transforms</h2>
+<p>These methods convert between coordinates systems within a layer.</p>
+<p>Some of these functions have a <code>Vec</code> suffix, which means they should be used
+for difference between points (the version without this suffix is for points).</p>
+<h3 id="layertocomp">Layer.toComp</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toComp (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a point from Layer coordinates to composition coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Point</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<h3 id="layerfromcomp">Layer.fromComp</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toComp (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a point from composition coordinates to Layer coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Point</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<h3 id="layertocompvec">Layer.toCompVec</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toComp (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a vector from Layer coordinates to composition coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Vector</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<h3 id="layerfromcompvec">Layer.fromCompVec</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toComp (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a vector from composition coordinates to Layer coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Vector</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<h3 id="layertoworld">Layer.toWorld</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toWorld (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a point from Layer coordinates to world coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Point</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<h3 id="layerfromworld">Layer.fromWorld</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toWorld (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a point from world coordinates to Layer coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Point</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<h3 id="layertoworldvec">Layer.toWorldVec</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toWorld (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a vector from Layer coordinates to world coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Vector</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<h3 id="layerfromworldvec">Layer.fromWorldVec</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts">toWorld (
+    point: Array
+    time: number = time
+): Array
+</code></pre>
+<p>
+<p>Maps a vector from world coordinates to Layer coordinates</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>point</code></td>
+<td><a href="#array">Array</a></td>
+<td></td>
+<td>
+<p>Vector</p>
+</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>number</code></td>
+<td><code>time</code></td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><a href="#array">Array</a></td>
+</tr>
+</table>
+<!--
+Not Implemented:
+    sourceTime()
+    mask
+    hasVideo
+    hasAudio
+    active
+    enabled
+    audioActive
+    audioLevels
+    timeRemap
+    marker
+    name
+    Layer 3D attributes and methods
+    fromCompToSurface
+
+Implemented but dummy:
+    sourceRectAtTime()
+    sampleImage()
+-->
+
+<h3 id="transform">Transform</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>anchorPoint</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>array[2]</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>a</code></p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<th>Name</th>
+<td><code>position</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>array[2]</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>p</code></p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<th>Name</th>
+<td><code>scale</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>s</code></p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<th>Name</th>
+<td><code>rotation</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>r</code></p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<th>Name</th>
+<td><code>opacity</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>o</code></p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<th>Name</th>
+<td><code>skew</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>sk</code></p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<th>Name</th>
+<td><code>skewAxis</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>number</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Value of <code>sa</code></p>
+</td>
+</tr>
+</table>
+<h3 id="effect">Effect</h3>
+<table>
+<tr>
+<th>Name</th>
+<td><code>active</code></td>
+</tr>
+<tr>
+<th>Type</th>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<th>Description</th>
+<td>
+<p>Whether the effect is active</p>
+</td>
+</tr>
+</table>
+<h3 id="effect_1">Effect()</h3>
+<p><strong>Synopsis</strong></p>
+<pre><code class="language-ts"> (
+    property: number|string
+): number|Array
+</code></pre>
+<p>
+<p>Returns the value for the given property of the effect</p>
+</p>
+<p><strong>Parameters</strong></p>
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>property</code></td>
+<td><code>number</code>|<code>string</code></td>
+<td></td>
+<td>
+<p>Name or index of the property</p>
+</td>
+</tr>
+</table>
+<p><strong>Return</strong></p>
+<table>
+<tr>
+<th>Type</th>
+<td><code>number</code>|<a href="#array">Array</a></td>
+</tr>
+</table>
+<!--
+Not Implemented:
+    param()
+--></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/breakdown/precomps/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    
+    <title>Precompositions - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../css/base.min.css" rel="stylesheet">
+    <link href="../../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href="../.." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../bezier/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../../values/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/breakdown/precomps.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#precompositions">Precompositions</a></li>
+            <li class="second-level"><a href="#what-are-precompositions">What are Precompositions?</a></li>
+                
+            <li class="second-level"><a href="#how-do-precompositions-work-in-a-lottie">How do Precompositions work in a Lottie?</a></li>
+                
+                <li class="third-level"><a href="#important-things-to-note">Important things to note</a></li>
+            <li class="second-level"><a href="#what-can-you-do-with-precompositions">What can you do with Precompositions?</a></li>
+                
+                <li class="third-level"><a href="#resizing">Resizing</a></li>
+                <li class="third-level"><a href="#speeding-up-and-slowing-down">Speeding up and Slowing down</a></li>
+                <li class="third-level"><a href="#reversing-playback">Reversing Playback</a></li>
+                <li class="third-level"><a href="#repeated-elements">Repeated Elements</a></li>
+                <li class="third-level"><a href="#overlaying-animations">Overlaying Animations</a></li>
+                <li class="third-level"><a href="#concatenating-animations">Concatenating Animations</a></li>
+                <li class="third-level"><a href="#masking-animations">Masking Animations</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="precompositions">Precompositions</h1>
+<p>This page will explain Precompositions (or precomps for short),
+which are a defining feature of the Lottie format which allows for great
+flexibility in effects and organization of animation files.</p>
+<h2 id="what-are-precompositions">What are Precompositions?</h2>
+<p>In short, a precomposition is an animation embedded inside another
+animation, of which you can control playback.</p>
+<p>Once you have a precomposition, you can use layers to reference it
+in various parts of the animation to avoid repeating elements.</p>
+<h2 id="how-do-precompositions-work-in-a-lottie">How do Precompositions work in a Lottie?</h2>
+<p>The main object is the <a href="../../assets/#precomposition">Precomposition Asset</a>.
+Its structure is very simple, just an asset identifier and a list of layers.</p>
+<p>By itself a precomposition asset doesn't do much, it needs to be
+referenced by a <a href="../../layers/#precomposition-layer">Precomposition Layer</a>.</p>
+<p>You can think of the precomp asset to be similar to a video asset,
+and the layer plays back the animation defined by that asset.</p>
+<p>Follows a simple example:</p>
+<p>First we start with a file without precomps:</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_79"></div>
+</div>
+<div><button id="lottie_play_79" onclick="lottie_player_79.play(); document.getElementById('lottie_pause_79').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_79" onclick="lottie_player_79.pause(); document.getElementById('lottie_play_79').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../../static/examples/precomp/star-nocomp.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_79 = new LottiePlayer(
+                    'lottie_target_79',
+                    '../../static/examples/precomp/star-nocomp.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<p>And the same animation but using a precomp:</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_80"></div>
+</div>
+<div><button id="lottie_play_80" onclick="lottie_player_80.play(); document.getElementById('lottie_pause_80').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_80" onclick="lottie_player_80.pause(); document.getElementById('lottie_play_80').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../../static/examples/precomp/star-comp.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_80 = new LottiePlayer(
+                    'lottie_target_80',
+                    '../../static/examples/precomp/star-comp.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<p>Now let's have a look at how the JSON changed:</p>
+<p>This is the original animation, nothing special about it:</p>
+<pre><code class="language-js">{
+    &quot;nm&quot;: &quot;Animation&quot;,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;assets&quot;: [],
+    &quot;layers&quot;: [
+        {
+            &quot;nm&quot;: &quot;Shape Layer&quot;,
+            &quot;ty&quot;: 4,
+            &quot;ind&quot;: 0,
+            &quot;st&quot;: 0,
+            &quot;ip&quot;: 0,
+            &quot;op&quot;: 60,
+            &quot;ks&quot;: {},
+            &quot;shapes&quot;: [/* ... */]
+        }
+    ]
+}
+</code></pre>
+<p>And this is the version using a precomposition:</p>
+<pre><code class="language-js">{
+    &quot;nm&quot;: &quot;Animation&quot;,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;assets&quot;: [
+        {
+            &quot;id&quot;: &quot;Star&quot;,
+            &quot;layers&quot;: [
+                {
+                    &quot;nm&quot;: &quot;Shape Layer&quot;,
+                    &quot;ty&quot;: 4,
+                    &quot;ind&quot;: 0,
+                    &quot;st&quot;: 0,
+                    &quot;ip&quot;: 0,
+                    &quot;op&quot;: 60,
+                    &quot;shapes&quot;: [/* ... */]
+                }
+            ]
+        }
+    ],
+    &quot;layers&quot;: [
+        {
+            &quot;nm&quot;: &quot;Precomp Layer&quot;,
+            &quot;refId&quot;: &quot;Star&quot;
+            &quot;ty&quot;: 0,
+            &quot;ind&quot;: 0,
+            &quot;st&quot;: 0,
+            &quot;ip&quot;: 0,
+            &quot;op&quot;: 60,
+            &quot;w&quot;: 512,
+            &quot;h&quot;: 512,
+            &quot;ks&quot;: {}
+        }
+    ],
+}
+</code></pre>
+<p>As you can see, the layers in the original animation have been moved to
+an asset (in this example there was only one layer but it works the same
+when you have multiple layer).</p>
+<p>And in <code>layers</code> of the outer animation there is a single layer
+referencing the new asset.</p>
+<p>The structure of the <a href="../../assets/#precomposition">asset</a> is fairly
+straightforward: a unique identifier (<code>Star</code> in the example) and the
+list of layers in the precomposition.</p>
+<p>The <a href="../../layers/#precomposition-layer">layer</a> has the usual attributes
+you can find on visual layers and a couple others:
+<code>refId</code> is the identifier of the precomp the layer is referencing,
+<code>w</code> and <code>h</code> define the clipping rectangle for the composition, in this
+case they match the value in the outer animation.</p>
+<h3 id="important-things-to-note">Important things to note</h3>
+<p>A precomp doesn't contain assets, but it can reference assets defined in
+the main animation object. It can also reference other precomps.</p>
+<p>Layer indexes are unique in each composition: you can have a layer with
+index <code>0</code> in multiple precomps and in the main animation, references
+to these (such as when parenting layers) are relative to the composition.</p>
+<p>You need to always specify <code>w</code> and <code>h</code> in the precomp layer or nothing
+will be displayed.</p>
+<h2 id="what-can-you-do-with-precompositions">What can you do with Precompositions?</h2>
+<p>In this section we'll describe some example use case including the
+initial animations and the result to compare how a file needs to be
+changed to obtain certain effects.</p>
+<h3 id="resizing">Resizing</h3>
+<p>If you need to resize an animation, the best way of doing it is by
+precomposing all its layers and then scale the precomp layer.</p>
+<p>While for simple examples you'd might be able to get away with scaling
+all the layers in the original animation, it gets complicated if you
+have parented layers or transforms applied to some of the layers.</p>
+<p>Note that in the example below <code>w</code> and <code>h</code> keep their initial value
+and only the scale is changed.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_81"></div>
+</div>
+<div class="json-parent" id="playground_81_1_parent">
+<pre><code class="language-json hljs" id="playground_81_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_81 = new PlaygroundPlayer(
+            81,
+            'playground_81_1',
+            'lottie_target_81',
+            {"v": "5.7.1", "ip": 0, "op": 60, "nm": "Animation", "mn": "{0b14b755-3d9e-4f7f-b7ab-21cd57d13e23}", "fr": 60, "w": 512, "h": 512, "assets": [{"id": "Star", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Shape Layer", "mn": "{4d57cabf-951f-4067-b50e-8307f9f5fe72}", "ks": {}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{c99b4a89-363b-4cd3-8797-bf65b57fdd29}", "d": 1, "p": {"a": 1, "k": [{"t": 0, "s": [256, 256], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0, 0]}]}, "or": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "ir": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "is": {"a": 0, "k": 0}, "os": {"a": 0, "k": 0}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1}, {"ty": "st", "nm": "Stroke", "mn": "{eb7fbdff-0656-41f5-9337-3aa283dde263}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}}, {"ty": "fl", "nm": "Fill", "mn": "{54bfe210-7450-4824-accc-eef8f6c48ae8}", "o": {"a": 0, "k": 100}, "r": 1, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}}]}]}], "layers": [{"ddd": 0, "ty": 0, "ind": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "nm": "Precomp Layer", "ks": {}, "refId": "Star"}], "meta": {"g": "Glaxnimate 0.5.0-93-g187709f5"}},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie, assets:["..."]};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<script>
+lottie.w = lottie.h = 512 * data["Scale"] / 100;
+lottie.layers[0].ks.s = {
+    a: 0,
+    k: [
+        data["Scale"], data["Scale"]
+    ]
+};
+</script>
+
+<h3 id="speeding-up-and-slowing-down">Speeding up and Slowing down</h3>
+<p>Similarly, you can use time stretch to speed up and slow down an animation:</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_82"></div>
+</div>
+<div class="json-parent" id="playground_82_1_parent">
+<pre><code class="language-json hljs" id="playground_82_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_82 = new PlaygroundPlayer(
+            82,
+            'playground_82_1',
+            'lottie_target_82',
+            {"v": "5.7.1", "ip": 0, "op": 60, "nm": "Animation", "mn": "{0b14b755-3d9e-4f7f-b7ab-21cd57d13e23}", "fr": 60, "w": 512, "h": 512, "assets": [{"id": "Star", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Shape Layer", "mn": "{4d57cabf-951f-4067-b50e-8307f9f5fe72}", "ks": {}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{c99b4a89-363b-4cd3-8797-bf65b57fdd29}", "d": 1, "p": {"a": 1, "k": [{"t": 0, "s": [256, 256], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0, 0]}]}, "or": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "ir": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "is": {"a": 0, "k": 0}, "os": {"a": 0, "k": 0}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1}, {"ty": "st", "nm": "Stroke", "mn": "{eb7fbdff-0656-41f5-9337-3aa283dde263}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}}, {"ty": "fl", "nm": "Fill", "mn": "{54bfe210-7450-4824-accc-eef8f6c48ae8}", "o": {"a": 0, "k": 100}, "r": 1, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}}]}]}], "layers": [{"ddd": 0, "ty": 0, "ind": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "nm": "Precomp Layer", "ks": {}, "refId": "Star"}], "meta": {"g": "Glaxnimate 0.5.0-93-g187709f5"}},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie, assets:["..."]};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<script>
+var time_mult = 100 / data["Speed"];
+lottie.op = 60 * time_mult;
+lottie.layers[0].op = 60 * time_mult;
+lottie.layers[0].sr = time_mult;
+</script>
+
+<p>You can also change the start time to delay the start of the precomp playback:</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_83"></div>
+</div>
+<div class="json-parent" id="playground_83_1_parent">
+<pre><code class="language-json hljs" id="playground_83_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_83 = new PlaygroundPlayer(
+            83,
+            'playground_83_1',
+            'lottie_target_83',
+            {"v": "5.7.1", "ip": 0, "op": 60, "nm": "Animation", "mn": "{0b14b755-3d9e-4f7f-b7ab-21cd57d13e23}", "fr": 60, "w": 512, "h": 512, "assets": [{"id": "Star", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Shape Layer", "mn": "{4d57cabf-951f-4067-b50e-8307f9f5fe72}", "ks": {}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{c99b4a89-363b-4cd3-8797-bf65b57fdd29}", "d": 1, "p": {"a": 1, "k": [{"t": 0, "s": [256, 256], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0, 0]}]}, "or": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "ir": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "is": {"a": 0, "k": 0}, "os": {"a": 0, "k": 0}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1}, {"ty": "st", "nm": "Stroke", "mn": "{eb7fbdff-0656-41f5-9337-3aa283dde263}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}}, {"ty": "fl", "nm": "Fill", "mn": "{54bfe210-7450-4824-accc-eef8f6c48ae8}", "o": {"a": 0, "k": 100}, "r": 1, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}}]}]}], "layers": [{"ddd": 0, "ty": 0, "ind": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "nm": "Precomp Layer", "ks": {}, "refId": "Star"}], "meta": {"g": "Glaxnimate 0.5.0-93-g187709f5"}},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie, assets:["..."]};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<script>
+var time_mult = 100 / data["Speed"];
+var start = data["Start"];
+lottie.op = 60 * time_mult + start;
+lottie.layers[0].op = 60 * time_mult + start;
+lottie.layers[0].sr = time_mult;
+lottie.layers[0].st = start;
+</script>
+
+<h3 id="reversing-playback">Reversing Playback</h3>
+<p>While <code>sr</code> only allows you to speed up and slow down time, with
+<a href="../../layers/#time-remapping">time remapping</a> You can have more
+interesting effects, such as reversing playback:</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_84"></div>
+</div>
+<div class="json-parent" id="playground_84_1_parent">
+<pre><code class="language-json hljs" id="playground_84_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_84 = new PlaygroundPlayer(
+            84,
+            'playground_84_1',
+            'lottie_target_84',
+            {"v": "5.7.1", "ip": 0, "op": 60, "nm": "Animation", "mn": "{0b14b755-3d9e-4f7f-b7ab-21cd57d13e23}", "fr": 60, "w": 512, "h": 512, "assets": [{"id": "Star", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Shape Layer", "mn": "{4d57cabf-951f-4067-b50e-8307f9f5fe72}", "ks": {}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{c99b4a89-363b-4cd3-8797-bf65b57fdd29}", "d": 1, "p": {"a": 1, "k": [{"t": 0, "s": [256, 256], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0, 0]}]}, "or": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "ir": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "is": {"a": 0, "k": 0}, "os": {"a": 0, "k": 0}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1}, {"ty": "st", "nm": "Stroke", "mn": "{eb7fbdff-0656-41f5-9337-3aa283dde263}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}}, {"ty": "fl", "nm": "Fill", "mn": "{54bfe210-7450-4824-accc-eef8f6c48ae8}", "o": {"a": 0, "k": 100}, "r": 1, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}}]}]}], "layers": [{"ddd": 0, "ty": 0, "ind": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "nm": "Precomp Layer", "ks": {}, "refId": "Star"}], "meta": {"g": "Glaxnimate 0.5.0-93-g187709f5"}},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie, assets:["..."]};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<script>
+lottie.layers[0].tm = {
+    a: 1,
+    "k": [
+        {
+            "t": 0,
+            "s": [1],
+            "o": { "x": 0, "y": 0},
+            "i": { "x": 1, "y": 1}
+        },
+        {
+            "t": 60,
+            "s": [0],
+            "o": { "x": 0, "y": 0},
+            "i": { "x": 1, "y": 1}
+        }
+    ]
+};
+</script>
+
+<h3 id="repeated-elements">Repeated Elements</h3>
+<p>Another important use for precomps is that they allow to have multiple
+layers showing the same precomp.</p>
+<p>In the following example the star is animated once but there are 8
+precomp layers with different rotations:</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_85"></div>
+</div>
+<div><button id="lottie_play_85" onclick="lottie_player_85.play(); document.getElementById('lottie_pause_85').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_85" onclick="lottie_player_85.pause(); document.getElementById('lottie_play_85').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../../static/examples/precomp/star-splosion.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_85 = new LottiePlayer(
+                    'lottie_target_85',
+                    '../../static/examples/precomp/star-splosion.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<h3 id="overlaying-animations">Overlaying Animations</h3>
+<p>Precomps also make it easier to combine multiple files into ones.</p>
+<p>One thing to keep in mind is if the two files already have assets,
+you need to ensure their asset identifier are unique, this can be done
+by overwriting asset <code>id</code> and layer <code>refId</code> properties to some kind of
+incremental values.</p>
+<p>In the following example we will overlay the animation from the last
+example with a different animation.</p>
+<p lottie="lottie" src="static/examples/precomp/star-splosion.json">First Animation:</p>
+<p lottie="lottie" src="static/examples/precomp/circle.json">Second Animation:</p>
+<p>Overlaid:</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_86"></div>
+</div>
+<div class="json-parent" id="playground_86_1_parent">
+<pre><code class="language-json hljs" id="playground_86_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_86 = new PlaygroundPlayer(
+            86,
+            'playground_86_1',
+            'lottie_target_86',
+            {"v": "5.7.1", "ip": 0, "op": 60, "nm": "Animation", "mn": "{0b14b755-3d9e-4f7f-b7ab-21cd57d13e23}", "fr": 60, "w": 512, "h": 512, "assets": [{"id": "Star", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Shape Layer", "mn": "{4d57cabf-951f-4067-b50e-8307f9f5fe72}", "ks": {}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{c99b4a89-363b-4cd3-8797-bf65b57fdd29}", "d": 1, "p": {"a": 1, "k": [{"t": 0, "s": [256, 256], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0, 0]}]}, "or": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "ir": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "is": {"a": 0, "k": 0}, "os": {"a": 0, "k": 0}, "r": {"a": 0, "k": -45}, "pt": {"a": 0, "k": 5}, "sy": 1}, {"ty": "st", "nm": "Stroke", "mn": "{eb7fbdff-0656-41f5-9337-3aa283dde263}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}}, {"ty": "fl", "nm": "Fill", "mn": "{54bfe210-7450-4824-accc-eef8f6c48ae8}", "o": {"a": 0, "k": 100}, "r": 1, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}}]}]}, {"id": "Expanding Stars", "layers": [{"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 0}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 45}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 90}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 135}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 180}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -45}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -90}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -135}}}]}, {"id": "Circle", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Layer", "mn": "{456fdfe5-686b-4006-92f4-951c47ab4bc7}", "ks": {}, "shapes": [{"ty": "el", "nm": "Ellipse", "mn": "{05d5f1a0-6046-4aea-a405-b9ba60a24bd7}", "d": 1, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 1, "k": [{"t": 0, "s": [0, 0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [730, 730]}]}}, {"ty": "st", "nm": "Stroke", "mn": "{d835adb4-6502-4e3e-98c2-70d1145f1a23}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [6], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "c": {"a": 0, "k": [0.11372549019607843, 0.1568627450980392, 0.2823529411764706]}}, {"ty": "fl", "nm": "Fill", "mn": "{78036603-40f1-42ca-ada5-fee506b4ac58}", "o": {"a": 1, "k": [{"t": 30, "s": [100], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "r": 1, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}}]}]}], "layers": [{"nm": "Expanding Stars Layer", "refId": "Expanding Stars", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {}}, {"nm": "Circle Layer", "refId": "Circle", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {}}]},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie, assets:["..."]};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<p>If you look at the JSON you'll notice that this is how the structure changed:</p>
+<pre><code class="language-js">// First Animation:
+{
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;assets&quot;: [
+        {
+            &quot;id&quot;: &quot;Star&quot;,
+            &quot;layers&quot;: [ /* Star Precomp Layers */ ]
+        }
+    ],
+    &quot;layers&quot;: [ /* First Animation Layers */ ]
+}
+
+// Second Animation
+{
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;assets&quot;: [],
+    &quot;layers&quot;: [ /* Second Animation Layers */ ]
+}
+
+// Overlaid
+{
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;assets&quot;: [
+        {
+            &quot;id&quot;: &quot;Star&quot;,
+            &quot;layers&quot;: [ /* Star Precomp Layers */ ]
+        },
+        {
+            &quot;id&quot;: &quot;Expanding Stars&quot;,
+            &quot;layers&quot;: [ /* First Animation Layers */ ]
+        },
+        {
+            &quot;id&quot;: &quot;Circle&quot;,
+            &quot;layers&quot;: [ /* Second Animation Layers */ ]
+        }
+    ],
+    &quot;layers&quot;: [
+        {
+            &quot;nm&quot;: &quot;Expanding Stars Layer&quot;,
+            &quot;refId&quot;: &quot;Expanding Stars&quot;,
+            &quot;ty&quot;: 0,
+            &quot;st&quot;: 0,
+            &quot;ip&quot;: 0,
+            &quot;op&quot;: 60,
+            &quot;w&quot;: 512,
+            &quot;h&quot;: 512,
+            &quot;ks&quot;: {}
+        },
+        {
+            &quot;nm&quot;: &quot;Circle Layer&quot;,
+            &quot;refId&quot;: &quot;Circle&quot;,
+            &quot;ty&quot;: 0,
+            &quot;st&quot;: 0,
+            &quot;ip&quot;: 0,
+            &quot;op&quot;: 60,
+            &quot;w&quot;: 512,
+            &quot;h&quot;: 512,
+            &quot;ks&quot;: {}
+        }
+    ]
+}
+</code></pre>
+<p>In this example the two animations had the same duration and size,
+you can use the techniques described earlier to resize or retime the
+animations if you want to overlay animations with different sizes or
+durations.</p>
+<h3 id="concatenating-animations">Concatenating Animations</h3>
+<p>This works basically the same as overlaying them, just by changing
+some timing properties in the precomp layers.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_87"></div>
+</div>
+<div class="json-parent" id="playground_87_1_parent">
+<pre><code class="language-json hljs" id="playground_87_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_87 = new PlaygroundPlayer(
+            87,
+            'playground_87_1',
+            'lottie_target_87',
+            {"v": "5.7.1", "ip": 0, "op": 60, "nm": "Animation", "mn": "{0b14b755-3d9e-4f7f-b7ab-21cd57d13e23}", "fr": 60, "w": 512, "h": 512, "assets": [{"id": "Star", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Shape Layer", "mn": "{4d57cabf-951f-4067-b50e-8307f9f5fe72}", "ks": {}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{c99b4a89-363b-4cd3-8797-bf65b57fdd29}", "d": 1, "p": {"a": 1, "k": [{"t": 0, "s": [256, 256], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0, 0]}]}, "or": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "ir": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "is": {"a": 0, "k": 0}, "os": {"a": 0, "k": 0}, "r": {"a": 0, "k": -45}, "pt": {"a": 0, "k": 5}, "sy": 1}, {"ty": "st", "nm": "Stroke", "mn": "{eb7fbdff-0656-41f5-9337-3aa283dde263}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}}, {"ty": "fl", "nm": "Fill", "mn": "{54bfe210-7450-4824-accc-eef8f6c48ae8}", "o": {"a": 0, "k": 100}, "r": 1, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}}]}]}, {"id": "Expanding Stars", "layers": [{"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 0}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 45}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 90}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 135}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 180}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -45}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -90}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -135}}}]}, {"id": "Circle", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Layer", "mn": "{456fdfe5-686b-4006-92f4-951c47ab4bc7}", "ks": {}, "shapes": [{"ty": "el", "nm": "Ellipse", "mn": "{05d5f1a0-6046-4aea-a405-b9ba60a24bd7}", "d": 1, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 1, "k": [{"t": 0, "s": [0, 0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [730, 730]}]}}, {"ty": "st", "nm": "Stroke", "mn": "{d835adb4-6502-4e3e-98c2-70d1145f1a23}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [6], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "c": {"a": 0, "k": [0.11372549019607843, 0.1568627450980392, 0.2823529411764706]}}, {"ty": "fl", "nm": "Fill", "mn": "{78036603-40f1-42ca-ada5-fee506b4ac58}", "o": {"a": 1, "k": [{"t": 30, "s": [100], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "r": 1, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}}]}]}], "layers": [{"nm": "Expanding Stars Layer", "refId": "Expanding Stars", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {}}, {"nm": "Circle Layer", "refId": "Circle", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {}}]},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie, assets:["..."]};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<script>
+lottie.op = 120
+lottie.layers[1].ip = 60;
+lottie.layers[1].op = 120;
+lottie.layers[1].st = 60;
+</script>
+
+<h3 id="masking-animations">Masking Animations</h3>
+<p>Just like any other visual layer, precomp layers can be used for <a href="../../layers/#mattes">mattes</a>.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_88"></div>
+</div>
+<div class="json-parent" id="playground_88_1_parent">
+<pre><code class="language-json hljs" id="playground_88_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_88 = new PlaygroundPlayer(
+            88,
+            'playground_88_1',
+            'lottie_target_88',
+            {"v": "5.7.1", "ip": 0, "op": 60, "nm": "Animation", "mn": "{0b14b755-3d9e-4f7f-b7ab-21cd57d13e23}", "fr": 60, "w": 512, "h": 512, "assets": [{"id": "Star", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Shape Layer", "mn": "{4d57cabf-951f-4067-b50e-8307f9f5fe72}", "ks": {}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{c99b4a89-363b-4cd3-8797-bf65b57fdd29}", "d": 1, "p": {"a": 1, "k": [{"t": 0, "s": [256, 256], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0, 0]}]}, "or": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [80], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "ir": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 51, "s": [40], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "is": {"a": 0, "k": 0}, "os": {"a": 0, "k": 0}, "r": {"a": 0, "k": -45}, "pt": {"a": 0, "k": 5}, "sy": 1}, {"ty": "st", "nm": "Stroke", "mn": "{eb7fbdff-0656-41f5-9337-3aa283dde263}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}}, {"ty": "fl", "nm": "Fill", "mn": "{54bfe210-7450-4824-accc-eef8f6c48ae8}", "o": {"a": 0, "k": 100}, "r": 1, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}}]}]}, {"id": "Expanding Stars", "layers": [{"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 0}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 45}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 90}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 135}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": 180}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -45}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -90}}}, {"nm": "Precomp Layer", "refId": "Star", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "r": {"a": 0, "k": -135}}}]}, {"id": "Circle", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 60, "nm": "Layer", "mn": "{456fdfe5-686b-4006-92f4-951c47ab4bc7}", "ks": {}, "shapes": [{"ty": "el", "nm": "Ellipse", "mn": "{05d5f1a0-6046-4aea-a405-b9ba60a24bd7}", "d": 1, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 1, "k": [{"t": 0, "s": [0, 0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [730, 730]}]}}, {"ty": "st", "nm": "Stroke", "mn": "{d835adb4-6502-4e3e-98c2-70d1145f1a23}", "o": {"a": 0, "k": 100}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 1, "k": [{"t": 0, "s": [0], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 30, "s": [6], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "c": {"a": 0, "k": [0.11372549019607843, 0.1568627450980392, 0.2823529411764706]}}, {"ty": "fl", "nm": "Fill", "mn": "{78036603-40f1-42ca-ada5-fee506b4ac58}", "o": {"a": 1, "k": [{"t": 30, "s": [100], "h": 0, "o": {"x": [0], "y": [0]}, "i": {"x": [1], "y": [1]}}, {"t": 60, "s": [0]}]}, "r": 1, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}}]}]}], "layers": [{"nm": "Expanding Stars Layer", "refId": "Expanding Stars", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {}}, {"nm": "Circle Layer", "refId": "Circle", "ty": 0, "st": 0, "ip": 0, "op": 60, "w": 512, "h": 512, "ks": {}}]},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie, assets:["..."]};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<script>
+lottie.layers[0].td = 1;
+lottie.layers[1].tt = 1;
+</script></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = "../.."</script>
+    
+    <script src="../../js/base.js"></script>
+    <script src="../../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

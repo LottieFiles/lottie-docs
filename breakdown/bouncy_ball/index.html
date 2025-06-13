@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/breakdown/bouncy_ball/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    
+    <title>Bouncy Ball - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../css/base.min.css" rel="stylesheet">
+    <link href="../../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href="../.." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../../Introduction/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../lottie_from_scratch/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/breakdown/bouncy_ball.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#bouncy-ball">Bouncy Ball</a></li>
+            <li class="second-level"><a href="#top-level">Top level</a></li>
+                
+            <li class="second-level"><a href="#layers">Layers</a></li>
+                
+            <li class="second-level"><a href="#layer-transform">Layer transform</a></li>
+                
+            <li class="second-level"><a href="#shapes">Shapes</a></li>
+                
+            <li class="second-level"><a href="#ellipse">Ellipse</a></li>
+                
+            <li class="second-level"><a href="#fill">Fill</a></li>
+                
+            <li class="second-level"><a href="#transform">Transform</a></li>
+                
+            <li class="second-level"><a href="#animated-position">Animated Position</a></li>
+                
+                <li class="third-level"><a href="#first-keyframe">First Keyframe</a></li>
+                <li class="third-level"><a href="#second-keyframe">Second Keyframe</a></li>
+                <li class="third-level"><a href="#last-keyframe">Last Keyframe</a></li>
+            <li class="second-level"><a href="#animated-scale">Animated scale</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="bouncy-ball">Bouncy Ball</h1>
+<p>This page will show the basics of Lottie by inspecting this simple animation:</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_78"></div>
+</div>
+<div><button id="lottie_play_78" onclick="lottie_player_78.play(); document.getElementById('lottie_pause_78').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_78" onclick="lottie_player_78.pause(); document.getElementById('lottie_play_78').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../../static/examples/bouncy_ball.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_78 = new LottiePlayer(
+                    'lottie_target_78',
+                    '../../static/examples/bouncy_ball.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<p>Note that Lottie files usually have their JSON minified, but the example files
+here have been expanded for ease of inspection.</p>
+<p>This dissection is not meant to be a complete description, so certain attributes
+will not be described but each section will have links to the relevant reference
+pages where you can find a description for those.</p>
+<h2 id="top-level">Top level</h2>
+<p>The top level object, describes the <a href="../../composition/#animation">animation</a> as a whole.</p>
+<pre><code class="language-json">{
+    &quot;nm&quot;: &quot;Bouncy Ball&quot;,
+    &quot;v&quot;: &quot;5.5.2&quot;,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 120,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;layers&quot;: [
+        ...
+    ]
+}
+</code></pre>
+<p>Here we see the basic properties:</p>
+<p><code>nm</code> is the name of the document, it's not actually used by players.</p>
+<p><code>v</code> shows the Lottie format version, some older files might have a slightly different structure.</p>
+<p><code>fr</code> is the framerate in frames per second.
+Note that most timing information is described in frames within Lottie,
+so changing the framerate means the duration of the animation will also change.</p>
+<p><code>op</code> is the last frame of the animation, after which the animation will loop or stop,
+depending on how the player is set up.
+In this case 120 frames at 60 fps will result in 2 seconds of animation.</p>
+<p><code>ip</code> marks the first frame of the animation, usually it's set to <code>0</code>.</p>
+<p><code>w</code> and <code>h</code> describe the width and height of the animation,
+any content outside the box starting at <code>(0, 0)</code> and ending at <code>(w, h)</code> will not be visible.</p>
+<p>Note that a lottie file is a vector format and can be scaled up and down.
+So you shouldn't think of these values as a size in pixels.</p>
+<h2 id="layers">Layers</h2>
+<p>Now we look at the <a href="../../layers/">layers</a>.</p>
+<p>Most file will be more complex than this and have multiple layers but here we only have one:</p>
+<pre><code class="language-json"> {
+    &quot;ddd&quot;: 0,
+    &quot;ty&quot;: 4,
+    &quot;ind&quot;: 0,
+    &quot;st&quot;: 0,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 120,
+    &quot;nm&quot;: &quot;Layer&quot;,
+    &quot;ks&quot;: {
+        ...
+    },
+    &quot;shapes&quot;: [...]
+}
+</code></pre>
+<p>We see the layer can also have a name (<code>nm</code>).</p>
+<p>You might note that <code>ip</code> and <code>op</code> have the same values as in the animation.
+This means the layer will always be visible.
+You can decide to show a layer only for a small amount of time, in which case
+you would set <code>ip</code> to the first frame the layer should be visible at and
+<code>op</code> to the last frame, and the layer will only be visible between those frames.</p>
+<p><code>ddd</code> is a boolean value that indicates whether this layer contains 3D elements.</p>
+<p><code>ty</code> is the layer type. In this case it's a <a href="../../layers/#shape-layer">shape layer</a>.</p>
+<p>Finally <code>ind</code> is a unique number used to reference this layer.
+Here it's not being used since there is only one layer.</p>
+<h2 id="layer-transform">Layer transform</h2>
+<p>Here we'll have a look at the <code>ks</code> attribute of the layer that represents its <a href="../../helpers/#transform">transform</a>:</p>
+<pre><code class="language-json">{
+    &quot;a&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: [
+            0,
+            0
+        ]
+    },
+    &quot;p&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: [
+            0,
+            0
+        ]
+    },
+    &quot;s&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: [
+            100,
+            100
+        ]
+    },
+    &quot;r&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: 0
+    },
+    &quot;o&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: 100
+    }
+}
+</code></pre>
+<p>This layer does not have any transform so everything is at its default value.
+(If you see a transform missing some attributes, you can assume they have the values above)</p>
+<p>You might have noticed that all the attributes of the transform are objects with the same structure.</p>
+<p>This is because they are <a href="../../properties/#animated-property">animatable properties</a>.
+In this case they don't have any animations applied to them so <code>a</code> is <code>0</code> and <code>k</code> is the actual value.</p>
+<p>If they were animated, <code>a</code> would be <code>1</code> and <code>k</code> would have a list of keyframes (more on this later).</p>
+<p>The animated properties of a transform are as follows:</p>
+<p><code>a</code> is the anchor point along which other transformations are applied (you can think of it as the center of rotation).</p>
+<p><code>p</code> is the position (translation). Both <code>a</code> and <code>p</code> have arrays as values representing 2D coordinates.</p>
+<p><code>s</code> is the scale and, similar to <code>a</code> and <code>p</code>, its value has 2 components.
+Note that values are expressed as percentages (<code>100</code> meaning 100% or no scaling).</p>
+<p><code>r</code> is the rotation angle in degrees.</p>
+<p><code>o</code> is opacity, similar to <code>s</code>, it also is expressed as a percentage.</p>
+<p>You might also find <code>sk</code> and <code>sa</code> in a transform object, determining the skew.</p>
+<h2 id="shapes">Shapes</h2>
+<p>Since this is a shape layer, it contains a list of shapes.</p>
+<p>In this case there is only one shape:</p>
+<pre><code class="language-json">{
+    &quot;ty&quot;: &quot;gr&quot;,
+    &quot;nm&quot;: &quot;Ellipse Group&quot;,
+    &quot;it&quot;: [ ... ]
+}
+</code></pre>
+<p><code>ty</code> represents the type of the shape, in this case it's a <a href="../../shapes/#group">group</a>,
+which is simply a shape that contains other shapes.</p>
+<p>Groups add another layer of organization: you have layers at the top,
+shape layers can contain group shapes, and groups can contain other groups.</p>
+<p><code>nm</code> is the name, same as before.</p>
+<p><code>it</code> is the list of shapes within the group, we will inspect them one by one</p>
+<h2 id="ellipse">Ellipse</h2>
+<pre><code class="language-json">{
+    &quot;ty&quot;: &quot;el&quot;,
+    &quot;nm&quot;: &quot;Ellipse&quot;,
+    &quot;p&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: [
+            204,
+            169
+        ]
+    },
+    &quot;s&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: [
+            153,
+            153
+        ]
+    }
+}
+</code></pre>
+<p>The first shape in the group is an <a href="../../shapes/#ellipse">ellipse</a> (denoted by <code>"ty": "el"</code>).</p>
+<p>It has two properties: position (<code>p</code>) and size (<code>s</code>).</p>
+<p>The position determines the center of the ellipse and size its two axes.
+In this case we can tell it's a circle since both values in <code>s</code> are the same.</p>
+<h2 id="fill">Fill</h2>
+<pre><code class="language-json">{
+    &quot;ty&quot;: &quot;fl&quot;,
+    &quot;nm&quot;: &quot;Fill&quot;,
+    &quot;o&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: 100
+    },
+    &quot;c&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: [
+            0.710,
+            0.192,
+            0.278
+        ]
+    },
+    &quot;r&quot;: 1
+}
+</code></pre>
+<p>An ellipse by itself doesn't actually draw anything. it just defines the shape.</p>
+<p>So we need to apply some style to it. Here we have a <a href="../../shapes/#fill">fill shape</a>
+that determines the fill color for the ellipse.</p>
+<p><code>r</code> is not animated and it determines the <a href="../../constants/#fillrule">fill rule</a>.</p>
+<p><code>o</code> is the opacity, as a percentage.</p>
+<p><code>c</code> is a <a href="../../values/#color">Color</a>. Colors are RGB triplets with components in <code>[0, 1]</code>.<br/>
+In this case it represents this color: <span><span class="color-preview" style="background-color:#b53147;"></span><code>[0.71, 0.192, 0.278]</code></span>.</p>
+<h2 id="transform">Transform</h2>
+<pre><code class="language-json">{
+    &quot;ty&quot;: &quot;tr&quot;,
+    &quot;a&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: [
+            204,
+            169
+        ]
+    },
+    &quot;p&quot;: { ... },
+    &quot;s&quot;: { ... },
+    &quot;r&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: 0
+    },
+    &quot;o&quot;: {
+        &quot;a&quot;: 0,
+        &quot;k&quot;: 100
+    }
+}
+</code></pre>
+<p>Unlike layers, that have the transform as an attribute, groups have them as a <a href="../../shapes/#transform-shape">shape</a>.</p>
+<p>Note that this might give you a false sense of flexibility, because players
+expect to have a transform shape at the end of their shape list.</p>
+<p>The attributes are the same as the layer transform, with the addition of <code>ty</code>
+to represent the shape type.</p>
+<p>Here position (<code>p</code>) and scale (<code>s</code>) are animated and we'll look into them separately:</p>
+<h2 id="animated-position">Animated Position</h2>
+<pre><code class="language-json">{
+    &quot;a&quot;: 1,
+    &quot;k&quot;: [
+        {
+            &quot;t&quot;: 0,
+            &quot;s&quot;: [
+                235,
+                106
+            ],
+            &quot;h&quot;: 0,
+            &quot;o&quot;: {
+                &quot;x&quot;: [
+                    0.333
+                ],
+                &quot;y&quot;: [
+                    0
+                ]
+            },
+            &quot;i&quot;: {
+                &quot;x&quot;: [
+                    1
+                ],
+                &quot;y&quot;: [
+                    1
+                ]
+            }
+        },
+        {
+            &quot;t&quot;: 60,
+            &quot;s&quot;: [
+                235,
+                441
+            ],
+            &quot;h&quot;: 0,
+            &quot;o&quot;: {
+                &quot;x&quot;: [
+                    0
+                ],
+                &quot;y&quot;: [
+                    0
+                ]
+            },
+            &quot;i&quot;: {
+                &quot;x&quot;: [
+                    0.667
+                ],
+                &quot;y&quot;: [
+                    1
+                ]
+            }
+        },
+        {
+            &quot;t&quot;: 120,
+            &quot;s&quot;: [
+                235,
+                106
+            ]
+        }
+    ]
+}
+</code></pre>
+<p><code>a</code> is <code>1</code>, denoting the property is animated. <code>k</code> contains a list of <a href="../../properties/#base-keyframe">keyframe</a>.</p>
+<h3 id="first-keyframe">First Keyframe</h3>
+<pre><code class="language-json">{
+    &quot;t&quot;: 0,
+    &quot;s&quot;: [
+        235,
+        106
+    ],
+    &quot;h&quot;: 0,
+    &quot;o&quot;: {
+        &quot;x&quot;: [
+            0.333
+        ],
+        &quot;y&quot;: [
+            0
+        ]
+    },
+    &quot;i&quot;: {
+        &quot;x&quot;: [
+            1
+        ],
+        &quot;y&quot;: [
+            1
+        ]
+    }
+}
+</code></pre>
+<p>The first keyframe specifies the time at which the property starts being animated.</p>
+<p>In this case <code>t</code> is <code>0</code>, meaning the animation starts right away.</p>
+<p><code>s</code> shows the value the property will have at <code>t</code>.</p>
+<p><code>o</code> and <code>i</code> specify the <a href="../../properties/#easing-handle">easing function</a>.</p>
+<p><code>o</code> affects the movement at the beginning of the keyframe and <code>i</code> at the end.</p>
+<p>In this case, it uses an "ease in" kind of curve, where the animation starts
+slowly and it picks up speed at the end.</p>
+<h3 id="second-keyframe">Second Keyframe</h3>
+<pre><code class="language-json">{
+    &quot;t&quot;: 60,
+    &quot;s&quot;: [
+        235,
+        441
+    ],
+    &quot;h&quot;: 0,
+    &quot;o&quot;: {
+        &quot;x&quot;: [
+            0
+        ],
+        &quot;y&quot;: [
+            0
+        ]
+    },
+    &quot;i&quot;: {
+        &quot;x&quot;: [
+            0.667
+        ],
+        &quot;y&quot;: [
+            1
+        ]
+    }
+}
+</code></pre>
+<p>Here is the second keyframe, <code>t</code> is <code>60</code> which is the half way point of the animation.</p>
+<p>You can compare <code>s</code> with the previous keyframe to see how the position is affected.</p>
+<p>In this case it went from <code>[235, 106]</code> to <code>[235, 441]</code>, meaning the ball has moved down.</p>
+<p><code>i</code> and <code>o</code> are set up for an "ease out" curve, meaning the animation starts quick
+but eventually it slows down.</p>
+<h3 id="last-keyframe">Last Keyframe</h3>
+<pre><code class="language-json">{
+    &quot;t&quot;: 120,
+    &quot;s&quot;: [
+        235,
+        106
+    ]
+}
+</code></pre>
+<p>The last keyframe is at the end of the animation (<code>t</code> is <code>100</code>).</p>
+<p>It doesn't have easing information because there are no more keyframes after this.</p>
+<p>The value of <code>s</code> is the same as in the first keyframe, this allows for a seamless loop.</p>
+<h2 id="animated-scale">Animated scale</h2>
+<pre><code class="language-json">{
+    &quot;a&quot;: 1,
+    &quot;k&quot;: [
+        {
+            &quot;t&quot;: 55,
+            &quot;s&quot;: [
+                100,
+                100
+            ],
+            &quot;h&quot;: 0,
+            &quot;o&quot;: {
+                &quot;x&quot;: [
+                    0
+                ],
+                &quot;y&quot;: [
+                    0
+                ]
+            },
+            &quot;i&quot;: {
+                &quot;x&quot;: [
+                    1
+                ],
+                &quot;y&quot;: [
+                    1
+                ]
+            }
+        },
+        {
+            &quot;t&quot;: 60,
+            &quot;s&quot;: [
+                136,
+                59
+            ],
+            &quot;h&quot;: 0,
+            &quot;o&quot;: {
+                &quot;x&quot;: [
+                    0
+                ],
+                &quot;y&quot;: [
+                    0
+                ]
+            },
+            &quot;i&quot;: {
+                &quot;x&quot;: [
+                    1
+                ],
+                &quot;y&quot;: [
+                    1
+                ]
+            }
+        },
+        {
+            &quot;t&quot;: 65,
+            &quot;s&quot;: [
+                100,
+                100
+            ]
+        }
+    ]
+}
+</code></pre>
+<p>This provides the "squishing" effect. The works the same as the animated position described above.</p>
+<p>One thing to note is the first and last keyframe have <code>t</code> that doesn't match with the <code>ip</code> and <code>op</code> of the animation.</p>
+<p>This mean the property will maintain its value on the time before the first keyframe and after the last one.</p></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = "../.."</script>
+    
+    <script src="../../js/base.js"></script>
+    <script src="../../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

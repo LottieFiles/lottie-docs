@@ -1,0 +1,4615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/layers/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Layers - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../composition/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../shapes/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/layers.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#layers">Layers</a></li>
+            <li class="second-level"><a href="#layer">Layer</a></li>
+                
+            <li class="second-level"><a href="#visual-layer">Visual Layer</a></li>
+                
+                <li class="third-level"><a href="#parenting">Parenting</a></li>
+                <li class="third-level"><a href="#auto-orient">Auto Orient</a></li>
+                <li class="third-level"><a href="#mattes">Mattes</a></li>
+                <li class="third-level"><a href="#masks">Masks</a></li>
+                <li class="third-level"><a href="#lists-of-layers-and-shapes">Lists of layers and shapes</a></li>
+            <li class="second-level"><a href="#shape-layer">Shape Layer</a></li>
+                
+            <li class="second-level"><a href="#precomposition-layer">Precomposition Layer</a></li>
+                
+                <li class="third-level"><a href="#time-remapping">Time remapping</a></li>
+            <li class="second-level"><a href="#null-layer">Null Layer</a></li>
+                
+            <li class="second-level"><a href="#text-layer">Text Layer</a></li>
+                
+            <li class="second-level"><a href="#image-layer">Image Layer</a></li>
+                
+            <li class="second-level"><a href="#solid-layer">Solid Layer</a></li>
+                
+            <li class="second-level"><a href="#audio-layer">Audio Layer</a></li>
+                
+                <li class="third-level"><a href="#audio-settings">Audio Settings</a></li>
+            <li class="second-level"><a href="#3d-layers">3D Layers</a></li>
+                
+                <li class="third-level"><a href="#camera-layer">Camera Layer</a></li>
+                <li class="third-level"><a href="#3d-parenting">3D Parenting</a></li>
+            <li class="second-level"><a href="#data-layer">Data Layer</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="layers">Layers</h1>
+<h2 id="layer">Layer</h2>
+<p></p>
+<p><span>Common properties for all layers</span></p>
+<div>
+<details>
+<summary>Composition Diagram for Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="314pt" viewBox="0.00 0.00 422.00 314.00" width="422pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 310)">
+
+<polygon fill="white" points="-4,4 -4,-310 418,-310 418,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="311,-144 257,-144 257,-108 311,-108 311,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="284" y="-123.5">Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="414,-144 347,-144 347,-108 414,-108 414,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="380.5" y="-123.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M311.07,-126C319,-126 327.94,-126 336.67,-126" fill="none" stroke="black"></path>
+<polygon fill="none" points="336.76,-129.5 346.76,-126 336.76,-122.5 336.76,-129.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#camera-layer" title="Camera Layer">
+<polygon fill="none" points="221,-225 148,-225 148,-189 221,-189 221,-225" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="184.5" y="-204.5">Camera Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M209.73,-188.91C213.53,-185.98 217.4,-182.93 221,-180 232.38,-170.73 244.62,-160.2 255.19,-150.92" fill="none" stroke="black"></path>
+<polygon fill="none" points="257.73,-153.34 262.91,-144.1 253.09,-148.1 257.73,-153.34" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="./#visual-layer" title="Visual Layer">
+<polygon fill="none" points="216.5,-171 152.5,-171 152.5,-135 216.5,-135 216.5,-171" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="184.5" y="-150.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge9">
+
+<path d="M216.62,-144.38C226.31,-141.7 237.09,-138.71 247.09,-135.95" fill="none" stroke="black"></path>
+<polygon fill="none" points="248.05,-139.31 256.76,-133.27 246.18,-132.56 248.05,-139.31" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node5">
+
+<g id="a_node5"><a href="./#image-layer" title="Image Layer">
+<polygon fill="none" points="88.5,-306 23.5,-306 23.5,-270 88.5,-270 88.5,-306" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-285.5">Image Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M88.58,-277.09C96.98,-273.04 105.51,-267.74 112,-261 139.32,-232.62 123.55,-210.89 148,-180 148.47,-179.41 148.95,-178.82 149.45,-178.24" fill="none" stroke="black"></path>
+<polygon fill="none" points="151.99,-180.65 156.56,-171.1 147.03,-175.72 151.99,-180.65" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node6">
+
+<g id="a_node6"><a href="./#precomposition-layer" title="Precomposition Layer">
+<polygon fill="none" points="112,-252 0,-252 0,-216 112,-216 112,-252" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-231.5">Precomposition Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge4">
+
+<path d="M96.26,-215.87C101.64,-213.06 107.02,-210.07 112,-207 113.11,-206.32 132.77,-191.46 151.19,-177.51" fill="none" stroke="black"></path>
+<polygon fill="none" points="153.64,-180.04 159.49,-171.21 149.41,-174.47 153.64,-180.04" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node7">
+
+<g id="a_node7"><a href="./#shape-layer" title="Shape Layer">
+<polygon fill="none" points="88.5,-198 23.5,-198 23.5,-162 88.5,-162 88.5,-198" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-177.5">Shape Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge5">
+
+<path d="M88.59,-173.26C104.87,-169.78 124.91,-165.51 142.37,-161.78" fill="none" stroke="black"></path>
+<polygon fill="none" points="143.26,-165.17 152.31,-159.66 141.8,-158.32 143.26,-165.17" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node8">
+
+<g id="a_node8"><a href="./#solid-layer" title="Solid Layer">
+<polygon fill="none" points="85,-144 27,-144 27,-108 85,-108 85,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-123.5">Solid Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge6">
+
+<path d="M85.07,-131.99C101.98,-135.6 123.8,-140.26 142.6,-144.27" fill="none" stroke="black"></path>
+<polygon fill="none" points="141.89,-147.7 152.4,-146.36 143.35,-140.85 141.89,-147.7" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node9">
+
+<g id="a_node9"><a href="./#text-layer" title="Text Layer">
+<polygon fill="none" points="83.5,-90 28.5,-90 28.5,-54 83.5,-54 83.5,-90" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-69.5">Text Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge7">
+
+<path d="M83.57,-83.78C92.77,-88.19 103.03,-93.48 112,-99 113.11,-99.68 132.77,-114.54 151.19,-128.49" fill="none" stroke="black"></path>
+<polygon fill="none" points="149.41,-131.53 159.49,-134.79 153.64,-125.96 149.41,-131.53" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node10">
+
+<g id="a_node10"><a href="./#null-layer" title="Null Layer">
+<polygon fill="none" points="83.5,-36 28.5,-36 28.5,0 83.5,0 83.5,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-15.5">Null Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge8">
+
+<path d="M83.75,-26.7C93.61,-30.97 104.25,-36.95 112,-45 139.32,-73.38 123.55,-95.11 148,-126 148.47,-126.59 148.95,-127.18 149.45,-127.76" fill="none" stroke="black"></path>
+<polygon fill="none" points="147.03,-130.28 156.56,-134.9 151.99,-125.35 147.03,-130.28" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node11">
+
+<g id="a_node11"><a href="./#audio-layer" title="Audio Layer">
+<polygon fill="none" points="216,-117 153,-117 153,-81 216,-81 216,-117" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="184.5" y="-96.5">Audio Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge10">
+
+<path d="M216.08,-107.47C225.88,-110.18 236.83,-113.21 246.98,-116.03" fill="none" stroke="black"></path>
+<polygon fill="none" points="246.23,-119.45 256.8,-118.74 248.09,-112.7 246.23,-119.45" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node12">
+
+<g id="a_node12"><a href="./#data-layer" title="Data Layer">
+<polygon fill="none" points="213,-63 156,-63 156,-27 213,-27 213,-63" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="184.5" y="-42.5">Data Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge11">
+
+<path d="M209.73,-63.09C213.53,-66.02 217.4,-69.07 221,-72 232.38,-81.27 244.62,-91.8 255.19,-101.08" fill="none" stroke="black"></path>
+<polygon fill="none" points="253.09,-103.9 262.91,-107.9 257.73,-98.66 253.09,-103.9" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <code>ty</code> property defines the specific layer type based on the following values:</p>
+<p>
+<table>
+<thead>
+<tr>
+<th><code>ty</code></th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><a href="./#precomposition-layer">Precomposition Layer</a></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><a href="./#solid-layer">Solid Layer</a></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><a href="./#image-layer">Image Layer</a></td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><a href="./#null-layer">Null Layer</a></td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><a href="./#shape-layer">Shape Layer</a></td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td><a href="./#text-layer">Text Layer</a></td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td><a href="./#audio-layer">Audio Layer</a></td>
+</tr>
+<tr>
+<td><code>15</code></td>
+<td><a href="./#data-layer">Data Layer</a></td>
+</tr>
+<tr>
+<td><code>13</code></td>
+<td><a href="./#camera-layer">Camera Layer</a></td>
+</tr>
+</tbody>
+</table>
+</p>
+<h2 id="visual-layer">Visual Layer</h2>
+<p></p>
+<p><span>Layer used to affect visual elements</span></p>
+<div>
+<details>
+<summary>Composition Diagram for Visual Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="314pt" viewBox="0.00 0.00 413.00 314.00" width="413pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 310)">
+
+<polygon fill="white" points="-4,4 -4,-310 409,-310 409,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="212,-171 148,-171 148,-135 212,-135 212,-171" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="180" y="-150.5">Visual Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#layer" title="Layer">
+<polygon fill="none" points="302,-171 248,-171 248,-135 302,-135 302,-171" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="275" y="-150.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M212.23,-153C220.48,-153 229.46,-153 237.94,-153" fill="none" stroke="black"></path>
+<polygon fill="none" points="237.97,-156.5 247.97,-153 237.97,-149.5 237.97,-156.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="405,-171 338,-171 338,-135 405,-135 405,-171" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="371.5" y="-150.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M302.07,-153C310,-153 318.94,-153 327.67,-153" fill="none" stroke="black"></path>
+<polygon fill="none" points="327.76,-156.5 337.76,-153 327.76,-149.5 327.76,-156.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="./#image-layer" title="Image Layer">
+<polygon fill="none" points="88.5,-306 23.5,-306 23.5,-270 88.5,-270 88.5,-306" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-285.5">Image Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M88.58,-276.22C96.79,-272.2 105.22,-267.14 112,-261 137.01,-238.35 156.05,-204.22 167.33,-180.41" fill="none" stroke="black"></path>
+<polygon fill="none" points="170.56,-181.76 171.54,-171.21 164.19,-178.84 170.56,-181.76" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node5">
+
+<g id="a_node5"><a href="./#precomposition-layer" title="Precomposition Layer">
+<polygon fill="none" points="112,-252 0,-252 0,-216 112,-216 112,-252" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-231.5">Precomposition Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge4">
+
+<path d="M96.64,-215.86C101.91,-213.07 107.16,-210.09 112,-207 125.61,-198.32 139.67,-187.35 151.38,-177.57" fill="none" stroke="black"></path>
+<polygon fill="none" points="153.72,-180.17 159.07,-171.02 149.18,-174.84 153.72,-180.17" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node6">
+
+<g id="a_node6"><a href="./#shape-layer" title="Shape Layer">
+<polygon fill="none" points="88.5,-198 23.5,-198 23.5,-162 88.5,-162 88.5,-198" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-177.5">Shape Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge5">
+
+<path d="M88.74,-172.98C103.68,-169.67 121.69,-165.68 137.68,-162.14" fill="none" stroke="black"></path>
+<polygon fill="none" points="138.84,-165.47 147.85,-159.89 137.33,-158.64 138.84,-165.47" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node7">
+
+<g id="a_node7"><a href="./#solid-layer" title="Solid Layer">
+<polygon fill="none" points="85,-144 27,-144 27,-108 85,-108 85,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-123.5">Solid Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge6">
+
+<path d="M85.3,-132.26C100.95,-135.73 120.68,-140.09 137.99,-143.92" fill="none" stroke="black"></path>
+<polygon fill="none" points="137.34,-147.36 147.86,-146.11 138.85,-140.53 137.34,-147.36" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node8">
+
+<g id="a_node8"><a href="./#text-layer" title="Text Layer">
+<polygon fill="none" points="83.5,-90 28.5,-90 28.5,-54 83.5,-54 83.5,-90" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-69.5">Text Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge7">
+
+<path d="M83.67,-83.62C92.88,-88.02 103.12,-93.34 112,-99 125.61,-107.68 139.67,-118.65 151.38,-128.43" fill="none" stroke="black"></path>
+<polygon fill="none" points="149.18,-131.16 159.07,-134.98 153.72,-125.83 149.18,-131.16" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node9">
+
+<g id="a_node9"><a href="./#null-layer" title="Null Layer">
+<polygon fill="none" points="83.5,-36 28.5,-36 28.5,0 83.5,0 83.5,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-15.5">Null Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge8">
+
+<path d="M83.75,-27.52C93.39,-31.84 103.88,-37.65 112,-45 137.01,-67.65 156.05,-101.78 167.33,-125.59" fill="none" stroke="black"></path>
+<polygon fill="none" points="164.19,-127.16 171.54,-134.79 170.56,-124.24 164.19,-127.16" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/visual-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer Type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ao</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Auto Orient</p>
+</td>
+<td>
+<p>If 1, the layer will rotate itself to match its animated position path</p>
+</td>
+</tr>
+<tr>
+<td><code>tt</code></td>
+<td><a href="../constants/#matte-mode">Matte Mode</a></td>
+<td>
+<p>Matte Mode</p>
+</td>
+<td>
+<p>Defines the track matte mode for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>tp</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Matte Parent</p>
+</td>
+<td>
+<p>Index of the layer used as matte, if omitted assume the layer above the current one</p>
+</td>
+</tr>
+<tr>
+<td><code>td</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Matte Target</p>
+</td>
+<td>
+<p>If set to 1, it means a layer is using this layer as a track matte</p>
+</td>
+</tr>
+<tr>
+<td><code>hasMask</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Has Masks</p>
+</td>
+<td>
+<p>Whether the layer has masks applied</p>
+</td>
+</tr>
+<tr>
+<td><code>masksProperties</code></td>
+<td><code>array</code> of <a href="../helpers/#mask">Mask</a></td>
+<td>
+<p>Masks</p>
+</td>
+<td>
+<p>Optional array of masks for the layer.</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <a href="../effects/#effect">Effect</a></td>
+<td>
+<p>Effects</p>
+</td>
+<td>
+<p>List of layer effects</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Motion Blur</p>
+</td>
+<td>
+<p>Whether motion blur is enabled for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><code>array</code> of <a href="../effects/#layer-style">Layer Style</a></td>
+<td>
+<p>Layer style</p>
+</td>
+<td>
+<p>Styling effects for this layer</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a></td>
+<td>
+<p>Blend Mode</p>
+</td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML ID</p>
+</td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>tg</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML tag name</p>
+</td>
+<td>
+<p>tag name used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>This is deprecated in favour of <code>ct</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ct</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>Marks that transforms should be applied before masks</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that layers that don't have a visual component (Audio layers for example),
+won't have a transform and similar.</p>
+<p>The layer is only visible between its <code>ip</code> and <code>op</code>.
+If they match the corresponding attributes in <a href="../composition/#animation">Animation</a>, the layer
+will be visible the whole time, otherwise it will become visible at the frame <code>ip</code>
+and disappear at <code>op</code>.</p>
+<h3 id="parenting">Parenting</h3>
+<p>Within a list of layers, the <code>ind</code> attribute (if present) must be unique.</p>
+<p>Layers having a <code>parent</code> attribute matching another layer will inherit their
+parent's transform (except for opacity).</p>
+<p>Basically you need multiply the transform matrix by the parent's transform matrix
+to get a child layer's final transform.</p>
+<p>The flat layer structure and flexible parenting allows more flexibility but it's
+different from the more traditional approach of nesting child layers inside the
+parent layer (like a folder structure).</p>
+<p>One of the advantages of flexible parenting is you can have children of the same
+layer be intermixed with unrelated layers.</p>
+<p>In the following example, the star and the ellipse are in separate layers,
+but both have the same parent, which moves left and right.
+Between the two there's an additional layer with the rectangle.</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_26"></div>
+</div>
+<div><button id="lottie_play_26" onclick="lottie_player_26.play(); document.getElementById('lottie_pause_26').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_26" onclick="lottie_player_26.pause(); document.getElementById('lottie_play_26').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../static/examples/parenting.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_26 = new LottiePlayer(
+                    'lottie_target_26',
+                    '../static/examples/parenting.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<h3 id="auto-orient">Auto Orient</h3>
+<p>When true, if the transform position is animated, it rotates the layer along the
+path the position follows.</p>
+<p>In the following example there are two arrows animated along the same path,
+with no rotation when the position moves towards the right.</p>
+<p>The transparent one keeps its rotation the same (<code>ao</code> is 0), while the solid one
+follows the path (<code>ao</code> is 1).</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_27"></div>
+</div>
+<div><button id="lottie_play_27" onclick="lottie_player_27.play(); document.getElementById('lottie_pause_27').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_27" onclick="lottie_player_27.pause(); document.getElementById('lottie_play_27').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../static/examples/auto_orient.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_27 = new LottiePlayer(
+                    'lottie_target_27',
+                    '../static/examples/auto_orient.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<h3 id="mattes">Mattes</h3>
+<p>A matte allows using a layer as a mask for another layer.</p>
+<p>The way it works is the layer defining the mask has a <code>tt</code> attribute with the
+appropriate <a href="../constants/#mattemode">value</a>.
+By defaults it affects the layer on top (the layer before it in the layer list, which has the <code>td</code> attribute),
+otherwise check the <code>tp</code> attribute.</p>
+<p>In this example there's a layer with a rectangle and a star being masked by an ellipse:</p>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Enable Matte</label> </td>
+<td style="width: 100%"><input autocomplete="off" checked="checked" data-lottie-input="28" name="Enable Matte" oninput="lottie_player_28.reload();" title="Enable Matte" type="checkbox" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Matte Mode</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="28" name="Matte Mode" oninput="lottie_player_28.reload();"><option value="0">Normal</option><option selected="selected" value="1">Alpha</option><option value="2">Inverted Alpha</option><option value="3">Luma</option><option value="4">Inverted Luma</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_28"></div>
+</div>
+<div class="json-parent" id="playground_28_3_parent">
+<pre><code class="language-json hljs" id="playground_28_3">
+</code></pre>
+</div>
+<script>
+        var lottie_player_28 = new PlaygroundPlayer(
+            28,
+            'playground_28_3',
+            'lottie_target_28',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{b3d1b083-9de7-4537-a691-fc9aa42f9742}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 1, "st": 0, "ip": 0, "op": 180, "nm": "Ellipse (Mask)", "ks": {"a": {"a": 0, "k": [153, 294]}, "p": {"a": 0, "k": [346, 211]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "el", "nm": "Ellipse", "mn": "{261eddeb-af92-4be1-932c-790b00c23933}", "p": {"a": 0, "k": [137.0955223880597, 293.60820895522386]}, "s": {"a": 0, "k": [303.42089552238804, 315.55074626865667]}}, {"ty": "st", "nm": "Stroke", "mn": "{aa9c282c-253d-4d8d-ab05-4819c592fa85}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 1, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}}, {"ty": "fl", "nm": "Fill", "mn": "{2b2b0002-ff0c-4978-a33b-db4e0498848d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.9411764705882353, 0.11372549019607843, 0.0392156862745098]}, "r": 1}], "td": 1}, {"ddd": 0, "ty": 4, "ind": 2, "st": 0, "ip": 0, "op": 180, "nm": "Shapes (Masked)", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{528994b7-40ff-4d12-81f8-603f274da12e}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{ce8756d7-289f-4f84-a135-d225d57c42e0}", "p": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "or": {"a": 0, "k": 216.4160919189453}, "ir": {"a": 0, "k": 87.03440856933594}, "r": {"a": 0, "k": 261.54803466796875}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{efd05a25-a43b-451d-83d2-53a477087223}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{523ca39c-9e57-4547-bf0e-ba7496003579}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "p": {"a": 0, "k": [338.7223880597015, 209.76716417910447]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "Rectangle", "mn": "{d2d7a5d5-6d91-42e8-b40a-af52a112fe38}", "it": [{"ty": "rc", "nm": "Rectangle", "mn": "{9ef8604e-7891-4909-a655-445131b4d842}", "p": {"a": 0, "k": [209.17611940298502, 226.8]}, "s": {"a": 0, "k": [363.3313432835821, 369.3492537313433]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{444584d2-cb59-4cba-83a1-82cc605837fd}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{f75aed67-9b0e-41a9-b859-a14b5b0a320d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.7686274509803922, 0.8509803921568627, 0.9607843137254902]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "p": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}], "tt": 1, "tp": 1}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                
+        if ( data["Enable Matte"] )
+        {
+            lottie.layers[1].tt = Number(data["Matte Mode"]);
+            lottie.layers[1].tp = 1;
+            lottie.layers[0].td = 1;
+        }
+        else
+        {
+            lottie.layers[1].tt = undefined;
+            lottie.layers[1].tp = undefined;
+            lottie.layers[0].td = undefined;
+        }
+    this.json_viewer_contents = {...lottie.layers[1], shapes: [], ks: {}};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="masks">Masks</h3>
+<p>A layer can have an array of <a href="../helpers/#mask">masks</a> that clip the contents of the layer to a shape.</p>
+<p>This is similar to <a href="#mattes">mattes</a>, but there are a few differences.</p>
+<p>With mattes, you use a layer to define the clipping area, while with masks
+you use an <a href="../properties/#animated-property">animated</a> <a href="../values/#bezier">bezier curve</a>.</p>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Mode</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="29" name="Mode" oninput="lottie_player_29.reload();"><option value="n">None</option><option selected="selected" value="a">Add</option><option value="s">Subtract</option><option value="i">Intersect</option><option value="l">Lighten</option><option value="d">Darken</option><option value="f">Difference</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" max="100" min="0" name="Opacity" oninput="lottie_player_29.reload();document.getElementById('playground_29_2_span').innerText = event.target.value;" title="Opacity" type="range" value="100" />
+        <span id="playground_29_2_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Invert</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" name="Invert" oninput="lottie_player_29.reload();" title="Invert" type="checkbox" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Expand</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="29" max="100" min="-100" name="Expand" oninput="lottie_player_29.reload();document.getElementById('playground_29_4_span').innerText = event.target.value;" title="Expand" type="range" value="0" />
+    <span id="playground_29_4_span">0</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_29"></div>
+</div>
+<div class="json-parent" id="playground_29_5_parent">
+<pre><code class="language-json hljs" id="playground_29_5">
+</code></pre>
+</div>
+<script>
+        var lottie_player_29 = new PlaygroundPlayer(
+            29,
+            'playground_29_5',
+            'lottie_target_29',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{b3d1b083-9de7-4537-a691-fc9aa42f9742}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 2, "st": 0, "ip": 0, "op": 180, "nm": "Shapes", "ks": {}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{528994b7-40ff-4d12-81f8-603f274da12e}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{ce8756d7-289f-4f84-a135-d225d57c42e0}", "p": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "or": {"a": 0, "k": 216.4160919189453}, "ir": {"a": 0, "k": 87.03440856933594}, "r": {"a": 0, "k": 261.54803466796875}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{efd05a25-a43b-451d-83d2-53a477087223}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{523ca39c-9e57-4547-bf0e-ba7496003579}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "p": {"a": 0, "k": [338.7223880597015, 209.76716417910447]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "Rectangle", "mn": "{d2d7a5d5-6d91-42e8-b40a-af52a112fe38}", "it": [{"ty": "rc", "nm": "Rectangle", "mn": "{9ef8604e-7891-4909-a655-445131b4d842}", "p": {"a": 0, "k": [209.17611940298502, 226.8]}, "s": {"a": 0, "k": [363.3313432835821, 369.3492537313433]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{444584d2-cb59-4cba-83a1-82cc605837fd}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{f75aed67-9b0e-41a9-b859-a14b5b0a320d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.7686274509803922, 0.8509803921568627, 0.9607843137254902]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "p": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}], "hasMask": true, "masksProperties": [{"mode": "a", "o": {"a": 0, "k": 100}, "inv": false, "x": {"a": 0, "k": 0}, "pt": {"a": 0, "k": {"c": true, "v": [[247.109, 125.719], [66.109, 306.719], [424.109, 389.719]], "i": [[0, 0], [0, 0], [0, 0]], "o": [[0, 0], [0, 0], [0, 0]]}}}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                
+        let mask = lottie.layers[0].masksProperties[0];
+        mask.o.k = Number(data["Opacity"]);
+        mask.inv = data["Invert"];
+        mask.x.k = Number(data["Expand"]);
+        mask.mode = data["Mode"];
+    this.json_viewer_contents = lottie.layers[0].masksProperties[0];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="lists-of-layers-and-shapes">Lists of layers and shapes</h3>
+<p>Such lists appear Precomposition, Animation, ShapeLayer, and Groop.</p>
+<p>In such lists, items coming first will be rendered on top</p>
+<p>So if you have for example: <code>[Ellipse, Rectangle]</code></p>
+<p>The ellipse will show on top of the rectangle:</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_30"></div>
+</div>
+<div><button id="lottie_play_30" onclick="lottie_player_30.play(); document.getElementById('lottie_pause_30').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_30" onclick="lottie_player_30.pause(); document.getElementById('lottie_play_30').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../static/examples/layer_order.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_30 = new LottiePlayer(
+                    'lottie_target_30',
+                    '../static/examples/layer_order.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<p>This means the render order goes from the last element to the first.</p>
+<h2 id="shape-layer">Shape Layer</h2>
+<p></p>
+<p>Renders vector data.</p>
+<p>The only special property for this layer is <strong>shapes</strong>, an <a href="./#lists-of-layers-and-shapes">array</a> of <a href="../shapes/#shape-element">shapes</a>.</p>
+<div>
+<details>
+<summary>Composition Diagram for Shape Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 366.00 44.00" width="366pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 362,-40 362,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="65,-36 0,-36 0,0 65,0 65,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="32.5" y="-15.5">Shape Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#visual-layer" title="Visual Layer">
+<polygon fill="none" points="165,-36 101,-36 101,0 165,0 165,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="133" y="-15.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M65.21,-18C73.28,-18 82.09,-18 90.57,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="90.69,-21.5 100.69,-18 90.69,-14.5 90.69,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#layer" title="Layer">
+<polygon fill="none" points="255,-36 201,-36 201,0 255,0 255,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="228" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M165.23,-18C173.48,-18 182.46,-18 190.94,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="190.97,-21.5 200.97,-18 190.97,-14.5 190.97,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="358,-36 291,-36 291,0 358,0 358,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="324.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M255.07,-18C263,-18 271.94,-18 280.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="280.76,-21.5 290.76,-18 280.76,-14.5 280.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/shape-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>4</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ao</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Auto Orient</p>
+</td>
+<td>
+<p>If 1, the layer will rotate itself to match its animated position path</p>
+</td>
+</tr>
+<tr>
+<td><code>tt</code></td>
+<td><a href="../constants/#matte-mode">Matte Mode</a></td>
+<td>
+<p>Matte Mode</p>
+</td>
+<td>
+<p>Defines the track matte mode for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>tp</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Matte Parent</p>
+</td>
+<td>
+<p>Index of the layer used as matte, if omitted assume the layer above the current one</p>
+</td>
+</tr>
+<tr>
+<td><code>td</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Matte Target</p>
+</td>
+<td>
+<p>If set to 1, it means a layer is using this layer as a track matte</p>
+</td>
+</tr>
+<tr>
+<td><code>hasMask</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Has Masks</p>
+</td>
+<td>
+<p>Whether the layer has masks applied</p>
+</td>
+</tr>
+<tr>
+<td><code>masksProperties</code></td>
+<td><code>array</code> of <a href="../helpers/#mask">Mask</a></td>
+<td>
+<p>Masks</p>
+</td>
+<td>
+<p>Optional array of masks for the layer.</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <a href="../effects/#effect">Effect</a></td>
+<td>
+<p>Effects</p>
+</td>
+<td>
+<p>List of layer effects</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Motion Blur</p>
+</td>
+<td>
+<p>Whether motion blur is enabled for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><code>array</code> of <a href="../effects/#layer-style">Layer Style</a></td>
+<td>
+<p>Layer style</p>
+</td>
+<td>
+<p>Styling effects for this layer</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a></td>
+<td>
+<p>Blend Mode</p>
+</td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML ID</p>
+</td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>tg</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML tag name</p>
+</td>
+<td>
+<p>tag name used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>This is deprecated in favour of <code>ct</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ct</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>Marks that transforms should be applied before masks</p>
+</td>
+</tr>
+<tr>
+<td><code>shapes</code></td>
+<td><code>array</code> of <a href="../shapes/#graphic-element">Graphic Element</a></td>
+<td>
+<p>Shapes</p>
+</td>
+<td>
+<p>Shapes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="precomposition-layer">Precomposition Layer</h2>
+<p></p>
+<p>This layer renders a <a href="../assets/#precomposition">precomposition</a>.</p>
+<p>You can find more details in the <a href="../breakdown/precomps/">Precompositions</a> page.</p>
+<div>
+<details>
+<summary>Composition Diagram for Precomposition Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 413.00 44.00" width="413pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 409,-40 409,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="112,-36 0,-36 0,0 112,0 112,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-15.5">Precomposition Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#visual-layer" title="Visual Layer">
+<polygon fill="none" points="212,-36 148,-36 148,0 212,0 212,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="180" y="-15.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M112.29,-18C120.89,-18 129.64,-18 137.85,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="137.92,-21.5 147.92,-18 137.92,-14.5 137.92,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#layer" title="Layer">
+<polygon fill="none" points="302,-36 248,-36 248,0 302,0 302,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="275" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M212.23,-18C220.48,-18 229.46,-18 237.94,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="237.97,-21.5 247.97,-18 237.97,-14.5 237.97,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="405,-36 338,-36 338,0 405,0 405,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="371.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M302.07,-18C310,-18 318.94,-18 327.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="327.76,-21.5 337.76,-18 327.76,-14.5 327.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/precomposition-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>0</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ao</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Auto Orient</p>
+</td>
+<td>
+<p>If 1, the layer will rotate itself to match its animated position path</p>
+</td>
+</tr>
+<tr>
+<td><code>tt</code></td>
+<td><a href="../constants/#matte-mode">Matte Mode</a></td>
+<td>
+<p>Matte Mode</p>
+</td>
+<td>
+<p>Defines the track matte mode for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>tp</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Matte Parent</p>
+</td>
+<td>
+<p>Index of the layer used as matte, if omitted assume the layer above the current one</p>
+</td>
+</tr>
+<tr>
+<td><code>td</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Matte Target</p>
+</td>
+<td>
+<p>If set to 1, it means a layer is using this layer as a track matte</p>
+</td>
+</tr>
+<tr>
+<td><code>hasMask</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Has Masks</p>
+</td>
+<td>
+<p>Whether the layer has masks applied</p>
+</td>
+</tr>
+<tr>
+<td><code>masksProperties</code></td>
+<td><code>array</code> of <a href="../helpers/#mask">Mask</a></td>
+<td>
+<p>Masks</p>
+</td>
+<td>
+<p>Optional array of masks for the layer.</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <a href="../effects/#effect">Effect</a></td>
+<td>
+<p>Effects</p>
+</td>
+<td>
+<p>List of layer effects</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Motion Blur</p>
+</td>
+<td>
+<p>Whether motion blur is enabled for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><code>array</code> of <a href="../effects/#layer-style">Layer Style</a></td>
+<td>
+<p>Layer style</p>
+</td>
+<td>
+<p>Styling effects for this layer</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a></td>
+<td>
+<p>Blend Mode</p>
+</td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML ID</p>
+</td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>tg</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML tag name</p>
+</td>
+<td>
+<p>tag name used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>This is deprecated in favour of <code>ct</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ct</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>Marks that transforms should be applied before masks</p>
+</td>
+</tr>
+<tr>
+<td><code>refId</code></td>
+<td><code>string</code></td>
+<td>
+<p>Reference Id</p>
+</td>
+<td>
+<p>ID of the precomp as specified in the assets</p>
+</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Width</p>
+</td>
+<td>
+<p>Width of the clipping rect</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Height</p>
+</td>
+<td>
+<p>Height of the clipping rect</p>
+</td>
+</tr>
+<tr>
+<td><code>tm</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Time Remap</p>
+</td>
+<td>
+<p>Timeline remap function (frame index -&gt; time in seconds)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="time-remapping">Time remapping</h3>
+<p>The <code>tm</code> property maps the time in seconds of the precomposition to show.</p>
+<p>Basically you get the value of <code>tm</code> at the current frame, then assume that's
+a time in seconds since the start of the animation, and render the corresponding
+frame of the precomposition.</p>
+<p>Follows an example of this, here there are two layers showing the same
+precomposition, the one at the top right keeps the original time while the bottom
+one remaps time as follows:</p>
+<ul>
+<li>frame 0 (0s) maps to 0s (frame 0) in the precomp</li>
+<li>frame 30 (0.5s) maps to 3s (frame 180) in the precomp</li>
+<li>frame 60 (1s) maps to 1.5s (frame 90) in the precomp</li>
+<li>frame 180 (3s) maps to 3s (frame 180) in the precomp</li>
+</ul>
+<p>Basically it makes the precomp play in the first half second, then rewind
+to half way for the next half second, and plays back to the end for the remaining
+2 seconds.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_31"></div>
+</div>
+<div class="json-parent" id="playground_31_1_parent">
+<pre><code class="language-json hljs" id="playground_31_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_31 = new PlaygroundPlayer(
+            31,
+            'playground_31_1',
+            'lottie_target_31',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{7820523d-dd32-453b-b311-50323a49e4df}", "fr": 60, "w": 512, "h": 512, "assets": [{"nm": "Composition", "mn": "{4d838004-a221-48cb-966f-399347c5acb8}", "id": "{4d838004-a221-48cb-966f-399347c5acb8}", "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer 1", "mn": "{8afc4794-97eb-4533-814b-f92676e324f5}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar 1", "mn": "{600eb536-73f0-415d-8743-01dd2f26e2b7}", "it": [{"ty": "sr", "nm": "PolyStar 1", "mn": "{0d81b309-da59-4646-812d-ed9212679e27}", "p": {"a": 0, "k": [166.49999999999997, 144.89999999999998]}, "or": {"a": 0, "k": 103.60950469970703}, "ir": {"a": 0, "k": 51.804752349853516}, "r": {"a": 0, "k": 147.41429138183594}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{5271148f-841e-4e99-9f23-e0b201b46def}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{c72fab9f-6a71-4e30-966c-1b863389d19a}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [166.49999999999997, 144.89999999999998]}, "p": {"a": 1, "k": [{"t": 0, "s": [106.19999999999997, 126.89999999999998], "h": 0, "o": {"x": [0.3333333333333333], "y": [0]}, "i": {"x": [0.6666666666666666], "y": [1]}, "e": [413.99999999999994, 413.09999999999997]}, {"t": 180, "s": [413.99999999999994, 413.09999999999997]}]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}]}], "layers": [{"ty": 0, "ddd": 0, "nm": "Composition", "mn": "{e3aa5446-47d2-454e-8d20-ed3c5f15612e}", "ip": 0, "op": 180, "ind": 2, "st": 0, "sr": 1, "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [50, 50]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "refId": "{4d838004-a221-48cb-966f-399347c5acb8}", "w": 512, "h": 512}, {"ty": 0, "ddd": 0, "nm": "Remapped", "mn": "{0f7b917c-b0e8-450f-bb63-812dff786620}", "ip": 0, "op": 180, "ind": 1, "st": 0, "sr": 1, "tm": {"a": 1, "k": [{"t": 0, "s": [0], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}}, {"t": 30, "s": [3], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}}, {"t": 60, "s": [1.5], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}}, {"t": 180, "s": [3], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}}]}, "ks": {"a": {"a": 0, "k": [512, 512]}, "p": {"a": 0, "k": [512, 512]}, "s": {"a": 0, "k": [50, 50]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "refId": "{4d838004-a221-48cb-966f-399347c5acb8}", "w": 512, "h": 512}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                this.json_viewer_contents = {...lottie.layers[1], ks:{}};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="null-layer">Null Layer</h2>
+<p></p>
+<p>This layer doesn't have any special properties.</p>
+<p>It's often used by animators as a parent to multiple other layers (see <a href="#parenting">parenting</a>).</p>
+<div>
+<details>
+<summary>Composition Diagram for Null Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 356.00 44.00" width="356pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 352,-40 352,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="55,-36 0,-36 0,0 55,0 55,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="27.5" y="-15.5">Null Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#visual-layer" title="Visual Layer">
+<polygon fill="none" points="155,-36 91,-36 91,0 155,0 155,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="123" y="-15.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M55.04,-18C63.04,-18 72.01,-18 80.72,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="80.76,-21.5 90.76,-18 80.76,-14.5 80.76,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#layer" title="Layer">
+<polygon fill="none" points="245,-36 191,-36 191,0 245,0 245,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="218" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M155.23,-18C163.48,-18 172.46,-18 180.94,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="180.97,-21.5 190.97,-18 180.97,-14.5 180.97,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="348,-36 281,-36 281,0 348,0 348,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="314.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M245.07,-18C253,-18 261.94,-18 270.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="270.76,-21.5 280.76,-18 270.76,-14.5 270.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/null-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>3</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ao</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Auto Orient</p>
+</td>
+<td>
+<p>If 1, the layer will rotate itself to match its animated position path</p>
+</td>
+</tr>
+<tr>
+<td><code>tt</code></td>
+<td><a href="../constants/#matte-mode">Matte Mode</a></td>
+<td>
+<p>Matte Mode</p>
+</td>
+<td>
+<p>Defines the track matte mode for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>tp</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Matte Parent</p>
+</td>
+<td>
+<p>Index of the layer used as matte, if omitted assume the layer above the current one</p>
+</td>
+</tr>
+<tr>
+<td><code>td</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Matte Target</p>
+</td>
+<td>
+<p>If set to 1, it means a layer is using this layer as a track matte</p>
+</td>
+</tr>
+<tr>
+<td><code>hasMask</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Has Masks</p>
+</td>
+<td>
+<p>Whether the layer has masks applied</p>
+</td>
+</tr>
+<tr>
+<td><code>masksProperties</code></td>
+<td><code>array</code> of <a href="../helpers/#mask">Mask</a></td>
+<td>
+<p>Masks</p>
+</td>
+<td>
+<p>Optional array of masks for the layer.</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <a href="../effects/#effect">Effect</a></td>
+<td>
+<p>Effects</p>
+</td>
+<td>
+<p>List of layer effects</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Motion Blur</p>
+</td>
+<td>
+<p>Whether motion blur is enabled for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><code>array</code> of <a href="../effects/#layer-style">Layer Style</a></td>
+<td>
+<p>Layer style</p>
+</td>
+<td>
+<p>Styling effects for this layer</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a></td>
+<td>
+<p>Blend Mode</p>
+</td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML ID</p>
+</td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>tg</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML tag name</p>
+</td>
+<td>
+<p>tag name used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>This is deprecated in favour of <code>ct</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ct</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>Marks that transforms should be applied before masks</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="text-layer">Text Layer</h2>
+<p></p>
+<p>For text data, please refer to the <a href="../text/">section about text</a> for details.</p>
+<div>
+<details>
+<summary>Composition Diagram for Text Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 356.00 44.00" width="356pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 352,-40 352,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="55,-36 0,-36 0,0 55,0 55,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="27.5" y="-15.5">Text Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#visual-layer" title="Visual Layer">
+<polygon fill="none" points="155,-36 91,-36 91,0 155,0 155,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="123" y="-15.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M55.04,-18C63.04,-18 72.01,-18 80.72,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="80.76,-21.5 90.76,-18 80.76,-14.5 80.76,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#layer" title="Layer">
+<polygon fill="none" points="245,-36 191,-36 191,0 245,0 245,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="218" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M155.23,-18C163.48,-18 172.46,-18 180.94,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="180.97,-21.5 190.97,-18 180.97,-14.5 180.97,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="348,-36 281,-36 281,0 348,0 348,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="314.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M245.07,-18C253,-18 261.94,-18 270.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="270.76,-21.5 280.76,-18 270.76,-14.5 270.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/text-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>5</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ao</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Auto Orient</p>
+</td>
+<td>
+<p>If 1, the layer will rotate itself to match its animated position path</p>
+</td>
+</tr>
+<tr>
+<td><code>tt</code></td>
+<td><a href="../constants/#matte-mode">Matte Mode</a></td>
+<td>
+<p>Matte Mode</p>
+</td>
+<td>
+<p>Defines the track matte mode for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>tp</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Matte Parent</p>
+</td>
+<td>
+<p>Index of the layer used as matte, if omitted assume the layer above the current one</p>
+</td>
+</tr>
+<tr>
+<td><code>td</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Matte Target</p>
+</td>
+<td>
+<p>If set to 1, it means a layer is using this layer as a track matte</p>
+</td>
+</tr>
+<tr>
+<td><code>hasMask</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Has Masks</p>
+</td>
+<td>
+<p>Whether the layer has masks applied</p>
+</td>
+</tr>
+<tr>
+<td><code>masksProperties</code></td>
+<td><code>array</code> of <a href="../helpers/#mask">Mask</a></td>
+<td>
+<p>Masks</p>
+</td>
+<td>
+<p>Optional array of masks for the layer.</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <a href="../effects/#effect">Effect</a></td>
+<td>
+<p>Effects</p>
+</td>
+<td>
+<p>List of layer effects</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Motion Blur</p>
+</td>
+<td>
+<p>Whether motion blur is enabled for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><code>array</code> of <a href="../effects/#layer-style">Layer Style</a></td>
+<td>
+<p>Layer style</p>
+</td>
+<td>
+<p>Styling effects for this layer</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a></td>
+<td>
+<p>Blend Mode</p>
+</td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML ID</p>
+</td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>tg</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML tag name</p>
+</td>
+<td>
+<p>tag name used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>This is deprecated in favour of <code>ct</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ct</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>Marks that transforms should be applied before masks</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><a href="../text/#text-data">Text Data</a></td>
+<td>
+<p>Data</p>
+</td>
+<td>
+<p>Data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="image-layer">Image Layer</h2>
+<p></p>
+<p>This layer renders a static <a href="../assets/#image">image</a>.</p>
+<div>
+<details>
+<summary>Composition Diagram for Image Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 366.00 44.00" width="366pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 362,-40 362,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="65,-36 0,-36 0,0 65,0 65,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="32.5" y="-15.5">Image Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#visual-layer" title="Visual Layer">
+<polygon fill="none" points="165,-36 101,-36 101,0 165,0 165,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="133" y="-15.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M65.21,-18C73.28,-18 82.09,-18 90.57,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="90.69,-21.5 100.69,-18 90.69,-14.5 90.69,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#layer" title="Layer">
+<polygon fill="none" points="255,-36 201,-36 201,0 255,0 255,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="228" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M165.23,-18C173.48,-18 182.46,-18 190.94,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="190.97,-21.5 200.97,-18 190.97,-14.5 190.97,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="358,-36 291,-36 291,0 358,0 358,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="324.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M255.07,-18C263,-18 271.94,-18 280.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="280.76,-21.5 290.76,-18 280.76,-14.5 280.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/image-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>2</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ao</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Auto Orient</p>
+</td>
+<td>
+<p>If 1, the layer will rotate itself to match its animated position path</p>
+</td>
+</tr>
+<tr>
+<td><code>tt</code></td>
+<td><a href="../constants/#matte-mode">Matte Mode</a></td>
+<td>
+<p>Matte Mode</p>
+</td>
+<td>
+<p>Defines the track matte mode for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>tp</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Matte Parent</p>
+</td>
+<td>
+<p>Index of the layer used as matte, if omitted assume the layer above the current one</p>
+</td>
+</tr>
+<tr>
+<td><code>td</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Matte Target</p>
+</td>
+<td>
+<p>If set to 1, it means a layer is using this layer as a track matte</p>
+</td>
+</tr>
+<tr>
+<td><code>hasMask</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Has Masks</p>
+</td>
+<td>
+<p>Whether the layer has masks applied</p>
+</td>
+</tr>
+<tr>
+<td><code>masksProperties</code></td>
+<td><code>array</code> of <a href="../helpers/#mask">Mask</a></td>
+<td>
+<p>Masks</p>
+</td>
+<td>
+<p>Optional array of masks for the layer.</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <a href="../effects/#effect">Effect</a></td>
+<td>
+<p>Effects</p>
+</td>
+<td>
+<p>List of layer effects</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Motion Blur</p>
+</td>
+<td>
+<p>Whether motion blur is enabled for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><code>array</code> of <a href="../effects/#layer-style">Layer Style</a></td>
+<td>
+<p>Layer style</p>
+</td>
+<td>
+<p>Styling effects for this layer</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a></td>
+<td>
+<p>Blend Mode</p>
+</td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML ID</p>
+</td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>tg</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML tag name</p>
+</td>
+<td>
+<p>tag name used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>This is deprecated in favour of <code>ct</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ct</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>Marks that transforms should be applied before masks</p>
+</td>
+</tr>
+<tr>
+<td><code>refId</code></td>
+<td><code>string</code></td>
+<td>
+<p>Reference Id</p>
+</td>
+<td>
+<p>ID of the image as specified in the assets</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="solid-layer">Solid Layer</h2>
+<p></p>
+<p>This layer represents a rectangle with a single color.</p>
+<p>Anything you can do with solid layers, you can do better with a shape layer
+and a rectangle shape since none of this layer's own properties can be animated.</p>
+<p>Note that the color is represented as a string, unlike most other places.</p>
+<div>
+<details>
+<summary>Composition Diagram for Solid Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 359.00 44.00" width="359pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 355,-40 355,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="58,-36 0,-36 0,0 58,0 58,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="29" y="-15.5">Solid Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#visual-layer" title="Visual Layer">
+<polygon fill="none" points="158,-36 94,-36 94,0 158,0 158,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="126" y="-15.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M58.25,-18C66.18,-18 74.97,-18 83.51,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="83.71,-21.5 93.71,-18 83.71,-14.5 83.71,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#layer" title="Layer">
+<polygon fill="none" points="248,-36 194,-36 194,0 248,0 248,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="221" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M158.23,-18C166.48,-18 175.46,-18 183.94,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="183.97,-21.5 193.97,-18 183.97,-14.5 183.97,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="351,-36 284,-36 284,0 351,0 351,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="317.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M248.07,-18C256,-18 264.94,-18 273.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="273.76,-21.5 283.76,-18 273.76,-14.5 273.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/solid-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>1</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ao</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Auto Orient</p>
+</td>
+<td>
+<p>If 1, the layer will rotate itself to match its animated position path</p>
+</td>
+</tr>
+<tr>
+<td><code>tt</code></td>
+<td><a href="../constants/#matte-mode">Matte Mode</a></td>
+<td>
+<p>Matte Mode</p>
+</td>
+<td>
+<p>Defines the track matte mode for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>tp</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Matte Parent</p>
+</td>
+<td>
+<p>Index of the layer used as matte, if omitted assume the layer above the current one</p>
+</td>
+</tr>
+<tr>
+<td><code>td</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Matte Target</p>
+</td>
+<td>
+<p>If set to 1, it means a layer is using this layer as a track matte</p>
+</td>
+</tr>
+<tr>
+<td><code>hasMask</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Has Masks</p>
+</td>
+<td>
+<p>Whether the layer has masks applied</p>
+</td>
+</tr>
+<tr>
+<td><code>masksProperties</code></td>
+<td><code>array</code> of <a href="../helpers/#mask">Mask</a></td>
+<td>
+<p>Masks</p>
+</td>
+<td>
+<p>Optional array of masks for the layer.</p>
+</td>
+</tr>
+<tr>
+<td><code>ef</code></td>
+<td><code>array</code> of <a href="../effects/#effect">Effect</a></td>
+<td>
+<p>Effects</p>
+</td>
+<td>
+<p>List of layer effects</p>
+</td>
+</tr>
+<tr>
+<td><code>mb</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Motion Blur</p>
+</td>
+<td>
+<p>Whether motion blur is enabled for the layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sy</code></td>
+<td><code>array</code> of <a href="../effects/#layer-style">Layer Style</a></td>
+<td>
+<p>Layer style</p>
+</td>
+<td>
+<p>Styling effects for this layer</p>
+</td>
+</tr>
+<tr>
+<td><code>bm</code></td>
+<td><a href="../constants/#blend-mode">Blend Mode</a></td>
+<td>
+<p>Blend Mode</p>
+</td>
+<td>
+<p>Blend Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>cl</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS class used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML ID</p>
+</td>
+<td>
+<p><code>id</code> attribute used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>tg</code></td>
+<td><code>string</code></td>
+<td>
+<p>Layer XML tag name</p>
+</td>
+<td>
+<p>tag name used by the SVG renderer</p>
+</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>This is deprecated in favour of <code>ct</code></p>
+</td>
+</tr>
+<tr>
+<td><code>ct</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Collapse Transform</p>
+</td>
+<td>
+<p>Marks that transforms should be applied before masks</p>
+</td>
+</tr>
+<tr>
+<td><code>sw</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Width</p>
+</td>
+<td>
+<p>Solid rectangle width</p>
+</td>
+</tr>
+<tr>
+<td><code>sh</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Height</p>
+</td>
+<td>
+<p>Solid rectangle height</p>
+</td>
+</tr>
+<tr>
+<td><code>sc</code></td>
+<td><a href="../values/#hexcolor">Hex Color</a></td>
+<td>
+<p>Color</p>
+</td>
+<td>
+<p>Solid fill color</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Color</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="32" name="Color" oninput="lottie_player_32.reload();" title="Color" type="color" value="#ff0000" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="32" max="512" min="0" name="Width" oninput="lottie_player_32.reload();document.getElementById('playground_32_2_span').innerText = event.target.value;" title="Width" type="range" value="512" />
+        <span id="playground_32_2_span">512</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Height</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="32" max="512" min="0" name="Height" oninput="lottie_player_32.reload();document.getElementById('playground_32_3_span').innerText = event.target.value;" title="Height" type="range" value="512" />
+    <span id="playground_32_3_span">512</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_32"></div>
+</div>
+<div class="json-parent" id="playground_32_4_parent">
+<pre><code class="language-json hljs" id="playground_32_4">
+</code></pre>
+</div>
+<script>
+        var lottie_player_32 = new PlaygroundPlayer(
+            32,
+            'playground_32_4',
+            'lottie_target_32',
+            {"fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "layers": [{"ty": 1, "ip": 0, "op": 60, "st": 0, "ks": {}, "sc": "#ff0000", "sh": 512, "sw": 512}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].sc = data["Color"];
+    lottie.layers[0].sw = Number(data["Width"]);
+    lottie.layers[0].sh = Number(data["Height"]);
+    this.json_viewer_contents = lottie.layers[0];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="audio-layer">Audio Layer</h2>
+<p></p>
+<p>This layer plays a <a href="../assets/#sound">sound</a>.</p>
+<div>
+<details>
+<summary>Composition Diagram for Audio Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 264.00 44.00" width="264pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 260,-40 260,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="63,-36 0,-36 0,0 63,0 63,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="31.5" y="-15.5">Audio Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#layer" title="Layer">
+<polygon fill="none" points="153,-36 99,-36 99,0 153,0 153,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="126" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M63.04,-18C71.27,-18 80.26,-18 88.77,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="88.83,-21.5 98.83,-18 88.83,-14.5 88.83,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="256,-36 189,-36 189,0 256,0 256,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="222.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M153.07,-18C161,-18 169.94,-18 178.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="178.76,-21.5 188.76,-18 178.76,-14.5 178.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/audio-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>6</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>au</code></td>
+<td><a href="./#audio-settings">Audio Settings</a></td>
+<td>
+<p>Audio Settings</p>
+</td>
+<td>
+<p>Audio Settings</p>
+</td>
+</tr>
+<tr>
+<td><code>refId</code></td>
+<td><code>string</code></td>
+<td>
+<p>Sound Id</p>
+</td>
+<td>
+<p>ID of the sound as specified in the assets</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="audio-settings">Audio Settings</h3>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/audio-settings" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lv</code></td>
+<td><a href="../properties/#vector-property">Vector</a></td>
+<td>
+<p>Level</p>
+</td>
+<td>
+<p>Level</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="3d-layers">3D Layers</h2>
+<p>Layers can have 3D transforms as well:</p>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_33"></div>
+</div>
+<div><button id="lottie_play_33" onclick="lottie_player_33.play(); document.getElementById('lottie_pause_33').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_33" onclick="lottie_player_33.pause(); document.getElementById('lottie_play_33').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../static/examples/3d_layers_animation.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_33 = new LottiePlayer(
+                    'lottie_target_33',
+                    '../static/examples/3d_layers_animation.json',
+                    true,
+                    {"renderer": "html"}
+                );
+            </script>
+</div>
+<p>3D layers need to have the <code>ddd</code> set to <code>1</code> (and so does the top-level object).</p>
+<p>Their transform will habe <code>a</code> and <code>p</code> specified as 3D components.</p>
+<p>Rotation will be split into 3 properties: <code>rx</code>, <code>ry</code>, <code>rz</code>, and
+you have and additional orientation property <code>or</code>.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="512" min="0" name="ax" oninput="lottie_player_34.reload();document.getElementById('playground_34_1_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_34_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="512" min="0" name="ay" oninput="lottie_player_34.reload();document.getElementById('playground_34_2_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_34_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="100" min="-100" name="az" oninput="lottie_player_34.reload();document.getElementById('playground_34_3_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+        Position
+        <span id="playground_34_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="512" min="0" name="px" oninput="lottie_player_34.reload();document.getElementById('playground_34_4_span').innerText = event.target.value;" title="X" type="range" value="256" />
+        <span id="playground_34_4_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="512" min="0" name="py" oninput="lottie_player_34.reload();document.getElementById('playground_34_5_span').innerText = event.target.value;" title="Y" type="range" value="256" />
+        <span id="playground_34_5_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="100" min="-100" name="pz" oninput="lottie_player_34.reload();document.getElementById('playground_34_6_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+        Rotation
+        <span id="playground_34_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="360" min="0" name="rx" oninput="lottie_player_34.reload();document.getElementById('playground_34_7_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_34_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="360" min="0" name="ry" oninput="lottie_player_34.reload();document.getElementById('playground_34_8_span').innerText = event.target.value;" title="Y" type="range" value="30" />
+        <span id="playground_34_8_span">30</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="360" min="0" name="rz" oninput="lottie_player_34.reload();document.getElementById('playground_34_9_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+        Orientation
+        <span id="playground_34_9_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="360" min="0" name="orx" oninput="lottie_player_34.reload();document.getElementById('playground_34_10_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_34_10_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="360" min="0" name="ory" oninput="lottie_player_34.reload();document.getElementById('playground_34_11_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_34_11_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="360" min="0" name="orz" oninput="lottie_player_34.reload();document.getElementById('playground_34_12_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+        Scale
+        <span id="playground_34_12_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="300" min="0" name="sx" oninput="lottie_player_34.reload();document.getElementById('playground_34_13_span').innerText = event.target.value;" title="X" type="range" value="100" />
+        <span id="playground_34_13_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="300" min="0" name="sy" oninput="lottie_player_34.reload();document.getElementById('playground_34_14_span').innerText = event.target.value;" title="Y" type="range" value="100" />
+        <span id="playground_34_14_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="34" max="300" min="0" name="sz" oninput="lottie_player_34.reload();document.getElementById('playground_34_15_span').innerText = event.target.value;" title="Z" type="range" value="100" />
+    <span id="playground_34_15_span">100</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_34"></div>
+</div>
+<div class="json-parent" id="playground_34_16_parent">
+<pre><code class="language-json hljs" id="playground_34_16">
+</code></pre>
+</div>
+<script>
+        var lottie_player_34 = new PlaygroundPlayer(
+            34,
+            'playground_34_16',
+            'lottie_target_34',
+            {"v": "5.9.2", "fr": 60, "ip": 0, "op": 120, "w": 512, "h": 512, "nm": "3d layers", "ddd": 1, "layers": [{"ddd": 1, "ind": 2, "ty": 4, "nm": "Blue Circle", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [256, 256, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "el", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}}, {"ty": "fl", "c": {"a": 0, "k": [0.196, 0.314, 0.69]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ind": 2, "ty": 4, "nm": "Yellow Square", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 30}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [256, 256, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 1, 0.3]}, "o": {"a": 0, "k": 100}}]}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[1].ks.a.k = [
+        data["ax"], data["ay"], data["az"]
+    ];
+    lottie.layers[1].ks.p.k = [
+        data["px"], data["py"], data["pz"]
+    ];
+    lottie.layers[1].ks.or.k = [
+        data["orx"], data["ory"], data["orz"]
+    ];
+    lottie.layers[1].ks.s.k = [
+        data["sx"], data["sy"], data["sz"]
+    ];
+    lottie.layers[1].ks.rx.k = data["rx"];
+    lottie.layers[1].ks.ry.k = data["ry"];
+    lottie.layers[1].ks.rz.k = data["rz"];
+    this.json_viewer_contents = lottie.layers[1].ks;
+            },
+            {"renderer": "html"}
+        );
+        </script>
+</div>
+</div>
+<h3 id="camera-layer">Camera Layer</h3>
+<p></p>
+<p>Camera for 3D layers.</p>
+<div>
+<details>
+<summary>Composition Diagram for Camera Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 274.00 44.00" width="274pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 270,-40 270,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="73,-36 0,-36 0,0 73,0 73,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="36.5" y="-15.5">Camera Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#layer" title="Layer">
+<polygon fill="none" points="163,-36 109,-36 109,0 163,0 163,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="136" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M73.25,-18C81.51,-18 90.3,-18 98.58,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="98.72,-21.5 108.72,-18 98.72,-14.5 98.72,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="266,-36 199,-36 199,0 266,0 266,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="232.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M163.07,-18C171,-18 179.94,-18 188.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="188.76,-21.5 198.76,-18 188.76,-14.5 188.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/camera-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>13</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>pe</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Perspective</p>
+</td>
+<td>
+<p>Distance from the Z=0 plane.
+Small values yield a higher perspective effect.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Perspective</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="512" min="0" name="Perspective" oninput="lottie_player_35.reload();document.getElementById('playground_35_1_span').innerText = event.target.value;" title="Perspective" type="range" value="256" />
+        Position
+        <span id="playground_35_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="512" min="-512" name="px" oninput="lottie_player_35.reload();document.getElementById('playground_35_2_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_35_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="512" min="-512" name="py" oninput="lottie_player_35.reload();document.getElementById('playground_35_3_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_35_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="512" min="-512" name="pz" oninput="lottie_player_35.reload();document.getElementById('playground_35_4_span').innerText = event.target.value;" title="Z" type="range" value="-10" />
+        Rotation
+        <span id="playground_35_4_span">-10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="180" min="-180" name="rx" oninput="lottie_player_35.reload();document.getElementById('playground_35_5_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_35_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="180" min="-180" name="ry" oninput="lottie_player_35.reload();document.getElementById('playground_35_6_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_35_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="180" min="-180" name="rz" oninput="lottie_player_35.reload();document.getElementById('playground_35_7_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+        Orientation
+        <span id="playground_35_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="180" min="-180" name="orx" oninput="lottie_player_35.reload();document.getElementById('playground_35_8_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_35_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="180" min="-180" name="ory" oninput="lottie_player_35.reload();document.getElementById('playground_35_9_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_35_9_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="35" max="180" min="-180" name="orz" oninput="lottie_player_35.reload();document.getElementById('playground_35_10_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+    <span id="playground_35_10_span">0</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_35"></div>
+</div>
+<div class="json-parent" id="playground_35_11_parent">
+<pre><code class="language-json hljs" id="playground_35_11">
+</code></pre>
+</div>
+<script>
+        var lottie_player_35 = new PlaygroundPlayer(
+            35,
+            'playground_35_11',
+            'lottie_target_35',
+            {"v": "5.9.2", "fr": 60, "ip": 0, "op": 120, "w": 512, "h": 512, "nm": "3d layers", "ddd": 1, "layers": [{"ddd": 1, "ty": 13, "nm": "Camera", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, -10]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "pe": {"a": 0, "k": 256}}, {"ddd": 1, "ty": 4, "nm": "Page", "ks": {"o": {"a": 0, "k": 50}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 1, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Front", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, 200]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0.5, 0.5, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall FR", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [141, 0, 141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 0.5, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall FL", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": -45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [-141, 0, 141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0, 0.5, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Left", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": -90}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [-200, 0, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0, 0.5, 0.5]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Right", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 90}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [200, 0, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 0.5, 0.5]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall BR", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": -45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [141, 0, -141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 0.5, 0]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall BL", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [-141, 0, -141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0, 0.5, 0]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Back", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, -200]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0.5, 0.5, 0]}, "o": {"a": 0, "k": 100}}]}]},
+            function (lottie, data)
+            {
+                
+    var index = 0;
+    lottie.layers[index].ks.p.k = [
+        data["px"], data["py"], data["pz"]
+    ];
+    lottie.layers[index].ks.or.k = [
+        data["orx"], data["ory"], data["orz"]
+    ];
+    lottie.layers[index].ks.rx.k = data["rx"];
+    lottie.layers[index].ks.ry.k = data["ry"];
+    lottie.layers[index].ks.rz.k = data["rz"];
+    lottie.layers[index].pe.k = data["Perspective"];
+    this.json_viewer_contents = lottie.layers[0];
+            },
+            {"renderer": "html"}
+        );
+        </script>
+</div>
+</div>
+<h3 id="3d-parenting">3D Parenting</h3>
+<p>As with 2D layers, you can parent 3D layers.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="512" min="-512" name="px" oninput="lottie_player_36.reload();document.getElementById('playground_36_1_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_36_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="512" min="-512" name="py" oninput="lottie_player_36.reload();document.getElementById('playground_36_2_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_36_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="512" min="-512" name="pz" oninput="lottie_player_36.reload();document.getElementById('playground_36_3_span').innerText = event.target.value;" title="Z" type="range" value="-10" />
+        Rotation
+        <span id="playground_36_3_span">-10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="180" min="-180" name="rx" oninput="lottie_player_36.reload();document.getElementById('playground_36_4_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_36_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="180" min="-180" name="ry" oninput="lottie_player_36.reload();document.getElementById('playground_36_5_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_36_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="180" min="-180" name="rz" oninput="lottie_player_36.reload();document.getElementById('playground_36_6_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+        Orientation
+        <span id="playground_36_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="180" min="-180" name="orx" oninput="lottie_player_36.reload();document.getElementById('playground_36_7_span').innerText = event.target.value;" title="X" type="range" value="0" />
+        <span id="playground_36_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="180" min="-180" name="ory" oninput="lottie_player_36.reload();document.getElementById('playground_36_8_span').innerText = event.target.value;" title="Y" type="range" value="0" />
+        <span id="playground_36_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Z</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="36" max="180" min="-180" name="orz" oninput="lottie_player_36.reload();document.getElementById('playground_36_9_span').innerText = event.target.value;" title="Z" type="range" value="0" />
+    <span id="playground_36_9_span">0</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_36"></div>
+</div>
+<div class="json-parent" id="playground_36_10_parent">
+<pre><code class="language-json hljs" id="playground_36_10">
+</code></pre>
+</div>
+<script>
+        var lottie_player_36 = new PlaygroundPlayer(
+            36,
+            'playground_36_10',
+            'lottie_target_36',
+            {"v": "5.9.2", "fr": 60, "ip": 0, "op": 120, "w": 512, "h": 512, "nm": "3d layers", "ddd": 1, "layers": [{"ddd": 1, "ty": 13, "nm": "Camera", "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, -10]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "pe": {"a": 0, "k": 256}}, {"ddd": 1, "ty": 4, "ind": 1, "nm": "Parent", "ks": {"o": {"a": 0, "k": 50}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 1, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Front", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, 200]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0.5, 0.5, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall FR", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [141, 0, 141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 0.5, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall FL", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": -45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [-141, 0, 141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0, 0.5, 1]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Left", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": -90}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [-200, 0, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0, 0.5, 0.5]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Right", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 90}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [200, 0, 0]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 0.5, 0.5]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall BR", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": -45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [141, 0, -141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [1, 0.5, 0]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall BL", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 45}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [-141, 0, -141]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0, 0.5, 0]}, "o": {"a": 0, "k": 100}}]}, {"ddd": 1, "ty": 4, "nm": "Wall Back", "parent": 1, "ks": {"o": {"a": 0, "k": 100}, "rx": {"a": 0, "k": 0}, "ry": {"a": 0, "k": 0}, "rz": {"a": 0, "k": 0}, "or": {"a": 0, "k": [0, 0, 0]}, "p": {"a": 0, "k": [0, 0, -200]}, "a": {"a": 0, "k": [0, 0, 0]}, "s": {"a": 0, "k": [100, 100, 100]}}, "ip": 0, "op": 120, "st": 0, "shapes": [{"ty": "rc", "s": {"a": 0, "k": [200, 200]}, "p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "c": {"a": 0, "k": [0.5, 0.5, 0]}, "o": {"a": 0, "k": 100}}]}]},
+            function (lottie, data)
+            {
+                
+    var index = 1;
+    lottie.layers[index].ks.p.k = [
+        data["px"], data["py"], data["pz"]
+    ];
+    lottie.layers[index].ks.or.k = [
+        data["orx"], data["ory"], data["orz"]
+    ];
+    lottie.layers[index].ks.rx.k = data["rx"];
+    lottie.layers[index].ks.ry.k = data["ry"];
+    lottie.layers[index].ks.rz.k = data["rz"];
+    this.json_viewer_contents = lottie.layers[1];
+            },
+            {"renderer": "html"}
+        );
+        </script>
+</div>
+</div>
+<h2 id="data-layer">Data Layer</h2>
+<p>This layer links to a <a href="../assets/#data-source">data source</a>.</p>
+<div>
+<details>
+<summary>Composition Diagram for Data Layer</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 258.00 44.00" width="258pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 254,-40 254,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="57,-36 0,-36 0,0 57,0 57,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="28.5" y="-15.5">Data Layer</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#layer" title="Layer">
+<polygon fill="none" points="147,-36 93,-36 93,0 147,0 147,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="120" y="-15.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M57.33,-18C65.35,-18 74.23,-18 82.69,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="82.72,-21.5 92.72,-18 82.72,-14.5 82.72,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="../helpers/#visual-object" title="Visual Object">
+<polygon fill="none" points="250,-36 183,-36 183,0 250,0 250,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="216.5" y="-15.5">Visual Object</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M147.07,-18C155,-18 163.94,-18 172.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="172.76,-21.5 182.76,-18 172.76,-14.5 172.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/layers/data-layer" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>ddd</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Threedimensional</p>
+</td>
+<td>
+<p>Whether the layer is threedimensional</p>
+</td>
+</tr>
+<tr>
+<td><code>hd</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Hidden</p>
+</td>
+<td>
+<p>Whether the layer is hidden</p>
+</td>
+</tr>
+<tr>
+<td><code>ty</code></td>
+<td><code>integer</code> = <code>15</code></td>
+<td>
+<p>Type</p>
+</td>
+<td>
+<p>Layer type</p>
+</td>
+</tr>
+<tr>
+<td><code>ind</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Index</p>
+</td>
+<td>
+<p>Index that can be used for parenting and referenced in expressions</p>
+</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Parent Index</p>
+</td>
+<td>
+<p>Must be the <code>ind</code> property of another layer</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+<tr>
+<td><code>refId</code></td>
+<td><code>string</code></td>
+<td>
+<p>Data source Id</p>
+</td>
+<td>
+<p>ID of the data source in assets</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

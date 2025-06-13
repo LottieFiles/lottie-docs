@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/constants/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Enumerations - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../effects/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../text/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/constants.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#enumerations">Enumerations</a></li>
+            <li class="second-level"><a href="#blend-mode">Blend Mode</a></li>
+                
+            <li class="second-level"><a href="#composite">Composite</a></li>
+                
+            <li class="second-level"><a href="#fill-rule">Fill Rule</a></li>
+                
+            <li class="second-level"><a href="#font-path-origin">Font Path Origin</a></li>
+                
+            <li class="second-level"><a href="#gradient-type">Gradient Type</a></li>
+                
+            <li class="second-level"><a href="#line-cap">Line Cap</a></li>
+                
+            <li class="second-level"><a href="#line-join">Line Join</a></li>
+                
+            <li class="second-level"><a href="#mask-mode">Mask Mode</a></li>
+                
+            <li class="second-level"><a href="#matte-mode">Matte Mode</a></li>
+                
+            <li class="second-level"><a href="#merge-mode">Merge Mode</a></li>
+                
+            <li class="second-level"><a href="#shape-direction">Shape Direction</a></li>
+                
+            <li class="second-level"><a href="#star-type">Star Type</a></li>
+                
+            <li class="second-level"><a href="#stroke-dash-type">Stroke Dash Type</a></li>
+                
+            <li class="second-level"><a href="#text-based">Text Based</a></li>
+                
+            <li class="second-level"><a href="#text-grouping">Text Grouping</a></li>
+                
+            <li class="second-level"><a href="#text-justify">Text Justify</a></li>
+                
+            <li class="second-level"><a href="#text-shape">Text Shape</a></li>
+                
+            <li class="second-level"><a href="#trim-multiple-shapes">Trim Multiple Shapes</a></li>
+                
+            <li class="second-level"><a href="#text-caps">Text Caps</a></li>
+                
+            <li class="second-level"><a href="#text-range-units">Text Range Units</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="enumerations">Enumerations</h1>
+<h2 id="blend-mode">Blend Mode</h2>
+<p></p>
+<p><span>Layer and shape blend mode</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/blend-mode" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Normal</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Multiply</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Screen</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Overlay</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Darken</td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td>Lighten</td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td>Color Dodge</td>
+</tr>
+<tr>
+<td><code>7</code></td>
+<td>Color Burn</td>
+</tr>
+<tr>
+<td><code>8</code></td>
+<td>Hard Light</td>
+</tr>
+<tr>
+<td><code>9</code></td>
+<td>Soft Light</td>
+</tr>
+<tr>
+<td><code>10</code></td>
+<td>Difference</td>
+</tr>
+<tr>
+<td><code>11</code></td>
+<td>Exclusion</td>
+</tr>
+<tr>
+<td><code>12</code></td>
+<td>Hue</td>
+</tr>
+<tr>
+<td><code>13</code></td>
+<td>Saturation</td>
+</tr>
+<tr>
+<td><code>14</code></td>
+<td>Color</td>
+</tr>
+<tr>
+<td><code>15</code></td>
+<td>Luminosity</td>
+</tr>
+<tr>
+<td><code>16</code></td>
+<td>Add</td>
+</tr>
+<tr>
+<td><code>17</code></td>
+<td>Hard Mix</td>
+</tr>
+</tbody>
+</table>
+<p>In the following example you can change the blend mode of the top layer</p>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="1" max="100" min="0" name="Opacity" oninput="lottie_player_1.reload();document.getElementById('playground_1_1_span').innerText = event.target.value;" title="Opacity" type="range" value="50" />
+        <span id="playground_1_1_span">50</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Blend Mode</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="1" name="Blend Mode" oninput="lottie_player_1.reload();"><option value="0">Normal</option><option value="1">Multiply</option><option value="2">Screen</option><option value="3">Overlay</option><option value="4">Darken</option><option value="5">Lighten</option><option value="6">Color Dodge</option><option value="7">Color Burn</option><option value="8">Hard Light</option><option value="9">Soft Light</option><option value="10">Difference</option><option value="11">Exclusion</option><option value="12">Hue</option><option value="13">Saturation</option><option value="14">Color</option><option value="15">Luminosity</option><option value="16">Add</option><option value="17">Hard Mix</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_1"></div>
+</div>
+<div class="json-parent" id="playground_1_3_parent">
+<pre><code class="language-json hljs" id="playground_1_3">
+</code></pre>
+</div>
+<script>
+        var lottie_player_1 = new PlaygroundPlayer(
+            1,
+            'playground_1_3',
+            'lottie_target_1',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{429ff333-f31c-4124-91c5-5e861412a004}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 1, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{625eab7e-4758-4d4b-b37c-d89115b1442b}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 50}}, "shapes": [{"ty": "gr", "nm": "Ellipse", "mn": "{dd57d763-ff3b-420f-a94d-eb5503e7faa7}", "it": [{"ty": "el", "nm": "Ellipse", "mn": "{fa5c495c-00d1-4253-b30c-cc8cb1b855b2}", "p": {"a": 0, "k": [400.1910447761194, 240.71641791044777]}, "s": {"a": 0, "k": [195.15223880597017, 180.53731343283584]}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{89437b5f-dca9-42d4-aff9-c57ce08c8c1e}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "nm": "Fill", "mn": "{352559ca-ebe9-4b11-acdd-09e155612598}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.3411764705882353, 0.01568627450980392]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [400.1910447761194, 240.71641791044777]}, "p": {"a": 0, "k": [400.1910447761194, 240.71641791044777]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "PolyStar", "mn": "{b6000853-a4d3-4b13-acdd-2e4f1a192760}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{d647a149-8105-4e08-b395-c8de40669fb0}", "p": {"a": 0, "k": [110.90149253731343, 216.644776119403]}, "or": {"a": 0, "k": 121.5619125366211}, "ir": {"a": 0, "k": 60.78095626831055}, "r": {"a": 0, "k": 143.04905700683594}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{67a87e2b-afff-4f55-9004-4cc274cefe07}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "nm": "Fill", "mn": "{39b8d13c-45cf-4ad7-972a-ef5169f1ffbf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [110.90149253731343, 216.644776119403]}, "p": {"a": 0, "k": [159.9044776119403, 247.59402985074627]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}, {"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer 1", "mn": "{d74c9dcc-e7af-45c3-9eab-554c7b93f6b6}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Rectangle 1", "mn": "{b22ddad1-738b-471a-86eb-1f072fa45799}", "it": [{"ty": "rc", "nm": "Rectangle 1", "mn": "{0c09bd21-59ab-4f1e-bd3d-547613eb3e2a}", "p": {"a": 0, "k": [241.57611940298506, 357.6358208955224]}, "s": {"a": 0, "k": [383.4268656716418, 211.4865671641791]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{8cd4fca9-3480-49fa-947f-04bc40ed74f5}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "nm": "Fill", "mn": "{050089d8-44c4-4312-8e23-3c89df7615aa}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.7686274509803922, 0.8509803921568627, 0.9607843137254902]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [241.57611940298506, 357.6358208955224]}, "p": {"a": 0, "k": [226.1014925373134, 131.53432835820894]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "Rectangle", "mn": "{700bfca8-0e45-42e9-8559-15ac0ebe93b2}", "it": [{"ty": "rc", "nm": "Rectangle", "mn": "{0e3ac2ac-22c8-4310-8208-f5d5ba9cd6d9}", "p": {"a": 0, "k": [277.68358208955226, 148.2985074626866]}, "s": {"a": 0, "k": [335.2835820895522, 162.48358208955224]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{af0c691f-7815-414e-a988-ac2eb6e32128}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "nm": "Fill", "mn": "{059d8c4e-de02-4fa7-99fe-c069b73218be}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [277.68358208955226, 148.2985074626866]}, "p": {"a": 0, "k": [277.68358208955226, 366.6626865671642]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+        lottie.layers[0].bm = Number(data["Blend Mode"]);
+        lottie.layers[0].ks.o.k = data["Opacity"];
+    this.json_viewer_contents = lottie.layers[0];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="composite">Composite</h2>
+<p></p>
+<p><span>How to stack copies in a repeater</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name </th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/constants/composite" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Below</td>
+<td>Subsequent copies are added underneath the previous ones.</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Above</td>
+<td>Subsequent copies are added on top of the previous ones.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fill-rule">Fill Rule</h2>
+<p></p>
+<p><span>Rule used to handle multiple shapes rendered with the same fill object</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name </th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/constants/fill-rule" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Non Zero</td>
+<td>Everything is colored (You can think of this as an OR)</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Even Odd</td>
+<td>Colored based on intersections and path direction, can be used to create "holes"</td>
+</tr>
+</tbody>
+</table>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Fill Rule</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="2" name="Fill Rule" oninput="lottie_player_2.reload();"><option value="1">Non Zero</option><option value="2">Even Odd</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_2"></div>
+</div>
+<div class="json-parent" id="playground_2_2_parent">
+<pre><code class="language-json hljs" id="playground_2_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_2 = new PlaygroundPlayer(
+            2,
+            'playground_2_2',
+            'lottie_target_2',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{f5d94f54-bb8f-4f07-be45-232ebd4b9eb1}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{4b0993ed-e35b-48a5-ab12-687dbc147c7c}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Path", "mn": "{29196ff2-0a65-48b4-a450-f9fbc3a3640d}", "it": [{"ty": "sh", "nm": "Path", "mn": "{bb7e6c60-755e-4a21-a7ba-bd054feab5c7}", "ks": {"a": 0, "k": {"c": true, "v": [[125.51641791044776, 452.20298507462684], [240.71641791044777, 38.6865671641791], [435.8686567164179, 447.9044776119403], [42.125373134328356, 173.65970149253732], [460.8, 156.46567164179103]], "i": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], "o": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]}}}, {"ty": "fl", "nm": "Fill", "mn": "{3af40b83-15f6-4f69-aa2a-96acd03eb3b6}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.98, 0.28]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [251.46268656716418, 245.4447761194029]}, "p": {"a": 0, "k": [251.46268656716418, 245.4447761194029]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+        var shape = lottie.layers[0].shapes[0].it[1];
+        shape.r = Number(data["Fill Rule"]);
+    this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="font-path-origin">Font Path Origin</h2>
+<p></p>
+<p><span></span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/font-path-origin" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Local</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Css Url</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Script Url</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Font Url</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gradient-type">Gradient Type</h2>
+<p></p>
+<p><span>Whether a Gradient is a linear or radial.</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name </th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/constants/gradient-type" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Linear</td>
+<td>Colors transition in a single linear direction.</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Radial</td>
+<td>Colors transition outward from a center point.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="line-cap">Line Cap</h2>
+<p></p>
+<p><span>Style at the end of a stoked line</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/line-cap" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Butt</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Round</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Square</td>
+</tr>
+</tbody>
+</table>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Line Cap</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="3" name="Line Cap" oninput="lottie_player_3.reload();"><option value="1">Butt</option><option selected="selected" value="2">Round</option><option value="3">Square</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_3"></div>
+</div>
+<div class="json-parent" id="playground_3_2_parent">
+<pre><code class="language-json hljs" id="playground_3_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_3 = new PlaygroundPlayer(
+            3,
+            'playground_3_2',
+            'lottie_target_3',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "or": {"a": 0, "k": 200}, "ir": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "tm", "nm": "Trim Path", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "s": {"a": 0, "k": 0}, "e": {"a": 0, "k": 100}, "o": {"a": 0, "k": 0}, "m": 1}, {"ty": "st", "nm": "Stroke", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.98, 0.28]}, "lc": 2, "lj": 2, "ml": 3, "w": {"a": 0, "k": 20}, "d": [{"n": "o", "nm": "offset", "v": {"a": 0, "k": 0}}, {"n": "d", "nm": "dash", "v": {"a": 0, "k": 100}}, {"n": "g", "nm": "gap", "v": {"a": 0, "k": 0}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+        var shape = lottie.layers[0].shapes[2];
+        shape.lc = Number(data["Line Cap"]);
+        shape.d = undefined;
+    this.json_viewer_contents = lottie.layers[0].shapes[2];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="line-join">Line Join</h2>
+<p></p>
+<p><span>Style at a sharp corner of a stoked line</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/line-join" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Miter</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Round</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Bevel</td>
+</tr>
+</tbody>
+</table>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Line Join</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="4" name="Line Join" oninput="lottie_player_4.reload();"><option value="1">Miter</option><option selected="selected" value="2">Round</option><option value="3">Bevel</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Miter Limit</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="4" max="10" min="0" name="Miter Limit" oninput="lottie_player_4.reload();document.getElementById('playground_4_2_span').innerText = event.target.value;" title="Miter Limit" type="range" value="3" />
+    <span id="playground_4_2_span">3</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_4"></div>
+</div>
+<div class="json-parent" id="playground_4_3_parent">
+<pre><code class="language-json hljs" id="playground_4_3">
+</code></pre>
+</div>
+<script>
+        var lottie_player_4 = new PlaygroundPlayer(
+            4,
+            'playground_4_3',
+            'lottie_target_4',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "or": {"a": 0, "k": 200}, "ir": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "tm", "nm": "Trim Path", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "s": {"a": 0, "k": 0}, "e": {"a": 0, "k": 100}, "o": {"a": 0, "k": 0}, "m": 1}, {"ty": "st", "nm": "Stroke", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.98, 0.28]}, "lc": 2, "lj": 2, "ml": 3, "w": {"a": 0, "k": 20}, "d": [{"n": "o", "nm": "offset", "v": {"a": 0, "k": 0}}, {"n": "d", "nm": "dash", "v": {"a": 0, "k": 100}}, {"n": "g", "nm": "gap", "v": {"a": 0, "k": 0}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+        var shape = lottie.layers[0].shapes[2];
+        shape.lj = Number(data["Line Join"]);
+        shape.ml = data["Miter Limit"];
+        shape.d = undefined;
+        var trim = lottie.layers[0].shapes[1];
+        trim.e.k = 100;
+    this.json_viewer_contents = lottie.layers[0].shapes[2];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="mask-mode">Mask Mode</h2>
+<p></p>
+<p><span>Describes how a mask interacts (blends) with the preceding masks in the stack.</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name </th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/constants/mask-mode" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'n'</code></td>
+<td>None</td>
+<td>The mask is ignored.</td>
+</tr>
+<tr>
+<td><code>'a'</code></td>
+<td>Add</td>
+<td>Mask coverage is added (Normal blending).</td>
+</tr>
+<tr>
+<td><code>'s'</code></td>
+<td>Subtract</td>
+<td>Mask coverage is subtracted (Subtract blending).</td>
+</tr>
+<tr>
+<td><code>'i'</code></td>
+<td>Intersect</td>
+<td>Mask coverage is intersected (Source-In blending).</td>
+</tr>
+<tr>
+<td><code>'l'</code></td>
+<td>Lighten</td>
+<td></td>
+</tr>
+<tr>
+<td><code>'d'</code></td>
+<td>Darken</td>
+<td></td>
+</tr>
+<tr>
+<td><code>'f'</code></td>
+<td>Difference</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Mask Mode</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="5" name="Mask Mode" oninput="lottie_player_5.reload();"><option value="n">None</option><option selected="selected" value="a">Add</option><option value="s">Subtract</option><option value="i">Intersect</option><option value="l">Lighten</option><option value="d">Darken</option><option value="f">Difference</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Mask1 Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="5" max="100" min="0" name="Mask1 Opacity" oninput="lottie_player_5.reload();document.getElementById('playground_5_2_span').innerText = event.target.value;" title="Mask1 Opacity" type="range" value="100" />
+        <span id="playground_5_2_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Mask2 Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="5" max="100" min="0" name="Mask2 Opacity" oninput="lottie_player_5.reload();document.getElementById('playground_5_3_span').innerText = event.target.value;" title="Mask2 Opacity" type="range" value="100" />
+    <span id="playground_5_3_span">100</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_5"></div>
+</div>
+<div class="json-parent" id="playground_5_4_parent">
+<pre><code class="language-json hljs" id="playground_5_4">
+</code></pre>
+</div>
+<script>
+        var lottie_player_5 = new PlaygroundPlayer(
+            5,
+            'playground_5_4',
+            'lottie_target_5',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{b3d1b083-9de7-4537-a691-fc9aa42f9742}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 2, "st": 0, "ip": 0, "op": 180, "nm": "Shapes", "ks": {}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{528994b7-40ff-4d12-81f8-603f274da12e}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{ce8756d7-289f-4f84-a135-d225d57c42e0}", "p": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "or": {"a": 0, "k": 216.4160919189453}, "ir": {"a": 0, "k": 87.03440856933594}, "r": {"a": 0, "k": 261.54803466796875}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{efd05a25-a43b-451d-83d2-53a477087223}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{523ca39c-9e57-4547-bf0e-ba7496003579}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "p": {"a": 0, "k": [338.7223880597015, 209.76716417910447]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "Rectangle", "mn": "{d2d7a5d5-6d91-42e8-b40a-af52a112fe38}", "it": [{"ty": "rc", "nm": "Rectangle", "mn": "{9ef8604e-7891-4909-a655-445131b4d842}", "p": {"a": 0, "k": [209.17611940298502, 226.8]}, "s": {"a": 0, "k": [363.3313432835821, 369.3492537313433]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{444584d2-cb59-4cba-83a1-82cc605837fd}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{f75aed67-9b0e-41a9-b859-a14b5b0a320d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.7686274509803922, 0.8509803921568627, 0.9607843137254902]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "p": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}], "hasMask": true, "masksProperties": [{"mode": "a", "o": {"a": 0, "k": 100}, "inv": false, "x": {"a": 0, "k": 0}, "pt": {"a": 0, "k": {"c": true, "v": [[247.109, 125.719], [66.109, 306.719], [424.109, 389.719]], "i": [[0, 0], [0, 0], [0, 0]], "o": [[0, 0], [0, 0], [0, 0]]}}}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                
+        let mask1 = lottie.layers[1].masksProperties[0];
+        let mask2 = lottie.layers[1].masksProperties[1];
+        mask1.o.k = Number(data["Mask1 Opacity"]);
+        mask2.o.k = Number(data["Mask2 Opacity"]);
+        mask2.mode = data["Mask Mode"];
+    this.json_viewer_contents = lottie.layers[1].masksProperties[1];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="matte-mode">Matte Mode</h2>
+<p></p>
+<p><span>How a layer should mask another layer</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name </th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/constants/matte-mode" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Normal</td>
+<td>The layer is not used as a track matte</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Alpha</td>
+<td>The masked layer opacity is modulated by the track matte layer opacity</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Inverted Alpha</td>
+<td>The masked layer opacity is modulated by the inverted track matte layer opacity</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Luma</td>
+<td>The masked layer opacity is modulated by the track matte layer luminance</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Inverted Luma</td>
+<td>The masked layer opacity is modulated by the inverted track matte layer luminance</td>
+</tr>
+</tbody>
+</table>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Matte Mode</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="6" name="Matte Mode" oninput="lottie_player_6.reload();"><option value="0">Normal</option><option selected="selected" value="1">Alpha</option><option value="2">Inverted Alpha</option><option value="3">Luma</option><option value="4">Inverted Luma</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_6"></div>
+</div>
+<div class="json-parent" id="playground_6_2_parent">
+<pre><code class="language-json hljs" id="playground_6_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_6 = new PlaygroundPlayer(
+            6,
+            'playground_6_2',
+            'lottie_target_6',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{b3d1b083-9de7-4537-a691-fc9aa42f9742}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 1, "st": 0, "ip": 0, "op": 180, "nm": "Ellipse (Mask)", "ks": {"a": {"a": 0, "k": [153, 294]}, "p": {"a": 0, "k": [346, 211]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "el", "nm": "Ellipse", "mn": "{261eddeb-af92-4be1-932c-790b00c23933}", "p": {"a": 0, "k": [137.0955223880597, 293.60820895522386]}, "s": {"a": 0, "k": [303.42089552238804, 315.55074626865667]}}, {"ty": "st", "nm": "Stroke", "mn": "{aa9c282c-253d-4d8d-ab05-4819c592fa85}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 1, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 6}}, {"ty": "fl", "nm": "Fill", "mn": "{2b2b0002-ff0c-4978-a33b-db4e0498848d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.9411764705882353, 0.11372549019607843, 0.0392156862745098]}, "r": 1}], "td": 1}, {"ddd": 0, "ty": 4, "ind": 2, "st": 0, "ip": 0, "op": 180, "nm": "Shapes (Masked)", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{528994b7-40ff-4d12-81f8-603f274da12e}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{ce8756d7-289f-4f84-a135-d225d57c42e0}", "p": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "or": {"a": 0, "k": 216.4160919189453}, "ir": {"a": 0, "k": 87.03440856933594}, "r": {"a": 0, "k": 261.54803466796875}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{efd05a25-a43b-451d-83d2-53a477087223}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{523ca39c-9e57-4547-bf0e-ba7496003579}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "p": {"a": 0, "k": [338.7223880597015, 209.76716417910447]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "Rectangle", "mn": "{d2d7a5d5-6d91-42e8-b40a-af52a112fe38}", "it": [{"ty": "rc", "nm": "Rectangle", "mn": "{9ef8604e-7891-4909-a655-445131b4d842}", "p": {"a": 0, "k": [209.17611940298502, 226.8]}, "s": {"a": 0, "k": [363.3313432835821, 369.3492537313433]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{444584d2-cb59-4cba-83a1-82cc605837fd}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{f75aed67-9b0e-41a9-b859-a14b5b0a320d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.7686274509803922, 0.8509803921568627, 0.9607843137254902]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "p": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}], "tt": 1, "tp": 1}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                
+        lottie.layers[1].tt = Number(data["Matte Mode"]);
+    this.json_viewer_contents = {...lottie.layers[1], shapes: [], ks: {}};
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="merge-mode">Merge Mode</h2>
+<p></p>
+<p><span>Boolean operation on shapes</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/merge-mode" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Normal</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Add</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Subtract</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Intersect</td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td>Exclude Intersections</td>
+</tr>
+</tbody>
+</table>
+<h2 id="shape-direction">Shape Direction</h2>
+<p></p>
+<p><span>Drawing direction of the shape curve, useful for trim path</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name </th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/constants/shape-direction" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Normal</td>
+<td>Usually clockwise</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Reversed</td>
+<td>Usually counter clockwise</td>
+</tr>
+</tbody>
+</table>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Shape Direction</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="7" name="Shape Direction" oninput="lottie_player_7.reload();"><option value="1">Normal</option><option value="3">Reversed</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_7"></div>
+</div>
+<div class="json-parent" id="playground_7_2_parent">
+<pre><code class="language-json hljs" id="playground_7_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_7 = new PlaygroundPlayer(
+            7,
+            'playground_7_2',
+            'lottie_target_7',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [128, 128]}, "or": {"a": 0, "k": 100}, "ir": {"a": 0, "k": 50}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "el", "nm": "Ellipse", "mn": "{74587b40-1ef1-445d-b9ab-02b8a42a96aa}", "p": {"a": 0, "k": [384, 128]}, "s": {"a": 0, "k": [200, 200]}}, {"ty": "rc", "nm": "Rect", "mn": "{0776f2df-2619-415c-b10d-f648f2edfa0f}", "d": 1, "p": {"a": 0, "k": [128, 384]}, "s": {"a": 0, "k": [200, 200]}, "r": {"a": 0, "k": 0}}, {"ty": "sr", "nm": "Triangle", "mn": "{db373594-d0ae-44ff-9295-30ff72616af2}", "p": {"a": 0, "k": [384, 384]}, "or": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 3}, "sy": 2, "os": {"a": 0, "k": 0}}, {"ty": "tm", "nm": "Trim Path", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "s": {"a": 0, "k": 0}, "e": {"a": 0, "k": 50}, "o": {"a": 0, "k": 0}, "m": 1}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 20}}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+        for ( let shape of lottie.layers[0].shapes )
+            shape.d = Number(data["Shape Direction"]);
+    this.json_viewer_contents = lottie.layers[0].shapes[1];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="star-type">Star Type</h2>
+<p></p>
+<p><span>Whether a PolyStar is a star or a polygon</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/star-type" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Star</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Polygon</td>
+</tr>
+</tbody>
+</table>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Star Type</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="8" name="Star Type" oninput="lottie_player_8.reload();"><option value="1">Star</option><option value="2">Polygon</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_8"></div>
+</div>
+<div class="json-parent" id="playground_8_2_parent">
+<pre><code class="language-json hljs" id="playground_8_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_8 = new PlaygroundPlayer(
+            8,
+            'playground_8_2',
+            'lottie_target_8',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "layers": [{"ty": 4, "ddd": 0, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ip": 0, "op": 180, "ind": 0, "st": 0, "sr": 1, "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 200}, "ir": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.979995422293431, 0.28000305180437934]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+        var star = lottie.layers[0].shapes[0].it[0];
+        star.sy = Number(data["Star Type"]);
+        if ( data["Star Type"] == "1" )
+        {
+            star["ir"] = {"a": 0, "k": 100};
+            star["is"] = {"a": 0, "k": 0};
+        }
+        else
+        {
+            delete star["ir"];
+            delete star["is"];
+        }
+        lottie.layers[0].shapes[0].it[0] = star;
+    this.json_viewer_contents = lottie.layers[0].shapes[0].it[0];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="stroke-dash-type">Stroke Dash Type</h2>
+<p></p>
+<p><span>Type of a dash item in a stroked line</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/stroke-dash-type" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'d'</code></td>
+<td>Dash</td>
+</tr>
+<tr>
+<td><code>'g'</code></td>
+<td>Gap</td>
+</tr>
+<tr>
+<td><code>'o'</code></td>
+<td>Offset</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-based">Text Based</h2>
+<p></p>
+<p><span></span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/text-based" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Characters</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Character Excluding Spaces</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Words</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Lines</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-grouping">Text Grouping</h2>
+<p></p>
+<p><span></span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/text-grouping" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Characters</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Word</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Line</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>All</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-justify">Text Justify</h2>
+<p></p>
+<p><span>Text alignment / justification</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/text-justify" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Left</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Right</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Center</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Justify with Last Line Left</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Justify with Last Line Right</td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td>Justify with Last Line Center</td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td>Justify with Last Line Full</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-shape">Text Shape</h2>
+<p></p>
+<p><span>Defines the function used to determine the interpolating factor on a text range selector.</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/text-shape" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Square</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Ramp Up</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Ramp Down</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Triangle</td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td>Round</td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td>Smooth</td>
+</tr>
+</tbody>
+</table>
+<p>To better illustrate what the value mean, the graphics below shows an
+example for each value, including the function itself, based on the
+range start and end character.</p>
+<p><img alt="Text Shapes" src="/lottie-docs/static/examples/text_shape.png" /></p>
+<h2 id="trim-multiple-shapes">Trim Multiple Shapes</h2>
+<p></p>
+<p><span>How to handle multiple shapes in trim path</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name </th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/constants/trim-multiple-shapes" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Parallel</td>
+<td>All shapes apply the trim at the same time</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Sequential</td>
+<td>Shapes are considered as a continuous sequence</td>
+</tr>
+</tbody>
+</table>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Multiple Shapes</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="9" name="Multiple Shapes" oninput="lottie_player_9.reload();"><option value="1">Parallel</option><option value="2">Sequential</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_9"></div>
+</div>
+<div class="json-parent" id="playground_9_2_parent">
+<pre><code class="language-json hljs" id="playground_9_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_9 = new PlaygroundPlayer(
+            9,
+            'playground_9_2',
+            'lottie_target_9',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [128, 128]}, "or": {"a": 0, "k": 100}, "ir": {"a": 0, "k": 50}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "el", "nm": "Ellipse", "mn": "{74587b40-1ef1-445d-b9ab-02b8a42a96aa}", "p": {"a": 0, "k": [384, 128]}, "s": {"a": 0, "k": [200, 200]}}, {"ty": "rc", "nm": "Rect", "mn": "{0776f2df-2619-415c-b10d-f648f2edfa0f}", "d": 1, "p": {"a": 0, "k": [128, 384]}, "s": {"a": 0, "k": [200, 200]}, "r": {"a": 0, "k": 0}}, {"ty": "sr", "nm": "Triangle", "mn": "{db373594-d0ae-44ff-9295-30ff72616af2}", "p": {"a": 0, "k": [384, 384]}, "or": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 3}, "sy": 2, "os": {"a": 0, "k": 0}}, {"ty": "tm", "nm": "Trim Path", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "s": {"a": 0, "k": 0}, "e": {"a": 0, "k": 50}, "o": {"a": 0, "k": 0}, "m": 1}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 20}}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+        lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
+    this.json_viewer_contents = lottie.layers[0].shapes[4];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="text-caps">Text Caps</h2>
+<p></p>
+<p><span></span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/text-caps" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Regular</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>All Caps</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Small Caps</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-range-units">Text Range Units</h2>
+<p></p>
+<p><span>Unit type for a text selector</span></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Name <a class="schema-link" href="../schema/#/$defs/constants/text-range-units" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>Percent</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Index</td>
+</tr>
+</tbody>
+</table></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

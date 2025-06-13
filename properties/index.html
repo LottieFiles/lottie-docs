@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/properties/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Propeties - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../values/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../composition/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/properties.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#propeties">Propeties</a></li>
+            <li class="second-level"><a href="#property">Animated Property</a></li>
+                
+                <li class="third-level"><a href="#base-keyframe">Keyframes</a></li>
+                <li class="third-level"><a href="#easing-handle">Keyframe Easing</a></li>
+            <li class="second-level"><a href="#property-types">Property types</a></li>
+                
+                <li class="third-level"><a href="#vector-property">Vector</a></li>
+                <li class="third-level"><a href="#scalar-property">Scalar</a></li>
+                <li class="third-level"><a href="#position-property">Position</a></li>
+                <li class="third-level"><a href="#bezier-property">Bezier Shape</a></li>
+                <li class="third-level"><a href="#color-property">Color</a></li>
+                <li class="third-level"><a href="#gradient-property">Gradient</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="propeties">Propeties</h1>
+<h2 id="property">Animated Property</h2>
+<p></p>
+<p>Properties in Lottie can be animated.</p>
+<p>Their structure depends on whether it's animated or not:</p>
+<div>
+<details>
+<summary>Composition Diagram for Property</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="314pt" viewBox="0.00 0.00 186.00 314.00" width="186pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 310)">
+
+<polygon fill="white" points="-4,4 -4,-310 182,-310 182,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="178,-171 124,-171 124,-135 178,-135 178,-171" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="151" y="-150.5">Property</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#position-property" title="Position Property">
+<polygon fill="none" points="88,-306 0,-306 0,-270 88,-270 88,-306" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="44" y="-285.5">Position Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M77.79,-269.86C81.44,-267.14 84.95,-264.18 88,-261 110.68,-237.41 128.22,-203.95 138.76,-180.55" fill="none" stroke="black"></path>
+<polygon fill="none" points="142.05,-181.76 142.85,-171.19 135.64,-178.96 142.05,-181.76" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#scalar-property" title="Scalar Property">
+<polygon fill="none" points="83.5,-252 4.5,-252 4.5,-216 83.5,-216 83.5,-252" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="44" y="-231.5">Scalar Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M75.01,-216C79.44,-213.1 83.89,-210.05 88,-207 99.96,-198.12 112.48,-187.5 123.11,-178.04" fill="none" stroke="black"></path>
+<polygon fill="none" points="125.75,-180.37 130.83,-171.08 121.06,-175.18 125.75,-180.37" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="./#vector-property" title="Vector Property">
+<polygon fill="none" points="83.5,-198 4.5,-198 4.5,-162 83.5,-162 83.5,-198" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="44" y="-177.5">Vector Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M83.5,-170.1C93.49,-167.53 104.21,-164.77 114.07,-162.24" fill="none" stroke="black"></path>
+<polygon fill="none" points="115.14,-165.58 123.95,-159.7 113.4,-158.8 115.14,-165.58" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node5">
+
+<g id="a_node5"><a href="./#gradient-stops" title="Gradient stops">
+<polygon fill="none" points="82,-144 6,-144 6,-108 82,-108 82,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="44" y="-123.5">Gradient stops</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge4">
+
+<path d="M82.02,-135.52C92.38,-138.18 103.63,-141.08 113.93,-143.73" fill="none" stroke="black"></path>
+<polygon fill="none" points="113.3,-147.18 123.86,-146.28 115.05,-140.4 113.3,-147.18" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node6">
+
+<g id="a_node6"><a href="./#color-property" title="Color Property">
+<polygon fill="none" points="81.5,-90 6.5,-90 6.5,-54 81.5,-54 81.5,-90" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="44" y="-69.5">Color Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge5">
+
+<path d="M75.01,-90C79.44,-92.9 83.89,-95.95 88,-99 99.96,-107.88 112.48,-118.5 123.11,-127.96" fill="none" stroke="black"></path>
+<polygon fill="none" points="121.06,-130.82 130.83,-134.92 125.75,-125.63 121.06,-130.82" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node7">
+
+<g id="a_node7"><a href="./#bezier-property" title="Bezier Property">
+<polygon fill="none" points="84,-36 4,-36 4,0 84,0 84,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="44" y="-15.5">Bezier Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge6">
+
+<path d="M77.79,-36.14C81.44,-38.86 84.95,-41.82 88,-45 110.68,-68.59 128.22,-102.05 138.76,-125.45" fill="none" stroke="black"></path>
+<polygon fill="none" points="135.64,-127.04 142.85,-134.81 142.05,-124.24 135.64,-127.04" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Property Index</p>
+</td>
+<td>
+<p>Property Index</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot ID</p>
+</td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Animated</p>
+</td>
+<td>
+<p>Whether the property is animated</p>
+</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td><code>any</code> or <code>array</code> of <a href="./#base-keyframe">Keyframes</a></td>
+<td>Value or Keyframes</td>
+<td>When it's not animated, <code>k</code> will contain the value directly. When animated, <code>k</code> will be an array of keyframes.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If <code>a</code> is <code>0</code>, then <code>k</code> just has the value of the property.</p>
+<p>If <code>a</code> is <code>1</code>, <code>k</code> will be an array of keyframes.</p>
+<h3 id="base-keyframe">Keyframes</h3>
+<p></p>
+<div>
+<details>
+<summary>Composition Diagram for Base Keyframe</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="206pt" viewBox="0.00 0.00 349.00 206.00" width="349pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 202)">
+
+<polygon fill="white" points="-4,4 -4,-202 345,-202 345,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="341,-117 263,-117 263,-81 341,-81 341,-117" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="302" y="-96.5">Base Keyframe</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#color-keyframe" title="Color Keyframe">
+<polygon fill="none" points="218,-198 138,-198 138,-162 218,-162 218,-198" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="178" y="-177.5">Color Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M212.35,-161.91C217.32,-159.03 222.34,-156 227,-153 241.27,-143.83 256.49,-132.93 269.39,-123.33" fill="none" stroke="black"></path>
+<polygon fill="none" points="271.61,-126.04 277.51,-117.24 267.41,-120.44 271.61,-126.04" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#bezier-keyframe" title="Shape Keyframe">
+<polygon fill="none" points="220.5,-144 135.5,-144 135.5,-108 220.5,-108 220.5,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="178" y="-123.5">Shape Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M220.64,-116.78C231,-114.49 242.19,-112.02 252.83,-109.66" fill="none" stroke="black"></path>
+<polygon fill="none" points="253.82,-113.03 262.82,-107.45 252.3,-106.19 253.82,-113.03" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="./#gradient-keyframe" title="Gradient Keyframe">
+<polygon fill="none" points="227,-90 129,-90 129,-54 227,-54 227,-90" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="178" y="-69.5">Gradient Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M227.22,-82.67C235.74,-84.56 244.61,-86.52 253.12,-88.4" fill="none" stroke="black"></path>
+<polygon fill="none" points="252.39,-91.83 262.91,-90.57 253.9,-84.99 252.39,-91.83" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node5">
+
+<g id="a_node5"><a href="./#vector-keyframe" title="Vector Keyframe">
+<polygon fill="none" points="220.5,-36 135.5,-36 135.5,0 220.5,0 220.5,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="178" y="-15.5">Vector Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge5">
+
+<path d="M212.35,-36.09C217.32,-38.97 222.34,-42 227,-45 241.27,-54.17 256.49,-65.07 269.39,-74.67" fill="none" stroke="black"></path>
+<polygon fill="none" points="267.41,-77.56 277.51,-80.76 271.61,-71.96 267.41,-77.56" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node6">
+
+<g id="a_node6"><a href="./#position-keyframe" title="Position Keyframe">
+<polygon fill="none" points="93,-36 0,-36 0,0 93,0 93,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="46.5" y="-15.5">Position Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge4">
+
+<path d="M93.16,-18C103.42,-18 114.4,-18 124.9,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="125.21,-21.5 135.21,-18 125.21,-14.5 125.21,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/base-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Frame number</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Hold</p>
+</td>
+<td>
+<p>Hold</p>
+</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>In Tangent</p>
+</td>
+<td>
+<p>Easing tangent going into the next keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>Out Tangent</p>
+</td>
+<td>
+<p>Easing tangent leaving the current keyframe</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If <code>h</code> is present and it's 1, you don't need <code>i</code> and <code>o</code>, as the property will keep the same value
+until the next keyframe.</p>
+<h3 id="easing-handle">Keyframe Easing</h3>
+<p></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/easing-handle" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td><span><a href="../values/#vector">Vector</a> or <code>number</code></span></td>
+<td>
+<p>X</p>
+</td>
+<td>
+<p>Time component:
+0 means start time of the keyframe,
+1 means time of the next keyframe.</p>
+</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td><span><a href="../values/#vector">Vector</a> or <code>number</code></span></td>
+<td>
+<p>Y</p>
+</td>
+<td>
+<p>Value interpolation component:
+0 means start value of the keyframe,
+1 means value at the next keyframe.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>They are objects with <code>x</code> and <code>y</code> attributes, which are numbers within 0 and 1.</p>
+<p>For multi-dimensional animated properties, these are arrays, with one element
+per dimension so you can have different easing curves per dimension.</p>
+<p>They represent a cubic bezier, starting at <code>[0,0]</code> and ending at <code>[1,1]</code> where
+the value determines the easing function.</p>
+<p>The <code>x</code> axis represents time, a value of 0 is the time of the current keyframe,
+a value of 1 is the time of the next keyframe.</p>
+<p>The <code>y</code> axis represents the value interpolation factor, a value of 0
+represents the value at the current keyframe, a value of 1 represents the
+value at the next keyframe.</p>
+<p>When you use easing you have two easing handles for the keyframe:</p>
+<p><code>o</code> is the "out" handle, and is the first one in the bezier, determines the curve
+as it exits the current keyframe.</p>
+<p><code>i</code> is the "in" handle, and it's the second one in the bezier, determines the curve
+as it enters the next keyframe.</p>
+<p>For linear interpolation you'd have</p>
+<pre><code class="language-json">{
+    &quot;o&quot;: {&quot;x&quot;: [0, 0], &quot;y&quot;: [0, 0]},
+    &quot;i&quot;: {&quot;x&quot;: [1, 1], &quot;y&quot;: [1, 1]}
+}
+</code></pre>
+<p>For easing in and out, you move the <code>x</code> towards the center, this makes the animation more fluid:</p>
+<pre><code class="language-json">{
+    &quot;o&quot;: {&quot;x&quot;: [0.333, 0.333], &quot;y&quot;: [0, 0]},
+    &quot;i&quot;: {&quot;x&quot;: [0.667, 0.667], &quot;y&quot;: [1, 1]}
+}
+</code></pre>
+<h4 id="old-lottie-keyframes">Old Lottie Keyframes</h4>
+<p>Old lotties have an additional attribute for keyframes, <code>e</code> which works
+similarly to <code>s</code> but represents the value at the end of the keyframe.</p>
+<p>They also have a final keyframe with only the <code>t</code> attribute and you
+need to determine its value based on the <code>s</code> value of the previous keyframe.</p>
+<h4 id="easing-example">Easing example</h4>
+<p>In the following example, the ball moves left and right, on the background
+you can see a representation of its easing function.</p>
+<div class="playground playground-columns print-site-plugin-ignore">
+<div id="editor_37"></div>
+<div>
+<pre id="json_viewer_37_parent"><code class="language-json hljs" id="json_viewer_37">
+</code></pre>
+</div>
+<script>
+        KeyframePreviewEditor.stand_alone(document.getElementById("editor_37"), (lottie) =>
+        {
+            var raw_json = JSON.stringify(lottie, undefined, 4);
+            var pretty_json = hljs.highlight("json", raw_json).value;
+            document.getElementById("json_viewer_37").innerHTML = pretty_json;
+        }, );
+        </script>
+</div>
+<h2 id="property-types">Property types</h2>
+<h3 id="vector-property">Vector</h3>
+<p></p>
+<p>Animatable <a href="../values/#vector">Vector</a>.</p>
+<div>
+<details>
+<summary>Composition Diagram for Vector Property</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 177.00 44.00" width="177pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 173,-40 173,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="79,-36 0,-36 0,0 79,0 79,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="39.5" y="-15.5">Vector Property</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#property" title="Property">
+<polygon fill="none" points="169,-36 115,-36 115,0 169,0 169,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="142" y="-15.5">Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M79.07,-18C87.48,-18 96.34,-18 104.66,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="104.82,-21.5 114.82,-18 104.82,-14.5 104.82,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/vector-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Property Index</p>
+</td>
+<td>
+<p>Property Index</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot ID</p>
+</td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Animated</p>
+</td>
+<td>
+<p>Whether the property is animated</p>
+</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Length</p>
+</td>
+<td>
+<p>Number of components in the value arrays.
+If present values will be truncated or expanded to match this length when accessed from expressions.</p>
+</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td><span><a href="../values/#vector">Vector</a> or <code>array</code></span></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Static Value or Array of keyframes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="vector-keyframe">Vector Keyframe</h4>
+<p></p>
+<p><span></span></p>
+<div>
+<details>
+<summary>Composition Diagram for Vector Keyframe</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 336.00 44.00" width="336pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 332,-40 332,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="214,-36 129,-36 129,0 214,0 214,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="171.5" y="-15.5">Vector Keyframe</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#base-keyframe" title="Base Keyframe">
+<polygon fill="none" points="328,-36 250,-36 250,0 328,0 328,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="289" y="-15.5">Base Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M214.2,-18C222.47,-18 231.21,-18 239.68,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="239.82,-21.5 249.82,-18 239.82,-14.5 239.82,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#position-keyframe" title="Position Keyframe">
+<polygon fill="none" points="93,-36 0,-36 0,0 93,0 93,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="46.5" y="-15.5">Position Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M93.3,-18C101.56,-18 110.21,-18 118.63,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="118.72,-21.5 128.72,-18 118.72,-14.5 118.72,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/vector-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Frame number</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Hold</p>
+</td>
+<td>
+<p>Hold</p>
+</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>In Tangent</p>
+</td>
+<td>
+<p>Easing tangent going into the next keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>Out Tangent</p>
+</td>
+<td>
+<p>Easing tangent leaving the current keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../values/#vector">Vector</a></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Value at this keyframe.</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../values/#vector">Vector</a></td>
+<td>
+<p>End value</p>
+</td>
+<td>
+<p>Value at the end of the keyframe, note that this is deprecated and you should use <code>s</code> from the next keyframe to get this value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="scalar-property">Scalar</h3>
+<p></p>
+<p>Animatable scalar (single number value).</p>
+<p>Note that when animated it uses <a href="./#vector-keyframe">Vector Keyframes</a>,
+so instead of scalars keyframes have arrays with a single values.</p>
+<div>
+<details>
+<summary>Composition Diagram for Scalar Property</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 177.00 44.00" width="177pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 173,-40 173,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="79,-36 0,-36 0,0 79,0 79,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="39.5" y="-15.5">Scalar Property</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#property" title="Property">
+<polygon fill="none" points="169,-36 115,-36 115,0 169,0 169,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="142" y="-15.5">Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M79.07,-18C87.48,-18 96.34,-18 104.66,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="104.82,-21.5 114.82,-18 104.82,-14.5 104.82,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/scalar-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Property Index</p>
+</td>
+<td>
+<p>Property Index</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot ID</p>
+</td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Animated</p>
+</td>
+<td>
+<p>Whether the property is animated</p>
+</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td><span><code>number</code> or <code>array</code></span></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Static Value or Array of keyframes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="position-property">Position</h3>
+<p></p>
+<p>Animatable 2D <a href="../values/#vector">Vector</a> with optional spatial tangents.</p>
+<div>
+<details>
+<summary>Composition Diagram for Position Property</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 186.00 44.00" width="186pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 182,-40 182,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="88,-36 0,-36 0,0 88,0 88,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="44" y="-15.5">Position Property</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#property" title="Property">
+<polygon fill="none" points="178,-36 124,-36 124,0 178,0 178,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="151" y="-15.5">Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M88.01,-18C96.53,-18 105.4,-18 113.67,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="113.76,-21.5 123.76,-18 113.76,-14.5 113.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/position-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Property Index</p>
+</td>
+<td>
+<p>Property Index</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot ID</p>
+</td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Animated</p>
+</td>
+<td>
+<p>Whether the property is animated</p>
+</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Length</p>
+</td>
+<td>
+<p>Number of components in the value arrays.
+If present values will be truncated or expanded to match this length when accessed from expressions.</p>
+</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td><span><a href="../values/#vector">Vector</a> or <code>array</code></span></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Static Value or Array of keyframes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="position-keyframe">Position Keyframe</h4>
+<p></p>
+<p><span></span></p>
+<div>
+<details>
+<summary>Composition Diagram for Position Keyframe</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 336.00 44.00" width="336pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 332,-40 332,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="93,-36 0,-36 0,0 93,0 93,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="46.5" y="-15.5">Position Keyframe</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#vector-keyframe" title="Vector Keyframe">
+<polygon fill="none" points="214,-36 129,-36 129,0 214,0 214,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="171.5" y="-15.5">Vector Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M93.3,-18C101.56,-18 110.21,-18 118.63,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="118.72,-21.5 128.72,-18 118.72,-14.5 118.72,-21.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="./#base-keyframe" title="Base Keyframe">
+<polygon fill="none" points="328,-36 250,-36 250,0 328,0 328,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="289" y="-15.5">Base Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M214.2,-18C222.47,-18 231.21,-18 239.68,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="239.82,-21.5 249.82,-18 239.82,-14.5 239.82,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/position-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Frame number</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Hold</p>
+</td>
+<td>
+<p>Hold</p>
+</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>In Tangent</p>
+</td>
+<td>
+<p>Easing tangent going into the next keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>Out Tangent</p>
+</td>
+<td>
+<p>Easing tangent leaving the current keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../values/#vector">Vector</a></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Value at this keyframe.</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../values/#vector">Vector</a></td>
+<td>
+<p>End value</p>
+</td>
+<td>
+<p>Value at the end of the keyframe, note that this is deprecated and you should use <code>s</code> from the next keyframe to get this value</p>
+</td>
+</tr>
+<tr>
+<td><code>ti</code></td>
+<td><a href="../values/#vector">Vector</a></td>
+<td>
+<p>Value In Tangent</p>
+</td>
+<td>
+<p>Tangent for values (eg: moving position around a curved path)</p>
+</td>
+</tr>
+<tr>
+<td><code>to</code></td>
+<td><a href="../values/#vector">Vector</a></td>
+<td>
+<p>Value Out Tangent</p>
+</td>
+<td>
+<p>Tangent for values (eg: moving position around a curved path)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="split-position"></div>
+<h4 id="splittable-position-property">Split Position</h4>
+<p></p>
+<p><span>An animatable position where position values may be defined and animated separately.</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/split-position" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>s</code></td>
+<td><code>boolean</code> = <code>True</code></td>
+<td>
+<p>Split</p>
+</td>
+<td>
+<p>Whether the position has split values</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><a href="./#scalar-property">Scalar</a></td>
+<td>
+<p>X Position</p>
+</td>
+<td>
+<p>X Position</p>
+</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td><a href="./#scalar-property">Scalar</a></td>
+<td>
+<p>Y Position</p>
+</td>
+<td>
+<p>Y Position</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="bezier-property">Bezier Shape</h3>
+<p></p>
+<p>Animatable <a href="../values/#bezier">Bezier</a>.</p>
+<div>
+<details>
+<summary>Composition Diagram for Bezier Property</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 178.00 44.00" width="178pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 174,-40 174,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="80,-36 0,-36 0,0 80,0 80,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="40" y="-15.5">Bezier Property</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#property" title="Property">
+<polygon fill="none" points="170,-36 116,-36 116,0 170,0 170,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="143" y="-15.5">Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M80.05,-18C88.48,-18 97.36,-18 105.68,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="105.85,-21.5 115.85,-18 105.85,-14.5 105.85,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/bezier-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Property Index</p>
+</td>
+<td>
+<p>Property Index</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot ID</p>
+</td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Animated</p>
+</td>
+<td>
+<p>Whether the property is animated</p>
+</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td><span><a href="../values/#bezier">Bezier</a> or <code>array</code></span></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Static Value or Array of keyframes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="bezier-keyframe">Bezier Shape Keyframe</h4>
+<p></p>
+<p><span></span></p>
+<div>
+<details>
+<summary>Composition Diagram for Shape Keyframe</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 207.00 44.00" width="207pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 203,-40 203,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="85,-36 0,-36 0,0 85,0 85,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="42.5" y="-15.5">Shape Keyframe</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#base-keyframe" title="Base Keyframe">
+<polygon fill="none" points="199,-36 121,-36 121,0 199,0 199,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="160" y="-15.5">Base Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M85.2,-18C93.47,-18 102.21,-18 110.68,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="110.82,-21.5 120.82,-18 110.82,-14.5 110.82,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/bezier-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Frame number</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Hold</p>
+</td>
+<td>
+<p>Hold</p>
+</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>In Tangent</p>
+</td>
+<td>
+<p>Easing tangent going into the next keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>Out Tangent</p>
+</td>
+<td>
+<p>Easing tangent leaving the current keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><code>array</code> of <a href="../values/#bezier">Bezier</a></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Value at this keyframe.</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><code>array</code> of <a href="../values/#bezier">Bezier</a></td>
+<td>
+<p>End value</p>
+</td>
+<td>
+<p>Value at the end of the keyframe, note that this is deprecated and you should use <code>s</code> from the next keyframe to get this value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="color-property">Color</h3>
+<p></p>
+<p>Animatable <a href="../values/#color">Color</a>.</p>
+<div>
+<details>
+<summary>Composition Diagram for Color Property</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 173.00 44.00" width="173pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 169,-40 169,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="75,-36 0,-36 0,0 75,0 75,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="37.5" y="-15.5">Color Property</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#property" title="Property">
+<polygon fill="none" points="165,-36 111,-36 111,0 165,0 165,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="138" y="-15.5">Property</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M75.18,-18C83.48,-18 92.3,-18 100.6,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="100.75,-21.5 110.75,-18 100.75,-14.5 100.75,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/color-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ix</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Property Index</p>
+</td>
+<td>
+<p>Property Index</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot ID</p>
+</td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Animated</p>
+</td>
+<td>
+<p>Whether the property is animated</p>
+</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td><span><a href="../values/#color">Color</a> or <code>array</code></span></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Static Value or Array of keyframes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="color-keyframe">Color Keyframe</h4>
+<p></p>
+<p><span></span></p>
+<div>
+<details>
+<summary>Composition Diagram for Color Keyframe</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 202.00 44.00" width="202pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 198,-40 198,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="80,-36 0,-36 0,0 80,0 80,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="40" y="-15.5">Color Keyframe</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#base-keyframe" title="Base Keyframe">
+<polygon fill="none" points="194,-36 116,-36 116,0 194,0 194,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="155" y="-15.5">Base Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M80.2,-18C88.36,-18 97.05,-18 105.5,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="105.63,-21.5 115.63,-18 105.63,-14.5 105.63,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/color-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Frame number</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Hold</p>
+</td>
+<td>
+<p>Hold</p>
+</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>In Tangent</p>
+</td>
+<td>
+<p>Easing tangent going into the next keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>Out Tangent</p>
+</td>
+<td>
+<p>Easing tangent leaving the current keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../values/#color">Color</a></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Value at this keyframe.</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../values/#color">Color</a></td>
+<td>
+<p>End value</p>
+</td>
+<td>
+<p>Value at the end of the keyframe, note that this is deprecated and you should use <code>s</code> from the next keyframe to get this value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gradient-stops"></div>
+<h3 id="gradient-property">Gradient</h3>
+<p></p>
+<p>Animatable <a href="../values/#gradient">Gradient</a>.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/gradient-property" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>p</code></td>
+<td><code>number</code></td>
+<td>
+<p>Color stop count</p>
+</td>
+<td>
+<p>Color stop count</p>
+</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td><a href="./#gradient-stops">Gradient stops</a></td>
+<td>
+<p>Gradient stops</p>
+</td>
+<td>
+<p>Gradient stops</p>
+</td>
+</tr>
+<tr>
+<td><code>k.a</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>Animated</td>
+<td>Whether the property is animated</td>
+</tr>
+<tr>
+<td><code>k.k</code></td>
+<td><a href="../values/#gradient">Gradient</a> or <code>array</code></td>
+<td>Value or Keyframes</td>
+<td>When it's not animated, <code>k</code> will contain the value directly. When animated, <code>k</code> will be an array of keyframes.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Color count is not animatable.</p>
+<h4 id="gradient-keyframe">Gradient Keyframe</h4>
+<p></p>
+<p><span></span></p>
+<div>
+<details>
+<summary>Composition Diagram for Gradient Keyframe</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 220.00 44.00" width="220pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 216,-40 216,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="98,-36 0,-36 0,0 98,0 98,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="49" y="-15.5">Gradient Keyframe</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="./#base-keyframe" title="Base Keyframe">
+<polygon fill="none" points="212,-36 134,-36 134,0 212,0 212,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="173" y="-15.5">Base Keyframe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M98.22,-18C106.65,-18 115.42,-18 123.84,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="123.91,-21.5 133.91,-18 123.91,-14.5 123.91,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/properties/gradient-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Frame number</p>
+</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Hold</p>
+</td>
+<td>
+<p>Hold</p>
+</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>In Tangent</p>
+</td>
+<td>
+<p>Easing tangent going into the next keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="./#easing-handle">Keyframe Easing</a></td>
+<td>
+<p>Out Tangent</p>
+</td>
+<td>
+<p>Easing tangent leaving the current keyframe</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../values/#gradient">Gradient</a></td>
+<td>
+<p>Value</p>
+</td>
+<td>
+<p>Value at this keyframe.</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../values/#gradient">Gradient</a></td>
+<td>
+<p>End value</p>
+</td>
+<td>
+<p>Value at the end of the keyframe, note that this is deprecated and you should use <code>s</code> from the next keyframe to get this value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

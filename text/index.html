@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/text/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Text - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../constants/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../expressions/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/text.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#text">Text</a></li>
+            <li class="second-level"><a href="#font-list">Font List</a></li>
+                
+                <li class="third-level"><a href="#using-a-system-font">Using a system font</a></li>
+                <li class="third-level"><a href="#font-from-css-url">Font from CSS URL</a></li>
+                <li class="third-level"><a href="#font-from-url">Font from URL</a></li>
+                <li class="third-level"><a href="#character-data">Character Data</a></li>
+            <li class="second-level"><a href="#text-layer">Text Layer</a></li>
+                
+                <li class="third-level"><a href="#text-data">Text Data</a></li>
+                <li class="third-level"><a href="#animated-text-document">Animated Text Document</a></li>
+                <li class="third-level"><a href="#text-document-keyframe">Text Document Keyframe</a></li>
+                <li class="third-level"><a href="#text-document">Text Document</a></li>
+                <li class="third-level"><a href="#text-alignment-options">Text Alignment Options</a></li>
+                <li class="third-level"><a href="#text-follow-path">Text Follow Path</a></li>
+                <li class="third-level"><a href="#text-range">Text Range</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="text">Text</h1>
+<h2 id="font-list">Font List</h2>
+<p>Fonts are defined in the animation object, under <code>fonts</code>.</p>
+<p>When <code>fonts</code> is present in the <a href="../composition/#animation">Animation</a> object,
+it has a single attribute called <code>list</code>, which is an array of font objects:</p>
+<div id="font"></div>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/font" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ascent</code></td>
+<td><code>number</code></td>
+<td>
+<p>Ascent</p>
+</td>
+<td>
+<p>Text will be moved down based on this value</p>
+</td>
+</tr>
+<tr>
+<td><code>fFamily</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Family</p>
+</td>
+<td>
+<p>Font Family</p>
+</td>
+</tr>
+<tr>
+<td><code>fName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Name used by text documents to reference this font, usually it's <code>fFamily</code> followed by <code>fStyle</code></p>
+</td>
+</tr>
+<tr>
+<td><code>fStyle</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Style</p>
+</td>
+<td>
+<p>Font Style</p>
+</td>
+</tr>
+<tr>
+<td><code>fPath</code></td>
+<td><code>string</code></td>
+<td>
+<p>Path</p>
+</td>
+<td>
+<p>Path</p>
+</td>
+</tr>
+<tr>
+<td><code>fWeight</code></td>
+<td><code>string</code></td>
+<td>
+<p>Weight</p>
+</td>
+<td>
+<p>Weight</p>
+</td>
+</tr>
+<tr>
+<td><code>origin</code></td>
+<td><a href="../constants/#font-path-origin">Font Path Origin</a></td>
+<td>
+<p>Origin</p>
+</td>
+<td>
+<p>Origin</p>
+</td>
+</tr>
+<tr>
+<td><code>fClass</code></td>
+<td><code>string</code></td>
+<td>
+<p>CSS Class</p>
+</td>
+<td>
+<p>CSS Class applied to text objects using this font</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To understand how to load fonts it's better to look at some examples so here
+follow various ways of adding a font into lottie. The tables show the JSON,
+its resulting output, then an equivalent font definition using CSS.</p>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf) format('truetype');
+}
+</style>
+
+<h3 id="using-a-system-font">Using a system font</h3>
+<p>Here we use <code>origin</code> 0 (and we can omit it).</p>
+<p><code>fFamily</code> needs to be an available font family.</p>
+<table>
+<tr>
+<th>JSON</th>
+<th>Lottie Output</th>
+</tr>
+<tr>
+<td>
+
+
+<pre><code class="language-json">{
+    &quot;fFamily&quot;: &quot;monospace&quot;,
+    &quot;fName&quot;: &quot;MyFont&quot;,
+    &quot;fStyle&quot;: &quot;Regular&quot;
+}
+</code></pre>
+
+
+</td>
+<td>
+<div>
+<div class="animation-container" style="background: white">
+<div id="lottie_target_66"></div>
+</div>
+<script>
+                var lottie_player_66 = new LottiePlayer(
+                    'lottie_target_66',
+                    '../static/examples/font-local.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</td>
+</tr>
+<tr>
+<th>CSS</th>
+<th>Output</th>
+</tr>
+<tr>
+<td>
+
+
+<pre><code class="language-css">{
+    font-family: monospace;
+}
+</code></pre>
+
+
+</td>
+<td>
+<div style="font-family: monospace; font-size:100px; color: black; background: white;">Hello</div>
+</td>
+</tr>
+</table>
+<h3 id="font-from-css-url">Font from CSS URL</h3>
+<p>Here we use <code>origin</code> 1.</p>
+<table>
+<tr>
+<th>JSON</th>
+<th>Lottie Output</th>
+</tr>
+<tr>
+<td>
+
+
+<pre><code class="language-json">{
+    &quot;fPath&quot;: &quot;https://fonts.googleapis.com/css2?family=Montserrat:wght@800&amp;display=swap&quot;,
+    &quot;fFamily&quot;: &quot;Poppins&quot;,
+    &quot;fStyle&quot;: &quot;Bold&quot;,
+    &quot;fName&quot;: &quot;Poppins Bold&quot;,
+    &quot;origin&quot;: 1
+}
+</code></pre>
+
+
+</td>
+<td>
+<div>
+<div class="animation-container" style="background: white">
+<div id="lottie_target_67"></div>
+</div>
+<script>
+                var lottie_player_67 = new LottiePlayer(
+                    'lottie_target_67',
+                    '../static/examples/font-css.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</td>
+</tr>
+<tr>
+<th>CSS</th>
+<th>Output</th>
+</tr>
+<tr>
+<td>
+
+
+<pre><code class="language-css"> @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&amp;display=swap');
+</code></pre>
+
+
+or
+
+
+<pre><code class="language-html">&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+</code></pre>
+
+
+</td>
+<td>
+<div style="font-family: Poppins; font-size:100px; color: black; background: white;">Hello</div>
+</td>
+</tr>
+</table>
+<h3 id="font-from-url">Font from URL</h3>
+<p>Here we use <code>origin</code> 3.</p>
+<table>
+<tr>
+<th>JSON</th>
+<th>Lottie Output</th>
+</tr>
+<tr>
+<td>
+
+
+<pre><code class="language-json">{
+    &quot;fPath&quot;: &quot;https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf&quot;,
+    &quot;fFamily&quot;: &quot;Ubuntu&quot;,
+    &quot;fStyle&quot;: &quot;Light Italic&quot;,
+    &quot;fName&quot;: &quot;Ubuntu Light Italic&quot;,
+    &quot;origin&quot;: 3
+}
+</code></pre>
+
+
+</td>
+<td>
+<div>
+<div class="animation-container" style="background: white">
+<div id="lottie_target_68"></div>
+</div>
+<script>
+                var lottie_player_68 = new LottiePlayer(
+                    'lottie_target_68',
+                    '../static/examples/font-url.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+</td>
+</tr>
+<tr>
+<th>CSS</th>
+<th>Output</th>
+</tr>
+<tr>
+<td>
+
+
+<pre><code class="language-css">@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf) format('truetype');
+}
+</code></pre>
+
+
+</td>
+<td>
+<div style="font-family: ubuntu; font-weight: 300; font-style: italic; font-size:100px; color: black; background: white;">Hello</div>
+</td>
+</tr>
+</table>
+<h3 id="character-data">Character Data</h3>
+<p>You can also have font data directly into the lottie, this is done by having an
+array of character data objects in the <code>chars</code> attribute of the <a href="../composition/#animation">Animation</a>.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/character-data" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ch</code></td>
+<td><code>string</code></td>
+<td>
+<p>Character</p>
+</td>
+<td>
+<p>Character</p>
+</td>
+</tr>
+<tr>
+<td><code>fFamily</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Family</p>
+</td>
+<td>
+<p>Font Family</p>
+</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>number</code></td>
+<td>
+<p>Font Size</p>
+</td>
+<td>
+<p>Font Size</p>
+</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Style</p>
+</td>
+<td>
+<p>Font Style</p>
+</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td><code>number</code></td>
+<td>
+<p>Width</p>
+</td>
+<td>
+<p>Width</p>
+</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><span><a href="./#character-shapes">Character Shape</a> or <a href="./#character-precomp">Character Precomp</a></span></td>
+<td>
+<p>Data</p>
+</td>
+<td>
+<p>Data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="character-shapes">Character Shapes</h4>
+<p><span>Defines a character as shapes</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/character-shapes" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shapes</code></td>
+<td><code>array</code> of <a href="../shapes/#graphic-element">Graphic Element</a></td>
+<td>
+<p>Shapes</p>
+</td>
+<td>
+<p>Shapes forming the character</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="character-precomp">Character Precomp</h4>
+<p><span>Defines a character as a precomp layer</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/character-precomp" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>refId</code></td>
+<td><code>string</code></td>
+<td>
+<p>Reference Id</p>
+</td>
+<td>
+<p>ID of the precomp as specified in the assets</p>
+</td>
+</tr>
+<tr>
+<td><code>ks</code></td>
+<td><a href="../helpers/#transform">Transform</a></td>
+<td>
+<p>Transform</p>
+</td>
+<td>
+<p>Layer transform</p>
+</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>number</code></td>
+<td>
+<p>In Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes visible</p>
+</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td><code>number</code></td>
+<td>
+<p>Out Point</p>
+</td>
+<td>
+<p>Frame when the layer becomes invisible</p>
+</td>
+</tr>
+<tr>
+<td><code>sr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time Stretch</p>
+</td>
+<td>
+<p>Time Stretch</p>
+</td>
+</tr>
+<tr>
+<td><code>st</code></td>
+<td><code>number</code></td>
+<td>
+<p>Start Time</p>
+</td>
+<td>
+<p>Start Time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="text-layer">Text Layer</h2>
+<p>The <a href="../layers/#text-layer">text layer</a> has an attribute called <code>t</code> containing a <a href="#text-animator-data">Text Animator Data</a> object.</p>
+<h3 id="text-data">Text Data</h3>
+<p><span>Contains all the text data and animation</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-data" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td><code>array</code> of <a href="./#text-range">Text Range</a></td>
+<td>
+<p>Ranges</p>
+</td>
+<td>
+<p>Ranges</p>
+</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td><a href="./#animated-text-document">Animated Text Document</a></td>
+<td>
+<p>Document</p>
+</td>
+<td>
+<p>Document</p>
+</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td><a href="./#text-alignment-options">Text Alignment Options</a></td>
+<td>
+<p>Alignment</p>
+</td>
+<td>
+<p>Alignment</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="./#text-follow-path">Text Follow Path</a></td>
+<td>
+<p>Follow Path</p>
+</td>
+<td>
+<p>Follow Path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="animated-text-document">Animated Text Document</h3>
+<p>This object is similar to an <a href="../properties/#animated-property">animated property</a> for text.</p>
+<p>The main difference is that it's always treated as animated (ie: you <em>must</em> use keyframes).</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/animated-text-document" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>k</code></td>
+<td><code>array</code> of <a href="./#text-document-keyframe">Text Document Keyframe</a></td>
+<td>
+<p>Keyframes</p>
+</td>
+<td>
+<p>Keyframes</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>string</code></td>
+<td>
+<p>Expression</p>
+</td>
+<td>
+<p>Expression</p>
+</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot ID</p>
+</td>
+<td>
+<p>One of the ID in the file's slots</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-document-keyframe">Text Document Keyframe</h3>
+<p>This is similar to the <a href="../properties/#base-keyframe">keyframe</a> object used by animated properties,
+but it doesn't have any attribute specifying interpolation as text is always animated in discrete steps.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-document-keyframe" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>s</code></td>
+<td><a href="./#text-document">Text Document</a></td>
+<td>
+<p>Start</p>
+</td>
+<td>
+<p>Start</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-document">Text Document</h3>
+<p>This is where the actual text data is stored.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-document" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f</code></td>
+<td><code>string</code></td>
+<td>
+<p>Font Family</p>
+</td>
+<td>
+<p>Font Family</p>
+</td>
+</tr>
+<tr>
+<td><code>fc</code></td>
+<td><a href="../values/#color">Color</a></td>
+<td>
+<p>Fill Color</p>
+</td>
+<td>
+<p>Fill Color</p>
+</td>
+</tr>
+<tr>
+<td><code>sc</code></td>
+<td><a href="../values/#color">Color</a></td>
+<td>
+<p>Stroke Color</p>
+</td>
+<td>
+<p>Stroke Color</p>
+</td>
+</tr>
+<tr>
+<td><code>sw</code></td>
+<td><code>number</code></td>
+<td>
+<p>Stroke Width</p>
+</td>
+<td>
+<p>Stroke Width</p>
+</td>
+</tr>
+<tr>
+<td><code>of</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Stroke Over Fill</p>
+</td>
+<td>
+<p>Render stroke above the fill</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><code>number</code></td>
+<td>
+<p>Font Size</p>
+</td>
+<td>
+<p>Font Size</p>
+</td>
+</tr>
+<tr>
+<td><code>lh</code></td>
+<td><code>number</code></td>
+<td>
+<p>Line Height</p>
+</td>
+<td>
+<p>Distance between lines on multiline or wrapped text</p>
+</td>
+</tr>
+<tr>
+<td><code>sz</code></td>
+<td><code>array</code> of <code>number</code></td>
+<td>
+<p>Wrap Size</p>
+</td>
+<td>
+<p>Size of the box containing the text</p>
+</td>
+</tr>
+<tr>
+<td><code>ps</code></td>
+<td><code>array</code> of <code>number</code></td>
+<td>
+<p>Wrap Position</p>
+</td>
+<td>
+<p>Position of the box containing the text</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><code>string</code></td>
+<td>
+<p>Text</p>
+</td>
+<td>
+<p>Text, note that newlines are encoded with \r</p>
+</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td><a href="../constants/#text-justify">Text Justify</a></td>
+<td>
+<p>Justify</p>
+</td>
+<td>
+<p>Justify</p>
+</td>
+</tr>
+<tr>
+<td><code>ca</code></td>
+<td><a href="../constants/#text-caps">Text Caps</a></td>
+<td>
+<p>Text Caps</p>
+</td>
+<td>
+<p>Text Caps</p>
+</td>
+</tr>
+<tr>
+<td><code>tr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Tracking</p>
+</td>
+<td>
+<p>Text Tracking</p>
+</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td><code>number</code></td>
+<td>
+<p>Baseline Shift</p>
+</td>
+<td>
+<p>Baseline Shift</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Text</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" name="Text" oninput="lottie_player_69.reload();" title="Text" type="text" value="Hello" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Color Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="1" min="0" name="Color Red" oninput="lottie_player_69.reload();document.getElementById('playground_69_2_span').innerText = event.target.value;" step="0.01" title="Color Red" type="range" value="0" />
+        <span id="playground_69_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Color Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="1" min="0" name="Color Green" oninput="lottie_player_69.reload();document.getElementById('playground_69_3_span').innerText = event.target.value;" step="0.01" title="Color Green" type="range" value="0" />
+        <span id="playground_69_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Color Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="1" min="0" name="Color Blue" oninput="lottie_player_69.reload();document.getElementById('playground_69_4_span').innerText = event.target.value;" step="0.01" title="Color Blue" type="range" value="0" />
+        <span id="playground_69_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="32" min="0" name="Stroke Width" oninput="lottie_player_69.reload();document.getElementById('playground_69_5_span').innerText = event.target.value;" title="Stroke Width" type="range" value="0" />
+        <span id="playground_69_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Red</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="1" min="0" name="Stroke Red" oninput="lottie_player_69.reload();document.getElementById('playground_69_6_span').innerText = event.target.value;" step="0.01" title="Stroke Red" type="range" value="0" />
+        <span id="playground_69_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Green</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="1" min="0" name="Stroke Green" oninput="lottie_player_69.reload();document.getElementById('playground_69_7_span').innerText = event.target.value;" step="0.01" title="Stroke Green" type="range" value="0" />
+        <span id="playground_69_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Blue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="1" min="0" name="Stroke Blue" oninput="lottie_player_69.reload();document.getElementById('playground_69_8_span').innerText = event.target.value;" step="0.01" title="Stroke Blue" type="range" value="0" />
+        <span id="playground_69_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="300" min="0" name="Position X" oninput="lottie_player_69.reload();document.getElementById('playground_69_9_span').innerText = event.target.value;" title="Position X" type="range" value="5" />
+        <span id="playground_69_9_span">5</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="100" min="0" name="Position Y" oninput="lottie_player_69.reload();document.getElementById('playground_69_10_span').innerText = event.target.value;" title="Position Y" type="range" value="80" />
+        <span id="playground_69_10_span">80</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Font Size</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="69" max="150" min="0" name="Font Size" oninput="lottie_player_69.reload();document.getElementById('playground_69_11_span').innerText = event.target.value;" title="Font Size" type="range" value="100" />
+        <span id="playground_69_11_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Justify</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="69" name="Justify" oninput="lottie_player_69.reload();"><option value="0">Left</option><option value="1">Right</option><option value="2">Center</option><option value="3">Justify with Last Line Left</option><option value="4">Justify with Last Line Right</option><option value="5">Justify with Last Line Center</option><option value="6">Justify with Last Line Full</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_69" style="width:300px;height:100px"></div>
+</div>
+<div class="json-parent" id="playground_69_13_parent">
+<pre><code class="language-json hljs" id="playground_69_13">
+</code></pre>
+</div>
+<script>
+        var lottie_player_69 = new PlaygroundPlayer(
+            69,
+            'playground_69_13',
+            'lottie_target_69',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 120, "w": 300, "h": 100, "ddd": 0, "assets": [], "fonts": {"list": [{"fPath": "https://fonts.gstatic.com/s/ubuntu/v15/4iCp6KVjbNBYlgoKejZftWyI.ttf", "fFamily": "Ubuntu", "fStyle": "Light Italic", "fName": "Ubuntu Light Italic", "origin": 3}]}, "layers": [{"nm": "Text Layer", "ty": 5, "sr": 1, "ks": {"p": {"k": [5, 80], "a": 0}}, "ip": 0, "op": 120, "st": 0, "t": {"a": [], "d": {"k": [{"s": {"f": "Ubuntu Light Italic", "fc": [0, 0, 0], "s": 100, "t": "Hello", "j": 0}, "t": 0}]}, "m": {"a": {"k": [0, 0], "a": 0}}, "p": {}}}]},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].t.d.k[0].s.t = data["Text"];
+    lottie.layers[0].t.d.k[0].s.fc[0] = data["Color Red"];
+    lottie.layers[0].t.d.k[0].s.fc[1] = data["Color Green"];
+    lottie.layers[0].t.d.k[0].s.fc[2] = data["Color Blue"];
+    lottie.layers[0].t.d.k[0].s.sc = [
+        data["Stroke Red"],
+        data["Stroke Green"],
+        data["Stroke Blue"]
+    ];
+    lottie.layers[0].t.d.k[0].s.sw = data["Stroke Width"];
+    lottie.layers[0].ks.p.k[0] = data["Position X"];
+    lottie.layers[0].ks.p.k[1] = data["Position Y"];
+    lottie.layers[0].t.d.k[0].s.s = data["Font Size"];
+    lottie.layers[0].t.d.k[0].s.j = Number(data["Justify"]);
+    this.json_viewer_contents = lottie.layers[0];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h3 id="text-alignment-options">Text Alignment Options</h3>
+<p>Used to change the origin point for transformations, such as Rotation, that may be applied to the text string. The origin point for each character, word, or line can be changed.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-alignment-options" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td><a href="../properties/#vector-property">Vector</a></td>
+<td>
+<p>Alignment</p>
+</td>
+<td>
+<p>Group alignment</p>
+</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td><a href="../constants/#text-grouping">Text Grouping</a></td>
+<td>
+<p>Grouping</p>
+</td>
+<td>
+<p>Anchor point grouping</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-follow-path">Text Follow Path</h3>
+<p><span>Uses the path described by a layer mask to put the text on said path.</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-follow-path" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>m</code></td>
+<td><code>integer</code></td>
+<td>
+<p>Mask</p>
+</td>
+<td>
+<p>Index of the mask to use</p>
+</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>First Margin</p>
+</td>
+<td>
+<p>First Margin</p>
+</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Last Margin</p>
+</td>
+<td>
+<p>Last Margin</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Reverse Path</p>
+</td>
+<td>
+<p>Reverse Path</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Force Alignment</p>
+</td>
+<td>
+<p>Force Alignment</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Perpendicular To Path</p>
+</td>
+<td>
+<p>Perpendicular To Path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="text-range">Text Range</h3>
+<p><span>Range of text with custom animations and style</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-range" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Name</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="./#text-range-selector">Text Range Selector</a></td>
+<td>
+<p>Selector</p>
+</td>
+<td>
+<p>Selector</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="./#text-style">Text Style</a></td>
+<td>
+<p>Style</p>
+</td>
+<td>
+<p>Style</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td colspan="2" style="white-space: pre"><label>Text</label> </td>
+</tr>
+<tr>
+<td colspan="2" style="width: 100%">
+<textarea autocomplete="off" class="code-input" data-lottie-input="70" name="Text" oninput="lottie_player_70.reload();" rows="4" style="width: 100%" title="Text">        Hello World
+        the quick brown
+        fox jumps over
+        the lazy dog
+        </textarea>
+        Selector
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Start</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="0" name="Start" oninput="lottie_player_70.reload();document.getElementById('playground_70_2_span').innerText = event.target.value;" step="1" title="Start" type="range" value="60" />
+        <span id="playground_70_2_span">60</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>End</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="0" name="End" oninput="lottie_player_70.reload();document.getElementById('playground_70_3_span').innerText = event.target.value;" step="1" title="End" type="range" value="75" />
+        <span id="playground_70_3_span">75</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Offset</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Offset" oninput="lottie_player_70.reload();document.getElementById('playground_70_4_span').innerText = event.target.value;" step="1" title="Offset" type="range" value="0" />
+        <span id="playground_70_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Min Ease</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Min Ease" oninput="lottie_player_70.reload();document.getElementById('playground_70_5_span').innerText = event.target.value;" step="1" title="Min Ease" type="range" value="0" />
+        <span id="playground_70_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Max Ease</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Max Ease" oninput="lottie_player_70.reload();document.getElementById('playground_70_6_span').innerText = event.target.value;" step="1" title="Max Ease" type="range" value="0" />
+        <span id="playground_70_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Randomize</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" name="Randomize" oninput="lottie_player_70.reload();" title="Randomize" type="checkbox" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Range Units</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="70" name="Range Units" oninput="lottie_player_70.reload();"><option value="1">Percent</option><option value="2">Index</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Based On</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="70" name="Based On" oninput="lottie_player_70.reload();"><option value="1">Characters</option><option value="2">Character Excluding Spaces</option><option value="3">Words</option><option value="4">Lines</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Shape</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="70" name="Shape" oninput="lottie_player_70.reload();"><option value="1">Square</option><option value="2">Ramp Up</option><option value="3">Ramp Down</option><option value="4">Triangle</option><option value="5">Round</option><option value="6">Smooth</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Position X" oninput="lottie_player_70.reload();document.getElementById('playground_70_11_span').innerText = event.target.value;" step="1" title="Position X" type="range" value="0" />
+        <span id="playground_70_11_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Position Y" oninput="lottie_player_70.reload();document.getElementById('playground_70_12_span').innerText = event.target.value;" step="1" title="Position Y" type="range" value="0" />
+        <span id="playground_70_12_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="360" min="0" name="Rotation" oninput="lottie_player_70.reload();document.getElementById('playground_70_13_span').innerText = event.target.value;" step="1" title="Rotation" type="range" value="0" />
+        <span id="playground_70_13_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="0" name="Opacity" oninput="lottie_player_70.reload();document.getElementById('playground_70_14_span').innerText = event.target.value;" step="1" title="Opacity" type="range" value="100" />
+        Style
+        <span id="playground_70_14_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" lottie-color="1" name="Fill" oninput="lottie_player_70.reload();" title="Fill" type="color" value="#3250b0" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill Hue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="360" min="-360" name="Fill Hue" oninput="lottie_player_70.reload();document.getElementById('playground_70_16_span').innerText = event.target.value;" step="1" title="Fill Hue" type="range" value="0" />
+        <span id="playground_70_16_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill Saturation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Fill Saturation" oninput="lottie_player_70.reload();document.getElementById('playground_70_17_span').innerText = event.target.value;" step="1" title="Fill Saturation" type="range" value="0" />
+        <span id="playground_70_17_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill Brightness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Fill Brightness" oninput="lottie_player_70.reload();document.getElementById('playground_70_18_span').innerText = event.target.value;" step="1" title="Fill Brightness" type="range" value="0" />
+        <span id="playground_70_18_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" lottie-color="1" name="Stroke" oninput="lottie_player_70.reload();" title="Stroke" type="color" value="#000000" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="20" min="0" name="Stroke Width" oninput="lottie_player_70.reload();document.getElementById('playground_70_20_span').innerText = event.target.value;" step="1" title="Stroke Width" type="range" value="0" />
+        <span id="playground_70_20_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Letter Spacing</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="70" max="100" min="-100" name="Letter Spacing" oninput="lottie_player_70.reload();document.getElementById('playground_70_21_span').innerText = event.target.value;" step="1" title="Letter Spacing" type="range" value="0" />
+    <span id="playground_70_21_span">0</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_70" style="width:512px;height:350px"></div>
+</div>
+<div class="json-parent" id="playground_70_22_parent">
+<pre><code class="language-json hljs" id="playground_70_22">
+</code></pre>
+</div>
+<script>
+        var lottie_player_70 = new PlaygroundPlayer(
+            70,
+            'playground_70_22',
+            'lottie_target_70',
+            {"v": "5.9.6", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 350, "assets": [], "fonts": {"list": [{"origin": 0, "fPath": "", "fClass": "", "fFamily": "Sans", "fWeight": "", "fStyle": "Regular", "fName": "Sans"}]}, "layers": [{"ty": 5, "sr": 1, "ip": 0, "op": 60, "st": 0, "ks": {"p": {"a": 0, "k": [256, 70, 0]}}, "t": {"d": {"k": [{"s": {"s": 70, "f": "Sans", "t": "Hello World\rthe quick brown\rfox jumps over\rthe lazy dog", "ls": 0, "j": 2, "fc": [0, 0, 0], "sc": [0, 0, 0], "sw": 0, "of": true}, "t": 0}]}, "p": {}, "m": {"g": 1, "a": {"a": 0, "k": [0, 0], "ix": 2}}, "a": [{"nm": "Text Range", "s": {"t": 0, "o": {"a": 0, "k": 0}, "s": {"a": 0, "k": 60}, "e": {"a": 0, "k": 75}, "a": {"a": 0, "k": 100}, "b": 1, "rn": 0, "sh": 1, "xe": {"a": 0, "k": 0}, "ne": {"a": 0, "k": 0}, "sm": {"a": 0, "k": 100}, "r": 1}, "a": {"p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}, "fc": {"a": 0, "k": [0.196, 0.314, 0.69]}, "fh": {"a": 0, "k": 0}, "fs": {"a": 0, "k": 0}, "fb": {"a": 0, "k": 0}, "sc": {"a": 0, "k": [1, 0, 0]}, "sw": {"a": 0, "k": 0}, "t": {"a": 0, "k": 0}}}]}}, {"ty": 1, "ip": 0, "op": 60, "st": 0, "ks": {}, "sc": "#ffffff", "sw": 512, "sh": 350}]},
+            function (lottie, data)
+            {
+                
+    var range = lottie.layers[0].t.a[0];
+    lottie.fonts.list[0].fFamily = "monospace";
+    lottie.layers[0].t.d.k[0].s.t = data["Text"].replace(/\n\r?/g, "\r")
+    range.s.s.k = data["Start"];
+    range.s.e.k = data["End"];
+    range.s.o.k = data["Offset"];
+    range.s.ne.k = data["Min Ease"];
+    range.s.xe.k = data["Max Ease"];
+    range.s.rn = Number(data["Randomize"]);
+    range.s.b = Number(data["Based On"]);
+    range.s.sh = Number(data["Shape"]);
+    range.s.r = Number(data["Range Units"]);
+    range.a.p.k = [data["Position X"], data["Position Y"]];
+    range.a.o.k = data["Opacity"];
+    range.a.r.k = data["Rotation"];
+    range.a.fc.k = data["Fill"];
+    range.a.sc.k = data["Stroke"];
+    range.a.sw.k = data["Stroke Width"];
+    range.a.t.k = data["Letter Spacing"];
+    range.a.fh.k = data["Fill Hue"];
+    range.a.fs.k = data["Fill Saturation"];
+    range.a.fb.k = data["Fill Brightness"];
+    this.json_viewer_contents = lottie.layers[0].t.a[0];
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h4 id="text-range-selector">Text Range Selector</h4>
+<p>Defines the range of characters to apply a property value only to
+a specific subset of the text document.</p>
+<p><code>r</code> Defines whether the values are defined as a percentage or indices.</p>
+<p>The range is defined by <code>s</code>, <code>e</code>, and <code>o</code>.</p>
+<p><code>ne</code> and <code>xe</code> define what happes to text that is only partly inside the selected range.</p>
+<p><code>b</code> changes whether selection is done on per character basis, per word, etc.
+It also changes the meaning of an index when <code>r</code> is set to Indices.</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-range-selector" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Expressible</p>
+</td>
+<td>
+<p>Expressible</p>
+</td>
+</tr>
+<tr>
+<td><code>xe</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Max Ease</p>
+</td>
+<td>
+<p>Max Ease</p>
+</td>
+</tr>
+<tr>
+<td><code>ne</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Min Ease</p>
+</td>
+<td>
+<p>Min Ease</p>
+</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Max Amount</p>
+</td>
+<td>
+<p>Max Amount</p>
+</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td><a href="../constants/#text-based">Text Based</a></td>
+<td>
+<p>Based On</p>
+</td>
+<td>
+<p>Based On</p>
+</td>
+</tr>
+<tr>
+<td><code>rn</code></td>
+<td><a href="../values/#int-boolean" style="white-space: nowrap;">0-1 <code>integer</code></a></td>
+<td>
+<p>Randomize</p>
+</td>
+<td>
+<p>Randomize</p>
+</td>
+</tr>
+<tr>
+<td><code>sh</code></td>
+<td><a href="../constants/#text-shape">Text Shape</a></td>
+<td>
+<p>Shape</p>
+</td>
+<td>
+<p>Shape</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Offset</p>
+</td>
+<td>
+<p>Offset</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../constants/#text-range-units">Text Range Units</a></td>
+<td>
+<p>Range Units</p>
+</td>
+<td>
+<p>Range Units</p>
+</td>
+</tr>
+<tr>
+<td><code>sm</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Selector Smoothness</p>
+</td>
+<td>
+<p>Selector Smoothness</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Start</p>
+</td>
+<td>
+<p>Start</p>
+</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>End</p>
+</td>
+<td>
+<p>End</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Start</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="71" max="100" min="0" name="Start" oninput="lottie_player_71.reload();document.getElementById('playground_71_1_span').innerText = event.target.value;" step="1" title="Start" type="range" value="60" />
+        <span id="playground_71_1_span">60</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>End</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="71" max="100" min="0" name="End" oninput="lottie_player_71.reload();document.getElementById('playground_71_2_span').innerText = event.target.value;" step="1" title="End" type="range" value="75" />
+        <span id="playground_71_2_span">75</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Offset</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="71" max="100" min="-100" name="Offset" oninput="lottie_player_71.reload();document.getElementById('playground_71_3_span').innerText = event.target.value;" step="1" title="Offset" type="range" value="0" />
+        <span id="playground_71_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Min Ease</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="71" max="100" min="-100" name="Min Ease" oninput="lottie_player_71.reload();document.getElementById('playground_71_4_span').innerText = event.target.value;" step="1" title="Min Ease" type="range" value="0" />
+        <span id="playground_71_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Max Ease</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="71" max="100" min="-100" name="Max Ease" oninput="lottie_player_71.reload();document.getElementById('playground_71_5_span').innerText = event.target.value;" step="1" title="Max Ease" type="range" value="0" />
+        <span id="playground_71_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Randomize</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="71" name="Randomize" oninput="lottie_player_71.reload();" title="Randomize" type="checkbox" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Range Units</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="71" name="Range Units" oninput="lottie_player_71.reload();"><option value="1">Percent</option><option value="2">Index</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Based On</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="71" name="Based On" oninput="lottie_player_71.reload();"><option value="1">Characters</option><option value="2">Character Excluding Spaces</option><option value="3">Words</option><option value="4">Lines</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Shape</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="71" name="Shape" oninput="lottie_player_71.reload();"><option value="1">Square</option><option value="2">Ramp Up</option><option value="3">Ramp Down</option><option value="4">Triangle</option><option value="5">Round</option><option value="6">Smooth</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_71" style="width:512px;height:350px"></div>
+</div>
+<div class="json-parent" id="playground_71_10_parent">
+<pre><code class="language-json hljs" id="playground_71_10">
+</code></pre>
+</div>
+<script>
+        var lottie_player_71 = new PlaygroundPlayer(
+            71,
+            'playground_71_10',
+            'lottie_target_71',
+            {"v": "5.9.6", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 350, "assets": [], "fonts": {"list": [{"origin": 0, "fPath": "", "fClass": "", "fFamily": "Sans", "fWeight": "", "fStyle": "Regular", "fName": "Sans"}]}, "layers": [{"ty": 5, "sr": 1, "ip": 0, "op": 60, "st": 0, "ks": {"p": {"a": 0, "k": [256, 70, 0]}}, "t": {"d": {"k": [{"s": {"s": 70, "f": "Sans", "t": "Hello World\rthe quick brown\rfox jumps over\rthe lazy dog", "ls": 0, "j": 2, "fc": [0, 0, 0], "sc": [0, 0, 0], "sw": 0, "of": true}, "t": 0}]}, "p": {}, "m": {"g": 1, "a": {"a": 0, "k": [0, 0], "ix": 2}}, "a": [{"nm": "Text Range", "s": {"t": 0, "o": {"a": 0, "k": 0}, "s": {"a": 0, "k": 60}, "e": {"a": 0, "k": 75}, "a": {"a": 0, "k": 100}, "b": 1, "rn": 0, "sh": 1, "xe": {"a": 0, "k": 0}, "ne": {"a": 0, "k": 0}, "sm": {"a": 0, "k": 100}, "r": 1}, "a": {"p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}, "fc": {"a": 0, "k": [0.196, 0.314, 0.69]}, "fh": {"a": 0, "k": 0}, "fs": {"a": 0, "k": 0}, "fb": {"a": 0, "k": 0}, "sc": {"a": 0, "k": [1, 0, 0]}, "sw": {"a": 0, "k": 0}, "t": {"a": 0, "k": 0}}}]}}, {"ty": 1, "ip": 0, "op": 60, "st": 0, "ks": {}, "sc": "#ffffff", "sw": 512, "sh": 350}]},
+            function (lottie, data)
+            {
+                
+    var selector = lottie.layers[0].t.a[0].s;
+    selector.s.k = data["Start"];
+    selector.e.k = data["End"];
+    selector.o.k = data["Offset"];
+    selector.ne.k = data["Min Ease"];
+    selector.xe.k = data["Max Ease"];
+    selector.rn = Number(data["Randomize"]);
+    selector.b = Number(data["Based On"]);
+    selector.sh = Number(data["Shape"]);
+    selector.r = Number(data["Range Units"]);
+    this.json_viewer_contents = lottie.layers[0].t.a[0].s;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h4 id="text-style">Text Style</h4>
+<p>Has the properties of a transform and the style options of a text document.</p>
+<p>It applies such transform and style to the part of the text defined
+by the text selector property</p>
+<div>
+<details>
+<summary>Composition Diagram for Text Style</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 152.00 44.00" width="152pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 148,-40 148,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="54,-36 0,-36 0,0 54,0 54,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="27" y="-15.5">Text Style</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="../helpers/#transform" title="Transform">
+<polygon fill="none" points="144,-36 90,-36 90,0 144,0 144,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="117" y="-15.5">Transform</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M54.4,-18C62.39,-18 71.31,-18 79.82,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="79.92,-21.5 89.92,-18 79.92,-14.5 79.92,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/text/text-style" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td><a href="../properties/#position-property">Position</a></td>
+<td>
+<p>Anchor Point</p>
+</td>
+<td>
+<p>Anchor point: a position (relative to its parent) around which transformations are applied (ie: center for rotation / scale)</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="../properties/#splittable-position-property">Splittable Position</a></td>
+<td>
+<p>Position</p>
+</td>
+<td>
+<p>Position / Translation</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Rotation</p>
+</td>
+<td>
+<p>Rotation in degrees, clockwise</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../properties/#vector-property">Vector</a></td>
+<td>
+<p>Scale</p>
+</td>
+<td>
+<p>Scale factor, <code>[100, 100]</code> for no scaling</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Opacity</p>
+</td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>sk</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Skew</p>
+</td>
+<td>
+<p>Skew amount as an angle in degrees</p>
+</td>
+</tr>
+<tr>
+<td><code>sa</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Skew Axis</p>
+</td>
+<td>
+<p>Direction along which skew is applied, in degrees (<code>0</code> skews along the X axis, <code>90</code> along the Y axis)</p>
+</td>
+</tr>
+<tr>
+<td><code>rx</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>X Rotation</p>
+</td>
+<td>
+<p>Split rotation component</p>
+</td>
+</tr>
+<tr>
+<td><code>ry</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Y Rotation</p>
+</td>
+<td>
+<p>Split rotation component</p>
+</td>
+</tr>
+<tr>
+<td><code>rz</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Z Rotation</p>
+</td>
+<td>
+<p>Split rotation component, equivalent to <code>r</code> when not split</p>
+</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><a href="../properties/#vector-property">Vector</a></td>
+<td>
+<p>Orientation</p>
+</td>
+<td>
+<p>Orientation</p>
+</td>
+</tr>
+<tr>
+<td><code>sw</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Stroke Width</p>
+</td>
+<td>
+<p>Stroke Width</p>
+</td>
+</tr>
+<tr>
+<td><code>sc</code></td>
+<td><a href="../properties/#color-property">Color</a></td>
+<td>
+<p>Stroke Color</p>
+</td>
+<td>
+<p>Stroke Color</p>
+</td>
+</tr>
+<tr>
+<td><code>sh</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Stroke Hue</p>
+</td>
+<td>
+<p>Stroke Hue</p>
+</td>
+</tr>
+<tr>
+<td><code>ss</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Stroke Saturation</p>
+</td>
+<td>
+<p>Stroke Saturation</p>
+</td>
+</tr>
+<tr>
+<td><code>sb</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Stroke Brightness</p>
+</td>
+<td>
+<p>Stroke Brightness</p>
+</td>
+</tr>
+<tr>
+<td><code>so</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Stroke Opacity</p>
+</td>
+<td>
+<p>Stroke Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>fc</code></td>
+<td><a href="../properties/#color-property">Color</a></td>
+<td>
+<p>Fill Color</p>
+</td>
+<td>
+<p>Fill Color</p>
+</td>
+</tr>
+<tr>
+<td><code>fh</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Fill Hue</p>
+</td>
+<td>
+<p>Fill Hue</p>
+</td>
+</tr>
+<tr>
+<td><code>fs</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Fill Saturation</p>
+</td>
+<td>
+<p>Fill Saturation</p>
+</td>
+</tr>
+<tr>
+<td><code>fb</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Fill Brightness</p>
+</td>
+<td>
+<p>Fill Brightness</p>
+</td>
+</tr>
+<tr>
+<td><code>fo</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Fill Opacity</p>
+</td>
+<td>
+<p>Fill Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Letter Spacing</p>
+</td>
+<td>
+<p>Letter Spacing</p>
+</td>
+</tr>
+<tr>
+<td><code>bl</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Blur</p>
+</td>
+<td>
+<p>Blur</p>
+</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Line Spacing</p>
+</td>
+<td>
+<p>Line Spacing</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Position X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="100" min="-100" name="Position X" oninput="lottie_player_72.reload();document.getElementById('playground_72_1_span').innerText = event.target.value;" step="1" title="Position X" type="range" value="0" />
+        <span id="playground_72_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="100" min="-100" name="Position Y" oninput="lottie_player_72.reload();document.getElementById('playground_72_2_span').innerText = event.target.value;" step="1" title="Position Y" type="range" value="0" />
+        <span id="playground_72_2_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="360" min="0" name="Rotation" oninput="lottie_player_72.reload();document.getElementById('playground_72_3_span').innerText = event.target.value;" step="1" title="Rotation" type="range" value="0" />
+        <span id="playground_72_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="100" min="0" name="Opacity" oninput="lottie_player_72.reload();document.getElementById('playground_72_4_span').innerText = event.target.value;" step="1" title="Opacity" type="range" value="100" />
+        Style
+        <span id="playground_72_4_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" lottie-color="1" name="Fill" oninput="lottie_player_72.reload();" title="Fill" type="color" value="#3250b0" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill Hue</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="360" min="-360" name="Fill Hue" oninput="lottie_player_72.reload();document.getElementById('playground_72_6_span').innerText = event.target.value;" step="1" title="Fill Hue" type="range" value="0" />
+        <span id="playground_72_6_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill Saturation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="100" min="-100" name="Fill Saturation" oninput="lottie_player_72.reload();document.getElementById('playground_72_7_span').innerText = event.target.value;" step="1" title="Fill Saturation" type="range" value="0" />
+        <span id="playground_72_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Fill Brightness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="100" min="-100" name="Fill Brightness" oninput="lottie_player_72.reload();document.getElementById('playground_72_8_span').innerText = event.target.value;" step="1" title="Fill Brightness" type="range" value="0" />
+        <span id="playground_72_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" lottie-color="1" name="Stroke" oninput="lottie_player_72.reload();" title="Stroke" type="color" value="#000000" />
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="20" min="0" name="Stroke Width" oninput="lottie_player_72.reload();document.getElementById('playground_72_10_span').innerText = event.target.value;" step="1" title="Stroke Width" type="range" value="0" />
+        <span id="playground_72_10_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Letter Spacing</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="72" max="100" min="-100" name="Letter Spacing" oninput="lottie_player_72.reload();document.getElementById('playground_72_11_span').innerText = event.target.value;" step="1" title="Letter Spacing" type="range" value="0" />
+    <span id="playground_72_11_span">0</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_72" style="width:512px;height:350px"></div>
+</div>
+<div class="json-parent" id="playground_72_12_parent">
+<pre><code class="language-json hljs" id="playground_72_12">
+</code></pre>
+</div>
+<script>
+        var lottie_player_72 = new PlaygroundPlayer(
+            72,
+            'playground_72_12',
+            'lottie_target_72',
+            {"v": "5.9.6", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 350, "assets": [], "fonts": {"list": [{"origin": 0, "fPath": "", "fClass": "", "fFamily": "Sans", "fWeight": "", "fStyle": "Regular", "fName": "Sans"}]}, "layers": [{"ty": 5, "sr": 1, "ip": 0, "op": 60, "st": 0, "ks": {"p": {"a": 0, "k": [256, 70, 0]}}, "t": {"d": {"k": [{"s": {"s": 70, "f": "Sans", "t": "Hello World\rthe quick brown\rfox jumps over\rthe lazy dog", "ls": 0, "j": 2, "fc": [0, 0, 0], "sc": [0, 0, 0], "sw": 0, "of": true}, "t": 0}]}, "p": {}, "m": {"g": 1, "a": {"a": 0, "k": [0, 0], "ix": 2}}, "a": [{"nm": "Text Range", "s": {"t": 0, "o": {"a": 0, "k": 0}, "s": {"a": 0, "k": 60}, "e": {"a": 0, "k": 75}, "a": {"a": 0, "k": 100}, "b": 1, "rn": 0, "sh": 1, "xe": {"a": 0, "k": 0}, "ne": {"a": 0, "k": 0}, "sm": {"a": 0, "k": 100}, "r": 1}, "a": {"p": {"a": 0, "k": [0, 0]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}, "fc": {"a": 0, "k": [0.196, 0.314, 0.69]}, "fh": {"a": 0, "k": 0}, "fs": {"a": 0, "k": 0}, "fb": {"a": 0, "k": 0}, "sc": {"a": 0, "k": [1, 0, 0]}, "sw": {"a": 0, "k": 0}, "t": {"a": 0, "k": 0}}}]}}, {"ty": 1, "ip": 0, "op": 60, "st": 0, "ks": {}, "sc": "#ffffff", "sw": 512, "sh": 350}]},
+            function (lottie, data)
+            {
+                
+    var range = lottie.layers[0].t.a[0];
+    range.a.p.k = [data["Position X"], data["Position Y"]];
+    range.a.o.k = data["Opacity"];
+    range.a.r.k = data["Rotation"];
+    range.a.fc.k = data["Fill"];
+    range.a.sc.k = data["Stroke"];
+    range.a.sw.k = data["Stroke Width"];
+    range.a.t.k = data["Letter Spacing"];
+    range.a.fh.k = data["Fill Hue"];
+    range.a.fs.k = data["Fill Saturation"];
+    range.a.fb.k = data["Fill Brightness"];
+    this.json_viewer_contents = lottie.layers[0].t.a[0].a;
+            },
+            {}
+        );
+        </script>
+</div>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

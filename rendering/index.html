@@ -1,0 +1,3469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/rendering/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Tips for rendering - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../playground/json_editor/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../schema/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/rendering.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#tips-for-rendering">Tips for rendering</a></li>
+            <li class="second-level"><a href="#introduction">Introduction</a></li>
+                
+                <li class="third-level"><a href="#code">Code</a></li>
+            <li class="second-level"><a href="#rectangle">Rectangle</a></li>
+                
+            <li class="second-level"><a href="#ellipse">Ellipse</a></li>
+                
+            <li class="second-level"><a href="#polystar">PolyStar</a></li>
+                
+            <li class="second-level"><a href="#pucker-bloat">Pucker Bloat</a></li>
+                
+            <li class="second-level"><a href="#rounded-corners">Rounded Corners</a></li>
+                
+            <li class="second-level"><a href="#zig-zag">Zig Zag</a></li>
+                
+            <li class="second-level"><a href="#offset-path">Offset Path</a></li>
+                
+            <li class="second-level"><a href="#trim-path">Trim Path</a></li>
+                
+            <li class="second-level"><a href="#transform">Transform</a></li>
+                
+                <li class="third-level"><a href="#3d-transform">3D Transform</a></li>
+                <li class="third-level"><a href="#auto-orient">Auto Orient</a></li>
+            <li class="second-level"><a href="#animated-properties">Animated Properties</a></li>
+                
+            <li class="second-level"><a href="#effects">Effects</a></li>
+                
+                <li class="third-level"><a href="#fill-effect">Fill Effect</a></li>
+                <li class="third-level"><a href="#tritone-effect">Tritone Effect</a></li>
+                <li class="third-level"><a href="#gaussian-blur">Gaussian Blur</a></li>
+                <li class="third-level"><a href="#drop-shadow-effect">Drop Shadow Effect</a></li>
+                <li class="third-level"><a href="#pro-levels-effect">Pro Levels Effect</a></li>
+                <li class="third-level"><a href="#matte3">Matte3</a></li>
+                <li class="third-level"><a href="#bulge">Bulge</a></li>
+                <li class="third-level"><a href="#wave-warp">Wave Warp</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="tips-for-rendering">Tips for rendering</h1>
+<script src="../scripts/lottie_bezier.js"></script>
+<style>
+.json-parent:not([hidden]) {
+    display: flex;    
+}
+
+.json-parent > pre {
+    width: 50%;
+}
+.json-parent > pre > code {
+    height: 100%;
+}
+</style>
+<script>
+let converter_map = {};
+
+function convert_shape(shape)
+{
+    return converter_map[shape.ty](shape);
+}
+
+</script>
+
+<h2 id="introduction">Introduction</h2>
+<p>This page will give tips and example code on how to render certain objects within lottie.</p>
+<p>Lottie has several implementations and some things might vary from player to player,
+this guide tries to follow the behaviour of <a href="https://github.com/airbnb/lottie-web/">lottie web</a>
+which is the reference implementation.</p>
+<p>For shapes, it ensures the stroke order is the same as in lottie web, which is crucial
+for <a href="../shapes/#trim-path">Trim Path</a> to work correctly.</p>
+<p>All shapes have the <code>d</code> attribute that if has the value <code>3</code> the path should be reversed.</p>
+<h3 id="code">Code</h3>
+<p>The code examples take some shortcuts for readablility:
+all animated properties are shown as static, of course you'd need to get the
+correct values to render shapes at a given frame.</p>
+<p>When adding points to a bezier, there are calls to <code>bezier.add_vertex()</code>.
+Assume the in/out tangents are <code>[0, 0]</code> if not specified.
+When they are specified they show as <code>set_out_tangent</code> immediately following
+the corresponding <code>add_vertex</code>.</p>
+<p>Bezier tangents are assumed to be relative to their vertex since that's how lottie works
+but it might be useful to keep them as absolute points when rendering.</p>
+<p>All the examples show the original on the left and the bezier on the right.</p>
+<p>Explanation for bezier operations is outside the scope of this guide,
+the code below use a simple bezier library for some operations,
+you can <a href="/lottie-docs/scripts/lottie_bezier.js">check its sources</a>
+for some context on what the various functions do.</p>
+<h2 id="rectangle">Rectangle</h2>
+<p>See <a href="../shapes/#rectangle">Rectangle</a>.</p>
+<p>Note that unlike other shapes, on lottie web when the <code>d</code> attribute is missing,
+the rectangle defaults as being reversed.</p>
+<div class="algorithm"><select onchange="this.parentElement.querySelectorAll(&quot;pre&quot;).forEach(
+                (e, i) =&gt; e.style.display = i == this.value ? &quot;block&quot; : &quot;none&quot;
+            )"><option value="0">Python</option><option value="1">C++</option><option value="2">TypeScript</option></select><pre><code class="language-py hljs">
+def rectangle(shape: Bezier, p: Vector2D, s: Vector2D, r: float):
+    left: float = p.x - s.x / 2
+    right: float = p.x + s.x / 2
+    top: float = p.y - s.y / 2
+    bottom: float = p.y + s.y / 2
+
+    shape.closed = True
+
+    if r &lt;= 0:
+
+        # The rectangle is rendered from the top-right going clockwise
+
+        shape.add_vertex(Vector2D(right, top))
+        shape.add_vertex(Vector2D(right, bottom))
+        shape.add_vertex(Vector2D(left, bottom))
+        shape.add_vertex(Vector2D(left, top))
+
+    else:
+
+        # Rounded corners must be taken into account
+
+        rounded: float = min(s.x/2, s.y/2, r)
+        tangent: float = rounded * ELLIPSE_CONSTANT
+
+        shape.add_vertex(Vector2D(right, top + rounded))
+        shape.set_in_tangent(Vector2D(0, -tangent))
+        shape.add_vertex(Vector2D(right, bottom - rounded))
+        shape.set_out_tangent(Vector2D(0, tangent))
+        shape.add_vertex(Vector2D(right - rounded, bottom))
+        shape.set_in_tangent(Vector2D(tangent, 0))
+        shape.add_vertex(Vector2D(left + rounded, bottom))
+        shape.set_out_tangent(Vector2D(-tangent, 0))
+        shape.add_vertex(Vector2D(left, bottom - rounded))
+        shape.set_in_tangent(Vector2D(0, tangent))
+        shape.add_vertex(Vector2D(left, top + rounded))
+        shape.set_out_tangent(Vector2D(0, -tangent))
+        shape.add_vertex(Vector2D(left + rounded, top))
+        shape.set_in_tangent(Vector2D(-tangent, 0))
+        shape.add_vertex(Vector2D(right - rounded, top))
+        shape.set_out_tangent(Vector2D(tangent, 0))
+</code></pre>
+<pre style="display: none"><code class="language-cpp hljs">
+void rectangle(Bezier shape, Vector2D p, Vector2D s, float r)
+{
+    float left = p.x - s.x / 2;
+    float right = p.x + s.x / 2;
+    float top = p.y - s.y / 2;
+    float bottom = p.y + s.y / 2;
+
+    shape.closed = true;
+
+    if ( r &lt;= 0 )
+    {
+        // The rectangle is rendered from the top-right going clockwise
+
+        shape.add_vertex(Vector2D(right, top));
+        shape.add_vertex(Vector2D(right, bottom));
+        shape.add_vertex(Vector2D(left, bottom));
+        shape.add_vertex(Vector2D(left, top));
+    }
+    // Rounded corners must be taken into account
+
+    else
+    {
+        float rounded = std::min(s.x / 2, s.y / 2, r);
+        float tangent = rounded * ELLIPSE_CONSTANT;
+
+        shape.add_vertex(Vector2D(right, top + rounded));
+        shape.set_in_tangent(Vector2D(0, -tangent));
+        shape.add_vertex(Vector2D(right, bottom - rounded));
+        shape.set_out_tangent(Vector2D(0, tangent));
+        shape.add_vertex(Vector2D(right - rounded, bottom));
+        shape.set_in_tangent(Vector2D(tangent, 0));
+        shape.add_vertex(Vector2D(left + rounded, bottom));
+        shape.set_out_tangent(Vector2D(-tangent, 0));
+        shape.add_vertex(Vector2D(left, bottom - rounded));
+        shape.set_in_tangent(Vector2D(0, tangent));
+        shape.add_vertex(Vector2D(left, top + rounded));
+        shape.set_out_tangent(Vector2D(0, -tangent));
+        shape.add_vertex(Vector2D(left + rounded, top));
+        shape.set_in_tangent(Vector2D(-tangent, 0));
+        shape.add_vertex(Vector2D(right - rounded, top));
+        shape.set_out_tangent(Vector2D(tangent, 0));
+    }
+}
+</code></pre>
+<pre style="display: none"><code class="language-ts hljs">
+function rectangle(shape: Bezier, p: Vector2D, s: Vector2D, r: number) {
+    let left: number = p.x - s.x / 2;
+    let right: number = p.x + s.x / 2;
+    let top: number = p.y - s.y / 2;
+    let bottom: number = p.y + s.y / 2;
+
+    shape.closed = true;
+
+    if ( r &lt;= 0 ) {
+
+        // The rectangle is rendered from the top-right going clockwise
+
+        shape.addVertex(new Vector2D(right, top));
+        shape.addVertex(new Vector2D(right, bottom));
+        shape.addVertex(new Vector2D(left, bottom));
+        shape.addVertex(new Vector2D(left, top));
+
+    } else {
+
+        // Rounded corners must be taken into account
+
+        let rounded: number = Math.min(s.x / 2, s.y / 2, r);
+        let tangent: number = rounded * ELLIPSE_CONSTANT;
+
+        shape.addVertex(new Vector2D(right, top + rounded));
+        shape.setInTangent(new Vector2D(0, -tangent));
+        shape.addVertex(new Vector2D(right, bottom - rounded));
+        shape.setOutTangent(new Vector2D(0, tangent));
+        shape.addVertex(new Vector2D(right - rounded, bottom));
+        shape.setInTangent(new Vector2D(tangent, 0));
+        shape.addVertex(new Vector2D(left + rounded, bottom));
+        shape.setOutTangent(new Vector2D(-tangent, 0));
+        shape.addVertex(new Vector2D(left, bottom - rounded));
+        shape.setInTangent(new Vector2D(0, tangent));
+        shape.addVertex(new Vector2D(left, top + rounded));
+        shape.setOutTangent(new Vector2D(0, -tangent));
+        shape.addVertex(new Vector2D(left + rounded, top));
+        shape.setInTangent(new Vector2D(-tangent, 0));
+        shape.addVertex(new Vector2D(right - rounded, top));
+        shape.setOutTangent(new Vector2D(tangent, 0));
+    }
+}
+</code></pre>
+</div>
+<h2 id="ellipse">Ellipse</h2>
+<p>See <a href="../shapes/#ellipse">Ellipse</a>.</p>
+<p>The stroke direction should start at the top.
+If you think of the ellipse as a clock, start at 12 go clockwise.</p>
+<p>The magic number <code>0.5519</code> is what lottie uses for this, based on <a href="https://spencermortensen.com/articles/bezier-circle/">this article</a>.</p>
+<div class="algorithm"><select onchange="this.parentElement.querySelectorAll(&quot;pre&quot;).forEach(
+                (e, i) =&gt; e.style.display = i == this.value ? &quot;block&quot; : &quot;none&quot;
+            )"><option value="0">Python</option><option value="1">C++</option><option value="2">TypeScript</option></select><pre><code class="language-py hljs">
+def ellipse(shape: Bezier, p: Vector2D, s: Vector2D):
+    # An ellipse is drawn from the top quandrant point going clockwise:
+    radius = s / 2
+    tangent = radius * ELLIPSE_CONSTANT
+    x = p.x
+    y = p.y
+
+    shape.closed = True
+    shape.add_vertex(Vector2D(x, y - radius.y))
+    shape.set_in_tangent(Vector2D(-tangent.x, 0))
+    shape.set_out_tangent(Vector2D(tangent.x, 0))
+    shape.add_vertex(Vector2D(x + radius.x, y))
+    shape.set_in_tangent(Vector2D(0, -tangent.y))
+    shape.set_out_tangent(Vector2D(0, tangent.y))
+    shape.add_vertex(Vector2D(x, y + radius.y))
+    shape.set_in_tangent(Vector2D(tangent.x, 0))
+    shape.set_out_tangent(Vector2D(-tangent.x, 0))
+    shape.add_vertex(Vector2D(x - radius.x, y))
+    shape.set_in_tangent(Vector2D(0, tangent.y))
+    shape.set_out_tangent(Vector2D(0, -tangent.y))
+</code></pre>
+<pre style="display: none"><code class="language-cpp hljs">
+void ellipse(Bezier shape, Vector2D p, Vector2D s)
+{
+    // An ellipse is drawn from the top quandrant point going clockwise:
+    radius = s / 2;
+    tangent = radius * ELLIPSE_CONSTANT;
+    x = p.x;
+    y = p.y;
+
+    shape.closed = true;
+    shape.add_vertex(Vector2D(x, y - radius.y));
+    shape.set_in_tangent(Vector2D(-tangent.x, 0));
+    shape.set_out_tangent(Vector2D(tangent.x, 0));
+    shape.add_vertex(Vector2D(x + radius.x, y));
+    shape.set_in_tangent(Vector2D(0, -tangent.y));
+    shape.set_out_tangent(Vector2D(0, tangent.y));
+    shape.add_vertex(Vector2D(x, y + radius.y));
+    shape.set_in_tangent(Vector2D(tangent.x, 0));
+    shape.set_out_tangent(Vector2D(-tangent.x, 0));
+    shape.add_vertex(Vector2D(x - radius.x, y));
+    shape.set_in_tangent(Vector2D(0, tangent.y));
+    shape.set_out_tangent(Vector2D(0, -tangent.y));
+}
+</code></pre>
+<pre style="display: none"><code class="language-ts hljs">
+function ellipse(shape: Bezier, p: Vector2D, s: Vector2D) {
+    // An ellipse is drawn from the top quandrant point going clockwise:
+    radius = s / 2;
+    tangent = radius * ELLIPSE_CONSTANT;
+    x = p.x;
+    y = p.y;
+
+    shape.closed = true;
+    shape.addVertex(new Vector2D(x, y - radius.y));
+    shape.setInTangent(new Vector2D(-tangent.x, 0));
+    shape.setOutTangent(new Vector2D(tangent.x, 0));
+    shape.addVertex(new Vector2D(x + radius.x, y));
+    shape.setInTangent(new Vector2D(0, -tangent.y));
+    shape.setOutTangent(new Vector2D(0, tangent.y));
+    shape.addVertex(new Vector2D(x, y + radius.y));
+    shape.setInTangent(new Vector2D(tangent.x, 0));
+    shape.setOutTangent(new Vector2D(-tangent.x, 0));
+    shape.addVertex(new Vector2D(x - radius.x, y));
+    shape.setInTangent(new Vector2D(0, tangent.y));
+    shape.setOutTangent(new Vector2D(0, -tangent.y));
+}
+</code></pre>
+</div>
+<h2 id="polystar">PolyStar</h2>
+<p>Pseudocode for rendering a <a href="../shapes/#polystar">PolyStar</a>.</p>
+<div class="algorithm"><select onchange="this.parentElement.querySelectorAll(&quot;pre&quot;).forEach(
+                (e, i) =&gt; e.style.display = i == this.value ? &quot;block&quot; : &quot;none&quot;
+            )"><option value="0">Python</option><option value="1">C++</option><option value="2">TypeScript</option></select><pre><code class="language-py hljs">
+def polystar(shape: Bezier, p: Vector2D, pt: float, r: float, or_: float, os: float, sy: int, ir: float, is_: float):
+    points: int = int(round(pt))
+    alpha: float = -r * math.pi / 180 - math.pi / 2
+    theta: float = -math.pi / points
+    tan_len_out: float = (2 * math.pi * or_) / (4 * points) * (os / 100)
+    tan_len_in: float = (2 * math.pi * ir) / (4 * points) * (is_ / 100)
+
+    shape.closed = True
+
+    for i in range(points):
+        beta: float = alpha + i * theta * 2
+        v_out: Vector2D = Vector2D(or_ * math.cos(beta),  or_ * math.sin(beta))
+        shape.add_vertex(p + v_out)
+
+        if os != 0 and or_ != 0:
+            # We need to add bezier tangents
+            tan_out: Vector2D = v_out * tan_len_out / or_
+            shape.set_in_tangent(Vector2D(-tan_out.y, tan_out.x))
+            shape.set_out_tangent(Vector2D(tan_out.y, -tan_out.x))
+
+        if sy == 1:
+            # We need to add a vertex towards the inner radius to make a star
+            v_in: Vector2D = Vector2D(ir * math.cos(beta + theta), ir * math.sin(beta + theta))
+            shape.add_vertex(p + v_in)
+
+            if is_ != 0 and ir != 0:
+                # We need to add bezier tangents
+                tan_in = v_in * tan_len_in / ir
+                shape.set_in_tangent(Vector2D(-tan_in.y, tan_in.x))
+                shape.set_out_tangent(Vector2D(tan_in.y, -tan_in.x))
+</code></pre>
+<pre style="display: none"><code class="language-cpp hljs">
+void polystar(Bezier shape, Vector2D p, float pt, float r, float or_, float os, int sy, float ir, float is)
+{
+    int points = std::round(pt);
+    float alpha = -r * std::numbers::pi / 180 - std::numbers::pi / 2;
+    float theta = -std::numbers::pi / points;
+    float tan_len_out = 2 * std::numbers::pi * or_ / 4 * points * os / 100;
+    float tan_len_in = 2 * std::numbers::pi * ir / 4 * points * is / 100;
+
+    shape.closed = true;
+
+    for ( int i = 0; i &lt; points; i++ )
+    {
+        float beta = alpha + i * theta * 2;
+        Vector2D v_out(or_ * std::cos(beta), or_ * std::sin(beta));
+        shape.add_vertex(p + v_out);
+
+        if ( os != 0 &amp;&amp; or_ != 0 )
+        {
+            // We need to add bezier tangents
+            Vector2D tan_out = v_out * tan_len_out / or_;
+            shape.set_in_tangent(Vector2D(-tan_out.y, tan_out.x));
+            shape.set_out_tangent(Vector2D(tan_out.y, -tan_out.x));
+        }
+
+        if ( sy == 1 )
+        {
+            // We need to add a vertex towards the inner radius to make a star
+            Vector2D v_in(ir * std::cos(beta + theta), ir * std::sin(beta + theta));
+            shape.add_vertex(p + v_in);
+
+            if ( is != 0 &amp;&amp; ir != 0 )
+            {
+                // We need to add bezier tangents
+                tan_in = v_in * tan_len_in / ir;
+                shape.set_in_tangent(Vector2D(-tan_in.y, tan_in.x));
+                shape.set_out_tangent(Vector2D(tan_in.y, -tan_in.x));
+            }
+        }
+    }
+}
+</code></pre>
+<pre style="display: none"><code class="language-ts hljs">
+function polystar(shape: Bezier, p: Vector2D, pt: number, r: number, or: number, os: number, sy: number, ir: number, is: number) {
+    let points: number = new Number(round(pt));
+    let alpha: number = -r * Math.PI / 180 - Math.PI / 2;
+    let theta: number = -Math.PI / points;
+    let tanLenOut: number = 2 * Math.PI * or / 4 * points * os / 100;
+    let tanLenIn: number = 2 * Math.PI * ir / 4 * points * is / 100;
+
+    shape.closed = true;
+
+    for ( let i: number = 0; i &lt; points; i++ ) {
+        let beta: number = alpha + i * theta * 2;
+        let vOut: Vector2D = new Vector2D(or * Math.cos(beta), or * Math.sin(beta));
+        shape.addVertex(p + vOut);
+
+        if ( os != 0 &amp;&amp; or != 0 ) {
+            // We need to add bezier tangents
+            let tanOut: Vector2D = vOut * tanLenOut / or;
+            shape.setInTangent(new Vector2D(-tanOut.y, tanOut.x));
+            shape.setOutTangent(new Vector2D(tanOut.y, -tanOut.x));
+        }
+
+        if ( sy == 1 ) {
+            // We need to add a vertex towards the inner radius to make a star
+            let vIn: Vector2D = new Vector2D(ir * Math.cos(beta + theta), ir * Math.sin(beta + theta));
+            shape.addVertex(p + vIn);
+
+            if ( is != 0 &amp;&amp; ir != 0 ) {
+                // We need to add bezier tangents
+                tanIn = vIn * tanLenIn / ir;
+                shape.setInTangent(new Vector2D(-tanIn.y, tanIn.x));
+                shape.setOutTangent(new Vector2D(tanIn.y, -tanIn.x));
+            }
+        }
+    }
+}
+</code></pre>
+</div>
+<h2 id="pucker-bloat">Pucker Bloat</h2>
+<p>See <a href="../shapes/#pucker-bloat">Pucker / Bloat</a>.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Amount</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="38" max="100" min="-100" name="Amount" oninput="lottie_player_38.reload();document.getElementById('playground_38_1_span').innerText = event.target.value;" title="Amount" type="range" value="50" />
+    <span id="playground_38_1_span">50</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_38" style="width:394px;height:394px"></div>
+<div id="lottie_target_38_bezier" style="width:394px;height:394px"></div>
+</div>
+<div class="json-parent" id="playground_38_2_parent">
+<pre><code class="language-json hljs" id="playground_38_2">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_38_2_bezier">
+</code></pre>
+</div>
+<script>
+                
+                
+                var lottie_player_38_bezier = new LottiePlayer('lottie_target_38_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_38 = new PlaygroundPlayer(
+                    38,
+                    'playground_38_2',
+                    'lottie_target_38',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 160}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 2, "os": {"a": 0, "k": 0}}, {"ty": "pb", "nm": "Inflate and Deflate", "mn": "{b4af429a-546e-4728-a869-711a404c55ae}", "a": {"a": 0, "k": 50}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "hd": true, "nm": "Fill", "mn": "{a1bcc159-6916-4718-841d-a99140c0e74b}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_38_bezier.lottie;
+                        
+    lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+    let star = lottie.layers[0].shapes[0].it[0];
+    
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let  = lottie.layers[0].shapes[0].it[1];
+                        let bez_result = ;
+                        if ( !Array.isArray(bez_result) )
+                            bez_result = [bez_result];
+                        let out_shapes = bez_result.map(b => ({
+                            ty: "sh", "ks": {a: 0, k: b.to_lottie()}
+                        }));
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it;
+                        bez_target.splice(0, bez_target.length - 2, ...out_shapes);
+                        lottie_player_38_bezier.reload();
+                        this.set_json('playground_38_2_bezier', out_shapes[0].ks.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+</div>
+<h2 id="rounded-corners">Rounded Corners</h2>
+<p>See <a href="../shapes/#rounded-corners">Rounded Corners</a>.</p>
+<p>It approximates rounding using circular arcs.</p>
+<p>The magic number <code>0.5519</code> is what lottie uses for this, based on <a href="https://spencermortensen.com/articles/bezier-circle/">this article</a>.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Radius</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="39" max="100" min="0" name="Radius" oninput="lottie_player_39.reload();document.getElementById('playground_39_1_span').innerText = event.target.value;" title="Radius" type="range" value="50" />
+    <span id="playground_39_1_span">50</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_39" style="width:394px;height:394px"></div>
+<div id="lottie_target_39_bezier" style="width:394px;height:394px"></div>
+</div>
+<div class="json-parent" id="playground_39_2_parent">
+<pre><code class="language-json hljs" id="playground_39_2">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_39_2_bezier">
+</code></pre>
+</div>
+<script>
+                
+                
+                var lottie_player_39_bezier = new LottiePlayer('lottie_target_39_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_39 = new PlaygroundPlayer(
+                    39,
+                    'playground_39_2',
+                    'lottie_target_39',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 222.72242736816406}, "ir": {"a": 0, "k": 111.36121368408203}, "r": {"a": 0, "k": 358.67291259765625}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "rd", "nm": "Rounded Corners", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "r": {"a": 0, "k": 50}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "fl", "hd": true, "nm": "Fill", "mn": "{a1bcc159-6916-4718-841d-a99140c0e74b}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_39_bezier.lottie;
+                        
+    lottie.layers[0].shapes[0].it[1].r.k = data["Radius"];
+    let star = lottie.layers[0].shapes[0].it[0];
+    
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let  = lottie.layers[0].shapes[0].it[1];
+                        let bez_result = ;
+                        if ( !Array.isArray(bez_result) )
+                            bez_result = [bez_result];
+                        let out_shapes = bez_result.map(b => ({
+                            ty: "sh", "ks": {a: 0, k: b.to_lottie()}
+                        }));
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it;
+                        bez_target.splice(0, bez_target.length - 2, ...out_shapes);
+                        lottie_player_39_bezier.reload();
+                        this.set_json('playground_39_2_bezier', out_shapes[0].ks.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+</div>
+<h2 id="zig-zag">Zig Zag</h2>
+<p>See <a href="../shapes/#zig-zag">Zig Zag</a>.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Amplitude</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="40" max="100" min="-100" name="Amplitude" oninput="lottie_player_40.reload();document.getElementById('playground_40_1_span').innerText = event.target.value;" title="Amplitude" type="range" value="10" />
+        <span id="playground_40_1_span">10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Frequency</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="40" max="30" min="0" name="Frequency" oninput="lottie_player_40.reload();document.getElementById('playground_40_2_span').innerText = event.target.value;" title="Frequency" type="range" value="10" />
+        <span id="playground_40_2_span">10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Point Type</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="40" name="Point Type" oninput="lottie_player_40.reload();" title="Point Type"><option value="1">Point</option><option value="2">Smooth</option></select>
+        Star
+        </td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="40" max="100" min="0" name="Roundness" oninput="lottie_player_40.reload();document.getElementById('playground_40_4_span').innerText = event.target.value;" title="Roundness" type="range" value="0" />
+        <span id="playground_40_4_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="40" max="360" min="0" name="Rotation" oninput="lottie_player_40.reload();document.getElementById('playground_40_5_span').innerText = event.target.value;" title="Rotation" type="range" value="0" />
+        <span id="playground_40_5_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Points</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="40" max="10" min="3" name="Points" oninput="lottie_player_40.reload();document.getElementById('playground_40_6_span').innerText = event.target.value;" title="Points" type="range" value="5" />
+        <span id="playground_40_6_span">5</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Stroke Width</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="40" max="30" min="1" name="Stroke Width" oninput="lottie_player_40.reload();document.getElementById('playground_40_7_span').innerText = event.target.value;" title="Stroke Width" type="range" value="3" />
+    <span id="playground_40_7_span">3</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_40" style="width:394px;height:394px"></div>
+<div id="lottie_target_40_bezier" style="width:394px;height:394px"></div>
+</div>
+<div class="json-parent" id="playground_40_8_parent">
+<pre><code class="language-json hljs" id="playground_40_8">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_40_8_bezier">
+</code></pre>
+</div>
+<script>
+                
+                
+                var lottie_player_40_bezier = new LottiePlayer('lottie_target_40_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_40 = new PlaygroundPlayer(
+                    40,
+                    'playground_40_8',
+                    'lottie_target_40',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 222.72242736816406}, "ir": {"a": 0, "k": 111.36121368408203}, "r": {"a": 0, "k": 358.67291259765625}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "zz", "nm": "Zig Zag", "mn": "{b4af429a-546e-4728-a869-711a404c55ae}", "r": {"a": 0, "k": 0}, "s": {"a": 0, "k": 10}, "pt": {"a": 0, "k": 2}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 3}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_40_bezier.lottie;
+                        
+    lottie.layers[0].shapes[0].it[1].s.k = data["Amplitude"];
+    lottie.layers[0].shapes[0].it[1].r.k = data["Frequency"];
+    lottie.layers[0].shapes[0].it[1].pt.k = Number(data["Point Type"]);
+    lottie.layers[0].shapes[0].it[0].pt.k = data["Points"];
+    lottie.layers[0].shapes[0].it[0].r.k = data["Rotation"];
+    lottie.layers[0].shapes[0].it[0].is.k = data["Roundness"];
+    lottie.layers[0].shapes[0].it[0].os.k = data["Roundness"];
+    lottie.layers[0].shapes[0].it[2].w.k = data["Stroke Width"];
+    let star = lottie.layers[0].shapes[0].it[0];
+    bezier_lottie.layers[0].shapes[0].it[1].w.k = data["Stroke Width"];
+    
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let  = lottie.layers[0].shapes[0].it[1];
+                        let bez_result = ;
+                        if ( !Array.isArray(bez_result) )
+                            bez_result = [bez_result];
+                        let out_shapes = bez_result.map(b => ({
+                            ty: "sh", "ks": {a: 0, k: b.to_lottie()}
+                        }));
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it;
+                        bez_target.splice(0, bez_target.length - 2, ...out_shapes);
+                        lottie_player_40_bezier.reload();
+                        this.set_json('playground_40_8_bezier', out_shapes[0].ks.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+</div>
+<h2 id="offset-path">Offset Path</h2>
+<p>See <a href="../shapes/#offset-path">Offset Path</a>.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Amount</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="41" max="100" min="-100" name="Amount" oninput="lottie_player_41.reload();document.getElementById('playground_41_1_span').innerText = event.target.value;" title="Amount" type="range" value="10" />
+        <span id="playground_41_1_span">10</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Miter Limit</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="41" max="100" min="0" name="Miter Limit" oninput="lottie_player_41.reload();document.getElementById('playground_41_2_span').innerText = event.target.value;" title="Miter Limit" type="range" value="100" />
+        <span id="playground_41_2_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Line Join</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="41" name="Line Join" oninput="lottie_player_41.reload();"><option value="1">Miter</option><option selected="selected" value="2">Round</option><option value="3">Bevel</option></select></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Star Roundness</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="41" max="100" min="0" name="Star Roundness" oninput="lottie_player_41.reload();document.getElementById('playground_41_4_span').innerText = event.target.value;" title="Star Roundness" type="range" value="0" />
+    <span id="playground_41_4_span">0</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_41" style="width:394px;height:394px"></div>
+<div id="lottie_target_41_bezier" style="width:394px;height:394px"></div>
+</div>
+<div class="json-parent" id="playground_41_5_parent">
+<pre><code class="language-json hljs" id="playground_41_5">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_41_5_bezier">
+</code></pre>
+</div>
+<script>
+                
+                
+                var lottie_player_41_bezier = new LottiePlayer('lottie_target_41_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_41 = new PlaygroundPlayer(
+                    41,
+                    'playground_41_5',
+                    'lottie_target_41',
+                    {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{9199543e-3552-4e51-a802-623f2a4a2ca1}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [256, 256]}, "or": {"a": 0, "k": 222.72242736816406}, "ir": {"a": 0, "k": 111.36121368408203}, "r": {"a": 0, "k": 358.67291259765625}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "op", "nm": "Offset Path", "mn": "{b4af429a-546e-4728-a869-711a404c55ae}", "a": {"a": 0, "k": 10}, "lj": 2, "ml": {"a": 0, "k": 100}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 3}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_41_bezier.lottie;
+                        
+    lottie.layers[0].shapes[0].it[0].is.k = data["Star Roundness"];
+    lottie.layers[0].shapes[0].it[0].os.k = data["Star Roundness"];
+    lottie.layers[0].shapes[0].it[1].a.k = data["Amount"];
+    lottie.layers[0].shapes[0].it[1].lj = Number(data["Line Join"]);
+    lottie.layers[0].shapes[0].it[1].ml.k = data["Miter Limit"];
+                        this.json_viewer_contents = lottie.layers[0].shapes[0].it[1];
+                        let  = lottie.layers[0].shapes[0].it[1];
+                        let bez_result = ;
+                        if ( !Array.isArray(bez_result) )
+                            bez_result = [bez_result];
+                        let out_shapes = bez_result.map(b => ({
+                            ty: "sh", "ks": {a: 0, k: b.to_lottie()}
+                        }));
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it;
+                        bez_target.splice(0, bez_target.length - 2, ...out_shapes);
+                        lottie_player_41_bezier.reload();
+                        this.set_json('playground_41_5_bezier', out_shapes[0].ks.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+</div>
+<pre><code>let star = lottie.layers[0].shapes[0].it[0];
+bezier_lottie.layers[0].shapes[0].it[1].w.k = 3;
+&lt;/script&gt;
+&lt;script func="offset_path([convert_shape(star)], modifier.a.k, modifier.lj, modifier.ml.k)" varname="modifier"&gt;
+/*
+    Simple offset of a linear segment
+*/
+function linear_offset(p1, p2, amount)
+{
+    let angle = Math.atan2(p2.x - p1.x, p2.y - p1.y);
+    return [
+        p1.add_polar(angle, amount),
+        p2.add_polar(angle, amount)
+    ];
+}
+
+/*
+    Offset a bezier segment
+    only works well if the segment is flat enough
+*/
+function offset_segment(segment, amount)
+{
+    let [p0, p1a] = linear_offset(segment.points[0], segment.points[1], amount);
+    let [p1b, p2b] = linear_offset(segment.points[1], segment.points[2], amount);
+    let [p2a, p3] = linear_offset(segment.points[2], segment.points[3], amount);
+    let p1 = line_intersection(p0, p1a, p1b, p2b) ?? p1a;
+    let p2 = line_intersection(p2a, p3, p1b, p2b) ?? p2a;
+
+    return new BezierSegment(p0, p1, p2, p3);
+}
+
+/*
+    Join two segments
+*/
+function join_lines(output_bezier, seg1, seg2, line_join, miter_limit)
+{
+    let p0 = seg1.points[3];
+    let p1 = seg2.points[0];
+
+    // Bevel
+    if ( line_join == 3 )
+        return p0;
+
+
+    // Connected, they don't need a joint
+    if ( p0.is_equal(p1) )
+        return p0;
+
+    let last_point = output_bezier.points[output_bezier.points.length - 1];
+
+    // Round
+    if ( line_join == 2 )
+    {
+        const ellipse_constant = 0.5519;
+        let angle_out = seg1.tangent_angle(1);
+        let angle_in = seg2.tangent_angle(0) + Math.PI;
+        let center = line_intersection(
+            p0, p0.add_polar(angle_out + Math.PI / 2, 100),
+            p1, p1.add_polar(angle_out + Math.PI / 2, 100)
+        );
+        let radius = center ? center.distance(p0) : p0.distance(p1) / 2;
+        last_point.set_out_tangent(Point.polar(angle_out, 2 * radius * ellipse_constant));
+
+        output_bezier.add_vertex(p1)
+            .set_in_tangent(Point.polar(angle_in, 2 * radius * ellipse_constant));
+
+        return p1;
+    }
+
+    // Miter
+    let t0 = p0.is_equal(seg1.points[2]) ? seg1.points[0] : seg1.points[2];
+    let t1 = p1.is_equal(seg2.points[1]) ? seg2.points[3] : seg2.points[1];
+    let intersection = line_intersection(t0, p0, p1, t1);
+    if ( intersection &amp;&amp; intersection.distance(p0) &lt; miter_limit )
+    {
+        output_bezier.add_vertex(intersection);
+        return intersection;
+    }
+
+    return p0;
+}
+
+
+function get_intersection(a, b)
+{
+    let intersect = a.intersections(b);
+
+    if ( intersect.length &amp;&amp; fuzzy_compare(intersect[0], 1) )
+        intersect.shift();
+
+    if ( intersect.length )
+        return intersect[0];
+
+    return null;
+}
+
+function prune_segment_intersection(a, b)
+{
+    let out_a = [...a];
+    let out_b = [...b];
+
+    let intersect = get_intersection(a[a.length-1], b[0]);
+
+    if ( intersect )
+    {
+        out_a[a.length-1] = a[a.length-1].split(intersect[0])[0];
+        out_b[0] = b[0].split(intersect[1])[1];
+    }
+
+    if ( a.length &gt; 1 &amp;&amp; b.length &gt; 1 )
+    {
+        intersect = get_intersection(a[0], b[b.length - 1]);
+
+        if ( intersect )
+        {
+            return [
+                [a[0].split(intersect[0])[0]],
+                [b[b.length-1].split(intersect[1])[1]],
+            ];
+        }
+    }
+
+    return [out_a, out_b];
+}
+
+function prune_intersections(segments)
+{
+    for ( let i = 1; i &lt; segments.length; i++ )
+    {
+        [segments[i-1], segments[i]] = prune_segment_intersection(segments[i - 1], segments[i]);
+    }
+
+    if ( segments.length &gt; 1 )
+        [segments[segments.length - 1], segments[0]] = prune_segment_intersection(segments[segments.length - 1], segments[0]);
+
+    return segments;
+}
+
+function offset_segment_split(segment, amount)
+{
+    /*
+        We split each bezier segment into smaller pieces based
+        on inflection points, this ensures the control point
+        polygon is convex.
+
+        (A cubic bezier can have none, one, or two inflection points)
+    */
+    let flex = segment.inflection_points();
+
+    if ( flex.length == 0 )
+    {
+        return [offset_segment(segment, amount)];
+    }
+    else if ( flex.length == 1 || flex[1] == 1 )
+    {
+        let [left, right] = segment.split(flex[0]);
+
+        return [
+            offset_segment(left, amount),
+            offset_segment(right, amount)
+        ];
+    }
+    else
+    {
+        let [left, mid_right] = segment.split(flex[0]);
+        let t = (flex[1] - flex[0]) / (1 - flex[0]);
+        let [mid, right] = mid_right.split(t);
+
+        return [
+            offset_segment(left, amount),
+            offset_segment(mid, amount),
+            offset_segment(right, amount)
+        ];
+    }
+
+}
+
+function offset_path(
+    // Beziers as collected from the other shapes
+    collected_shapes,
+    amount,
+    line_join,
+    miter_limit,
+)
+{
+    let result = [];
+
+    for ( let input_bezier of collected_shapes )
+    {
+        let output_bezier = new Bezier();
+
+        output_bezier.closed = input_bezier.closed;
+        let count = input_bezier.segment_count();
+
+        let multi_segments = [];
+
+        for ( let i = 0; i &lt; count; i++ )
+            multi_segments.push(offset_segment_split(input_bezier.segment(i), amount));
+
+        // Open paths are stroked rather than being simply offset
+        if ( !input_bezier.closed )
+        {
+            for ( let i = count - 1; i &gt;= 0; i-- )
+                multi_segments.push(offset_segment_split(input_bezier.inverted_segment(i), amount));
+        }
+
+        multi_segments = prune_intersections(multi_segments);
+
+        // Add bezier segments to the output and apply line joints
+        let last_point = null;
+        let last_seg = null;
+
+        for ( let multi_segment of multi_segments )
+        {
+            if ( last_seg )
+                last_point = join_lines(output_bezier, last_seg, multi_segment[0], line_join, miter_limit);
+
+            last_seg = multi_segment[multi_segment.length - 1];
+
+            for ( let segment of multi_segment )
+            {
+                if ( segment.points[0].is_equal(last_point) )
+                {
+                    output_bezier.points[output_bezier.points.length - 1]
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+                else
+                {
+                    output_bezier.add_vertex(segment.points[0])
+                        .set_out_tangent(segment.points[1].sub(segment.points[0]));
+                }
+
+
+                output_bezier.add_vertex(segment.points[3])
+                    .set_in_tangent(segment.points[2].sub(segment.points[3]));
+
+                last_point = segment.points[3];
+            }
+        }
+
+        if ( multi_segments.length )
+            join_lines(output_bezier, last_seg, multi_segments[0][0], line_join, miter_limit);
+
+        result.push(output_bezier);
+    }
+
+    return result;
+}
+&lt;/script&gt;
+</code></pre>
+<p></shape_bezier_script></p>
+<h2 id="trim-path">Trim Path</h2>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Start</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="42" max="100" min="0" name="Start" oninput="lottie_player_42.reload();document.getElementById('playground_42_1_span').innerText = event.target.value;" title="Start" type="range" value="0" />
+        <span id="playground_42_1_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>End</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="42" max="100" min="0" name="End" oninput="lottie_player_42.reload();document.getElementById('playground_42_2_span').innerText = event.target.value;" title="End" type="range" value="50" />
+        <span id="playground_42_2_span">50</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Offset</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="42" max="360" min="0" name="Offset" oninput="lottie_player_42.reload();document.getElementById('playground_42_3_span').innerText = event.target.value;" title="Offset" type="range" value="0" />
+        <span id="playground_42_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Multiple Shapes</label> </td>
+<td style="width: 100%"><select autocomplete="off" data-lottie-input="42" name="Multiple Shapes" oninput="lottie_player_42.reload();"><option value="1">Parallel</option><option value="2">Sequential</option></select></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_42" style="width:394px;height:394px"></div>
+<div id="lottie_target_42_bezier" style="width:394px;height:394px"></div>
+</div>
+<div class="json-parent" id="playground_42_5_parent">
+<pre><code class="language-json hljs" id="playground_42_5">
+</code></pre>
+<pre><code class="language-json hljs" id="playground_42_5_bezier">
+</code></pre>
+</div>
+<script>
+                
+                
+                var lottie_player_42_bezier = new LottiePlayer('lottie_target_42_bezier', {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "gr", "nm": "Group", "it": [{"ty": "sh", "nm": "Shape", "ks": {"a": 0, "k": {"c": true, "v": [], "i": [], "o": []}}}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 30}}, {"ty": "tr", "a": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "p": {"a": 0, "k": [249.3134328358209, 254.47164179104476]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}});
+                var lottie_player_42 = new PlaygroundPlayer(
+                    42,
+                    'playground_42_5',
+                    'lottie_target_42',
+                    {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{8f1618e3-6f83-4531-8f65-07dd4b68ee2e}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Layer", "mn": "{85f37d8b-1792-4a4f-82d2-1b3b6d829c07}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "sr", "nm": "PolyStar", "mn": "{57cff206-c227-4a14-a679-195157be886b}", "p": {"a": 0, "k": [128, 128]}, "or": {"a": 0, "k": 100}, "ir": {"a": 0, "k": 50}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "el", "nm": "Ellipse", "mn": "{74587b40-1ef1-445d-b9ab-02b8a42a96aa}", "p": {"a": 0, "k": [384, 128]}, "s": {"a": 0, "k": [200, 200]}}, {"ty": "rc", "nm": "Rect", "mn": "{0776f2df-2619-415c-b10d-f648f2edfa0f}", "d": 1, "p": {"a": 0, "k": [128, 384]}, "s": {"a": 0, "k": [200, 200]}, "r": {"a": 0, "k": 0}}, {"ty": "sr", "nm": "Triangle", "mn": "{db373594-d0ae-44ff-9295-30ff72616af2}", "p": {"a": 0, "k": [384, 384]}, "or": {"a": 0, "k": 100}, "r": {"a": 0, "k": 0}, "pt": {"a": 0, "k": 3}, "sy": 2, "os": {"a": 0, "k": 0}}, {"ty": "tm", "nm": "Trim Path", "mn": "{dcd7570f-5105-485b-bd43-42ad990b01e8}", "s": {"a": 0, "k": 0}, "e": {"a": 0, "k": 50}, "o": {"a": 0, "k": 0}, "m": 1}, {"ty": "st", "nm": "Stroke", "mn": "{0930ce27-c8f9-4371-b0cf-111a859abfaf}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.9803921568627451, 0.2823529411764706]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 20}}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+                    function (lottie, data)
+                    {
+                        let bezier_lottie = lottie_player_42_bezier.lottie;
+                        
+    lottie.layers[0].shapes[4].s.k = data["Start"];
+    lottie.layers[0].shapes[4].e.k = data["End"];
+    lottie.layers[0].shapes[4].o.k = data["Offset"];
+    lottie.layers[0].shapes[4].m = Number(data["Multiple Shapes"]);
+                        this.json_viewer_contents = lottie.layers[0].shapes[4];
+                        let  = lottie.layers[0].shapes[4];
+                        let bez_result = ;
+                        if ( !Array.isArray(bez_result) )
+                            bez_result = [bez_result];
+                        let out_shapes = bez_result.map(b => ({
+                            ty: "sh", "ks": {a: 0, k: b.to_lottie()}
+                        }));
+                        let bez_target = bezier_lottie.layers[0].shapes[0].it;
+                        bez_target.splice(0, bez_target.length - 2, ...out_shapes);
+                        lottie_player_42_bezier.reload();
+                        this.set_json('playground_42_5_bezier', out_shapes[0].ks.k);
+                    },
+                    {}
+                );
+            </script>
+</div>
+</div>
+<pre><code>let siblings = bezier_lottie.layers[0].shapes[0].it;
+siblings[siblings.length-2].w.k = 20;
+
+let shapes = [];
+for ( let i = 0; i &lt; 4; i++ )
+    shapes.push(convert_shape(lottie.layers[0].shapes[i]));
+&lt;/script&gt;
+&lt;script func="trim_path(shapes, modifier.s.k, modifier.e.k, modifier.o.k, modifier.m)" varname="modifier"&gt;
+
+function trim_path_gather_chunks(collected_shapes, multiple)
+{
+    let chunks = [];
+    // Shapes are handled as a single unit
+    if ( multiple === 2 )
+        chunks.push({segments: [], length: 0});
+    for ( let input_bezier of collected_shapes )
+    {
+        // Shapes are all affected separately
+        if ( multiple === 1 )
+            chunks.push({segments: [], length: 0});
+        let chunk = chunks[chunks.length-1];
+        for ( let i = 0; i &lt; input_bezier.segment_count(); i++ )
+        {
+            let segment = input_bezier.segment(i);
+            let length = segment.get_length();
+            chunk.segments.push(segment);
+            chunk.length += length;
+        }
+        // Use null as a marker to start a new bezier
+        if ( multiple == 2 )
+            chunk.segments.push(null);
+    }
+    return chunks;
+}
+function trim_path_chunk(chunk, start, end, output_shapes)
+{
+    // Note: start and end have been normalized and have the offset applied
+    // The offset itself was normalized into [0, 1] so this is always true:
+    // 0 &lt;= start &lt; end &lt;= 2
+    // Some offsets require us to handle different "splits"
+    // We want each split to be a pair [s, e] such that
+    // 0 &lt;= s &lt; e &lt;= 1
+    var splits = [];
+    if ( end &lt;= 1 )
+    {
+        // Simplest case, the segment is in [0, 1]
+        splits.push([start, end]);
+    }
+    else if ( start &gt; 1 )
+    {
+        // The whole segment is outside [0, 1]
+        splits.push([start-1, end-1]);
+    }
+    else
+    {
+        // The segment goes over the end point, so we need two splits
+        splits.push([start, 1]);
+        splits.push([0, end-1]);
+    }
+    // Each split is a separate bezier, all left to do is finding the
+    // bezier segment to add to the output
+    for ( let [s, e] of splits )
+    {
+        let start_length = s * chunk.length;
+        let start_t;
+        let end_length = e * chunk.length;
+        let prev_length = 0;
+        let output_bezier = new Bezier(false);
+        output_shapes.push(output_bezier);
+        for ( let i = 0; i &lt; chunk.segments.length; i++ )
+        {
+            let segment = chunk.segments[i];
+            // New bezier marker found
+            if ( segment === null )
+            {
+                output_bezier = new Bezier(false);
+                output_shapes.push(output_bezier);
+                continue;
+            }
+            if ( segment.length &gt;= end_length )
+            {
+                let end_t = segment.t_at_length(end_length);
+                if ( segment.length &gt;= start_length )
+                {
+                    start_t = segment.t_at_length(start_length);
+                    segment = segment.split(start_t)[1];
+                    end_t = (end_t - start_t) / (1 - start_t);
+                }
+                output_bezier.add_segment(segment.split(end_t)[0], false);
+                break;
+            }
+            if ( start_t === undefined )
+            {
+                if ( segment.length &gt;= start_length )
+                {
+                    start_t = segment.t_at_length(start_length);
+                    output_bezier.add_segment(segment.split(start_t)[1], false);
+                }
+            }
+            else
+            {
+                output_bezier.add_segment(segment, true);
+            }
+            start_length -= segment.length;
+            end_length -= segment.length;
+        }
+    }
+}
+function trim_path(
+    collected_shapes,
+    start,
+    end,
+    offset,
+    multiple
+)
+{
+    // Normalize Inputs
+    offset = offset / 360 % 1;
+    if ( offset &lt; 0 )
+        offset += 1;
+    start = Math.min(1, Math.max(0, start / 100));
+    end = Math.min(1, Math.max(0, end / 100));
+    if ( end &lt; start )
+        [start, end] = [end, start];
+    // Apply offset
+    start += offset;
+    end += offset;
+    // Handle the degenerate cases
+    if ( fuzzy_compare(start, end) )
+        return [new Bezier(false)];
+    if ( fuzzy_zero(start) &amp;&amp; fuzzy_compare(end, 1) )
+        return collected_shapes;
+    // Gather up the segments to trim
+    let chunks = trim_path_gather_chunks(collected_shapes, multiple);
+    let output_shapes = [];
+    for ( let chunk of chunks )
+        trim_path_chunk(chunk, start, end, output_shapes);
+    return output_shapes;
+}
+&lt;/script&gt;
+</code></pre>
+<p></shape_bezier_script></p>
+<h2 id="transform">Transform</h2>
+<script src="/lottie-docs/scripts/lottie_matrix.js"></script>
+
+<p>This is how to convert a <a href="../helpers/#transform">transform</a> object into a matrix.</p>
+<p>Assuming the matrix</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">a</td>
+<td style="width: 25%;">c</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">b</td>
+<td style="width: 25%;">d</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">tx</td>
+<td style="width: 25%;">ty</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>The names <code>a</code>, <code>b</code>, etc are the ones commonly used for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix()">CSS transforms</a>.</p>
+<p>4D matrix to allow for 3D transforms, even though currently lottie only supports 2D graphics.</p>
+<p>Multiplications are right multiplications (<code>Next = Previous * StepOperation</code>).</p>
+<p>If your transform is transposed (<code>tx</code>, <code>ty</code> are on the last column), perform left multiplication instead.</p>
+<p>Perform the following operations on a matrix starting from the identity matrix (or the parent object's transform matrix):</p>
+<p>Translate by <code>-a</code>:</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-a[0]</td>
+<td style="width: 25%;">-a[1]</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Scale by <code>s/100</code>:</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">s[0]/100</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">s[1]/100</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>-sa</code> (can be skipped if not skewing)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(-sa)</td>
+<td style="width: 25%;">sin(-sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(-sa)</td>
+<td style="width: 25%;">cos(-sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Skew by <code>sk</code> (can be skipped if not skewing)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">tan(-sk)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>sa</code> (can be skipped if not skewing)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(sa)</td>
+<td style="width: 25%;">sin(sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(sa)</td>
+<td style="width: 25%;">cos(sa)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>-r</code></p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">sin(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(-r)</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>If you are handling an <a href="../layers/#auto-orient">auto orient</a> layer,
+evaluate and apply auto-orient rotation.</p>
+<p>Translate by <code>p</code></p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">p[0]</td>
+<td style="width: 25%;">p[1]</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Anchor X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="512" min="0" name="Anchor X" oninput="lottie_player_43.reload();document.getElementById('playground_43_1_span').innerText = event.target.value;" title="Anchor X" type="range" value="256" />
+        <span id="playground_43_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Anchor Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="512" min="0" name="Anchor Y" oninput="lottie_player_43.reload();document.getElementById('playground_43_2_span').innerText = event.target.value;" title="Anchor Y" type="range" value="256" />
+        <span id="playground_43_2_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="512" min="0" name="Position X" oninput="lottie_player_43.reload();document.getElementById('playground_43_3_span').innerText = event.target.value;" title="Position X" type="range" value="256" />
+        <span id="playground_43_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="512" min="0" name="Position Y" oninput="lottie_player_43.reload();document.getElementById('playground_43_4_span').innerText = event.target.value;" title="Position Y" type="range" value="256" />
+        <span id="playground_43_4_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Scale X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="200" min="0" name="Scale X" oninput="lottie_player_43.reload();document.getElementById('playground_43_5_span').innerText = event.target.value;" title="Scale X" type="range" value="100" />
+        <span id="playground_43_5_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Scale Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="200" min="0" name="Scale Y" oninput="lottie_player_43.reload();document.getElementById('playground_43_6_span').innerText = event.target.value;" title="Scale Y" type="range" value="100" />
+        <span id="playground_43_6_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="360" min="0" name="Rotation" oninput="lottie_player_43.reload();document.getElementById('playground_43_7_span').innerText = event.target.value;" title="Rotation" type="range" value="0" />
+        <span id="playground_43_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Skew</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="360" min="0" name="Skew" oninput="lottie_player_43.reload();document.getElementById('playground_43_8_span').innerText = event.target.value;" title="Skew" type="range" value="0" />
+        <span id="playground_43_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Skew Angle</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="360" min="0" name="Skew Angle" oninput="lottie_player_43.reload();document.getElementById('playground_43_9_span').innerText = event.target.value;" title="Skew Angle" type="range" value="0" />
+        <span id="playground_43_9_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="43" max="100" min="0" name="Opacity" oninput="lottie_player_43.reload();document.getElementById('playground_43_10_span').innerText = event.target.value;" title="Opacity" type="range" value="100" />
+    <span id="playground_43_10_span">100</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_43"></div>
+</div>
+<div class="json-parent" id="playground_43_11_parent">
+<pre><code class="language-json hljs" id="playground_43_11">
+</code></pre>
+</div>
+<script>
+        var lottie_player_43 = new PlaygroundPlayer(
+            43,
+            'playground_43_11',
+            'lottie_target_43',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{a3bb98c7-d0dd-4484-b6da-74a0e70eaf2f}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 2, "st": 0, "ip": 0, "op": 180, "nm": "Anchor", "mn": "{04f9b742-3603-49fa-9552-ea04de1a3f33}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "el", "nm": "Ellipse", "mn": "{4251e46a-bb13-464b-913c-e67c44a218da}", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [32, 32]}}, {"ty": "fl", "nm": "Fill", "mn": "{7d3070ed-88a3-41aa-a62e-7db8df1bd312}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.9411764705882353, 0.11372549019607843, 0.0392156862745098]}, "r": 1}]}, {"ddd": 0, "ty": 4, "ind": 1, "st": 0, "ip": 0, "op": 180, "nm": "Transformed", "mn": "{d00298c4-66b4-4ae4-a730-22c1eb85c188}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}, "sk": {"a": 0, "k": 0}, "sa": {"a": 0, "k": 0}}, "shapes": [{"ty": "rc", "nm": "Rectangle 1", "mn": "{bf8ad877-113b-4df8-a2e2-3bb4af32edf7}", "p": {"a": 0, "k": [252.75223880597017, 250.60298507462684]}, "s": {"a": 0, "k": [319.8089552238806, 330.98507462686564]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "nm": "Fill 1", "mn": "{b9040dc8-0753-4a6e-b5f1-d508d17bbd4f}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}]}, {"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Reference", "mn": "{8f351be7-8a51-4310-9dc3-59ed21594815}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "rc", "nm": "Rectangle", "mn": "{cb4f7b74-bed1-493b-a0e6-01b00566aedd}", "p": {"a": 0, "k": [252.75223880597017, 250.60298507462684]}, "s": {"a": 0, "k": [319.8089552238806, 330.98507462686564]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "nm": "Fill", "mn": "{05064670-7e14-4141-89c1-e0f0f3a1c57d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.1607843137254902, 0.1843137254901961, 0.4588235294117647]}, "r": 1}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+if ( lottie.layers.length == 3 )
+{
+    lottie.layers.splice(1, 0, {
+        "ty": 4,
+        "st": 0,
+        "ip": 0,
+        "op": 180,
+        "ks": {},
+        "shapes": [
+            {
+                "ty": "sh",
+                "ks": {
+                    "k": {
+                        "c": true,
+                        "v": [],
+                        "i": [[0, 0], [0, 0], [0, 0], [0, 0]],
+                        "o": [[0, 0], [0, 0], [0, 0], [0, 0]],
+                    },
+                    "a": 0
+                }
+            },
+            {
+                "ty": "st",
+                "o": {
+                    "a": 0,
+                    "k": 100
+                },
+                "w": {
+                    "a": 0,
+                    "k": 2
+                },
+                "c": {
+                    "a": 0,
+                    "k": [
+                        0.078,
+                        0.741,
+                        0.431
+                    ]
+                }
+            }
+        ]
+    });
+}this.json_viewer_contents = 
+    [
+        transform.elements.slice(0, 4),
+        transform.elements.slice(4, 8),
+        transform.elements.slice(8, 12),
+        transform.elements.slice(12, 16)
+    ].map(x => Array.from(x))
+    ;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<p>lottie.layers[0].ks.p.k[0] = data["Anchor X"];
+lottie.layers[2].ks.a.k[0] = data["Anchor X"];
+lottie.layers[0].ks.p.k[1] = data["Anchor Y"];
+lottie.layers[2].ks.a.k[1] = data["Anchor Y"];
+lottie.layers[2].ks.p.k[0] = data["Position X"];
+lottie.layers[2].ks.p.k[1] = data["Position Y"];
+lottie.layers[2].ks.s.k[0] = data["Scale X"];
+lottie.layers[2].ks.s.k[1] = data["Scale Y"];
+lottie.layers[2].ks.r.k = data["Rotation"];
+lottie.layers[2].ks.sk.k = data["Skew"];
+lottie.layers[2].ks.sa.k = data["Skew Angle"];
+lottie.layers[2].ks.o.k = data["Opacity"];</p>
+<p>var transform = new LottieMatrix();
+transform.translate(-data["Anchor X"], -data["Anchor Y"]);
+transform.scale(data["Scale X"] / 100, data["Scale Y"] / 100);
+transform.skew(data["Skew"] * Math.PI / 180, data["Skew Angle"] * Math.PI / 180);
+transform.rotate(-data["Rotation"] * Math.PI / 180);
+transform.translate(data["Position X"], data["Position Y"]);</p>
+<p>var cx = lottie.layers[2].shapes[0].p.k[0];
+var cy = lottie.layers[2].shapes[0].p.k[1];
+var rx = lottie.layers[2].shapes[0].s.k[0] / 2;
+var ry = lottie.layers[2].shapes[0].s.k[1] / 2;</p>
+<p>lottie.layers[1].shapes[0].ks.k.v = [
+    transform.map(cx - rx, cy - ry).slice(0, 2),
+    transform.map(cx + rx, cy - ry).slice(0, 2),
+    transform.map(cx + rx, cy + ry).slice(0, 2),
+    transform.map(cx - rx, cy + ry).slice(0, 2)
+];
+</script>
+</lottie-playground></p>
+<h3 id="3d-transform">3D Transform</h3>
+<p>If you have a 3D transform, the process is similar, with <code>a</code>, <code>p</code>, <code>s</code>,
+using their 3D matrices, note that for <code>p</code> and <code>a</code> the Z axis is inverted.</p>
+<p>The rotation step is a bit more complicated, with the 2D rotation being
+equivalent to a Z rotation.</p>
+<p>The rotation step above is replaced with the following set of steps:</p>
+<p>Rotate by <code>-rz</code></p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">sin(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(-r)</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>ry</code></p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">sin(r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>rx</code></p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">cos(r)</td>
+<td style="width: 25%;">-sin(r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">-sin(r)</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Then repeat the steps for <code>or</code>:</p>
+<p>Rotate by <code>-or[2]</code> (Z axis)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">sin(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(-r)</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>or[1]</code> (Y axis)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">sin(r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<p>Rotate by <code>or[0]</code> (X axis)</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">cos(r)</td>
+<td style="width: 25%;">-sin(r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">-sin(r)</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<h3 id="auto-orient">Auto Orient</h3>
+<p>Auto-orient is only relevant for layers that have <code>ao</code> set to <code>1</code> an animated position.</p>
+<p>You get the derivative of the position property at the current time as a
+pair (<code>dx</code>, <code>dy</code>), and find the angle with <code>atan2(dy, dx)</code>, then rotate
+by that angle clockwise:</p>
+<table class="table-plain matrix" style="font-family: monospace; text-align: center; ">
+<tr>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">sin(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">-sin(-r)</td>
+<td style="width: 25%;">cos(-r)</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+<td style="width: 25%;">0</td>
+</tr>
+<tr>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">0</td>
+<td style="width: 25%;">1</td>
+</tr>
+</table>
+<h2 id="animated-properties">Animated Properties</h2>
+<p>Assuming a 1D property, a keyframe looks something like this:</p>
+<pre><code class="language-js">{
+    &quot;t&quot;: start_time,
+    &quot;s&quot;: [
+        start_value
+    ],
+    &quot;o&quot;: {
+        &quot;x&quot;: [
+            ox
+        ],
+        &quot;y&quot;: [
+            oy
+        ]
+    },
+    &quot;i&quot;: {
+        &quot;x&quot;: [
+            ix
+        ],
+        &quot;y&quot;: [
+            iy
+        ]
+    }
+}
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>t</code> is the time at the start of the keyframe (in frames),</li>
+<li><code>s</code> is the value at that time</li>
+<li><code>i</code> and <code>o</code> are the in/out bezier tangents</li>
+</ul>
+<p>The transition between keyframes is defined by two keyframes,
+for simplicity we'll refer to the named values above plus <code>end_time</code> and
+<code>end_value</code> corresponding to <code>t</code> and <code>s</code> on the keyframe after the one listed.</p>
+<p>The transition is given as a cubic bezier curve whose x axis is time and
+the y axis is the interpolating factor between <code>start_value</code> and <code>end_value</code>.</p>
+<p>The four points of this bezier curve are: (0, 0), (ox, oy), (iy, iy), (1, 1).</p>
+<p><code>x</code> is given by <code>x = (current_time - start_time) / (end_time - start_time)</code>.</p>
+<p>If the bezier is defined as</p>
+<p><em>a</em> t<sup>3</sup> + <em>b</em> t<sup>2</sup> + <em>c</em> t + <em>d</em> = 0</p>
+<p>then you need to find the cubic roots of</p>
+<p><em>a</em> t<sup>3</sup> + <em>b</em> t<sup>2</sup> + <em>c</em> t + <em>d</em> - <code>x</code> = 0</p>
+<p>to find the <code>t</code> corresponding to that <code>x</code>, (You only need to consider real roots in [0, 1]).</p>
+<p>Then you can find the <code>y</code> by evaluating the bezier at <code>t</code>.</p>
+<p>The final value is as follows: <code>lerp(y, start_value, end_value)</code>.</p>
+<div class="playground playground-columns print-site-plugin-ignore">
+<div id="editor_44"></div>
+<div>
+<pre id="json_viewer_44_parent"><code class="language-json hljs" id="json_viewer_44">
+</code></pre>
+</div>
+<script>
+        KeyframePreviewEditor.stand_alone(document.getElementById("editor_44"), (lottie) =>
+        {
+            var raw_json = JSON.stringify(lottie, undefined, 4);
+            var pretty_json = hljs.highlight("json", raw_json).value;
+            document.getElementById("json_viewer_44").innerHTML = pretty_json;
+        }, {foreground: function () {
+    if ( !this.x_input )
+        return;
+
+    var t1 = this.points[0].out_tan.logical_coords();
+    var t2 = this.points[1].in_tan.logical_coords();
+    var seg = new BezierSegment(
+        new Point(0, 0), new Point(t1.x, t1.y), new Point(t2.x, t2.y), new Point(1, 1)
+    );
+
+    let x = Number(this.x_input.value);
+    this.context.lineWidth = 1;
+    this.context.strokeStyle = "red";
+    this.context.beginPath();
+    this.context.moveTo(...this.logical_to_canvas(x, 0));
+    this.context.lineTo(...this.logical_to_canvas(x, 1));
+
+    let t = seg.t_at_x(x);
+
+    let y = seg.value(t).y;
+    this.context.moveTo(...this.logical_to_canvas(0, y));
+    this.context.lineTo(...this.logical_to_canvas(1, y));
+
+    this.table_x.innerText = x;
+    this.table_t.innerText = t;
+    this.table_y.innerText = y;
+
+    this.context.stroke();
+},
+init: function (editor, container) {
+    var inp = container.appendChild(document.createElement("input"));
+    var style = "width: " + editor.bezier_editor.canvas.width + "px";
+    editor.bezier_editor.x_input = inp;
+    inp.setAttribute("type", "range");
+    inp.setAttribute("min", "0");
+    inp.setAttribute("max", "1");
+    inp.setAttribute("value", "0");
+    inp.setAttribute("step", "0.01");
+    inp.setAttribute("style", style);
+    inp.addEventListener("input", () => editor.bezier_editor.draw_frame());
+
+    var table = container.appendChild(document.createElement("table"));
+    table.setAttribute("style", style);
+    for ( let v of "xty" )
+    {
+        var tr = table.appendChild(document.createElement("tr"));
+        tr.appendChild(document.createElement("th")).appendChild(document.createTextNode(v));
+        var td = tr.appendChild(document.createElement("td"));
+        td.setAttribute("style", "text-align: left; width: 90%;");
+        editor.bezier_editor["table_" + v] = td;
+    }
+
+    editor.bezier_editor.draw_frame();
+},
+});
+        </script>
+</div>
+<h2 id="effects">Effects</h2>
+<script src="/lottie-docs/scripts/simple_shader.js"></script>
+<style>
+.webgl-shader {
+    transform: scaleY(-1);
+}
+</style>
+
+<h3 id="fill-effect">Fill Effect</h3>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_45" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_45_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_45_1_parent">
+<pre><code class="language-json hljs" id="playground_45_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_45 = new MultiPassShader(document.getElementById('lottie_target_45_canvas'));
+        
+        var lottie_player_45 = new PlaygroundPlayer(
+            45,
+            'playground_45_1',
+            'lottie_target_45',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 21, "ef": [{"ty": 3, "v": {"k": [0, 0], "a": 0}}, {"ty": 7, "v": {"k": 0, "a": 0}}, {"ty": 2, "v": {"k": [1, 0.9, 0, 1], "a": 0}}, {"ty": 2, "v": {"k": [0, 0, 0, 1], "a": 0}}, {"ty": 7, "v": {"k": 0, "a": 0}}, {"ty": 0, "v": {"a": 0, "k": 0}}, {"ty": 0, "v": {"a": 0, "k": 1}}, {"ty": 0, "v": {"a": 0, "k": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_45;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <input title="Opacity" type="range" min="0" value="1" max="1" step="0.1"/>
+    <th>Color</th>
+    <input title="Red" type="range" min="0" value="1" max="1" step="0.1"/>
+    <input title="Green" type="range" min="0" value="0.9" max="1" step="0.1"/>
+    <input title="Blue" type="range" min="0" value="0" max="1" step="0.1"/>
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[6].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["Blue"];
+
+shader.set_uniform("color", "4fv", [data["Red"], data["Green"], data["Blue"], data["Opacity"]]);
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+uniform highp vec4 color;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    gl_FragColor = color;
+    gl_FragColor.a = 1.0;
+    gl_FragColor *= pixel.a * color.a;
+}
+</script>
+<p></effect_shader_script></p>
+<h3 id="tritone-effect">Tritone Effect</h3>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_46" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_46_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_46_1_parent">
+<pre><code class="language-json hljs" id="playground_46_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_46 = new MultiPassShader(document.getElementById('lottie_target_46_canvas'));
+        
+        var lottie_player_46 = new PlaygroundPlayer(
+            46,
+            'playground_46_1',
+            'lottie_target_46',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 23, "ef": [{"ty": 2, "v": {"k": [1, 1, 1, 1], "a": 0}}, {"ty": 2, "v": {"k": [0.3, 0.8, 0.3, 1], "a": 0}}, {"ty": 2, "v": {"k": [0, 0, 0, 1], "a": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_46;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <th>Bright</th>
+    <input title="Red" type="range" min="0" value="1" max="1" step="0.1" name="r1"/>
+    <input title="Green" type="range" min="0" value="1" max="1" step="0.1" name="g1"/>
+    <input title="Blue" type="range" min="0" value="1" max="1" step="0.1" name="b1"/>
+    <th>Mid</th>
+    <input title="Red" type="range" min="0" value="0.3" max="1" step="0.1" name="r2"/>
+    <input title="Green" type="range" min="0" value="0.8" max="1" step="0.1" name="g2"/>
+    <input title="Blue" type="range" min="0" value="0.3" max="1" step="0.1" name="b2"/>
+    <th>Dark</th>
+    <input title="Red" type="range" min="0" value="0" max="1" step="0.1" name="r3"/>
+    <input title="Green" type="range" min="0" value="0" max="1" step="0.1" name="g3"/>
+    <input title="Blue" type="range" min="0" value="0" max="1" step="0.1" name="b3"/>
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k[0] = data["r1"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["g1"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["b1"];
+lottie.layers[0].ef[0].ef[1].v.k[0] = data["r2"];
+lottie.layers[0].ef[0].ef[1].v.k[1] = data["g2"];
+lottie.layers[0].ef[0].ef[1].v.k[2] = data["b2"];
+lottie.layers[0].ef[0].ef[2].v.k[0] = data["r3"];
+lottie.layers[0].ef[0].ef[2].v.k[1] = data["g3"];
+lottie.layers[0].ef[0].ef[2].v.k[2] = data["b3"];
+
+shader.set_uniform("bright", "4fv", [data["r1"], data["g1"], data["b1"], 1]);
+shader.set_uniform("mid", "4fv", [data["r2"], data["g2"], data["b2"], 1]);
+shader.set_uniform("dark", "4fv", [data["r3"], data["g3"], data["b3"], 1]);
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+uniform highp vec4 bright;
+uniform highp vec4 mid;
+uniform highp vec4 dark;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    highp float lightness = sqrt(pixel.r * pixel.r * 0.299 + pixel.g * pixel.g * 0.587 + pixel.b * pixel.b * 0.114);
+    // If you want results more similar to lottie-web use the lightness below
+    // (this shader has a more accurate lightness calculation)
+    // lightness = sqrt((pixel.r * pixel.r + pixel.g * pixel.g + pixel.b * pixel.b) / 3.0);
+
+    if ( lightness < 0.5 )
+    {
+        lightness *= 2.0;
+        gl_FragColor = dark * (1.0 - lightness) + mid * lightness;
+    }
+    else
+    {
+        lightness = (lightness - 0.5) * 2.0;
+        gl_FragColor = mid * (1.0 - lightness) + bright * lightness;
+    }
+
+    gl_FragColor *= pixel.a;
+}
+</script>
+<p></effect_shader_script></p>
+<h3 id="gaussian-blur">Gaussian Blur</h3>
+<p>This is a two-pass shader, the uniform <code>pass</code> is has value <code>0</code>
+on the first pass and value <code>1</code> on the second pass.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_47" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_47_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_47_1_parent">
+<pre><code class="language-json hljs" id="playground_47_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_47 = new MultiPassShader(document.getElementById('lottie_target_47_canvas'));
+        
+        var lottie_player_47 = new PlaygroundPlayer(
+            47,
+            'playground_47_1',
+            'lottie_target_47',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 29, "en": 1, "ef": [{"ty": 0, "v": {"a": 0, "k": 25}}, {"ty": 0, "v": {"k": 0, "a": 0}}, {"ty": 4, "v": {"k": 0, "a": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_47;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <input title="Sigma" type="range" min="0" value="25" max="100"/>
+    <select title=Direction">
+        <option value="1">Both</option>
+        <option value="2">Horizontal</option>
+        <option value="3">Vertical</option>
+    </select>
+    <input title="Wrap" type="checkbox" />
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = data["Sigma"];
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Direction"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Wrap"]);
+
+
+for ( let pass of [0, 1] )
+{
+    shader.set_uniform(pass, "sigma", "1f", data["Sigma"]);
+    shader.set_uniform(pass, "direction", "1i", data["Direction"]);
+    shader.set_uniform(pass, "wrap", "1i", data["Wrap"]);
+}
+
+</script>
+<script type="x-shader/x-fragment" passes="2">
+#version 300 es
+
+#define PI 3.1415926538
+precision highp float;
+
+uniform float sigma;
+uniform int direction;
+uniform int kernel_size;
+uniform bool wrap;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+uniform int pass;
+
+out vec4 FragColor;
+
+
+vec4 texture_value(vec2 uv)
+{
+    if ( wrap )
+    {
+        if ( uv.x < 0. ) uv.x = 1. - uv.x;
+        if ( uv.x > 1. ) uv.x = uv.x - 1.;
+        if ( uv.y < 0. ) uv.y = 1. - uv.y;
+        if ( uv.y > 1. ) uv.y = uv.y - 1.;
+    }
+    else if ( uv.x < 0. || uv.x > 1. || uv.y < 0. || uv.y > 1. )
+    {
+        return vec4(0.0);
+    }
+
+    return texture(texture_sampler, uv);
+}
+
+
+vec4 blur_pass(float sigma, int kernel_size, vec2 uv, bool horizontal)
+{
+    float side = float(kernel_size / 2);
+
+    vec2 direction_vector = horizontal ?
+        vec2(1.0, 0.0) / canvas_size.x :
+        vec2(0.0, 1.0) / canvas_size.y;
+
+    vec3 delta_gauss;
+    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);
+    delta_gauss.y = exp(-0.5 / (sigma * sigma));
+    delta_gauss.z = delta_gauss.y * delta_gauss.y;
+
+    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
+    float sum = 0.0;
+
+    vec4 pixel = texture_value(uv);
+    avg += pixel * delta_gauss.x;
+    sum += delta_gauss.x;
+    delta_gauss.xy *= delta_gauss.yz;
+
+    for ( float i = 1.0; i <= side; i++)
+    {
+        for ( float s = -1.0; s <= 1.0; s += 2.0 )
+        {
+            vec2 pos = uv + s * i * direction_vector;
+            pixel = texture_value(pos);
+            avg += pixel * delta_gauss.x;
+        }
+        sum += 2.0 * delta_gauss.x;
+        delta_gauss.xy *= delta_gauss.yz;
+    }
+
+    avg /= sum;
+
+    return avg;
+}
+
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+
+    int actual_kernel_size = kernel_size == 0 ? int(0.5 + 6.0 * sigma) : kernel_size;
+
+    const float multiplier = 0.25;
+
+    if ( sigma == 0.0 )
+    {
+        FragColor = texture(texture_sampler, uv);
+    }
+    else if ( pass == 0 )
+    {
+        if ( direction != 3 )
+            FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, true);
+        else
+            FragColor = texture(texture_sampler, uv);
+    }
+    else if ( pass == 1 )
+    {
+        if ( direction != 2 )
+            FragColor = blur_pass(sigma * multiplier, actual_kernel_size, uv, false);
+        else
+            FragColor = texture(texture_sampler, uv);
+    }
+}
+</script>
+<p></effect_shader_script></p>
+<h3 id="drop-shadow-effect">Drop Shadow Effect</h3>
+<p>The effect below is split into multiple shaders:</p>
+<ul>
+<li>First it generates the shadow</li>
+<li>Then it has a 2 pass gaussian blur (simplified from the example above)</li>
+<li>Finally, it composites the original image on top of the blurred shadow</li>
+</ul>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_48" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_48_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_48_1_parent">
+<pre><code class="language-json hljs" id="playground_48_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_48 = new MultiPassShader(document.getElementById('lottie_target_48_canvas'));
+        
+        var lottie_player_48 = new PlaygroundPlayer(
+            48,
+            'playground_48_1',
+            'lottie_target_48',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 25, "ef": [{"ty": 2, "v": {"k": [0, 0, 0, 1], "a": 0}}, {"ty": 0, "v": {"k": 128, "a": 0}}, {"ty": 1, "v": {"k": 135, "a": 0}}, {"ty": 0, "v": {"k": 10, "a": 0}}, {"ty": 0, "v": {"k": 7, "a": 0}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_48;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <input title="Red" type="range" min="0" value="0" max="1" step="0.1"/>
+    <input title="Green" type="range" min="0" value="0" max="1" step="0.1"/>
+    <input title="Blue" type="range" min="0" value="0" max="1" step="0.1"/>
+    <input title="Opacity" type="range" min="0" value="128" max="256"/>
+    <input title="Angle" type="range" min="0" value="135" max="360"/>
+    <input title="Distance" type="range" min="0" value="10" max="512"/>
+    <input title="Blur" type="range" min="0" value="7" max="512"/>
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k[0] = data["Red"];
+lottie.layers[0].ef[0].ef[0].v.k[1] = data["Green"];
+lottie.layers[0].ef[0].ef[0].v.k[2] = data["Blue"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Opacity"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Angle"];
+lottie.layers[0].ef[0].ef[3].v.k = data["Distance"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Blur"];
+
+shader.set_uniform(0, "color", "4fv", [data["Red"], data["Green"], data["Blue"], data["Opacity"]]);
+shader.set_uniform(0, "angle", "1f", data["Angle"]);
+// 0.77 is just to take into account the canvas is 394 instead of 512
+shader.set_uniform(0, "distance", "1f", data["Distance"] * 0.77);
+
+shader.set_uniform(1, "sigma", "1f", data["Blur"]);
+shader.set_uniform(2, "sigma", "1f", data["Blur"]);
+
+shader.texture("/lottie-docs/examples/blep.png").set_uniform(shader.passes[3].program, "original");
+</script>
+<script type="x-shader/x-fragment">
+#version 300 es
+#define PI 3.1415926538
+
+uniform highp vec4 color;
+uniform mediump float angle;
+uniform mediump float distance;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+out highp vec4 FragColor;
+
+void main()
+{
+    // Base pixel value
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture(texture_sampler, uv);
+
+    // Pixel value at the given offset
+    mediump float radians = -angle * PI / 180.0 + PI / 2.0;
+    highp vec2 shadow_uv = vec2(
+        (gl_FragCoord.x - distance * cos(radians)) / canvas_size.x,
+        1.0 - (gl_FragCoord.y - distance * sin(radians)) / canvas_size.y
+    );
+    highp vec4 shadow_pixel = texture(texture_sampler, shadow_uv);
+
+    // Colorize shadow
+    highp vec4 shadow_color;
+
+    if ( shadow_uv.x >= 0.0 && shadow_uv.x <= 1.0 && shadow_uv.y >= 0.0 && shadow_uv.y <= 1.0 )
+    {
+        shadow_color = color;
+        shadow_color.a = 1.0;
+        shadow_color *= shadow_pixel.a * color.a / 255.0;
+    }
+
+    // Apply shadow below the base pixel
+    FragColor = shadow_color; //pixel * pixel.a + shadow_color * (1.0 - pixel.a);
+}
+</script>
+<script type="x-shader/x-fragment" passes="2">
+#version 300 es
+
+#define PI 3.1415926538
+precision highp float;
+
+uniform float sigma;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+uniform int pass;
+
+out vec4 FragColor;
+
+vec4 blur_pass(float sigma, int kernel_size, vec2 uv, bool horizontal)
+{
+    float side = float(kernel_size / 2);
+
+    vec2 direction_vector = horizontal ?
+        vec2(1.0, 0.0) / canvas_size.x :
+        vec2(0.0, 1.0) / canvas_size.y;
+
+    vec3 delta_gauss;
+    delta_gauss.x = 1.0 / (sqrt(2.0 * PI) * sigma);
+    delta_gauss.y = exp(-0.5 / (sigma * sigma));
+    delta_gauss.z = delta_gauss.y * delta_gauss.y;
+
+    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
+    float sum = 0.0;
+
+    vec4 pixel = texture(texture_sampler, uv);
+    avg += pixel * delta_gauss.x;
+    sum += delta_gauss.x;
+    delta_gauss.xy *= delta_gauss.yz;
+
+    for ( float i = 1.0; i <= side; i++)
+    {
+        for ( float s = -1.0; s <= 1.0; s += 2.0 )
+        {
+            vec2 pos = uv + s * i * direction_vector;
+            pixel = texture(texture_sampler, pos);
+            avg += pixel * delta_gauss.x;
+        }
+        sum += 2.0 * delta_gauss.x;
+        delta_gauss.xy *= delta_gauss.yz;
+    }
+
+    avg /= sum;
+
+    return avg;
+}
+
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+
+    int kernel_size = int(0.5 + 6.0 * sigma);
+
+    const float multiplier = 0.25;
+
+    if ( sigma == 0.0 )
+        FragColor = texture(texture_sampler, uv);
+    else if ( pass == 1 )
+        FragColor = blur_pass(sigma * multiplier, kernel_size, uv, true);
+    else if ( pass == 2 )
+        FragColor = blur_pass(sigma * multiplier, kernel_size, uv, false);
+}
+</script>
+<script type="x-shader/x-fragment">
+#version 300 es
+
+precision highp float;
+
+uniform sampler2D original;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+out vec4 FragColor;
+
+vec4 alpha_blend(vec4 top, vec4 bottom)
+{
+    float comp_alpha = bottom.a * (1.0 - top.a);
+    vec4 result;
+    result.a = top.a + comp_alpha;
+    result.rgb = (top.rgb * top.a + bottom.rgb * comp_alpha) / result.a;
+    return result;
+}
+
+void main()
+{
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+
+    FragColor = alpha_blend(
+        texture(original, uv),
+        texture(texture_sampler, vec2(uv.x, 1.0 - uv.y))
+    );
+}
+</script>
+<p></effect_shader_script></p>
+<h3 id="pro-levels-effect">Pro Levels Effect</h3>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_49" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_49_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_49_1_parent">
+<pre><code class="language-json hljs" id="playground_49_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_49 = new MultiPassShader(document.getElementById('lottie_target_49_canvas'));
+        
+        var lottie_player_49 = new PlaygroundPlayer(
+            49,
+            'playground_49_1',
+            'lottie_target_49',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {"a": {"k": [0, 0], "a": 0}, "p": {"k": [0, 0], "a": 0}, "s": {"k": [100, 100], "a": 0}, "r": {"k": 0, "a": 0}, "o": {"k": 100, "a": 0}, "sk": {"k": 0, "a": 0}, "sa": {"k": 0, "a": 0}}, "ao": 0, "ip": 0, "op": 60, "st": 0, "bm": 0, "ind": 0, "ef": [{"ty": 24, "ef": [{"ty": 7, "v": {"nm": "00 Dropdown", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "01", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "02", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "comp_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "comp_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "comp_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "comp_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "comp_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "08", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "09 slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "r_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "r_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "r_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "r_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "r_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "15 slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "16 slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "g_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "g_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "g_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "g_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "g_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "22", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "23", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "b_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "b_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "b_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "b_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "b_outwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "29", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "a_inblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "a_inwhite slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "a_gamma slider", "a": 0, "k": 1}}, {"ty": 0, "v": {"nm": "a_outblack slider", "a": 0, "k": 0}}, {"ty": 0, "v": {"nm": "a_outwhite slider", "a": 0, "k": 1}}]}], "refId": "blep"}]},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_49;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <th>Composite</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Composite In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Composite In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Composite Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Composite Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Composite Out White"/>
+    <th>Red</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Red In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Red In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Red Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Red Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Red Out White"/>
+    <th>Green</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Green In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Green In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Green Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Green Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Green Out White"/>
+    <th>Blue</th>
+    <input title="In Black" type="range" min="0" value="0" max="1" step="0.1" name="Blue In Black"/>
+    <input title="In White" type="range" min="0" value="1" max="1" step="0.1" name="Blue In White"/>
+    <input title="Gamma" type="range" min="0" value="1" max="3" step="0.1" name="Blue Gamma"/>
+    <input title="Out Black" type="range" min="0" value="0" max="1" step="0.1" name="Blue Out Black"/>
+    <input title="Out White" type="range" min="0" value="1" max="1" step="0.1" name="Blue Out White"/>
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[3].v.k = data["Composite In Black"];
+lottie.layers[0].ef[0].ef[4].v.k = data["Composite In White"];
+lottie.layers[0].ef[0].ef[5].v.k = data["Composite Gamma"];
+lottie.layers[0].ef[0].ef[6].v.k = data["Composite Out Black"];
+lottie.layers[0].ef[0].ef[7].v.k = data["Composite Out White"];
+lottie.layers[0].ef[0].ef[10].v.k = data["Red In Black"];
+lottie.layers[0].ef[0].ef[11].v.k = data["Red In White"];
+lottie.layers[0].ef[0].ef[12].v.k = data["Red Gamma"];
+lottie.layers[0].ef[0].ef[13].v.k = data["Red Out Black"];
+lottie.layers[0].ef[0].ef[14].v.k = data["Red Out White"];
+lottie.layers[0].ef[0].ef[17].v.k = data["Green In Black"];
+lottie.layers[0].ef[0].ef[18].v.k = data["Green In White"];
+lottie.layers[0].ef[0].ef[19].v.k = data["Green Gamma"];
+lottie.layers[0].ef[0].ef[20].v.k = data["Green Out Black"];
+lottie.layers[0].ef[0].ef[21].v.k = data["Green Out White"];
+lottie.layers[0].ef[0].ef[24].v.k = data["Blue In Black"];
+lottie.layers[0].ef[0].ef[25].v.k = data["Blue In White"];
+lottie.layers[0].ef[0].ef[26].v.k = data["Blue Gamma"];
+lottie.layers[0].ef[0].ef[27].v.k = data["Blue Out Black"];
+lottie.layers[0].ef[0].ef[28].v.k = data["Blue Out White"];
+
+shader.set_uniform("composite_in_black",  "1f", data["Composite In Black"]);
+shader.set_uniform("composite_in_white",  "1f", data["Composite In White"]);
+shader.set_uniform("composite_gamma",     "1f", data["Composite Gamma"]);
+shader.set_uniform("composite_out_black", "1f", data["Composite Out Black"]);
+shader.set_uniform("composite_out_white", "1f", data["Composite Out White"]);
+
+shader.set_uniform("red_in_black",  "1f", data["Red In Black"]);
+shader.set_uniform("red_in_white",  "1f", data["Red In White"]);
+shader.set_uniform("red_gamma",     "1f", data["Red Gamma"]);
+shader.set_uniform("red_out_black", "1f", data["Red Out Black"]);
+shader.set_uniform("red_out_white", "1f", data["Red Out White"]);
+
+shader.set_uniform("green_in_black",  "1f", data["Green In Black"]);
+shader.set_uniform("green_in_white",  "1f", data["Green In White"]);
+shader.set_uniform("green_gamma",     "1f", data["Green Gamma"]);
+shader.set_uniform("green_out_black", "1f", data["Green Out Black"]);
+shader.set_uniform("green_out_white", "1f", data["Green Out White"]);
+
+shader.set_uniform("blue_in_black",  "1f", data["Blue In Black"]);
+shader.set_uniform("blue_in_white",  "1f", data["Blue In White"]);
+shader.set_uniform("blue_gamma",     "1f", data["Blue Gamma"]);
+shader.set_uniform("blue_out_black", "1f", data["Blue Out Black"]);
+shader.set_uniform("blue_out_white", "1f", data["Blue Out White"]);
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+precision highp float;
+
+uniform highp float composite_in_black;
+uniform highp float composite_in_white;
+uniform highp float composite_gamma;
+uniform highp float composite_out_black;
+uniform highp float composite_out_white;
+
+uniform highp float red_in_black;
+uniform highp float red_in_white;
+uniform highp float red_gamma;
+uniform highp float red_out_black;
+uniform highp float red_out_white;
+
+uniform highp float green_in_black;
+uniform highp float green_in_white;
+uniform highp float green_gamma;
+uniform highp float green_out_black;
+uniform highp float green_out_white;
+
+uniform highp float blue_in_black;
+uniform highp float blue_in_white;
+uniform highp float blue_gamma;
+uniform highp float blue_out_black;
+uniform highp float blue_out_white;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+
+float adjust_channel(float value, float in_black, float in_white, float gamma, float out_black, float out_white)
+{
+    float in_delta = in_white - in_black;
+    float out_delta = out_white - out_black;
+    if ( in_delta == 0.0 )
+        return out_black;
+
+    // Clamp to input range
+    if ( value <= in_black && value <= in_white )
+        return out_black;
+
+    if ( value >= in_black && value >= in_white )
+        return out_white;
+
+    // Apply adjustment
+    return out_black + out_delta * pow((value - in_black) / in_delta, 1.0 / gamma);
+}
+
+
+void main()
+{
+    // Base pixel value
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    // First Pass: composite
+    pixel.rgb = vec3(
+        adjust_channel(pixel.r, composite_in_black, composite_in_white, composite_gamma, composite_out_black, composite_out_white),
+        adjust_channel(pixel.g, composite_in_black, composite_in_white, composite_gamma, composite_out_black, composite_out_white),
+        adjust_channel(pixel.b, composite_in_black, composite_in_white, composite_gamma, composite_out_black, composite_out_white)
+    );
+
+    // Second Pass: individual Channels
+    pixel.rgb = vec3(
+        adjust_channel(pixel.r, red_in_black, red_in_white, red_gamma, red_out_black, red_out_white),
+        adjust_channel(pixel.g, green_in_black, green_in_white, green_gamma, green_out_black, green_out_white),
+        adjust_channel(pixel.b, blue_in_black, blue_in_white, blue_gamma, blue_out_black, blue_out_white)
+    );
+
+    gl_FragColor.rgb = pixel.rgb * pixel.a;
+    gl_FragColor.a = pixel.a;
+}
+</script>
+<p></effect_shader_script></p>
+<h3 id="matte3">Matte3</h3>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_50" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_50_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_50_1_parent">
+<pre><code class="language-json hljs" id="playground_50_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_50 = new MultiPassShader(document.getElementById('lottie_target_50_canvas'));
+        
+        var lottie_player_50 = new PlaygroundPlayer(
+            50,
+            'playground_50_1',
+            'lottie_target_50',
+            {"v": "5.5.2", "fr": 60, "ip": 0, "op": 60, "w": 512, "h": 512, "ddd": 0, "assets": [{"id": "blep", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}, {"id": "thumbs-up", "h": 512, "w": 512, "p": "/lottie-docs/examples/thumbs-up.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ty": 2, "sr": 1, "ks": {}, "ip": 0, "op": 60, "st": 0, "ind": 0, "ef": [{"ty": 28, "nm": "Set Matte", "np": 8, "mn": "ADBE Set Matte3", "ix": 1, "en": 1, "ef": [{"ty": 10, "nm": "Take Matte From Layer", "mn": "ADBE Set Matte3-0001", "ix": 1, "v": {"a": 0, "k": 1, "ix": 1}}, {"ty": 7, "nm": "Use For Matte", "mn": "ADBE Set Matte3-0002", "ix": 2, "v": {"a": 0, "k": 4, "ix": 2}}, {"ty": 7, "nm": "Invert Matte", "mn": "ADBE Set Matte3-0003", "ix": 3, "v": {"a": 0, "k": 0, "ix": 3}}, {"ty": 7, "nm": "If Layer Sizes Differ", "mn": "ADBE Set Matte3-0004", "ix": 4, "v": {"a": 0, "k": 1, "ix": 4}}, {"ty": 7, "nm": "Composite Matte with Original", "mn": "ADBE Set Matte3-0005", "ix": 5, "v": {"a": 0, "k": 1, "ix": 5}}, {"ty": 7, "nm": "Premultiply Matte Layer", "mn": "ADBE Set Matte3-0006", "ix": 6, "v": {"a": 0, "k": 1, "ix": 6}}]}], "refId": "blep"}, {"ddd": 0, "ty": 2, "sr": 1, "ks": {}, "ip": 0, "op": 60, "st": 0, "ind": 1, "refId": "thumbs-up"}]},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_50;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <select title="Channel">
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        <option value="4" selected="selected">Alpha</option>
+        <option value="5">Luma</option>
+        <option value="6">Hue</option>
+        <option value="7">Lightness</option>
+        <option value="8">Saturation</option>
+        <option value="9">Full</option>
+        <option value="10">Off</option>
+    </select>
+    <input title="Invert" type="checkbox" />
+    <input title="Stretch To Fit" type="checkbox" checked="checked"/>
+    <input title="Show Mask" type="checkbox"/>
+    <input title="Premultiply Mask" type="checkbox" checked="checked"/>
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[1].v.k = Number(data["Channel"]);
+lottie.layers[0].ef[0].ef[2].v.k = Number(data["Invert"]);
+lottie.layers[0].ef[0].ef[3].v.k = Number(data["Stretch To Fit"]);
+lottie.layers[0].ef[0].ef[4].v.k = Number(data["Show Mask"]);
+lottie.layers[0].ef[0].ef[5].v.k = Number(data["Premultiply Mask"]);
+
+shader.set_uniform("channel", "1i", Number(data["Channel"]));
+shader.set_uniform("invert", "1i", Number(data["Invert"]));
+shader.set_uniform("show_mask", "1i", Number(data["Show Mask"]));
+shader.set_uniform("premultiply_mask", "1i", Number(data["Premultiply Mask"]));
+shader.texture("/lottie-docs/examples/thumbs-up.png").set_uniform(shader.program, "mask_layer");
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+precision highp float;
+
+uniform int channel;
+uniform int invert;
+uniform int premultiply_mask;
+uniform int show_mask;
+uniform sampler2D mask_layer;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+highp vec3 hsl(vec4 c)
+{
+    float maxc = max(c.r, max(c.g, c.b));
+    float minc = min(c.r, min(c.g, c.b));
+    float h = 0.0;
+    float s = 0.0;
+    float l = (maxc + minc) / 2.0;
+
+    if ( maxc != minc)
+    {
+        float d = maxc - minc;
+        s = l > 0.5 ? d / (2.0 - d) : d / (maxc + minc);
+        if ( maxc == c.r )
+            h = (c.g - c.b) / d + (c.g < c.b ? 6.0 : 0.0);
+        else if ( maxc == c.g )
+            h = (c.b - c.r) / d + 2.0;
+        else if ( maxc == c.b )
+            h = (c.r - c.g) / d + 4.0;
+
+        h /= 6.0;
+    }
+
+    return vec3(h, s, l);
+}
+
+highp float opacity(vec4 pixel, int channel, int invert, int premultiply)
+{
+    if ( premultiply == 1 )
+        pixel *= pixel.a;
+
+    highp float opacity;
+
+    if ( channel == 1 )
+        opacity = pixel.r;
+    else if ( channel == 2 )
+        opacity = pixel.g;
+    else if ( channel == 3 )
+        opacity = pixel.b;
+    else if ( channel == 4 )
+        opacity = pixel.a;
+    else if ( channel == 5 )
+        opacity = sqrt(pixel.r * pixel.r * 0.299 + pixel.g * pixel.g * 0.587 + pixel.b * pixel.b * 0.114);
+    else if ( channel == 6 )
+        opacity = hsl(pixel).x;
+    else if ( channel == 7 )
+        opacity = hsl(pixel).z;
+    else if ( channel == 8 )
+        opacity = hsl(pixel).y;
+    else if ( channel == 9 )
+        opacity = 1.0;
+    else if ( channel == 10 )
+        opacity = 0.0;
+
+
+    return invert == 1 ? 1.0 - opacity : opacity;
+}
+
+vec4 alpha_blend(vec4 top, vec4 bottom)
+{
+    float comp_alpha = bottom.a * (1.0 - top.a);
+    vec4 result;
+    result.a = top.a + comp_alpha;
+    result.rgb = (top.rgb * top.a + bottom.rgb * comp_alpha) / result.a;
+    return result;
+}
+
+void main()
+{
+    // Base pixel value
+    highp vec2 uv = vec2(gl_FragCoord.x / canvas_size.x, gl_FragCoord.y / canvas_size.y);
+    highp vec4 pixel = texture2D(texture_sampler, uv);
+
+    highp vec4 mask = texture2D(mask_layer, uv);
+
+
+    gl_FragColor.a = pixel.a * opacity(mask, channel, invert, premultiply_mask);
+    gl_FragColor.rgb = pixel.rgb * gl_FragColor.a;
+
+    if ( show_mask == 1 )
+        gl_FragColor = alpha_blend(gl_FragColor, mask);
+}
+</script>
+<p></effect_shader_script></p>
+<h3 id="bulge">Bulge</h3>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_51" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_51_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_51_1_parent">
+<pre><code class="language-json hljs" id="playground_51_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_51 = new MultiPassShader(document.getElementById('lottie_target_51_canvas'));
+        
+        var lottie_player_51 = new PlaygroundPlayer(
+            51,
+            'playground_51_1',
+            'lottie_target_51',
+            {"v": "5.9.0", "fr": 60, "ip": 0, "op": 1800, "w": 512, "h": 512, "nm": "Comp 1", "ddd": 0, "assets": [{"id": "image_0", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ind": 1, "ty": 2, "nm": "blep.png", "cl": "png", "refId": "image_0", "sr": 1, "ks": {"o": {"a": 0, "k": 100, "ix": 11}, "r": {"a": 0, "k": 0, "ix": 10}, "p": {"a": 0, "k": [256, 256, 0], "ix": 2, "l": 2}, "a": {"a": 0, "k": [256, 256, 0], "ix": 1, "l": 2}, "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}}, "ao": 0, "ef": [{"ty": 5, "nm": "Bulge", "np": 9, "mn": "ADBE Bulge", "ix": 1, "en": 1, "ef": [{"ty": 0, "nm": "Horizontal Radius", "mn": "ADBE Bulge-0001", "ix": 1, "v": {"a": 0, "k": 197, "ix": 1}}, {"ty": 0, "nm": "Vertical Radius", "mn": "ADBE Bulge-0002", "ix": 2, "v": {"a": 0, "k": 179, "ix": 2}}, {"ty": 3, "nm": "Bulge Center", "mn": "ADBE Bulge-0003", "ix": 3, "v": {"a": 0, "k": [286, 277], "ix": 3}}, {"ty": 0, "nm": "Bulge Height", "mn": "ADBE Bulge-0004", "ix": 4, "v": {"a": 0, "k": 1.85, "ix": 4}}, {"ty": 0, "nm": "Taper Radius", "mn": "ADBE Bulge-0005", "ix": 5, "v": {"a": 0, "k": 0, "ix": 5}}, {"ty": 7, "nm": "Antialiasing (Best Qual Only)", "mn": "ADBE Bulge-0006", "ix": 6, "v": {"a": 0, "k": 1, "ix": 6}}, {"ty": 7, "nm": "Pinning", "mn": "ADBE Bulge-0007", "ix": 7, "v": {"a": 0, "k": 1, "ix": 7}}]}], "ip": 0, "op": 1800, "st": 0, "bm": 0}], "markers": []},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_51;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <input title="Center X" type="range" min="0" max="512" value="286"/>
+    <input title="Center Y" type="range" min="0" max="512" value="277"/>
+    <input title="Radius X" type="range" min="0" max="512" value="197"/>
+    <input title="Radius Y" type="range" min="0" max="512" value="179"/>
+    <input title="Height" type="range" min="-4" max="4" step="0.1" value="1.9"/>
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = data["Radius X"];
+lottie.layers[0].ef[0].ef[1].v.k = data["Radius Y"];
+lottie.layers[0].ef[0].ef[2].v.k = [data["Center X"], data["Center Y"]];
+lottie.layers[0].ef[0].ef[3].v.k = data["Height"];
+
+
+shader.set_uniform("center", "2fv", [data["Center X"] * 0.77, data["Center Y"] * 0.77]);
+shader.set_uniform("radius", "2fv", [data["Radius X"] * 0.77, data["Radius Y"] * 0.77]);
+shader.set_uniform("height", "1f", data["Height"]);
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+precision highp float;
+
+uniform vec2 center;
+uniform vec2 radius;
+uniform float height;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+vec2 normalize_uv(vec2 coord)
+{
+    return vec2(coord.x / canvas_size.x, coord.y / canvas_size.y);
+}
+
+vec2 exponential_displacement(vec2 uv, float magnitude)
+{
+    return uv * pow(dot(uv, uv), magnitude) - uv;
+}
+
+
+vec2 spherical_displacement(vec2 uv, float magnitude)
+{
+    float radius = (1.0 + magnitude) / (2.0 * sqrt(magnitude));
+
+
+    float arc_ratio = asin(length(uv) / radius) / asin(1.0 / radius);
+    return normalize(uv) * arc_ratio - uv;
+}
+
+vec2 displace(vec2 owo)
+{
+    float t = dot(owo, owo);
+    if (t >= 1.0)
+        return owo;
+
+    float magnitude = abs(height);
+    // We modify the magniture to more closely match AE
+    magnitude = (2.0/(1.0+exp(-3.0*magnitude))-1.0) * (0.23 * magnitude + 0.14);
+    // If the above is too expensive, you can use this instead:
+    // magnitude = magnitude * 0.275;
+    // Both of the above were derived by interpolating sample points
+
+    float sign = height > 0.0 ? 1.0 : -1.0;
+    vec2 displacement =
+        exponential_displacement(owo, magnitude) +
+        spherical_displacement(owo, magnitude)
+    ;
+    return owo + displacement * magnitude * sign;
+
+}
+
+void main()
+{
+    highp vec2 uv = normalize_uv(gl_FragCoord.xy);
+    vec2 norm_center = normalize_uv(center);
+    vec2 norm_radius = normalize_uv(radius);
+
+    // forward transform
+    uv = (uv - norm_center) / norm_radius;
+    //displace
+    uv = displace(uv);
+    // backward transform
+    uv = uv * norm_radius + norm_center;
+
+    gl_FragColor = texture2D(texture_sampler, uv);
+}
+</script>
+<p></effect_shader_script></p>
+<h3 id="wave-warp">Wave Warp</h3>
+<p>This effect is animated by default, so it has a "time" slider (in seconds).</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_52" style="width:394px;height:394px"></div>
+<canvas class="webgl-shader" height="394" id="lottie_target_52_canvas" style="width:394px;height:394px" width="394"></canvas>
+</div>
+<div class="json-parent" id="playground_52_1_parent">
+<pre><code class="language-json hljs" id="playground_52_1">
+</code></pre>
+</div>
+<script>
+        var lottie_shader_52 = new MultiPassShader(document.getElementById('lottie_target_52_canvas'));
+        
+        var lottie_player_52 = new PlaygroundPlayer(
+            52,
+            'playground_52_1',
+            'lottie_target_52',
+            {"v": "5.9.0", "fr": 60, "ip": 0, "op": 1800, "w": 512, "h": 512, "nm": "Comp 1", "ddd": 0, "assets": [{"id": "image_0", "h": 512, "w": 512, "p": "/lottie-docs/static/examples/blep.png", "u": "", "e": 1}], "layers": [{"ddd": 0, "ind": 1, "ty": 2, "nm": "blep.png", "cl": "png", "refId": "image_0", "sr": 1, "ks": {"o": {"a": 0, "k": 100, "ix": 11}, "r": {"a": 0, "k": 0, "ix": 10}, "p": {"a": 0, "k": [256, 256, 0], "ix": 2, "l": 2}, "a": {"a": 0, "k": [256, 256, 0], "ix": 1, "l": 2}, "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}}, "ao": 0, "ef": [{"ty": 5, "nm": "Wave Warp", "np": 10, "mn": "ADBE Wave Warp", "ix": 1, "en": 1, "ef": [{"ty": 7, "nm": "Wave Type", "mn": "ADBE Wave Warp-0001", "ix": 1, "v": {"a": 0, "k": 1, "ix": 1}}, {"ty": 0, "nm": "Wave Height", "mn": "ADBE Wave Warp-0002", "ix": 2, "v": {"a": 0, "k": 10, "ix": 2}}, {"ty": 0, "nm": "Wave Width", "mn": "ADBE Wave Warp-0003", "ix": 3, "v": {"a": 0, "k": 64, "ix": 3}}, {"ty": 0, "nm": "Direction", "mn": "ADBE Wave Warp-0004", "ix": 4, "v": {"a": 0, "k": 90, "ix": 4}}, {"ty": 7, "nm": "Wave Speed", "mn": "ADBE Wave Warp-0005", "ix": 5, "v": {"a": 0, "k": 2, "ix": 5}}, {"ty": 7, "nm": "Pinning", "mn": "ADBE Wave Warp-0006", "ix": 6, "v": {"a": 0, "k": 1, "ix": 6}}, {"ty": 0, "nm": "Phase", "mn": "ADBE Wave Warp-0007", "ix": 7, "v": {"a": 0, "k": 0, "ix": 7}}, {"ty": 7, "nm": "Antialiasing (Best Quality)", "mn": "ADBE Wave Warp-0008", "ix": 8, "v": {"a": 0, "k": 1, "ix": 8}}]}], "ip": 0, "op": 1800, "st": 0, "bm": 0}], "markers": []},
+            function (lottie, data)
+            {
+                let shader = lottie_shader_52;
+                
+                shader.render();
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<form>
+    <select title="Shape">
+        <option value="1">Sine</option>
+        <option value="2">Square</option>
+        <option value="3">Triangle</option>
+        <option value="4">Sawtooth</option>
+        <option value="5">Circle</option>
+        <option value="6">Semicircle</option>
+        <option value="7">Uncircle</option>
+        <option value="8">Noise</option>
+        <option value="9">Smooth noise</option>
+    </select>
+    <input title="Amplitude" type="range" min="-100" max="100" value="10"/>
+    <input title="Wavelength" type="range" min="-100" max="100" value="40"/>
+    <input title="Direction" type="range" min="0" max="360" value="90"/>
+    <input title="Phase" type="range" min="0" max="360" value="0"/>
+    <input title="Speed" type="range" min="0" max="10" value="1" step="0.1"/>
+    <input title="Time" type="range" min="0" max="2" value="0" step="0.1"/>
+</form>
+<p><json>lottie.layers[0].ef[0]</json></p>
+<script>
+lottie.layers[0].ef[0].ef[0].v.k = Number(data["Shape"]);
+lottie.layers[0].ef[0].ef[1].v.k = data["Amplitude"];
+lottie.layers[0].ef[0].ef[2].v.k = data["Wavelength"];
+lottie.layers[0].ef[0].ef[3].v.k = data["Direction"];
+lottie.layers[0].ef[0].ef[5].v.k = data["Speed"];
+// 5 "pinning" not implemented
+lottie.layers[0].ef[0].ef[6].v.k = data["Phase"];
+// & "antialiasing" unused
+
+
+shader.set_uniform("shape", "1i", Number(data["Shape"]));
+shader.set_uniform("amplitude", "1f", data["Amplitude"]);
+shader.set_uniform("wavelength", "1f", data["Wavelength"]);
+shader.set_uniform("angle", "1f", data["Direction"]);
+shader.set_uniform("phase", "1f", data["Phase"]);
+shader.set_uniform("speed", "1f", data["Speed"]);
+shader.set_uniform("time", "1f", data["Time"]);
+
+</script>
+<script type="x-shader/x-fragment">
+#version 100
+
+#define PI 3.1415926538
+#define TAU 6.283185307
+
+precision highp float;
+
+uniform int shape;
+uniform float amplitude;
+uniform float wavelength;
+uniform float angle;
+uniform float speed;
+uniform float phase;
+uniform float time;
+
+uniform mediump vec2 canvas_size;
+uniform sampler2D texture_sampler;
+
+
+vec2 normalize_uv(vec2 coord)
+{
+    return vec2(coord.x / canvas_size.x, coord.y / canvas_size.y);
+}
+
+float clamp_angle(float angle)
+{
+    return mod(angle, TAU);
+}
+
+vec2 project(vec2 a , vec2 b)
+{
+    return dot(a, b) / dot(b, b) * b;
+}
+
+float semicircle(float x)
+{
+    return sqrt(1.0 - pow(clamp_angle(x) / PI - 1.0, 2.0));
+}
+
+// Adapted from http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+highp float noise(float x)
+{
+    highp float a = 12.9898;
+    highp float b = 78.233;
+    highp float c = 43758.5453;
+    highp float dt = x * a;
+    highp float sn = mod(dt, PI);
+    return fract(sin(sn) * c) * 2.0 - 1.0;
+}
+
+// Interpolate between two random points
+float smooth_noise(float x)
+{
+    float x_fract = fract(x);
+    float x_int = x - x_fract;
+    float n1 = noise(x_int);
+    float n2 = noise(x_int + 1.0);
+    return (n1 * (1.0 - x_fract) + n2 * x_fract);
+}
+
+vec2 displace(vec2 uv)
+{
+    float rad = angle / 180.0 * PI;
+    vec2 normal = vec2(cos(rad), sin(rad));
+    rad -= PI /2.0;
+    vec2 direction = vec2(cos(rad), sin(rad));
+    float x = length(project(uv, direction));
+
+    x = x / wavelength * PI - time * speed * TAU + phase / 180.0 * PI;
+
+
+    float y;
+
+    if ( shape == 1 ) // sine
+        y = sin(x);
+    else if ( shape == 2 ) // square
+        y = clamp_angle(x) < PI ? 1.0 : -1.0;
+    else if ( shape == 3 ) // triangle
+        y = 1.0 - abs(clamp_angle(x) - PI) / PI * 2.0;
+    else if ( shape == 4 ) // sawtooth
+        y = 1.0 - clamp_angle(x) / PI;
+    else if ( shape == 5 ) // circle
+        y = sign(clamp_angle(x) -  PI) * semicircle(2.0 * x);
+    else if ( shape == 6 ) // semi circle
+        y = 2.0 * semicircle(x) - 1.0;
+    else if ( shape == 7 ) // uncircle
+        y = sign(clamp_angle(-x) -  PI) * (semicircle(2.0 * x) - 1.0);
+    else if ( shape == 8 ) // noise
+        y = noise(x);
+    else if ( shape == 9 ) // smooth noise
+        y = smooth_noise(x * 4.0) ;
+
+    return uv + y * normal * amplitude;
+
+}
+
+void main()
+{
+    vec2 uv = displace(gl_FragCoord.xy);
+    gl_FragColor = texture2D(texture_sampler, normalize_uv(uv));
+}
+</script>
+<p></effect_shader_script></p></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

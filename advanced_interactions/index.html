@@ -1,0 +1,4860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/advanced_interactions/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Advanced Interactions - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../schema/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="next" >
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/advanced_interactions.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#advanced-interactions">Advanced Interactions</a></li>
+            <li class="second-level"><a href="#level-0-regular-lotties">Level 0: Regular Lotties</a></li>
+                
+            <li class="second-level"><a href="#level-1-controlling-playback">Level 1: Controlling Playback</a></li>
+                
+            <li class="second-level"><a href="#level-2-svg-styling">Level 2: SVG Styling</a></li>
+                
+            <li class="second-level"><a href="#level-3-basic-expressions">Level 3: Basic Expressions</a></li>
+                
+            <li class="second-level"><a href="#level-4-advanced-expressions">Level 4: Advanced Expressions</a></li>
+                
+            <li class="second-level"><a href="#level-5-breaking-time">Level 5: Breaking Time</a></li>
+                
+            <li class="second-level"><a href="#level-6-injecting-data">Level 6: Injecting Data</a></li>
+                
+            <li class="second-level"><a href="#level-7-automatic-event-handlers">Level 7: Automatic Event Handlers</a></li>
+                
+                <li class="third-level"><a href="#lottie-json-extension">Lottie JSON Extension</a></li>
+                <li class="third-level"><a href="#preparing-globals">Preparing Globals</a></li>
+                <li class="third-level"><a href="#mouse-events">Mouse Events</a></li>
+                <li class="third-level"><a href="#keyboard-events">Keyboard Events</a></li>
+            <li class="second-level"><a href="#level-8-sound-effects">Level 8: Sound Effects</a></li>
+                
+            <li class="second-level"><a href="#interlude-writing-a-small-wrapper">Interlude: Writing a Small Wrapper</a></li>
+                
+            <li class="second-level"><a href="#level-9-patching-the-renderer">Level 9: Patching the Renderer</a></li>
+                
+                <li class="third-level"><a href="#why">Why</a></li>
+                <li class="third-level"><a href="#how">How</a></li>
+                <li class="third-level"><a href="#triggering-new-events">Triggering new events</a></li>
+                <li class="third-level"><a href="#resulting-wrapper">Resulting Wrapper</a></li>
+                <li class="third-level"><a href="#animation-or-interaction">Animation or Interaction</a></li>
+                <li class="third-level"><a href="#lottie-button-example">Lottie Button Example</a></li>
+                <li class="third-level"><a href="#3d">3D</a></li>
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="advanced-interactions">Advanced Interactions</h1>
+<p>This page will describe how to create lotties with advanced interactivity,
+specifically when used with <a href="https://github.com/airbnb/lottie-web/">lottie-web</a> player.</p>
+<p>This page is divided into "levels", each level adds more obscure features
+which are less portable but add increased interaction capabilities.</p>
+<p>There are 9 levels below <em>Regular Lottie</em>, which is the same as the
+number of circles of hell in Dante's Inferno. Reader discretion is advised.</p>
+<p>The techniques described below require knowledge on the following topics:</p>
+<ul>
+<li>The <a href="../">Lottie format</a></li>
+<li>Lottie <a href="../expressions/">expressions</a></li>
+<li>The <a href="https://github.com/airbnb/lottie-web/">lottie-web</a> player</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/javascript">ECMAScript / JavaScript</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">DOM</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/Events">events</a></li>
+</ul>
+<style>
+.playground_html > div > svg
+{
+    border: 1px solid #ccc;
+}
+
+pre {
+    margin-top: 0;
+}
+
+#content-container .nav.nav-tabs {
+    height: 45px;
+}
+</style>
+
+<h2 id="level-0-regular-lotties">Level 0: Regular Lotties</h2>
+<p>Lotties can play an animation, loading an animation looks something like this:</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_0_json">Lottie</a></li><li><a href="#script_playground_0_html">HTML</a></li><li><a href="#script_playground_0_js">Script</a></li><li class="active"><a href="#script_playground_0_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_0_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 1, "k": [
+                        {"t": 0, "s": [0], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}},
+                        {"t": 360, "s": [360]}
+                    ]},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [1, 1, 0.3]},
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_0_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level0"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_0_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level0");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+</code></pre></div><div id="script_playground_0_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level0"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 1, "k": [
+                        {"t": 0, "s": [0], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}},
+                        {"t": 360, "s": [360]}
+                    ]},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [1, 1, 0.3]},
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level0");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+})();</script>
+<p>By themselves lotties just play an animation, but luckily lottie-web provides some utility functions,
+note how in the <strong>Script</strong> above we are storing the variable <code>anim</code> returned by <code>bodymovin.loadAnimation</code>.</p>
+<h2 id="level-1-controlling-playback">Level 1: Controlling Playback</h2>
+<p>You can play around with the <code>anim</code> object like setting the current frame, pausing stopping etc.</p>
+<p>There's also the LottieFiles <a href="https://lottiefiles.com/interactivity">interactivity library</a>
+that makes some of these interactions easier to create.</p>
+<p>Here's an example of a lottie changing based on mouse position:</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_1_json">Lottie</a></li><li><a href="#script_playground_1_html">HTML</a></li><li><a href="#script_playground_1_js">Script</a></li><li class="active"><a href="#script_playground_1_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_1_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 1, "k": [
+                        {"t": 0, "s": [0], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}},
+                        {"t": 360, "s": [360]}
+                    ]},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [1, 1, 0.3]},
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_1_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level1"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_1_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level1");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: false,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+container.addEventListener("mousemove", ev =&gt; {
+    var rect = container.getBoundingClientRect();
+    var t = (ev.clientX - rect.left) / rect.width;
+    anim.goToAndStop(t * json.op, true);
+});
+</code></pre></div><div id="script_playground_1_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level1"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 1, "k": [
+                        {"t": 0, "s": [0], "o": {"x": 0, "y": 0}, "i": {"x": 1, "y": 1}},
+                        {"t": 360, "s": [360]}
+                    ]},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [1, 1, 0.3]},
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level1");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: false,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+container.addEventListener("mousemove", ev => {
+    var rect = container.getBoundingClientRect();
+    var t = (ev.clientX - rect.left) / rect.width;
+    anim.goToAndStop(t * json.op, true);
+});
+})();</script>
+<h2 id="level-2-svg-styling">Level 2: SVG Styling</h2>
+<p>When using the SVG renderer, you can make use of CSS styling by specifying
+a value for <code>cl</code> in the lottie layers.</p>
+<p>In the example below, CSS rules highlight the lottie layer showing a rectangle when the mouse is over it.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_2_json">Lottie</a></li><li><a href="#script_playground_2_css">CSS</a></li><li><a href="#script_playground_2_html">HTML</a></li><li><a href="#script_playground_2_js">Script</a></li><li class="active"><a href="#script_playground_2_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_2_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [400, 300]},
+                    "s": {"a": 0, "k": [150, 150]},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.769, 0.851, 0.961]}
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "cl": "lottie_level_2",
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "s": {"a": 0, "k": [256, 128]},
+                    "r": {"a": 0, "k": 3},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.196, 0.314, 0.69]}
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [100, 200]},
+                    "s": {"a": 0, "k": [150, 150]},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.769, 0.851, 0.961]}
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_2_css" class="tab-pane fade in"><pre><code class="css">.lottie_level_2:hover {
+    opacity: 10%;
+}
+.lottie_level_2 {
+    cursor: pointer;
+}
+</code></pre></div><div id="script_playground_2_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level2"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_2_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level2");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: false,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+</code></pre></div><div id="script_playground_2_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level2"></div>
+</div></div></div><style>.lottie_level_2:hover {
+    opacity: 10%;
+}
+.lottie_level_2 {
+    cursor: pointer;
+}
+</style></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [400, 300]},
+                    "s": {"a": 0, "k": [150, 150]},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.769, 0.851, 0.961]}
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "cl": "lottie_level_2",
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "s": {"a": 0, "k": [256, 128]},
+                    "r": {"a": 0, "k": 3},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.196, 0.314, 0.69]}
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [100, 200]},
+                    "s": {"a": 0, "k": [150, 150]},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.769, 0.851, 0.961]}
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level2");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: false,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+})();</script>
+<h2 id="level-3-basic-expressions">Level 3: Basic Expressions</h2>
+<p>Lotties can have <a href="../expressions/">expressions</a>, they are basically small
+snippets of JavaScript code used to modify the value of animated properties.</p>
+<p>Below the star rotation is animated using an expression instead of using keyframes.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_3_json">Lottie</a></li><li><a href="#script_playground_3_html">HTML</a></li><li><a href="#script_playground_3_js">Script</a></li><li class="active"><a href="#script_playground_3_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_3_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 0, "k": 0, "x": "var $bm_rt = time * 60;"},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [1, 1, 0.3]},
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_3_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level3"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_3_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level3");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+</code></pre></div><div id="script_playground_3_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level3"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 0, "k": 0, "x": "var $bm_rt = time * 60;"},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [1, 1, 0.3]},
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level3");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+})();</script>
+<h2 id="level-4-advanced-expressions">Level 4: Advanced Expressions</h2>
+<p>Within expressions you can access properties from other layers, and since
+they are all JavaScript objects, you can add your own properties to them.</p>
+<p>You can make a layer follow the position of another:</p>
+<pre><code class="language-js">// Set the layer position to follow the X position of another layer
+var other_position = thisComp(&quot;layer_name&quot;).transform.position;
+var $bm_rt = [other_position[0], value[1]];
+</code></pre>
+<p>Since property values are initialized to their non-expression value,
+you can't access updated value of the property you are changing from the
+expression. However you can work around this by storing state in the
+layer object.</p>
+<pre><code class="language-js">// Get size of the rect
+var size = thisLayer.content(1).size;
+
+// Initialize everything at the start
+if ( time == 0 )
+{
+    thisLayer.my_value = size[0] / 2;
+    thisLayer.speed = 60;
+    thisLayer.direction = 1;
+    thisLayer.prev_time = 0;
+}
+
+// Handle the case when the lottie has looped and time has reset
+// as it might not be exactly 0
+if ( time &lt; thisLayer.prev_time )
+    thisLayer.prev_time = time;
+
+// Find the time delta to keep constant speed
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Increment x
+thisLayer.my_value += dt * thisLayer.speed * thisLayer.direction;
+var x = thisLayer.my_value;
+if ( x &gt;= thisComp.width - size[0] / 2)
+    thisLayer.direction = -1;
+else if ( x &lt;= size[0] / 2 )
+    thisLayer.direction = 1;
+
+// Calculate y based on x
+var y = value[1] + Math.sin((x / thisComp.width) * Math.PI * 2) * (thisComp.height - size[1]) / 2;
+
+var $bm_rt = [x, y];
+</code></pre>
+<p>Here's an example:</p>
+<p>Note that the JSON uses ECMAScript's backtick string syntax for clarity,
+in a real Lottie file you'd need to put it into a single line.</p>
+<p>Newlines in the expression string work fine as long as the last line of
+the expression doesn't end in a single line comment.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_4_json">Lottie</a></li><li><a href="#script_playground_4_html">HTML</a></li><li><a href="#script_playground_4_js">Script</a></li><li class="active"><a href="#script_playground_4_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_4_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "nm": "layer_name",
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [0, 256],
+                    "x": `
+// Get size of the rect
+var size = thisLayer.content(1).size;
+
+// Initialize everything at the start
+if ( time == 0 )
+{
+    thisLayer.my_value = size[0] / 2;
+    thisLayer.speed = 120;
+    thisLayer.direction = 1;
+    thisLayer.prev_time = 0;
+}
+
+// Handle the case when the lottie has looped and time has reset
+// as it might not be exactly 0
+if ( time &lt; thisLayer.prev_time )
+    thisLayer.prev_time = time;
+
+// Find the time delta to keep constant speed
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Increment x
+thisLayer.my_value += dt * thisLayer.speed * thisLayer.direction;
+var x = thisLayer.my_value;
+if ( x &gt;= thisComp.width - size[0] / 2)
+    thisLayer.direction = -1;
+else if ( x &lt;= size[0] / 2 )
+    thisLayer.direction = 1;
+
+// Calculate y based on x
+var y = value[1] + Math.sin((x / thisComp.width) * Math.PI * 2) * (thisComp.height - size[1]) / 2;
+
+var $bm_rt = [x, y];
+`
+                }
+            },
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [80, 80]},
+                    "r": {"a": 0, "k": 3},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.196, 0.314, 0.69]}
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 3600,
+            "st": 0,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [0, 256],
+                    "x": `
+// Set the layer position to follow the X position of another layer
+var other_position = thisComp("layer_name").transform.position;
+var $bm_rt = [other_position[0], value[1]];
+`
+                }
+            },
+            "shapes": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [150, 150]},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.769, 0.851, 0.961]}
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_4_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level4"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_4_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level4");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+</code></pre></div><div id="script_playground_4_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level4"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "nm": "layer_name",
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [0, 256],
+                    "x": `
+// Get size of the rect
+var size = thisLayer.content(1).size;
+
+// Initialize everything at the start
+if ( time == 0 )
+{
+    thisLayer.my_value = size[0] / 2;
+    thisLayer.speed = 120;
+    thisLayer.direction = 1;
+    thisLayer.prev_time = 0;
+}
+
+// Handle the case when the lottie has looped and time has reset
+// as it might not be exactly 0
+if ( time < thisLayer.prev_time )
+    thisLayer.prev_time = time;
+
+// Find the time delta to keep constant speed
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Increment x
+thisLayer.my_value += dt * thisLayer.speed * thisLayer.direction;
+var x = thisLayer.my_value;
+if ( x >= thisComp.width - size[0] / 2)
+    thisLayer.direction = -1;
+else if ( x <= size[0] / 2 )
+    thisLayer.direction = 1;
+
+// Calculate y based on x
+var y = value[1] + Math.sin((x / thisComp.width) * Math.PI * 2) * (thisComp.height - size[1]) / 2;
+
+var $bm_rt = [x, y];
+`
+                }
+            },
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [80, 80]},
+                    "r": {"a": 0, "k": 3},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.196, 0.314, 0.69]}
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 3600,
+            "st": 0,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [0, 256],
+                    "x": `
+// Set the layer position to follow the X position of another layer
+var other_position = thisComp("layer_name").transform.position;
+var $bm_rt = [other_position[0], value[1]];
+`
+                }
+            },
+            "shapes": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [150, 150]},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0.769, 0.851, 0.961]}
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level4");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+})();</script>
+<h2 id="level-5-breaking-time">Level 5: Breaking Time</h2>
+<p>In the previous examples, we had a condition at the start of some expressions
+initializing custom attributes when <code>time</code> is equal to 0.</p>
+<pre><code class="language-js">if ( time == 0 )
+    thisLayer.my_property = &quot;some value&quot;;
+</code></pre>
+<p>This works because the first frame is always at time 0 but it isn't a
+super reliable check: when the player loops, the time can go back to 0
+which would result in your properties being initialized again.</p>
+<p>If you want your interactions to carry over across loops, a better
+approach is to use a condition where you check for <code>undefined</code> layer
+properties:</p>
+<pre><code class="language-js">if ( thisLayer.my_property === undefined )
+    thisLayer.my_property = &quot;some value&quot;;
+</code></pre>
+<p>For smooth value increments, we need to properly handle the <code>time</code>
+variable within expressions. Similarly to what we've done before the
+following example shows how to initialize and update a variable over
+time;</p>
+<pre><code class="language-js">// Initialization
+if ( thisLayer.last_time === undefined )
+{
+    thisLayer.last_time = time;
+    thisLayer.value = 0;
+    thisLayer.speed = 600;
+}
+
+// Handle looping
+if ( time &lt; thisLayer.last_time )
+    thisLayer.last_time = time;
+
+// `dt` is the time since the last expression evaluation in seconds
+var dt = time - thisLayer.last_time;
+
+// Update the time management variable
+thisLayer.last_time = time;
+
+// Increment
+thisLayer.value = dt * thisLayer.speed;
+</code></pre>
+<p>This approach allows you to change values regardless of playback speed
+and framerate. I also allows you to continue the movement when the
+lottie reaches its last frame and starts looping.</p>
+<p>In the following example, the lottie is set to loop every second but
+it keeps going indefinitely because of the <code>time</code> management setup:</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_5_json">Lottie</a></li><li><a href="#script_playground_5_html">HTML</a></li><li><a href="#script_playground_5_js">Script</a></li><li class="active"><a href="#script_playground_5_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_5_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.prev_time === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+
+    thisLayer.dx = 1;
+    thisLayer.dy = 1;
+    thisLayer.prev_time = 0;
+}
+
+// Time management
+if ( time &lt; thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Animation
+thisLayer.px += thisLayer.dx * dt * 100;
+thisLayer.py += thisLayer.dy * dt * 120;
+
+var radius = thisLayer.content(1).outerRadius;
+if ( thisLayer.px &lt; radius )
+    thisLayer.dx = 1;
+else if ( thisLayer.px &gt; thisComp.width - radius )
+    thisLayer.dx = -1;
+if ( thisLayer.py &lt; radius )
+    thisLayer.dy = 1;
+else if ( thisLayer.py &gt; thisComp.height - radius )
+    thisLayer.dy = -1;
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_5_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level5"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_5_js" class="tab-pane fade in"><pre><code class="javascript">var options = {
+    container: document.getElementById("level5"),
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+</code></pre></div><div id="script_playground_5_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level5"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.prev_time === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+
+    thisLayer.dx = 1;
+    thisLayer.dy = 1;
+    thisLayer.prev_time = 0;
+}
+
+// Time management
+if ( time < thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Animation
+thisLayer.px += thisLayer.dx * dt * 100;
+thisLayer.py += thisLayer.dy * dt * 120;
+
+var radius = thisLayer.content(1).outerRadius;
+if ( thisLayer.px < radius )
+    thisLayer.dx = 1;
+else if ( thisLayer.px > thisComp.width - radius )
+    thisLayer.dx = -1;
+if ( thisLayer.py < radius )
+    thisLayer.dy = 1;
+else if ( thisLayer.py > thisComp.height - radius )
+    thisLayer.dy = -1;
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+var options = {
+    container: document.getElementById("level5"),
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+})();</script>
+<h2 id="level-6-injecting-data">Level 6: Injecting Data</h2>
+<p>Remember the <code>anim</code> object we get from lottie-web?
+It's the key for more advanced interactions.</p>
+<p>Internally it stores its lottie structure and the objects being passed
+to expression as <code>thisComp</code> and <code>thisLayer</code>. Being able to access these
+objects allows us to pass data directly to the lottie expressions.</p>
+<p>The object corresponding to <code>thisComp</code> can be accessed as
+<code>anim.renderer.compInterface</code>, and from there you can get the layers
+by name or index (see the <a href="../expressions/#composition">Composition</a> expression object).</p>
+<p>In the example below the rotation direction and color of the star change
+based on whether the mouse is over the element containing the lottie.</p>
+<pre><code class="language-js">// Time management as before
+if ( time == 0 )
+{
+    thisLayer.angle = 0;
+    thisLayer.prev_time = 0;
+}
+if ( time &lt; thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+var direction = thisComp.counter_clockwise ? -1 : 1;
+thisLayer.angle += dt * direction * 60;
+var $bm_rt = thisLayer.angle;
+</code></pre>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_6_json">Lottie</a></li><li><a href="#script_playground_6_html">HTML</a></li><li><a href="#script_playground_6_js">Script</a></li><li class="active"><a href="#script_playground_6_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_6_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 0, "k": 0, "x": `
+// Time management as before
+if ( thisLayer.prev_time === undefined )
+{
+    thisLayer.angle = 0;
+    thisLayer.prev_time = 0;
+}
+if ( time &lt; thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+var direction = thisComp.mouse_is_over ? -1 : 1;
+thisLayer.angle += dt * direction * 60;
+var $bm_rt = thisLayer.angle;
+                    `},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                        "x": "var $bm_rt = thisComp.mouse_is_over ? [0.196, 0.314, 0.69] : value;"
+                    },
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_6_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level6"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_6_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level6");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+container.addEventListener("mouseenter", () =&gt; {
+    anim.renderer.compInterface.mouse_is_over = true;
+});
+container.addEventListener("mouseleave", () =&gt; {
+    anim.renderer.compInterface.mouse_is_over = false;
+});
+</code></pre></div><div id="script_playground_6_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level6"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 360,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "layers": [
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 360,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 200},
+                    "ir": {"a": 0, "k": 100},
+                    "r": {"a": 0, "k": 0, "x": `
+// Time management as before
+if ( thisLayer.prev_time === undefined )
+{
+    thisLayer.angle = 0;
+    thisLayer.prev_time = 0;
+}
+if ( time < thisLayer.prev_time )
+    thisLayer.prev_time = time;
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+var direction = thisComp.mouse_is_over ? -1 : 1;
+thisLayer.angle += dt * direction * 60;
+var $bm_rt = thisLayer.angle;
+                    `},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                        "x": "var $bm_rt = thisComp.mouse_is_over ? [0.196, 0.314, 0.69] : value;"
+                    },
+                    "lc": 2,
+                    "lj": 2,
+                    "ml": 0,
+                    "w": {"a": 0, "k": 30}
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level6");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+container.addEventListener("mouseenter", () => {
+    anim.renderer.compInterface.mouse_is_over = true;
+});
+container.addEventListener("mouseleave", () => {
+    anim.renderer.compInterface.mouse_is_over = false;
+});
+})();</script>
+<h2 id="level-7-automatic-event-handlers">Level 7: Automatic Event Handlers</h2>
+<p>So far the interaction logic has been done by JavaScript on the browser.</p>
+<p>In this section we'll add all the logic in the JSON itself and write a
+wrapper script that sets up the animation.</p>
+<p>This allows you to have self-contained lotties you can embed in a web
+page that will handle events on their own.</p>
+<h3 id="lottie-json-extension">Lottie JSON Extension</h3>
+<p>First thing is to write the expressions in the Lottie itself.</p>
+<p>Since Lottie is just a JSON file, it's easy to add custom values:</p>
+<pre><code class="language-json">{
+    &quot;v&quot;: &quot;5.9.1&quot;,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;events&quot;: {
+        &quot;click&quot;: &quot;/*event handler code*/&quot;
+    }
+}
+</code></pre>
+<p>Now we need to add some JavaScript so we can listen to the events
+fired by the DOM and execute expressions:</p>
+<pre><code class="language-js">for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function(&quot;event&quot;, expression);
+    container.addEventListener(ev_type, expression_function);
+}
+</code></pre>
+<h3 id="preparing-globals">Preparing Globals</h3>
+<p>While the above would work, we should expose some objects for it to be
+useful. The lottie player define a bunch of <a href="../expressions/#global-objects">objects</a>
+and <a href="../expressions/#misc-functions">functions</a> for expressions, but we don't really
+need all of them since the even handlers only need to pass along the information
+that an event has occurred.</p>
+<p>We will define <a href="../expressions/#thiscomp">thisComp</a> and <a href="../expressions/#time">time</a>
+to be the same as the globals of the same name you'd expect to find an expressions,
+and pass them to the event handling function:</p>
+<pre><code class="language-js">
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function(&quot;event&quot;, &quot;thisComp&quot;, &quot;time&quot;, expression);
+    container.addEventListener(ev_type, ev =&gt; event_handler(ev, expression_function));
+}
+</code></pre>
+<p>After this step, you're all set to hanle DOM events automatically from a lottie.
+The next couple steps add some polish to the event interface for a smoother experience.</p>
+<h3 id="mouse-events">Mouse Events</h3>
+<p>Events like <code>click</code>, <code>mousemove</code>, etc. provide the mouse coordinates,
+which you might want to access from within the lottie.</p>
+<p>By default these coordinates aren't in the same space as the values
+inside the lottie so we need to scale them appropriately:</p>
+<pre><code class="language-js">function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function(&quot;event&quot;, &quot;thisComp&quot;, &quot;time&quot;, expression);
+    container.addEventListener(ev_type, ev =&gt; event_handler(ev, expression_function));
+}
+</code></pre>
+<p>Now we can reference the position in the lottie expression:</p>
+<pre><code class="language-js">{
+    &quot;v&quot;: &quot;5.9.1&quot;,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;events&quot;: {
+        &quot;click&quot;: `
+var star = thisComp(&quot;star&quot;);
+star.px = event.lottie_x;
+star.py = event.lottie_y;
+`
+    }
+}
+</code></pre>
+<p>In the example below you can click to move the star to a given position:</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_7_json">Lottie</a></li><li><a href="#script_playground_7_html">HTML</a></li><li><a href="#script_playground_7_js">Script</a></li><li class="active"><a href="#script_playground_7_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_7_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "click": `
+var star = thisComp("star");
+star.px = event.lottie_x;
+star.py = event.lottie_y;
+`
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_7_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level7_mouse"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_7_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level7_mouse");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev =&gt; event_handler(ev, expression_function));
+}
+</code></pre></div><div id="script_playground_7_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level7_mouse"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "click": `
+var star = thisComp("star");
+star.px = event.lottie_x;
+star.py = event.lottie_y;
+`
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level7_mouse");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev => event_handler(ev, expression_function));
+}
+})();</script>
+<h3 id="keyboard-events">Keyboard Events</h3>
+<p>To allow keyboard events to be fired correctly, you need to ensure the
+element containing the lottie is focusable.</p>
+<p>You can do this by setting the <code>tabindex</code> attribute in HTML or with JavaScript.</p>
+<pre><code class="language-html">&lt;div id=&quot;level7_keyboard&quot; tabindex=&quot;0&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>or</p>
+<pre><code class="language-js">container.setAttribute(&quot;tabindex&quot;, &quot;0&quot;);
+</code></pre>
+<p>In the example below we'll move a layer based on whether the user is
+pressing the left and right arrow keys.</p>
+<p>A good solution for this is to keep track of which key has been pressed
+and react accordingly.</p>
+<p>The event handler code is simple enough:</p>
+<p>For <code>keydown</code>:</p>
+<pre><code class="language-js">if ( event.key == &quot;ArrowLeft&quot; )
+    thisComp(&quot;star&quot;).left = true;
+else if ( event.key == &quot;ArrowRight&quot; )
+    thisComp(&quot;star&quot;).right = true;
+
+// Prevent scrolling and other browser shortcuts
+event.preventDefault();
+</code></pre>
+<p><code>keyup</code>:</p>
+<pre><code class="language-js">if ( event.key == &quot;ArrowLeft&quot; )
+    thisComp(&quot;star&quot;).left = false;
+else if ( event.key == &quot;ArrowRight&quot; )
+    thisComp(&quot;star&quot;).right = false;
+
+// Prevent scrolling and other browser shortcuts
+event.preventDefault();
+</code></pre>
+<p>We should also reset these when the lottie element loses focus:</p>
+<p><code>focusout</code>:</p>
+<pre><code class="language-js">    thisComp(&quot;star&quot;).left = false;
+    thisComp(&quot;star&quot;).right = false;
+</code></pre>
+<p>We need to add some logic to the layer position property:</p>
+<pre><code class="language-js">// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+    thisLayer.left = false;
+    thisLayer.right = false;
+    thisLayer.prev_time = 0;
+}
+// Handle time wrapping around
+if ( time &lt; thisLayer.prev_time )
+    thisLayer.prev_time = time;
+
+// Time delta
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Figure which direction to move
+var direction = 0;
+if ( thisLayer.left &amp;&amp; thisLayer.right )
+    direction = 0;
+else if ( thisLayer.left )
+    direction = -1;
+else if ( thisLayer.right )
+    direction = 1;
+
+// Move
+if ( direction != 0 )
+{
+    // 600 is the &quot;speed&quot;, you need to consider that dt is the time
+    // in seconds since the previous frame so it's usally a rather small value
+    thisLayer.px += direction * dt * 600;
+    var radius = thisLayer.content(1).outerRadius;
+    thisLayer.px = clamp(thisLayer.px, radius, thisComp.width - radius);
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+</code></pre>
+<p>The example below shows how to handle keyboard event.</p>
+<p>Focusing on the element changes the star color.
+When focused (blue star) left and right arrow keys move the star in the corresponding direction.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_8_json">Lottie</a></li><li><a href="#script_playground_8_html">HTML</a></li><li><a href="#script_playground_8_js">Script</a></li><li class="active"><a href="#script_playground_8_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_8_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "keydown": `
+if ( event.key == "ArrowLeft" )
+    thisComp("star").left = true;
+else if ( event.key == "ArrowRight" )
+    thisComp("star").right = true;
+
+// Prevent scrolling and other browser shortcuts
+event.preventDefault();
+`,
+        "keyup": `
+if ( event.key == "ArrowLeft" )
+    thisComp("star").left = false;
+else if ( event.key == "ArrowRight" )
+    thisComp("star").right = false;
+
+// Prevent scrolling and other browser shortcuts
+event.preventDefault();
+`,
+        "focusin": "thisComp.focus = true;",
+        "focusout": `
+    thisComp("star").left = false;
+    thisComp("star").right = false;
+    thisComp.focus = false;
+`,
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+    thisLayer.left = false;
+    thisLayer.right = false;
+    thisLayer.prev_time = 0;
+}
+// Handle time wrapping around
+if ( time &lt; thisLayer.prev_time )
+    thisLayer.prev_time = time;
+
+// Time delta
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Figure which direction to move
+var direction = 0;
+if ( thisLayer.left &amp;&amp; thisLayer.right )
+    direction = 0;
+else if ( thisLayer.left )
+    direction = -1;
+else if ( thisLayer.right )
+    direction = 1;
+
+// Move
+if ( direction != 0 )
+{
+    // 600 is the "speed", you need to consider that dt is the time
+    // in seconds since the previous frame so it's usally a rather small value
+    thisLayer.px += direction * dt * 600;
+    var radius = thisLayer.content(1).outerRadius;
+    thisLayer.px = clamp(thisLayer.px, radius, thisComp.width - radius);
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                        "x": "var $bm_rt = thisComp.focus ? [0.196, 0.314, 0.69] : value;"
+                    }
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_8_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level7_keyboard" tabindex="0"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_8_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level7_keyboard");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev =&gt; event_handler(ev, expression_function));
+}
+</code></pre></div><div id="script_playground_8_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level7_keyboard" tabindex="0"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "keydown": `
+if ( event.key == "ArrowLeft" )
+    thisComp("star").left = true;
+else if ( event.key == "ArrowRight" )
+    thisComp("star").right = true;
+
+// Prevent scrolling and other browser shortcuts
+event.preventDefault();
+`,
+        "keyup": `
+if ( event.key == "ArrowLeft" )
+    thisComp("star").left = false;
+else if ( event.key == "ArrowRight" )
+    thisComp("star").right = false;
+
+// Prevent scrolling and other browser shortcuts
+event.preventDefault();
+`,
+        "focusin": "thisComp.focus = true;",
+        "focusout": `
+    thisComp("star").left = false;
+    thisComp("star").right = false;
+    thisComp.focus = false;
+`,
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+    thisLayer.left = false;
+    thisLayer.right = false;
+    thisLayer.prev_time = 0;
+}
+// Handle time wrapping around
+if ( time < thisLayer.prev_time )
+    thisLayer.prev_time = time;
+
+// Time delta
+var dt = time - thisLayer.prev_time;
+thisLayer.prev_time = time;
+
+// Figure which direction to move
+var direction = 0;
+if ( thisLayer.left && thisLayer.right )
+    direction = 0;
+else if ( thisLayer.left )
+    direction = -1;
+else if ( thisLayer.right )
+    direction = 1;
+
+// Move
+if ( direction != 0 )
+{
+    // 600 is the "speed", you need to consider that dt is the time
+    // in seconds since the previous frame so it's usally a rather small value
+    thisLayer.px += direction * dt * 600;
+    var radius = thisLayer.content(1).outerRadius;
+    thisLayer.px = clamp(thisLayer.px, radius, thisComp.width - radius);
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                        "x": "var $bm_rt = thisComp.focus ? [0.196, 0.314, 0.69] : value;"
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level7_keyboard");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev => event_handler(ev, expression_function));
+}
+})();</script>
+<h2 id="level-8-sound-effects">Level 8: Sound Effects</h2>
+<p>Lottie web supports playing audio layers with the help of <a href="https://howlerjs.com/">Howler</a>.</p>
+<p>By default the level of control you get with sound is rather limited but
+we can find a way around it.</p>
+<p>The issue is audio layers don't have a scriptable property that controls
+playback which means we can't attach an expression to audio layers.</p>
+<p>The trick is to wrap an audio layer into a precomp and to use an expression
+on its time remapping property.</p>
+<p>We can then control playback as follows:</p>
+<pre><code class="language-js">if ( thisLayer.last_time === undefined )
+{
+    thisLayer.last_time = time;
+    // This variable wil control whether the sound is played
+    thisLayer.sound_play = 0;
+    // This should be the time in seconds you want the sound to play for
+    // To get the best results, it should be just short of the duration
+    // of the audio file
+    thisLayer.sound_duration = 1;
+
+}
+// Usual time management stuff
+if ( time &lt; thisLayer.last_time )
+    thisLayer.last_time = time;
+var dt = time - thisLayer.last_time;
+thisLayer.last_time = time;
+
+// Default to not playing
+var $bm_rt = 0;
+
+if ( thisLayer.sound_play &gt; 0 )
+{
+    $bm_rt = thisLayer.sound_duration - thisLayer.sound_play;
+    thisLayer.sound_play -= dt;
+}
+</code></pre>
+<p>In the example that follows you can click on the lottie to make it play a sound.</p>
+<p>The precomp also has a green cicle that shows playback progress.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_9_json">Lottie</a></li><li><a href="#script_playground_9_html">HTML</a></li><li><a href="#script_playground_9_js">Script</a></li><li class="active"><a href="#script_playground_9_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_9_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.5.2",
+    "fr": 60,
+    "ip": 0,
+    "op": 180,
+    "w": 512,
+    "h": 512,
+    "ddd": 0,
+    "events": {
+        "click": "thisComp('sound_control').sound_play = thisComp('sound_control').sound_duration"
+    },
+    "assets": [
+        {
+            "id": "sound",
+            "u": "/lottie-docs/examples/",
+            "p": "sound.mp3",
+            "e": 0
+        },
+        {
+            "id": "precomp",
+            "layers": [
+                {
+                    "nm": "a",
+                    "ty": 4,
+                    "ip": 0,
+                    "op": 180,
+                    "st": 0,
+                    "ks": {},
+                    "shapes": [
+                        {
+                            "ty": "el",
+                            "p": {"a": 1, "k": [
+                                {
+                                    "t": 0,
+                                    "s": [0, 256],
+                                    "i": {"x": 0, "y": 0},
+                                    "o": {"x": 1, "y": 1},
+                                },
+                                {
+                                    "t": 60,
+                                    "s": [512, 256],
+                                }
+                            ]},
+                            "s": {"a": 0, "k": [100, 100]},
+                        },
+                        {
+                            "ty": "fl",
+                            "c": {"a": 0, "k": [0, 1, 0]},
+                            "o": {"a": 0, "k": 100},
+                        }
+                    ]
+                },
+                {
+                    "ty": 6,
+                    "ip": 1,
+                    "op": 60,
+                    "st": 1,
+                    "refId": "sound",
+                    "au": {
+                        "lv": {"a": 0, "k": [100, 100]}
+                    }
+                }
+            ]
+        }
+    ],
+    "markers": [],
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {
+                        "a": 1,
+                        "k": [
+                            {
+                                "t": 0,
+                                "s": [0],
+                                "i": {"x": 0, "y": 0},
+                                "o": {"x": 1, "y": 1}
+                            },
+                            {
+                                "t": 180,
+                                "s": [360]
+                            }
+                        ]
+                    },
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 1],
+                        "x": `
+var amount = thisComp('sound_control').sound_play ?? 0;
+var $bm_rt = [amount, 0, 0];
+`,
+                    }
+                }
+            ]
+        },
+        {
+            "nm": "sound_control",
+            "ty": 0,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "ks": {},
+            "refId": "precomp",
+            "w": 512,
+            "h": 512,
+            "tm": {
+                "a": 1,
+                "k": [{
+                        "t": 0,
+                        "s": [0],
+                        "i": {"x": 0, "y": 0},
+                        "o": {"x": 1, "y": 1}
+                    },
+                    {
+                        "t": 180,
+                        "s": [0]
+                    }
+                ],
+                "x": `
+if ( thisLayer.last_time === undefined )
+{
+    thisLayer.last_time = time;
+    // This variable wil control whether the sound is played
+    thisLayer.sound_play = 0;
+    // This should be the time in seconds you want the sound to play for
+    thisLayer.sound_duration = 1;
+
+}
+// Usual time management stuff
+if ( time &lt; thisLayer.last_time )
+    thisLayer.last_time = time;
+var dt = time - thisLayer.last_time;
+thisLayer.last_time = time;
+
+// Default to not playing
+var $bm_rt = 100;
+
+if ( thisLayer.sound_play &gt; 0 )
+{
+    $bm_rt = thisLayer.sound_duration - thisLayer.sound_play;
+    thisLayer.sound_play -= dt;
+}`
+            }
+        }
+    ]
+}
+
+</code></pre></div><div id="script_playground_9_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level8"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_9_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level8");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev =&gt; event_handler(ev, expression_function));
+}
+</code></pre></div><div id="script_playground_9_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level8"></div>
+</div></div></div></div><script>(function(){var json = {
+    "v": "5.5.2",
+    "fr": 60,
+    "ip": 0,
+    "op": 180,
+    "w": 512,
+    "h": 512,
+    "ddd": 0,
+    "events": {
+        "click": "thisComp('sound_control').sound_play = thisComp('sound_control').sound_duration"
+    },
+    "assets": [
+        {
+            "id": "sound",
+            "u": "/lottie-docs/examples/",
+            "p": "sound.mp3",
+            "e": 0
+        },
+        {
+            "id": "precomp",
+            "layers": [
+                {
+                    "nm": "a",
+                    "ty": 4,
+                    "ip": 0,
+                    "op": 180,
+                    "st": 0,
+                    "ks": {},
+                    "shapes": [
+                        {
+                            "ty": "el",
+                            "p": {"a": 1, "k": [
+                                {
+                                    "t": 0,
+                                    "s": [0, 256],
+                                    "i": {"x": 0, "y": 0},
+                                    "o": {"x": 1, "y": 1},
+                                },
+                                {
+                                    "t": 60,
+                                    "s": [512, 256],
+                                }
+                            ]},
+                            "s": {"a": 0, "k": [100, 100]},
+                        },
+                        {
+                            "ty": "fl",
+                            "c": {"a": 0, "k": [0, 1, 0]},
+                            "o": {"a": 0, "k": 100},
+                        }
+                    ]
+                },
+                {
+                    "ty": 6,
+                    "ip": 1,
+                    "op": 60,
+                    "st": 1,
+                    "refId": "sound",
+                    "au": {
+                        "lv": {"a": 0, "k": [100, 100]}
+                    }
+                }
+            ]
+        }
+    ],
+    "markers": [],
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "ks": {},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [256, 256]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {
+                        "a": 1,
+                        "k": [
+                            {
+                                "t": 0,
+                                "s": [0],
+                                "i": {"x": 0, "y": 0},
+                                "o": {"x": 1, "y": 1}
+                            },
+                            {
+                                "t": 180,
+                                "s": [360]
+                            }
+                        ]
+                    },
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 1],
+                        "x": `
+var amount = thisComp('sound_control').sound_play ?? 0;
+var $bm_rt = [amount, 0, 0];
+`,
+                    }
+                }
+            ]
+        },
+        {
+            "nm": "sound_control",
+            "ty": 0,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "ks": {},
+            "refId": "precomp",
+            "w": 512,
+            "h": 512,
+            "tm": {
+                "a": 1,
+                "k": [{
+                        "t": 0,
+                        "s": [0],
+                        "i": {"x": 0, "y": 0},
+                        "o": {"x": 1, "y": 1}
+                    },
+                    {
+                        "t": 180,
+                        "s": [0]
+                    }
+                ],
+                "x": `
+if ( thisLayer.last_time === undefined )
+{
+    thisLayer.last_time = time;
+    // This variable wil control whether the sound is played
+    thisLayer.sound_play = 0;
+    // This should be the time in seconds you want the sound to play for
+    thisLayer.sound_duration = 1;
+
+}
+// Usual time management stuff
+if ( time < thisLayer.last_time )
+    thisLayer.last_time = time;
+var dt = time - thisLayer.last_time;
+thisLayer.last_time = time;
+
+// Default to not playing
+var $bm_rt = 100;
+
+if ( thisLayer.sound_play > 0 )
+{
+    $bm_rt = thisLayer.sound_duration - thisLayer.sound_play;
+    thisLayer.sound_play -= dt;
+}`
+            }
+        }
+    ]
+}
+
+;
+var container = document.getElementById("level8");
+var options = {
+    container: container,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+function event_handler(ev, expression_function)
+{
+    var thisComp = anim.renderer.compInterface;
+    var time = anim.renderer.renderedFrame / anim.renderer.globalData.frameRate;
+
+    if ( ev.clientX !== undefined )
+    {
+        var rect = container.getBoundingClientRect();
+        ev.lottie_x = (ev.clientX - rect.left) / rect.width * thisComp.width;
+        ev.lottie_y = (ev.clientY - rect.top) / rect.height * thisComp.height;
+    }
+
+    expression_function(ev, thisComp, time);
+}
+
+for ( let [ev_type, expression] of Object.entries(json.events) )
+{
+    let expression_function = Function("event", "thisComp", "time", expression);
+    container.addEventListener(ev_type, ev => event_handler(ev, expression_function));
+}
+})();</script>
+<h2 id="interlude-writing-a-small-wrapper">Interlude: Writing a Small Wrapper</h2>
+<p>Follows a JavaScript class that sets everything we've seen until now
+in a self-contained object.</p>
+<pre><code class="language-js">class LottieInteractionPlayer
+{
+    constructor(container, custom_options={})
+    {
+        if ( typeof container == &quot;string&quot; )
+            this.container = document.getElementById(container);
+        else
+            this.container = container;
+
+        this.anim = null;
+
+        this.custom_options = custom_options;
+
+        // needed by keyup/down
+        if ( !container.hasAttribute(&quot;tabindex&quot;) )
+            container.setAttribute(&quot;tabindex&quot;, &quot;0&quot;);
+
+        this.handlers = {};
+
+        this._container_event_listener = this.container_event.bind(this);
+    }
+
+    // Deep copy lottie JSON
+    lottie_clone(json)
+    {
+        return JSON.parse(JSON.stringify(json));
+    }
+
+    load(lottie, resize = true)
+    {
+        // Options
+        var options = {
+            container: this.container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            // Clone because the player modifies the passed object
+            animationData = this.lottie_clone(lottie);
+            ...this.custom_options,
+        };
+
+        if ( resize )
+        {
+            this.container.style.width = lottie.w + &quot;px&quot;;
+            this.container.style.height = lottie.h + &quot;px&quot;;
+        }
+
+        // Clean up
+        this.clear();
+
+        // Setup handlers
+        this.handlers = {};
+        if ( lottie.events )
+        {
+            for ( var [name, func] of Object.entries(lottie.events) )
+            {
+                this.handlers[name] = this.expression_to_event_handler(func);
+                this.container.addEventListener(name, this._container_event_listener);
+            }
+        }
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+    }
+
+    // Destroy the animation
+    clear()
+    {
+        if ( this.anim != null )
+        {
+            try {
+                this.anim.destroy();
+                this.anim = null;
+            } catch ( e ) {}
+        }
+
+        for ( let name of Object.keys(this.handlers) )
+            this.container.removeEventListener(name, this._container_event_listener);
+    }
+
+    // Get the expression `thisComp` global
+    get thisComp()
+    {
+        return this.anim.renderer.compInterface;
+    }
+
+    // Get the expression `time` global
+    get time()
+    {
+        return this.anim.renderer.renderedFrame / this.anim.renderer.globalData.frameRate;
+    }
+
+    // Get an expression layer
+    layer(name)
+    {
+        return this.thisComp(name);
+    }
+
+    // Handles an event from the container element
+    container_event(ev)
+    {
+        this.prepare_lottie_event(ev);
+
+        if ( this.handlers[ev.type] )
+            this.handle_lottie_event(ev, this.handlers[ev.type]);
+    }
+
+    // Adds useful attributes to an event object
+    prepare_lottie_event(ev)
+    {
+        if ( ev.clientX !== undefined )
+        {
+            var rect = this.container.getBoundingClientRect();
+            ev.lottie_x = (ev.clientX - rect.left) / rect.width * this.thisComp.width;
+            ev.lottie_y = (ev.clientY - rect.top) / rect.height * this.thisComp.height;
+        }
+    }
+
+    // Handles an event given a handler
+    handle_lottie_event(ev, handler)
+    {
+        handler(ev, this.thisComp, this.time);
+    }
+
+    // Sets up an event handler
+    expression_to_event_handler(expr)
+    {
+        return Function(&quot;event&quot;, &quot;thisComp&quot;, &quot;time&quot;, expr);
+    }
+}
+</code></pre>
+<h2 id="level-9-patching-the-renderer">Level 9: Patching the Renderer</h2>
+<p>So far we've used the vanilla lottie-web player without modifications.</p>
+<p>This is good for the interactions described until now but for more
+advanced stuff we need to patch the player.</p>
+<p>The code in this level assumes you have a wrapper class similar to the one
+described in the interlude.</p>
+<h3 id="why">Why</h3>
+<p>Follows a description of some use cases that don't work with the current approach.</p>
+<h4 id="initializing-values">Initializing Values</h4>
+<p>So far we've initialized custom layer attributes in the expressions using them.</p>
+<p>We started by checking if <code>time</code> is 0:</p>
+<pre><code class="language-js">// Initialize everything at the start
+if ( time == 0 )
+{
+    thisLayer.my_value = size[0] / 2;
+    thisLayer.speed = 60;
+    thisLayer.direction = 1;
+    thisLayer.prev_time = 0;
+}
+</code></pre>
+<p>Since that isn't always reliable, we moved on to checking if the attributes
+are undefined:</p>
+<pre><code class="language-js">// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+}
+</code></pre>
+<p>While this works, it's a bit annoying because you don't know if you can
+access another layer's custom attributes on frame 0, so it would be nice
+to have an event for this:</p>
+<pre><code class="language-json">{
+    &quot;v&quot;: &quot;5.9.1&quot;,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;fr&quot;: 60,
+    &quot;w&quot;: 512,
+    &quot;h&quot;: 512,
+    &quot;events&quot;: {
+        &quot;load&quot;: &quot;thisComp('mylayer').value = 123;&quot;
+    }
+}
+</code></pre>
+<p>We have the options of the <code>DOMLoaded</code> event from bodymovin:</p>
+<pre><code class="language-js">    load(lottie, resize = true)
+    {
+        // (omitted the part of the code that's the same as before)
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this.anim.addEventListener(&quot;DOMLoaded&quot;, this._lottie_loaded_event.bind(this));
+    }
+
+    _lottie_loaded_event()
+    {
+        // Create a dummy event object and invoke the
+        this.container.dispatchEvent(new Event(&quot;load&quot;), {});
+    }
+</code></pre>
+<p>The issue with this is such event can only be fired after the first
+frame has been renderer (and expressions have been evaluated at least once).</p>
+<h4 id="dom-events-from-layers">DOM Events from Layers</h4>
+<p>Until now the event handling has been done on the container element.
+Since all the layers result in DOM elements, it would be nice to
+be able to listen to events from those elements and handle them based
+on expressions defined on each layer.</p>
+<pre><code class="language-json">{
+    &quot;ty&quot;: 4,
+    &quot;nm&quot;: &quot;My layer&quot;,
+    &quot;ip&quot;: 0,
+    &quot;op&quot;: 60,
+    &quot;st&quot;: 0,
+    &quot;ks&quot;: {},
+    &quot;shapes&quot;: [],
+    &quot;events&quot;: {
+        &quot;click&quot;: &quot;thisLayer.clicked = true;&quot;
+    }
+}
+</code></pre>
+<p>To do this we need a way of mapping the layer in the JSON to the
+DOM element and the value for the expression <code>thisLayer</code>.</p>
+<p>All this information is within the lottie-web SVG renderer but we need
+to find a way of accessing it.</p>
+<p>The first step is to allow a layer object to be passed to the events:</p>
+<pre><code class="language-javascript">    // Handles an event from the container element
+    container_event(ev)
+    {
+        this.prepare_lottie_event(ev);
+
+        if ( this.handlers[ev.type] )
+            this.handle_lottie_event(ev, this.handlers[ev.type], null);
+    }
+
+    // Handles an event given a handler
+    handle_lottie_event(ev, handler, layer)
+    {
+        handler(ev, this.thisComp, this.time, layer);
+    }
+
+    // Sets up an event handler
+    expression_to_event_handler(expr)
+    {
+        return Function(&quot;event&quot;, &quot;thisComp&quot;, &quot;time&quot;, &quot;thisLayer&quot;, expr);
+    }
+</code></pre>
+<h3 id="how">How</h3>
+<p>The gist of it is we need to path the renderer object and inject our
+code in some of its methods. Luckily we can do this on the fly:</p>
+<pre><code class="language-javascript">    load(lottie, resize = true)
+    {
+        // (omitted the part of the code that's the same as before)
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this._patch_renderer();
+    }
+
+
+    _patch_renderer()
+    {
+        // We patch initItems to trigger an event before any expression is evaluated:
+        var old_init = this.anim.renderer.initItems.bind(this.anim.renderer);
+        var post_init = this._lottie_load_event.bind(this)
+        this.anim.renderer.initItems = function(){
+            old_init();
+            post_init();
+        };
+
+        // We patch createItem to add event listener.
+        // It takes the JSON layer as input and returns the renderer later object
+        this.layer_elements = [];
+        var old_create = this.anim.renderer.createItem.bind(this.anim.renderer);
+        this.anim.renderer.createItem = (function(layer){
+            var item = old_create(layer);
+            this._create_item_event(layer, item);
+            return item;
+        }).bind(this);
+    }
+
+    _lottie_load_event()
+    {
+        let ev = new Event(&quot;load&quot;, {});
+        this.container.dispatchEvent(ev);
+        for ( let layer of this.layer_elements )
+            layer.dispatchEvent(ev);
+    }
+
+    _create_item_event(lottie, item)
+    {
+        // lottie is the JSON layer
+        // item.layerElement is the DOM element for this layer
+        // item.layerInterface is the expression thisLayer object
+        if ( !lottie.events )
+            return;
+
+        // Create a dummy element for Null layers and the like,
+        // it makes it easier to listen for `load` events
+        let element = item.layerElement ?? document.createElement(&quot;div&quot;);
+
+        // Keep track of layer elements so they can have the `load` event too
+        this.layer_elements.push(element);
+
+        for ( let [name, func] of Object.entries(lottie.events) )
+        {
+            let handler = this.expression_to_event_handler(func);
+            function listener(ev)
+            {
+                this.prepare_lottie_event(ev);
+                this.handle_lottie_event(ev, handler, item.layerInterface);
+            }
+            element.addEventListener(name, listener.bind(this));
+        }
+    }
+</code></pre>
+<p>Now that the renderer has been patched can we be assured the patching is
+done before the functions we are patching have been called?</p>
+<p>The short answer is No, but we can have a look at how we can achieve this.</p>
+<h4 id="abusing-font-loading">Abusing Font Loading</h4>
+<p>When a lottie has external fonts, the lottie-web player waits for every
+font to be loaded before initializing the renderer. Which means when you
+have text layers, the code above works perfectly.</p>
+<p>This is nice but not all lotties need text so we'll need something better.</p>
+<h4 id="deferring-animation-load">Deferring Animation Load</h4>
+<p>The trick is to not pass the lottie JSON to lottie-web until after
+we've patched the renderer. This is easy enough because if you call
+<code>bodymovin.loadAnimation</code> without <code>path</code> or <code>animationData</code> everything
+will be initialized (including the renderer) and only the JSON loading
+step is missing.</p>
+<p>We can use this to patch the renderer before loading the animation:</p>
+<pre><code class="language-javascript">    load(lottie, resize = true)
+    {
+        // Options
+        var options = {
+            container: this.container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            ...this.custom_options,
+            // Note that animationData is deferred
+        };
+
+        if ( resize )
+        {
+            this.container.style.width = lottie.w + &quot;px&quot;;
+            this.container.style.height = lottie.h + &quot;px&quot;;
+        }
+
+        // Clean up
+        this.clear();
+
+        // Setup handlers
+        this.handlers = {};
+        if ( lottie.events )
+        {
+            for ( var [name, func] of Object.entries(lottie.events) )
+            {
+                this.handlers[name] = this.expression_to_event_handler(func);
+                this.container.addEventListener(name, this._container_event_listener);
+            }
+        }
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this._patch_renderer();
+
+        this.anim.addEventListener(&quot;DOMLoaded&quot;, this._lottie_loaded_event.bind(this));
+
+        // Clone because the player modifies the passed object
+        var animation_data = this.lottie_clone(lottie);
+
+        // Load animation separately so we can patch the renderer
+        this.anim.setupAnimation(animation_data);
+    }
+</code></pre>
+<p>Note that <code>anim.setupAnimation</code> is available from lottie-web version
+5.8.0. If you have earlier versions, you should call <code>anim.configAnimation</code>
+instead.</p>
+<h3 id="triggering-new-events">Triggering new events</h3>
+<p>We know how to make the lottie react to DOM events, but what if we want
+to make the DOM react to events triggered from the lottie?</p>
+<p>We can use the patching setup just discussed to also add events on the
+other direction, the only thing we need is adding a method to <code>thisComp</code>,
+so it's invokable from the expressions and make it trigger DOM events.</p>
+<p>The trick is to patch <code>thisComp</code> in the right place, fortunately we've
+already done the bulk of the work so we just need to add some more code
+when the animation has been loaded:</p>
+<pre><code class="language-javascript">    _lottie_load_event()
+    {
+        let ev = new Event(&quot;load&quot;, {});
+        this.container.dispatchEvent(ev);
+        for ( let layer of this.layer_elements )
+            layer.dispatchEvent(ev);
+
+        // We add a method for triggering events from the lottie
+        this.thisComp.trigger_event = (function(type, detail){
+            this.container.dispatchEvent(new CustomEvent(&quot;lottie.&quot; + type, {detail}));
+        }).bind(this);
+    }
+</code></pre>
+<p>Then you can add event listeners to the element containing the lottie animation.</p>
+<h3 id="resulting-wrapper">Resulting Wrapper</h3>
+<p>Here's the same wrapper class as described earlier, but with patching
+code applied to support the <code>load</code> event and layer events.</p>
+<div><div><div><pre><code class="javascript">class LottieInteractionPlayer
+{
+    constructor(container, custom_options={})
+    {
+        if ( typeof container == "string" )
+            this.container = document.getElementById(container);
+        else
+            this.container = container;
+
+        this.anim = null;
+
+        this.custom_options = custom_options;
+
+        // needed by keyup/down
+        if ( !container.hasAttribute("tabindex") )
+            container.setAttribute("tabindex", "0");
+
+        this.handlers = {};
+
+        this._container_event_listener = this.container_event.bind(this);
+    }
+
+    // Deep copy lottie JSON
+    lottie_clone(json)
+    {
+        return JSON.parse(JSON.stringify(json));
+    }
+
+    load(lottie, resize = true)
+    {
+        // Options
+        var options = {
+            container: this.container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            ...this.custom_options,
+            // Note that animationData is deferred
+        };
+
+        if ( resize )
+        {
+            this.container.style.width = lottie.w + "px";
+            this.container.style.height = lottie.h + "px";
+        }
+
+        // Clean up
+        this.clear();
+
+        // Setup handlers
+        this.handlers = {};
+        if ( lottie.events )
+        {
+            for ( var [name, func] of Object.entries(lottie.events) )
+            {
+                this.handlers[name] = this.expression_to_event_handler(func);
+                this.container.addEventListener(name, this._container_event_listener);
+            }
+        }
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this._patch_renderer();
+
+        // Clone because the player modifies the passed object
+        var animation_data = this.lottie_clone(lottie);
+
+        // Load animation separately so we can patch the renderer
+        this.anim.setupAnimation(animation_data);
+    }
+
+    _patch_renderer()
+    {
+        // We patch initItems to trigger an event before any expression is evaluated:
+        var old_init = this.anim.renderer.initItems.bind(this.anim.renderer);
+        var post_init = this._lottie_load_event.bind(this)
+        this.anim.renderer.initItems = function(){
+            old_init();
+            post_init();
+        };
+
+        // We patch createItem to add event listener.
+        // It takes the JSON layer as input and returns the renderer later object
+        this.layer_elements = [];
+        var old_create = this.anim.renderer.createItem.bind(this.anim.renderer);
+        this.anim.renderer.createItem = (function(layer){
+            var item = old_create(layer);
+            this._create_item_event(layer, item);
+            return item;
+        }).bind(this);
+    }
+
+    _create_item_event(lottie, item)
+    {
+        // lottie is the JSON layer
+        // item.layerElement is the DOM element for this layer
+        // item.layerInterface is the expression thisLayer object
+        if ( !lottie.events )
+            return;
+
+        // Create a dummy element for Null layers and the like,
+        // it makes it easier to listen for `load` events
+        let element = item.layerElement ?? document.createElement("div");
+
+        // Keep track of layer elements so they can have the `load` event too
+        this.layer_elements.push(element);
+
+        for ( let [name, func] of Object.entries(lottie.events) )
+        {
+            let handler = this.expression_to_event_handler(func);
+            function listener(ev)
+            {
+                this.prepare_lottie_event(ev);
+                this.handle_lottie_event(ev, handler, item.layerInterface);
+            }
+            element.addEventListener(name, listener.bind(this));
+        }
+    }
+
+    _lottie_load_event()
+    {
+        let ev = new Event("load", {});
+        this.container.dispatchEvent(ev);
+        for ( let layer of this.layer_elements )
+            layer.dispatchEvent(ev);
+
+        // We add a method for triggering events from the lottie
+        this.thisComp.trigger_event = (function(type, detail){
+            this.container.dispatchEvent(new CustomEvent("lottie." + type, {detail}));
+        }).bind(this);
+    }
+
+    // Destroy the animation
+    clear()
+    {
+        if ( this.anim != null )
+        {
+            try {
+                this.anim.destroy();
+                this.anim = null;
+            } catch ( e ) {}
+        }
+
+        for ( let name of Object.keys(this.handlers) )
+            this.container.removeEventListener(name, this._container_event_listener);
+    }
+
+    // Get the expression `thisComp` global
+    get thisComp()
+    {
+        return this.anim.renderer.compInterface;
+    }
+
+    // Get the expression `time` global
+    get time()
+    {
+        return this.anim.renderer.renderedFrame / this.anim.renderer.globalData.frameRate;
+    }
+
+    // Get an expression layer
+    layer(name)
+    {
+        return this.thisComp(name);
+    }
+
+    // Handles an event from the container element
+    container_event(ev)
+    {
+        this.prepare_lottie_event(ev);
+
+        if ( this.handlers[ev.type] )
+            this.handle_lottie_event(ev, this.handlers[ev.type], null);
+    }
+
+    // Adds useful attributes to an event object
+    prepare_lottie_event(ev)
+    {
+        if ( ev.clientX !== undefined )
+        {
+            var rect = this.container.getBoundingClientRect();
+            ev.lottie_x = (ev.clientX - rect.left) / rect.width * this.thisComp.width;
+            ev.lottie_y = (ev.clientY - rect.top) / rect.height * this.thisComp.height;
+        }
+    }
+
+    // Handles an event given a handler
+    handle_lottie_event(ev, handler, layer)
+    {
+        handler(ev, this.thisComp, this.time, layer);
+    }
+
+    // Sets up an event handler
+    expression_to_event_handler(expr)
+    {
+        return Function("event", "thisComp", "time", "thisLayer", expr);
+    }
+}
+</code></pre></div></div></div><script>class LottieInteractionPlayer
+{
+    constructor(container, custom_options={})
+    {
+        if ( typeof container == "string" )
+            this.container = document.getElementById(container);
+        else
+            this.container = container;
+
+        this.anim = null;
+
+        this.custom_options = custom_options;
+
+        // needed by keyup/down
+        if ( !container.hasAttribute("tabindex") )
+            container.setAttribute("tabindex", "0");
+
+        this.handlers = {};
+
+        this._container_event_listener = this.container_event.bind(this);
+    }
+
+    // Deep copy lottie JSON
+    lottie_clone(json)
+    {
+        return JSON.parse(JSON.stringify(json));
+    }
+
+    load(lottie, resize = true)
+    {
+        // Options
+        var options = {
+            container: this.container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            ...this.custom_options,
+            // Note that animationData is deferred
+        };
+
+        if ( resize )
+        {
+            this.container.style.width = lottie.w + "px";
+            this.container.style.height = lottie.h + "px";
+        }
+
+        // Clean up
+        this.clear();
+
+        // Setup handlers
+        this.handlers = {};
+        if ( lottie.events )
+        {
+            for ( var [name, func] of Object.entries(lottie.events) )
+            {
+                this.handlers[name] = this.expression_to_event_handler(func);
+                this.container.addEventListener(name, this._container_event_listener);
+            }
+        }
+
+        // Create lottie player
+        this.anim = bodymovin.loadAnimation(options);
+
+        this._patch_renderer();
+
+        // Clone because the player modifies the passed object
+        var animation_data = this.lottie_clone(lottie);
+
+        // Load animation separately so we can patch the renderer
+        this.anim.setupAnimation(animation_data);
+    }
+
+    _patch_renderer()
+    {
+        // We patch initItems to trigger an event before any expression is evaluated:
+        var old_init = this.anim.renderer.initItems.bind(this.anim.renderer);
+        var post_init = this._lottie_load_event.bind(this)
+        this.anim.renderer.initItems = function(){
+            old_init();
+            post_init();
+        };
+
+        // We patch createItem to add event listener.
+        // It takes the JSON layer as input and returns the renderer later object
+        this.layer_elements = [];
+        var old_create = this.anim.renderer.createItem.bind(this.anim.renderer);
+        this.anim.renderer.createItem = (function(layer){
+            var item = old_create(layer);
+            this._create_item_event(layer, item);
+            return item;
+        }).bind(this);
+    }
+
+    _create_item_event(lottie, item)
+    {
+        // lottie is the JSON layer
+        // item.layerElement is the DOM element for this layer
+        // item.layerInterface is the expression thisLayer object
+        if ( !lottie.events )
+            return;
+
+        // Create a dummy element for Null layers and the like,
+        // it makes it easier to listen for `load` events
+        let element = item.layerElement ?? document.createElement("div");
+
+        // Keep track of layer elements so they can have the `load` event too
+        this.layer_elements.push(element);
+
+        for ( let [name, func] of Object.entries(lottie.events) )
+        {
+            let handler = this.expression_to_event_handler(func);
+            function listener(ev)
+            {
+                this.prepare_lottie_event(ev);
+                this.handle_lottie_event(ev, handler, item.layerInterface);
+            }
+            element.addEventListener(name, listener.bind(this));
+        }
+    }
+
+    _lottie_load_event()
+    {
+        let ev = new Event("load", {});
+        this.container.dispatchEvent(ev);
+        for ( let layer of this.layer_elements )
+            layer.dispatchEvent(ev);
+
+        // We add a method for triggering events from the lottie
+        this.thisComp.trigger_event = (function(type, detail){
+            this.container.dispatchEvent(new CustomEvent("lottie." + type, {detail}));
+        }).bind(this);
+    }
+
+    // Destroy the animation
+    clear()
+    {
+        if ( this.anim != null )
+        {
+            try {
+                this.anim.destroy();
+                this.anim = null;
+            } catch ( e ) {}
+        }
+
+        for ( let name of Object.keys(this.handlers) )
+            this.container.removeEventListener(name, this._container_event_listener);
+    }
+
+    // Get the expression `thisComp` global
+    get thisComp()
+    {
+        return this.anim.renderer.compInterface;
+    }
+
+    // Get the expression `time` global
+    get time()
+    {
+        return this.anim.renderer.renderedFrame / this.anim.renderer.globalData.frameRate;
+    }
+
+    // Get an expression layer
+    layer(name)
+    {
+        return this.thisComp(name);
+    }
+
+    // Handles an event from the container element
+    container_event(ev)
+    {
+        this.prepare_lottie_event(ev);
+
+        if ( this.handlers[ev.type] )
+            this.handle_lottie_event(ev, this.handlers[ev.type], null);
+    }
+
+    // Adds useful attributes to an event object
+    prepare_lottie_event(ev)
+    {
+        if ( ev.clientX !== undefined )
+        {
+            var rect = this.container.getBoundingClientRect();
+            ev.lottie_x = (ev.clientX - rect.left) / rect.width * this.thisComp.width;
+            ev.lottie_y = (ev.clientY - rect.top) / rect.height * this.thisComp.height;
+        }
+    }
+
+    // Handles an event given a handler
+    handle_lottie_event(ev, handler, layer)
+    {
+        handler(ev, this.thisComp, this.time, layer);
+    }
+
+    // Sets up an event handler
+    expression_to_event_handler(expr)
+    {
+        return Function("event", "thisComp", "time", "thisLayer", expr);
+    }
+}
+</script>
+<h3 id="animation-or-interaction">Animation or Interaction</h3>
+<p>It's possible to use the custom <code>load</code> to detect whether the lottie
+is being played in an environment that supports the custom events.</p>
+<p>The following example is similar to the click example from level 7
+but when a player doesn't have interaction support, the star moves
+around on its own.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_11_json">Lottie</a></li><li><a href="#script_playground_11_html">HTML</a></li><li><a href="#script_playground_11_css">CSS</a></li><li><a href="#script_playground_11_js">Script</a></li><li class="active"><a href="#script_playground_11_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_11_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "click": "var star = thisComp('star'); star.px = event.lottie_x; star.py = event.lottie_y;",
+        "load": "thisComp('star').interactive = true;"
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+
+    if ( !thisLayer.interactive )
+    {
+        thisLayer.dx = 1;
+        thisLayer.dy = 1;
+        thisLayer.prev_time = 0;
+    }
+}
+
+if ( !thisLayer.interactive )
+{
+    if ( time &lt; thisLayer.prev_time )
+        thisLayer.prev_time = time;
+    var dt = time - thisLayer.prev_time;
+    thisLayer.prev_time = time;
+
+    thisLayer.px += thisLayer.dx * dt * 100;
+    thisLayer.py += thisLayer.dy * dt * 120;
+
+    var radius = thisLayer.content(1).outerRadius;
+    if ( thisLayer.px &lt; radius )
+        thisLayer.dx = 1;
+    else if ( thisLayer.px &gt; thisComp.width - radius )
+        thisLayer.dx = -1;
+    if ( thisLayer.py &lt; radius )
+        thisLayer.dy = 1;
+    else if ( thisLayer.py &gt; thisComp.height - radius )
+        thisLayer.dy = -1;
+
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_11_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level9_parent"&gt;
+    &lt;div id="level9_not_interactive"&gt;&lt;/div&gt;
+    &lt;div id="level9_interactive"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div><div id="script_playground_11_css" class="tab-pane fade in"><pre><code class="css">#level9_parent {
+    display: flex;
+}
+#level9_interactive, #level9_not_interactive {
+    border: 1px solid #ccc;
+    width: 50%;
+    box-sizing: border-box;
+}
+</code></pre></div><div id="script_playground_11_js" class="tab-pane fade in"><pre><code class="javascript">var options = {
+    container: document.getElementById("level9_not_interactive"),
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+var player = new LottieInteractionPlayer(document.getElementById("level9_interactive"));
+player.load(json, false);
+</code></pre></div><div id="script_playground_11_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level9_parent">
+    <div id="level9_not_interactive"></div>
+    <div id="level9_interactive"></div>
+</div>
+</div></div></div><style>#level9_parent {
+    display: flex;
+}
+#level9_interactive, #level9_not_interactive {
+    border: 1px solid #ccc;
+    width: 50%;
+    box-sizing: border-box;
+}
+</style></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "events": {
+        "click": "var star = thisComp('star'); star.px = event.lottie_x; star.py = event.lottie_y;",
+        "load": "thisComp('star').interactive = true;"
+    },
+    "layers": [
+        {
+            "ty": 4,
+            "nm": "star",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ks": {
+                "p": {"a": 0, "k": [0, 0], "x": `
+// Initialization
+if ( thisLayer.px === undefined )
+{
+    thisLayer.px = thisComp.width / 2;
+    thisLayer.py = thisComp.height / 2;
+
+    if ( !thisLayer.interactive )
+    {
+        thisLayer.dx = 1;
+        thisLayer.dy = 1;
+        thisLayer.prev_time = 0;
+    }
+}
+
+if ( !thisLayer.interactive )
+{
+    if ( time < thisLayer.prev_time )
+        thisLayer.prev_time = time;
+    var dt = time - thisLayer.prev_time;
+    thisLayer.prev_time = time;
+
+    thisLayer.px += thisLayer.dx * dt * 100;
+    thisLayer.py += thisLayer.dy * dt * 120;
+
+    var radius = thisLayer.content(1).outerRadius;
+    if ( thisLayer.px < radius )
+        thisLayer.dx = 1;
+    else if ( thisLayer.px > thisComp.width - radius )
+        thisLayer.dx = -1;
+    if ( thisLayer.py < radius )
+        thisLayer.dy = 1;
+    else if ( thisLayer.py > thisComp.height - radius )
+        thisLayer.dy = -1;
+
+}
+
+// Set value
+var $bm_rt = [thisLayer.px, thisLayer.py];
+                `}},
+            "shapes": [
+                {
+                    "ty": "sr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "or": {"a": 0, "k": 70},
+                    "ir": {"a": 0, "k": 40},
+                    "r": {"a": 0, "k": 0},
+                    "pt": {"a": 0, "k": 5},
+                    "sy": 1,
+                    "os": {"a": 0, "k": 0},
+                    "is": {"a": 0, "k": 0}
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 100},
+                    "c": {
+                        "a": 0,
+                        "k": [1, 1, 0.3],
+                    }
+                }
+            ]
+        }
+    ]
+}
+;
+var options = {
+    container: document.getElementById("level9_not_interactive"),
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    animationData: json,
+};
+var anim = bodymovin.loadAnimation(options);
+
+var player = new LottieInteractionPlayer(document.getElementById("level9_interactive"));
+player.load(json, false);
+})();</script>
+<h3 id="lottie-button-example">Lottie Button Example</h3>
+<p>This example uses everything we discussed so far.</p>
+<p>A quick note: to avoid clicks going to the wrong layer we need to define
+some CSS that gets rid of pointer events for layers we don't want to click.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_12_json">Lottie</a></li><li><a href="#script_playground_12_js">Script</a></li><li><a href="#script_playground_12_html">HTML</a></li><li><a href="#script_playground_12_css">CSS</a></li><li class="active"><a href="#script_playground_12_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_12_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "fonts": {"list":[
+        {
+            "ascent": 72,
+            "fFamily": "Roboto",
+            "fName": "Roboto Regular",
+            "fStyle": "Regular",
+            "fPath": "https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap",
+            "origin": 1,
+        }
+    ]},
+    "layers": [
+        {
+            "ty": 5,
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "parent": 1,
+            "cl": "no-mouse",
+            "ks": {
+                "p": {"a": 0, "k": [0, 25]},
+            },
+            "t": {
+                "a": [],
+                "d": {
+                    "x": "var $bm_rt = 'Clicks: ' + thisComp('button').clicks;",
+                    "k": [
+                        {
+                            "s": {
+                                "f": "Roboto Regular",
+                                "fc": [0, 0, 0],
+                                "s": 70,
+                                "t": "",
+                                "j": 2,
+                            },
+                            "t": 0
+                        }
+                    ]
+                },
+                "m": {
+                    "a": {"a": 0, "k": [0,0]},
+                    "g": 3
+                },
+                "p": {}
+            }
+        },
+        {
+            "ty": 4,
+            "nm": "button",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ind": 1,
+            "cl": "lottie-button",
+            "events": {
+                "load": "thisLayer.clicks = 0;",
+                "click": "thisLayer.clicks += 1; thisComp.trigger_event('click', {clicks: thisLayer.clicks});",
+                "mouseenter": "thisLayer.highlighted = true;",
+                "mouseleave": "thisLayer.highlighted = false;"
+            },
+            "ks": {
+                "p": {"a": 0, "k": [256, 256]},
+                "s": {
+                    "a": 0,
+                    "k": [100, 100],
+                    "x": "var sz = thisLayer.highlighted ? 120 : 100; var $bm_rt = [sz, sz];"
+                }
+            },
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [350, 90]},
+                    "r": {"a": 0, "k": 3},
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 1, 0]},
+                    "w": {"a": 0, "k": 1},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 50, "x": "var $bm_rt = thisLayer.highlighted ? 70 : 30;"},
+                    "c": {"a": 0, "k": [0.4, 1, 0.4]}
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div><div id="script_playground_12_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level9_button");
+var player = new LottieInteractionPlayer(container);
+player.load(json);
+container.addEventListener("lottie.click", ev =&gt;
+    document.getElementById("level9_outer").innerText = `Lottie clicked ${ev.detail.clicks} times`
+);
+</code></pre></div><div id="script_playground_12_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level9_button"&gt;&lt;/div&gt;
+&lt;div id="level9_outer"&gt;Button not clicked&lt;/div&gt;
+</code></pre></div><div id="script_playground_12_css" class="tab-pane fade in"><pre><code class="css">.no-mouse {
+    pointer-events: none;
+}
+.lottie-button {
+    cursor: pointer;
+}
+</code></pre></div><div id="script_playground_12_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level9_button"></div>
+<div id="level9_outer">Button not clicked</div>
+</div></div></div><style>.no-mouse {
+    pointer-events: none;
+}
+.lottie-button {
+    cursor: pointer;
+}
+</style></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 60,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "fonts": {"list":[
+        {
+            "ascent": 72,
+            "fFamily": "Roboto",
+            "fName": "Roboto Regular",
+            "fStyle": "Regular",
+            "fPath": "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
+            "origin": 1,
+        }
+    ]},
+    "layers": [
+        {
+            "ty": 5,
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "parent": 1,
+            "cl": "no-mouse",
+            "ks": {
+                "p": {"a": 0, "k": [0, 25]},
+            },
+            "t": {
+                "a": [],
+                "d": {
+                    "x": "var $bm_rt = 'Clicks: ' + thisComp('button').clicks;",
+                    "k": [
+                        {
+                            "s": {
+                                "f": "Roboto Regular",
+                                "fc": [0, 0, 0],
+                                "s": 70,
+                                "t": "",
+                                "j": 2,
+                            },
+                            "t": 0
+                        }
+                    ]
+                },
+                "m": {
+                    "a": {"a": 0, "k": [0,0]},
+                    "g": 3
+                },
+                "p": {}
+            }
+        },
+        {
+            "ty": 4,
+            "nm": "button",
+            "ip": 0,
+            "op": 60,
+            "st": 0,
+            "ind": 1,
+            "cl": "lottie-button",
+            "events": {
+                "load": "thisLayer.clicks = 0;",
+                "click": "thisLayer.clicks += 1; thisComp.trigger_event('click', {clicks: thisLayer.clicks});",
+                "mouseenter": "thisLayer.highlighted = true;",
+                "mouseleave": "thisLayer.highlighted = false;"
+            },
+            "ks": {
+                "p": {"a": 0, "k": [256, 256]},
+                "s": {
+                    "a": 0,
+                    "k": [100, 100],
+                    "x": "var sz = thisLayer.highlighted ? 120 : 100; var $bm_rt = [sz, sz];"
+                }
+            },
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [350, 90]},
+                    "r": {"a": 0, "k": 3},
+                },
+                {
+                    "ty": "st",
+                    "o": {"a": 0, "k": 100},
+                    "c": {"a": 0, "k": [0, 1, 0]},
+                    "w": {"a": 0, "k": 1},
+                },
+                {
+                    "ty": "fl",
+                    "o": {"a": 0, "k": 50, "x": "var $bm_rt = thisLayer.highlighted ? 70 : 30;"},
+                    "c": {"a": 0, "k": [0.4, 1, 0.4]}
+                }
+            ]
+        }
+    ]
+}
+;
+var container = document.getElementById("level9_button");
+var player = new LottieInteractionPlayer(container);
+player.load(json);
+container.addEventListener("lottie.click", ev =>
+    document.getElementById("level9_outer").innerText = `Lottie clicked ${ev.detail.clicks} times`
+);
+})();</script>
+<h3 id="3d">3D</h3>
+<p>Everything discussed so far was for the lottie-web <code>svg</code> renderer
+but all the patching works with the <code>html</code> renderer as well.</p>
+<p>The <code>html</code> renderer supports 3D layers so we can make an interactive
+3D scene with little effort.</p>
+<p>The main caveat is that you need to set <code>position: relative</code> on the
+container element.</p>
+<p>On the example below you can click to capture the mouse then have
+first-person controls.</p>
+<div><ul class="nav nav-tabs"><li><a href="#script_playground_13_json">Lottie</a></li><li><a href="#script_playground_13_js">Script</a></li><li><a href="#script_playground_13_html">HTML</a></li><li><a href="#script_playground_13_css">CSS</a></li><li class="active"><a href="#script_playground_13_preview">Result</a></li></ul><div class="tab-content"><div id="script_playground_13_json" class="tab-pane fade in"><pre><code class="javascript">{
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 180,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "fonts": {
+        "list": []
+    },
+    "assets": [],
+    "layers": [
+        {
+            "nm": "Camera",
+            "ty": 13,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        -10
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "pe": {
+                "a": 0,
+                "k": 256
+            },
+            "ddd": 1
+        },
+        {
+            "nm": "Move Parent",
+            "ty": 3,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "a": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "x": "var dt = thisComp.time_delta(thisLayer, time);\n\n            if ( thisComp.mouse_dx )\n            {\n                thisComp.char_angle -= dt * thisComp.mouse_dx / 8 * Math.PI;\n                thisComp.mouse_dx  = 0;\n            }\n\n            if ( thisComp.mouse_dy )\n            {\n                thisComp.look_angle += dt * thisComp.mouse_dy / 8 * Math.PI;\n                thisComp.mouse_dy  = 0;\n            }\n\n\n            var left = thisComp.keys_pressed.ArrowLeft || thisComp.keys_pressed.a;\n            var right = thisComp.keys_pressed.ArrowRight || thisComp.keys_pressed.d;\n            var dx = 0;\n            if ( left &amp;&amp; right )\n                dx = 0;\n            else if ( left )\n                dx = -1;\n            else if ( right )\n                dx = 1;\n\n            var up = thisComp.keys_pressed.ArrowUp || thisComp.keys_pressed.w;\n            var down = thisComp.keys_pressed.ArrowDown || thisComp.keys_pressed.s;\n            var dz = 0;\n            if ( up &amp;&amp; down )\n                dz = 0;\n            else if ( up )\n                dz = 1;\n            else if ( down )\n                dz = -1;\n\n            thisLayer.char_x += dz * dt * -200 * Math.sin(thisComp.char_angle);\n            thisLayer.char_z += dz * dt * 200 * Math.cos(thisComp.char_angle);\n\n            thisLayer.char_x += dx * dt * -200 * Math.sin(thisComp.char_angle - Math.PI / 2);\n            thisLayer.char_z += dx * dt * 200 * Math.cos(thisComp.char_angle - Math.PI / 2);\n\n            var $bm_rt = [thisLayer.char_x, thisLayer.char_y, thisLayer.char_z];\n        \n/**/"
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "x": "var $bm_rt = [thisComp.look_angle * 180 / Math.PI, thisComp.char_angle * 180 / Math.PI, 0];\n        \n/**/"
+                }
+            },
+            "ind": 1,
+            "ddd": 1,
+            "events": {
+                "load": "thisLayer.char_x = 0;\n            thisLayer.char_z = 0;\n            thisLayer.char_y = 0;\n        \n/**/"
+            }
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        200
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0.5,
+                            0.5,
+                            1
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        -200
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0.5,
+                            0.5,
+                            0
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        200,
+                        0,
+                        0
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 90
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            1,
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        -200,
+                        0,
+                        0
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 90
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        }
+    ],
+    "events": {
+        "keydown": "thisComp.keys_pressed[event.key] = true;\n\n        if ( event.key != \"F5\" )\n            event.preventDefault();\n    \n/**/",
+        "keyup": "thisComp.keys_pressed[event.key] = false;\n\n        if ( event.key != \"F5\" )\n            event.preventDefault();\n    \n/**/",
+        "load": "thisComp.keys_pressed = {};\n        thisComp.mouse_dx = 0;\n        thisComp.mouse_dy = 0;\n        thisComp.char_angle = 0;\n        thisComp.look_angle = 0;\n        thisComp.time_delta = function (thisLayer, time) {\n            if ( thisLayer.last_time === undefined || time &lt; thisLayer.last_time )\n            {\n                thisLayer.last_time = time;\n                return 0;\n            }\n\n            var dt = time - thisLayer.last_time;\n            thisLayer.last_time = time;\n            return dt;\n        };\n    \n/**/",
+        "mouseenter": "thisComp.mouse_old_x = thisComp.mouse_x = event.lottie_x;\n        thisComp.mouse_old_y = thisComp.mouse_y = event.lottie_x;\n    \n/**/",
+        "mouseleave": "thisComp.mouse_old_x = thisComp.mouse_x = event.lottie_x;\n        thisComp.mouse_old_y = thisComp.mouse_y = event.lottie_x;\n    \n/**/",
+        "mousemove": "thisComp.mouse_dx += event.movementX;\n        thisComp.mouse_dy += event.movementY;\n    \n/**/"
+    },
+    "ddd": 1
+}
+</code></pre></div><div id="script_playground_13_js" class="tab-pane fade in"><pre><code class="javascript">var container = document.getElementById("level9_3d");
+var player = new LottieInteractionPlayer(container, {renderer: "html"});
+player.load(json);
+</code></pre></div><div id="script_playground_13_html" class="tab-pane fade in"><pre><code class="html">&lt;div id="level9_3d" onclick="this.requestPointerLock();"&gt;&lt;/div&gt;
+</code></pre></div><div id="script_playground_13_css" class="tab-pane fade in"><pre><code class="css">#level9_3d {
+    position: relative;
+}
+</code></pre></div><div id="script_playground_13_preview" class="tab-pane fade in active"><div class="playground_html"><div id="level9_3d" onclick="this.requestPointerLock();"></div>
+</div></div></div><style>#level9_3d {
+    position: relative;
+}
+</style></div><script>(function(){var json = {
+    "v": "5.9.1",
+    "ip": 0,
+    "op": 180,
+    "fr": 60,
+    "w": 512,
+    "h": 512,
+    "fonts": {
+        "list": []
+    },
+    "assets": [],
+    "layers": [
+        {
+            "nm": "Camera",
+            "ty": 13,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        -10
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "pe": {
+                "a": 0,
+                "k": 256
+            },
+            "ddd": 1
+        },
+        {
+            "nm": "Move Parent",
+            "ty": 3,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "a": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "x": "var dt = thisComp.time_delta(thisLayer, time);\n\n            if ( thisComp.mouse_dx )\n            {\n                thisComp.char_angle -= dt * thisComp.mouse_dx / 8 * Math.PI;\n                thisComp.mouse_dx  = 0;\n            }\n\n            if ( thisComp.mouse_dy )\n            {\n                thisComp.look_angle += dt * thisComp.mouse_dy / 8 * Math.PI;\n                thisComp.mouse_dy  = 0;\n            }\n\n\n            var left = thisComp.keys_pressed.ArrowLeft || thisComp.keys_pressed.a;\n            var right = thisComp.keys_pressed.ArrowRight || thisComp.keys_pressed.d;\n            var dx = 0;\n            if ( left && right )\n                dx = 0;\n            else if ( left )\n                dx = -1;\n            else if ( right )\n                dx = 1;\n\n            var up = thisComp.keys_pressed.ArrowUp || thisComp.keys_pressed.w;\n            var down = thisComp.keys_pressed.ArrowDown || thisComp.keys_pressed.s;\n            var dz = 0;\n            if ( up && down )\n                dz = 0;\n            else if ( up )\n                dz = 1;\n            else if ( down )\n                dz = -1;\n\n            thisLayer.char_x += dz * dt * -200 * Math.sin(thisComp.char_angle);\n            thisLayer.char_z += dz * dt * 200 * Math.cos(thisComp.char_angle);\n\n            thisLayer.char_x += dx * dt * -200 * Math.sin(thisComp.char_angle - Math.PI / 2);\n            thisLayer.char_z += dx * dt * 200 * Math.cos(thisComp.char_angle - Math.PI / 2);\n\n            var $bm_rt = [thisLayer.char_x, thisLayer.char_y, thisLayer.char_z];\n        \n/**/"
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "x": "var $bm_rt = [thisComp.look_angle * 180 / Math.PI, thisComp.char_angle * 180 / Math.PI, 0];\n        \n/**/"
+                }
+            },
+            "ind": 1,
+            "ddd": 1,
+            "events": {
+                "load": "thisLayer.char_x = 0;\n            thisLayer.char_z = 0;\n            thisLayer.char_y = 0;\n        \n/**/"
+            }
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        200
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0.5,
+                            0.5,
+                            1
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        -200
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 0
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0.5,
+                            0.5,
+                            0
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        200,
+                        0,
+                        0
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 90
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            1,
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        },
+        {
+            "ty": 4,
+            "ip": 0,
+            "op": 180,
+            "st": 0,
+            "sr": 1,
+            "ks": {
+                "p": {
+                    "a": 0,
+                    "k": [
+                        -200,
+                        0,
+                        0
+                    ]
+                },
+                "rx": {
+                    "a": 0,
+                    "k": 0
+                },
+                "ry": {
+                    "a": 0,
+                    "k": 90
+                },
+                "rz": {
+                    "a": 0,
+                    "k": 0
+                },
+                "or": {
+                    "a": 0,
+                    "k": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "ddd": 1,
+            "parent": 1,
+            "shapes": [
+                {
+                    "ty": "rc",
+                    "s": {
+                        "a": 0,
+                        "k": [
+                            200,
+                            200
+                        ]
+                    },
+                    "p": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0
+                        ]
+                    },
+                    "r": {
+                        "a": 0,
+                        "k": 0
+                    }
+                },
+                {
+                    "ty": "fl",
+                    "c": {
+                        "a": 0,
+                        "k": [
+                            0,
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    "o": {
+                        "a": 0,
+                        "k": 100
+                    }
+                }
+            ]
+        }
+    ],
+    "events": {
+        "keydown": "thisComp.keys_pressed[event.key] = true;\n\n        if ( event.key != \"F5\" )\n            event.preventDefault();\n    \n/**/",
+        "keyup": "thisComp.keys_pressed[event.key] = false;\n\n        if ( event.key != \"F5\" )\n            event.preventDefault();\n    \n/**/",
+        "load": "thisComp.keys_pressed = {};\n        thisComp.mouse_dx = 0;\n        thisComp.mouse_dy = 0;\n        thisComp.char_angle = 0;\n        thisComp.look_angle = 0;\n        thisComp.time_delta = function (thisLayer, time) {\n            if ( thisLayer.last_time === undefined || time < thisLayer.last_time )\n            {\n                thisLayer.last_time = time;\n                return 0;\n            }\n\n            var dt = time - thisLayer.last_time;\n            thisLayer.last_time = time;\n            return dt;\n        };\n    \n/**/",
+        "mouseenter": "thisComp.mouse_old_x = thisComp.mouse_x = event.lottie_x;\n        thisComp.mouse_old_y = thisComp.mouse_y = event.lottie_x;\n    \n/**/",
+        "mouseleave": "thisComp.mouse_old_x = thisComp.mouse_x = event.lottie_x;\n        thisComp.mouse_old_y = thisComp.mouse_y = event.lottie_x;\n    \n/**/",
+        "mousemove": "thisComp.mouse_dx += event.movementX;\n        thisComp.mouse_dy += event.movementY;\n    \n/**/"
+    },
+    "ddd": 1
+}
+;
+var container = document.getElementById("level9_3d");
+var player = new LottieInteractionPlayer(container, {renderer: "html"});
+player.load(json);
+})();</script>
+<script>
+            document.querySelectorAll(".nav-tabs a").forEach( link =>
+                link.addEventListener("click", e => jQuery(e.target).tab("show"))
+            );
+            </script></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

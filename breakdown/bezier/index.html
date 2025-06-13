@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/breakdown/bezier/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    
+    <title>Bezier Curves - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../css/base.min.css" rel="stylesheet">
+    <link href="../../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href="../.." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../lottie_from_scratch/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../precomps/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/breakdown/bezier.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#bezier-curves">Bezier Curves</a></li>
+            <li class="second-level"><a href="#introduction-to-beziers">Introduction to Beziers</a></li>
+                
+                <li class="third-level"><a href="#poly-beziers">Poly Beziers</a></li>
+            <li class="second-level"><a href="#beziers-in-lottie">Beziers in Lottie</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="bezier-curves">Bezier Curves</h1>
+<div>
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_75"></div>
+</div>
+<div><button id="lottie_play_75" onclick="lottie_player_75.play(); document.getElementById('lottie_pause_75').style.display = 'inline-block'; this.style.display = 'none'" style="display:none" title="Play"><i class="fas fa-play"></i></button><button id="lottie_pause_75" onclick="lottie_player_75.pause(); document.getElementById('lottie_play_75').style.display = 'inline-block'; this.style.display = 'none'" title="Pause"><i class="fas fa-pause"></i></button><a href="../../static/examples/bezier_expression.json" title="Download"><button><i class="fas fa-download"></i></button></a></div>
+<script>
+                var lottie_player_75 = new LottiePlayer(
+                    'lottie_target_75',
+                    '../../static/examples/bezier_expression.json',
+                    true,
+                    {}
+                );
+            </script>
+</div>
+<h2 id="introduction-to-beziers">Introduction to Beziers</h2>
+<p>Bezier curves are a common way of approximating arbitrary shapes in computer graphics.</p>
+<p>They represent an arc of a polynomial, and they can be of any degree, but usually you will mostly find quadratic and cubic beziers.</p>
+<p>Lottie only deals in cubic beziers so we'll focus on those.</p>
+<p>A bezier curve of degree <em>n</em> is defined by <em>n</em>+1 points.</p>
+<p>The first and the last of such points will lay on the curve, while the others define the shape of the segment.</p>
+<p>So for the case of a cubic bezier (degree 3) you have 4 points.</p>
+<p>To find a point on a bezier, you usually define it as the result of an interpolation
+within the polynomial curve. The interpolation factor is usually referred to as <em>t</em>.</p>
+<p>The easiest way of calculating the poition of a point in a bezier given a <em>t</em> is to
+perform linear interpolations between the bezier points, each step reducing the
+curve to one with a degree less than the previous, until you end up with a final point.</p>
+<p>For example in the cubic case, you interpolate each cubic point with the next,
+resulting in 3 quadratic points.</p>
+<p>You repeat the process on these 3 points, and you end up with 2 other points.</p>
+<p>Finally you perform linear interpolation between the two to get the result.</p>
+<p>In the example below you can control the <em>t</em> value to see how this algorithm works.
+The black dots are the ones that define the bezier, and the red dot is the position
+along the bezier at the given <em>t</em>.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%"></table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_76"></div>
+</div>
+<div class="json-parent" id="playground_76_1_parent">
+<pre><code class="language-json hljs" id="playground_76_1">
+</code></pre>
+</div>
+<script>
+        var lottie_player_76 = new PlaygroundPlayer(
+            76,
+            'playground_76_1',
+            'lottie_target_76',
+            {"nm": "Animation", "fr": 60, "ip": 0, "op": 280, "w": 512, "h": 512, "ddd": 0, "assets": [], "chars": [], "layers": [{"nm": "Shapes", "ddd": 0, "hd": false, "ks": {}, "ao": 0, "ip": 0, "op": 280, "st": 0, "hasMask": false, "masksProperties": [], "ef": [{"ef": [{"ty": 0, "nm": "Slider", "v": {"a": 1, "k": [{"t": 0, "i": {"x": [0.667], "y": [1]}, "o": {"x": [0.333], "y": [0]}, "s": [0]}, {"t": 120, "i": {"x": [0.667], "y": [1]}, "o": {"x": [0.333], "y": [0]}, "s": [1]}, {"t": 140, "i": {"x": [0.667], "y": [1]}, "o": {"x": [0.333], "y": [0]}, "s": [1]}, {"t": 260, "s": [0]}]}}], "ty": 5, "nm": "Slider"}], "mb": false, "ty": 4, "shapes": [{"nm": "Bezier Point", "hd": false, "ty": "gr", "it": [{"nm": "p0", "hd": false, "ty": "el", "p": {"a": 0, "k": [25, 400], "x": "var group = thisLayer.content(\"Linear Points\");\nvar pt_index = 0;\nvar pt_from = group.content(\"p\"+pt_index).position;\nvar pt_to = group.content(\"p\"+(pt_index+1)).position;\nvar t = thisLayer.effect(\"Slider\")(\"Slider\");\nvar $bm_rt = linear(t, pt_from, pt_to);\n"}, "s": {"a": 0, "k": [32, 32]}}, {"hd": false, "ty": "fl", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.125, 0]}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}, {"nm": "Linear Points", "hd": false, "ty": "gr", "it": [{"nm": "p0", "hd": false, "ty": "el", "p": {"a": 0, "k": [25, 400], "x": "var group = thisLayer.content(\"Quadratic Points\");\nvar pt_index = 0;\nvar pt_from = group.content(\"p\"+pt_index).position;\nvar pt_to = group.content(\"p\"+(pt_index+1)).position;\nvar t = thisLayer.effect(\"Slider\")(\"Slider\");\nvar $bm_rt = linear(t, pt_from, pt_to);\n"}, "s": {"a": 0, "k": [32, 32]}}, {"nm": "p1", "hd": false, "ty": "el", "p": {"a": 0, "k": [130, 170], "x": "var group = thisLayer.content(\"Quadratic Points\");\nvar pt_index = 1;\nvar pt_from = group.content(\"p\"+pt_index).position;\nvar pt_to = group.content(\"p\"+(pt_index+1)).position;\nvar t = thisLayer.effect(\"Slider\")(\"Slider\");\nvar $bm_rt = linear(t, pt_from, pt_to);\n"}, "s": {"a": 0, "k": [32, 32]}}, {"hd": false, "ty": "fl", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.8, 0]}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}, {"nm": "Linear Lines", "hd": false, "ty": "gr", "it": [{"ty": "sh", "ks": {"a": 0, "k": {"i": [], "o": [], "v": []}, "x": "var group = thisLayer.content(\"Linear Points\");\nvar num_points = 2;\nvar points = [];\nvar ip = [];\nvar op = [];\nfor ( var i = 0; i < num_points; i++ )\n{\n    var pos = group.content(\"p\" + i).position;\n    points.push(pos);\n    ip.push(pos);\n    op.push(pos);\n}\nvar $bm_rt = {\n    v: points,\n    i: ip,\n    o: op\n};\n"}}, {"hd": false, "ty": "st", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [1, 0.8, 0]}, "w": {"a": 0, "k": 10}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}, {"nm": "Quadratic Points", "hd": false, "ty": "gr", "it": [{"nm": "p0", "hd": false, "ty": "el", "p": {"a": 0, "k": [25, 400], "x": "var group = thisLayer.content(\"Cubic Points\");\nvar pt_index = 0;\nvar pt_from = group.content(\"p\"+pt_index).position;\nvar pt_to = group.content(\"p\"+(pt_index+1)).position;\nvar t = thisLayer.effect(\"Slider\")(\"Slider\");\nvar $bm_rt = linear(t, pt_from, pt_to);\n"}, "s": {"a": 0, "k": [32, 32]}}, {"nm": "p1", "hd": false, "ty": "el", "p": {"a": 0, "k": [130, 170], "x": "var group = thisLayer.content(\"Cubic Points\");\nvar pt_index = 1;\nvar pt_from = group.content(\"p\"+pt_index).position;\nvar pt_to = group.content(\"p\"+(pt_index+1)).position;\nvar t = thisLayer.effect(\"Slider\")(\"Slider\");\nvar $bm_rt = linear(t, pt_from, pt_to);\n"}, "s": {"a": 0, "k": [32, 32]}}, {"nm": "p2", "hd": false, "ty": "el", "p": {"a": 0, "k": [350, 230], "x": "var group = thisLayer.content(\"Cubic Points\");\nvar pt_index = 2;\nvar pt_from = group.content(\"p\"+pt_index).position;\nvar pt_to = group.content(\"p\"+(pt_index+1)).position;\nvar t = thisLayer.effect(\"Slider\")(\"Slider\");\nvar $bm_rt = linear(t, pt_from, pt_to);\n"}, "s": {"a": 0, "k": [32, 32]}}, {"hd": false, "ty": "fl", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.2, 0.2, 1]}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}, {"nm": "Quadratic Lines", "hd": false, "ty": "gr", "it": [{"ty": "sh", "ks": {"a": 0, "k": {"i": [], "o": [], "v": []}, "x": "var group = thisLayer.content(\"Quadratic Points\");\nvar num_points = 3;\nvar points = [];\nvar ip = [];\nvar op = [];\nfor ( var i = 0; i < num_points; i++ )\n{\n    var pos = group.content(\"p\" + i).position;\n    points.push(pos);\n    ip.push(pos);\n    op.push(pos);\n}\nvar $bm_rt = {\n    v: points,\n    i: ip,\n    o: op\n};\n"}}, {"hd": false, "ty": "st", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.2, 0.2, 1]}, "w": {"a": 0, "k": 10}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}, {"nm": "Cubic Points", "hd": false, "ty": "gr", "it": [{"nm": "p0", "hd": false, "ty": "el", "p": {"a": 0, "k": [25, 400]}, "s": {"a": 0, "k": [32, 32]}}, {"nm": "p1", "hd": false, "ty": "el", "p": {"a": 0, "k": [130, 170]}, "s": {"a": 0, "k": [32, 32]}}, {"nm": "p2", "hd": false, "ty": "el", "p": {"a": 0, "k": [350, 230]}, "s": {"a": 0, "k": [32, 32]}}, {"nm": "p3", "hd": false, "ty": "el", "p": {"a": 0, "k": [485, 400]}, "s": {"a": 0, "k": [32, 32]}}, {"hd": false, "ty": "fl", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0, 0]}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}, {"nm": "Cubic Lines", "hd": false, "ty": "gr", "it": [{"ty": "sh", "ks": {"a": 0, "k": {"i": [], "o": [], "v": []}, "x": "var group = thisLayer.content(\"Cubic Points\");\nvar num_points = 4;\nvar points = [];\nvar ip = [];\nvar op = [];\nfor ( var i = 0; i < num_points; i++ )\n{\n    var pos = group.content(\"p\" + i).position;\n    points.push(pos);\n    ip.push(pos);\n    op.push(pos);\n}\nvar $bm_rt = {\n    v: points,\n    i: ip,\n    o: op\n};\n"}}, {"hd": false, "ty": "st", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0, 0]}, "w": {"a": 0, "k": 10}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}, {"nm": "Bezier Result", "hd": false, "ty": "gr", "it": [{"ty": "sh", "ks": {"a": 0, "k": {"i": [], "o": [], "v": []}, "x": "var group = thisLayer.content(\"Cubic Points\");\nvar $bm_rt = {\n    v: [group.content(\"p0\").position, group.content(\"p3\").position],\n    i: [[0, 0], group.content(\"p2\").position],\n    o: [group.content(\"p1\").position, [0,0]]\n};\n"}}, {"hd": false, "ty": "st", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.8, 0]}, "w": {"a": 0, "k": 10}}, {"hd": false, "ty": "tr", "s": {"a": 0, "k": [100, 100]}, "o": {"a": 0, "k": 100}}]}]}]},
+            function (lottie, data)
+            {
+                
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<script>
+lottie.layers[0].ef[0].ef[0].v.a = 0;
+lottie.layers[0].ef[0].ef[0].v.k = data["t"];
+</script>
+
+<h3 id="poly-beziers">Poly Beziers</h3>
+<p>Usually shapes are defined as a polybezier, which is the a concept equivalent to
+polygons, but with bezier segments as their edges.</p>
+<p>Each bezier segment has its last point in the same position as the first point in the following segment.</p>
+<p>This results in a sequence of points, some of which are along the line and some of which
+are not.</p>
+<p>For polybeziers with cubic segments, there are two points outside the path between each pair of points along the path.</p>
+<p>For this reason instead of viewing the polybezier as a sequence of bezier segments,
+they are often seen as a sequence of vertices and tangents.</p>
+<p>The vertices are the points along the path, which correspond to the end points of the segments.</p>
+<p>Each point has two tangents associated with them, one "in" thangent, and one "out" tangent.</p>
+<p>The "out" tangent is the second point defining the bezier segment following the vertex
+and the "in" tangent is the third point defining the bezier segment coming into the vertex.</p>
+<h2 id="beziers-in-lottie">Beziers in Lottie</h2>
+<p>An shape in Lotttie is represented as a cubic polybezier and it's represented in the JSON
+as an object with the following attributes:</p>
+<p><code>v</code> is an array of vertices.</p>
+<p><code>i</code> is an array of "in" tangent points, relative to <code>v</code>.</p>
+<p><code>o</code> is an array of "out" tangent points, relative to <code>v</code>.</p>
+<p><code>c</code> is a boolean determining whether the polybezier is closed.
+If it is, there's an additional bezier segment between the last point in <code>v</code> and the first.</p>
+<div class="playground playground-columns print-site-plugin-ignore">
+<div id="editor_77"></div>
+<div>
+<pre id="json_viewer_77_parent"><code class="language-json hljs" id="json_viewer_77">
+</code></pre>
+</div>
+<script>
+        BezierPreviewEditor.stand_alone(document.getElementById("editor_77"), (lottie) =>
+        {
+            var raw_json = JSON.stringify(lottie, undefined, 4);
+            var pretty_json = hljs.highlight("json", raw_json).value;
+            document.getElementById("json_viewer_77").innerHTML = pretty_json;
+        }, );
+        </script>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = "../.."</script>
+    
+    <script src="../../js/base.js"></script>
+    <script src="../../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
