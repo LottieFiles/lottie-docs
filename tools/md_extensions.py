@@ -15,7 +15,7 @@ from markdown.util import HTML_PLACEHOLDER_RE, AtomicString
 from mkdocs.structure.pages import _RelativePathTreeprocessor
 
 from lottie_specs.schema import Schema
-from lottie_specs.markdown.lottie_markdown import LottiePlayground, LottieColor, ReferenceLink, SchemaLink
+from lottie_specs.markdown.lottie_markdown import LottiePlayground, LottieColor, ReferenceLink, SchemaLink, LottiePlaygroundBase
 
 
 docs_path = Path(__file__).parent.parent / "docs"
@@ -166,10 +166,63 @@ class ShapeBezierScript(LottiePlayground):
         return id
 
 
-class EffectShaderScript(LottiePlayground):
+class EarlyHtmlProcessor(Preprocessor):
+    def __init__(self, tags, *a, **kw):
+        super().__init__(*a, **kw)
+        self.start_re = re.compile("^<(%s)" % "|".join(tags))
+
+    def run(self, lines):
+        new_lines = []
+        element_text = None
+        end_tag = None
+        comment = False
+
+        for line in lines:
+            if comment:
+                new_lines.append(line)
+                if "-->" in line:
+                    comment = False
+            elif element_text:
+                element_text += line + "\n"
+                if line == end_tag:
+                    self.flush(element_text, new_lines)
+                    element_text = None
+            else:
+                match = self.start_re.match(line)
+                if match:
+                    self.flush(element_text, new_lines)
+                    element_text = line + "\n"
+                    end_tag = "</%s>" % match.group(1)
+                else:
+                    new_lines.append(line)
+                    if "<!--" in line:
+                        comment = True
+
+        self.flush(element_text, new_lines)
+
+        return new_lines
+
+    def flush(self, element_text, new_lines):
+        if element_text:
+            self.on_flush(element_text, new_lines)
+
+    def on_flush(self, element_text, new_lines):
+        new_lines.append(self.md.htmlStash.store(element_text))
+
+
+class EffectShaderScript(EarlyHtmlProcessor, LottiePlaygroundBase):
     tag_name = "effect_shader_script"
 
-    def populate_script(self, script_element, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
+    def __init__(self, md, schema_data):
+        EarlyHtmlProcessor.__init__(self, [self.tag_name], md)
+        LottiePlaygroundBase.__init__(self, schema_data)
+
+    def on_flush(self, element_text, new_lines):
+        parent = etree.Element("div")
+        self.make_element(parent, element_text)
+        new_lines.append(self.md.htmlStash.store(parent))
+
+    def populate_script(self, md_element, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
         shader_view = etree.SubElement(builder.renderer.animation_container, "canvas")
         shader_view.attrib["class"] = "webgl-shader"
         shader_view.attrib["id"] = "lottie_target_%s_canvas" % builder.anim_id
@@ -180,17 +233,18 @@ class EffectShaderScript(LottiePlayground):
         uniforms = {}
         script = ""
         shader_sources = []
-        if script_element is not None:
-            if script_element.attrib.get("type", "") == "x-shader/x-fragment":
-                shader_source = script_element.text.strip()
+        for script_element in md_element.findall("./script"):
+            if script_element is not None:
+                if script_element.attrib.get("type", "") == "x-shader/x-fragment":
+                    shader_source = script_element.text.strip()
 
-                pre = etree.SubElement(builder.element, "pre")
-                # No glsl ;_;
-                code = etree.SubElement(pre, "code", {"class": "language-c hljs"})
-                code.text = AtomicString(shader_source)
-                shader_sources.append((shader_source, int(script_element.attrib.get("passes", "1"))))
-            else:
-                script = script_element.text
+                    pre = etree.SubElement(builder.element, "pre")
+                    # No glsl ;_;
+                    code = etree.SubElement(pre, "code", {"class": "language-c hljs"})
+                    code.text = AtomicString(shader_source)
+                    shader_sources.append((shader_source, int(script_element.attrib.get("passes", "1"))))
+                else:
+                    script = script_element.text
 
         if json_viewer_path:
             script += "this.json_viewer_contents = %s;" % json_viewer_path
@@ -679,8 +733,8 @@ class LottieDocsExtension(Extension):
         md.parser.blockprocessors.register(FunctionDocs(md.parser, expr_schema), 'function_docs', 175)
         md.parser.blockprocessors.register(VariableDocs(md.parser, expr_schema), 'variable_docs', 175)
         md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
+        md.preprocessors.register(EffectShaderScript(md, md.lottie_ts), "shape_bezier_script", 29)
         md.parser.blockprocessors.register(ShapeBezierScript(md, md.lottie_ts), "shape_bezier_script", 175)
-        md.parser.blockprocessors.register(EffectShaderScript(md, md.lottie_ts), "effect_shader_script", 175)
         md.parser.blockprocessors.register(AepMatchNameTable(md.parser, md.lottie_schema), "aep_mn", 175)
         md.inlinePatterns.register(SectionLinkInlineProcessor(md), "sl", 175)
 
