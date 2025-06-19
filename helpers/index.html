@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/helpers/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Helpers - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../assets/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../effects/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/helpers.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#helpers">Helpers</a></li>
+            <li class="second-level"><a href="#transform">Transform</a></li>
+                
+            <li class="second-level"><a href="#visual-object">Visual Object</a></li>
+                
+            <li class="second-level"><a href="#marker">Marker</a></li>
+                
+            <li class="second-level"><a href="#slots">Slots</a></li>
+                
+                <li class="third-level"><a href="#slot">Slot</a></li>
+                <li class="third-level"><a href="#slottable-object">Slotabble Object</a></li>
+            <li class="second-level"><a href="#mask">Mask</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="helpers">Helpers</h1>
+<h2 id="transform">Transform</h2>
+<p>This represents a layer or shape transform.</p>
+<p>It has the properties from <a href="#visual-object">Visual Object</a> and its own properties are all <a href="../properties/">animated</a>:</p>
+<div>
+<details>
+<summary>Composition Diagram for Transform</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="152pt" viewBox="0.00 0.00 201.00 152.00" width="201pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 148)">
+
+<polygon fill="white" points="-4,4 -4,-148 197,-148 197,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="193,-90 139,-90 139,-54 193,-54 193,-90" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="166" y="-69.5">Transform</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="../shapes/#repeater-transform" title="Repeater Transform">
+<polygon fill="none" points="103,-144 0,-144 0,-108 103,-108 103,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="51.5" y="-123.5">Repeater Transform</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M90.27,-107.87C102.99,-101.76 117.12,-94.98 129.65,-88.97" fill="none" stroke="black"></path>
+<polygon fill="none" points="131.36,-92.03 138.86,-84.55 128.33,-85.72 131.36,-92.03" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="../shapes/#transform" title="Transform Shape">
+<polygon fill="none" points="96,-90 7,-90 7,-54 96,-54 96,-90" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="51.5" y="-69.5">Transform Shape</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M96.32,-72C106.94,-72 118.19,-72 128.44,-72" fill="none" stroke="black"></path>
+<polygon fill="none" points="128.69,-75.5 138.69,-72 128.69,-68.5 128.69,-75.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../text/#text-style" title="Text Style">
+<polygon fill="none" points="78.5,-36 24.5,-36 24.5,0 78.5,0 78.5,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="51.5" y="-15.5">Text Style</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M78.59,-30.52C93.68,-37.76 112.87,-46.98 129.33,-54.88" fill="none" stroke="black"></path>
+<polygon fill="none" points="128.13,-58.18 138.66,-59.36 131.16,-51.87 128.13,-58.18" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/helpers/transform" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td><a href="../properties/#position-property">Position</a></td>
+<td>
+<p>Anchor Point</p>
+</td>
+<td>
+<p>Anchor point: a position (relative to its parent) around which transformations are applied (ie: center for rotation / scale)</p>
+</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td><a href="../properties/#splittable-position-property">Splittable Position</a></td>
+<td>
+<p>Position</p>
+</td>
+<td>
+<p>Position / Translation</p>
+</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Rotation</p>
+</td>
+<td>
+<p>Rotation in degrees, clockwise</p>
+</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><a href="../properties/#vector-property">Vector</a></td>
+<td>
+<p>Scale</p>
+</td>
+<td>
+<p>Scale factor, <code>[100, 100]</code> for no scaling</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Opacity</p>
+</td>
+<td>
+<p>Opacity</p>
+</td>
+</tr>
+<tr>
+<td><code>sk</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Skew</p>
+</td>
+<td>
+<p>Skew amount as an angle in degrees</p>
+</td>
+</tr>
+<tr>
+<td><code>sa</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Skew Axis</p>
+</td>
+<td>
+<p>Direction along which skew is applied, in degrees (<code>0</code> skews along the X axis, <code>90</code> along the Y axis)</p>
+</td>
+</tr>
+<tr>
+<td><code>rx</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>X Rotation</p>
+</td>
+<td>
+<p>Split rotation component</p>
+</td>
+</tr>
+<tr>
+<td><code>ry</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Y Rotation</p>
+</td>
+<td>
+<p>Split rotation component</p>
+</td>
+</tr>
+<tr>
+<td><code>rz</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Z Rotation</p>
+</td>
+<td>
+<p>Split rotation component, equivalent to <code>r</code> when not split</p>
+</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><a href="../properties/#vector-property">Vector</a></td>
+<td>
+<p>Orientation</p>
+</td>
+<td>
+<p>Orientation</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To make the anchor point properly line up with the center of location, <code>p</code> and <code>a</code> should have the same value.</p>
+<p>This example allows you to tweak transform attributes and see how the shape changes.</p>
+<p>The anchor point is highlighted with an orange dot.</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Anchor X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="512" min="0" name="Anchor X" oninput="lottie_player_23.reload();document.getElementById('playground_23_1_span').innerText = event.target.value;" title="Anchor X" type="range" value="256" />
+        <span id="playground_23_1_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Anchor Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="512" min="0" name="Anchor Y" oninput="lottie_player_23.reload();document.getElementById('playground_23_2_span').innerText = event.target.value;" title="Anchor Y" type="range" value="256" />
+        <span id="playground_23_2_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="512" min="0" name="Position X" oninput="lottie_player_23.reload();document.getElementById('playground_23_3_span').innerText = event.target.value;" title="Position X" type="range" value="256" />
+        <span id="playground_23_3_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Position Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="512" min="0" name="Position Y" oninput="lottie_player_23.reload();document.getElementById('playground_23_4_span').innerText = event.target.value;" title="Position Y" type="range" value="256" />
+        <span id="playground_23_4_span">256</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Scale X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="200" min="0" name="Scale X" oninput="lottie_player_23.reload();document.getElementById('playground_23_5_span').innerText = event.target.value;" title="Scale X" type="range" value="100" />
+        <span id="playground_23_5_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Scale Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="200" min="0" name="Scale Y" oninput="lottie_player_23.reload();document.getElementById('playground_23_6_span').innerText = event.target.value;" title="Scale Y" type="range" value="100" />
+        <span id="playground_23_6_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="360" min="-360" name="Rotation" oninput="lottie_player_23.reload();document.getElementById('playground_23_7_span').innerText = event.target.value;" title="Rotation" type="range" value="0" />
+        <span id="playground_23_7_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Skew</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="360" min="0" name="Skew" oninput="lottie_player_23.reload();document.getElementById('playground_23_8_span').innerText = event.target.value;" title="Skew" type="range" value="0" />
+        <span id="playground_23_8_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Skew Angle</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="360" min="0" name="Skew Angle" oninput="lottie_player_23.reload();document.getElementById('playground_23_9_span').innerText = event.target.value;" title="Skew Angle" type="range" value="0" />
+        <span id="playground_23_9_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="23" max="100" min="0" name="Opacity" oninput="lottie_player_23.reload();document.getElementById('playground_23_10_span').innerText = event.target.value;" title="Opacity" type="range" value="100" />
+    <span id="playground_23_10_span">100</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_23"></div>
+</div>
+<div class="json-parent" id="playground_23_11_parent">
+<pre><code class="language-json hljs" id="playground_23_11">
+</code></pre>
+</div>
+<script>
+        var lottie_player_23 = new PlaygroundPlayer(
+            23,
+            'playground_23_11',
+            'lottie_target_23',
+            {"v": "5.7.1", "ip": 0, "op": 180, "nm": "Animation", "mn": "{a3bb98c7-d0dd-4484-b6da-74a0e70eaf2f}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 2, "st": 0, "ip": 0, "op": 180, "nm": "Anchor", "mn": "{04f9b742-3603-49fa-9552-ea04de1a3f33}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "el", "nm": "Ellipse", "mn": "{4251e46a-bb13-464b-913c-e67c44a218da}", "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [32, 32]}}, {"ty": "fl", "nm": "Fill", "mn": "{7d3070ed-88a3-41aa-a62e-7db8df1bd312}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.9411764705882353, 0.11372549019607843, 0.0392156862745098]}, "r": 1}]}, {"ddd": 0, "ty": 4, "ind": 1, "st": 0, "ip": 0, "op": 180, "nm": "Transformed", "mn": "{d00298c4-66b4-4ae4-a730-22c1eb85c188}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}, "sk": {"a": 0, "k": 0}, "sa": {"a": 0, "k": 0}}, "shapes": [{"ty": "rc", "nm": "Rectangle 1", "mn": "{bf8ad877-113b-4df8-a2e2-3bb4af32edf7}", "p": {"a": 0, "k": [252.75223880597017, 250.60298507462684]}, "s": {"a": 0, "k": [319.8089552238806, 330.98507462686564]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "nm": "Fill 1", "mn": "{b9040dc8-0753-4a6e-b5f1-d508d17bbd4f}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}]}, {"ddd": 0, "ty": 4, "ind": 0, "st": 0, "ip": 0, "op": 180, "nm": "Reference", "mn": "{8f351be7-8a51-4310-9dc3-59ed21594815}", "ks": {"a": {"a": 0, "k": [256, 256]}, "p": {"a": 0, "k": [256, 256]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}, "shapes": [{"ty": "rc", "nm": "Rectangle", "mn": "{cb4f7b74-bed1-493b-a0e6-01b00566aedd}", "p": {"a": 0, "k": [252.75223880597017, 250.60298507462684]}, "s": {"a": 0, "k": [319.8089552238806, 330.98507462686564]}, "r": {"a": 0, "k": 0}}, {"ty": "fl", "nm": "Fill", "mn": "{05064670-7e14-4141-89c1-e0f0f3a1c57d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.1607843137254902, 0.1843137254901961, 0.4588235294117647]}, "r": 1}]}], "meta": {"g": "Glaxnimate 0.4.6-32-gb62899be"}},
+            function (lottie, data)
+            {
+                
+    lottie.layers[0].ks.p.k[0] = data["Anchor X"];
+    lottie.layers[1].ks.a.k[0] = data["Anchor X"];
+    lottie.layers[0].ks.p.k[1] = data["Anchor Y"];
+    lottie.layers[1].ks.a.k[1] = data["Anchor Y"];
+    lottie.layers[1].ks.p.k[0] = data["Position X"];
+    lottie.layers[1].ks.p.k[1] = data["Position Y"];
+    lottie.layers[1].ks.s.k[0] = data["Scale X"];
+    lottie.layers[1].ks.s.k[1] = data["Scale Y"];
+    lottie.layers[1].ks.r.k = data["Rotation"];
+    lottie.layers[1].ks.sk.k = data["Skew"];
+    lottie.layers[1].ks.sa.k = data["Skew Angle"];
+    lottie.layers[1].ks.o.k = data["Opacity"];
+    this.json_viewer_contents = lottie.layers[1].ks;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<p>Sometimes <code>p</code> might be <a href="../properties/#split-position">split into separate components</a> animated independently.</p>
+<h2 id="visual-object">Visual Object</h2>
+<p></p>
+<p><span></span></p>
+<div>
+<details>
+<summary>Composition Diagram for Visual Object</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="2852pt" viewBox="0.00 0.00 511.00 2852.00" width="511pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 2848)">
+
+<polygon fill="white" points="-4,4 -4,-2848 507,-2848 507,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="503,-1602 436,-1602 436,-1566 503,-1566 503,-1602" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="469.5" y="-1581.5">Visual Object</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="../assets/#asset" title="Asset">
+<polygon fill="none" points="383.5,-2736 329.5,-2736 329.5,-2700 383.5,-2700 383.5,-2736" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-2715.5">Asset</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge6">
+
+<path d="M361.82,-2699.92C370.48,-2662.97 389.99,-2576.04 400,-2502 447.14,-2153.3 463.86,-1725.38 467.62,-1612.42" fill="none" stroke="black"></path>
+<polygon fill="none" points="471.13,-1612.31 467.95,-1602.2 464.13,-1612.08 471.13,-1612.31" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node3">
+
+<g id="a_node3"><a href="../assets/#file-asset" title="File Asset">
+<polygon fill="none" points="239.5,-2790 185.5,-2790 185.5,-2754 239.5,-2754 239.5,-2790" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2769.5">File Asset</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge4">
+
+<path d="M239.54,-2762.1C262.02,-2753.55 294.71,-2741.12 319.66,-2731.63" fill="none" stroke="black"></path>
+<polygon fill="none" points="321.04,-2734.85 329.14,-2728.02 318.55,-2728.31 321.04,-2734.85" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node4">
+
+<g id="a_node4"><a href="../assets/#data-source" title="Data source">
+<polygon fill="none" points="86.5,-2844 25.5,-2844 25.5,-2808 86.5,-2808 86.5,-2844" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-2823.5">Data source</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M86.79,-2815.59C112.25,-2806.69 148.94,-2793.87 175.93,-2784.43" fill="none" stroke="black"></path>
+<polygon fill="none" points="177.12,-2787.73 185.4,-2781.12 174.81,-2781.12 177.12,-2787.73" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node5">
+
+<g id="a_node5"><a href="../assets/#sound" title="Sound">
+<polygon fill="none" points="83,-2790 29,-2790 29,-2754 83,-2754 83,-2790" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-2769.5">Sound</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge2">
+
+<path d="M83.21,-2772C108.48,-2772 146.93,-2772 175.15,-2772" fill="none" stroke="black"></path>
+<polygon fill="none" points="175.42,-2775.5 185.42,-2772 175.42,-2768.5 175.42,-2775.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node6">
+
+<g id="a_node6"><a href="../assets/#image" title="Image">
+<polygon fill="none" points="83,-2736 29,-2736 29,-2700 83,-2700 83,-2736" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-2715.5">Image</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge3">
+
+<path d="M83.21,-2727.16C108.7,-2736.07 147.61,-2749.67 175.9,-2759.56" fill="none" stroke="black"></path>
+<polygon fill="none" points="174.83,-2762.89 185.42,-2762.88 177.14,-2756.28 174.83,-2762.89" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node7">
+
+<g id="a_node7"><a href="../assets/#precomposition" title="Precomposition">
+<polygon fill="none" points="252,-2736 173,-2736 173,-2700 252,-2700 252,-2736" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2715.5">Precomposition</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge5">
+
+<path d="M252.3,-2718C273.14,-2718 298.67,-2718 319.13,-2718" fill="none" stroke="black"></path>
+<polygon fill="none" points="319.31,-2721.5 329.31,-2718 319.31,-2714.5 319.31,-2721.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node8">
+
+<g id="a_node8"><a href="../composition/#animation" title="Animation">
+<polygon fill="none" points="383.5,-2493 329.5,-2493 329.5,-2457 383.5,-2457 383.5,-2493" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-2472.5">Animation</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge7">
+
+<path d="M383.7,-2463.61C390.05,-2459.6 396.12,-2454.44 400,-2448 444.02,-2374.9 463.81,-1752.96 467.75,-1612.23" fill="none" stroke="black"></path>
+<polygon fill="none" points="471.25,-1612.32 468.03,-1602.23 464.25,-1612.13 471.25,-1612.32" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node9">
+
+<g id="a_node9"><a href="../effects/#effect-value" title="Effect Value">
+<polygon fill="none" points="387,-2439 326,-2439 326,-2403 387,-2403 387,-2439" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-2418.5">Effect Value</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge16">
+
+<path d="M359.92,-2402.74C374.2,-2295.08 447.36,-1743.4 464.78,-1612.08" fill="none" stroke="black"></path>
+<polygon fill="none" points="468.27,-1612.39 466.11,-1602.02 461.33,-1611.47 468.27,-1612.39" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node10">
+
+<g id="a_node10"><a href="../effects/#drop-down" title="Effect Value Drop Down">
+<polygon fill="none" points="273,-2682 152,-2682 152,-2646 273,-2646 273,-2682" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2661.5">Effect Value Drop Down</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge8">
+
+<path d="M267.59,-2645.89C271.09,-2643.3 274.29,-2640.36 277,-2637 330.67,-2570.43 264.96,-2518.74 313,-2448 314.46,-2445.85 316.16,-2443.83 318.01,-2441.95" fill="none" stroke="black"></path>
+<polygon fill="none" points="320.44,-2444.48 325.81,-2435.34 315.91,-2439.14 320.44,-2444.48" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node11">
+
+<g id="a_node11"><a href="../effects/#angle" title="Effect Value Angle">
+<polygon fill="none" points="259.5,-2628 165.5,-2628 165.5,-2592 259.5,-2592 259.5,-2628" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2607.5">Effect Value Angle</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge9">
+
+<path d="M259.57,-2596.48C266.1,-2592.94 272.21,-2588.52 277,-2583 317.7,-2536.1 276.28,-2498.08 313,-2448 314.39,-2446.11 315.95,-2444.32 317.63,-2442.63" fill="none" stroke="black"></path>
+<polygon fill="none" points="320.27,-2444.98 325.66,-2435.85 315.76,-2439.63 320.27,-2444.98" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node12">
+
+<g id="a_node12"><a href="../effects/#point" title="Effect Value Point">
+<polygon fill="none" points="257,-2574 168,-2574 168,-2538 257,-2538 257,-2574" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2553.5">Effect Value Point</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge10">
+
+<path d="M257.2,-2542.62C264.41,-2539.03 271.36,-2534.55 277,-2529 305.08,-2501.37 287.28,-2477.84 313,-2448 314.48,-2446.28 316.11,-2444.63 317.82,-2443.05" fill="none" stroke="black"></path>
+<polygon fill="none" points="320.21,-2445.63 325.81,-2436.63 315.82,-2440.17 320.21,-2445.63" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node13">
+
+<g id="a_node13"><a href="../effects/#checkbox" title="Effect Value Checkbox">
+<polygon fill="none" points="269.5,-2520 155.5,-2520 155.5,-2484 269.5,-2484 269.5,-2520" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2499.5">Effect Value Checkbox</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge11">
+
+<path d="M259.58,-2483.97C265.55,-2481.18 271.5,-2478.17 277,-2475 294.33,-2465.01 296.55,-2459.37 313,-2448 314.62,-2446.88 316.28,-2445.75 317.97,-2444.62" fill="none" stroke="black"></path>
+<polygon fill="none" points="320.07,-2447.42 326.5,-2439 316.22,-2441.58 320.07,-2447.42" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node14">
+
+<g id="a_node14"><a href="../effects/#ignored" title="Ignored Value">
+<polygon fill="none" points="248.5,-2466 176.5,-2466 176.5,-2430 248.5,-2430 248.5,-2466" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2445.5">Ignored Value</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge12">
+
+<path d="M248.6,-2441.33C268.93,-2437.46 294.58,-2432.58 315.66,-2428.57" fill="none" stroke="black"></path>
+<polygon fill="none" points="316.43,-2431.99 325.6,-2426.68 315.12,-2425.11 316.43,-2431.99" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node15">
+
+<g id="a_node15"><a href="../effects/#layer" title="Effect Value Layer">
+<polygon fill="none" points="259,-2412 166,-2412 166,-2376 259,-2376 259,-2412" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2391.5">Effect Value Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge13">
+
+<path d="M259.21,-2402.69C277.51,-2406.17 298.39,-2410.14 316.01,-2413.49" fill="none" stroke="black"></path>
+<polygon fill="none" points="315.49,-2416.96 325.97,-2415.39 316.8,-2410.08 315.49,-2416.96" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node16">
+
+<g id="a_node16"><a href="../effects/#color" title="Effect Value Color">
+<polygon fill="none" points="258,-2358 167,-2358 167,-2322 258,-2322 258,-2358" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2337.5">Effect Value Color</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge14">
+
+<path d="M258.11,-2357.62C264.55,-2360.55 271.02,-2363.71 277,-2367 292.97,-2375.77 309.73,-2386.99 323.64,-2396.93" fill="none" stroke="black"></path>
+<polygon fill="none" points="321.75,-2399.88 331.9,-2402.92 325.86,-2394.21 321.75,-2399.88" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node17">
+
+<g id="a_node17"><a href="../effects/#slider" title="Effect Value Slider">
+<polygon fill="none" points="259.5,-2304 165.5,-2304 165.5,-2268 259.5,-2268 259.5,-2304" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2283.5">Effect Value Slider</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge15">
+
+<path d="M259.6,-2302.04C265.76,-2305.18 271.75,-2308.82 277,-2313 305.02,-2335.3 327.81,-2370.02 341.48,-2394.04" fill="none" stroke="black"></path>
+<polygon fill="none" points="338.53,-2395.94 346.43,-2402.99 344.65,-2392.55 338.53,-2395.94" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node18">
+
+<g id="a_node18"><a href="../effects/#effect" title="Effect">
+<polygon fill="none" points="383.5,-1818 329.5,-1818 329.5,-1782 383.5,-1782 383.5,-1818" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-1797.5">Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge33">
+
+<path d="M366.77,-1781.96C386.24,-1744.08 431.46,-1656.08 454.48,-1611.27" fill="none" stroke="black"></path>
+<polygon fill="none" points="457.72,-1612.64 459.18,-1602.15 451.49,-1609.44 457.72,-1612.64" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node19">
+
+<g id="a_node19"><a href="../effects/#fill-effect" title="Fill Effect">
+<polygon fill="none" points="239.5,-2250 185.5,-2250 185.5,-2214 239.5,-2214 239.5,-2250" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2229.5">Fill Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge17">
+
+<path d="M239.61,-2226.99C252.71,-2223.14 267.73,-2216.46 277,-2205 324.42,-2146.38 346.94,-1910.23 353.44,-1828.22" fill="none" stroke="black"></path>
+<polygon fill="none" points="356.94,-1828.38 354.22,-1818.14 349.96,-1827.84 356.94,-1828.38" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node20">
+
+<g id="a_node20"><a href="../effects/#mesh-warp-effect" title="Mesh Warp Effect">
+<polygon fill="none" points="258,-2196 167,-2196 167,-2160 258,-2160 258,-2196" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2175.5">Mesh Warp Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge18">
+
+<path d="M258.15,-2165.5C265.27,-2161.81 271.94,-2157.08 277,-2151 318.32,-2101.38 344.11,-1902.83 352.5,-1828.38" fill="none" stroke="black"></path>
+<polygon fill="none" points="355.99,-1828.66 353.61,-1818.33 349.03,-1827.89 355.99,-1828.66" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node21">
+
+<g id="a_node21"><a href="../effects/#tritone-effect" title="Tritone Effect">
+<polygon fill="none" points="247.5,-2142 177.5,-2142 177.5,-2106 247.5,-2106 247.5,-2142" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2121.5">Tritone Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge19">
+
+<path d="M247.76,-2115.86C258.44,-2111.79 269.39,-2105.79 277,-2097 345.38,-2018.02 355.08,-1886.03 355.86,-1828.38" fill="none" stroke="black"></path>
+<polygon fill="none" points="359.36,-1828.22 355.91,-1818.2 352.36,-1828.18 359.36,-1828.22" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node22">
+
+<g id="a_node22"><a href="../effects/#drop-shadow-effect" title="Drop Shadow Effect">
+<polygon fill="none" points="263.5,-2088 161.5,-2088 161.5,-2052 263.5,-2052 263.5,-2088" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2067.5">Drop Shadow Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge20">
+
+<path d="M263.77,-2053.71C268.66,-2050.7 273.2,-2047.16 277,-2043 333.71,-1980.96 349.48,-1877.54 353.84,-1828.05" fill="none" stroke="black"></path>
+<polygon fill="none" points="357.33,-1828.31 354.63,-1818.07 350.35,-1827.76 357.33,-1828.31" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node23">
+
+<g id="a_node23"><a href="../effects/#wavy-effect" title="Wavy Effect">
+<polygon fill="none" points="243,-2034 182,-2034 182,-1998 243,-1998 243,-2034" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-2013.5">Wavy Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge21">
+
+<path d="M243.17,-2008.69C254.93,-2004.54 267.81,-1998.27 277,-1989 322.01,-1943.61 342.53,-1868.66 350.75,-1828.13" fill="none" stroke="black"></path>
+<polygon fill="none" points="354.22,-1828.61 352.67,-1818.13 347.34,-1827.29 354.22,-1828.61" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node24">
+
+<g id="a_node24"><a href="../effects/#spherize-effect" title="Spherize Effect">
+<polygon fill="none" points="251.5,-1980 173.5,-1980 173.5,-1944 251.5,-1944 251.5,-1980" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1959.5">Spherize Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge22">
+
+<path d="M251.75,-1950.4C260.7,-1946.48 269.72,-1941.42 277,-1935 310.6,-1905.34 333.54,-1857.69 345.58,-1827.66" fill="none" stroke="black"></path>
+<polygon fill="none" points="348.89,-1828.79 349.24,-1818.2 342.37,-1826.26 348.89,-1828.79" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node25">
+
+<g id="a_node25"><a href="../effects/#stroke-effect" title="Stroke Effect">
+<polygon fill="none" points="245.5,-1926 179.5,-1926 179.5,-1890 245.5,-1890 245.5,-1926" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1905.5">Stroke Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge23">
+
+<path d="M245.8,-1897.17C256.22,-1892.93 267.52,-1887.51 277,-1881 299.2,-1865.76 320.2,-1843.53 334.88,-1826.2" fill="none" stroke="black"></path>
+<polygon fill="none" points="337.87,-1828.08 341.56,-1818.15 332.48,-1823.61 337.87,-1828.08" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node26">
+
+<g id="a_node26"><a href="../effects/#tint-effect" title="Tint Effect">
+<polygon fill="none" points="239.5,-1872 185.5,-1872 185.5,-1836 239.5,-1836 239.5,-1872" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1851.5">Tint Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge24">
+
+<path d="M239.54,-1844.1C262.02,-1835.55 294.71,-1823.12 319.66,-1813.63" fill="none" stroke="black"></path>
+<polygon fill="none" points="321.04,-1816.85 329.14,-1810.02 318.55,-1810.31 321.04,-1816.85" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node27">
+
+<g id="a_node27"><a href="../effects/#matte3-effect" title="Set Matte Effect">
+<polygon fill="none" points="253.5,-1818 171.5,-1818 171.5,-1782 253.5,-1782 253.5,-1818" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1797.5">Set Matte Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge25">
+
+<path d="M253.81,-1800C274.38,-1800 299.21,-1800 319.19,-1800" fill="none" stroke="black"></path>
+<polygon fill="none" points="319.43,-1803.5 329.43,-1800 319.43,-1796.5 319.43,-1803.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node28">
+
+<g id="a_node28"><a href="../effects/#radial-wipe-effect" title="Radial Wipe">
+<polygon fill="none" points="243,-1764 182,-1764 182,-1728 243,-1728 243,-1764" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1743.5">Radial Wipe</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge26">
+
+<path d="M243.27,-1757.32C265.47,-1765.76 295.9,-1777.34 319.48,-1786.3" fill="none" stroke="black"></path>
+<polygon fill="none" points="318.53,-1789.68 329.12,-1789.97 321.02,-1783.14 318.53,-1789.68" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node29">
+
+<g id="a_node29"><a href="../effects/#twirl-effect" title="Twirl Effect">
+<polygon fill="none" points="241.5,-1710 183.5,-1710 183.5,-1674 241.5,-1674 241.5,-1710" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1689.5">Twirl Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge27">
+
+<path d="M241.62,-1701.17C253.12,-1705.62 266.23,-1711.61 277,-1719 299.2,-1734.24 320.2,-1756.47 334.88,-1773.8" fill="none" stroke="black"></path>
+<polygon fill="none" points="332.48,-1776.39 341.56,-1781.85 337.87,-1771.92 332.48,-1776.39" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node30">
+
+<g id="a_node30"><a href="../effects/#pro-levels-effect" title="Pro Levels Effect">
+<polygon fill="none" points="255.5,-1656 169.5,-1656 169.5,-1620 255.5,-1620 255.5,-1656" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1635.5">Pro Levels Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge28">
+
+<path d="M255.73,-1651.42C263.33,-1655.05 270.8,-1659.53 277,-1665 310.6,-1694.66 333.54,-1742.31 345.58,-1772.34" fill="none" stroke="black"></path>
+<polygon fill="none" points="342.37,-1773.74 349.24,-1781.8 348.89,-1771.21 342.37,-1773.74" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node31">
+
+<g id="a_node31"><a href="../effects/#custom-effect" title="Custom Effect">
+<polygon fill="none" points="248.5,-1602 176.5,-1602 176.5,-1566 248.5,-1566 248.5,-1602" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1581.5">Custom Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge29">
+
+<path d="M248.74,-1593.41C258.86,-1597.49 269.24,-1603.17 277,-1611 322.01,-1656.39 342.53,-1731.34 350.75,-1771.87" fill="none" stroke="black"></path>
+<polygon fill="none" points="347.34,-1772.71 352.67,-1781.87 354.22,-1771.39 347.34,-1772.71" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node32">
+
+<g id="a_node32"><a href="../effects/#gaussian-blur-effect" title="Gaussian Blur Effect">
+<polygon fill="none" points="265,-1548 160,-1548 160,-1512 265,-1512 265,-1548" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1527.5">Gaussian Blur Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge30">
+
+<path d="M265.01,-1547.07C269.42,-1549.91 273.52,-1553.2 277,-1557 333.71,-1619.04 349.48,-1722.46 353.84,-1771.95" fill="none" stroke="black"></path>
+<polygon fill="none" points="350.35,-1772.24 354.63,-1781.93 357.33,-1771.69 350.35,-1772.24" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node33">
+
+<g id="a_node33"><a href="../effects/#displacement-map-effect" title="Displacement Map Effect">
+<polygon fill="none" points="277,-1494 148,-1494 148,-1458 277,-1458 277,-1494" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1473.5">Displacement Map Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge31">
+
+<path d="M267.03,-1494.11C270.71,-1496.7 274.1,-1499.65 277,-1503 345.38,-1581.98 355.08,-1713.97 355.86,-1771.62" fill="none" stroke="black"></path>
+<polygon fill="none" points="352.36,-1771.82 355.91,-1781.8 359.36,-1771.78 352.36,-1771.82" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node34">
+
+<g id="a_node34"><a href="../effects/#puppet-effect" title="Puppet Effect">
+<polygon fill="none" points="247.5,-1440 177.5,-1440 177.5,-1404 247.5,-1404 247.5,-1440" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1419.5">Puppet Effect</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge32">
+
+<path d="M247.62,-1429.85C258.42,-1433.91 269.49,-1439.98 277,-1449 318.32,-1498.62 344.11,-1697.17 352.5,-1771.62" fill="none" stroke="black"></path>
+<polygon fill="none" points="349.03,-1772.11 353.61,-1781.67 355.99,-1771.34 349.03,-1772.11" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node35">
+
+<g id="a_node35"><a href="../layers/#layer" title="Layer">
+<polygon fill="none" points="383.5,-1359 329.5,-1359 329.5,-1323 383.5,-1323 383.5,-1359" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-1338.5">Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge44">
+
+<path d="M365.84,-1359.26C385.18,-1401.59 433.13,-1506.56 455.99,-1556.61" fill="none" stroke="black"></path>
+<polygon fill="none" points="452.87,-1558.21 460.21,-1565.86 459.24,-1555.3 452.87,-1558.21" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node36">
+
+<g id="a_node36"><a href="../layers/#camera-layer" title="Camera Layer">
+<polygon fill="none" points="249,-1386 176,-1386 176,-1350 249,-1350 249,-1386" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1365.5">Camera Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge34">
+
+<path d="M249.33,-1361.19C270.66,-1357.13 297.64,-1352 319.07,-1347.93" fill="none" stroke="black"></path>
+<polygon fill="none" points="319.92,-1351.33 329.09,-1346.02 318.61,-1344.45 319.92,-1351.33" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node37">
+
+<g id="a_node37"><a href="../layers/#visual-layer" title="Visual Layer">
+<polygon fill="none" points="244.5,-1332 180.5,-1332 180.5,-1296 244.5,-1296 244.5,-1332" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1311.5">Visual Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge41">
+
+<path d="M244.66,-1319.93C266.61,-1324.1 296.07,-1329.7 319.1,-1334.08" fill="none" stroke="black"></path>
+<polygon fill="none" points="318.7,-1337.56 329.17,-1335.99 320,-1330.69 318.7,-1337.56" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node38">
+
+<g id="a_node38"><a href="../layers/#image-layer" title="Image Layer">
+<polygon fill="none" points="88.5,-1521 23.5,-1521 23.5,-1485 88.5,-1485 88.5,-1521" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1500.5">Image Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge35">
+
+<path d="M88.72,-1493C97.32,-1488.93 105.92,-1483.4 112,-1476 151.41,-1428.01 107.3,-1387.9 148,-1341 154.11,-1333.96 162.38,-1328.7 170.92,-1324.8" fill="none" stroke="black"></path>
+<polygon fill="none" points="172.24,-1328.04 180.22,-1321.07 169.63,-1321.54 172.24,-1328.04" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node39">
+
+<g id="a_node39"><a href="../layers/#precomposition-layer" title="Precomposition Layer">
+<polygon fill="none" points="112,-1467 0,-1467 0,-1431 112,-1431 112,-1467" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1446.5">Precomposition Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge36">
+
+<path d="M101.28,-1430.87C105.17,-1428.25 108.83,-1425.3 112,-1422 139.32,-1393.62 119.92,-1368.63 148,-1341 154.45,-1334.65 162.63,-1329.7 170.95,-1325.87" fill="none" stroke="black"></path>
+<polygon fill="none" points="172.4,-1329.06 180.32,-1322.01 169.74,-1322.58 172.4,-1329.06" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node40">
+
+<g id="a_node40"><a href="../layers/#shape-layer" title="Shape Layer">
+<polygon fill="none" points="88.5,-1413 23.5,-1413 23.5,-1377 88.5,-1377 88.5,-1413" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1392.5">Shape Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge37">
+
+<path d="M88.67,-1380.71C96.45,-1376.86 104.65,-1372.5 112,-1368 129.05,-1357.55 130.67,-1350.99 148,-1341 155.23,-1336.83 163.23,-1332.93 171.04,-1329.47" fill="none" stroke="black"></path>
+<polygon fill="none" points="172.6,-1332.61 180.42,-1325.46 169.85,-1326.17 172.6,-1332.61" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node41">
+
+<g id="a_node41"><a href="../layers/#solid-layer" title="Solid Layer">
+<polygon fill="none" points="85,-1359 27,-1359 27,-1323 85,-1323 85,-1359" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1338.5">Solid Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge38">
+
+<path d="M85.34,-1336.05C109.21,-1331.88 143.66,-1325.86 170.53,-1321.16" fill="none" stroke="black"></path>
+<polygon fill="none" points="171.18,-1324.6 180.42,-1319.43 169.97,-1317.7 171.18,-1324.6" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node42">
+
+<g id="a_node42"><a href="../layers/#text-layer" title="Text Layer">
+<polygon fill="none" points="83.5,-1305 28.5,-1305 28.5,-1269 83.5,-1269 83.5,-1305" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1284.5">Text Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge39">
+
+<path d="M83.56,-1291.64C107.35,-1295.8 142.63,-1301.96 170.12,-1306.77" fill="none" stroke="black"></path>
+<polygon fill="none" points="169.78,-1310.26 180.23,-1308.54 170.99,-1303.37 169.78,-1310.26" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node43">
+
+<g id="a_node43"><a href="../layers/#null-layer" title="Null Layer">
+<polygon fill="none" points="83.5,-1251 28.5,-1251 28.5,-1215 83.5,-1215 83.5,-1251" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1230.5">Null Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge40">
+
+<path d="M83.56,-1244.8C92.76,-1249.21 103.02,-1254.5 112,-1260 129.05,-1270.45 130.67,-1277.01 148,-1287 155.23,-1291.17 163.23,-1295.07 171.04,-1298.53" fill="none" stroke="black"></path>
+<polygon fill="none" points="169.85,-1301.83 180.42,-1302.54 172.6,-1295.39 169.85,-1301.83" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node44">
+
+<g id="a_node44"><a href="../layers/#audio-layer" title="Audio Layer">
+<polygon fill="none" points="244,-1278 181,-1278 181,-1242 244,-1242 244,-1278" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1257.5">Audio Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge42">
+
+<path d="M244.26,-1271.33C254.9,-1275.7 266.72,-1281.08 277,-1287 294.33,-1296.99 296.55,-1302.63 313,-1314 315.51,-1315.73 318.12,-1317.5 320.76,-1319.25" fill="none" stroke="black"></path>
+<polygon fill="none" points="318.93,-1322.23 329.22,-1324.75 322.75,-1316.36 318.93,-1322.23" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node45">
+
+<g id="a_node45"><a href="../layers/#data-layer" title="Data Layer">
+<polygon fill="none" points="241,-1224 184,-1224 184,-1188 241,-1188 241,-1224" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1203.5">Data Layer</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge43">
+
+<path d="M241.13,-1212.76C253.37,-1216.91 267.18,-1223.34 277,-1233 305.08,-1260.63 287.28,-1284.16 313,-1314 315.43,-1316.81 318.22,-1319.44 321.19,-1321.86" fill="none" stroke="black"></path>
+<polygon fill="none" points="319.18,-1324.73 329.33,-1327.77 323.3,-1319.06 319.18,-1324.73" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node46">
+
+<g id="a_node46"><a href="../shapes/#stroke-dash" title="Stroke Dash">
+<polygon fill="none" points="388,-1305 325,-1305 325,-1269 388,-1269 388,-1305" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-1284.5">Stroke Dash</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge45">
+
+<path d="M388.25,-1302.45C392.69,-1305.76 396.82,-1309.61 400,-1314 454.28,-1388.97 465.68,-1502.75 467.98,-1555.41" fill="none" stroke="black"></path>
+<polygon fill="none" points="464.5,-1555.81 468.35,-1565.68 471.49,-1555.57 464.5,-1555.81" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node47">
+
+<g id="a_node47"><a href="../shapes/#graphic-element" title="Graphic Element">
+<polygon fill="none" points="400,-819 313,-819 313,-783 400,-783 400,-819" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-798.5">Graphic Element</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge68">
+
+<path d="M360.08,-819.2C374.66,-922.06 446.72,-1430.34 464.52,-1555.91" fill="none" stroke="black"></path>
+<polygon fill="none" points="461.06,-1556.49 465.93,-1565.9 468,-1555.51 461.06,-1556.49" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node48">
+
+<g id="a_node48"><a href="../shapes/#shape" title="Shape">
+<polygon fill="none" points="239.5,-1089 185.5,-1089 185.5,-1053 239.5,-1053 239.5,-1089" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-1068.5">Shape</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge50">
+
+<path d="M223.04,-1052.87C247.44,-1006.46 312.26,-883.23 341.2,-828.2" fill="none" stroke="black"></path>
+<polygon fill="none" points="344.45,-829.54 346,-819.06 338.25,-826.28 344.45,-829.54" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node49">
+
+<g id="a_node49"><a href="../shapes/#path" title="Path">
+<polygon fill="none" points="83,-1197 29,-1197 29,-1161 83,-1161 83,-1197" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1176.5">Path</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge46">
+
+<path d="M83.12,-1167.67C92.48,-1163.22 102.95,-1157.8 112,-1152 138.04,-1135.31 165.11,-1112.9 184.43,-1095.87" fill="none" stroke="black"></path>
+<polygon fill="none" points="186.81,-1098.44 191.95,-1089.18 182.15,-1093.21 186.81,-1098.44" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node50">
+
+<g id="a_node50"><a href="../shapes/#rectangle" title="Rectangle">
+<polygon fill="none" points="83,-1143 29,-1143 29,-1107 83,-1107 83,-1143" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1122.5">Rectangle</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge47">
+
+<path d="M83.21,-1115.84C108.7,-1106.93 147.61,-1093.33 175.9,-1083.44" fill="none" stroke="black"></path>
+<polygon fill="none" points="177.14,-1086.72 185.42,-1080.12 174.83,-1080.11 177.14,-1086.72" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node51">
+
+<g id="a_node51"><a href="../shapes/#polystar" title="PolyStar">
+<polygon fill="none" points="83,-1089 29,-1089 29,-1053 83,-1053 83,-1089" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1068.5">PolyStar</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge48">
+
+<path d="M83.21,-1071C108.48,-1071 146.93,-1071 175.15,-1071" fill="none" stroke="black"></path>
+<polygon fill="none" points="175.42,-1074.5 185.42,-1071 175.42,-1067.5 175.42,-1074.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node52">
+
+<g id="a_node52"><a href="../shapes/#ellipse" title="Ellipse">
+<polygon fill="none" points="83,-1035 29,-1035 29,-999 83,-999 83,-1035" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-1014.5">Ellipse</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge49">
+
+<path d="M83.21,-1026.16C108.7,-1035.07 147.61,-1048.67 175.9,-1058.56" fill="none" stroke="black"></path>
+<polygon fill="none" points="174.83,-1061.89 185.42,-1061.88 177.14,-1055.28 174.83,-1061.89" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node53">
+
+<g id="a_node53"><a href="../shapes/#group" title="Group">
+<polygon fill="none" points="239.5,-873 185.5,-873 185.5,-837 239.5,-837 239.5,-873" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-852.5">Group</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge51">
+
+<path d="M239.54,-845.1C257.4,-838.31 281.7,-829.07 303.44,-820.8" fill="none" stroke="black"></path>
+<polygon fill="none" points="304.79,-824.03 312.9,-817.2 302.3,-817.48 304.79,-824.03" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node54">
+
+<g id="a_node54"><a href="../shapes/#modifier" title="Modifier">
+<polygon fill="none" points="239.5,-819 185.5,-819 185.5,-783 239.5,-783 239.5,-819" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-798.5">Modifier</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge59">
+
+<path d="M239.54,-801C257.24,-801 281.26,-801 302.85,-801" fill="none" stroke="black"></path>
+<polygon fill="none" points="302.9,-804.5 312.9,-801 302.9,-797.5 302.9,-804.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node55">
+
+<g id="a_node55"><a href="../shapes/#repeater" title="Repeater">
+<polygon fill="none" points="83,-981 29,-981 29,-945 83,-945 83,-981" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-960.5">Repeater</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge52">
+
+<path d="M83.03,-955.15C93.27,-950.92 104.37,-944.73 112,-936 145.29,-897.9 113.69,-865.18 148,-828 155.45,-819.93 165.71,-814.17 175.81,-810.11" fill="none" stroke="black"></path>
+<polygon fill="none" points="177.1,-813.37 185.35,-806.72 174.75,-806.77 177.1,-813.37" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node56">
+
+<g id="a_node56"><a href="../shapes/#trim-path" title="Trim Path">
+<polygon fill="none" points="83,-927 29,-927 29,-891 83,-891 83,-927" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-906.5">Trim Path</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge53">
+
+<path d="M83.06,-899.58C92.84,-895.23 103.6,-889.36 112,-882 133.69,-862.99 125.8,-846.41 148,-828 156.09,-821.29 166.1,-816.01 175.75,-811.96" fill="none" stroke="black"></path>
+<polygon fill="none" points="177.13,-815.18 185.21,-808.32 174.62,-808.65 177.13,-815.18" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node57">
+
+<g id="a_node57"><a href="../shapes/#zig-zag" title="Zig Zag">
+<polygon fill="none" points="83,-873 29,-873 29,-837 83,-837 83,-873" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-852.5">Zig Zag</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge54">
+
+<path d="M83.21,-845.84C108.7,-836.93 147.61,-823.33 175.9,-813.44" fill="none" stroke="black"></path>
+<polygon fill="none" points="177.14,-816.72 185.42,-810.12 174.83,-810.11 177.14,-816.72" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node58">
+
+<g id="a_node58"><a href="../shapes/#twist" title="Twist">
+<polygon fill="none" points="83,-819 29,-819 29,-783 83,-783 83,-819" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-798.5">Twist</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge55">
+
+<path d="M83.21,-801C108.48,-801 146.93,-801 175.15,-801" fill="none" stroke="black"></path>
+<polygon fill="none" points="175.42,-804.5 185.42,-801 175.42,-797.5 175.42,-804.5" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node59">
+
+<g id="a_node59"><a href="../shapes/#rounded-corners" title="Rounded Corners">
+<polygon fill="none" points="101.5,-765 10.5,-765 10.5,-729 101.5,-729 101.5,-765" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-744.5">Rounded Corners</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge56">
+
+<path d="M101.69,-762.62C125.18,-770.83 153.6,-780.76 175.63,-788.46" fill="none" stroke="black"></path>
+<polygon fill="none" points="174.67,-791.84 185.27,-791.83 176.98,-785.23 174.67,-791.84" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node60">
+
+<g id="a_node60"><a href="../shapes/#offset-path" title="Offset Path">
+<polygon fill="none" points="84,-711 28,-711 28,-675 84,-675 84,-711" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-690.5">Offset Path</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge57">
+
+<path d="M84.19,-702.92C93.65,-707.22 103.92,-712.92 112,-720 133.69,-739.01 125.8,-755.59 148,-774 156.09,-780.71 166.1,-785.99 175.75,-790.04" fill="none" stroke="black"></path>
+<polygon fill="none" points="174.62,-793.35 185.21,-793.68 177.13,-786.82 174.62,-793.35" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node61">
+
+<g id="a_node61"><a href="../shapes/#pucker-bloat" title="Pucker Bloat">
+<polygon fill="none" points="88.5,-657 23.5,-657 23.5,-621 88.5,-621 88.5,-657" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-636.5">Pucker Bloat</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge58">
+
+<path d="M88.73,-649.38C97.23,-653.44 105.77,-658.87 112,-666 145.29,-704.1 113.69,-736.82 148,-774 155.45,-782.07 165.71,-787.83 175.81,-791.89" fill="none" stroke="black"></path>
+<polygon fill="none" points="174.75,-795.23 185.35,-795.28 177.1,-788.63 174.75,-795.23" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node62">
+
+<g id="a_node62"><a href="../shapes/#transform" title="Transform Shape">
+<polygon fill="none" points="257,-765 168,-765 168,-729 257,-729 257,-765" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-744.5">Transform Shape</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge60">
+
+<path d="M257.26,-763.64C271.7,-769.13 287.91,-775.3 302.94,-781.01" fill="none" stroke="black"></path>
+<polygon fill="none" points="302.02,-784.41 312.61,-784.69 304.51,-777.86 302.02,-784.41" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node63">
+
+<g id="a_node63"><a href="../shapes/#shape-style" title="Shape Style">
+<polygon fill="none" points="243,-576 182,-576 182,-540 243,-540 243,-576" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-555.5">Shape Style</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge66">
+
+<path d="M224.17,-576.26C248.96,-618.67 310.5,-724 339.68,-773.92" fill="none" stroke="black"></path>
+<polygon fill="none" points="336.83,-775.99 344.9,-782.86 342.87,-772.46 336.83,-775.99" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node64">
+
+<g id="a_node64"><a href="../shapes/#gradient-stroke" title="Gradient Stroke">
+<polygon fill="none" points="97,-603 15,-603 15,-567 97,-567 97,-603" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-582.5">Gradient Stroke</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge61">
+
+<path d="M97.19,-577.98C120.14,-573.97 148.81,-568.96 171.7,-564.96" fill="none" stroke="black"></path>
+<polygon fill="none" points="172.51,-568.37 181.76,-563.2 171.31,-561.47 172.51,-568.37" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node65">
+
+<g id="a_node65"><a href="../shapes/#gradient-fill" title="Gradient">
+<polygon fill="none" points="83,-549 29,-549 29,-513 83,-513 83,-549" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-528.5">Gradient</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge62">
+
+<path d="M83.21,-535.58C107.48,-539.82 143.93,-546.19 171.78,-551.06" fill="none" stroke="black"></path>
+<polygon fill="none" points="171.54,-554.57 181.99,-552.84 172.75,-547.67 171.54,-554.57" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node66">
+
+<g id="a_node66"><a href="../shapes/#no-style" title="No Style">
+<polygon fill="none" points="83,-495 29,-495 29,-459 83,-459 83,-495" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-474.5">No Style</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge63">
+
+<path d="M83.28,-488.67C92.56,-493.1 102.93,-498.44 112,-504 129.05,-514.45 130.67,-521.01 148,-531 155.61,-535.38 164.07,-539.47 172.27,-543.07" fill="none" stroke="black"></path>
+<polygon fill="none" points="171.13,-546.39 181.7,-547.07 173.86,-539.95 171.13,-546.39" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node67">
+
+<g id="a_node67"><a href="../shapes/#fill" title="Fill">
+<polygon fill="none" points="83,-441 29,-441 29,-405 83,-405 83,-441" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-420.5">Fill</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge64">
+
+<path d="M83.19,-431.46C93.2,-435.74 104.11,-441.8 112,-450 139.32,-478.38 119.92,-503.37 148,-531 154.84,-537.73 163.6,-542.88 172.43,-546.8" fill="none" stroke="black"></path>
+<polygon fill="none" points="171.35,-550.14 181.94,-550.58 173.94,-543.63 171.35,-550.14" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node68">
+
+<g id="a_node68"><a href="../shapes/#stroke" title="Stroke">
+<polygon fill="none" points="83,-387 29,-387 29,-351 83,-351 83,-387" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="56" y="-366.5">Stroke</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge65">
+
+<path d="M83.02,-376.51C93.38,-380.7 104.57,-386.96 112,-396 151.41,-443.99 107.3,-484.1 148,-531 154.47,-538.45 163.35,-543.91 172.42,-547.87" fill="none" stroke="black"></path>
+<polygon fill="none" points="171.26,-551.18 181.85,-551.49 173.77,-544.64 171.26,-551.18" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node69">
+
+<g id="a_node69"><a href="../shapes/#merge" title="Merge">
+<polygon fill="none" points="239.5,-522 185.5,-522 185.5,-486 239.5,-486 239.5,-522" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-501.5">Merge</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge67">
+
+<path d="M239.51,-509.46C252.42,-513.42 267.3,-520.07 277,-531 339.45,-601.37 352.36,-718.81 354.93,-772.56" fill="none" stroke="black"></path>
+<polygon fill="none" points="351.44,-772.88 355.32,-782.73 358.43,-772.6 351.44,-772.88" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node70">
+
+<g id="a_node70"><a href="../effects/#layer-style" title="Layer Style">
+<polygon fill="none" points="385.5,-279 327.5,-279 327.5,-243 385.5,-243 385.5,-279" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="356.5" y="-258.5">Layer Style</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge78">
+
+<path d="M359.03,-279.2C371.12,-423.29 451.3,-1378.97 466.14,-1555.86" fill="none" stroke="black"></path>
+<polygon fill="none" points="462.66,-1556.26 466.98,-1565.94 469.64,-1555.68 462.66,-1556.26" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node71">
+
+<g id="a_node71"><a href="../effects/#inner-glow-style" title="Inner Glow">
+<polygon fill="none" points="241,-468 184,-468 184,-432 241,-432 241,-468" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-447.5">Inner Glow</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge69">
+
+<path d="M241.31,-442.99C253.43,-438.8 267.11,-432.42 277,-423 316.35,-385.54 338.46,-324.25 348.59,-288.77" fill="none" stroke="black"></path>
+<polygon fill="none" points="351.98,-289.64 351.25,-279.07 345.23,-287.79 351.98,-289.64" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node72">
+
+<g id="a_node72"><a href="../effects/#stroke-style" title="Layer Stroke">
+<polygon fill="none" points="245.5,-414 179.5,-414 179.5,-378 245.5,-378 245.5,-414" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-393.5">Layer Stroke</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge70">
+
+<path d="M245.71,-386.19C256.36,-381.98 267.81,-376.31 277,-369 305.02,-346.7 327.81,-311.98 341.48,-287.96" fill="none" stroke="black"></path>
+<polygon fill="none" points="344.65,-289.45 346.43,-279.01 338.53,-286.06 344.65,-289.45" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node73">
+
+<g id="a_node73"><a href="../effects/#inner-shadow-style" title="Inner Shadow">
+<polygon fill="none" points="248.5,-360 176.5,-360 176.5,-324 248.5,-324 248.5,-360" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-339.5">Inner Shadow</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge71">
+
+<path d="M248.7,-328.52C258.08,-324.53 268.08,-319.9 277,-315 292.97,-306.23 309.73,-295.01 323.64,-285.07" fill="none" stroke="black"></path>
+<polygon fill="none" points="325.86,-287.79 331.9,-279.08 321.75,-282.12 325.86,-287.79" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node74">
+
+<g id="a_node74"><a href="../effects/#outer-glow-style" title="Outer Glow">
+<polygon fill="none" points="241.5,-306 183.5,-306 183.5,-270 241.5,-270 241.5,-306" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-285.5">Outer Glow</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge72">
+
+<path d="M241.55,-282.67C263.1,-278.57 293.09,-272.87 316.9,-268.34" fill="none" stroke="black"></path>
+<polygon fill="none" points="317.85,-271.72 327.02,-266.42 316.54,-264.85 317.85,-271.72" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node75">
+
+<g id="a_node75"><a href="../effects/#drop-shadow-style" title="Drop Shadow">
+<polygon fill="none" points="247.5,-252 177.5,-252 177.5,-216 247.5,-216 247.5,-252" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-231.5">Drop Shadow</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge73">
+
+<path d="M247.51,-240.47C268.62,-244.48 295.78,-249.64 317.58,-253.79" fill="none" stroke="black"></path>
+<polygon fill="none" points="317.01,-257.24 327.49,-255.67 318.32,-250.37 317.01,-257.24" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node76">
+
+<g id="a_node76"><a href="../effects/#bevel-emboss-style" title="Bevel Emboss">
+<polygon fill="none" points="249,-198 176,-198 176,-162 249,-162 249,-198" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-177.5">Bevel Emboss</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge74">
+
+<path d="M249.03,-193.63C258.31,-197.58 268.18,-202.16 277,-207 292.97,-215.77 309.73,-226.99 323.64,-236.93" fill="none" stroke="black"></path>
+<polygon fill="none" points="321.75,-239.88 331.9,-242.92 325.86,-234.21 321.75,-239.88" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node77">
+
+<g id="a_node77"><a href="../effects/#gradient-overlay-style" title="Gradient Overlay">
+<polygon fill="none" points="256.5,-144 168.5,-144 168.5,-108 256.5,-108 256.5,-144" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-123.5">Gradient Overlay</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge75">
+
+<path d="M256.62,-140.57C263.81,-144.02 270.91,-148.15 277,-153 305.02,-175.3 327.81,-210.02 341.48,-234.04" fill="none" stroke="black"></path>
+<polygon fill="none" points="338.53,-235.94 346.43,-242.99 344.65,-232.55 338.53,-235.94" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node78">
+
+<g id="a_node78"><a href="../effects/#satin-style" title="Satin">
+<polygon fill="none" points="239.5,-90 185.5,-90 185.5,-54 239.5,-54 239.5,-90" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-69.5">Satin</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge76">
+
+<path d="M239.72,-78.48C252.23,-82.65 266.67,-89.17 277,-99 316.35,-136.46 338.46,-197.75 348.59,-233.23" fill="none" stroke="black"></path>
+<polygon fill="none" points="345.23,-234.21 351.25,-242.93 351.98,-232.36 345.23,-234.21" stroke="black"></polygon>
+</g>
+
+<g class="node" id="node79">
+
+<g id="a_node79"><a href="../effects/#color-overlay-style" title="Color Overlay">
+<polygon fill="none" points="247.5,-36 177.5,-36 177.5,0 247.5,0 247.5,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="212.5" y="-15.5">Color Overlay</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge77">
+
+<path d="M247.64,-26.68C258.18,-30.77 269.09,-36.65 277,-45 327.82,-98.62 346.19,-187.67 352.47,-232.85" fill="none" stroke="black"></path>
+<polygon fill="none" points="349.01,-233.36 353.76,-242.83 355.95,-232.46 349.01,-233.36" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/helpers/visual-object" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>Human readable name, as seen from editors and the like</p>
+</td>
+</tr>
+<tr>
+<td><code>mn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Match Name</p>
+</td>
+<td>
+<p>Match name, used in expressions</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="marker">Marker</h2>
+<p></p>
+<p><span>Defines named portions of the composition.</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/helpers/marker" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Comment</p>
+</td>
+<td>
+<p>Comment</p>
+</td>
+</tr>
+<tr>
+<td><code>tm</code></td>
+<td><code>number</code></td>
+<td>
+<p>Time</p>
+</td>
+<td>
+<p>Time</p>
+</td>
+</tr>
+<tr>
+<td><code>dr</code></td>
+<td><code>number</code></td>
+<td>
+<p>Duration</p>
+</td>
+<td>
+<p>Duration</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="slots">Slots</h2>
+<p></p>
+<p>Slots are a way to define a property value once and use the value in multiple
+properties. Slot definitions are in a dictionary, the slot definition key is the
+key that is used to match all properties with a <code>sid</code> field to the same key for
+replacement.</p>
+<h3 id="slot">Slot</h3>
+<p></p>
+<p><span>Defines a property value that will be set to all matched properties</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/helpers/slot" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>p</code></td>
+<td><code></code></td>
+<td>
+<p>Property Value</p>
+</td>
+<td>
+<p>Property Value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="slottable-object">Slotabble Object</h3>
+<p></p>
+<p><span>Object that may have its value replaced with a slot value</span></p>
+<div>
+<details>
+<summary>Composition Diagram for Slottable Object</summary>
+<svg _xmlns="http://www.w3.org/2000/svg" height="44pt" viewBox="0.00 0.00 180.00 44.00" width="180pt">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 40)">
+
+<polygon fill="white" points="-4,4 -4,-40 176,-40 176,4 -4,4" stroke="transparent"></polygon>
+
+<g class="node current" id="node1">
+
+<polygon fill="none" points="172,-36 90,-36 90,0 172,0 172,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="131" y="-15.5">Slottable Object</text>
+</g>
+
+<g class="node" id="node2">
+
+<g id="a_node2"><a href="../assets/#image" title="Image">
+<polygon fill="none" points="54,-36 0,-36 0,0 54,0 54,-36" stroke="black"></polygon>
+<text _ff="Times,serif" font-size="10.00" text-anchor="middle" x="27" y="-15.5">Image</text>
+</a>
+</g>
+</g>
+
+<g class="edge" id="edge1">
+
+<path d="M54,-18C61.81,-18 70.65,-18 79.48,-18" fill="none" stroke="black"></path>
+<polygon fill="none" points="79.76,-21.5 89.76,-18 79.76,-14.5 79.76,-21.5" stroke="black"></polygon>
+</g>
+</g>
+</svg></details>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/helpers/slottable-object" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sid</code></td>
+<td><code>string</code></td>
+<td>
+<p>Slot Id</p>
+</td>
+<td>
+<p>Identifier to look up the slot</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Scale X</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="24" max="200" min="0" name="Scale X" oninput="lottie_player_24.reload();document.getElementById('playground_24_1_span').innerText = event.target.value;" title="Scale X" type="range" value="100" />
+        <span id="playground_24_1_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Scale Y</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="24" max="200" min="0" name="Scale Y" oninput="lottie_player_24.reload();document.getElementById('playground_24_2_span').innerText = event.target.value;" title="Scale Y" type="range" value="100" />
+        <span id="playground_24_2_span">100</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Rotation</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="24" max="360" min="-360" name="Rotation" oninput="lottie_player_24.reload();document.getElementById('playground_24_3_span').innerText = event.target.value;" title="Rotation" type="range" value="0" />
+        <span id="playground_24_3_span">0</span></td>
+</tr>
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="24" max="100" min="0" name="Opacity" oninput="lottie_player_24.reload();document.getElementById('playground_24_4_span').innerText = event.target.value;" title="Opacity" type="range" value="100" />
+    <span id="playground_24_4_span">100</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_24"></div>
+</div>
+<div class="json-parent" id="playground_24_5_parent">
+<pre><code class="language-json hljs" id="playground_24_5">
+</code></pre>
+</div>
+<script>
+        var lottie_player_24 = new PlaygroundPlayer(
+            24,
+            'playground_24_5',
+            'lottie_target_24',
+            {"v": "5.12.2", "fr": 29.9700012207031, "ip": 0, "op": 900.000036657751, "w": 512, "h": 512, "nm": "SlotDemo", "ddd": 0, "assets": [], "layers": [{"ddd": 0, "ind": 1, "ty": 4, "nm": "Shape Layer 1", "sr": 1, "ks": {"o": {"a": 0, "k": 100, "ix": 11}, "r": {"a": 0, "k": 0, "ix": 10}, "p": {"a": 0, "k": [256, 256, 0], "ix": 2, "l": 2}, "a": {"a": 0, "k": [0, 0, 0], "ix": 1, "l": 2}, "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}}, "ao": 0, "shapes": [{"ty": "gr", "it": [{"ty": "sr", "sy": 2, "d": 1, "pt": {"a": 0, "k": 3, "ix": 3}, "p": {"a": 0, "k": [0, 0], "ix": 4}, "r": {"a": 0, "k": 0, "ix": 5}, "or": {"a": 0, "k": 100, "ix": 7}, "os": {"a": 0, "k": 0, "ix": 9}, "ix": 1, "nm": "Polystar Path 1", "mn": "ADBE Vector Shape - Star", "hd": false}, {"ty": "st", "c": {"a": 0, "k": [0.271324008119, 0.323676015816, 0.880510995902, 1], "ix": 3}, "o": {"a": 0, "k": 100, "ix": 4}, "w": {"a": 0, "k": 6, "ix": 5}, "lc": 1, "lj": 1, "ml": 4, "bm": 0, "nm": "Stroke 1", "mn": "ADBE Vector Graphic - Stroke", "hd": false}, {"ty": "tr", "p": {"a": 0, "k": [-128, 128], "ix": 2}, "a": {"a": 0, "k": [0, 0], "ix": 1}, "s": {"a": 0, "k": [100, 100], "ix": 3, "sid": "scale"}, "r": {"a": 0, "k": 0, "ix": 6, "sid": "rotation"}, "o": {"a": 0, "k": 100, "ix": 7, "sid": "opacity"}, "sk": {"a": 0, "k": 0, "ix": 4}, "sa": {"a": 0, "k": 0, "ix": 5}, "nm": "Transform"}], "nm": "Polystar 2", "np": 3, "cix": 2, "bm": 0, "ix": 1, "mn": "ADBE Vector Group", "hd": false}, {"ty": "gr", "it": [{"d": 1, "ty": "el", "s": {"a": 0, "k": [149.971, 150], "ix": 2}, "p": {"a": 0, "k": [0, 0], "ix": 3}, "nm": "Ellipse Path 1", "mn": "ADBE Vector Shape - Ellipse", "hd": false}, {"ty": "st", "c": {"a": 0, "k": [0.271324008119, 0.323676015816, 0.880510995902, 1], "ix": 3}, "o": {"a": 0, "k": 100, "ix": 4}, "w": {"a": 0, "k": 6, "ix": 5}, "lc": 1, "lj": 1, "ml": 4, "bm": 0, "nm": "Stroke 1", "mn": "ADBE Vector Graphic - Stroke", "hd": false}, {"ty": "tr", "p": {"a": 0, "k": [128, -128], "ix": 2}, "a": {"a": 0, "k": [0, 0], "ix": 1}, "s": {"a": 0, "k": [100, 100], "ix": 3, "sid": "scale"}, "r": {"a": 0, "k": 0, "ix": 6, "sid": "rotation"}, "o": {"a": 0, "k": 100, "ix": 7, "sid": "opacity"}, "sk": {"a": 0, "k": 0, "ix": 4}, "sa": {"a": 0, "k": 0, "ix": 5}, "nm": "Transform"}], "nm": "Ellipse 1", "np": 3, "cix": 2, "bm": 0, "ix": 2, "mn": "ADBE Vector Group", "hd": false}, {"ty": "gr", "it": [{"ty": "sr", "sy": 1, "d": 1, "pt": {"a": 0, "k": 5, "ix": 3}, "p": {"a": 0, "k": [0, 0], "ix": 4}, "r": {"a": 0, "k": 0, "ix": 5}, "ir": {"a": 0, "k": 50, "ix": 6}, "is": {"a": 0, "k": 0, "ix": 8}, "or": {"a": 0, "k": 100, "ix": 7}, "os": {"a": 0, "k": 0, "ix": 9}, "ix": 1, "nm": "Polystar Path 1", "mn": "ADBE Vector Shape - Star", "hd": false}, {"ty": "fl", "c": {"a": 0, "k": [0.271324008119, 0.323676015816, 0.880510995902, 1], "ix": 4}, "o": {"a": 0, "k": 100, "ix": 5}, "r": 1, "bm": 0, "nm": "Fill 1", "mn": "ADBE Vector Graphic - Fill", "hd": false}, {"ty": "tr", "p": {"a": 0, "k": [128, 128], "ix": 2}, "a": {"a": 0, "k": [0, 0], "ix": 1}, "s": {"a": 0, "k": [100, 100], "ix": 3, "sid": "scale"}, "r": {"a": 0, "k": 0, "ix": 6, "sid": "rotation"}, "o": {"a": 0, "k": 100, "ix": 7, "sid": "opacity"}, "sk": {"a": 0, "k": 0, "ix": 4}, "sa": {"a": 0, "k": 0, "ix": 5}, "nm": "Transform"}], "nm": "Polystar 1", "np": 3, "cix": 2, "bm": 0, "ix": 3, "mn": "ADBE Vector Group", "hd": false}, {"ty": "gr", "it": [{"ty": "rc", "d": 1, "s": {"a": 0, "k": [150, 150], "ix": 2}, "p": {"a": 0, "k": [0, 0], "ix": 3}, "r": {"a": 0, "k": 0, "ix": 4}, "nm": "Rectangle Path 1", "mn": "ADBE Vector Shape - Rect", "hd": false}, {"ty": "fl", "c": {"a": 0, "k": [0.271324008119, 0.323676015816, 0.880510995902, 1], "ix": 4}, "o": {"a": 0, "k": 100, "ix": 5}, "r": 1, "bm": 0, "nm": "Fill 1", "mn": "ADBE Vector Graphic - Fill", "hd": false}, {"ty": "tr", "p": {"a": 0, "k": [-128, -128], "ix": 2}, "a": {"a": 0, "k": [0, 0], "ix": 1}, "s": {"a": 0, "k": [100, 100], "ix": 3, "sid": "scale"}, "r": {"a": 0, "k": 0, "ix": 6, "sid": "rotation"}, "o": {"a": 0, "k": 100, "ix": 7, "sid": "opacity"}, "sk": {"a": 0, "k": 0, "ix": 4}, "sa": {"a": 0, "k": 0, "ix": 5}, "nm": "Transform"}], "nm": "Rectangle 1", "np": 3, "cix": 2, "bm": 0, "ix": 4, "mn": "ADBE Vector Group", "hd": false}], "ip": 0, "op": 900.000036657751, "st": 0, "ct": 1, "bm": 0}], "markers": [], "props": {}, "slots": {"rotation": {"p": {"a": 0, "k": 0}}, "opacity": {"p": {"a": 0, "k": 100}}, "scale": {"p": {"a": 0, "k": [100, 100]}}}},
+            function (lottie, data)
+            {
+                
+    lottie.slots.rotation.p.k = data["Rotation"];
+    lottie.slots.opacity.p.k = data["Opacity"];
+    lottie.slots.scale.p.k[0] = data["Scale X"];
+    lottie.slots.scale.p.k[1] = data["Scale Y"];
+    this.json_viewer_contents = lottie.slots;
+            },
+            {}
+        );
+        </script>
+</div>
+</div>
+<h2 id="mask">Mask</h2>
+<p></p>
+<p><span>Mask for layer content.</span></p>
+<div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Title</th>
+<th>Description <a class="schema-link" href="../schema/#/$defs/helpers/mask" title="View Schema"><i class="fas fa-file-code"></i></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td><a href="../constants/#mask-mode">Mask Mode</a></td>
+<td>
+<p>Mode</p>
+</td>
+<td>
+<p>Mode</p>
+</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Opacity</p>
+</td>
+<td>
+<p>Mask opacity, as a percentage [0..100].</p>
+</td>
+</tr>
+<tr>
+<td><code>pt</code></td>
+<td><a href="../properties/#bezier-property">Bezier</a></td>
+<td>
+<p>Shape</p>
+</td>
+<td>
+<p>Mask shape</p>
+</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><a href="../properties/#scalar-property">Scalar</a></td>
+<td>
+<p>Expand</p>
+</td>
+<td>
+<p>Expand</p>
+</td>
+</tr>
+<tr>
+<td><code>inv</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>Inverted</p>
+</td>
+<td>
+<p>Inverted</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Masks provide single-channel coverage information (alpha channel) that modulates the layer's
+content.</p>
+<p>When multiple masks are specified, they are combined (blended) into a single coverage buffer,
+in order, based on the <a href="../constants/#mask-mode"><code>mode</code></a> operator.</p>
+<p>Masks are specified in terms of a <code>Path</code> plus additional properties.  For a given mask path,
+the coverage <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>C</mi><mrow><mi>p</mi><mi>a</mi><mi>t</mi><mi>h</mi></mrow></msub></mrow></math> is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>1</mn></mrow></math> inside the path, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>0</mn></mrow></math> outside the path, and possibly in the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">[</mo><mn>0</mn><mo>&#x0002E;</mo><mi>.1</mi><mo stretchy="false">]</mo></mrow></math>
+range along the path edges (anti-aliasing).</p>
+<p>The coverage for a given <code>Mask</code> is</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>C</mi><mo>&#x0003D;</mo><mrow><mo fence="true" form="prefix" stretchy="true">&#x0007B;</mo><mtable><mtr><mtd columnalign="left"><msub><mi>C</mi><mrow><mi>p</mi><mi>a</mi><mi>t</mi><mi>h</mi></mrow></msub><mi>&#x000B7;</mi><mi>o</mi><mi>p</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>&#x0002C;</mo></mtd><mtd columnalign="left"><mtext>when&#x000A0;</mtext><mi>i</mi><mi>n</mi><mi>v</mi><mo>&#x0003D;</mo><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi></mtd></mtr><mtr><mtd columnalign="left"><msubsup><mi>C</mi><mrow><mi>p</mi><mi>a</mi><mi>t</mi><mi>h</mi></mrow><mrow><mo>&#x02212;</mo><mn>1</mn></mrow></msubsup><mi>&#x000B7;</mi><mi>o</mi><mi>p</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>&#x0002C;</mo></mtd><mtd columnalign="left"><mtext>when&#x000A0;</mtext><mi>i</mi><mi>n</mi><mi>v</mi><mo>&#x0003D;</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi></mtd></mtr></mtable></mrow></mrow></math>
+<p>and the cumulative coverage for all masks is</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>C</mi><mrow><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi></mrow></msub><mo>&#x0003D;</mo><msubsup><mo>&#x0220F;</mo><mrow><mi>k</mi><mo>&#x0003D;</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><msub><mi>C</mi><mi>k</mi></msub></mrow></math>
+<p>where the product operator is determined by <a href="../constants/#mask-mode"><code>mode</code></a>.
+Then the final layer coverage (alpha channel) is</p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>C</mi><mrow><mi>l</mi><mi>a</mi><mi>y</mi><mi>e</mi><mi>r</mi></mrow></msub><mi>&#x02032;</mi><mo>&#x0003D;</mo><msub><mi>C</mi><mrow><mi>l</mi><mi>a</mi><mi>y</mi><mi>e</mi><mi>r</mi></mrow></msub><mi>&#x000B7;</mi><msub><mi>C</mi><mrow><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi></mrow></msub></mrow></math>
+<p class="print-site-plugin-ignore">Example</p>
+<div class="playground print-site-plugin-ignore">
+<table class="table-plain" style="width: 100%">
+<tr>
+<td style="white-space: pre"><label>Opacity</label> </td>
+<td style="width: 100%"><input autocomplete="off" data-lottie-input="25" max="100" min="0" name="Opacity" oninput="lottie_player_25.reload();document.getElementById('playground_25_1_span').innerText = event.target.value;" title="Opacity" type="range" value="100" />
+    <span id="playground_25_1_span">100</span></td>
+</tr>
+</table>
+<div class="playground-columns">
+<div class="animation-container animation-container-alpha">
+<div id="lottie_target_25"></div>
+</div>
+<div class="json-parent" id="playground_25_2_parent">
+<pre><code class="language-json hljs" id="playground_25_2">
+</code></pre>
+</div>
+<script>
+        var lottie_player_25 = new PlaygroundPlayer(
+            25,
+            'playground_25_2',
+            'lottie_target_25',
+            {"v": "5.5.7", "ip": 0, "op": 180, "nm": "Animation", "mn": "{b3d1b083-9de7-4537-a691-fc9aa42f9742}", "fr": 60, "w": 512, "h": 512, "assets": [], "layers": [{"ddd": 0, "ty": 4, "ind": 2, "st": 0, "ip": 0, "op": 180, "nm": "Shapes", "ks": {}, "shapes": [{"ty": "gr", "nm": "PolyStar", "mn": "{528994b7-40ff-4d12-81f8-603f274da12e}", "it": [{"ty": "sr", "nm": "PolyStar", "mn": "{ce8756d7-289f-4f84-a135-d225d57c42e0}", "p": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "or": {"a": 0, "k": 216.4160919189453}, "ir": {"a": 0, "k": 87.03440856933594}, "r": {"a": 0, "k": 261.54803466796875}, "pt": {"a": 0, "k": 5}, "sy": 1, "os": {"a": 0, "k": 0}, "is": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{efd05a25-a43b-451d-83d2-53a477087223}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{523ca39c-9e57-4547-bf0e-ba7496003579}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.19607843137254902, 0.3137254901960784, 0.6901960784313725]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [427.2716417910448, 194.29253731343283]}, "p": {"a": 0, "k": [338.7223880597015, 209.76716417910447]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}, {"ty": "gr", "nm": "Rectangle", "mn": "{d2d7a5d5-6d91-42e8-b40a-af52a112fe38}", "it": [{"ty": "rc", "nm": "Rectangle", "mn": "{9ef8604e-7891-4909-a655-445131b4d842}", "p": {"a": 0, "k": [209.17611940298502, 226.8]}, "s": {"a": 0, "k": [363.3313432835821, 369.3492537313433]}, "r": {"a": 0, "k": 0}}, {"ty": "st", "hd": true, "nm": "Stroke", "mn": "{444584d2-cb59-4cba-83a1-82cc605837fd}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0, 0.5019607843137255, 1]}, "lc": 2, "lj": 2, "ml": 0, "w": {"a": 0, "k": 1}}, {"ty": "fl", "nm": "Fill", "mn": "{f75aed67-9b0e-41a9-b859-a14b5b0a320d}", "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": [0.7686274509803922, 0.8509803921568627, 0.9607843137254902]}, "r": 1}, {"ty": "tr", "a": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "p": {"a": 0, "k": [256.1910447761194, 273.8149253731343]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}]}], "hasMask": true, "masksProperties": [{"mode": "a", "o": {"a": 0, "k": 100}, "inv": false, "x": {"a": 0, "k": 0}, "pt": {"a": 0, "k": {"c": true, "v": [[247.109, 125.719], [66.109, 306.719], [424.109, 389.719]], "i": [[0, 0], [0, 0], [0, 0]], "o": [[0, 0], [0, 0], [0, 0]]}}}]}], "meta": {"g": "Glaxnimate 0.4.6-26-g7b05e75c"}},
+            function (lottie, data)
+            {
+                
+        let mask = lottie.layers[1].masksProperties[0];
+        mask.o.k = Number(data["Opacity"]);
+    this.json_viewer_contents = lottie.layers[1].masksProperties[0];
+            },
+            {}
+        );
+        </script>
+</div>
+</div></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

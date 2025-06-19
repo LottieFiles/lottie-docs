@@ -1,0 +1,133 @@
+.schema-type {
+    color: #998;
+    font-style: italic;
+}
+
+.schema-type i {
+    margin-right: 5px;
+    font-style: normal;
+}
+
+.tab-content {
+    margin: 1em 0;
+}
+
+.drop-area {
+    border: 1px solid #ccc;
+    color: #ccc;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+#editor_area {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+
+.playback-controls {
+    display: flex;
+}
+
+.player-wrapper {
+    max-width:100%;
+    width: 512px;
+    margin: 24px 0 0 24px;
+}
+
+.cm-editor:focus-within {
+    outline: 2px solid #3daee9 !important;
+}
+
+#editor_parent > .cm-editor > .cm-scroller {
+    height: 80vh;
+}
+
+#editor_parent .cm-scroller {
+    overflow: auto;
+    resize: vertical;
+}
+
+#editor_parent {
+    position: relative;
+}
+
+body.wide .editor-side {
+    width: calc(100% - 512px - 72px);
+}
+
+.editor-side {
+    width: 100%;
+    margin: 24px 24px 0 24px;
+}
+
+body.wide .container {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+#editor_parent > #info_box {
+    display: none;
+    border: 5px solid #555;
+    border-radius: 6px;
+    padding: 5px;
+    background: white;
+    color: black;
+    font-style: normal;
+    word-break: normal;
+}
+
+.cm-editor > .tooltip-info-box
+{
+    background: none;
+    border: none;
+}
+
+#info_box
+{
+    border: 5px solid #555;
+    border-radius: 6px;
+    padding: 5px;
+    background: white;
+    color: black;
+    font-style: normal;
+    word-break: normal;
+}
+
+.cm-editor > .tooltip-info-box > .cm-tooltip-arrow:after {
+    border-top-color: #555;
+}
+
+#info_box input[type="color"]
+{
+    margin-top: 1ex;
+}
+
+.action-menu {
+    display: flex;
+    gap: 10px;
+}
+.action-menu .dropdown-menu > li > a {
+    cursor: pointer;
+    user-select: none;
+}
+.dropdown-divider {
+    border-bottom: 1px solid #ccc;
+}
+
+#editor_parent .color-preview {
+    vertical-align: top;
+}
+
+#info_box canvas {
+    display: block;
+}
+
+#lottie_target {
+    max-height: 512px;
+}
+
