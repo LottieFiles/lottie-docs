@@ -440,4 +440,4 @@ class TextureFactory
 }
 
 ShaderProgram.texture_factory = new TextureFactory();
-ShaderProgram.image_url = "/lottie-docs/examples/blep.png";
+ShaderProgram.image_url = "/lottie-docs/static/examples/blep.png";

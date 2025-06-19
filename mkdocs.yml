@@ -26,7 +26,6 @@ markdown_extensions:
             - lottie-playground
             - algorithm
             - shape_bezier_script
-            - effect_shader_script
     - lottie_specs.markdown.latex_markdown
     - md_extensions
 extra_css:

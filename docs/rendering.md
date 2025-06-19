@@ -3,7 +3,7 @@
 <script src="../scripts/lottie_bezier.js"></script>
 <style>
 .json-parent:not([hidden]) {
-    display: flex;    
+    display: flex;
 }
 
 .json-parent > pre {
@@ -984,6 +984,11 @@ Translate by `p`
 p[0]    p[1]    0   1
 
 
+<!--
+<script>
+var transform = new LottieMatrix();
+</script>
+
 <lottie-playground example="transform.json">
     <form>
         <input title="Anchor X" type="range" min="0" value="256" max="512"/>
@@ -1064,7 +1069,6 @@ lottie.layers[2].ks.sa.k = data["Skew Angle"];
 lottie.layers[2].ks.o.k = data["Opacity"];
 
 
-var transform = new LottieMatrix();
 transform.translate(-data["Anchor X"], -data["Anchor Y"]);
 transform.scale(data["Scale X"] / 100, data["Scale Y"] / 100);
 transform.skew(data["Skew"] * Math.PI / 180, data["Skew Angle"] * Math.PI / 180);
@@ -1084,6 +1088,7 @@ lottie.layers[1].shapes[0].ks.k.v = [
 ];
 </script>
 </lottie-playground>
+-->
 
 ### 3D Transform
 

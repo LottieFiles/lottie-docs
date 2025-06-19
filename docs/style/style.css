@@ -253,3 +253,12 @@ input[type="color"]
     margin: 1ex;
     height: 48px;
 }
+
+.algorithm {
+    position: relative;
+}
+
+.algorithm select {
+    position: absolute;
+    right: 0;
+}
