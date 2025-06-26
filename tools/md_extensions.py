@@ -83,10 +83,66 @@ def ref_links(ref: str, data: Schema):
     return [ReferenceLink.from_schema(item_schema)]
 
 
-class ShapeBezierScript(LottiePlayground):
+class EarlyHtmlProcessor(Preprocessor):
+    def __init__(self, tags, *a, **kw):
+        super().__init__(*a, **kw)
+        self.start_re = re.compile("^<(%s)" % "|".join(tags))
+
+    def run(self, lines):
+        new_lines = []
+        element_text = None
+        end_tag = None
+        comment = False
+
+        for line in lines:
+            if comment:
+                new_lines.append(line)
+                if "-->" in line:
+                    comment = False
+            elif element_text:
+                element_text += line + "\n"
+                if line == end_tag:
+                    self.flush(element_text, new_lines)
+                    element_text = None
+            else:
+                match = self.start_re.match(line)
+                if match:
+                    self.flush(element_text, new_lines)
+                    element_text = line + "\n"
+                    end_tag = "</%s>" % match.group(1)
+                else:
+                    new_lines.append(line)
+                    if "<!--" in line:
+                        comment = True
+
+        self.flush(element_text, new_lines)
+
+        return new_lines
+
+    def flush(self, element_text, new_lines):
+        if element_text:
+            self.on_flush(element_text, new_lines)
+
+    def on_flush(self, element_text, new_lines):
+        new_lines.append(self.md.htmlStash.store(element_text))
+
+
+class ComplexPlayground(EarlyHtmlProcessor, LottiePlaygroundBase):
+
+    def __init__(self, md, schema_data):
+        EarlyHtmlProcessor.__init__(self, [self.tag_name], md)
+        LottiePlaygroundBase.__init__(self, schema_data)
+
+    def on_flush(self, element_text, new_lines):
+        parent = etree.Element("div")
+        self.make_element(parent, element_text)
+        new_lines.append(self.md.htmlStash.store(parent))
+
+
+class ShapeBezierScript(ComplexPlayground):
     tag_name = "shape_bezier_script"
 
-    def populate_script(self, script_element, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
+    def populate_script(self, md_element, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
         bezier_view = etree.SubElement(builder.renderer.animation_container, "div")
         bezier_view.attrib["id"] = "lottie_target_%s_bezier" % builder.anim_id
         bezier_view.attrib["style"] = builder.renderer.animation.attrib["style"]
@@ -95,20 +151,21 @@ class ShapeBezierScript(LottiePlayground):
         non_func_script = ""
         func = ""
         varname = ""
-        if script_element is not None:
-            if "func" in script_element.attrib:
-                func = script_element.attrib["func"]
-                varname = script_element.attrib.get("varname", "shape")
-                func_script = script_element.text
+        for script_element in md_element.findall("./script"):
+            if script_element is not None:
+                if "func" in script_element.attrib:
+                    func = script_element.attrib["func"]
+                    varname = script_element.attrib.get("varname", "shape")
+                    func_script = script_element.text
 
-                pre = etree.SubElement(builder.element, "pre")
-                # We don't use `js` highlighting because it's a bit bugged
-                code = etree.SubElement(pre, "code", {"class": "language-typescript hljs"})
-                code.text = AtomicString(
-                    func_script + "\n\n// Example invocation\n" + func + ";"
-                )
-            else:
-                non_func_script = script_element.text
+                    pre = etree.SubElement(builder.element, "pre")
+                    # We don't use `js` highlighting because it's a bit bugged
+                    code = etree.SubElement(pre, "code", {"class": "language-typescript hljs"})
+                    code.text = AtomicString(
+                        func_script + "\n\n// Example invocation\n" + func + ";"
+                    )
+                else:
+                    non_func_script = script_element.text
 
         ty = extra_options.pop("ty", None)
         set_conv = ""
@@ -166,61 +223,8 @@ class ShapeBezierScript(LottiePlayground):
         return id
 
 
-class EarlyHtmlProcessor(Preprocessor):
-    def __init__(self, tags, *a, **kw):
-        super().__init__(*a, **kw)
-        self.start_re = re.compile("^<(%s)" % "|".join(tags))
-
-    def run(self, lines):
-        new_lines = []
-        element_text = None
-        end_tag = None
-        comment = False
-
-        for line in lines:
-            if comment:
-                new_lines.append(line)
-                if "-->" in line:
-                    comment = False
-            elif element_text:
-                element_text += line + "\n"
-                if line == end_tag:
-                    self.flush(element_text, new_lines)
-                    element_text = None
-            else:
-                match = self.start_re.match(line)
-                if match:
-                    self.flush(element_text, new_lines)
-                    element_text = line + "\n"
-                    end_tag = "</%s>" % match.group(1)
-                else:
-                    new_lines.append(line)
-                    if "<!--" in line:
-                        comment = True
-
-        self.flush(element_text, new_lines)
-
-        return new_lines
-
-    def flush(self, element_text, new_lines):
-        if element_text:
-            self.on_flush(element_text, new_lines)
-
-    def on_flush(self, element_text, new_lines):
-        new_lines.append(self.md.htmlStash.store(element_text))
-
-
-class EffectShaderScript(EarlyHtmlProcessor, LottiePlaygroundBase):
+class EffectShaderScript(ComplexPlayground):
     tag_name = "effect_shader_script"
-
-    def __init__(self, md, schema_data):
-        EarlyHtmlProcessor.__init__(self, [self.tag_name], md)
-        LottiePlaygroundBase.__init__(self, schema_data)
-
-    def on_flush(self, element_text, new_lines):
-        parent = etree.Element("div")
-        self.make_element(parent, element_text)
-        new_lines.append(self.md.htmlStash.store(parent))
 
     def populate_script(self, md_element, builder, json_data, extra_options, json_viewer_id, json_viewer_path):
         shader_view = etree.SubElement(builder.renderer.animation_container, "canvas")
@@ -733,8 +737,8 @@ class LottieDocsExtension(Extension):
         md.parser.blockprocessors.register(FunctionDocs(md.parser, expr_schema), 'function_docs', 175)
         md.parser.blockprocessors.register(VariableDocs(md.parser, expr_schema), 'variable_docs', 175)
         md.preprocessors.register(ScriptPlayground(md), 'script_playground', 29)
-        md.preprocessors.register(EffectShaderScript(md, md.lottie_ts), "shape_bezier_script", 29)
-        md.parser.blockprocessors.register(ShapeBezierScript(md, md.lottie_ts), "shape_bezier_script", 175)
+        md.preprocessors.register(EffectShaderScript(md, md.lottie_ts), "effect_shader_script", 29)
+        md.preprocessors.register(ShapeBezierScript(md, md.lottie_ts), "shape_bezier_script", 29)
         md.parser.blockprocessors.register(AepMatchNameTable(md.parser, md.lottie_schema), "aep_mn", 175)
         md.inlinePatterns.register(SectionLinkInlineProcessor(md), "sl", 175)
 
