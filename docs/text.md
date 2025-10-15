@@ -174,7 +174,7 @@ data:Defines how the character is defined
 
 ## Text Layer
 
-The [text layer](layers.md#text-layer) has an attribute called `t` containing a [Text Animator Data](#text-animator-data) object.
+The [text layer](layers.md#text-layer) has an attribute called `t` containing a [Text Data](#text-data) object.
 
 ### Text Data
 
@@ -184,7 +184,7 @@ The [text layer](layers.md#text-layer) has an attribute called `t` containing a 
 
 ### Animated Text Document
 
-This object is similar to an [animated property](properties.md#animated-property) for text.
+This object is similar to an [animated property](properties.md#property) for text.
 
 The main difference is that it's always treated as animated (ie: you _must_ use keyframes).
 

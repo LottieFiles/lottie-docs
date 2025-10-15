@@ -65,7 +65,7 @@ follows the path (`ao` is 1).
 A matte allows using a layer as a mask for another layer.
 
 The way it works is the layer defining the mask has a `tt` attribute with the
-appropriate [value](constants.md#mattemode).
+appropriate [value](constants.md#matte-mode).
 By defaults it affects the layer on top (the layer before it in the layer list, which has the `td` attribute),
 otherwise check the `tp` attribute.
 
@@ -103,7 +103,7 @@ A layer can have an array of {link:helpers/mask:masks} that clip the contents of
 This is similar to [mattes](#mattes), but there are a few differences.
 
 With mattes, you use a layer to define the clipping area, while with masks
-you use an [animated](properties.md#animated-property) {link:values/bezier:bezier curve}.
+you use an {link:properties/bezier-property:animated bezier curve}.
 
 <lottie-playground example="mask.json">
     <title>Example</title>
@@ -144,7 +144,7 @@ This means the render order goes from the last element to the first.
 
 Renders vector data.
 
-The only special property for this layer is **shapes**, an [array](layers.md#lists-of-layers-and-shapes) of [shapes](shapes.md#shape-element).
+The only special property for this layer is **shapes**, an [array](layers.md#lists-of-layers-and-shapes) of [shapes](shapes.md#graphic-element).
 
 {schema_object:layers/shape-layer}
 
