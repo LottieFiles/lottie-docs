@@ -24,7 +24,7 @@ The `ty` property defines the specific element type based on the following value
 <h2 id="shape">Shapes</h2>
 
 These shapes only define path data, to actually show something, they must be
-followed by some [style shape](#style).
+followed by some [style shape](#shape-style).
 
 They have a `d` attribute which specifies the drawing direction, which
 can be seen when using [Trim Path](#trim-path).
@@ -177,7 +177,7 @@ can be seen when using [Trim Path](#trim-path).
 <h2 id="shape-style">Style</h2>
 
 
-These apply a style (such as fill stroke) to the paths defined by the [shapes](#shapes).
+These apply a style (such as fill stroke) to the paths defined by the [shapes](#shape).
 
 Each style is applied to all preceding shapes in the same group / layer.
 
@@ -292,8 +292,13 @@ Offset entry, if present, MUST be at the end of the array.
     </script>
 </lottie-playground>
 
+<h3 id="base-gradient">Base Gradient</h3>
 
-<h3 id="gradient-fill"><span id="gradient-fill">Gradient Fill</span></h3>
+{schema_string:shapes/base-gradient/description}
+
+{schema_object:shapes/base-gradient}
+
+<h3 id="gradient-fill">Gradient Fill</h3>
 
 {schema_string:shapes/gradient-fill/description}
 
@@ -390,8 +395,8 @@ A group is a shape that can contain other shapes (including other groups).
 
 The usual contents of a group are:
 
-* [Shapes](#shapes)
-* [Style](#style)
+* [Shapes](#shape)
+* [Style](#shape-style)
 * [Transform](#transform)
 
 For example, if you want to have a red rectangle with a black outline, its group will contain
@@ -419,7 +424,7 @@ the last item in the `it` array.
 
 <h2 id="modifier">Modifiers</h2>
 
-Modifiers process their siblings and alter the path defined by [shapes](#shapes).
+Modifiers process their siblings and alter the path defined by [shapes](#shape).
 
 <h3 id="repeater">Repeater</h3>
 
@@ -477,7 +482,7 @@ The first copy will use `so`, the last `eo`, and copies between them will have a
 
 This is mostly useful for shapes with a stroke and not a fill.
 
-It takes the path defined by [shapes](#shapes) and only shows a segment of the resulting bezier data.
+It takes the path defined by [shapes](#shape) and only shows a segment of the resulting bezier data.
 
 
 {schema_object:shapes/trim-path}

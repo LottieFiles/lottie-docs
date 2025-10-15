@@ -9,6 +9,12 @@ Assets are usually referenced by [layers](layers.md) of the appropriate type.
 {schema_object:assets/asset}
 
 
+<h2 id="file-asset">File Asset</h2>
+
+{schema_string:assets/file-asset/description}
+
+{schema_object:assets/file-asset}
+
 ### Image
 
 Represents a (static) image

@@ -133,7 +133,7 @@ This layer does not have any transform so everything is at its default value.
 
 You might have noticed that all the attributes of the transform are objects with the same structure.
 
-This is because they are [animatable properties](../properties.md#animated-property).
+This is because they are [animatable properties](../properties.md#property).
 In this case they don't have any animations applied to them so `a` is `0` and `k` is the actual value.
 
 If they were animated, `a` would be `1` and `k` would have a list of keyframes (more on this later).
@@ -234,7 +234,7 @@ An ellipse by itself doesn't actually draw anything. it just defines the shape.
 So we need to apply some style to it. Here we have a [fill shape](../shapes.md#fill)
 that determines the fill color for the ellipse.
 
-`r` is not animated and it determines the [fill rule](../constants.md#fillrule).
+`r` is not animated and it determines the [fill rule](../constants.md#fill-rule).
 
 `o` is the opacity, as a percentage.
 
@@ -266,7 +266,7 @@ In this case it represents this color: {lottie_color:0.710,0.192,0.278}.
 }
 ```
 
-Unlike layers, that have the transform as an attribute, groups have them as a [shape](../shapes.md#transform-shape).
+Unlike layers, that have the transform as an attribute, groups have them as a [shape](../shapes.md#transform).
 
 Note that this might give you a false sense of flexibility, because players
 expect to have a transform shape at the end of their shape list.

@@ -353,8 +353,7 @@ Sometimes these are used together with expressions.
 {schema_object:effects/custom-effect}
 
 
-
-## Effect Values
+<h2 id="effect-value">Effect Values</h2>
 
 {schema_object:effect-values/effect-value}
 
