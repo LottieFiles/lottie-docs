@@ -262,3 +262,31 @@ input[type="color"]
     position: absolute;
     right: 0;
 }
+
+#content-container {
+    width: 100%;
+}
+
+/* playgrounds */
+
+.playground-columns {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    flex-flow: row wrap;
+}
+
+.json-parent {
+    flex: 1 1 0;
+    align-self: stretch;
+    min-width: 256px;
+}
+
+.json-parent pre {
+    margin: 0;
+    height: 100%;
+}
+
+.json-parent code {
+    height: 100%;
+}

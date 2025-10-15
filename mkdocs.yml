@@ -26,6 +26,10 @@ markdown_extensions:
             - lottie-playground
             - algorithm
             - shape_bezier_script
+        playground_buttons:
+            - title: Edit
+              icon: "fa-solid fa-edit"
+              action: "playground_set_data(player.lottie); window.location.href = &quot;/lottie-docs/playground/json_editor/&quot;"
     - lottie_specs.markdown.latex_markdown
     - md_extensions
 extra_css:
