@@ -68,6 +68,7 @@ nav:
     - "Playground":
         - "Builder": playground/builder.md
         - "JSON Editor": playground/json_editor.md
+        - "Validator": playground/validator.md
     - "Advanced Concept":
         - rendering.md
         - schema.md
