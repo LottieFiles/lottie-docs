@@ -45,7 +45,7 @@ disable_toc: 1
             <input id="lottie-input" type="file" accept=".json,.lot,video/lottie,application/json"/>
         </div>
     </div>
-    <table id="results">
+    <table id="results" class="table">
         <thead>
             <tr>
                 <th>Severity</th>
@@ -89,6 +89,8 @@ disable_toc: 1
         icon.classList.add("fa-solid");
         if ( error.type == "warning" )
             icon.classList.add("fa-triangle-exclamation");
+        else if ( error.type == "success" )
+            icon.classList.add("fa-check");
         else
             icon.classList.add("fa-circle-exclamation");
 
@@ -150,6 +152,8 @@ disable_toc: 1
         clear_results();
         const errors = validator.validate(data);
         errors.forEach(add_result_row);
+        if ( errors.length == 0 )
+            add_result_row({type: "success", message: "Valid Lottie!", path: ""});
     }
 
     let validator = null;
