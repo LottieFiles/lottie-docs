@@ -232,7 +232,7 @@ schema: normalize
 {function_docs}
 schema: length
 
-### looAt()
+### lookAt()
 
 {function_docs}
 schema: lookAt
