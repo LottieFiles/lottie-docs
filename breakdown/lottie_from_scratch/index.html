@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/breakdown/lottie_from_scratch/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    
+    <title>Lottie from Scratch - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../css/base.min.css" rel="stylesheet">
+    <link href="../../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href="../.." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../bouncy_ball/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../bezier/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/breakdown/lottie_from_scratch.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#lottie-from-scratch">Lottie from Scratch</a></li>
+            <li class="second-level"><a href="#introducing-the-builder-tool">Introducing the builder tool</a></li>
+                
+            <li class="second-level"><a href="#setting-up">Setting up</a></li>
+                
+            <li class="second-level"><a href="#adding-shapes">Adding Shapes</a></li>
+                
+            <li class="second-level"><a href="#basic-properties">Basic Properties</a></li>
+                
+            <li class="second-level"><a href="#making-a-star">Making a Star</a></li>
+                
+            <li class="second-level"><a href="#animating-the-star">Animating the Star</a></li>
+                
+            <li class="second-level"><a href="#making-the-animation-longer">Making the Animation longer</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="lottie-from-scratch">Lottie from Scratch</h1>
+<p>In this example, we'll build a simple Lottie animation from scratch.</p>
+<h2 id="introducing-the-builder-tool">Introducing the builder tool</h2>
+<p>The <a href="../../playground/builder/">builder tool</a> allows you to build lottie animations
+from its JSON components using a more convenient interface than manually
+editing the cryptic lottie JSON attributes.</p>
+<p>You can click on the categories on the toolbar to the left of the builder interface
+then drag and drop blocks into the workspace and see the effects.</p>
+<p>To the right you have a preview of the animation and the corresponding JSON.</p>
+<p>The rest of this guide will assume you are following along using the builder.</p>
+<p>Most block can be right-clicked to bring up a context menu, and you can select
+"Help" from that menu to go on the page that describes the object represented by that block.</p>
+<h2 id="setting-up">Setting up</h2>
+<p>Ensure your workspace is empty, if it isn't click on the "Clear" button near the top-right.</p>
+<p>Start by selecting the Animation block in the Animation category and dragging it to the workspace.</p>
+<p>Then select a Shape Layer (from Layers) and drop it into the Layers slot of the Animation block.</p>
+<p>Your workspace should look something like this:</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/setting_up.png" /></p>
+<p>You might have noticed the block attached to the layer.
+For simplicity all the common layer properties are in a separate block in the builder,
+this allows you to duplicate those blocks to copy the settings across layers and
+the block is collapsed by default to avoid cluttering the workspace.</p>
+<p><a href="/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/setting_up.xml">View workspace at the end of this step</a></p>
+<h2 id="adding-shapes">Adding Shapes</h2>
+<p>In order to show something, we need to add some shapes to the layer.</p>
+<p>So let's add a Polystar, a Fill and a Stroke from the Shapes category.</p>
+<p>Note that the order is important:</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/adding_shapes.png" /></p>
+<p>This should result in a black pentagon showing in the corner.</p>
+<p><a href="/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/adding_shapes.xml">View workspace at the end of this step</a></p>
+<h2 id="basic-properties">Basic Properties</h2>
+<p>We start by moving our shape in a more sensible position.</p>
+<p>To do so, select Static Property and connect it to the "Position" of the Polystar, then connect a "x y" block to it.
+Both these blocks are under "Properties".</p>
+<p>You can now edit the values of <code>x</code> and <code>y</code> to move the pentagon.</p>
+<p>For example, setting them both to <code>256</code> should move the shape to the center of the screen:</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/shape_position.png" /></p>
+<p>You can do something similar to modify the size of the pentagon and the fill color,
+of course you need to select the right block types from the properties toolbox.</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/more_props.png" /></p>
+<p>The color can be changed by manually updating the RGB components or by selecting
+a color from the palette shown after clicking the color preview on the block.</p>
+<p><a href="/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/basic_properties.xml">View workspace at the end of this step</a></p>
+<h2 id="making-a-star">Making a Star</h2>
+<p>We can turn the pentagon into a star by changing the star type and filling in
+some more properties:</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/star.png" /></p>
+<p>Note that while you can use just a number block for "Rotation",
+using the angle block allows you to edit the angle in a more intuitive way.
+You can tell these block apart because they are a different color and the
+angle block shows the &deg; symbol.</p>
+<p><a href="/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/star.xml">View workspace at the end of this step</a></p>
+<h2 id="animating-the-star">Animating the Star</h2>
+<p>Until now, we've only seen static properties, but now we can have a look at some
+animated ones.</p>
+<p>To animate the star rotation, we need to first disconnect the static property from it
+and connect an animated property in its place.</p>
+<p>Thne attach two keyframe blocks to the animated property.</p>
+<p>Once the keyframes are added, attach angle blocks to their value slots and change the second keyframe to have a time of 60 and a value of 72&deg;.</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/animation.png" /></p>
+<p>You should now see the star spinning in the preview.</p>
+<p><a href="/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/animation.xml">View workspace at the end of this step</a></p>
+<h2 id="making-the-animation-longer">Making the Animation longer</h2>
+<p>Currently, the animation lasts for 1 second (60 frames).</p>
+<p>If you want it to last for longer, you need to first change the Out Point in the animation block.
+Let's change it to 120 to make the animation last for 2 seconds.</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/animation_out_point.png" /></p>
+<p>You'll see the star starts blinking, disappearing after a second and reappearing
+after another second.</p>
+<p>This is because we also need to update the layer Out Point.</p>
+<p>By default, the layer properties are collapsed, so right-click on the Layer Properties
+and select "Expand Block" from the context menu, then change its "Out Point"
+to match with the Animation block.</p>
+<p><img alt="Screenshot of the workspace" src="../images/builder/layer_out_point.png" /></p>
+<p>Now the star remains visible the whole time, but it stops rotating at the second mark.
+To fix that you can update the second keyframe in the star rotation to have a time of 120.
+Alternatively you can add a third keyframe with that time and an appropriate value.</p>
+<p><a href="/lottie-docs/breakdown/builder/?url=/lottie-docs/breakdown/images/builder/final.xml">View the final workspace</a></p></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = "../.."</script>
+    
+    <script src="../../js/base.js"></script>
+    <script src="../../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

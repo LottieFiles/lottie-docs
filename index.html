@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/">
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    
+    <title>Home - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="css/base.min.css" rel="stylesheet">
+    <link href="css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href="." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li class="active">
+                        <a href=".">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="Introduction/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/index.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="main" id="content-container">
+            <div class="col-md-12" role="main" style="padding: 0;">
+
+<style>
+    .index-page {
+        margin-top: 36px;
+        margin-bottom: 200px;
+    }
+    .index-page a:hover{
+        color: #00C1A2;
+        text-decoration: none;
+    }
+    .index-card-header {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        padding: 24px 8px;
+        gap: 24px;
+        width: 1200px;
+    }
+    .index-card-header-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 16px;
+        width: 768px;
+    }
+    .index-card-header-nav{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 8px;
+        width: 360px;
+        background: #F3F6F8;
+        border-radius: 16px;
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+    }
+    .index-page a {
+        color: #20272C
+    }
+    .index-card-lg {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 16px;
+        width: 588px;
+        height: 200px;
+        padding: 24px;
+        border-radius: 12px;
+        border: 1px solid #F3F6F8;
+        cursor: pointer;
+    }
+    .index-card-sm {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 16px;
+        width: 282px;
+        left: 0px;
+        top: 0px;
+        border-radius: 12px;
+        padding: 24px;
+        border: 1px solid #F3F6F8;
+        cursor: pointer;
+    }
+    .index-footer {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+        width: 100vw;
+        height: 110px;
+        border-top: 1px solid #F3F6F8;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background: white;
+    }
+    .index-footer-content {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 10px;
+        gap: 10px;
+        width: 1200px;
+    }
+    .index-footer-content > p {
+        font-family: 'Karla';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 150%;
+        letter-spacing: -0.02em;
+        color: #63727E;
+    }
+    .index-topic-header {
+        margin: 0
+    }
+    .index-card-lg:hover {
+        border: 1px solid #D9E0E6;
+    }
+    .index-card-sm:hover {
+        border: 1px solid #D9E0E6;
+    }
+    .index-container-top{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 24px;
+        margin-top: 24px;
+    }
+    .index-card-header-content > h2 {
+        margin: 0;
+    }
+
+    .lottie-button{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 4px 12px;
+        gap: 8px;
+        height: 32px;
+        background: #F3F6F8;
+        border-radius: 8px;
+        border: 0;
+        color: #20272C;
+    }
+
+    .lottie-button:hover {
+        background: #D9E0E6;
+    }
+
+    .lottie-button:focus {
+        background: #F3F6F8;
+        /* focus-on-light */
+        box-shadow: 0px 0px 0px 1px #FFFFFF, 0px 0px 0px 3px #00DDB3;
+    }
+
+    @media (max-width: 800px) {
+        .index-card-header-nav {
+            display: none;
+        }
+    }
+
+    @media (max-height: 1200px) {
+            .index-page {
+                margin-bottom: 0px;
+            }
+            .index-footer {
+            margin-top: 64px;
+            margin-left: -16px;
+            position: static;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .index-card-header{
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .index-card-header {
+            padding: 24px 0;
+        }
+        .index-container-top {
+            flex-direction : column;
+            padding: 0;
+        }
+
+        .index-card-lg {
+            width: 100%;
+            height: auto;
+        }
+
+        .index-card-sm {
+            width: 100%;
+            height: auto;
+        }
+
+        .index-footer {
+            padding: 16px;
+        }
+        .index-page {
+                margin-bottom: 0px;
+            }
+        .index-footer {
+            margin-top: 64px;
+            margin-left: -16px;
+            position: static;
+        }
+    }
+</style>
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
+<div class="index-page">
+    <div class="index-card-header">
+        <div class="index-card-header-content">
+            <lottie src="https://assets9.lottiefiles.com/private_files/lf30_smcmhowt.json" loop="true" buttons="false" background="none" />
+            <h2>A human's guide to the Lottie format</h2>
+            <p>Lottie is a vector animation format, using JSON to represent its data.</p>
+            <p>
+            This guide aims to provide a human-readable description of the format and how everything works within it.
+            </p>
+            <button class="lottie-button"  onclick="window.location='/lottie-docs/Introduction/'" style="font-weight: bold;">Read the guide<img src="/lottie-docs/img/icon-right-arrow.svg"/></button>
+        </div>
+        <div class="index-card-header-nav">
+            <h5>Topics</h5>
+            <ul>
+                <li><a href="/lottie-docs/Introduction/">Introduction</a></li>
+                <li><a href="/lottie-docs/breakdown/bouncy_ball/">Bouncy Ball</a></li>
+                <li><a href="/lottie-docs/breakdown/lottie_from_scratch/">Lottie from Scratch</a></li>
+                <li><a href="/lottie-docs/breakdown/bezier/">Bezier Curves </a></li>
+                <li><a href="/lottie-docs/breakdown/precomps/">Precompositions</a></li>
+                <li><a href="/lottie-docs/values/">Values</a></li>
+                <li><a href="/lottie-docs/rendering/">Tips for Rendering</a></li>
+                <li><a href="/lottie-docs/schema/">JSON Schema</a></li>
+                <li><a href="/lottie-docs/advanced_interactions/">Advanced Interactions</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="index-container-top">
+        <div class="index-card-lg" onclick="window.location='/lottie-docs/values/'">
+            <h3 class="index-topic-header">Lottie Format</h3>
+            <p>This page describes values and other objects used throughout the Lottie format.</p>
+        </div>
+        <div class="index-card-lg">
+            <h3 class="index-topic-header" onclick="window.location='/lottie-docs/breakdown/lottie_from_scratch/'">Lottie from Scratch</h3>
+            <p>In this example, we'll build a simple lottie animation from scratch.</p>
+        </div>
+        <div class="index-card-lg" onclick="window.location='/lottie-docs/playground/json_editor/'">
+            <h3 class="index-topic-header">Lottie Playground</h3>
+            <ul>
+                <li><a href="/lottie-docs/playground/json_editor/">JSON Editor</a></li>
+                <li><a href="/lottie-docs/playground/builder/">Lottie Builder</a> </li>
+            </ul>
+        </div>
+    </div>
+    <div class="index-container-top">
+        <div class="index-card-sm"  onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-player'">
+            <img src="/lottie-docs/img/logo-lottie.svg"/>
+            <h4 class="index-topic-header">Lottie-Player</h4>
+            <p>Easily embed and play Lottie animations in websites.</p>
+        </div>
+        <div class="index-card-sm" onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-react'">
+            <img src="/lottie-docs/img/logo-react.svg"/>
+            <h4 class="index-topic-header">Lottie-React</h4>
+            <p>Easily add Lottie animations to your React projects.</p>
+        </div>
+        <div class="index-card-sm" onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-svelte'">
+            <img src="/lottie-docs/img/logo-svelte.svg"/>
+            <h4 class="index-topic-header">Lottie-Svelte</h4>
+            <p>Svelte provides a Lottie player using the lottie-web library.</p>
+        </div>
+        <div class="index-card-sm" onclick="window.location='https://docs.lottiefiles.com/lottie-player/components/lottie-vue'">
+            <img src="/lottie-docs/img/vue-logo.svg"/>
+            <h4 class="index-topic-header">Lottie-Vue</h4>
+            <p>Vue component for the Lottie Web Player.</p>
+        </div>
+    </div>
+    <div class="index-footer">
+        <div class="index-footer-content">
+            <p>
+            LottieFiles is by Design Barn Inc.<br/>
+            Copyright © 2022 Design Barn Inc. All rights reserved.
+            </p>
+        </div>
+    </div>
+</div></div>
+        </div>
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = "."</script>
+    
+    <script src="js/base.js"></script>
+    <script src="search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-11-21 09:29:24.822147+00:00
+-->

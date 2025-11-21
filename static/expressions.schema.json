@@ -1,0 +1,86 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://lottiefiles.github.io/lottie-docs/schema/expressions.schema.json",
+    "type": "object",
+    "$defs": {
+        "variable": {
+            "type": "object",
+            "properties": {
+                "description": {"type": "string"},
+                "type": {"$ref": "#/$defs/type"},
+                "default": {},
+                "notes": {"type": "string"}
+            },
+            "required": ["description", "type"]
+        },
+        "parameter": {
+            "allOf": [
+                {
+                    "$ref": "#/$defs/variable"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {"type": "string"}
+                    },
+                    "required": ["name"]
+                }
+            ]
+        },
+        "function_definition": {
+            "type": "object",
+            "properties": {
+                "return": {"$ref": "#/$defs/variable"},
+                "description": {"type": "string"},
+                "params": {
+                    "type": "array",
+                    "items": {"$ref": "#/$defs/parameter"}
+                }
+            }
+        },
+        "function": {
+            "oneOf": [
+                {"$ref": "#/$defs/function_definition"},
+                {
+                    "type": "array",
+                    "items": {"$ref": "#/$defs/function_definition"}
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "alias_of": {"type": "string"}
+                    }
+                }
+            ]
+        },
+        "type": {
+            "type": "string",
+            "bnf": {
+                "TYPE": "DESCRIPTION | SPECIFIC | OPTIONS",
+                "OPTIONS": "SPECIFIC | OPTIONS \| SPECIFIC",
+                "SPECIFIC": "any | number | boolean | string | object | ARRAY",
+                "ARRAY": "array | array [ NUMBER ]",
+                "NUMBER": "/[0-9]+/",
+                "DESCRIPTION": "/.+ .+/"
+            }
+        }
+    },
+    "properties": {
+        "variables": {
+            "type": "object",
+            "patternProperties": {
+                ".+": {"$ref": "#/$defs/variable"}
+            }
+        },
+        "functions": {
+            "type": "object",
+            "patternProperties": {
+                ".+": {"$ref": "#/$defs/function"}
+            }
+        },
+        "aliases": {
+            "type": "object",
+            "description": "Map alias name to actual function"
+        }
+    }
+}

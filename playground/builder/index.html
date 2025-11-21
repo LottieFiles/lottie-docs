@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/playground/builder/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    
+    <title>Builder - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../css/base.min.css" rel="stylesheet">
+    <link href="../../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body  class="wide" >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header-top-full navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href="../.." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom navbar-header-bottom-full">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../compat/">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../../compat/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../json_editor/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/playground/builder.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+            <div class="col-md-12" style="padding: 0 0;" role="main">
+
+<script src="https://unpkg.com/blockly@10.3.0/blockly.min.js"></script>
+<script src="../../scripts/blockly_generated.js"></script>
+<script src="../../scripts/lottie_blockly.js"></script>
+<style>
+html, body {
+    min-height: 100vh;
+}
+body {
+    display: flex;
+    flex-flow: column;
+}
+div[role='main'], body > .container, #playground_layout
+{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+}
+
+#playground_layout
+{
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+    padding: 24px
+}
+#blockly_div
+{
+    flex-grow: 1;
+}
+#playground_output_container
+{
+    width: 512px;
+}
+#lottie_player
+{
+    width: 512px;
+    height: 512px
+}
+#playground_output
+{
+    margin: 0;
+    width: 512px;
+    display: flex;
+    flex-flow: column;
+}
+#blockly_output
+{
+    margin: 0;
+    overflow: auto;
+    flex-grow: 1;
+    border: none;
+}
+#playground_output_buttons
+{
+    padding: 0;
+    list-style: none;
+    display: flex;
+    margin-bottom: 0px;
+}
+#playground_output_buttons > li > button
+{
+   border: 1px solid #D9E0E6;
+   padding: 8px;
+}
+</style>
+
+<div id="playground_layout">
+    <div id="blockly_div"></div>
+    <div id="playground_output">
+        <ul id="playground_output_buttons">
+            <li><button onclick="save()">Save</button></li>
+            <li><button onclick="load()">Load</button></li>
+            <li><button onclick="lottie_blockly.clear_workspace()">Clear</button></li>
+            <li><button onclick="copy_json()">Copy JSON</button></li>
+            <li><button onclick="load_url_prompt()">Load from URL</button></li>
+        </ul>
+        <div class="alpha_checkered" id="lottie_player"></div>
+        <div class="highlighted-input" style="flex-grow: 1">
+            <textarea
+                autocomplete="off"
+                class="code-input"
+                data-lang="js"
+                data-lottie-input="editor"
+                 oninput="syntax_edit_update(this, this.value); syntax_edit_scroll(this); parse_json();"
+                onkeydown="syntax_edit_tab(this, event);" onscroll="syntax_edit_scroll(this);"
+                spellcheck="false"
+                id="blockly_output"
+            ></textarea>
+            <pre aria-hidden="true"><code class="language-js hljs"></code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+
+function save()
+{
+    localStorage.setItem("blockly_lottie", lottie_blockly.workspace_to_xml_string());
+}
+
+function load()
+{
+    lottie_blockly.xml_to_workspace(localStorage.getItem("blockly_lottie"));
+}
+
+
+function update_code()
+{
+    var json = lottie_blockly.workspace_to_json();
+
+    var output = document.getElementById("blockly_output");
+    output.value = JSON.stringify(json, null, 4);
+    syntax_edit_update(output, output.value);
+
+    var anim_data = {
+        container: document.getElementById('lottie_player'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: JSON.parse(output.value)
+    };
+
+    var frame = 0;
+
+    if ( anim != null )
+    {
+        try {
+            frame = anim.currentFrame
+        } catch (e) {}
+        try {
+            anim.destroy();
+        } catch (e) {}
+        anim = null;
+    }
+
+    anim = bodymovin.loadAnimation(anim_data);
+    if ( frame != 0 )
+        anim.goToAndPlay(frame, true);
+}
+
+function copy_json()
+{
+    var element = document.getElementById("blockly_output");
+    var text = element.value;
+    navigator.clipboard.writeText(text);
+}
+
+function copy_xml()
+{
+    navigator.clipboard.writeText(lottie_blockly.workspace_to_xml_string());
+}
+
+function parse_json()
+{
+    lottie_blockly.json_to_workspace(document.getElementById("blockly_output").value);
+}
+
+function load_url_prompt()
+{
+    var url = prompt("URL to a lottie JSON");
+    if ( url )
+        lottie_blockly.load_json_url(url)
+}
+
+var options = {
+  comments: true,
+  toolbox: lottie_toolbox,
+  media: 'https://unpkg.com/blockly/media/',
+  collapse: true,
+};
+
+var anim = null;
+
+var lottie_blockly = new LottieBlockly(options, "blockly_div", alert);
+
+lottie_blockly.workspace.addChangeListener(update_code);
+
+var current_url = new URL(window.location.href);
+var requested_url = current_url.searchParams.get("url");
+if ( requested_url )
+    lottie_blockly.load_json_url(requested_url);
+else
+    load();
+
+</script></div>
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = "../.."</script>
+    
+    <script src="../../js/base.js"></script>
+    <script src="../../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
