@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for the Lottie animation format">
+    
+    <link rel="canonical" href="https://lottiefiles.github.io/lottie-docs/compat/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    
+    <title>Compatibility with older versions - Lottie Docs</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+
+     
+
+    
+    <link href="/lottie-docs/style/style.css" rel="stylesheet">
+    <link href="/lottie-docs/style/lottie-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-DNP7J0G3W8'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DNP7J0G3W8');
+    </script>
+
+    
+
+    
+     
+
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.js'></script>
+<!--     <script src="/lottie-docs/lottie.js"></script> -->
+
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+    
+
+    <script src="/lottie-docs/scripts/lottie_raw_utils.js"></script>
+    <script src="/lottie-docs/scripts/playground_data.js"></script>
+    <script src="/lottie-docs/scripts/value_editors.js"></script>
+
+
+</head>
+
+
+    
+<body >
+    
+        
+    
+    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container top-header-container">
+
+        <!-- Collapsed navigation -->
+        
+        <div class="navbar-header-top navbar-header ">
+        
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+
+            <div class="logo-brand">
+                <div class="top-right-header">
+                    <a class="navbar-brand" href=".." ><img src="/lottie-docs/img/LottieDocs.svg"/></a>
+                </div>
+                
+                <div class="top-left-header">
+                    <a href="https://lottiefiles.com/">Back to Home</a>
+                    <a href="https://help.lottiefiles.com/hc/en-us">Help Center</a>
+                    <a href="https://feedback.lottiefiles.com/">Feedback</a>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        
+        <div class=" navbar-collapse collapse navbar-header-bottom">
+        
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Introduction/">Introduction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bouncy_ball/">Bouncy Ball</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/lottie_from_scratch/">Lottie from Scratch</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/bezier/">Bezier Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../breakdown/precomps/">Precompositions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lottie Format <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../values/">Values</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../properties/">Propeties</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../composition/">Animation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../layers/">Layers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../shapes/">Shapes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../assets/">Assets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../helpers/">Helpers</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../effects/">Layer Effects</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../constants/">Enumerations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../text/">Text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../expressions/">Expressions</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Compatibility with older versions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playground <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../playground/builder/">Builder</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../playground/json_editor/">JSON Editor</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced Concept <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../rendering/">Tips for rendering</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../schema/">JSON Schema</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../advanced_interactions/">Advanced Interactions</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <img src="/lottie-docs/img/icon-search.svg" style="height: 16px;"> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../expressions/">
+                            <img src="/lottie-docs/img/chevron-left.svg"/> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../playground/builder/">
+                            Next <img src="/lottie-docs/img/chevron-right.svg"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/LottieFiles/lottie-docs/edit/main/docs/compat.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    <div class="container" style="width: 100%; padding: 0">
+        
+        
+        <div class="col-md-12 base-container" >
+            <div class="nav-container"><div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav ">
+        <li class="first-level active"><a href="#compatibility-with-older-versions">Compatibility with older versions</a></li>
+            <li class="second-level"><a href="#0255-colors">[0,255] Colors</a></li>
+                
+            <li class="second-level"><a href="#static-text-document">Static text document</a></li>
+                
+            <li class="second-level"><a href="#shape-closing">Shape closing</a></li>
+                
+            <li class="second-level"><a href="#old-keyframe-style">Old keyframe style</a></li>
+                
+            <li class="second-level"><a href="#static-text-layer-properties">Static text layer properties</a></li>
+                
+    </ul>
+</div></div>
+            <div id="content-container" class="content-container">
+                <div class="row content-container-row" >
+                    <div class="col-md-12" role="main">
+
+<h1 id="compatibility-with-older-versions">Compatibility with older versions</h1>
+<p>This page describes breaking changes that have been introduced over time.</p>
+<p>You'd need to check <code>v</code> from <a href="../composition/#animation">Animation</a> to see the
+the lottie is so old to need to worry about these.</p>
+<p>The code examples are just for illustrative purposes and are not to be
+taken as a complete conversion code.</p>
+<h2 id="0255-colors">[0,255] Colors</h2>
+<p>Until <code>v</code> 4.1.9.</p>
+<p>Modern Lotties have <a href="../values/#color">color</a> components in the [0, 1] range.
+Older ones have components in the [0, 255] range.</p>
+<p>Fix: Divide all color components by 255.</p>
+<h2 id="static-text-document">Static text document</h2>
+<p>Until <code>v</code> 4.4.14.</p>
+<p>In <a href="../text/#text-data">Text Data</a>, <code>d</code> was not animated.</p>
+<p>Fix: Wrap into an animated property</p>
+<p><code>text_layer.t.d = {"a": 0, "k": text_layer.t.d}</code></p>
+<h2 id="shape-closing">Shape closing</h2>
+<p>Until <code>v</code> 4.4.18.</p>
+<p><a href="../shapes/#path">Path</a> objects had a boolean <code>closed</code> property and <code>c</code> was not
+present in the bezier data.</p>
+<p>Similarly, <a href="../helpers/#mask">Mask</a> had <code>cl</code> that worked the same way.</p>
+<p>Fix: For each <a href="../shapes/#path">Path</a>, update all the keyframes
+(or the non-animated value) of <code>ks</code>.
+Do the same to fix <code>pt</code> in each <a href="../helpers/#mask">Mask</a>.</p>
+<p><code>shape.ks.k.c = shape.closed ? 1 : 0</code></p>
+<h2 id="old-keyframe-style">Old keyframe style</h2>
+<p>Until <code>v</code> 5.0.0 (?).</p>
+<p><a href="../properties/#base-keyframe">Keyframes</a> had an <code>e</code> property that specified
+the end value for that keyframe (<code>s</code> marking the start value),
+and the last keyframe would not have <code>s</code>.</p>
+<p>Fix: Ignore all the <code>e</code> in keyframes, but copy the <code>e</code> from the keyframe
+before last into the last keyframe.</p>
+<p><code>keyframes[keyframes.length - 1].s = keyframes[keyframes.length - 2].e</code></p>
+<h2 id="static-text-layer-properties">Static text layer properties</h2>
+<p>Until <code>v</code> 5.7.15.</p>
+<p>In <a href="../text/#text-follow-path">Text Follow Path</a> properties <code>r</code>, <code>a</code>, and <code>p</code> were
+plain numbers instead of animated properties.</p>
+<p>Fix: Wrap all of those into animated properties</p>
+<p><code>text_layer.t.p.a + {"a": 0, "k": text_layer.t.p.a}</code></p></div>
+                </div>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+    </div>
+    
+    
+      <footer class="col-md-12 text-center">
+          
+
+
+      </footer>
+    
+
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+
+      <!-- default is to include highlightjs -->
+    
+    
+
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if ( block.classList.length != 0 )
+                    hljs.highlightBlock(block);
+            });
+        });
+    </script>
+
+
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
