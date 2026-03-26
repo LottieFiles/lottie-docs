@@ -70,7 +70,7 @@ and the "in" tangent is the third point defining the bezier segment coming into 
 
 ## Beziers in Lottie
 
-An shape in Lotttie is represented as a cubic polybezier and it's represented in the JSON
+A shape in Lotttie is represented as a cubic polybezier and it's represented in the JSON
 as an object with the following attributes:
 
 `v` is an array of vertices.
