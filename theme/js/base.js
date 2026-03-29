@@ -75,7 +75,7 @@ $(document).ready(function() {
         });
     }
 
-    $('table').addClass('table table-striped table-hover');
+    $('table:not(.table)').addClass('table table-striped table-hover');
 
     // Improve the scrollspy behaviour when users click on a TOC item.
     $(".bs-sidenav a").on("click", function() {
