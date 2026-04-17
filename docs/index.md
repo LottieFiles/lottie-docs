@@ -269,6 +269,11 @@ disable_toc: 1
             <h4 class="index-topic-header">Lottie-Vue</h4>
             <p>Vue component for the Lottie Web Player.</p>
         </div>
+        <div class="index-card-sm" onclick="window.location='https://glaxnimate.org'">
+            <img src="/lottie-docs/img/glaxnimate.svg"/>
+            <h4 class="index-topic-header">Glaxnimate</h4>
+            <p>Lottie editor and Web Player.</p>
+        </div>
     </div>
     <div class="index-footer">
         <div class="index-footer-content">

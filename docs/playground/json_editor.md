@@ -136,6 +136,9 @@ disable_toc: 1
                     <!--<li><a class="dropdown-item" onclick="switch_renderer('html')">
                         lottie-web HTML
                     </a></li>-->
+                    <li><a class="dropdown-item" onclick="switch_renderer('glaxnimate')">
+                        Glaxnimate
+                    </a></li>
                     <li><a class="dropdown-item" onclick="switch_renderer('dotlottie')">
                         DotLottie
                     </a></li>

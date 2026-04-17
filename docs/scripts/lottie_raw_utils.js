@@ -53,6 +53,8 @@ class LottiePlayer
         {
             if ( options.renderer == "dotlottie" )
                 this.anim = new DotLottieWrapper(options);
+            else if ( options.renderer == "glaxnimate" )
+                this.anim = Glaxnimate.loadAnimation(options);
             else
                 this.anim = bodymovin.loadAnimation(options);
             if ( frame != undefined )

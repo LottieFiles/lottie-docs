@@ -387,6 +387,11 @@ ul.nav.navbar-nav.navbar-right > li > a > img {
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #4C5863;
 }
+
+.index-card-sm > img {
+    height: 40px;
+}
+
 @media (max-width: 1200px) {
 
     .navbar-header-top {
