@@ -3,6 +3,7 @@ site_description: Documentation for the Lottie animation format
 copyright: Copyright (C) 2021-2022
 extra:
     lottie_player_version: 5.12.2
+    glaxnimate_player_version: 0.6.59
 theme:
     name: cinder
     custom_dir: theme

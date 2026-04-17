@@ -59,7 +59,49 @@ In the following example you can change the blend mode of the top layer
 
 {schema_string:constants/gradient-type/description}
 
+
 {schema_enum:gradient-type}
+
+Gradient types are defined by {link:constants/gradient-type} with the following semantics
+(Properties are the ones from {link:shapes/gradient-fill} and {link:shapes/gradient-stroke}).
+
+All gradient types use a padded spread, meaning the color stays constant outside the range.
+
+
+<h4>`1`: Linear Gradient</h4>
+
+The gradient changes colors across a straight line, with `s` indicating the point
+at offset 0 and `e` the point at offset 1.
+
+
+<h4>`2`: Radial Gradient</h4>
+
+The gradient radiates between an outer circle and a point within it.
+
+The outer circle corresponds with offset 1 and is centered at `s` and has radius
+`|e - s|`.
+
+The inner point is defined in polar coordinates relative to `s` and `e`:
+
+`h` is a percentange of the radius (between 0 and 100) indicating the distance
+from `s`. A value of 0 indicates being at `s` and a value of 100 being on 
+the edge of the outer circle.
+
+`a` Is the angle in degrees the point is offset from the line between `s` and `e`.
+A value of 0 indicates the point is on that line, otherwise it's rotated clockwise
+by that many degrees.
+
+
+<h4>`3`: Conic Gradient</h4>
+
+The gradient changes colors across a circle around a point.
+
+`s` indicates the center of the circle.
+
+`a` is the initial angle in degrees. If omitted, defaults to `0`.
+
+Offset values represent portions of a turn around the circle turning clockwise.
+A value of 0 will be at the angle `a`, a value of 0.25 will be 90 degrees from that.
 
 
 <h2 id="line-cap">Line Cap</h2>
